@@ -1,0 +1,23 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<!-- Author: dungnt78 -->
+ 
+<struts>
+
+    <package name="note" extends="default">
+        <action name="noteAction" class="com.viettel.voffice.database.DAO.NoteDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    update,insert, delete,onExecuteSQL
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="notePage">notePage.page</result>
+            <result type="tiles" name="prepareSQL.page">prepareSQL.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+    </package>
+</struts>

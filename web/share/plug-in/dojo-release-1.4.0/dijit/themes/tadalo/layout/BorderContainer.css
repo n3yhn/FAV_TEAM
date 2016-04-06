@@ -1,0 +1,55 @@
+
+.tadalo .dijitBorderContainer {
+	background-color: #fcfcfc;
+	padding: 5px;
+}
+.tadalo .dijitSplitContainer-child,
+.tadalo .dijitBorderContainer-child {
+	
+	border: 1px #ccc solid;
+}
+.tadalo .dijitBorderContainer-dijitTabContainerTop,
+.tadalo .dijitBorderContainer-dijitTabContainerBottom,
+.tadalo .dijitBorderContainer-dijitTabContainerLeft,
+.tadalo .dijitBorderContainer-dijitTabContainerRight {
+	
+	 border: none;
+}
+.tadalo .dijitBorderContainer-dijitBorderContainer {
+	
+	border: none;
+	padding: 0px;
+}
+.tadalo .dijitSplitterH,
+.tadalo .dijitGutterH {
+	background:#fcfcfc;
+	border:0;
+	height:5px;
+}
+.tadalo .dijitSplitterH .dijitSplitterThumb {
+	background:url("../images/splitContainerSizerH-thumb.png") no-repeat;
+	top:1px;
+	width:19px;
+	height:2px;
+}
+.tadalo .dijitSplitterV,
+.tadalo .dijitGutterV {
+	background:#fcfcfc;
+	border:0;
+	width:5px;
+}
+.tadalo .dijitSplitterV .dijitSplitterThumb {
+	background:url("../images/splitContainerSizerV-thumb.png") no-repeat;
+	left:1px;
+	height:19px;
+	width:5px;
+}
+.tadalo .dijitSplitterActive {
+	font-size: 1px;
+	background-image: none;
+	background-color: #aaa;
+	-moz-opacity: 0.6;
+	opacity: 0.6;
+	filter: Alpha(Opacity=60);
+	margin: 0;
+}

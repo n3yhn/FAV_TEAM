@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="grid" extends="default">
+        <action name="grid" class="com.viettel.fwtest.database.DAO.GridDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    insertToDB,saveToDB,deleteFromDB
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="prepare">gridSearch.page</result>
+            <result type="tiles" name="popup">gridSearch.popup</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+    </package>
+</struts>

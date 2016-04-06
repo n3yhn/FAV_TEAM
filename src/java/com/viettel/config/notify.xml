@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="notify" extends="default">
+        <action name="notify" class="com.viettel.voffice.database.DAO.NotifyDAO">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    insertNotify
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="notifyInformation">notifyInformation.page</result>
+            <result type="tiles" name="notifyInformationAdd">notifyInformationAdd.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+    </package>
+</struts>

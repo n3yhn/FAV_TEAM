@@ -1,0 +1,17 @@
+
+.tadalo .dijitContentPane {
+	padding: 0px;
+}
+.tadalo .dijitTabContainerTop-dijitContentPane,
+.tadalo .dijitTabContainerLeft-dijitContentPane,
+.tadalo .dijitTabContainerBottom-dijitContentPane,
+.tadalo .dijitTabContainerRight-dijitContentPane,
+.tadalo .dijitAccordionContainer-dijitContentPane {
+	background-color: #fff;
+	padding: 5px;
+}
+.tadalo .dijitSplitContainer-dijitContentPane,
+.tadalo .dijitBorderContainer-dijitContentPane {
+	background-color: #fff;		
+	padding: 5px;
+}

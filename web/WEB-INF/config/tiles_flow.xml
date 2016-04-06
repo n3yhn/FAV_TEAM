@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="flowSearch.page" extends="body.definition" >
+        <put-attribute name="title" value="Quản lý luồng văn bản"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/flowManager/flowSearch.jsp"/>
+    </definition>
+    <definition name="flowView.page" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/flowManager/flowView.jsp"/>
+    </definition>
+</tiles-definitions>

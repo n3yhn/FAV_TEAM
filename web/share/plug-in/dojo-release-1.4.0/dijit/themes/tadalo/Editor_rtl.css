@@ -1,0 +1,10 @@
+
+.dijitRtl .tadalo .dijitEditorIcon {
+	background-image: url('images/editor_rtl.gif'); 
+}
+.dijitRtl .tadalo .dijitDisabled .dijitEditorIcon {
+	background-image: url('images/editorDisabled_rtl.gif'); 
+}
+.dijitRtl .tadalo .dijitToolbar .dijitToolbarSeparator {
+	background-image: url('images/editor_rtl.gif');
+}

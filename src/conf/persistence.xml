@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="RDWF_3PU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.viettel.fwtest.database.BO.Student</class>
+    <class>com.viettel.voffice.database.BO.VoDocumentReceive</class>
+    <class>com.viettel.voffice.database.BO.VoPublishDocument</class>
+    <class>com.viettel.voffice.database.BO.VoBookDocument</class>
+    <class>com.viettel.voffice.database.BO.VoBooks</class>
+    <class>com.viettel.voffice.database.BO.VoFlowRole</class>
+    <class>com.viettel.voffice.database.BO.VoDefaultRole</class>
+    <class>com.viettel.voffice.database.BO.VoExceptRole</class>
+    <class>com.viettel.voffice.database.BO.VoDocumentDirection</class>
+    <class>com.viettel.voffice.database.BO.VoAttachs</class>
+    <class>com.viettel.voffice.database.BO.VoArea</class>
+    <class>com.viettel.voffice.database.BO.VoCvPriority</class>
+    <class>com.viettel.voffice.database.BO.VoSecurityType</class>
+    <class>com.viettel.voffice.database.BO.VoReceiveType</class>
+    <class>com.viettel.voffice.database.BO.VoOfficeLevel</class>
+    <class>com.viettel.voffice.database.BO.VoOutsiteOffice</class>
+    <class>com.viettel.voffice.database.BO.Process</class>
+    <class>com.viettel.voffice.database.BO.ProcessComment</class>
+    <class>com.viettel.vsaadmin.database.BO.Position</class>
+    <class>com.viettel.voffice.database.BO.VoDocVersions</class>
+    <class>com.viettel.voffice.database.BO.VoDeliveryRecord</class>
+    <class>com.viettel.voffice.database.BO.Message</class>
+    <class>com.viettel.voffice.database.BO.VDreProcessReport</class>
+    <class>com.viettel.hqmc.BO.MainlyTarget</class>
+    <class>com.viettel.hqmc.BO.Files</class>
+    <class>com.viettel.hqmc.BO.VietnameseStandard_1</class>
+    <class>com.viettel.hqmc.BO.ReIssueForm</class>
+    <class>com.viettel.hqmc.BO.Confirmation</class>
+    <class>com.viettel.hqmc.BO.ProductTarget</class>
+    <class>com.viettel.hqmc.BO.AnnouncementReceipt</class>
+    <class>com.viettel.hqmc.BO.DetailProduct</class>
+    <class>com.viettel.hqmc.BO.StandardProduct_1</class>
+    <class>com.viettel.hqmc.BO.QualityControlPlan</class>
+    <class>com.viettel.hqmc.BO.TestRegistration</class>
+    <class>com.viettel.hqmc.BO.ConfirmTestReg</class>
+    <class>com.viettel.hqmc.BO.Announcement</class>
+    <class>com.viettel.hqmc.BO.Parameter</class>
+    <class>com.viettel.hqmc.BO.AnnouncementReceiptPaper</class>
+    <class>com.viettel.hqmc.BO.ConfirmImportSatistPaper</class>
+    <class>com.viettel.hqmc.BO.ConfirmAnnouncementPaper</class>
+    <class>com.viettel.hqmc.BO.ReceiveEmail</class>
+    <class>com.viettel.hqmc.BO.MessageEmail</class>
+    <class>com.viettel.hqmc.BO.ReceiveSms</class>
+    <class>com.viettel.hqmc.BO.TechnicalStandard</class>
+    <class>com.viettel.hqmc.BO.Business</class>
+    <class>com.viettel.hqmc.BO.EvaluationRecords</class>
+    <class>com.viettel.hqmc.BO.CaUser</class>
+    <class>com.viettel.hqmc.BO.Calendar</class>
+    <class>com.viettel.hqmc.BO.PaymentHistory</class>
+    <class>com.viettel.hqmc.BO.Repositories</class>
+    <class>com.viettel.hqmc.BO.UserAttachs</class>
+    <class>com.viettel.hqmc.BO.Complaints</class>
+    <class>com.viettel.hqmc.BO.TimeProcess</class>
+    <class>com.viettel.hqmc.BO.MessageSmsSent</class>
+    <class>com.viettel.hqmc.BO.MessageSmsFlag</class>
+    <class>com.viettel.hqmc.BO.MessageSms</class>
+    <class>com.viettel.hqmc.BO.MessageEmailFlag</class>
+    <class>com.viettel.hqmc.BO.MessageEmailSent</class>
+    <class>com.viettel.hqmc.BO.VFeePaymentInfoFee</class>
+    <class>com.viettel.hqmc.BO.MessageGroupPerson</class>
+    <class>com.viettel.hqmc.BO.MessageGroup</class>
+    <class>com.viettel.hqmc.BO.VLookupHomepage</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@172.18.15.28:1521:rddb"/>
+      <property name="javax.persistence.jdbc.password" value="LINHNTN3"/>
+      <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+      <property name="javax.persistence.jdbc.user" value="LINHNTN3"/>
+    </properties>
+  </persistence-unit>
+</persistence>

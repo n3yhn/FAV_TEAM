@@ -1,0 +1,60 @@
+.tadalo .dijitTitlePaneTitle {
+	background: #cccccc;
+	background:#fff url("images/titleBar.png") repeat-x bottom left;
+	border:1px solid #bfbfbf;
+	padding:3px 4px;
+	cursor: pointer;
+}
+.tadalo .dijitTitlePaneTitle-hover  {
+	background: #f8fafd url("images/accordionItemHover.gif") bottom repeat-x;
+}
+.tadalo .dijitTitlePaneTitle * {
+	vertical-align: middle;
+}
+.tadalo .dijitTitlePane .dijitArrowNode {
+	cursor: pointer;
+	background-image: url('images/spriteArrows.png');
+	background-repeat: no-repeat;
+	height: 7px;
+	width: 7px;
+}
+.dj_ie6 .tadalo .dijitTitlePane .dijitArrowNode {
+	background-image: url('images/spriteArrows.gif');
+}
+.tadalo .dijitTitlePane .dijitOpen .dijitArrowNode {
+	background-position: 0px 0px;
+}
+.tadalo .dijitTitlePane .dijitClosed .dijitArrowNode {
+	background-position: -14px 0px;
+}
+.tadalo .dijitTitlePaneFocused .dijitTitlePaneTextNode {
+	text-decoration:underline;
+}
+.tadalo .dijitTitlePane .dijitArrowNodeInner {
+	display:none;
+}
+.dijit_a11y .dijitTitlePane .dijitArrowNodeInner {
+	display:inline !important;
+	font-family:monospace;
+	cursor: pointer;
+	padding-bottom:.2em;
+}
+.dijit_a11y .dijitTitlePane .dijitArrowNode {
+	display:none;
+}
+.tadalo .dijitTitlePaneContentOuter {
+	background: #ffffff;
+	border:1px solid #bfbfbf;
+	border-top: 1px solid #ccc;	
+}
+.tadalo .dijitTitlePaneContentInner {
+	padding:10px;
+}
+.dj_ie6 .tadalo .dijitTitlePaneContentOuter,
+.dj_ie6 .tadalo .dijitTitlePane .dijitTitlePaneTitle {
+	zoom: 1;
+}
+.tadalo .dijitTitlePaneTextNode {
+	margin-left: 4px;
+	margin-right: 4px;
+}

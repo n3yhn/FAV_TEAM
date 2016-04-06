@@ -1,0 +1,17 @@
+<div class="dijitDialog" tabindex="-1" waiRole="dialog" waiState="labelledby-${id}_title">
+    <div dojoAttachPoint="titleBar" class="dijitDialogTitleBar" dojoAttachEvent="ondblclick: _vt_onToggleSize">
+        <span dojoAttachPoint="iconNode" class="dijitDialogIcon"></span>
+        <span dojoAttachPoint="titleNode" class="dijitDialogTitle" id="${id}_title"></span>
+        <span dojoAttachPoint="toggleSizeButtonNode" class="dijitDialogMaximizeIcon" dojoAttachEvent="onclick: _vt_onToggleSize, onmouseenter: _vt_onToggleEnter, onmouseleave: _vt_onToggleLeave"></span>
+        <span dojoAttachPoint="closeButtonNode" class="dijitDialogCloseIcon" dojoAttachEvent="onclick: onCancel, onmouseenter: _onCloseEnter, onmouseleave: _onCloseLeave" title="${buttonCancel}">
+            <span dojoAttachPoint="closeText" class="closeText" title="${buttonCancel}">x</span>
+        </span>
+    </div>
+    <div dojoAttachPoint="containerNode" class="dijitDialogPaneContent">
+        <!--[duongtb-->
+        <span dojoAttachPoint ="saveOnClose" dojoAttachEvent="onclick: _vtSaveOnClose" style="display:none;"></span>
+        <div dojoAttachPoint="settingsContent"></div>
+        <!--]-->
+    </div>
+    <div dojoAttachPoint="fakeContainerNode"></div>
+</div>

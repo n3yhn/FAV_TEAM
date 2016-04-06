@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2-hudson-740-. --><xs:schema xmlns:tns="http://service.convert.viettel.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://service.convert.viettel.com/">
+
+<xs:element name="convert" type="tns:convert" />
+
+<xs:element name="convertResponse" type="tns:convertResponse" />
+
+<xs:element name="pdfDocxFile" type="tns:pdfDocxFile" />
+
+<xs:complexType name="convert">
+<xs:sequence>
+<xs:element name="input" type="tns:pdfDocxFile" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="pdfDocxFile">
+<xs:sequence>
+<xs:element name="filename" type="xs:string" minOccurs="0" />
+<xs:element name="content" type="xs:base64Binary" minOccurs="0" />
+<xs:element name="convertType" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="convertResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:pdfDocxFile" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

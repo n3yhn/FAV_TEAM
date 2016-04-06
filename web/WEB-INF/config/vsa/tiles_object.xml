@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition extends="content.definition" name="prepare.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/application/applicationsModule-Dialog.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="appObjectsDialog.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/application/objectsCatalog-Dialog.jsp"/>
+    </definition>
+
+    <definition extends="content.definition" name="ObjectsAction.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/application/objectsCatalog-Window.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="objectTree.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/application/objectTree.jsp"/>
+    </definition>
+</tiles-definitions>

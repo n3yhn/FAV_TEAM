@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="reportDayClerical.page" extends="body.definition">
+        <put-attribute name="title" value="Báo cáo ngày"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/reportDayClerical.jsp"/>
+    </definition>    
+    <definition name="reportVT.page" extends="body.definition">
+        <put-attribute name="title" value="Báo cáo kế toán"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/reportVT.jsp"/>
+    </definition> 
+    <definition name="reportStaff.page" extends="body.definition">
+        <put-attribute name="title" value="Thống kê lãnh đạo, chuyên viên"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/reportStaff.jsp"/>
+    </definition> 
+    <definition name="reportWeekClerical.page" extends="body.definition">
+        <put-attribute name="title" value="Báo cáo tuần, văn thư"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/reportWeekClerical.jsp"/>
+    </definition>
+    <definition name="reportStaffAll.page" extends="body.definition">
+        <put-attribute name="title" value="Thống kê lãnh đạo, chuyên viên"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/reportStaffProcessPageAll.jsp"/>
+    </definition>
+        <definition name="reportStaffOnRequest.page" extends="body.definition">
+        <put-attribute name="title" value="Thống kê theo yêu cầu"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/reportStaffOnRequest.jsp"/>
+    </definition> 
+</tiles-definitions>

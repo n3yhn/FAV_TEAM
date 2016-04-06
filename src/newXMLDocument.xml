@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><ROOT>
+    <DATA>
+        <PUBLIC_ELEMENT>
+            <fileCode>14.03.01.34</fileCode>
+        </PUBLIC_ELEMENT>
+    </DATA>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+            <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+            <Reference URI="">
+                <Transforms>
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                </Transforms>
+                <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                <DigestValue>88ZK3ulxDrh3well+7/tyR/ok/Q=</DigestValue>
+            </Reference>
+        </SignedInfo>
+        <SignatureValue>YoaUVJdgBPMFJlF0Jmr33zbY5fJAR7n8wW11GKEwy6A553i/ZcKOHrHj1+aPiYZOd/caU+by780C+iSJ8oPuEM6GCVulZ3BMGTH0A1KvMaMiEafQzfNgNXGvzT8Cw02s5Tr2FQjW3Wg5iL7ofkWlOZ9Clhk9ZWJ7qlIeovMZH+s=</SignatureValue>
+        <KeyInfo>
+            <X509Data>
+                <X509SubjectName>C=VN,L=HÀ NỘI,CN=ĐỖ MẠNH TUẤN,UID=CMND:135127044</X509SubjectName>
+                <X509Certificate>MIID0zCCArugAwIBAgIQVATQh1dVPoGJpiLSjT1DjjANBgkqhkiG9w0BAQUFADA6MQswCQYDVQQGEwJWTjEWMBQGA1UEChMNVmlldHRlbCBHcm91cDETMBEGA1UEAxMKVmlldHRlbC1DQTAeFw0xMzA5MjUwMzAxMTRaFw0xNTA5MjYwMzAxMTRaMF8xHjAcBgoJkiaJk/IsZAEBDA5DTU5EOjEzNTEyNzA0NDEcMBoGA1UEAwwTxJDhu5YgTeG6oE5IIFRV4bqkTjESMBAGA1UEBwwJSMOAIE7hu5hJMQswCQYDVQQGEwJWTjCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAvFPlun4i5NGzd7CooZ8JuekBrs1oLHLRFyjRAun/191CH1FPjI6+ZBqQiM1N/O6aDgc+5MeQ01nDKdED5r/9QOK8I938AYgHYBNJulj4VOmO5O1kzE2q6HZbHRbDaOdrGHegI6oAZmv/A47vW1Ui0a1HpvS25vchpyZLO19t/V0CAwEAAaOCATIwggEuMDUGCCsGAQUFBwEBBCkwJzAlBggrBgEFBQcwAYYZaHR0cDovL29jc3AudmlldHRlbC1jYS52bjAdBgNVHQ4EFgQUCLE0pcloCUfCpW7cJHvg9ItndvUwDAYDVR0TAQH/BAIwADAfBgNVHSMEGDAWgBSFXARB3EcGcAIU5cwudt5y3kXWhTB4BgNVHR8EcTBvMG2gK6AphidodHRwOi8vY3JsLnZpZXR0ZWwtY2Eudm4vVmlldHRlbC1DQS5jcmyiPqQ8MDoxEzARBgNVBAMMClZpZXR0ZWwtQ0ExFjAUBgNVBAoMDVZpZXR0ZWwgR3JvdXAxCzAJBgNVBAYTAlZOMA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwDQYJKoZIhvcNAQEFBQADggEBAAHodX2jqV9/Kc9BhdnG24sJZ11nhZmaoNbTlzL4A4af6GzgK6O1LY6jJrHHwOW/kWuJ+hny+zOqkWAEqPjAwgO4NqfegfRKqbYRvMW56e9oilQy6RD1za5r+EUfHp2Oq5AgkLTNv2TITX4OCSYRhg0GPXUBgvJMtKcRmFeNbDAAMz10u1yComrpyinkM905cdF+7FadvewfbbfD37N9CYZ7+UM+MHlGIXUni5p5I89itGbHjOHWed7v4RkWl6dUaF/kmWtGb7XbqJzaLr5F9ygEElZipjMvH7t1zuy6yCRhynz97UMJxhrI2NqbI7JYa/CCkTYr5d59eBhZt/l31iU=</X509Certificate>
+            </X509Data>
+        </KeyInfo>
+    </Signature>
+</ROOT>

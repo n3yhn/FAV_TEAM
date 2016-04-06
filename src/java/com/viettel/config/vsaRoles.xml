@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="RolesAction" extends="default">
+        <action name="RolesAction" class="com.viettel.vsaadmin.database.DAO.RolesDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsertFunction, onInsert, onUpdate, onDelete, onLock, onUnLock, onLockFunction,
+                    onUnLockFunction, onDeleteFunction
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="prepare">roles.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+            <result type="json" name="jsonDataTree">
+                <param name="root">jsonDataTree</param>
+            </result>
+            <result type="json" name="childrenData">
+                <param name="root">childrenData</param>
+            </result>
+        </action>
+    </package>
+</struts>

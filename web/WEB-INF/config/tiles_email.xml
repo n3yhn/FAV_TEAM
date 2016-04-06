@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="inbox.page" extends="body.definition" >
+        <put-attribute name="title" value="Hộp thư đến"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/email/inbox.jsp"/>        
+    </definition>
+    <definition name="outbox.page" extends="body.definition" >
+        <put-attribute name="title" value="Hộp thư đi"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/email/outbox.jsp"/>        
+    </definition>
+    <definition name="fail.page" extends="body.definition" >
+        <put-attribute name="title" value="Không thể đăng nhập"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/email/fail.jsp"/>        
+    </definition>
+<!--    <definition name="emailContent.page" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/email/emailContent.jsp"/>        
+    </definition>
+-->   
+
+<!--    <definition name="sendMail.page" extends="content.definition">
+        <put-atribute name="title" value="Gửi Thư"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/email/sendMail.jsp"/>
+    </definition>-->
+    
+    <!--
+    <definition name="sentboxEmail.page" extends="content.definition">
+        <put-attribute name="title" value="sentboxEmail"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/email/sentboxEmail.jsp/"/>
+    </definition>-->
+    
+</tiles-definitions>

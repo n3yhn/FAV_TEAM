@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : variableEncrypto.xml
+    Created on : February 11, 2012, 11:19 AM
+    Author     : cn_longh
+    Description:
+        Purpose of the document follows.
+-->
+
+<VariableCrypto>
+    
+    <action name="Default">
+    </action>
+    <action name="grid!searchData.do">
+        <list>
+            <item name="testLst" attributes="stid" />
+        </list>
+    </action>
+    <action name="grid!deleteFromDB.do">
+        <json>
+            <item name="studentLst" attributes="stid" />
+        </json>
+    </action>
+            
+    <!--
+    <action name="indexGetJSON.do">
+        <list>
+            <item name="testLst" attributes="myProp1" />
+        </list>
+   
+         <var>
+            <item name="var1" />
+            <item name="longh" />
+        </var>
+        <form>
+            <item name="form1" attributes="stid" />
+        </form>
+    </action>-->
+</VariableCrypto>

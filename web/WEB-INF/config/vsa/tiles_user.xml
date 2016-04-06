@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <!-- User -->
+    <definition extends="base.definition" name="EditUserAction.page">
+        <put-attribute name="title" value="VSA Admin v3.0"/>
+        <put-attribute name="menu" value=""/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/user/editUser.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="userForm.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/user/userForm.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="UserAction.page">
+        <put-attribute name="title" value="Quản lý người dùng"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/user/user-Window.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="UserDialog.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/user/user-Dialog.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="listRoleOfUser.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/user/listRoleOfUser.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="listDeptOfUser.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/user/listDeptOfUser.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="password.Page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/layout/changePassword.jsp"/>
+    </definition>
+    <!-- End User -->
+    <!-- Start User of Dept-->
+    <definition extends="body.definition" name="prepareUserOfDept.page">
+        <put-attribute name="title" value="Quản lý người dùng"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/user_childDept/user-Window.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="UserDialogStaff.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/layout/user-Dialog.jsp"/>
+    </definition>
+    
+</tiles-definitions>

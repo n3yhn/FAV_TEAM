@@ -1,0 +1,372 @@
+a{
+	outline-style:none;
+	cursor:pointer;
+}
+/*MapMove*/
+.MapMove {
+	position: relative;
+	width: 65px;
+	height: 64px;
+	background: url(images/MapMoveZoom.png) no-repeat left top;
+}
+.MMTop {
+	position: absolute;
+	top: 1px;
+	left: 18px;
+	width: 28px;
+	height: 14px;
+	text-indent: -9999px;
+}
+a.MMTop:hover {
+	background: url(images/MapMoveZoom.png) no-repeat -79px top;
+}
+a.MMTop:active {
+	background: url(images/MapMoveZoom.png) no-repeat -135px top;
+}
+.MMRight {
+	position: absolute;
+	top: 16px;
+	left: 47px;
+	width: 14px;
+	height: 28px;
+	text-indent: -9999px;
+}
+a.MMRight:hover {
+	background: url(images/MapMoveZoom.png) no-repeat -107px -14px;
+}
+a.MMRight:active {
+	background: url(images/MapMoveZoom.png) no-repeat -163px -14px;
+}
+.MMBot {
+	position: absolute;
+	top: 45px;
+	left: 18px;
+	width: 28px;
+	height: 14px;
+	text-indent: -9999px;
+}
+a.MMBot:hover {
+	background: url(images/MapMoveZoom.png) no-repeat -79px -42px;
+}
+a.MMBot:active {
+	background: url(images/MapMoveZoom.png) no-repeat -135px -42px;
+}
+.MMLeft {
+	position: absolute;
+	top: 16px;
+	left: 3px;
+	width: 14px;
+	height: 28px;
+	text-indent: -9999px;
+}
+a.MMLeft:hover {
+	background: url(images/MapMoveZoom.png) no-repeat -65px -14px;
+}
+a.MMLeft:active {
+	background: url(images/MapMoveZoom.png) no-repeat -121px -14px;
+}
+.MMTopRight {
+	position: absolute;
+	top: 12px;
+	left: 39px;
+	width: 11px;
+	height: 11px;
+	text-indent: -9999px;	
+}
+a.MMTopRight:hover {
+	background: url(images/MapMoveZoom.png) no-repeat -222px -13px;
+}
+.MMBotRight {
+	position: absolute;
+	top: 37px;
+	left: 39px;
+	width: 11px;
+	height: 11px;
+	text-indent: -9999px;	
+}
+a.MMBotRight:hover {
+	background: url(images/MapMoveZoom.png) no-repeat -222px -24px;
+}
+.MMBotLeft {
+	position: absolute;
+	top: 37px;
+	left: 14px;
+	width: 11px;
+	height: 11px;
+	text-indent: -9999px;	
+}
+a.MMBotLeft:hover {
+	background: url(images/MapMoveZoom.png) no-repeat -211px -24px;
+}
+.MMTopLeft {
+	position: absolute;
+	top: 12px;
+	left: 14px;
+	width: 11px;
+	height: 11px;
+	text-indent: -9999px;	
+}
+a.MMTopLeft:hover {
+	background: url(images/MapMoveZoom.png) no-repeat -211px -13px;
+}
+.MMCenter {
+	position: absolute;
+	top: 22px;
+	left: 24px;
+	width: 16px;
+	height: 16px;
+	text-indent: -9999px;	
+}
+a.MMCenter:hover {
+	background: url(images/MapMoveZoom.png) no-repeat -85px -20px;
+}
+a.MMCenter:active {
+	background: url(images/MapMoveZoom.png) no-repeat -141px -20px;
+}
+/*EndMapMove*/
+
+/*MapZoom*/
+.MapZoom-top {
+	position: relative;
+	top: 5px;
+	left: 20px;
+	width: 23px;
+	background: url(images/MapMoveZoom.png) no-repeat -233px top;
+	display: inline-block;
+}
+.MapZoom-bot {
+	width: 23px;
+	background: url(images/MapMoveZoom.png) no-repeat -256px bottom;
+	display: inline-block;
+}
+.MapZoom-center {
+	width: 23px;
+	background: url(images/MZCen.png) repeat top center;
+	margin: 29px 0 32px 0;
+	cursor:pointer;
+}
+.MapZoom-center span {
+	position: absolute;
+	bottom: 30px;
+	left: 10px;
+	width: 3px;
+	background: none white;
+	box-shadow: 0 0 3px rgba(0,0,0,0.1);
+}
+.MZIn {
+	position: absolute;
+	top: 2px;
+	left: 3px;
+	width: 17px;
+	height: 21px;
+	text-indent: -9999px;
+}
+a.MZIn:hover {
+	background: url(images/MapMoveZoom.png) no-repeat -177px top;
+}
+a.MZIn:active {
+	background: url(images/MapMoveZoom.png) no-repeat -194px top;
+}
+.MZOut {
+	position: absolute;
+	bottom: 5px;
+	left: 3px;
+	width: 17px;
+	height: 20px;
+	text-indent: -9999px;
+}
+a.MZOut:hover {
+	background: url(images/MapMoveZoom.png) no-repeat -177px -21px;
+}
+a.MZOut:active {
+	background: url(images/MapMoveZoom.png) no-repeat -194px -21px;
+}
+.MZScroll {
+	background: url(images/MapMoveZoom.png) no-repeat -211px -35px;
+	width: 17px;
+	height: 14px;
+	position: absolute;
+	top: 21px;
+	left: 3px;
+	cursor:pointer;
+}
+
+.ZoomPinLeft {
+	position: absolute;
+	cursor:pointer;
+	background: url(images/ZoomPin.png) no-repeat top left;
+	height: 15px;
+}
+.ZoomPinRight {
+	background: url(images/ZoomPin.png) no-repeat right -15px;
+	height: 15px;
+}
+.ZoomPinCenter {
+	background: url(images/ZoomPin.png) repeat-x left -30px;
+	height: 13px;
+	color: #fff;
+	font-size: 10px;
+	margin: 0 3px 0 7px;
+	padding: 1px 0;
+	font-family: Tahoma,Verdana,Geneva,sans-serif;
+	white-space: nowrap;
+}
+/*EndZoom*/
+
+
+
+/*miniMap*/
+.VBtnOnOffOverviewMap #container_VImgOnOff
+{
+	position: absolute;
+	float: left;
+}
+.VBtnOnOffOverviewMap a, .VBtnOnOffOverviewMap a span {
+	float: left;
+	display: block;
+	width: 16px;
+	height: 16px;
+}
+.VOverviewMapControl
+{
+	position: absolute;
+	float: left;
+	display: inline-block;
+	background-color: transparent;
+	_background-color: #c9e3f2;
+	*background-color: #c9e3f2;
+}
+.VOverviewMapControl.On 
+{
+	-moz-box-shadow: 0 0 7px #555;
+	-webkit-box-shadow: 0 0 7px #555;
+	box-shadow: 0 0 7px #555;	
+}
+.MiniMapBorderTopLeft {
+	top:		0;
+	left:		0;
+	border-radius: 0 0 5px 0;
+	-moz-border-radius: 0 0 5px 0;
+	-webkit-border-radius: 0 0 5px 0;
+}
+.MiniMapBorderTopRight {
+	top:		0;
+	right:		0;
+	border-radius: 0 0 0 5px;
+	-moz-border-radius: 0 0 0 5px;
+	-webkit-border-radius: 0 0 0 5px;
+}
+.MiniMapBorderBottomLeft {
+	bottom:		0;
+	left:		0;
+	border-radius: 0 5px 0 0;
+	-moz-border-radius: 0 5px 0 0;
+	-webkit-border-radius: 0 5px 0 0;
+}
+.MiniMapBorderBottomRight {
+	bottom:		0;
+	right:		0;
+	border-radius: 5px 0 0 0;
+	-moz-border-radius: 5px 0 0 0;
+	-webkit-border-radius: 5px 0 0 0;
+}
+.MiniMapBorderTopLeft.On {
+	border-bottom: 1px solid #0072cc;
+	border-right: 1px solid #0072cc;
+}
+.MiniMapBorderTopRight.On {
+	border-bottom: 1px solid #0072cc;
+	border-left: 1px solid #0072cc;
+}
+.MiniMapBorderBottomLeft.On {
+	border-top: 1px solid #0072cc;
+	border-right: 1px solid #0072cc;
+}
+.MiniMapBorderBottomRight.On {
+	border-top: 1px solid #0072cc;
+	border-left: 1px solid #0072cc;
+}
+.VOverviewMapControl .VOverviewBound {
+	float:		left;
+	position:	relative;
+	overflow:	hidden;
+	width:		16px;
+	height:		16px;
+}
+.VOverviewMapControl.On .VOverviewBound {
+	height:		123px;
+	width:		143px;
+	border: 1px solid #3399cc;
+}
+
+#container_VImgOnOff {
+	position:	relative;
+	float:		left;
+	width:		16px;
+	height:		16px;
+	z-index:	3000;
+	background: url(images/ruler.png) repeat -203px 0;
+}
+.MiniMapBorderBottomRight.On .VOverviewBound {
+	margin:		5px 0 0 5px;
+}
+.MiniMapBorderBottomLeft.On .VOverviewBound {
+	margin:		5px 5px 0 0;
+}
+.MiniMapBorderTopLeft.On .VOverviewBound {
+	margin:		0 5px 5px 0;
+}
+.MiniMapBorderTopRight.On .VOverviewBound {
+	margin:		0 0 5px 5px;
+}
+.MiniMapBorderBottomRight #container_VImgOnOff {
+	right:		0;
+	bottom:		0;
+}
+.MiniMapBorderBottomLeft #container_VImgOnOff {
+	bottom:		0;
+	left:		0;
+}
+.MiniMapBorderTopLeft #container_VImgOnOff {
+	top:		0;
+	left:		0;
+}
+.MiniMapBorderTopRight #container_VImgOnOff {
+	top:		0;
+	right:		0;
+}
+.MiniMapBorderBottomRight.On #container_VImgOnOff a span,
+.MiniMapBorderTopLeft #container_VImgOnOff a span {
+	background: url(images/MapMoveZoom.png) no-repeat -281px -2px;
+}
+.MiniMapBorderBottomRight.On #container_VImgOnOff a:hover span,
+.MiniMapBorderTopLeft #container_VImgOnOff a:hover span {
+	background-position: -281px -22px;
+}
+.MiniMapBorderBottomRight #container_VImgOnOff a span,
+.MiniMapBorderTopLeft.On #container_VImgOnOff a span {
+	background: url(images/MapMoveZoom.png) no-repeat -281px -42px;
+}
+.MiniMapBorderBottomRight #container_VImgOnOff a:hover span,
+.MiniMapBorderTopLeft.On #container_VImgOnOff a:hover span {
+	background-position: -281px -62px;
+}
+.MiniMapBorderTopRight.On #container_VImgOnOff a span,
+.MiniMapBorderBottomLeft #container_VImgOnOff a span {
+	background: url(images/MapMoveZoom.png) no-repeat -301px -2px;
+}
+.MiniMapBorderTopRight.On #container_VImgOnOff a:hover span,
+.MiniMapBorderBottomLeft #container_VImgOnOff a:hover span {
+	background-position: -301px -22px;
+}
+.MiniMapBorderTopRight #container_VImgOnOff a span,
+.MiniMapBorderBottomLeft.On #container_VImgOnOff a span {
+	background: url(images/MapMoveZoom.png) no-repeat -301px -42px;
+}
+.MiniMapBorderTopRight #container_VImgOnOff a:hover span,
+.MiniMapBorderBottomLeft.On #container_VImgOnOff a:hover span {
+	background-position: -301px -62px;
+}
+
+
+/*End MiniMap*/

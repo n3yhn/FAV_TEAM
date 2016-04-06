@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="home.page" extends="body.definition" >
+        <put-attribute name="title" value="Trang chủ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/layout/home.jsp"/>
+    </definition>
+    <definition name="gotoFirstFunc.page" extends="body.definition" >
+        <put-attribute name="title" value="Trang chủ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/layout/gotoFirstFunction.jsp"/>
+    </definition>
+    <definition name="log.page" extends="body.definition" >
+        <put-attribute name="title" value="Xem log hệ thông"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/log/logManager.jsp"/>
+    </definition>
+    <definition name="guideline.page" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/layout/guideline.jsp"/>
+    </definition>
+</tiles-definitions>

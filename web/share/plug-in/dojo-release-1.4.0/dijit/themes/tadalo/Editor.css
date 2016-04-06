@@ -1,0 +1,61 @@
+.dijitIEFixedToolbar {
+	position:absolute;
+	
+	top: expression(eval((document.documentElement||document.body).scrollTop));
+}
+.tadalo .dijitToolbar .dijitToolbarSeparator {
+	background: url('images/editor.gif');
+}
+.tadalo .dijitEditorIcon {
+	background-image: url('images/editor.gif'); 
+	background-repeat: no-repeat;
+	width: 18px;
+	height: 18px;
+	text-align: center;
+}
+.tadalo .dijitDisabled .dijitEditorIcon {
+	background-image: url('images/editorDisabled.gif'); 
+}
+.tadalo .dijitEditorIconSep { background-position: 0px; }
+.tadalo .dijitEditorIconBackColor { background-position: -18px; }
+.tadalo .dijitEditorIconBold { background-position: -36px; }
+.tadalo .dijitEditorIconCancel { background-position: -54px; }
+.tadalo .dijitEditorIconCopy { background-position: -72px; }
+.tadalo .dijitEditorIconCreateLink { background-position: -90px; }
+.tadalo .dijitEditorIconCut { background-position: -108px; }
+.tadalo .dijitEditorIconDelete { background-position: -126px; }
+.tadalo .dijitEditorIconForeColor { background-position: -144px; }
+.tadalo .dijitEditorIconHiliteColor { background-position: -162px; }
+.tadalo .dijitEditorIconIndent { background-position: -180px; }
+.tadalo .dijitEditorIconInsertHorizontalRule { background-position: -198px; }
+.tadalo .dijitEditorIconInsertImage { background-position: -216px; }
+.tadalo .dijitEditorIconInsertOrderedList { background-position: -234px; }
+.tadalo .dijitEditorIconInsertTable { background-position: -252px; }
+.tadalo .dijitEditorIconInsertUnorderedList { background-position: -270px; }
+.tadalo .dijitEditorIconItalic { background-position: -288px; }
+.tadalo .dijitEditorIconJustifyCenter { background-position: -306px; }
+.tadalo .dijitEditorIconJustifyFull { background-position: -324px; }
+.tadalo .dijitEditorIconJustifyLeft { background-position: -342px; }
+.tadalo .dijitEditorIconJustifyRight { background-position: -360px; }
+.tadalo .dijitEditorIconLeftToRight { background-position: -378px; }
+.tadalo .dijitEditorIconListBulletIndent { background-position: -396px; }
+.tadalo .dijitEditorIconListBulletOutdent { background-position: -414px; }
+.tadalo .dijitEditorIconListNumIndent { background-position: -432px; }
+.tadalo .dijitEditorIconListNumOutdent { background-position: -450px; }
+.tadalo .dijitEditorIconOutdent { background-position: -468px; }
+.tadalo .dijitEditorIconPaste { background-position: -486px; }
+.tadalo .dijitEditorIconRedo { background-position: -504px; }
+.tadalo .dijitEditorIconRemoveFormat { background-position: -522px; }
+.tadalo .dijitEditorIconRightToLeft { background-position: -540px; }
+.tadalo .dijitEditorIconSave { background-position: -558px; }
+.tadalo .dijitEditorIconSpace { background-position: -576px; }
+.tadalo .dijitEditorIconStrikethrough { background-position: -594px; }
+.tadalo .dijitEditorIconSubscript { background-position: -612px; }
+.tadalo .dijitEditorIconSuperscript { background-position: -630px; }
+.tadalo .dijitEditorIconUnderline { background-position: -648px; }
+.tadalo .dijitEditorIconUndo { background-position: -666px; }
+.tadalo .dijitEditorIconWikiword { background-position: -684px; }
+.tadalo .dijitEditorIconToggleDir { background-position: -540px; }
+.tadalo .dijitEditorIconTabIndent { background-position: -702px; }
+.tadalo .dijitEditorIconSelectAll { background-position: -720px; }
+.tadalo .dijitEditorIconUnlink { background-position: -738px; }

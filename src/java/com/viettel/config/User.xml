@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="UserAction" extends="default">
+        <action name="UserAction" class="com.viettel.vsaadmin.database.DAO.UsersDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onUpdate, onDelete, onResetPass, onLock, onUnLock, assignRole, removeRole, lockRole,unLockRole, importStaffFromExcel, updateUserRoleDept
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="prepare">UserAction.page</result>
+            <result type="tiles" name="userDialog">UserDialog.page</result>
+            <result type="tiles" name="userDialogStaff">UserDialogStaff.page</result>
+            <result type="tiles" name="listRolePage">listRoleOfUser.page</result>
+            <result type="tiles" name="listDeptPage">listDeptOfUser.page</result>
+            <result type="tiles" name="prepareUserOfDept">prepareUserOfDept.page</result>
+            <result type="tiles" name="passwordPage">password.Page</result>
+            
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+            <result type="json" name="roleGridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+            <result type="json" name="treeData">
+                <param name="root">json</param>
+            </result>
+            <result type="json" name="childrenData">
+                <param name="root">childrenData</param>
+            </result>
+            <result type="json" name="staffsList">
+                <param name="root">staffsList</param>
+            </result>
+            <result type="stream" name="excel">
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="contentDisposition">filename="Bao cao.xls"</param>
+                <param name="inputName">userData</param>
+                <param name="bufferSize">12288</param>
+            </result>
+        </action>
+        <action name="EditUserAction" class="com.viettel.vsaadmin.database.DAO.UsersDAO" method="prepareEditUser">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onUpdate, onDelete, onResetPass, onLock, onUnLock, assignRole, removeRole, lockRole,unLockRole, importStaffFromExcel
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="prepareEditUser">EditUserAction.page</result>
+            <result type="tiles" name="userForm">userForm.page</result>
+        </action>
+    </package>
+</struts>

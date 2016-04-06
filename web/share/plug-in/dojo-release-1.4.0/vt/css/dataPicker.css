@@ -1,0 +1,60 @@
+/* 
+    Document   : test
+    Created on : Jun 11, 2009, 4:51:59 PM
+    Author     : Hoang Long
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+
+.dataPickerContainer {
+    background:#e4e4e4;
+    border: 1px solid #84a0c4;
+    height:auto;
+    width:650px;
+    padding: 0px;
+}
+
+.searchParams{
+    width:100%;
+}
+
+.searchParams td {
+    padding:1px;
+    margin:0;
+    vertical-align:top;
+}
+
+.dataPickerGrid {
+    margin-top:10px;
+    height:200px;
+    width:100%;
+    border:1px solid #ccc;
+}
+
+.padding-10{
+    padding:10px;
+}
+
+.datapicker-delete{
+     background: url(delete.jpg) no-repeat;
+     cursor:pointer;
+     width:20px;
+     height:21px;
+     padding:0px 10px 3px 10px;
+
+}
+.datapicker-list{
+     background: url(list.png) no-repeat;
+     cursor:pointer;
+     width:20px;
+     height:21px;
+     padding:0px 10px 3px 10px;
+
+}
+

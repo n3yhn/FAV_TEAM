@@ -1,0 +1,496 @@
+/* [ LongH mod */
+.tadalo .dijitTab .dijitClosable .closeImage {
+    margin-top:-5px;
+    background: url(images/tabs/tab-close.gif) no-repeat right top;
+    width: 11px;
+    height: 11px;
+}
+
+* html .tadalo .dijitTab .dijitClosable .closeImage {
+    margin-top:-3px;
+}
+
+.tadalo .dijitTabPaneWrapper {
+    border:1px solid #8db2e3;
+    border-top-width:0px;
+}
+
+.tadalo .dijitTab {
+    border:1px solid #8db2e3;
+    background:url(images/tabs/tabs-sprite.gif) repeat-x 0% -202px;
+    /*
+	line-height:normal;
+	margin-right:4px;
+	padding:0px;
+
+	background:#e2e2e2 url(images/tabEnabled.png) repeat-x;
+    */
+}
+
+.tadalo .dijitTabChecked {
+    background:#fff;
+}
+
+.tadalo .dijitTabHover {
+    background:url(images/tabs/tabs-sprite.gif) repeat-x 0% -152px;
+}
+
+.tadalo .tabStripButton {
+    background:url(images/tabs/tabs-sprite.gif) repeat-x 0% -203px;
+}
+
+.tadalo .dijitTabContainer .tabStripMenuButton img {
+    background:url(images/tools-sprites-trans.gif) no-repeat 0% -75px; /*left top*/
+    height:15px;
+    width:15px;
+}
+.tadalo .dijitTabContainer .tabStripSlideButtonLeft img {
+    /*background:url(images/tabs/scroll-left.gif) no-repeat -2px -6px;*/
+    background:url(images/tools-sprites-trans.gif) no-repeat 0% -105px;
+    height:15px;
+    width:15px;
+}
+.tadalo .dijitTabContainer .tabStripSlideButtonRight img {
+    /*background:url(images/tabs/scroll-right.gif) no-repeat -19px -6px;*/
+    background:url(images/tools-sprites-trans.gif) no-repeat 0% -120px;
+    height:15px;
+    width:15px;
+}
+
+.tadalo .dijitTabContainerTopStrip {
+    border-top: 1px solid #8db2e3;
+    border-right: 1px solid #8db2e3;
+    border-left: 1px solid #8db2e3;
+    padding-top: 2px;
+    background: url(images/tabs/tab-strip-bg.gif) #cedff5;
+}
+
+.tadalo .dijitTabContainerTop-tabs,
+.tadalo .dijitTabContainerBottom-tabs {
+    border-color: #8db2e3;
+}
+
+.tadalo .dijitAccordionContainer {
+    /*LongH-Accordion*/
+    /*
+	border-color: #ccc;
+	background-color: #fff;
+    */
+    border-color: #99bbe8;
+    background-color: #fff;
+}
+.tadalo .dijitAccordionTitle {
+    /*LongH-Accordion*/
+    /*background:#fafafa url(images/titleBar.png) repeat-x bottom left;*/
+    background: url(images/bg.gif) top repeat-x;
+    /*border-top: 1px solid #bfbfbf;*/
+    border-top: 1px solid #99bbe8;
+    padding: 4px 4px 4px 8px;
+    cursor:pointer;
+}
+.tadalo .dijitAccordionTitle-hover  {
+    /*LongH-Accordion*/
+    /*background: #f8fafd url(images/accordionItemHover.gif) bottom repeat-x;*/
+}
+.tadalo .dijitAccordionTitle-selected  {
+    /*LongH-Accordion*/
+    /*background: #f9f9f9 url(images/accordionItemActive.gif) bottom repeat-x;*/
+    font-weight: bold;
+    /*border-top: 1px solid #aaaaaa;*/
+    /*border-bottom: 1px solid #bfbfbf;*/
+    border-bottom: 1px solid #99bbe8;
+    padding: 4px 4px 4px 8px;
+    cursor: default;
+}
+.tadalo .dijitTextBoxFocused,
+.tadalo .dijitComboBoxFocused,
+.tadalo .dijitSpinnerFocused, .tadalo .dijitSpinnerUpArrowActive, .tadalo .dijitSpinnerDownArrowActive,
+.tadalo .dijitTextAreaFocused {
+    /*border-color:#406b9b;*/ /* mod by LongH */
+    border-color:blue;/*#7eadd9;*/
+}
+
+.tadalo .dijitTextBoxRequired,
+.tadalo .dijitComboBoxRequired,
+.tadalo .dijitSpinnerRequired, /*, .tadalo .dijitSpinnerUpArrowActive, .tadalo .dijitSpinnerDownArrowActive,*/
+.tadalo .dijitTextAreaRequired {
+    border-color:red;/*#cc3300;*/
+}
+
+.tadalo .dijitTitlePaneTitle {
+    /*background:url(images/tabEnabled.png) #e6e6e6 repeat-x 0% -4px;*/
+    /*background:#c0c0c0;*/
+    border:1px solid dodgerblue;
+    padding:6px 4px;
+    cursor: pointer;
+    font-weight:bold;
+    color:#333;
+}
+
+.tadalo .dijitTitlePaneTitle-hover  {
+    /*background: #f8fafd url(images/accordionItemHover.gif) bottom repeat-x;*/
+}
+
+.tadalo .dijitTitlePaneContentOuter {
+    /*background: #f0f0f0;*/
+    border:1px solid dodgerblue;
+    border-top-width: 0px;
+}
+
+.tadalo .dijitDialog {
+    border:2px solid #99bce8;
+    background: #dee8f4;
+
+    padding: 0px;
+    /*-webkit-box-shadow: 0px 5px 10px #d0d0d0;*/
+}
+.tadalo .dijitDialog .dijitDialogPaneContent {
+    border:none;
+    border-top:1px solid #84a0c4;
+    padding:10px;
+}
+
+.tadalo .dijitDialogPaneContent {
+    width:100%;
+}
+
+.tadalo .dijitDialogTitleBar {
+    background: url(images/tadalo-white-top-bottom.gif) repeat-x 0% -1px;
+    padding: 5px 6px 3px 6px;
+    cursor: move;
+    outline:0;
+}
+.tadalo .dijitDialogTitle {
+    color:#15428b;
+    font-family:Tahoma,helvetica,arial;
+    font-weight:bold;
+    font-style:normal;
+
+    padding: 0px 4px;
+}
+.tadalo .dijitDialogCloseIcon {
+    background: url(images/tadalo-tool-sprites.gif) no-repeat 0% 0%;
+    position: absolute;
+    vertical-align: middle;
+    right: 6px;
+    top: 4px;
+    height: 15px;
+    width: 15px;
+    cursor: pointer;
+}
+.dj_ie6 .tadalo .dijitDialogCloseIcon {
+    background : url(images/tadalo-tool-sprites.gif) no-repeat 0% 0%;
+}
+.tadalo .dijitDialogCloseIcon-hover {
+    background: url(images/tadalo-tool-sprites.gif) no-repeat -15px 0%;
+}
+.dj_ie6 .tadalo .dijitDialogCloseIcon-hover {
+    background : url(images/tabCloseHover.gif) no-repeat right top;
+}
+
+.tadalo .dijitDialogCloseIcon-disabled {
+    background: url(images/tools-sprites-trans.gif) no-repeat 0% 0%;
+}
+
+.tadalo .dijitDialogIcon {
+    background: url(images/dialog-icon.gif) no-repeat 0% 0%;
+    float:left;
+    margin-top:-2px;
+    margin-right:2px;
+    vertical-align: middle;
+
+    height: 16px;
+    width: 16px;
+    display:block;
+}
+
+.tadalo .dijitDialogMaximizeIcon {
+    background: url(images/tadalo-tool-sprites.gif) no-repeat 0% -30px;
+    position: absolute;
+    vertical-align: middle;
+    right: 21px;
+    top: 4px;
+    height: 15px;
+    width: 15px;
+    cursor: pointer;
+}
+
+.dj_ie6 .tadalo .dijitDialogMaximizeIcon {
+    background : url(images/tadalo-tool-sprites.gif) no-repeat 0% -30px;
+}
+.tadalo .dijitDialogMaximizeIcon-hover {
+    background: url(images/tadalo-tool-sprites.gif) no-repeat -15px -30px;
+}
+.dj_ie6 .tadalo .dijitDialogMaximizeIcon-hover {
+    background: url(images/tadalo-tool-sprites.gif) no-repeat -15px -30px;
+}
+
+.tadalo .dijitDialogMaximizeIcon-disabled {
+    background: url(images/tools-sprites-trans.gif) no-repeat 0% -30px;
+}
+
+
+.tadalo .dijitDialogMinimizeIcon {
+    background: url(images/tadalo-tool-sprites.gif) no-repeat 0% -45px;
+    position: absolute;
+    vertical-align: middle;
+    right: 21px;
+    top: 4px;
+    height: 15px;
+    width: 15px;
+    cursor: pointer;
+}
+.dj_ie6 .tadalo .dijitDialogMinimizeIcon {
+    background : url(images/tadalo-tool-sprites.gif) no-repeat 0% -45px;
+}
+.tadalo .dijitDialogMinimizeIcon-hover {
+    background: url(images/tadalo-tool-sprites.gif) no-repeat -15px -45px;
+}
+.dj_ie6 .tadalo .dijitDialogMinimizeIcon-hover {
+    background: url(images/tadalo-tool-sprites.gif) no-repeat -15px -45px;
+}
+/* ] LongH mod */
+
+
+/* [ LongH new */
+.tadalo label {
+    padding-left:10px;
+    font-family:arial;
+    color:#15428b;
+}
+
+.tadalo .label-blue {
+/*    background:url( images/tadalo-frmTbl_label_blue.gif ) no-repeat -3.5px 50%;*/
+}
+
+* .tadalo .label-blue {
+/*    background:url( images/tadalo-frmTbl_label_blue.gif ) no-repeat -4px 50%; */
+}
+
+.tadalo .label-red {
+/*    background:url( images/tadalo-frmTbl_label_red.gif ) no-repeat 0px 50%; */
+}
+
+* .tadalo .label-red {
+/*    background:url( images/tadalo-frmTbl_label_red.gif ) no-repeat 0px 50%;  */
+}
+
+form {
+    margin:0px;
+    padding:0px;
+}
+
+.fs {
+    margin: 0px;
+    padding: 0px;
+    border:1px solid #b5bace;
+    border-collapse:collapse;
+    background-position:0px 0px;
+}
+* html .fs {
+    width:100%;
+    background-position:0px 8px;
+}
+
+.fs-transparent{
+    background:transparent;
+}
+
+.fs-transparent-innerFS {
+}
+
+.fs-white {
+    background-image:url( images/fs_bg_white.gif );
+    background-repeat:repeat-x;
+}
+.fs-white-innerFS {
+    background-color:#fff;
+}
+
+.fs-blue {
+    background-image:url( images/fs_bg_blue.gif );
+    background-repeat:repeat-x;
+}
+.fs-blue-innerFS {
+    background-color:#dfe8f6;
+}
+
+.innerFS {
+    margin: 0;
+    padding: 0;
+    padding:4px;
+}
+* html .innerFS {
+    width:100%;
+    clear:both;
+}
+
+.fs-legend {
+    margin: 0px;
+    padding: 0px;
+    margin-left:10px;
+    background:transparent;
+}
+* html .fs-legend {
+    margin-left:4px;
+}
+
+/*legend span*/
+.titleFS {
+    margin: 0px;
+    padding: 0px;
+    margin-left:4px;
+    color:#15428b;
+    font-family:Tahoma,helvetica,arial;
+    font-weight:bold;
+    font-size:12px;
+    font-style:normal;
+}
+
+/*legend span*/
+.iconFS {
+    margin: 0px;
+    padding: 0px;
+    background:url( images/tadalo-tool-sprites.gif ) no-repeat -15px -60px;
+    height:15px;
+    width:15px;
+    display:block;
+    float:left;
+}
+
+/* html legend span*/
+* html .iconFS {
+    margin:0px;
+    padding:0px;
+    margin-bottom:0px;
+}
+
+.fs td {
+    margin:0px;
+    padding:2px;
+}
+
+.fs th {
+    margin:0px;
+    padding:2px;
+}
+/* ] LongH new */
+
+/* ThienKQ - style for notification dialog */
+.yes-no-area{
+    text-align:center;
+    margin:3px;
+}
+.iconMB{
+    float:left;
+    margin-top:-2px;
+    margin-right:2px;
+    vertical-align: middle;
+
+    height: 32px;
+    width: 32px;
+    display:block;
+}
+.confirm-icon{
+    background: url(images/confirm_32.png) no-repeat 0% 0%;
+}
+.info-icon{
+    background: url(images/info_32.png) no-repeat 0% 0%;
+}
+.alert-icon{
+    background: url(images/alert_32.png) no-repeat 0% 0%;
+}
+.error-icon{
+    background: url(images/error_32.png) no-repeat 0% 0%;
+}
+/*[duongtb*/
+.setting-icon{
+     background: url(images/setting.gif) no-repeat;
+     cursor:pointer;
+     width:20px;
+     height:21px;
+     padding:0px 10px 3px 10px;
+     margin-left:5px;
+}
+.setting-save{
+    background: #fafafa url(images/titleBar.png) repeat-x top left;
+    margin-top:-5px;
+    padding: 2px;
+    cursor: pointer;
+    outline:0;
+    /*border:1px solid #33799B;*/
+    border:1px solid #fafafa;
+}
+.setting-save-img{
+     background: url(images/save.gif) no-repeat;
+     cursor:pointer;
+     width:20px;
+     height:21px;
+     padding:0px 10px 3px 10px;
+}
+/*[*/
+
+/*] */
+/* ThienKQ accordion style */
+.tadalo .dijitAccordionContainer {
+    border-color: #b1badf;
+    background-color: #fff;
+}
+.tadalo .dijitAccordionTitle {
+    background:#fafafa url(images/titleBar.png) repeat-x top left;
+    border-top: 1px solid #b9bbdd;
+    padding: 5px 4px 6px 8px;
+    cursor:pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #373941;
+}
+.tadalo .dijitAccordionTitle-selected  {
+    background: #f9f9f9 url(images/acc_active.gif) top repeat-x;
+    font-weight: bold;
+    border-top: 1px solid #b9bbdd;
+    border-bottom: 1px solid #b9bbdd;
+    padding: 5px 4px 5px 8px;
+    cursor: default;
+    color: #243C5F;
+}
+.tadalo .dijitAccordionArrow {
+    background:url(images/spriteRoundedIconsSmallBl.gif) no-repeat -30px top;
+    width:15px;
+    height:15px;
+    margin-top:-1px;
+}
+.tadalo .dijitAccordionTitle-selected .dijitAccordionArrow {
+    background:url(images/spriteRoundedIconsSmallBl.gif) no-repeat -15px top;
+    margin-top:-1px;
+}
+.tadalo .dijitAccordionText {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+.tadalo .dijitSplitContainerSizerH {
+    background:url(images/splitContainerSizerV.png) repeat-y #cddef4;
+    border:0;
+    border-left:0px solid #436496;
+    border-right:0px solid #436496;
+    width:5px;
+}
+.tadalo .dijitSplitContainerSizerH .thumb {
+    background:url(images/splitContainerSizerV-thumb.png) no-repeat #ccc;
+    left:1px;
+    width:2px;
+    height:19px;
+}
+.tadalo .dijitSplitContainerSizerV {
+    background:url(images/splitContainerSizerH.png) repeat-x #cddef4;
+    border:0;
+    border-top:0px solid #436496;
+    border-bottom:0px solid #436496;
+    height:2px;
+}
+.tadalo .dijitSplitContainerSizerV .thumb {
+    background:url(images/splitContainerSizerH-thumb.png) no-repeat #ccc;
+    top:1px;
+    width:19px;
+    height:5px;
+}

@@ -1,0 +1,449 @@
+
+.tadalo .dijitMenu,
+.tadalo .dijitMenuBar {
+	border: 1px solid #d3d3d3;
+	margin: 0px;
+	padding: 0px;
+	background-color: #fff;
+}
+.tadalo .dijitBorderContainer .dijitMenuBar {
+	border: 1px #ccc solid;
+}
+.tadalo .dijitMenuItem {
+	font-family: sans-serif;
+	margin: 0px;
+	color: #243C5F;
+}
+.tadalo .dijitMenuBar .dijitMenuItem {
+	padding: 4px 5px;
+}
+.tadalo .dijitMenuPreviousButton, .tadalo .dijitMenuNextButton {
+	font-style: italic;
+}
+.tadalo .dijitMenuItem TD {
+	padding:1px;
+}
+.tadalo .dijitMenuPassive .dijitMenuItemHover,
+.tadalo .dijitMenuItemSelected {
+	background-color: #ffe284;
+	color: #243C5F;
+}
+.tadalo .dijitMenuItemIcon {
+	width: 15px;
+	height: 15px;
+}
+.tadalo .dijitMenuExpand {
+	width:15px;
+	height:15px;
+	background-image: url(../images/spriteRoundedIconsSmall.png);
+	background-position: -30px top;
+}
+.dj_ie6 .tadalo .dijitMenuExpand {
+	background-image:url(../images/spriteRoundedIconsSmall.gif);
+}
+.tadalo .dijitMenuSeparator {
+	height: 1px;
+}
+.tadalo .dijitMenuSeparatorTop {
+	border-bottom: 1px solid #fff;
+}
+.tadalo .dijitMenuSeparatorBottom {
+	border-top: 1px solid #d3d3d3;
+}
+.tadalo .dijitCheckedMenuItemIconChar {
+	display: none;
+}
+.tadalo .dijitCheckedMenuItemIcon {
+	background-image: url(../images/spriteCheckbox.gif);
+	background-position: -80px;
+}
+.tadalo .dijitCheckedMenuItemChecked .dijitCheckedMenuItemIcon {
+	background-position: -64px;
+}
+.tadalo .dijitTabContainer .tabStripRBtn {
+	margin-right: 21px;
+}
+.tadalo .dijitTabContainer .tabStripLBtn {
+	margin-left: 21px;
+}
+.tadalo .dijitTabContainerBottom .nowrapTabStrip .dijitTab {
+	top: 0px;
+}
+.tadalo .dijitTabContainer .tabStripMenuButton-Hover {
+	cursor: pointer;
+}
+.tadalo .dijitTabPaneWrapper {
+	background:#fff;
+	border:1px solid #ccc;
+	margin: 0;
+	padding: 0;
+}
+.tadalo .dijitTabInnerDiv {
+	padding:0px 3px 0px 0px;
+	margin: 0 0 0 4px;
+	background: url("../images/tabContainerSprite.gif") no-repeat;
+	background-position: right -400px;
+}
+.tadalo .dijitTab {
+	line-height:normal;
+	margin:0 2px 0 0;
+	padding:0px;
+	background: url("../images/tabContainerSprite.gif") no-repeat 0 -300px;
+	color: #6d6d6d;
+	border-bottom: 1px #ccc solid;
+}
+.tadalo .dijitTabInnerDiv .dijitTabContent {
+	padding:3px 3px 3px 4px;
+	background: url("../images/tabContainerSprite.gif") repeat-x 0 -350px;
+	position: relative;
+}
+.tadalo .dijitTabHover {
+	color: #243C5F;
+	background: url("../images/tabContainerSprite.gif") no-repeat 0px -150px;
+}
+
+.tadalo .dijitTabHover .dijitTabInnerDiv {
+    background: url("../images/tabContainerSprite.gif") no-repeat right -250px;
+}
+.tadalo .dijitTabHover .dijitTabInnerDiv .dijitTabContent {
+	background: url("../images/tabContainerSprite.gif") repeat-x 0 -200px;
+}
+.tadalo .dijitTabChecked,
+.tadalo .dijitTabCloseButtonChecked
+{
+
+	background: url("../images/tabContainerSprite.gif") no-repeat 0px -0px;
+}
+.tadalo .dijitTabChecked .dijitTabInnerDiv {
+	background: url("../images/tabContainerSprite.gif") no-repeat right -100px;
+}
+.tadalo .dijitTabChecked .dijitTabInnerDiv .dijitTabContent {
+	background: url("../images/tabContainerSprite.gif") repeat-x 0 -50px;
+	color: #243C5F !important;
+}
+.tadalo .dijitTabContainerNested .dijitTabListWrapper {
+	height: auto;
+}
+.tadalo .dijitTabContainerTabListNested {
+	background: #FDFDFD;
+	border: none;
+	margin-bottom: 0px;
+}
+.tadalo .dijitTabContainerTabListNested .dijitTab {
+	background: none;
+	border: none;
+	top: 0px;
+}
+.tadalo .dijitTabContainerTabListNested .dijitTab .dijitTabInnerDiv,
+.tadalo .dijitTabContainerTabListNested .dijitTab .dijitTabContent {
+	background: none;
+}
+.tadalo .dijitTabContainerTabListNested .dijitTabHover .dijitTabContent .tabLabel {
+	text-decoration: underline;
+}
+.tadalo .dijitTabContainerTabListNested .dijitTabChecked .tabLabel {
+	text-decoration: underline;
+	font-weight: bold;
+}
+.tadalo .dijitTabContainerSpacerNested {
+
+	height: 0px;
+	border-bottom: 0px;
+}
+.tadalo .dijitTabPaneWrapperNested {
+	border: none;
+}
+.tadalo .dijitTab .closeImage {
+	background: url("../images/spriteRoundedIconsSmall.png") no-repeat -60px top;
+	width: 15px;
+	height: 15px;
+	margin-top: -1px;
+}
+.dj_ie6 .tadalo .dijitTab .closeImage {
+	background: url("../images/spriteRoundedIconsSmall.gif") no-repeat -60px top;
+}
+.tadalo .dijitTab .closeButton-hover .closeImage {
+	background: url("../images/spriteRoundedIconsSmall.png") no-repeat -60px -15px;
+}
+.dj_ie6 .tadalo .dijitTab .closeButton-hover .closeImage {
+	background: url("../images/spriteRoundedIconsSmall.gif") no-repeat -60px -15px;
+}
+.tadalo .dijitTab .tabLabel {
+
+	min-height: 15px;
+	display: inline-block;
+}
+.dj_ie6 .tadalo .dijitTabButtonIcon {
+
+	height: 18px;
+	width: 1px;
+}
+.tadalo .dijitTabContainerTop-tabs {
+	border-bottom: none;
+	padding-bottom: 1px;
+	background-position: bottom;
+	padding-left: 3px;
+}
+.dj_ie6 .tadalo .dijitTabListContainer-top,
+.dj_ie7 .tadalo .dijitTabListContainer-top {
+	z-index: 3;
+}
+.dj_ie6 .tadalo .dijitTabContainerTop-tabs,
+.dj_ie7 .tadalo .dijitTabContainerTop-tabs {
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 0px;
+}
+.tadalo .dijitTabContainerTopNoStrip {
+	padding-top: 3px;
+}
+.tadalo .dijitTabContainerTop-container {
+	border-top: none;
+}
+.tadalo .dijitTabContainerTop-tabs .dijitTabChecked {
+	border-bottom-color: #f8f8f8;
+}
+.tadalo .dijitTabContainer .dijitTabContainerTopStrip {
+	border-bottom: none;
+	padding-top: 1px;
+	margin-top: 1px;
+	background: #f2f2f2;
+	border-top: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	border-left: 1px solid #CCC;
+}
+.tadalo .dijitTabContainerBottom-tabs {
+	border-top: none;
+	background-position: top;
+	padding-left: 3px;
+}
+.dj_ie6 .tadalo .dijitTabListContainer-bottom,
+.dj_ie7 .tadalo .dijitTabListContainer-bottom {
+	z-index: 3;
+}
+.dj_ie6 .tadalo .dijitTabContainerBottom-tabs,
+.dj_ie7 .tadalo .dijitTabContainerBottom-tabs {
+	border-top: 1px solid #ccc;
+	margin-top: -1px;
+}
+.tadalo .dijitTabContainerBottom-container {
+	border-bottom: none;
+}
+.tadalo .dijitTabContainerBottom-tabs .dijitTab {
+	border-bottom: none;
+	border-top: 1px solid #ccc;
+	background: url("../images/tabBottomEnabledSpriteLR.gif") no-repeat bottom left;
+}
+.tadalo .dijitTabContainerBottom-tabs .dijitTabChecked {
+	border-top-color: #f8f8f8;
+}
+.tadalo .dijitTabContainerBottom-tabs .dijitTabInnerDiv .dijitTabContent {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background: url("../images/tabBottomEnabledC.gif") repeat-x bottom left;
+}
+.tadalo .dijitTabContainerBottom-tabs .dijitTabInnerDiv {
+	background: url("../images/tabBottomEnabledSpriteLR.gif") no-repeat bottom right;
+}
+.tadalo .dijitTabContainerBottom-tabs .dijitTabHover {
+	color: #243C5F;
+	background: url("../images/tabBottomHoverSpriteLR.gif") no-repeat bottom left;
+}
+.tadalo .dijitTabContainerBottom-tabs .dijitTabHover .dijitTabInnerDiv {
+	background: url("../images/tabBottomHoverSpriteLR.gif") no-repeat bottom right;
+}
+.tadalo .dijitTabContainerBottom-tabs .dijitTabHover .dijitTabInnerDiv .dijitTabContent {
+	background: url("../images/tabBottomHoverC.gif") repeat-x bottom left;
+}
+.tadalo .dijitTabContainerBottom-tabs .dijitTabChecked,
+.tadalo .dijitTabContainerBottom-tabs .dijitTabCloseButtonChecked
+{
+
+	background: url("../images/tabBottomActiveSpriteLR.gif") no-repeat bottom left;
+}
+.tadalo .dijitTabContainerBottom-tabs .dijitTabChecked .dijitTabInnerDiv {
+	background: url("../images/tabBottomActiveSpriteLR.gif") no-repeat bottom right;
+}
+.tadalo .dijitTabContainerBottom-tabs .dijitTabChecked .dijitTabInnerDiv .dijitTabContent {
+	background: url("../images/tabBottomActiveC.gif") repeat-x bottom left;
+}
+.tadalo .dijitTabContainer .dijitTabContainerBottomStrip {
+	border: 1px solid #ccc;
+	background: #f2f2f2;
+	border-top: none;
+	padding-bottom: 2px;
+}
+.tadalo .dijitTabContainerBottom-spacer,
+.tadalo .dijitTabContainerTop-spacer {
+	height: 2px;
+	border: 1px solid #ccc;
+	background: #f8f8f8;
+}
+.tadalo  .dijitTabContainerTop-spacer {
+	margin-top: -1px;
+}
+.tadalo .dijitTabContainerBottom-spacer {
+	margin-bottom: -1px;
+}
+.tadalo .dijitTabContainerRight-tabs {
+	border-color: #ccc;
+	padding-top: 3px;
+}
+.tadalo .dijitTabContainerRight .dijitTabListWrapper {
+	padding-right: 3px;
+}
+.tadalo .dijitTabContainerRight-container {
+	border-right: none;
+}
+.tadalo .dijitTabContainerRight-tabs .dijitTab {
+	border-bottom: none;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #dedede !important;
+}
+.dj_ie .tadalo .dijitTabContainerRight-tabs .dijitTabInnerDiv {
+	border-bottom: solid #fff 1px;
+}
+.tadalo .dijitTabContainerRight-tabs .dijitTabChecked {
+	border-left-color: #f8f8f8;
+}
+.tadalo .dijitTabContainerRight-tabs .dijitTabChecked {
+	background: url("../images/tabRightChecked.gif") no-repeat left top !important;
+}
+.dj_ie .tadalo .dijitTabContainerRight-tabs .dijitTabChecked .dijitTabInnerDiv,
+.dj_ie .tadalo .dijitTabContainerRight-tabs .dijitTabCheckedHover .dijitTabInnerDiv {
+	border-bottom: solid #efefef 1px;
+}
+.tadalo .dijitTabContainerRight-tabs .dijitTab {
+	background: url("../images/tabContainerSprite.gif") no-repeat left -350px;
+}
+.tadalo .dijitTabContainerRight-tabs .dijitTabHover .dijitTab {
+	background: url("../images/tabContainerSprite.gif") no-repeat left -200px;
+}
+.tadalo .dijitTabContainerRightStrip {
+	padding-right: 2px;
+	border: 1px solid #ccc;
+	border-left: none;
+	background: #f2f2f2;
+}
+.tadalo .dijitTabContainerLeft-tabs {
+	border-color: #ccc;
+	padding-top: 3px;
+}
+.tadalo .dijitTabContainerLeft-container {
+	border-left: none;
+}
+.tadalo .dijitTabContainerLeft-tabs .dijitTab {
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #dedede;
+}
+.tadalo .dijitTabContainerLeft-tabs .dijitTabChecked {
+	border-right: 1px solid #f8f8f8;
+}
+.tadalo .dijitTabContainerLeft-tabs .dijitTabInnerDiv {
+	background: url("../images/tabContainerSprite.gif") no-repeat right -350px;
+}
+.tadalo .dijitTabContainerLeft-tabs .dijitTabHover .dijitTabInnerDiv {
+	background: url("../images/tabContainerSprite.gif") no-repeat right -200px;
+}
+.tadalo .dijitTabContainerLeft-tabs .dijitTabChecked .dijitTabInnerDiv,
+.tadalo .dijitTabContainerLeft-tabs .dijitTabCheckedHover .dijitTabInnerDiv {
+	background: url("../images/tabLeftChecked.gif") no-repeat right top;
+}
+.dj_ie .tadalo .dijitTabContainerLeft-tabs .dijitTabChecked .dijitTabInnerDiv,
+.dj_ie .tadalo .dijitTabContainerLeft-tabs .dijitTabCheckedHover .dijitTabInnerDiv {
+	border-bottom: solid #efefef 1px;
+}
+.dj_ie .tadalo .dijitTabContainerLeft-tabs .dijitTabInnerDiv {
+	border-bottom: solid #fff 1px;
+}
+.tadalo .dijitTabContainerLeftStrip {
+	padding-left: 2px;
+	border: 1px solid #ccc;
+	border-right: none;
+}
+.tadalo .dijitTabContainerLeftStrip {
+	background: #f2f2f2;
+}
+.tadalo .dijitTabContainerLeft-tabs .dijitTab,
+.tadalo .dijitTabContainerRight-tabs .dijitTab {
+	margin-right:auto;
+	margin-bottom:2px;
+}
+.tadalo .dijitTabContainerLeft-spacer,
+.tadalo .dijitTabContainerRight-spacer {
+	width: 2px;
+	border: 1px solid #ccc;
+	background: #f8f8f8;
+}
+.tadalo .dijitTabContainerRight-spacer {
+	border-right: none;
+}
+.tadalo .dijitTabContainerRight-tabs {
+	padding-top: 3px;
+	height: 100%;
+}
+.tadalo .dijitTabContainerLeft-tabs {
+	height: 100%;
+}
+.tadalo .dijitTabContainerLeft-spacer {
+	border-left: none;
+}
+.tadalo .dijitTabContainerTop-dijitContentPane .dijitTabContainerTop-tabs {
+	border-left: 0px solid #ccc;
+	border-top: 0px solid #ccc;
+	border-right: 0px solid #ccc;
+	padding-top: 0px;
+	padding-left: 0px;
+}
+.tadalo .dijitTabContainer .tabStripButton {
+	margin-right: 0px;
+}
+.tadalo .tabStripButton .dijitTabInnerDiv .dijitTabContent {
+	padding: 5px 0 6px;
+}
+.dj_ie6 .tadalo .tabStripButton .dijitTabInnerDiv .dijitTabContent,
+.dj_ie7 .tadalo .tabStripButton .dijitTabInnerDiv .dijitTabContent,
+.dj_opera .tadalo .tabStripButton .dijitTabInnerDiv .dijitTabContent {
+	padding-bottom: 7px;
+}
+.tadalo .tabStrip-disabled .tabStripButton .dijitTabInnerDiv .dijitTabContent {
+	padding: 3px 0 5px;
+}
+.dj_ie6 .tadalo .tabStrip-disabled .tabStripButton .dijitTabInnerDiv .dijitTabContent,
+.dj_ie7 .tadalo .tabStrip-disabled .tabStripButton .dijitTabInnerDiv .dijitTabContent,
+.dj_opera .tadalo .tabStrip-disabled .tabStripButton .dijitTabInnerDiv .dijitTabContent {
+	padding-top: 4px;
+}
+.tadalo .dijitTabContainer .tabStripButton {
+
+	width: 21px;
+}
+.tadalo .dijitTabContainer .tabStripButton img {
+	height: 14px;
+	background: url(../images/spriteRoundedIconsSmall.png) no-repeat left top ;
+}
+.dj_ie6 .tadalo .dijitTabContainer .tabStripButton img {
+	background-image: url(../images/spriteRoundedIconsSmall.gif);
+}
+.tadalo .dijitTabContainer .tabStripSlideButtonRight img {
+	background-position: -30px top;
+}
+.tadalo .dijitTabContainer .tabStripMenuButton img {
+	background-position: -15px top;
+}
+.tadalo .dijitTabContainerTopNone {
+	padding-top: 0px;
+}
+.tadalo .dijitTabContainer .tabStripButton-top {
+	margin-top: 1px;
+}
+.tadalo .dijitTabContainer .tabStripButton-bottom {
+	background: transparent url(../images/tabBottomEnabledSpriteLR.gif) no-repeat scroll left bottom;
+	border-bottom: medium none;
+	border-top: 1px solid #CCCCCC;
+}
+.tadalo .dijitTabContainer .tabStripButton-bottom .dijitTabInnerDiv {
+	background: transparent url(../images/tabBottomEnabledSpriteLR.gif) no-repeat scroll right bottom;
+}
+.tadalo .dijitTabContainer .tabStripButton-bottom .dijitTabContent {
+	background: transparent;
+}

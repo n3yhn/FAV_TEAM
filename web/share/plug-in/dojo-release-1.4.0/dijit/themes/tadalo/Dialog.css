@@ -1,0 +1,143 @@
+
+.tadalo .dijitDialog {
+	background: #fff;
+	border: 1px solid #7eabcd;
+	
+	padding: 0px;
+	-webkit-box-shadow: 0px 5px 10px #adadad;
+}
+.tadalo .dijitDialog .dijitDialogPaneContent {
+	background: #fff;
+	border:none;
+	border-top: 1px solid #d3d3d3; 
+	padding:10px;
+}
+.tadalo .dijitDialogTitleBar {
+	
+	background: #fafafa url("images/titleBar.png") repeat-x top left;
+	padding: 5px 6px 3px 6px;
+	cursor: move;
+	outline:0; 
+}
+.tadalo .dijitDialogTitle {
+	
+	font-weight: bold;
+	padding: 0px 4px;
+}
+.tadalo .dijitDialogCloseIcon {
+	
+	
+	background: url("images/tabClose.png") no-repeat right top;
+	position: absolute;
+	vertical-align: middle;
+	right: 6px;
+	top: 4px;
+	height: 15px;
+	width: 15px;
+	cursor: pointer;
+}
+.dj_ie6 .tadalo .dijitDialogCloseIcon {
+	background : url("images/tabClose.gif") no-repeat right top;
+}
+.tadalo .dijitDialogCloseIcon-hover {
+	background: url("images/tabCloseHover.png") no-repeat right top;
+}
+.dj_ie6 .tadalo .dijitDialogCloseIcon-hover {
+	background : url("images/tabCloseHover.gif") no-repeat right top;
+}
+.tadalo .dijitTooltip,
+.tadalo .dijitTooltipDialog {
+	
+	background: transparent;	
+}
+.dijitTooltipBelow {
+	
+	padding-top: 13px;
+}
+.dijitTooltipAbove {
+	
+	padding-bottom: 13px;
+}
+.tadalo .dijitTooltipContainer {
+	
+	background: #ffffff url("images/popupMenuBg.gif") repeat-x bottom left;
+	border: 1px solid #7eabcd;
+	padding: 0.45em;	
+	-webkit-border-radius: 3px;
+}
+.dj_ff3 .tadalo .dijitTooltipContainer {
+	
+	-moz-border-radius: 3px;
+}	
+.tadalo .dijitTooltipConnector {
+	
+	border:0px;
+	z-index: 2;
+}
+.tadalo .dijitTooltipABRight .dijitTooltipConnector {
+	
+	left: auto !important;
+	right: 3px;
+}
+.tadalo .dijitTooltipBelow .dijitTooltipConnector {
+	
+	top: 0px;
+	left: 3px;
+	background:url("images/tooltipConnectorUp.png") no-repeat top left;
+	width:16px;
+	height:14px;
+}
+.dj_ie6 .tadalo .dijitTooltipBelow .dijitTooltipConnector {
+	
+	background-image: url("images/tooltipConnectorUp.gif");
+}
+.tadalo .dijitTooltipAbove .dijitTooltipConnector {
+	
+	bottom: 0px;
+	left: 3px;
+	background:url("images/tooltipConnectorDown.png") no-repeat top left;
+	width:16px;
+	height:14px;
+}
+.dj_ie6 .tadalo .dijitTooltipAbove .dijitTooltipConnector {
+	background-image: url("images/tooltipConnectorDown.gif");
+}
+.dj_ie6 .tadalo .dijitTooltipAbove .dijitTooltipConnector {
+	bottom: -3px;
+}
+.tadalo .dijitTooltipLeft {
+	padding-right: 14px;
+}
+.dj_ie6 .tadalo .dijitTooltipLeft {
+	padding-left: 15px;
+}
+.tadalo .dijitTooltipLeft .dijitTooltipConnector {
+	
+	right: 0px;
+	bottom: 3px;
+	background:url("images/tooltipConnectorRight.png") no-repeat top left;
+	width:16px;
+	height:14px;
+}
+.dj_ie6 .tadalo .dijitTooltipLeft .dijitTooltipConnector {
+	background-image: url("images/tooltipConnectorRight.gif");
+}
+.tadalo .dijitTooltipRight {
+	padding-left: 14px;
+}
+.tadalo .dijitTooltipRight .dijitTooltipConnector {
+	
+	left: 0px;
+	bottom: 3px;
+	background:url("images/tooltipConnectorLeft.png") no-repeat top left;
+	width:16px;
+	height:14px;
+}
+.dj_ie6 .tadalo .dijitTooltipRight .dijitTooltipConnector {
+	background-image: url("images/tooltipConnectorLeft.gif");
+}
+.dj_webkit .tadalo .dijitPopup .dijitTooltipContainer,
+.dj_webkit .tadalo .dijitPopup .dijitMenu {
+	
+	-webkit-box-shadow: 0px 5px 10px #adadad;
+}

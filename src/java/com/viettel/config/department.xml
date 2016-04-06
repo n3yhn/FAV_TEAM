@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="departmentAction" extends="default">
+        <action name="departmentAction" class="com.viettel.vsaadmin.database.DAO.DepartmentDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onUpdate, onDelete, assignUser, removeUser
+                </param>
+            </interceptor-ref>
+<!--            <result type="tiles" name="department">department.page</result>
+            <result name="departmentTree">/WEB-INF/jsp/pages/category/department/departmentTree.jsp</result>
+            <result name="departmentTreePicker">/WEB-INF/jsp/pages/category/department/departmentTreePicker.jsp</result>
+            <result type="json" name="treeData">
+                <param name="root">json</param>
+            </result>
+            <result type="json" name="childrenData">
+                <param name="root">childrenData</param>
+            </result>
+            <result type="json" name="deptSeachData">
+                <param name="root">jsonDeptSearch</param>
+            </result>-->
+
+            <result type="tiles" name="tree">tree.page0</result>
+            <result type="tiles" name="treeDept">tree.page1</result>
+            <result type="tiles" name="prepareChildDept">prepareChildDept.page</result>
+            <result type="tiles" name="department">department.page</result>
+            <result type="tiles" name="listUserPage">listUserOfDept.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+            <result type="json" name="treeData">
+                <param name="root">json</param>
+            </result>
+            <result type="json" name="childrenData">
+                <param name="root">childrenData</param>
+            </result>
+        </action>
+    </package>
+</struts>

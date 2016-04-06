@@ -1,0 +1,44 @@
+.tadalo .dijitToggleButton .dijitRadio,
+.tadalo .dijitToggleButton .dijitRadioIcon {
+	background-image: url('../images/checkmarkNoBorder.png');
+}
+.dj_ie6 .tadalo .dijitToggleButton .dijitRadio,
+.dj_ie6 .tadalo .dijitToggleButton .dijitRadioIcon {
+	background-image: url('../images/checkmarkNoBorder.gif');
+}
+.tadalo .dijitRadio,
+.tadalo .dijitRadioIcon	{		
+	background-image: url('../images/checkmark.png'); 
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+	margin: 0;
+	padding: 0;
+}
+.dj_ie6 .tadalo .dijitRadio,
+.dj_ie6 .tadalo .dijitRadioIcon	{
+	background-image: url('../images/checkmark.gif'); 
+}
+.tadalo .dijitRadio,
+.tadalo .dijitToggleButton .dijitRadioIcon {
+	
+	background-position: -112px;
+}
+.tadalo .dijitRadioDisabled {
+	
+	background-position: -144px;
+}
+.tadalo .dijitRadioHover {
+	
+	background-position: -176px;
+}
+.tadalo .dijitRadioChecked,
+.tadalo .dijitRadioCheckedHover,
+.tadalo .dijitToggleButtonChecked .dijitRadioIcon {
+	
+	background-position: -96px;
+}
+.tadalo .dijitRadioCheckedDisabled {
+	
+	background-position: -128px;
+}

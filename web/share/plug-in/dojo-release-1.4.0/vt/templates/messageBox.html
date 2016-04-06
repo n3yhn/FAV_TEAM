@@ -1,0 +1,30 @@
+<div class="dijitDialog" tabindex="-1" waiRole="dialog" waiState="labelledby-${id}_title">
+    <div dojoAttachPoint="titleBar" class="dijitDialogTitleBar">
+        <span dojoAttachPoint="titleNode" class="dijitDialogTitle"></span>
+        <span dojoAttachPoint="closeButtonNode" class="dijitDialogCloseIcon" dojoAttachEvent="onclick: onCancel, onmouseenter: _onCloseEnter, onmouseleave: _onCloseLeave" title="close">
+            <span dojoAttachPoint="closeText" class="closeText" title="close"></span>
+        </span>
+    </div>
+    <div dojoAttachPoint="containerNode" class="dijitDialogPaneContent">
+        <table>
+            <tr>
+                <td valign="top">
+                    <span dojoAttachPoint="imgNode" style="padding:3px;"></span>
+                </td>
+                <td>
+                    <div dojoAttachPoint="contentNode" style="min-width:188px;"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <div dojoAttachPoint="yes-no" class="yes-no-area">
+        <span dojoAttachPoint="spanYesNode">
+            <input class="dijitReset dijitInline dijitButtonNode" style="width:55px;" dojoAttachPoint="yesNode" type="button" value="OK" dojoAttachEvent="onclick: _onYes" />
+        </span>
+        <span dojoAttachPoint="spanNoNode">
+            <input class="dijitReset dijitInline dijitButtonNode" dojoAttachPoint="noNode" type="button" value="Cancel" dojoAttachEvent="onclick: _onNo" />
+        </span>
+    </div>
+</div>
+

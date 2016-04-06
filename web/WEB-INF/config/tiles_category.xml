@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="categoryPage.page" extends="body.definition" >
+        <put-attribute name="title" value="Danh mục"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/category/category.jsp"/>
+    </definition>
+    <definition name="procedure.page" extends="body.definition" >
+        <put-attribute name="title" value="Thủ tục hành chính"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/category/procedure/procedurePage.jsp"/>
+    </definition>
+    <definition name="areaSearch.page" extends="body.definition" >
+        <put-attribute name="title" value="Danh mục lĩnh vực"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/category/areaSearch.jsp"/>
+    </definition>
+    <definition name="businessSearch.page" extends="body.definition" >
+        <put-attribute name="title" value="Danh mục lĩnh vực"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/business/businessSearch.jsp"/>
+    </definition>
+    <definition name="categoryType.page" extends="body.definition" >
+        <put-attribute name="title" value="Loại danh mục"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/category/categoryType/categoryTypeSearch.jsp"/>
+    </definition>
+    <definition name="caUser.page" extends="body.definition" >
+        <put-attribute name="title" value="Danh mục CA token"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/business/businessRegisterCA.jsp"/>
+    </definition>
+    <definition name="categorySearch.page" extends="body.definition" >
+        <put-attribute name="title" value="Loại danh mục"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/category/category/categorySearch.jsp"/>
+    </definition>
+    <definition name="vietnameseStandardSearch.page" extends="body.definition" >
+        <put-attribute name="title" value="Tiêu chuẩn VN về ATVSTP"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/category/VietnameseStandard/vietnameseStandardSearch.jsp"/>
+    </definition>
+    <definition name="technicalStandardSearch.page" extends="body.definition" >
+        <put-attribute name="title" value="Qui chuẩn kĩ thuật"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/category/TechnicalStandard/technicalStandardSearch.jsp"/>
+    </definition>
+    <definition name="registerSearch.page" extends="body.definition" >
+        <put-attribute name="title" value="Quản lí tài khoản"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/register/registerSearch.jsp"/>
+    </definition>
+    <definition name="registerCreate.page" extends="body.definition" >
+        <put-attribute name="title" value="Đăng ký tài khoản"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/register/registerCreate.jsp"/>
+    </definition>
+    <definition name="eventLogLogin.page" extends="body.definition" >
+        <put-attribute name="title" value="Báo cáo đăng nhập"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/log/eventLogLoginSearch.jsp"/>
+    </definition>
+    <definition name="parameter.page" extends="body.definition" >
+        <put-attribute name="title" value="Bảng cấu hình hệ thống"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/parameter/parameterSearch.jsp"/>
+    </definition>
+    <!-- Tien ich -->
+    <definition name="announcementReceiptPaper.page" extends="body.definition" >
+        <put-attribute name="title" value="Nhập thông tin giấy tiếp nhận bản công bố hợp quy"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/reception/announcementReceiptPaperSearch.jsp"/>      
+    </definition>
+    <definition name="confirmImportSatistPaper.page" extends="body.definition" >
+        <put-attribute name="title" value="Nhập thông tin giấy xác nhận đạt yêu cầu nhập khẩu của cơ quan kiểm tra Nhà nước về chất lượng thực phẩm nhập khẩu"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/reception/confirmImportSatistPaperSearch.jsp"/>      
+    </definition>
+    <definition name="confirmAnnouncementPaper.page" extends="body.definition" >
+        <put-attribute name="title" value="Nhập thông tin giấy xác nhận công bố phù hợp quy định an toàn thực phẩm"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/reception/confirmAnnouncementPaperSearch.jsp"/>      
+    </definition>
+    <definition name="userAttachsSearch.page" extends="body.definition" >
+        <put-attribute name="title" value="Quản lý văn bản pháp lí doanh nghiệp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/category/UserAttachs/userAttachsSearch.jsp"/>
+    </definition>
+    <definition name="timeProcessSearch.page" extends="body.definition" >
+        <put-attribute name="title" value="Quản lý lịch nghỉ lễ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/category/timeProcess/timeProcessSearch.jsp"/>
+    </definition>
+    <definition name="feeSearch.page" extends="body.definition" >
+        <put-attribute name="title" value="Quản lý biểu phí"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/category/fee/feeSearch.jsp"/>
+    </definition>
+    
+        <definition name="notificationSearch.page" extends="body.definition" >
+        <put-attribute name="title" value="Quản lý thông báo"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/category/notification/notificationSearch.jsp"/>
+    </definition>
+  
+    <!-- End Tien ich -->
+</tiles-definitions>

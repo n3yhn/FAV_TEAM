@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>       
+        <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+        <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+        <property name="hibernate.c3p0.min_size">1</property>
+        <property name="hibernate.c3p0.max_size">50</property>
+        <property name="hibernate.c3p0.timeout">300</property>
+        <property name="hibernate.c3p0.checkoutTimeout">300</property>
+        <property name="hibernate.c3p0.max_statements">0</property>
+        <property name="hibernate.c3p0.idle_test_period">100</property>
+        <property name="show_sql">false</property>
+        <property name="format_sql">true</property>
+        <!-- VSA -->
+        <mapping class="com.viettel.vsaadmin.database.BO.Applications"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.Objects"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.ObjectType"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.RoleObject"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.RoleUser"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.RoleUserPK"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.Roles"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.Users"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.Department"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.VDepartment"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.DeptType"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.Position"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.DeptUserPos"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.EventLogBO"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.RoleUserDept"/>
+        <mapping class="com.viettel.vsaadmin.database.BO.EventLogLogin"/>
+        <!-- End Of VSA -->
+        <!-- Begin vOffice BTP  -->
+        <mapping class="com.viettel.voffice.database.BO.Category"/>
+        <mapping class="com.viettel.voffice.database.BO.Process"/>
+        <mapping class="com.viettel.voffice.database.BO.Message"/>
+        <mapping class="com.viettel.voffice.database.BO.VoAttachs"/>
+        <mapping class="com.viettel.voffice.database.BO.Email"/>
+        <mapping class="com.viettel.voffice.database.BO.EmailUser"/>
+        <mapping class="com.viettel.voffice.database.BO.ProcessComment"/>
+        <!-- End of vOffice BTP -->
+        <!-- Table for flow -->
+        <mapping class="com.viettel.flow.BO.Flow"/>
+        <mapping class="com.viettel.flow.BO.Node"/>
+        <mapping class="com.viettel.flow.BO.NodeDeptUser"/>
+        <mapping class="com.viettel.flow.BO.NodeToNodePK"/>
+        <mapping class="com.viettel.flow.BO.NodeToNode"/>
+        <!-- End able for flow -->
+        <!-- Begin ATTP-Category -->
+        <mapping class="com.viettel.hqmc.BO.Business"/>
+        <mapping class="com.viettel.hqmc.BO.StandardProduct"/>
+        <mapping class="com.viettel.hqmc.BO.TechnicalStandard"/>
+        <mapping class="com.viettel.hqmc.BO.VietnameseStandard"/>
+        <mapping class="com.viettel.hqmc.BO.CategoryType"/>
+        <mapping class="com.viettel.hqmc.BO.Register"/>
+        <mapping class="com.viettel.hqmc.BO.Parameter"/>
+        <mapping class="com.viettel.hqmc.BO.Procedure"/>
+        <mapping class="com.viettel.hqmc.BO.ProcedureDepartment"/>
+        <mapping class="com.viettel.hqmc.BO.CaUser"/>
+        <mapping class="com.viettel.hqmc.BO.Repositories"/>
+        <!-- End ATTP -->
+        <!-- Begin ATTP-Xu ly ho so -->
+        <mapping class="com.viettel.hqmc.BO.Announcement"/>
+        <mapping class="com.viettel.hqmc.BO.AnnouncementReceipt"/>
+        <mapping class="com.viettel.hqmc.BO.ConfirmTestReg"/>
+        <mapping class="com.viettel.hqmc.BO.Confirmation"/>
+        <mapping class="com.viettel.hqmc.BO.DetailProduct"/>
+        <mapping class="com.viettel.hqmc.BO.Files"/>
+        <mapping class="com.viettel.hqmc.BO.FileForSearch"/>
+        <mapping class="com.viettel.hqmc.BO.FilesNoClob"/>
+        <mapping class="com.viettel.hqmc.BO.MainlyTarget"/>
+        <mapping class="com.viettel.hqmc.BO.ProductTarget"/>
+        <mapping class="com.viettel.hqmc.BO.QualityControlPlan"/>
+        <mapping class="com.viettel.hqmc.BO.ProductInFile"/>
+        <mapping class="com.viettel.hqmc.BO.ReIssueForm"/>
+        <mapping class="com.viettel.hqmc.BO.TestRegistration"/>
+        <mapping class="com.viettel.hqmc.BO.EvaluationRecords"/>
+        <mapping class="com.viettel.hqmc.BO.PaymentHistory"/>
+        <mapping class="com.viettel.hqmc.BO.AnnouncementReceiptPaper"/>
+        <mapping class="com.viettel.hqmc.BO.ConfirmImportSatistPaper"/>
+        <mapping class="com.viettel.hqmc.BO.ConfirmAnnouncementPaper"/>
+        <mapping class="com.viettel.hqmc.BO.ReceiveEmail"/>
+        <mapping class="com.viettel.hqmc.BO.ReceiveSms"/>
+        <mapping class="com.viettel.hqmc.BO.MessageEmail"/>
+        <mapping class="com.viettel.hqmc.BO.UserAttachs"/>
+        <mapping class="com.viettel.hqmc.BO.Complaints"/>
+        <mapping class="com.viettel.hqmc.BO.TimeProcess"/>   
+        <mapping class="com.viettel.hqmc.BO.MessageSms"/>              
+        <mapping class="com.viettel.hqmc.BO.MessageSmsFlag"/>              
+        <mapping class="com.viettel.hqmc.BO.MessageEmail"/>      
+        <mapping class="com.viettel.hqmc.BO.MessageEmailFlag"/>      
+        <!-- Begin ATTP-Thanh toan online -->
+        <mapping class="com.viettel.hqmc.BO.Fee"/>
+        <mapping class="com.viettel.hqmc.BO.FeePaymentInfo"/>      
+        <mapping class="com.viettel.hqmc.BO.FeeAdd"/>
+        <mapping class="com.viettel.hqmc.BO.FeeAddFile"/>
+        <mapping class="com.viettel.hqmc.BO.FeePaymentType"/>
+        <mapping class="com.viettel.hqmc.BO.FeeProcedure"/>
+        <mapping class="com.viettel.hqmc.BO.FeeFile"/>
+        <mapping class="com.viettel.hqmc.BO.VFeePaymentInfoFee"/>      
+        <mapping class="com.viettel.hqmc.BO.RequestComment"/>  
+        <mapping class="com.viettel.hqmc.BO.VLookupHomepage"/>
+        <mapping class="com.viettel.hqmc.BO.Notification"/>
+        <mapping class="com.viettel.hqmc.BO.MessageGroup"/>
+        <mapping class="com.viettel.hqmc.BO.MessageGroupPerson"/>
+        <mapping class="com.viettel.hqmc.BO.CountNo"/>       
+        <mapping class="com.viettel.hqmc.BO.VReportStaffProcess"/>                 
+        <mapping class="com.viettel.hqmc.BO.VReportStaffProcessed"/>
+        <mapping class="com.viettel.hqmc.BO.VReportStaffProcessing"/>
+        <mapping class="com.viettel.hqmc.BO.VReportStaff"/>
+        <mapping class="com.viettel.hqmc.BO.VReportLos"/><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->
+        <mapping class="com.viettel.hqmc.BO.VReportLsProcessed"/><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->
+        <mapping class="com.viettel.hqmc.BO.VReportLsProcessing"/><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->
+        <mapping class="com.viettel.hqmc.BO.VReportLsProcess"/><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->        
+        <mapping class="com.viettel.hqmc.BO.VReportL"/><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->
+        <mapping class="com.viettel.hqmc.BO.VReportLProcessed"/><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->
+        <mapping class="com.viettel.hqmc.BO.VReportLProcessing"/><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->
+        <mapping class="com.viettel.hqmc.BO.VReportLProcess"/><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->        
+        <!-- End ATTP -->
+    </session-factory>
+</hibernate-configuration>

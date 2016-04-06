@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">    
+    <system systemId="http://103.1.210.181:8667/ConvertService/Converter?wsdl" uri="wsdl/103.1.210.181_8667/ConvertService/Converter.wsdl"/>
+    <system systemId="http://103.1.210.181:8667/ConvertService/Converter?xsd=1" uri="wsdl/103.1.210.181_8667/ConvertService/Converter.xsd_1.xsd"/>
+    <system systemId="http://10.224.162.9:8661/ConvertService/Converter?wsdl" uri="wsdl/10.224.162.9_8661/ConvertService/Converter.wsdl"/>
+    <system systemId="http://10.224.162.9:8661/ConvertService/Converter?xsd=1" uri="wsdl/10.224.162.9_8661/ConvertService/Converter.xsd_1.xsd"/>
+    <system systemId="http://10.224.162.11:8112/ConvertService/Converter?wsdl" uri="wsdl/10.224.162.11_8112/ConvertService/Converter.wsdl"/>
+    <system systemId="http://10.224.162.11:8112/ConvertService/Converter?xsd=1" uri="wsdl/10.224.162.11_8112/ConvertService/Converter.xsd_1.xsd"/>
+    <system systemId="http://localhost:6886/ConvertService/Converter?wsdl" uri="wsdl/localhost_6886/ConvertService/Converter.wsdl"/>
+    <system systemId="http://localhost:6886/ConvertService/Converter?xsd=1" uri="wsdl/localhost_6886/ConvertService/Converter.xsd_1.xsd"/>
+    <system systemId="http://103.1.210.181:8669/ConvertService/Converter?wsdl" uri="wsdl/103.1.210.181_8669/ConvertService/Converter.wsdl"/>
+    <system systemId="http://103.1.210.181:8669/ConvertService/Converter?xsd=1" uri="wsdl/103.1.210.181_8669/ConvertService/Converter.xsd_1"/>
+    <system systemId="http://10.224.162.11:8669/ConvertService/Converter?wsdl" uri="wsdl/10.224.162.11_8669/ConvertService/Converter.wsdl"/>
+    <system systemId="http://10.224.162.11:8669/ConvertService/Converter?xsd=1" uri="wsdl/10.224.162.11_8669/ConvertService/Converter.xsd_1.xsd"/>
+    <system systemId="http://10.224.162.11:8669/ConvertService/Converter?wsdl" uri="wsdl/10.224.162.11_8669/ConvertService/Converter.wsdl"/>
+    <system systemId="http://10.224.162.11:8669/ConvertService/Converter?xsd=1" uri="wsdl/10.224.162.11_8669/ConvertService/Converter.xsd_1.xsd"/>
+    <system systemId="http://10.224.164.11:8669/ConvertService/Converter?wsdl" uri="wsdl/10.224.164.11_8669/ConvertService/Converter.wsdl"/>
+    <system systemId="http://10.224.164.11:8669/ConvertService/Converter?xsd=1" uri="wsdl/10.224.164.11_8669/ConvertService/Converter.xsd_1.xsd"/>
+    <system systemId="http://10.224.164.88:8669/ConvertService/Converter?wsdl" uri="wsdl/10.224.164.88_8669/ConvertService/Converter.wsdl"/>
+    <system systemId="http://10.224.164.88:8669/ConvertService/Converter?xsd=1" uri="wsdl/10.224.164.88_8669/ConvertService/Converter.xsd_1.xsd"/>
+</catalog>

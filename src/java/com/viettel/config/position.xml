@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="position" extends="default">
+        <action name="position" class="com.viettel.voffice.database.DAO.PositionDAO" method="prepareSearch">
+           <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onDelete, onInsert
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="positionSearch">positionSearch.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>        
+    </package>
+</struts>

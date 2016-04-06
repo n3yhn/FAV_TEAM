@@ -1,0 +1,38 @@
+<div class="tundra" style="width: 200px; background-color: white;">
+    <!--    <input dojoAttachEvent="onclick:_onImageClick,onkeyup:_onImageClick" dojoAttachPoint="myTextBox">
+
+        </input>-->
+    <div style="width: 199px; border-style: solid; background-color: white; border-width: 1px; border-color: olive;" dojoAttachPoint="myCalendarTime" target="${target}">
+
+        <input dojoType="dijit.Calendar"
+               dojoAttachPoint="myCalendar"
+               style="width:199px;"/>
+        </input>
+
+
+        <div style="font-weight:bold; background-color:#d5e0e8; padding:2px; color:#0b7dfb;" align="center" dojoAttachPoint="calendarReport">
+
+        </div>
+
+        <div style="text-align: left; width: 199px; margin-top: 1px; margin-bottom:1px; background-color: #ebe8e8; " align="center" dojoAttachPoint="myButtonTime">
+
+            <strong style="margin-left:2px; margin-right:2px;">Time</strong>
+
+            <input type="text" dojoType="dijit.form.TimeTextBox"
+                   required="true"
+                   constraints=" {timePattern: 'HH:mm:ss', clickableIncrement: 'T00:15:00', visibleIncrement: 'T00:15:00', visibleRange: 'T01:00:00' }"
+                   style="width: 108px; margin:2px;"
+                   dojoAttachPoint="myTime"
+                   />
+
+            <button dojoAttachEvent="onclick:onSelect"  style="border:1px solid #C6D880; font-weight:600; font-size:smaller; width: 40px; margin:3px;">
+                OK
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="gridSearch.page" extends="body.definition" >
+        <put-attribute name="title" value="Tìm kiếm DataGrid phân trang từ server"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/grid/gridSearch.jsp"/>
+    </definition>
+    <definition name="gridSearch.popup" extends="popup.definition" >
+        <put-attribute name="title" value="Tìm kiếm DataGrid phân trang từ server"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/grid/popup.jsp"/>
+    </definition>
+</tiles-definitions>

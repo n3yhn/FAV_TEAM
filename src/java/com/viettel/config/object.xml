@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="object" extends="default">
+        <action name="object" class="com.viettel.vsaadmin.database.DAO.ObjectsDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onApply, onDelete, onLock, onUnlock 
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="preparePage">prepare.page</result>
+            <result type="tiles" name="refreshObjectDialogPage">appObjectsDialog.page</result>
+            <result type="tiles" name="prepare">ObjectsAction.page</result>
+            <result type="tiles" name="objectTree">objectTree.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+            <result type="json" name="treeData">
+                <param name="root">json</param>
+            </result>
+            <result type="json" name="childrenData">
+                <param name="root">childrenData</param>
+            </result>
+        </action>
+    </package>
+</struts>

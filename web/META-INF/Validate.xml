@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<VALIDATE>
+<ANNOUNCESENDDtoType xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <components name="Thành phần cấu tạo" Id="2;3" Code="" Length="500" ReferenceField="" Type=""/>
+  <timeinuse name="Hạn sử dụng" Id="2;3" Code="" Length="50" ReferenceField="" Type=""/>
+  <objectusage name= "Đối tượng sử dụng" Id="3" Length="150" ReferenceField="" Type=""/>
+  <useage name="Công dụng" Id="3" Length="500" Code="" ReferenceField="" Type=""/>
+  <guideline name= "Hướng dẫn sử dụng" Id="2;3" Code="" Length="500" ReferenceField="" Type=""/>
+  <packatematerial name= "Chất lượng bao bì" Id="2;3" Code="" Length="500" ReferenceField="" Type=""/>
+  <productionprocess name= "Chất lượng bao bì" Id="3" Code="" Length="500" ReferenceField="" Type=""/>
+  <packatematerial name= "Quy trình sản xuất" Id="3" Code="" Length="500" ReferenceField="" Type=""/>
+  <productcompare name= "Phân biệt thật giả" Id="3" Code="" Length="500" ReferenceField="" Type=""/>
+  <nswfilecode name= "Mã hồ sơ phù hợp hợp quy" Id="3" Code="" Length="12" ReferenceField="" Type=""/>
+  <isdeleted name= "Đã xóa (hồ sơ)" Id="2;4" Code="" Length="1" ReferenceField="" Type="Bool"/>
+  <!-- DB --><filetypecode name= "Mã loại hồ sơ" Id="2;5" Code="" Length="" ReferenceField="" Type=""/>
+  <!-- DB --><statuscode name= "Trạng thái hồ sơ" Id="2;5" Code="" Length="" ReferenceField="" Type=""/>
+  <!-- DB --><deptcode name= "Mã đơn vị cấp phép" Id="2;5" Code="" Length="" ReferenceField="" Type=""/>
+  <bussinesscode name= "Mã doanh nghiệp" Id="2;4" Code="" Length="1" ReferenceField="" Type="Tax"/>
+  <businessname name= "Tên doanh nghiệp" Id="3 Code="" Length="150" ReferenceField="" Type=""/>
+  <businessaddress name= "Địa chỉ doanh nghiệp" Id="3" Code="" Length="150" ReferenceField="" Type=""/>
+  <businessphone name= "SĐT doanh nghiệp" Id="4" Code="" Length="1" ReferenceField="" Type="Phone"/>
+  <businessfax name= "Fax Doanh nghiệp" Id="4" Code="" Length="1" ReferenceField="" Type="Phone"/>
+  <businessemail name= "Email doanh nghiệp" Id="3;4" Code="" Length="50" ReferenceField="" Type="Email"/>
+  <hscode name= "Mã HS nhóm sản phẩm" Id="3" Code="" Length="15" ReferenceField="" Type=""/>
+  <!-- DB --><producttypecode name= "Mã nhóm sản phẩm" Id="2;3;4" Code="" Length="5" ReferenceField="" Type=""/>
+  <productname name= "Tên sản phẩm" Id="2;3" Code="" Length="250" ReferenceField="" Type=""/>
+  <productno name= "Số sản phẩm" Id="3" Code="" Length="50" ReferenceField="" Type=""/>
+  <manufacturename name= "Tên nhà sản xuất" Id="2;3" Code="" Length="50" ReferenceField="" Type=""/>
+  <manufacturephone name= "SĐT nhà sản xuất" Id="4" Code="" Length="1" ReferenceField="" Type="Phone"/>
+  <manufactureaddress name= "Địa chỉ nhà sản xuất" Id="2;3" Code="" Length="255" ReferenceField="" Type=""/>
+  <manufactureemail name= "Email nhà sản xuất" Id="3;4" Code="" Length="50" ReferenceField="" Type="Email"/>
+  <manufacturefax name= "Fax nhà sản xuất" Id="4" Code="" Length="" ReferenceField="" Type="Phone"/>
+  <regionfrom name= "Xuất xứ" Id="2;3" Code="" Length="150" ReferenceField="" Type=""/>
+  <announcenumber name= "Số công bố hợp quy/phù hợp" Id="2;3" Code="" Length="50" ReferenceField="" Type=""/>
+  <announcedate name= "Ngày công bố" Id="4" Code="" Length="" ReferenceField="" Type="DateTime"/>
+  <announcesignname name= "Người ký" Id="3" Code="" Length="50" ReferenceField="" Type=""/>
+  <announcemethod name= "Phương thức đánh giá phù hợp" Id="3" Code="" Length="150" ReferenceField="" Type=""/>
+  <productsmell name= "Mùi vị" Id="3" Code="" Length="150" ReferenceField="" Type=""/>
+  <productstatus name= "Trạng thái Id="3" Code="" Length="150" ReferenceField="" Type=""/>
+  <productcolor name= "Màu sắc" Id="3" Code="" Length="150" ReferenceField="" Type=""/>
+  <productotherstate name= "Trạng thái khác" Id="3" Code="" Length="150" ReferenceField="" Type=""/>
+  <announcesigndate name= "Ngày ký" Id="4" Code="" Length="1" ReferenceField="" Type="DateTime"/>
+  <createdate name= "Ngày tạo" Id="4" Code="" Length="1" ReferenceField="" Type="DateTime"/>
+  <createdby name= "Người tạo" Id="4" Code="" Length="1" ReferenceField="" Type="Tax"/>
+  <modifydate name= "Ngày sửa" Id="4" Code="" Length="1" ReferenceField="" Type="DateTime"/>
+  <modifiedby name= "Người sửa" Id="2;3;4" Code="" Length="1" ReferenceField="" Type="Tax"/>
+  <MATCHINGTARGETDtoType> 
+    <matchingcode name= "Mã quy chuẩn kỹ thuật" Id="2;4" Code="" Length="" ReferenceField="" Type="Int"/>
+	<!-- DB --><targetcode name= "Mã quy chuẩn kỹ thuật(do nhà nước cấp)" Id="2;3,5" Code="" Length="15" ReferenceField="" Type=""/>
+	<isdeleted name= "Đã xóa (chuẩn kỹ thuật)" Id="2;4" Code="" Length="" ReferenceField="" Type="Bool"/>
+  </MATCHINGTARGETDtoType>
+  <MAINLYTARGETSDtoType> 
+    <mainlycode name= "Mã chỉ tiêu chất lượng chủ yếu" Id="2;4" Code="" Length="" ReferenceField="" Type="Int"/>
+	<targetname name= "Tên chỉ tiêu chất lượng chủ yếu" Id="2;3" Code="" Length="250" ReferenceField="" Type=""/>
+	<!-- DB --><unitcode name= "Mã đơn vị tính chỉ tiêu chất lượng chủ yếu" Id="3;5" Code="" Length="18" ReferenceField="" Type=""/>
+	<publishlevel name= "Mức công bố chỉ tiêu chất lượng chủ yếu Id="3" Code="" Length="10" ReferenceField="" Type=""/>
+	<meetleveldes name= "Mức đáp ứng khẩu phần ăn" Id="3" Code="" Length="500" ReferenceField="" Type=""/>
+	<isdeleted name= "Đã xóa" Id="2;4" Code="" Length="" ReferenceField="" Type="Bool"/>
+  </MAINLYTARGETSDtoType>
+  <BIOTARGETDtoType> 
+    <biocode name= "Mã chỉ tiêu vi sinh vật" Id="2;4" Code="" Length="" ReferenceField="" Type="Int"/>
+	<targetname name= "Tên chỉ tiêu vi sinh vật" Id="2;3" Code="" Length="250" ReferenceField="" Type=""/>
+	<!-- DB --><unitcode name= "Mã đơn vị tính chỉ tiêu vi sinh vật" Id="3;5" Code="" Length="18" ReferenceField="" Type=""/>
+	<maxlevel name= "Mức tối đa chỉ tiêu vi sinh vật" Id="3" Code="" Length="10" ReferenceField="" Type=""/>
+	<isdeleted name= "Đã xóa (chỉ tiêu vi sinh vật)" Id="2;4" Code="" Length="" ReferenceField="" Type="Bool"/>
+  </BIOTARGETDtoType>
+  <HEAVYTARGETDtoType> 
+    <heavycode name= "Mã hàm lượng kim loại nặng" Id="2;4" Code="" Length="" ReferenceField="" Type="Int"/>
+	<targetname name= "Tên hàm lượng kim loại nặng" Id="2;3" Code="" Length="250" ReferenceField="" Type=""/>
+	<!-- DB --><unitcode name= "Mã đơn vị tính hàm lượng kim loại nặng" Id="3;5" Code="" Length="18" ReferenceField="" Type=""/>
+	<maxlevel name= "Mức tối đa hàm lượng kim loại nặng" Id="3" Code="" Length="10" ReferenceField="" Type=""/>
+	<isdeleted name= "Đã xóa (hàm lượng kim loại nặng)" Id="2;4" Code="" Length="" ReferenceField="" Type="Bool"/>
+  </HEAVYTARGETDtoType>
+  <CHEMTARGETDtoType> 
+    <chemicalcode name= "Mã hóa chất không mong muốn" Id="2;4" Code="" Length="" ReferenceField="" Type="Int"/>
+	<targetname name= "Tên hóa chất không mong muốn" Id="2;3" Code="" Length="250" ReferenceField="" Type=""/>
+	<!-- DB --><unitcode name= "Mã đơn vị tính hóa chất không mong muốn" Id="3;5" Code="" Length="18" ReferenceField="" Type=""/>
+	<maxlevel name= "Mức tối đa hóa chất không mong muốn" Id="3" Code="" Length="10" ReferenceField="" Type=""/>
+	<isdeleted name= "Đã xóa (hóa chất không mong muốn)" Id="2;4" Code="" Length="" ReferenceField="" Type="Bool"/>
+  </CHEMTARGETDtoType>
+  <IMPACTTARGETDtoType> 
+    <impactcode name= "Mã mức thôi nhiễm" Id="2;4" Code="" Length="" ReferenceField="" Type="Int"/>
+	<targetname name= "Tên mức thôi nhiễm" Id="2;3" Code="" Length="250" ReferenceField="" Type=""/>
+	<!-- DB --><unitcode name= "Mã đơn vị tính mức thôi nhiễm" Id="3;5" Code="" Length="18" ReferenceField="" Type=""/>
+	<publishlevel name= "Mức tối đa mức thôi nhiễm" Id="3" Code="" Length="10" ReferenceField="" Type=""/>
+	<isdeleted name= "Đã xóa (mức thôi nhiễm)" Id="2;4" Code="" Length="" ReferenceField="" Type="Bool"/>
+  </HEAVYTARGETDtoType>
+  <CONTROLPLANDtoType> 
+    <controlcode name= "Mã hàm lượng kim loại nặng" Id="2;4" Code="" Length="" ReferenceField="" Type="Int"/>
+	<productprocessdetail name= "Quá trình sản xuất cụ thể (kế hoạch kiểm soát chất lượng)" Id="2;3" Code="" Length="250" ReferenceField="" Type=""/>
+	<controltarget name= "Chỉ tiêu kiểm soát (kế hoạch kiểm soát chất lượng)" Id="3" Code="" Length="250" ReferenceField="" Type=""/>
+	<technicalregulation name= "Quy định kỹ thuật (kế hoạch kiểm soát chất lượng)" Id="3;5" Code="" Length="18" ReferenceField="" Type=""/>
+	<patternfrequence name= "Tần suất lấy mẫu (kế hoạch kiểm soát chất lượng)" Id="3" Code="" Length="10" ReferenceField="" Type=""/>
+	<testdevice name= "Thiết bị thử nghiệm/kiểm tra (kế hoạch kiểm soát chất lượng)" Id="3" Code="" Length="" ReferenceField="" Type=""/>
+	<testmethod name= "Phương thức lấy mẫu (kế hoạch kiểm soát chất lượng)" Id="3" Code="" Length="250" ReferenceField="" Type=""/>
+	<noteform name= "Biểu ghi chép (kế hoạch kiểm soát chất lượng)" Id="3" Code="" Length="18" ReferenceField="" Type=""/>
+	<note name= "Ghi chú (kế hoạch kiểm soát chất lượng)" Id="3" Code="" Length="10" ReferenceField="" Type=""/>
+	<isdeleted name= "Đã xóa (kế hoạch kiểm soát chất lượng)" Id="2;4" Code="" Length="" ReferenceField="" Type="Bool"/>
+  </CONTROLPLANDtoType>
+</FILERESULTSDto>
+<VALIDATE>

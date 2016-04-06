@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<VALIDATE>
+    <CONNECTION Url="jdbc:oracle:thin:@//10.224.162.8:1521/orcl" UserName="attp14" Password="attp2014" />
+    <ANNOUNCESENDDtoType>
+        <components Name="Thành phần cấu tạo" Id="2;3" Length="500" Table="" Type=""/>
+        <timeinuse Name="Hạn sử dụng" Id="2;3" Length="50" Table="" Type=""/>
+        <objectusage Name= "Đối tượng sử dụng" Id="3" Length="150" Table="" Type=""/>
+        <useage Name="Công dụng" Id="3" Length="500" Table="" Type=""/>
+        <guideline Name= "Hướng dẫn sử dụng" Id="2;3" Length="500" Table="" Type=""/>
+        <packatematerial Name= "Chất lượng bao bì" Id="2;3" Length="500" Table="" Type=""/>
+        <productionprocess Name= "Chất lượng bao bì" Id="3" Length="500" Table="" Type=""/>
+        <packatematerial Name= "Quy trình sản xuất" Id="3" Length="500" Table="" Type=""/>
+        <productcompare Name= "Phân biệt thật giả" Id="3" Length="500" Table="" Type=""/>
+        <nswfilecode Name= "Mã hồ sơ phù hợp hợp quy" Id="3" Length="12" Table="" Type=""/>
+        <isdeleted Name= "Đã xóa (hồ sơ)" Id="2;4" Length="" Table="" Type="Bool"/>
+        <!-- DB -->
+        <filetypecode Name= "Mã loại hồ sơ" Id="2;5" Length="" Table="Procedure;Code" Type=""/>
+        <!-- DB -->
+        <statuscode Name= "Trạng thái hồ sơ" Id="2;5" Length="" Table="Category;Code;Type = 'STATUS'" Type=""/>
+        <!-- DB -->
+        <deptcode Name= "Mã đơn vị cấp phép" Id="2;5" Length="" Table="Department;Dept_Code" Type=""/>
+        <bussinesscode Name= "Mã doanh nghiệp" Id="2;4" Length="" Table="" Type="Tax"/>
+        <businessname Name= "Tên doanh nghiệp" Id="3" Length="150" Table="" Type=""/>
+        <businessaddress Name= "Địa chỉ doanh nghiệp" Id="3" Length="150" Table="" Type=""/>
+        <businessphone Name= "SĐT doanh nghiệp" Id="4" Length="50" Table="" Type="Phone"/>
+        <businessfax Name= "Fax Doanh nghiệp" Id="4" Length="50" Table="" Type="Phone"/>
+        <businessemail Name= "Email doanh nghiệp" Id="3;4" Length="50" Table="" Type="Email"/>
+        <hscode Name= "Mã HS nhóm sản phẩm" Id="3" Length="15" Table="" Type=""/>
+        <!-- DB -->
+        <producttypecode Name= "Mã nhóm sản phẩm" Id="2;3;5" Length="5" Table="Category;Code;Type = 'SP'" Type=""/>
+        <productname Name= "Tên sản phẩm" Id="2;3" Length="250" Table="" Type=""/>
+        <productno Name= "Số sản phẩm" Id="3" Length="50" Table="" Type=""/>
+        <manufacturename Name= "Tên nhà sản xuất" Id="2;3" Length="50" Table="" Type=""/>
+        <manufacturephone Name= "SĐT nhà sản xuất" Id="4" Length="50" Table="" Type="Phone"/>
+        <manufactureaddress Name= "Địa chỉ nhà sản xuất" Id="2;3" Length="255" Table="" Type=""/>
+        <manufactureemail Name= "Email nhà sản xuất" Id="3;4" Length="50" Table="" Type="Email"/>
+        <manufacturefax Name= "Fax nhà sản xuất" Id="4" Length="50" Table="" Type="Phone"/>
+        <regionfrom Name= "Xuất xứ" Id="2;3" Length="150" Table="" Type=""/>
+        <announcenumber Name= "Số công bố hợp quy/phù hợp" Id="2;3" Length="50" Table="" Type=""/>
+        <announcedate Name= "Ngày công bố" Id="4" Length="" Table="" Type="DateTime"/>
+        <announcesignname Name= "Người ký" Id="3" Length="50" Table="" Type=""/>
+        <announcemethod Name= "Phương thức đánh giá phù hợp" Id="3" Length="150" Table="" Type=""/>
+        <productsmell Name= "Mùi vị" Id="3" Length="150" Table="" Type=""/>
+        <productstatus Name= "Trạng thái" Id="3" Length="150" Table="" Type=""/>
+        <productcolor Name= "Màu sắc" Id="3" Length="150" Table="" Type=""/>
+        <productotherstate Name= "Trạng thái khác" Id="3" Length="150" Table="" Type=""/>
+        <announcesigndate Name= "Ngày ký" Id="4" Length="1" Table="" Type="DateTime"/>
+        <createdate Name= "Ngày tạo" Id="4" Length="1" Table="" Type="DateTime"/>
+        <createdby Name= "Người tạo" Id="4" Length="1" Table="" Type="Tax"/>
+        <modifydate Name= "Ngày sửa" Id="4" Length="1" Table="" Type="DateTime"/>
+       <!-- <modifiedby Name= "Người sửa" Id="2;3;4" Length="1" Table="" Type="Tax"/>-->
+        <productdetailtypecode Name= "Loại mẫu chi tiết sản phẩm" Id="2" Length="" Table="" Type=""/>
+        <MATCHINGTARGETDtoType> 
+            <matchingcode Name= "Mã quy chuẩn kỹ thuật" Id="2;4" Length="" Table="" Type="Int"/>
+            <!-- DB -->
+            <targetcode Name= "Mã quy chuẩn kỹ thuật(do nhà nước cấp)" Id="2;3;5" Length="18" Table="TECHNICAL_STANDARD;STANDARD_CODE" Type=""/>
+            <isdeleted Name= "Đã xóa (chuẩn kỹ thuật)" Id="2;4" Length="" Table="" Type="Bool"/>
+        </MATCHINGTARGETDtoType>
+        <MAINLYTARGETSDtoType> 
+            <mainlycode Name= "Mã chỉ tiêu chất lượng chủ yếu" Id="2;4" Length="" Table="" Type="Int"/>
+            <targetname Name= "Tên chỉ tiêu chất lượng chủ yếu" Id="2;3" Length="250" Table="" Type=""/>
+            <!-- DB -->
+            <unitcode Name= "Mã đơn vị tính chỉ tiêu chất lượng chủ yếu" Id="3;5" Length="18" Table="Category;Code;Type = 'DVI'" Type=""/>
+            <publishlevel Name= "Mức công bố chỉ tiêu chất lượng chủ yếu" Id="3" Length="10" Table="" Type=""/>
+            <meetleveldes Name= "Mức đáp ứng khẩu phần ăn" Id="3" Length="500" Table="" Type=""/>
+            <isdeleted Name= "Đã xóa" Id="2;4" Length="" Table="" Type="Bool"/>
+        </MAINLYTARGETSDtoType>
+        <BIOTARGETDtoType> 
+            <biocode Name= "Mã chỉ tiêu vi sinh vật" Id="2;4" Length="" Table="" Type="Int"/>
+            <targetname Name= "Tên chỉ tiêu vi sinh vật" Id="2;3" Length="250" Table="" Type=""/>
+            <!-- DB -->
+            <unitcode Name= "Mã đơn vị tính chỉ tiêu vi sinh vật" Id="3;5" Length="18" Table="Category;Code;Type = 'DVI'" Type=""/>
+            <maxlevel Name= "Mức tối đa chỉ tiêu vi sinh vật" Id="3" Length="10" Table="" Type=""/>
+            <isdeleted Name= "Đã xóa (chỉ tiêu vi sinh vật)" Id="2;4" Length="" Table="" Type="Bool"/>
+        </BIOTARGETDtoType>
+        <HEAVYTARGETDtoType> 
+            <heavycode Name= "Mã hàm lượng kim loại nặng" Id="2;4" Length="" Table="" Type="Int"/>
+            <targetname Name= "Tên hàm lượng kim loại nặng" Id="2;3" Length="250" Table="" Type=""/>
+            <!-- DB -->
+            <unitcode Name= "Mã đơn vị tính hàm lượng kim loại nặng" Id="3;5" Length="18" Table="Category;Code;Type = 'DVI'" Type=""/>
+            <maxlevel Name= "Mức tối đa hàm lượng kim loại nặng" Id="3" Length="10" Table="" Type=""/>
+            <isdeleted Name= "Đã xóa (hàm lượng kim loại nặng)" Id="2;4" Length="" Table="" Type="Bool"/>
+        </HEAVYTARGETDtoType>
+        <CHEMTARGETDtoType> 
+            <chemicalcode Name= "Mã hóa chất không mong muốn" Id="2;4" Length="" Table="" Type="Int"/>
+            <targetname Name= "Tên hóa chất không mong muốn" Id="2;3" Length="250" Table="" Type=""/>
+            <!-- DB -->
+            <unitcode Name= "Mã đơn vị tính hóa chất không mong muốn" Id="3;5" Length="18" Table="Category;Code;Type = 'DVI'" Type=""/>
+            <maxlevel Name= "Mức tối đa hóa chất không mong muốn" Id="3" Length="10" Table="" Type=""/>
+            <isdeleted Name= "Đã xóa (hóa chất không mong muốn)" Id="2;4" Length="" Table="" Type="Bool"/>
+        </CHEMTARGETDtoType>
+        <IMPACTTARGETDtoType> 
+            <impactcode Name= "Mã mức thôi nhiễm" Id="2;4" Length="" Table="" Type="Int"/>
+            <targetname Name= "Tên mức thôi nhiễm" Id="2;3" Length="250" Table="" Type=""/>
+            <!-- DB -->
+            <unitcode Name= "Mã đơn vị tính mức thôi nhiễm" Id="3;5" Length="18" Table="Category;Code;Type = 'DVI'" Type=""/>
+            <publishlevel Name= "Mức tối đa mức thôi nhiễm" Id="3" Length="10" Table="" Type=""/>
+            <isdeleted Name= "Đã xóa (mức thôi nhiễm)" Id="2;4" Length="" Table="" Type="Bool"/>
+        </IMPACTTARGETDtoType>
+        <CONTROLPLANDtoType> 
+            <controlcode Name= "Mã hàm lượng kim loại nặng" Id="2;4" Length="" Table="" Type="Int"/>
+            <productprocessdetail Name= "Quá trình sản xuất cụ thể (kế hoạch kiểm soát chất lượng)" Id="2;3" Length="250" Table="" Type=""/>
+            <controltarget Name= "Chỉ tiêu kiểm soát (kế hoạch kiểm soát chất lượng)" Id="3" Length="250" Table="" Type=""/>
+            
+            <technicalregulation Name= "Quy định kỹ thuật (kế hoạch kiểm soát chất lượng)" Id="3;5" Length="18" Table="VIETNAMESE_STANDARD;STANDARD_CODE" Type=""/>
+            <patternfrequence Name= "Tần suất lấy mẫu (kế hoạch kiểm soát chất lượng)" Id="3" Length="10" Table="" Type=""/>
+            <testdevice Name= "Thiết bị thử nghiệm/kiểm tra (kế hoạch kiểm soát chất lượng)" Id="3" Length="250" Table="" Type=""/>
+            <testmethod Name= "Phương thức lấy mẫu (kế hoạch kiểm soát chất lượng)" Id="3" Length="250" Table="" Type=""/>
+            <noteform Name= "Biểu ghi chép (kế hoạch kiểm soát chất lượng)" Id="3" Length="250" Table="" Type=""/>
+            <note Name= "Ghi chú (kế hoạch kiểm soát chất lượng)" Id="3" Length="250" Table="" Type=""/>
+            <isdeleted Name= "Đã xóa (kế hoạch kiểm soát chất lượng)" Id="2;4" Length="" Table="" Type="Bool"/>
+        </CONTROLPLANDtoType>
+        <ATTACHMENTSDtoType>
+            <attachmentcode Name= "Mã tệp đính kèm" Id="2;4" Length="" Table="" Type="Int"/>
+            <attachmentname Name= "Tên tệp đính kèm" Id="2;3;4" Length="50" Table="" Type="FileName"/>
+            <attachtypecode Name= "Mã loại tệp đính kèm" Id="2;4" Length="250" Table="" Type="Int"/>
+            <isdeleted Name= "Đã xóa (tệp đính kèm)" Id="2;4" Length="" Table="" Type="Bool"/>
+        </ATTACHMENTSDtoType>
+    </ANNOUNCESENDDtoType>
+    <RE_ANNOUNCE>
+        <filetypecode Name= "Mã loại hồ sơ" Id="2;5" Length="" Table="Procedure;Code" Type=""/>
+        <statuscode Name= "Trạng thái hồ sơ" Id="2;5" Length="" Table="Category;Code;Type = 'STATUS'" Type=""/>
+        <announcedeptcode Name= "Mã đơn vị cấp phép" Id="2;5" Length="" Table="Department;Dept_Code" Type=""/>
+        <publishdate Name="Mã loại hồ sơ" Id="4" Length="" Table="" Type="Date" />
+        <announcedate Name="Mã loại hồ sơ" Id="4" Length="" Table="" Type="Date" />
+        <signdate Name="Ngày ký" Id="4" Length="" Table="" Type="Date" />
+        <isdeleted Name="Đã xóa" Id="2;4" Length="" Table="" Type="Bool" />
+        <ATTACHMENTSDtoType>
+            <attachmentcode Name= "Mã tệp đính kèm" Id="2;4" Length="" Table="" Type="Int"/>
+            <attachmentname Name= "Tên tệp đính kèm" Id="2;3;4" Length="50" Table="" Type="FileName"/>
+            <attachtypecode Name= "Mã loại tệp đính kèm" Id="2;4" Length="250" Table="" Type="Int"/>
+            <isdeleted Name= "Đã xóa (tệp đính kèm)" Id="2;4" Length="" Table="" Type="Bool"/>
+        </ATTACHMENTSDtoType>
+    </RE_ANNOUNCE>
+</VALIDATE>

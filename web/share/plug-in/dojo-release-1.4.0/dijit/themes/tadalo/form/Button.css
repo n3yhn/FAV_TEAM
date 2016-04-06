@@ -1,0 +1,116 @@
+
+.tadalo .dijitButtonNode {
+	
+	border: 1px solid #c0c0c0; 
+	border-bottom: 1px solid #9b9b9b; 
+	padding: 0.1em 0.2em 0.2em 0.2em; 
+	background: #fff url("../images/buttonEnabled.png") repeat-x bottom left;
+}
+.tadalo .dijitButtonNode button {
+	border: 0px; 
+	background-color: transparent; 
+} 
+ 
+.tadalo .dijitButtonText {
+	text-align: center; 
+	padding: 0 0.3em;
+}
+.tadalo .dijitDisabled .dijitButtonText {
+	color: #7F7F7F;
+}
+.tadalo .dijitArrowButton {
+	color: #111;
+}
+.tadalo .dijitComboButton .dijitDownArrowButton {
+	padding-right:4px;
+}
+.dj_ff2 .tadalo .dijitComboButton .dijitButtonContentsFocused,
+.dj_ff2 .tadalo .dijitComboButton .dijitDownArrowButtonFocused {
+	border: 1px solid transparent; 
+}
+.tadalo .dijitButtonDisabled .dijitButtonNode,
+.tadalo .dijitToggleButtonDisabled .dijitButtonNode,
+.tadalo .dijitDropDownButtonDisabled .dijitButtonNode,
+.tadalo .dijitComboButtonDisabled .dijitButtonNode,
+.tadalo .dijitComboBoxDisabled,
+.tadalo .dijitSpinnerDisabled,
+.tadalo .dijitSpinnerDisabled .dijitButtonNode {
+	
+	
+	border-color: #d5d5d5 #d5d5d5 #bdbdbd #d5d5d5; 
+	background:#e4e4e4 url("../images/buttonDisabled.png") top repeat-x;
+}
+.tadalo .dijitButtonHover .dijitButtonNode,
+.tadalo .dijitButtonNodeHover,
+.tadalo .dijitToggleButtonHover .dijitButtonNode,
+.tadalo .dijitDropDownButtonHover .dijitButtonNode,
+.tadalo .dijitComboButtonHover .dijitButtonContents,
+.tadalo .dijitComboButtonDownArrowHover .dijitDownArrowButton {
+	
+	
+	border-color:		#a5beda; 
+	border-bottom-color:#5c7590; 
+	color:#243C5F;
+	background:#fcfdff url("../images/buttonHover.png") repeat-x bottom;
+}
+.tadalo .dijitComboBoxHover .dijitDownArrowButton,
+.tadalo .dijitSpinnerUpArrowHover .dijitUpArrowButton,
+.tadalo .dijitSpinnerDownArrowHover .dijitDownArrowButton {
+	
+	color:#243C5F;
+	background:#fcfdff url("../images/buttonHover.png") repeat-x bottom;
+}
+.tadalo .dijitSpinnerUpArrowActive .dijitUpArrowButton,
+.tadalo .dijitSpinnerDownArrowActive .dijitDownArrowButton,
+.tadalo .dijitButtonActive .dijitButtonNode,
+.tadalo .dijitToggleButtonActive .dijitButtonNode,
+.tadalo .dijitDropDownButtonActive .dijitButtonNode,
+.tadalo .dijitComboButtonActive .dijitButtonContents,
+.tadalo .dijitDownArrowActive .dijitDownArrowButton,
+.tadalo .dijitComboBoxActive .dijitDownArrowButton,
+.tadalo .dijitStackController .dijitToggleButtonChecked .dijitButtonNode {
+	
+	border-color:#366dba;
+	background: #ededed url("../images/buttonActive.png") bottom repeat-x;
+}
+.tadalo .dijitArrowButtonInner {
+	background-image:url("../images/spriteArrows.png");
+	background-position: left top;
+	width: 7px;
+	height: 7px;
+	font-size: 1px;
+	margin: 0px 4px 0px 5px;
+}
+.dj_ie6 .tadalo .dijitArrowButtonInner {
+	background-image:url("../images/spriteArrows.gif");
+}
+.tadalo .dijitDisabled .dijitArrowButtonInner {
+	background-position: -28px top;
+}
+.tadalo .dijitUpArrowButton .dijitArrowButtonInner {
+	background-position: -21px top; 
+}
+.tadalo .dijitDisabled .dijitUpArrowButton .dijitArrowButtonInner {
+	background-position: -49px top; 
+}
+.tadalo .dijitComboBox .dijitArrowButton .dijitArrowButtonInner {
+	background-image: url("../images/comboArrowDown.gif");
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-position: center center;
+	height: auto;
+	font-size: 100%;
+	font-size: inherit;
+}
+.tadalo .dijitComboBoxHover .dijitArrowButtonInner {
+	
+}
+.tadalo .dijitSpinner .dijitArrowButtonInner {
+	display: block;  
+	position:absolute;
+	top: 50%; 
+	margin-top: -4px; 
+	left: 50%;
+	margin-left: -4px; 
+	line-height: 2px;
+}

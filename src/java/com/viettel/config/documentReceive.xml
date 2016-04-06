@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="documentReceive" extends="default">
+        <action name="documentReceive" class="com.viettel.voffice.database.DAO.DocumentReceiveSearchDAO" method="prepare">
+            <result type="tiles" name="documentReceiveSearch">documentReceiveSearch.page</result>
+            <result type="tiles" name="mainOfficeProcess">mainOfficeProcess.page</result>
+            
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>        
+        <action name="assignDoc" class="com.viettel.voffice.database.DAO.DocumentReceive.AssignDocDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    setMainProcess,insertNewItem,deleteItem,updateDealine,insertComment,gridDeliveryDoc,updateMonitorDepartment,
+                    updateProcessStatus ,insertReturnComment,insertFinishComment,updateProcessStatusProfile,relationDocumentFiles,
+                    onDeleteRelationDocument,updateNextProcess,publicationDocument,loadView
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="forwardAssignDoc">forwardAssignDoc.page</result>
+            <result type="tiles" name="assignedDoc">assignedDoc.page</result>
+            <result type="tiles" name="assignDoc">assignDoc.page</result>
+            <result type="tiles" name="leaderDoc">leaderDoc.page</result>
+            <result type="tiles" name="staffDoc">staffDoc.page</result>
+            <result type="tiles" name="departmentDoc.page.processing">departmentDoc.processing.page</result>
+            <result type="tiles" name="staffDoc.processed">staffDoc.processed.page</result>
+            <result type="tiles" name="staffDoc.wait">staffDoc.wait.page</result>
+            <result type="tiles" name="staffDoc.cowork.processed">staffDoc.cowork.processed.page</result>
+            <result type="tiles" name="staffDoc.cowork.wait">staffDoc.cowork.wait.page</result>
+            <result type="tiles" name="staffDoc.justRef">staffDoc.justRef.page</result>
+            <result type="tiles" name="monitorDoc">monitorDoc.page</result>
+            <result type="tiles" name="monitorLeaderDoc">monitorLeaderDoc.page</result>
+            <result type="tiles" name="monitorLeaderDocImport">monitorLeaderDocImport.page</result>
+            <result type="tiles" name="viewDocumentReceivePage">viewDocumentReceivePage.page</result>
+            <result type="tiles" name="leaderMonitorassignDoc">leaderMonitorassignDoc.page</result>
+            <result type="tiles" name="HSDKsearchPage_PP">HSDKsearchPage_PP.page</result>
+            <result type="tiles" name="HSDKsearchPage_CV">HSDKsearchPage_CV.page</result>
+            
+            <!-- HSCV -->
+            <result type="tiles" name="relationReceiveDocumentDlg">relationReceiveDocumentDlg.page</result>
+            <result type="tiles" name="fileRelationReceiveView">fileRelationReceiveView.page</result>
+            
+            <result type="tiles" name="report.expiredDocProcess">report_expiredDocProcess.page</result>
+            <result type="tiles" name="report.sendReceiveProcess">report_sendReceiveProcess.page</result>
+            <result type="tiles" name="report.tranferReportDocument">page.tranferReportDocument</result>
+            <result type="tiles" name="userSendListPage">userSendList.page</result>
+            <result type="tiles" name="userReceiveListPage">userReceiveList.page</result>
+            
+             <result type="tiles" name="searchPageByDept_processed">searchPageByDept_processed.page</result>
+             <result type="tiles" name="searchPageByDept_processing">searchPageByDept_processing.page</result>
+
+             <!-- Menu cho Cuc ATTP-->
+             <result type="tiles" name="registerRecord">registerRecord.page</result>
+             <result type="tiles" name="documentReceiveATTP">documentReceiveATTP.page</result>
+             <result type="tiles" name="registerRecordATTP">registerRecordATTP.page</result>
+             <result type="tiles" name="receiveDoc.deptProcessing.ATTP">receiveDoc.deptProcessing.ATTP.page</result>
+             <result type="tiles" name="registerRecord.deptProcessing.ATTP">registerRecord.deptProcessing.ATTP.page</result>
+             <result type="tiles" name="staffDoc.processed.ATTP">staffDoc.processed.ATTP.page</result>
+             <result type="tiles" name="record.processed.ATTP">record.processed.ATTP.page</result>
+             <result type="tiles" name="forwardAssignDocATTP">forwardAssignDocATTP.page</result>
+             <result type="tiles" name="recordAssignDocATTP">recordAssignDocATTP.page</result>
+             <result type="tiles" name="assignedDocATTP">assignedDocATTP.page</result>
+             <result type="tiles" name="assignedRecordATTP">assignedRecordATTP.page</result>
+
+             <!-- HanPT add -->
+             <result type="tiles" name="documentWaitProcessATTP">documentWaitProcessATTP.page</result>
+             <result type="tiles" name="hsdkWaitProcessATTP">hsdkWaitProcessATTP.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+    </package>
+</struts>

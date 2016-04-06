@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="businessRegister.Page" extends="body.definition" >
+        <put-attribute name="title" value="Nộp hồ sơ thủ tục hành chính"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/selectProcedureToCreate.jsp"/>
+    </definition>
+    
+    <!--  Home Page-->
+    <definition name="lookupHomePage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Tra cứu"/>
+        <put-attribute name="body" value="/share/homepage/Lookup.jsp"/>
+    </definition>
+    <definition name="procedureHomePage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Thủ tục hành chính"/>
+        <put-attribute name="body" value="/share/homepage/procedure/procedure.jsp"/>
+    </definition>
+    <definition name="contactHomePage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Liên hệ"/>
+        <put-attribute name="body" value="/share/homepage/contact.jsp"/>
+    </definition>
+    
+      <definition name="KeypayPage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Keypay"/>
+        <put-attribute name="body" value="/share/keypay/keypay.jsp"/>
+    </definition>
+    <!-- huong dan dang ky tai khoan hompage -->
+    <definition name="guideRegisterHtmlPage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Hướng dẫn đăng ký tài khoản doanh nghiệp"/>
+        <put-attribute name="body" value="/share/homepage/guidehtmlpage.jsp"/>
+    </definition>
+    
+<!--       huong dan dang nhap 
+    <definition name="loginHtmlPage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Hướng dẫn đăng nhập và nộp hồ sơ"/>
+        <put-attribute name="body" value="/share/homepage/loginhtmlpage.jsp"/>
+    </definition>
+    
+       huong dan nop phi tham dinh 
+    <definition name="feePayHtmlPage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Hướng dẫn nộp phí thẩm định hồ sơ"/>
+        <put-attribute name="body" value="/share/homepage/feepayhtmlpage.jsp"/>
+    </definition>
+    
+       huong nop le phi 
+    <definition name="feeHtmlPage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Hướng dẫn nộp lệ phí cấp số"/>
+        <put-attribute name="body" value="/share/homepage/feehtmlpage.jsp"/>
+    </definition>-->
+
+
+    <definition name="HomePage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Tra cứu"/>
+        <put-attribute name="body" value="/share/homepage/index.jsp"/>
+    </definition>
+    <definition name="LookupBYT.Page" extends="body.definition" >
+        <put-attribute name="title" value="Tra cứu"/>
+        <put-attribute name="body" value="/share/homepage/LookupBYT.jsp"/>
+    </definition>
+    <definition name="registerHomePage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Tra cứu"/>
+        <put-attribute name="body" value="/share/homepage/registration.jsp"/>
+    </definition>
+    <definition name="resetPasswordHomePage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Quên mật khẩu"/>
+        <put-attribute name="body" value="/share/homepage/resetPassword.jsp"/>
+    </definition>
+    <definition name="guideLineHomePage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Hướng dẫn sử dụng"/>
+        <put-attribute name="body" value="/share/homepage/guideline/guideline.jsp"/>
+    </definition>
+    <definition name="guideLineVideoHomePage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Video hướng dẫn sử dụng"/>
+        <put-attribute name="body" value="/share/homepage/guideline/guideline_video.jsp"/>
+    </definition>
+    
+    <definition name="businessLstPage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Danh sách hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/lstFilePage.jsp"/>
+    </definition>    
+    <definition name="businessLstAddition.Page" extends="body.definition" >
+        <put-attribute name="title" value="Bổ sung hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/lstFileAdditionPage.jsp"/>
+    </definition>
+    <!-- trang thanh toán -->
+    <definition name="payFilePage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Thanh toán hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/payFilePage.jsp"/>
+    </definition>
+    <definition name="feeManagePage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Quản lý lệ phí"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/feeManage.jsp"/>
+    </definition>
+    <definition name="feePayManagePage.Page" extends="body.definition" >
+        <put-attribute name="title" value="Quản lý nộp phí"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/feePayManage.jsp"/>
+    </definition>
+    <definition name="payFilePageMore.Page" extends="body.definition" >
+        <put-attribute name="title" value="Thanh toán nhiều hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/payFilePageMore.jsp"/>
+    </definition>
+    
+    <!-- trang thanh toán -->
+    
+    <definition name="repository.page" extends="body.definition" >
+        <put-attribute name="title" value="Quản lý lưu trữ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/repository/repositorySearch.jsp"/>
+    </definition>
+    <!-- quản lý kho lưu trữ -->
+    <definition name="lookupRepositories.page" extends="body.definition" >
+        <put-attribute name="title" value="Quản lý kho"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/repository/lookupRepositories.jsp"/>
+    </definition>
+    
+    
+    <definition name="proposeEvaluation.page" extends="body.definition" >
+        <put-attribute name="title" value="Đề xuất thẩm định"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/proposeEvaluation.jsp"/>
+    </definition>
+    <!--phân công thẩm định -->
+    <definition name="assignEvaluation.page" extends="body.definition" >
+        <put-attribute name="title" value="Phân công thẩm định"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/assignEvaluation.jsp"/>
+    </definition>
+    <!--phân công lại thẩm định -->
+    <definition name="reAssignEvaluation.page" extends="body.definition" >
+        <put-attribute name="title" value="Phân công lại thẩm định"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/reAssignEvaluation.jsp"/>
+    </definition>    
+    <!-- tham dinh ho so -->
+    <definition name="evaluateFile.page" extends="body.definition" >
+        <put-attribute name="title" value="Thẩm định hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/evaluatePage.jsp"/>
+    </definition>    
+    <definition name="evaluateFileView.page" extends="body.definition" >
+        <put-attribute name="title" value="Thẩm định hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/fileViewDialog.jsp"/>
+    </definition>
+    <!-- pho phong tham dinh ho so -->
+    <definition name="evaluateLeaderFile.page" extends="body.definition" >
+        <put-attribute name="title" value="Lãnh đạo xử lý hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/evaluatePageByLeader.jsp"/>
+    </definition>
+    <!-- thong bao ket qia tham dinh ho so -->
+    <definition name="feedbackEvaluateFile.page" extends="body.definition" >
+        <put-attribute name="title" value="Thông báo kết quả thẩm định hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/feedbackEvaluate/feedbackEvaluatePage.jsp"/>
+    </definition>
+    <definition name="coEvaluation.page" extends="body.definition" >
+        <put-attribute name="title" value="Phối hợp xử lý hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/coEvaluatePage.jsp"/>
+    </definition>
+    <!-- Xem xet ho so -->
+    <definition name="reviewFile.page" extends="body.definition" >
+        <put-attribute name="title" value="Xem xét hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/reviewPage.jsp"/>
+    </definition>    
+    <!-- Xem xet SDBS ho so -->
+    <definition name="additionReviewFile.page" extends="body.definition" >
+        <put-attribute name="title" value="Xem xét hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/additionReview/additionReviewPage.jsp"/>
+    </definition>
+    <!-- phe duyet ho so -->
+    <definition name="approveFile.page" extends="body.definition" >
+        <put-attribute name="title" value="Phê duyệt hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/approvePage.jsp"/>
+    </definition>    
+    <definition name="approvedFile.page" extends="body.definition" >
+        <put-attribute name="title" value="Xuất giấy công bố"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/approvedPage.jsp"/>
+    </definition>
+    <definition name="approvedChangeFile.page" extends="body.definition" >
+        <put-attribute name="title" value="Xuất giấy công bố"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/approvedChangeFile.jsp"/>
+    </definition>
+    <definition name="assignApproveFile.page" extends="body.definition" >
+        <put-attribute name="title" value="Phân công phê duyệt hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/assignApprovePage.jsp"/>
+    </definition>
+    <definition name="approveByCT.page" extends="body.definition" >
+        <put-attribute name="title" value="Cục trưởng phê duyệt hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/approvePageByCT.jsp"/>
+    </definition>
+    <!-- giay tiep nhan cong bo hop quy -->
+    <!--    <definition name="signingFile.page" extends="body.definition" >
+        <put-attribute name="title" value="Soạn giấy công bố hợp qui"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/signingPage.jsp"/>
+    </definition>-->
+    <!-- ky giay cong bo hop quy -->
+    <!--    <definition name="signFile.page" extends="body.definition" >
+        <put-attribute name="title" value="Ký giấy tiếp nhận công bố hợp qui"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/signPage.jsp"/>
+    </definition>-->
+    <!-- create pages -->
+    <definition name="announcementFile01" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createAnnounFilesPage01.jsp"/>
+    </definition>
+    <definition name="annoucementTL01" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createAnnounFilesPage01TL.jsp"/>
+    </definition>
+    <definition name="announcementFile03" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createAnnounFilesPage03.jsp"/>
+    </definition>
+    <definition name="annoucementTL03" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createAnnounFilesPage03TL.jsp"/>
+    </definition>
+    <definition name="reAnnouncement" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createReAnnounFilesPage.jsp"/>
+    </definition>
+    <definition name="confirmNormalImport" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createConfirmNormalImport.jsp"/>
+    </definition>
+    <definition name="reConfirmNormalImp" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createReConfirmNormalImp.jsp"/>
+    </definition>
+    <definition name="confirmNormalVN" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createConfirmNormalVN.jsp"/>
+    </definition>
+    <definition name="reConfirmNormalVN" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createReConfirmNormalVN.jsp"/>
+    </definition>
+    <definition name="confirmFuncImport" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createConfirmFuncImport.jsp"/>
+    </definition>
+    <definition name="confirmTL" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createConfirmFuncImportTL.jsp"/>
+    </definition>
+    <definition name="reConfirmFuncImport" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createReConfirmFuncImport.jsp"/>
+    </definition>
+    <definition name="confirmFuncVN" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createConfirmFuncVN.jsp"/>
+    </definition>
+    <definition name="reConfirmFuncVN" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createReConfirmFuncVN.jsp"/>
+    </definition>
+    <definition name="confirmSatisfactory" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createConfirmSatisfactory.jsp"/>
+    </definition>
+    <definition name="announcement4star" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createFiles4Star.jsp"/>
+    </definition>
+    <!-- end create page -->
+    
+    <!-- View page -->    
+    <definition name="annoucementTL01View" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createAnnounFilesPage01TL.jsp"/>
+    </definition>
+    <definition name="announcementTL01DialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createAnnounFilesPage01DialogTL.jsp"/>
+    </definition>
+    <definition name="annoucementTL03View" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createAnnounFilesPage03TL.jsp"/>
+    </definition>
+    <definition name="announcementTL03DialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createAnnounFilesPage03DialogTL.jsp"/>
+    </definition>
+    <definition name="confirmTLView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createConfirmFuncImportTL.jsp"/>
+    </definition>
+    <definition name="confirmTLDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createConfirmFuncImportDialogTL.jsp"/>
+    </definition>
+    
+    <definition name="announcementFile01View" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createAnnounFilesPage01.jsp"/>
+    </definition>
+    <definition name="announcementFile01DialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createAnnounFilesPage01Dialog.jsp"/>
+    </definition>              
+    <definition name="announcementFile03View" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createAnnounFilesPage03.jsp"/>
+    </definition>
+    <definition name="announcementFile03DialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createAnnounFilesPage03Dialog.jsp"/>
+    </definition>        
+    <definition name="reAnnouncementView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReAnnounFilesPage.jsp"/>
+    </definition>
+    <definition name="reAnnouncementDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReAnnounFilesPageDialog.jsp"/>
+    </definition>
+    <definition name="confirmNormalImportView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createConfirmNormalImport.jsp"/>
+    </definition>
+    <definition name="confirmNormalImportDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createConfirmNormalImportDialog.jsp"/>
+    </definition>
+    <definition name="reConfirmNormalImpView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmNormalImp.jsp"/>
+    </definition>
+    <definition name="reConfirmNormalImpDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmNormalImpDialog.jsp"/>
+    </definition>
+    <definition name="confirmNormalVNView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createConfirmNormalVN.jsp"/>
+    </definition>
+    <definition name="confirmNormalVNDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createConfirmNormalVNDialog.jsp"/>
+    </definition>    
+    <definition name="reConfirmNormalVNView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmNormalVN.jsp"/>
+    </definition>
+    <definition name="reConfirmNormalVNDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmNormalVNDialog.jsp"/>
+    </definition>
+    <definition name="confirmFuncImportView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createConfirmFuncImport.jsp"/>
+    </definition>            
+    <definition name="confirmFuncImportDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createConfirmFuncImportDialog.jsp"/>
+    </definition>        
+    <definition name="reConfirmFuncImportView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmFuncImport.jsp"/>
+    </definition>
+    <definition name="reConfirmFuncImportDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmFuncImportDialog.jsp"/>
+    </definition>
+    <definition name="confirmFuncVNView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createConfirmFuncVN.jsp"/>
+    </definition>
+    <definition name="confirmFuncVNDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createConfirmFuncVNDialog.jsp"/>
+    </definition>
+    <definition name="reConfirmFuncVNView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmFuncVN.jsp"/>
+    </definition>
+    <definition name="reConfirmFuncVNDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmFuncVNDialog.jsp"/>
+    </definition>
+    <definition name="confirmSatisfactoryView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createConfirmSatisfactory.jsp"/>
+    </definition>
+    <definition name="confirmSatisfactoryDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createConfirmSatisfactoryDialog.jsp"/>
+    </definition>
+    <definition name="announcement4starView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createFiles4Star.jsp"/>
+    </definition>
+    <definition name="announcement4starDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createFiles4StarDialog.jsp"/>
+    </definition>
+    
+    <definition name="reAnnouncementView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReAnnounFilesPage.jsp"/>
+    </definition>
+    <definition name="reAnnouncementDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReAnnounFilesPageDialog.jsp"/>
+    </definition>
+    <definition name="reConfirmNormalImpView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmNormalImp.jsp"/>
+    </definition>
+    <definition name="reConfirmNormalImpDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmNormalImpDialog.jsp"/>
+    </definition>    
+    <definition name="reConfirmNormalVNView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmNormalVN.jsp"/>
+    </definition>
+    <definition name="reConfirmNormalVNDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmNormalVNDialog.jsp"/>
+    </definition>
+    <definition name="reConfirmFuncImportView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmFuncImport.jsp"/>
+    </definition>
+    <definition name="reConfirmFuncImportDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmFuncImportDialog.jsp"/>
+    </definition>    
+    <definition name="reConfirmFuncVNView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmFuncVN.jsp"/>
+    </definition>
+    <definition name="reConfirmFuncVNDialogView" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReConfirmFuncVNDialog.jsp"/>
+    </definition>        
+    <!-- end view page -->
+    
+    <!-- Provide page -->
+    <definition name="announcementFile01Provide" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabProvide/announcementReceiptPaperCreateDlg.jsp"/>
+    </definition>
+    <definition name="announcementFile03Provide" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabProvide/announcementReceiptPaperCreateDlg.jsp"/>    
+    </definition>
+    <definition name="reAnnouncementProvide" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabProvide/announcementReceiptPaperCreateDlg.jsp"/>    
+    </definition>
+    <definition name="confirmNormalImportProvide" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabProvide/announcementReceiptPaperCreateDlg.jsp"/>    
+    </definition>
+    <definition name="reConfirmNormalImpProvide" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabProvide/announcementReceiptPaperCreateDlg.jsp"/>    
+    </definition>
+    <definition name="confirmNormalVNProvide" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabProvide/announcementReceiptPaperCreateDlg.jsp"/>    
+    </definition>
+    <definition name="reConfirmNormalVNProvide" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabProvide/announcementReceiptPaperCreateDlg.jsp"/>    
+    </definition>
+    <definition name="confirmFuncImportProvide" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabProvide/announcementReceiptPaperCreateDlg.jsp"/>    
+    </definition>
+    <definition name="reConfirmFuncImportProvide" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabProvide/announcementReceiptPaperCreateDlg.jsp"/>    
+    </definition>
+    <definition name="confirmFuncVNProvide" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabProvide/announcementReceiptPaperCreateDlg.jsp"/>    
+    </definition>
+    <definition name="reConfirmFuncVNProvide" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabProvide/announcementReceiptPaperCreateDlg.jsp"/>    
+    </definition>
+    <definition name="confirmSatisfactoryProvide" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabProvide/confirmImportSatistPaperCreateDlg.jsp"/>    
+    </definition>
+    <!-- end Provide page -->
+    
+    <!-- Sign page -->
+    <definition name="announcementFile01Sign" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcementReceiptPaperSignDlg.jsp"/>
+    </definition>
+    <definition name="announcementFile03Sign" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcementReceiptPaperSignDlg.jsp"/>    
+    </definition>
+    <definition name="reAnnouncementSign" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcementReceiptPaperSignDlg.jsp"/>    
+    </definition>
+    <definition name="confirmNormalImportSign" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcementReceiptPaperSignDlg.jsp"/>    
+    </definition>
+    <definition name="reConfirmNormalImpSign" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcementReceiptPaperSignDlg.jsp"/>    
+    </definition>
+    <definition name="confirmNormalVNSign" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcementReceiptPaperSignDlg.jsp"/>    
+    </definition>
+    <definition name="reConfirmNormalVNSign" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcementReceiptPaperSignDlg.jsp"/>    
+    </definition>
+    <definition name="confirmFuncImportSign" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcementReceiptPaperSignDlg.jsp"/>    
+    </definition>
+    <definition name="reConfirmFuncImportSign" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcementReceiptPaperSignDlg.jsp"/>    
+    </definition>
+    <definition name="confirmFuncVNSign" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcementReceiptPaperSignDlg.jsp"/>    
+    </definition>
+    <definition name="reConfirmFuncVNSign" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcementReceiptPaperSignDlg.jsp"/>    
+    </definition>
+    <definition name="confirmSatisfactorySign" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/confirmImportSatistPaperSignDlg.jsp"/>    
+    </definition>
+    <!-- end Sign page -->
+    
+    <!-- #lookup files by users -->
+    <definition name="lookupFilesByLeader.Page" extends="body.definition" >
+        <put-attribute name="title" value="Tra cứu hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/lookup/lookupFilesByLeader.jsp"/>
+    </definition>
+    <definition name="lookupFilesByLeaderApproveSdbs.Page" extends="body.definition" >
+        <put-attribute name="title" value="Phê duyệt Công văn SĐBS"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/lookup/lookupFilesByLeaderApproveSdbs.jsp"/>
+    </definition>
+    <definition name="lookupFilesByStaff.Page" extends="body.definition" >
+        <put-attribute name="title" value="Tra cứu hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/lookup/lookupFilesByStaff.jsp"/>
+    </definition>    
+    <definition name="lookupFilesByStaffDonothing.Page" extends="body.definition" >
+        <put-attribute name="title" value="Tra cứu hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/lookup/lookupFilesByStaffDoNothing.jsp"/>
+    </definition>
+    <definition name="lookupFilesByLeaderOfStaff.Page" extends="body.definition" >
+        <put-attribute name="title" value="Tra cứu hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/lookup/lookupFilesByLeaderOfStaff.jsp"/>
+    </definition>
+    <definition name="lookupFilesByClerical.Page" extends="body.definition" >
+        <put-attribute name="title" value="Tra cứu hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/lookup/lookupFilesByClerical.jsp"/>
+    </definition>
+    <definition name="reportStaffProcess.Page" extends="body.definition" >
+        <put-attribute name="title" value="Thống kê chuyên viên xử lý hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/lookup/reportStaffProcessPage.jsp"/>
+    </definition>
+    <definition name="reportLOSProcess.Page" extends="body.definition" ><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->
+        <put-attribute name="title" value="Thống kê lãnh đạo phòng xử lý hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/lookup/reportLOSProcessPage.jsp"/>
+    </definition>
+    <definition name="reportLProcess.Page" extends="body.definition" ><!--141215u binhnt53 thong ke lanh dao cuc xu ly ho so-->
+        <put-attribute name="title" value="Thống kê lãnh đạo cục xử lý hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/lookup/reportLProcessPage.jsp"/>
+    </definition>
+    <definition name="returnFileToAddition.Page" extends="body.definition" ><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->
+        <put-attribute name="title" value="Quản trị trả lại luồng sdbs"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/management/returnFileToAddition.jsp"/>
+    </definition>
+    <!-- end #lookup files by users -->
+    
+    <!-- #RECEIVED tiep nhan ho so-->
+    <definition name="received.page" extends="body.definition" >
+        <put-attribute name="title" value="Tiếp nhận hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/received/receivedPage.jsp"/>
+    </definition>    
+    <!-- #COMPARISON doi chieu ho so-->
+    <definition name="toComparison.Page" extends="body.definition" >
+        <put-attribute name="title" value="Đối chiếu hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/comparison/comparisonPage.jsp"/>
+    </definition>
+    <!-- #COMPARISON_FAIL -->
+    <definition name="toComparisonFail.Page" extends="body.definition" >
+        <put-attribute name="title" value="Đối chiếu hồ sơ lỗi"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/comparison/comparisonPage.jsp"/>
+    </definition>
+    <!-- #COMPARISON_ALERT -->
+    <definition name="toComparisonAlert.Page" extends="body.definition">
+        <put-attribute name="title" value="Thông báo đối chiếu hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/comparison/comparisonPage.jsp"/>
+    </definition>
+    <!-- VIEW PAGE xem thong tin chi tiet ho so-->
+    <definition name="announcementFile01ViewReceived" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/received/viewPage/createAnnounFilesPage01.jsp"/>
+    </definition>
+    <definition name="announcementFile03ViewReceived" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/received/viewPage/createAnnounFilesPage03.jsp"/>
+    </definition>
+    <definition name="reAnnouncementViewReceived" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/received/viewPage/createReAnnounFilesPage.jsp"/>
+    </definition>
+    <definition name="confirmNormalImportViewReceived" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/received/viewPage/createConfirmNormalImport.jsp"/>
+    </definition>
+    <definition name="reConfirmNormalImpViewReceived" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/received/viewPage/createReConfirmNormalImp.jsp"/>
+    </definition>
+    <definition name="confirmNormalVNViewReceived" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/received/viewPage/createConfirmNormalVN.jsp"/>
+    </definition>
+    <definition name="reConfirmNormalVNViewReceived" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/received/viewPage/createReConfirmNormalVN.jsp"/>
+    </definition>
+    <definition name="confirmFuncImportViewReceived" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/received/viewPage/createConfirmFuncImport.jsp"/>
+    </definition>
+    <definition name="reConfirmFuncImportViewReceived" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/received/viewPage/createReConfirmFuncImport.jsp"/>
+    </definition>
+    <definition name="confirmFuncVNViewReceived" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/received/viewPage/createConfirmFuncVN.jsp"/>
+    </definition>
+    <definition name="reConfirmFuncVNViewReceived" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/received/viewPage/createReConfirmFuncVN.jsp"/>
+    </definition>
+    <definition name="confirmSatisfactoryViewReceived" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/received/viewPage/createConfirmSatisfactory.jsp"/>
+    </definition>
+    <!-- end view page -->  
+    <!--hiepvv van thu tiep nhan ho so suoa doi sau cong bo-->
+    <definition name="receivedAfterAnnounced.page" extends="body.definition" ><!--Hiepvv-->
+        <put-attribute name="title" value="Tiếp nhận hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/received/receivedAfterAnnouncedPage.jsp"/>
+    </definition>  
+    <definition name="reviewFileEditAfterAnnounced.page" extends="body.definition" > <!--Hiepvv-->
+        <put-attribute name="title" value="Xem xét hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/reviewEditAfterAnnouncedPage.jsp"/>
+    </definition>
+    <definition name="assignEvaluationEditAfterAnnounced.page" extends="body.definition" ><!--Hiepvv-->
+        <put-attribute name="title" value="Phân công thẩm định"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/assignEvaluationEditAfterAnnounced.jsp"/>
+    </definition>
+    <definition name="evaluateFileEditAfterAnnounced.page" extends="body.definition" ><!--Hiepvv-->
+        <put-attribute name="title" value="Thẩm định hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/evaluateFileEditAfterAnnounced.jsp"/>
+    </definition>
+    <definition name="approveFileEditAfterAnnounced.page" extends="body.definition" >
+        <put-attribute name="title" value="Phê duyệt hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/approveFileEditAfterAnnounced.jsp"/><!--Hiepvv-->
+    </definition>
+    <definition name="businessEditAfterAnnouncedFiles.Page" extends="body.definition" ><!--Hiepvv-->
+        <put-attribute name="title" value="Danh sách hồ sơ đã công bố"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/editAfterAnnouncedFiles.jsp"/>
+    </definition>
+    <definition name="announcementFile05" extends="content.definition" ><!--Hiepvv-->
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createAnnounFilesPage05.jsp"/>
+    </definition>
+    <definition name="announcementFile05DialogView" extends="content.definition" ><!--Hiepvv-->
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createAnnounFilesPage05Dialog.jsp"/>
+    </definition>
+    <definition name="announcementFile05View" extends="content.definition" ><!--Hiepvv-->
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createAnnounFilesPage05.jsp"/>
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,395 @@
+@charset "utf-8";
+
+
+body {
+    margin: 0px;
+    padding:0px;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:normal;
+    text-align:left;
+
+    /*background: url( ../images/layout/main_bg.jpg ) #4396ca repeat-x 0% 0%;*/
+    /*background: url( ../images/layout/new_3_3/body_bg.gif ) #446e9c repeat-x 0% -4px;*/
+    color:#000;
+    //background-color: #a8e289;
+}
+
+#vt-projectBar {
+    /*background: url( ../images/layout/new_3_3/voffice_banner.png )  no-repeat top left transparent ;*/
+    background-color: rgb(107,173,246);
+    height: 30px;
+    padding:10px;
+    /* Safari 4-5, Chrome 1-9 */
+/*    background: -webkit-gradient(linear, left top, right top, from(#1a82f7), to(#2F2727));
+
+     Safari 5.1, Chrome 10+ 
+    background: -webkit-linear-gradient(left, rgb(65,80,102), rgb(107,173,246));
+
+     Firefox 3.6+ 
+    background: -moz-linear-gradient(left, rgb(65,80,102), rgb(107,173,246));
+
+     IE 10 
+    background: -ms-linear-gradient(left, rgb(65,80,102), rgb(107,173,246));
+
+     Opera 11.10+ 
+    background: -o-linear-gradient(left, rgb(65,80,102), rgb(107,173,246));*/
+
+}
+
+#vt-projectName {
+    margin-top: 1px;
+    margin-left: 10px;
+    font-family: myFont, Tahoma;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+#vt-projectInfo {
+    margin-left:90px; /*same as vt-projectName*/
+    height:25px;
+}
+
+* html #vt-projectInfo {
+    margin-top: 4px;
+}
+
+#vt-projectVersion {
+    color:#fff;
+    font-size: 11px;
+    margin-right:10px;
+}
+
+#vt-slogan {
+    padding-left: 1px;
+    font-family:verdana,tahoma,arial,sans-serif;
+    text-align: left;
+    font-size:11px;
+    color:#fff;
+}
+
+#vt-content-wrapper {
+    border-top:0px none #fff;
+    background: #fff;
+    margin: 0px;
+}
+
+#vt-content {
+    width:100%;
+/*    background: url( ../images/layout/home_page.jpg )  no-repeat right bottom;*/
+}
+
+#vt-header-wrapper {
+    /*background: url( ../images/layout/new_3_1/bg_clouds.jpg ) repeat-x 0% 70%;*/
+    margin:0px;
+}
+
+#vt-footer {
+    /*background: url( ../images/layout/new_3_3/body_bg.gif ) #446e9c repeat-x 0% -22px;*/
+    font-size: 11px;
+    height:63px;
+    color: white;
+    padding-top:0px;
+    margin:0px;
+}
+
+#vt-copyRite {
+    text-align: left;
+    margin-top: 12px;
+    margin-left: 10px;
+}
+
+#vt-poweredByIcon {
+    margin-right: 10px;
+    width: 90px;
+    height: 63px;
+    background: url( ../images/layout/new_3_1/rdwf90x63.png ) no-repeat 100% 0%;
+}
+
+#vt-poweredByText {
+    margin-top: 40px;
+    margin-left: 56px;
+    color:#fff;
+}
+
+#vt-errorDisplayDiv {
+    color: #ff0000;
+    font-weight:bold;
+    font-size: 14px;
+}
+
+#vt-errorDisplayIframe {
+    display:none;
+}
+
+#vt-languageBar {
+
+}
+
+#vt-lang-vn {
+    background:url( ../images/languages/vn.png ) no-repeat 0% 0%;
+}
+
+#vt-lang-en {
+    margin-right:10px;
+    background:url( ../images/languages/en.png ) no-repeat 0% 0%;
+}
+
+#vt-menuBar {
+}
+
+* html #vt-menuBar {
+    height:25px;
+}
+
+#vt-titleBar {
+    /*    background: url( ../images/layout/new_3_3/title_bar.PNG ) repeat-x;*/
+    background-color: #a8e289;
+    font-size:15px;
+    color:white;
+    border-top: 1px solid #446e9c;
+
+    height:33px;
+}
+
+#vt-iconAction {
+    background:url(../images/layout/new_3_3/top-home-icon.png) no-repeat 10px 5px; /*left top*/
+    height:25px; /*must be same as titleBar*/
+    padding-left: 50px; /*10 + 32 + 8*/
+    color:white;
+}
+
+#vt-breadCumb, #vt-breadCumb a {
+    font-family: helvetica, sans-serif;
+    font-size: 11px;
+    color:#00366b;
+}
+
+#vt-breadCumb a:hover {
+    color:#e06713;
+}
+
+#vt-titleAction {
+    margin-top:5px;
+    padding-left: 0px;
+    font-family: Tahoma;
+    font-size:12px;
+    font-weight:bold;
+    color:#00366b;
+}
+
+* html #vt-titleAction {
+    margin-top:6px;
+}
+
+#vt-home {
+    padding-left: 26px;
+    background: url( ../images/layout/new_3_3/top_menu_home.gif ) no-repeat 0% 0%;
+
+}
+
+#vt-home:hover {
+    color:#A1D072;
+}
+
+#vt-backFirstPage:hover {
+    color:#A1D072;
+}
+
+#vt-help:hover {
+    color:#A1D072;
+}
+
+#vt-profile {
+    padding-left: 21px;
+    background: url( ../images/layout/new_3_3/top_menu_user.gif ) no-repeat 0% 0%;
+}
+#vt-profile:hover {
+    color:#A1D072;
+}
+
+#vt-changePwd {
+    padding-left: 21px;
+    background: url( ../images/layout/new_3_3/top_menu_pwd.gif ) no-repeat 0% 0%;
+}
+
+#vt-backFirstPage {
+    padding-left: 21px;
+    background: url( ../images/layout/backFirstPage.png ) no-repeat 0% 0%;
+}
+
+#vt-help {
+    padding-left: 21px;
+    /*
+    margin-right: 10px;
+    font-weight: bold;
+    color:white;
+    font-family: helvetica, sans-serif; 
+    font-size: 11px;
+    */
+    background: url( ../images/icons/help.png ) no-repeat 0% 0%;
+}
+#vt-help:hover {
+    color:#A1D072;
+}
+
+#vt-keyboard {
+    padding-left: 21px;
+    margin-right: 10px;
+    font-weight: bold;
+    color:white;
+    font-family: helvetica, sans-serif; 
+    font-size: 11px;
+    background: url( ../images/icons/keyboard.png ) no-repeat 0% 0%;
+}
+#vt-keyboard:hover {
+    color:#A1D072;
+}
+
+#vt-changePwd:hover {
+    color:#A1D072;
+}
+#vt-changeWorkingDept {
+    padding-left: 21px;
+}
+#vt-changeWorkingDept:hover {
+    color:#A1D072;
+}
+#vt-ministryJusticeId {
+    padding-left: 21px;
+    background: url( ../images/layout/new_3_3/top_menu_ministry.gif ) no-repeat 0% 0%;
+}
+#vt-ministryJusticeId:hover {
+    color:#A1D072;
+}
+
+#vt-download-help{
+    padding-left: 21px;
+    background: url( ../images/icons/help.png ) no-repeat 0% 0%;
+}
+#vt-download-help:hover {
+    color:#A1D072;
+}
+
+#vt-logout {
+    padding-left: 25px;
+    margin-right:10px;
+    background: url( ../images/layout/new_3_3/top_menu_logout.gif ) no-repeat 0% 0%;
+}
+
+#vt-logout:hover {
+    color:#A1D072;
+}
+
+/******************* utils *******************/
+.no-space {
+    margin: 0px;
+    padding:0px;
+}
+
+.no-margin {
+    margin: 0px;
+}
+
+.no-padding {
+    padding:0px;
+}
+
+.text-title {
+    color:#15428B;
+    font-family:tahoma,arial,verdana,sans-serif;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.text-normal {
+    color:#222;
+    font-family: helvetica,arial,verdana,sans-serif;
+    font-size: 11px;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:normal;
+}
+
+.float-left {
+    float:left;
+}
+
+.float-right {
+    float:right;
+}
+
+.no-float {
+    clear:both;
+}
+
+.cursor-pointer {
+    cursor:pointer;
+}
+
+.vt-lang {
+    width:16px;
+    height:11px;
+
+    margin-top:2px;
+    margin-right:4px;
+}
+
+.vt-icon {
+    font-family: helvetica, sans-serif;
+
+    margin-top:5px;
+    margin-right:15px;
+
+    padding-top:2px;
+
+    height:16px;
+    font-size:11px;
+    color:#666;
+}
+
+.global-error {
+    color: #E31B1D;
+    font-size: 150%;
+    font-weight: bold;
+}
+
+/*VT ToolTip*/
+.informer-icon{
+    width:18px;
+    height:18px;
+}
+.informer-icon-info{
+    background: url(../images/icons/informer-sprite.gif) no-repeat scroll 0 -38px transparent;
+}
+.informer-icon-warning{
+    background: url(../images/icons/informer-sprite.gif) no-repeat scroll 0 -20px transparent;
+}
+.informer-icon-error{
+    background: url(../images/icons/informer-sprite.gif) no-repeat scroll 0 -74px transparent;
+}
+.x-region{
+    background-color: #A1D072;
+    padding: 5px 10px;
+}
+.vtTooltip{
+    position: absolute;
+    -moz-border-radius: 3px 3px 3px 3px;
+    background: url("images/popupMenuBg.gif") repeat-x scroll left bottom #FFFFFF;
+    border: 1px solid #7EABCD;
+    padding: 0.45em;
+}
+.vtTooltipContents{
+    font-size: 13px;
+    white-space: nowrap;
+}
+/*end VT ToolTip*/
+
+
+img{
+    border: medium none;
+}

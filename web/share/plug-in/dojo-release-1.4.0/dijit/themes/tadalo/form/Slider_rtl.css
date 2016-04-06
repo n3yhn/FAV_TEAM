@@ -1,0 +1,26 @@
+.dijitRtl .tadalo .dijitSliderProgressBarH,
+.dijitRtl .tadalo .dijitSliderRemainingBarH,
+.dijitRtl .tadalo .dijitSliderLeftBumper,
+.dijitRtl .tadalo .dijitSliderRightBumper,
+.dijitRtl .tadalo .dijitSliderTopBumper {
+	background-position: top right;
+}
+.dijitRtl .tadalo .dijitSliderProgressBarV,
+.dijitRtl .tadalo .dijitSliderRemainingBarV,
+.dijitRtl .tadalo .dijitSliderBottomBumper {
+	background-position: bottom right;
+}
+.dijitRtl .tadalo .dijitSliderLeftBumper {
+	border-left-width: 0px;
+	border-right-width: 1px;
+}
+.dijitRtl .tadalo .dijitSliderRightBumper {
+	border-left-width: 1px;
+	border-right-width: 0px;
+}
+.dijitRtl .tadalo .dijitSliderIncrementIconH {
+	background-position: -7px 0px;
+}
+.dijitRtl .tadalo .dijitSliderDecrementIconH {
+	background-position: -14px 0px;
+}

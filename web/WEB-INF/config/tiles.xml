@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <!--[ LongH says: Core definitions -->
+    <definition name="base.definition" template="/WEB-INF/jsp/pages/layout/index.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="menu" value="/WEB-INF/jsp/pages/layout/menubar.jsp"/>
+        <put-attribute name="body" value=""/>
+    </definition>
+    
+    <definition name="popup.definition" template="/WEB-INF/jsp/pages/layout/popup.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="body" value=""/>
+    </definition>
+
+    <definition name="body.definition" template="/WEB-INF/jsp/pages/layout/bodyLayout.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="type" value="default"/>
+    </definition>
+
+    <definition name="website.definition" template="/WEB-INF/jsp/pages/layout/publishDocumentDirection.jsp">
+        <put-attribute name="body" value=""/>
+    </definition>
+     
+    <definition name="registerAccount.page" extends="website.definition">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/register/registerCreate.jsp"/>
+    </definition>
+     
+    
+    <definition name="content.definition" template="/WEB-INF/jsp/pages/layout/contentLayout.jsp">
+    </definition>
+    <!--] -->
+    <definition name="extBody.definition" template="/WEB-INF/jsp/pages/layout/fullBody.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="leftPaneTitle" value="Left Region"/>
+        <put-attribute name="rightPaneTitle" value="Right Region"/>
+        <put-attribute name="leftPane" value=""/>
+        <put-attribute name="rightPane" value=""/>
+        <put-attribute name="pickerPane" value=""/>
+    </definition>
+    
+    <!--[ LongH says: RDWF-used definitions -->
+    <definition name="index.page" extends="base.definition" >
+        <put-attribute name="title" value="homePage"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/layout/homepage.jsp"/>
+    </definition>
+    <definition name="waitingContent.page" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/layout/waitingEntity.jsp"/>
+    </definition>    
+    <definition name="selectDept.page" extends="base.definition" >
+        <put-attribute name="title" value="homePage"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/layout/selectWorkingDept.jsp"/>
+    </definition>    
+
+    <definition name="loginError.page" template="/WEB-INF/jsp/pages/layout/error.jsp"/>
+    <definition name="loginErrorPermission.page" template="/WEB-INF/jsp/pages/layout/error_no_permission.jsp"/>
+    <!--] -->
+
+    <!--[LongH UploadIframe-->
+    <definition extends="body.definition" name="mainUploadIframeScreen.page">
+        <put-attribute name="title" value="UploadIframe"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/uploadiframe/form.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="uploadIframeCallbackTarget.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/uploadiframe/callbackTarget.jsp"/>
+    </definition>
+    <definition name="errorNoFile.page" template="/WEB-INF/jsp/pages/layout/error_no_file.jsp"/>
+    <!--]LongH UploadIframe-->
+    <definition extends="content.definition" name="uploadResultPage.page">
+        <put-attribute name="title" value="HỆ THỐNG QUẢN LÝ HỒ SƠ CÔNG VIỆC"/>        
+        <put-attribute name="body" value="/WEB-INF/tags/uploadResult.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="uploadResultPageImp.page">      
+        <put-attribute name="body" value="/WEB-INF/tags/uploadResultImp.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="uploadResultPageSh.page">
+        <put-attribute name="body" value="/WEB-INF/tags/uploadResultSH.jsp"/>
+    </definition>
+    <definition name="reportResult.page" extends="content.definition">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/reportResult.jsp"/>
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="category" extends="default">
+        <action name="category" class="com.viettel.voffice.database.DAO.CategoryDAO" method="prepare">
+            <result type="tiles" name="categoryPage">categoryPage.page</result>
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    insertCategory, onInsert, onDelete, onInsertCategory, gridDeleteData, insertCategorySp
+
+                </param>
+            </interceptor-ref>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        
+        <action name="businessAction" class="com.viettel.hqmc.DAO.BusinessDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, gridDeleteData
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="businessPage">businessSearch.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        <action name="caUserAction" class="com.viettel.hqmc.DAO.CaUserDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    registerCA
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="caUserPage">caUser.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        
+        <action name="categoryTypeAction" class="com.viettel.hqmc.DAO.CategoryTypeDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onDelete
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="categoryTypePage">categoryType.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        
+        <action name="categoryAction" class="com.viettel.voffice.database.DAO.CategoryDAO" method="prepareCategory">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onDelete, onInsertCategory, insertCategory, gridDeleteData
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="categorysPage">categorySearch.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        
+        <action name="procedureAction" class="com.viettel.hqmc.DAO.ProcedureDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onDelete, onDeleteDept, onInsertDept, onUpdateDeptProcessing, onRemoveDeptProcessing
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="procedurePage">procedure.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+
+        <action name="vietnameseStandardAction" class="com.viettel.hqmc.DAO.VietnameseStandardDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onDelete
+                </param>
+                
+            </interceptor-ref>
+            <result type="tiles" name="vietnameseStandardPage">vietnameseStandardSearch.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        
+        <action name="technicalStandardAction" class="com.viettel.hqmc.DAO.TechnicalStandardDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onDelete, onPublished, onTerminate, onUpdateStatus
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="technicalStandardPage">technicalStandardSearch.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        
+        <action name="registerCreateAction" class="com.viettel.hqmc.DAO.RegisterDAO" method="prepareCreate">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onApprove, onResetPasswordHomePage
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="registerCreatePage">registerCreate.page</result>
+            <result type="tiles" name="registerAccountPage">registerAccount.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        
+        <action name="registerSearchAction" class="com.viettel.hqmc.DAO.RegisterDAO" method="prepareSearch">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onApprove,onInsert
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="registerSearchPage">registerSearch.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        
+        <action name="eventLogLoginAction" class="com.viettel.vsaadmin.database.DAO.EventLogLoginDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="eventLogLoginPage">eventLogLogin.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        
+        <action name="parameterAction" class="com.viettel.hqmc.DAO.ParameterDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onDelete
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="parameterActionPage">parameter.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        
+        <!-- Tien ich -->
+        <action name="announcementReceiptPaperAction" class="com.viettel.hqmc.DAO.AnnouncementReceiptPaperDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onDelete, onProvide
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="announcementReceiptPaperPage">announcementReceiptPaper.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        <action name="confirmImportSatistPaperAction" class="com.viettel.hqmc.DAO.ConfirmImportSatistPaperDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onDelete, onProvide
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="confirmImportSatistPaperPage">confirmImportSatistPaper.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        <action name="confirmAnnouncementPaperAction" class="com.viettel.hqmc.DAO.ConfirmAnnouncementPaperDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onDelete
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="confirmAnnouncementPaperPage">confirmAnnouncementPaper.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        
+        <action name="userAttachsAction" class="com.viettel.hqmc.DAO.UserAttachsDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onDelete, onUpdateStatus
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="userAttachsPage">userAttachsSearch.page</result>
+            <result type="tiles" name="uploadResultPage">uploadResultPage.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        <action name="timeProcessAction" class="com.viettel.hqmc.DAO.TimeProcessDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onDelete, onUpdateStatus
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="timeProcessPage">timeProcessSearch.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        <action name="feeAction" class="com.viettel.hqmc.DAO.FeeDao" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onDelete, onUpdateStatus, onSavePayment, onSavePaymentOnline, onSavePaymentFinal, onSavePaymentNew, onInsertFeePaymentInfo, onDeny
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="feePage">feeSearch.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        
+        <action name="notificationAction" class="com.viettel.hqmc.DAO.NotificationDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onDelete, onUpdate 
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="notificationPage">notificationSearch.page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        
+        
+        <!-- End Tien ich -->
+    </package>
+</struts>

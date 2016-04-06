@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value=
+                   "Time: %d{ISO8601} %-5p %n
+                   Location: %l%n
+                   Message: %m %n %n"/>
+        </layout>
+    </appender>
+
+    <appender name="wflog" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="../logs/wflog.log" />
+        <param name="append" value="true" />
+        <param name="datePattern" value="'.'yyyy-MM-dd-HH" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{HH:mm:ss.SSS} %t %C{1} %-5p %n%l%n%m%n%n" />
+        </layout>
+    </appender>
+
+    <logger name="com.viettel">
+        <level value="error"/>
+        <appender-ref ref="wflog"/>
+    </logger>
+
+    <root>
+        <priority value ="error" />
+        <appender-ref ref="ConsoleAppender"/>
+    </root>
+
+    
+    <appender name="VSAFilterAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="${catalina.base}/logs/vsaFilter.log" />
+        <param name="append" value="true" />
+        <param name="datePattern" value="'.'yyyy-MM-dd-HH" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{dd/MM/yyyy HH:mm:ss} %5p [%c{1}] %m%n" />
+        </layout>
+    </appender>
+
+    <logger name="viettel.passport.util">
+        <level value="error"/>
+        <appender-ref ref="VSAFilterAppender"/>
+    </logger>
+
+
+
+
+
+</log4j:configuration>

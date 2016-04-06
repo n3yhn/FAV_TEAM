@@ -1,0 +1,582 @@
+.dojoxGridMasterHeader {
+    position: relative;
+}
+
+.dojoxGridMasterView  {
+    position: relative;
+}
+
+.dojoxGridView {
+    position: absolute;
+    overflow: hidden;
+}
+
+.dojoxGridHeader table {
+    text-align: center;
+}
+
+.dojoxGridHeader .dojoxGridCellFocus .dojoxGridCellOver {
+    background-image: none;
+    background-color: white;
+    border-bottom-color: #FEBE47;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom-width: 3px;
+}
+
+.dojoxGridArrowButtonNode:hover {
+    cursor: default;
+}
+.dojoxGridArrowButtonChar:hover {
+    cursor: default;
+}
+.dojoxGridSortUp:hover {
+    cursor: default;
+}
+.dojoxGridSortDown:hover {
+    cursor: default;
+}
+.dijit_a11y .dojoxGridArrowButtonChar {
+    display:inline !important;
+}
+
+.dojoxGridContent {
+    position: relative;
+    overflow: hidden;
+    -moz-outline-style: none;
+    outline: none;
+}
+
+.dojoxGridRow {
+    position: relative;
+    width: 9000em;
+}
+
+.dojoxGridRowTable {
+    table-layout: fixed;
+    width: 0;
+    empty-cells: show;
+}
+.dj_ie .dojoxGridRowTable {
+    border-collapse: collapse;
+}
+.dojoxGridInvisible {
+    visibility: hidden;
+}
+.Xdojo-ie .dojoxGridInvisible {
+    display: none;
+}
+.dojoxGridInvisible td, .dojoxGridHeader .dojoxGridInvisible td {
+    border-top-width: 0;
+    border-bottom-width: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.dojoxGridCellFocus.dojoxGridCellOver {
+    border: 1px dashed green;
+}
+
+.dojoxGridInput, .dojoxGridSelect, .dojoxGridTextarea {
+    margin: 0;
+    padding: 0;
+    border-style: none;
+    width: 100%;
+    font-size: 100%;
+    font-family: inherit;
+}
+.dojoxGridHiddenFocus {
+    position: absolute;
+    top: -1000px;
+    height: 0;
+    width: 0;
+}
+.dijit_a11y .dojoxGridRowbarSelected {
+    border-top: 1px solid white;
+    border-bottom: 1px dashed black;
+    border-top: 0;
+    background: none;
+}
+.dijit_a11y .dojoxGridRowbarSelected .dojoxGridRowbarInner {
+    border: 0;
+    border-top: 1px solid white;
+}
+.dijit_a11y .dojoxGridRowSelected {
+    border: 1px solid black !important;
+}
+.dojoxGridDndAvatar {
+    font-size: 100%;
+}
+
+.dijit_a11y .dojoDndItemBefore {
+    border-left: double;
+}
+.dijit_a11y .dojoDndItemAfter {
+    border-right: double;
+}
+.dojoxGridDndAvatarItem	td {
+    border: 1px solid;
+    border-color: #F6F4EB #ACA899 #ACA899 #F6F4EB;
+    background: url(images/grid_dx_gradient.gif) #E8E1CF top repeat-x;
+    padding: 0pt;
+    margin: 0pt;
+}
+.dojoxGridDndAvatarItem	td.dojoxGridDndAvatarItemImage {
+    border: 0;
+    border-color: #F6F4EB #ACA899 #ACA899 #F6F4EB;
+    background-color: transparent;
+    padding: 3px;
+    padding-bottom: 2px;
+    margin: 0;
+}
+.dojoDndMove .dojoxGridDndAvatarItem .dojoxGridDndAvatarItemImage {
+    background-image: url(../../../dojo/resources/images/dndNoMove.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.dojoDndCopy .dojoxGridDndAvatarItem .dojoxGridDndAvatarItemImage {
+    background-image: url(../../../dojo/resources/images/dndNoCopy.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.dojoDndMove .dojoDndAvatarCanDrop .dojoxGridDndAvatarItem .dojoxGridDndAvatarItemImage {
+    background-image: url(../../../dojo/resources/images/dndMove.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.dojoDndCopy .dojoDndAvatarCanDrop .dojoxGridDndAvatarItem .dojoxGridDndAvatarItemImage {
+    background-image: url(../../../dojo/resources/images/dndCopy.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.dojoxGridColPlaceBottom {
+    background: transparent url(images/grid_sort_up.gif) no-repeat scroll left top;
+}
+.dojoxGridColPlaceTop {
+    background: transparent url(images/grid_sort_down.gif) no-repeat scroll left top;
+}
+.dojoxGridColPlaceTop, .dojoxGridColPlaceBottom {
+    font-size:1px;
+    height:6px;
+    z-index:10000;
+    top:0;
+    overflow:hidden;
+    position:absolute;
+    line-height:1px;
+    width:8px;
+}
+.dojoxGridResizeColLine {
+    width: 1px;
+    background-color: #777;
+    position: absolute;
+    cursor: col-resize;
+    z-index:10000;
+}
+.dojoxGridColNoResize,
+.dojoxGridColNoResize .dojoDndItemOver {
+    cursor: not-allowed !important;
+}
+.dojoxGridColResize,
+.dojoxGridColResize .dojoDndItemOver,
+.dojoxGridColumnResizing,
+.dojoxGridColumnResizing .dojoDndItemOver,
+.dojoxGridColumnResizing .dojoxGridHeader {
+    cursor: col-resize !important;
+}
+.dojoxGridColPlaceBottom {
+    background: transparent url(images/grid_sort_up.gif) no-repeat scroll left top;
+}
+.dojoxGridColPlaceTop {
+    background: transparent url(images/grid_sort_down.gif) no-repeat scroll left top;
+}
+.dojoxGridColPlaceTop, .dojoxGridColPlaceBottom {
+    font-size:1px;
+    height:6px;
+    z-index:10000;
+    top:0;
+    overflow:hidden;
+    position:absolute;
+    line-height:1px;
+    width:8px;
+}
+.dojoxGridResizeColLine {
+    width: 1px;
+    background-color: #777;
+    position: absolute;
+}
+
+.dojoxGridSummarySpan {
+    visibility: hidden;
+}
+.dojoxGridSummaryRow .dojoxGridSummarySpan,
+.dojoxGridRowCollapsed .dojoxGridSummarySpan {
+    visibility: visible;
+}
+.dojoxGridNoChildren .dojoxGridExpando {
+    visibility: hidden !important;
+    width: 0px !important;
+}
+
+.dojoxGrid {
+    /*[ org*/
+    position: relative;
+
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    -moz-outline-style: none;
+    outline: none;
+    overflow: hidden;
+    height: 0;
+
+    border:1px solid #a9a9a9;
+    background: url(../../../dijit/themes/tadalo/images/tabHover.gif) #e9e9e9 repeat-x top;
+    /*] org*/
+    
+    font-size: 0.85em;
+}
+
+.dojoxGrid table {
+    padding: 0;
+}
+
+.dojoxGrid td {
+    font-size:12px; /*font-size-td*/
+    -moz-outline: none;
+}
+
+.dojoxGridMasterMessages {
+    /*[ org*/
+    position: relative;
+    padding: 1em;
+    text-align: center;
+    background-color: white;
+    /*] org*/
+
+    background-color: #fefefe;
+}
+.dojoxGridLoading,
+.dojoxGridError {
+    background-position:left center;
+    background-repeat: no-repeat;
+    padding-left:25px;
+}
+.dijitRtl .dojoxGridLoading,
+.dijitRtl .dojoxGridError,
+.dijitRtl .dojoxGridNoData {
+    background-position:right;
+    padding-right:25px;
+    padding-left:0px;
+}
+.dojoxGridLoading {
+    background-image: url('../../../dijit/themes/tadalo/images/loading.gif');
+}
+.dojoxGridError {
+    background-image: url('../../../dijit/themes/tadalo/images/warning.png');
+}
+.dojoxGridHeader {
+    /*[ org*/
+    position: absolute;
+    overflow: hidden;
+    cursor: default;
+    background: url(images/grid3-hrow.gif) #f9f9f9 bottom repeat-x;
+    /*] org*/
+
+    background: url(../../../dijit/themes/tadalo/images/tabHover.gif) #e7ecf2 repeat-x top;
+}
+.dojoxGridHeader .dojoxGridCell {
+    /*[ org*/
+    border: 1px solid;
+    border-color: #F6F4EB #ACA899 #ACA899 #F6F4EB;
+    background: url(images/grid3-hrow.gif) #f9f9f9 bottom repeat-x;
+    padding-bottom: 2px;
+    /*] org*/
+
+    border-width: 1px;
+    padding-bottom: 0px;
+    border-color: transparent #ACA899 #ACA899 transparent;
+    background: url(../../../dijit/themes/tadalo/images/tabHover.gif) #e7ecf2 repeat-x top;
+    color: #15428b !important;
+    font-size:12px !important; /*font-size-header*/
+
+}
+.dojoxGridHeader .dojoxGridCellOver {
+    /*[ org*/
+    background: url(images/grid3-hrow-over.gif) #ebf3fd bottom repeat-x;
+    /*] org*/
+
+    background: url(../../../dijit/themes/tadalo/images/grid3-hrow-over.gif) #ebf3fd repeat-x bottom;
+    color: #000 !important;
+}
+.dojoxGridHeader .dojoxGridCellFocus {
+    /*[ org*/
+    border: 1px dashed blue;
+    /*] org*/
+    
+    border-color: #ACA899 #919191;
+    border-style: dashed;
+}
+.dojoxGridArrowButtonChar {
+    /*[ org*/
+    display:inline;
+    /*] org*/
+    
+    float: right;
+    display: none;
+}
+.dojoxGridArrowButtonNode {
+    /*[ org*/
+    display: none;
+    padding-left: 16px;
+    /*] org*/
+
+    display: block !important;
+    padding-left: 0px;
+    float: right;
+    background:url("../../../dijit/themes/tadalo/images/spriteArrows.png") no-repeat left center;
+    width: 7px;
+    height: 1em;
+    margin: 2px 4px 0px 5px;
+}
+.dj_ie6 .dojoxGridArrowButtonNode {
+    background-image:url("../../../dijit/themes/tadalo/images/spriteArrows.gif");
+    margin-left: 0px;
+}
+.dojoxGridSortUp .dojoxGridArrowButtonNode {
+    background-position: -21px;
+}
+.dijit_a11y .dojoxGridArrowButtonNode {
+    display: none !important;
+}
+.dojoxGridScrollbox {
+    /*[ org*/
+    position: relative;
+    overflow: auto;
+    background-color: white;
+    width: 100%;
+    /*] org*/
+    
+    background-color: #fefefe;
+}
+.dojoxGridRowbar {
+    /*[ org*/
+    border: 1px solid red;
+    border-color: #F6F4EB #ACA899 #ACA899 #F6F4EB;
+    border-top: none;
+    background: url(images/grid3-special-col-bg.gif) #f9f9f9 repeat-y right;
+    /*] org*/
+    
+    border: none;
+    background: url(../../../dijit/themes/tadalo/images/tabActive.png) #f9f9f9 repeat-y 8px 0%;
+    border-right: 1px solid #D0D0D0;
+    padding: 0px;
+
+}
+.dojoxGridRowbarInner {
+    /*[ org*/
+    border-top: 1px solid #F6F4EB;
+    /*] org*/
+
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+.dojoxGridRowbarOver {
+    /*[ org*/
+    background-image: none;
+    background-color: blue;
+    border-top-color: #FEBE47;
+    border-bottom-color: #FEBE47;
+    /*] org*/
+    
+    background: url(../../../dijit/themes/tadalo/images/tabHover.png) #e9e9e9 repeat-y right;
+}
+.dojoxGridRowbarSelected {
+    /*[ org*/
+    background-color: #D9E8F9;
+    /*] org*/
+    
+    background: url(../../../dijit/themes/tadalo/images/tabDisabled.png) #D8E8F9 no-repeat center;
+    border-right: 1px solid #ccc;
+}
+.dojoxGridRow {
+    /*[ org*/
+    border: 1px solid #E8E4D8;
+    border-color: #F8F7F1;
+
+    border-left: none;
+    border-right: none;
+    background-color: white;
+    border-top: none;
+    /*] org*/
+    
+    border: none;
+    background-color: white;
+}
+.dojoxGridRowOver {
+    /*[ org*/
+    border-top-color: #FEBE47;
+    border-bottom-color: #FEBE47;
+    /*] org*/
+    
+    border-top-color: #ccc;
+    border-bottom-color: #ccc;
+}
+.dojoxGridRowOver .dojoxGridCell {
+    background-color: #60a1ea;
+    color:#fff;
+}
+.dojoxGridRowOver .dojoxGridCell .dijit {
+    color: #000;
+}
+.dojoxGridRowOver .dojoxGridCell .dijitDisabled {
+    color: gray;
+}
+.dojoxGridRowOdd {
+    /*[ org*/
+    background: #f8f8f8;
+    /*] org*/
+
+    background-color: #E8EFF5;
+}
+.dojoxGridRowSelected {
+    /*[ org*/
+    background-color: #dfe8f6;
+    /*] org*/
+    
+    background-color: #aec7e3 !important;
+}
+
+.dojoxGridCell {
+    /*[ org*/
+    border: 1px solid;
+    border-color: #EBEADB;
+    border-right-color: #D5CDB5;
+    /*padding: 3px 3px 3px 3px;*/
+    padding-top: 3px;
+    padding-bottom: 3px;
+    text-align: left;
+    overflow: hidden;
+    /*] org*/
+
+    border: 1px solid #E0E0E0;
+    border-left-color: transparent;
+    border-top-color: transparent;
+}
+.dj_ff2 .dojoxGridCell {
+    border-left-width: 0px;
+    border-top-width: 0px;
+}
+.dj_ie6 .dojoxGridCell {
+    border: 1px solid white;
+    border-right: 1px solid #E0E0E0;
+}
+.dojoxGridCellFocus {
+    /*[ org*/
+    border: 1px dashed blue;
+    /*] org*/
+    
+    border: 1px dashed darkblue !important;
+}
+.dojoxGridCellOver {
+    /*[ org*/
+    border: 1px dotted #FEBE47;
+    /*] org*/
+
+    border: 1px dotted #a6a6a6;
+}
+.dojoxGridCellFocus .dojoxGridCellOver {
+    border: 1px dashed darkblue !important;
+}
+.dojoxGridRowEditing td {
+    /*[ org*/
+    background-color: #F4FFF4;
+    /*] org*/
+    
+    background-color: #60a1ea;
+
+}
+.dojoxGridRow-inserting td {
+    /*[ org*/
+    background-color: #F4FFF4;
+    /*] org*/
+    
+    background-color: #F4FFF4;
+}
+.dojoxGridRow-inflight td {
+    /*[ org*/
+    background-color: #F2F7B7;
+    /*] org*/
+    
+    background-color: #F2F7B7;
+}
+.dojoxGridRow-error td {
+    background-color: #F8B8B6;
+}
+.dojoxGrid .dojoDndItemBefore {
+    border-left-color: #3559ac;
+}
+.dojoxGrid .dojoDndItemAfter {
+    border-right-color: #3559ac;
+}
+.dojoxGridExpando {
+    float: left;
+    height: 18px;
+    width: 18px;
+    text-align: center;
+    margin-top: -3px;
+}
+.dijitRtl .dojoxGridExpando {
+    float: right;
+}
+.dojoxGridExpandoCell {
+    /*[ org*/
+    vertical-align: top;
+    /*] org*/
+    padding-top: 5px;
+}
+.dojoxGridExpandoNode {
+    height: 18px;
+    background-image: url('../../../dijit/themes/tadalo/images/treeExpand_plus.gif');
+}
+.dojoxGridExpandoOpened .dojoxGridExpandoNode {
+    background-image: url('../../../dijit/themes/tadalo/images/treeExpand_minus.gif');
+}
+.dojoxGridExpandoLoading .dojoxGridExpandoNode {
+    background-image: url('../../../dijit/themes/tadalo/images/treeExpand_loading.gif');
+}
+.dojoxGridTreeModel .dojoxGridNoChildren .dojoxGridExpando {
+    visibility: visible !important;
+    width: 18px !important;
+}
+.dojoxGridTreeModel .dojoxGridNoChildren .dojoxGridExpandoNode {
+    background-image: url('../../../dijit/themes/tadalo/images/treeExpand_leaf.gif');
+    background-position: -3px;
+}
+.dojoxGridExpandoNodeInner {
+    visibility: hidden;
+}
+.dijit_a11y .dojoxGridExpandoNodeInner {
+    visibility: visible;
+}
+
+.dojoxGridSummaryRow .dojoxGridCell {
+    border-top-color: #999;
+    border-top-style: solid;
+}
+.dojoxGridSpacerCell,
+.dojoxGridExpandoCell,
+.dojoxGridSummaryRow .dojoxGridSpacerCell {
+    border-color: transparent;
+    border-right-color: #D5CDB5;
+}
+.dojoxGridSummaryRow .dojoxGridTotalCell,
+.dojoxGridRowCollapsed .dojoxGridExpandoCell,
+.dojoxGridTreeModel .dojoxGridExpandoCell {
+    border-bottom-color: #D5CDB5;
+}
+.dojoxGridSubRowAlt {
+    background-color: #F8F8F8;
+}
+.dojoxGridRowOdd .dojoxGridSubRowAlt {
+    background-color: #EDEFF3;
+}

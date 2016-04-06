@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <!--definition extends="extBody.definition" name="department.page">
+        <put-attribute name="title" value="Danh mục phòng ban đơn vị"/>
+        <put-attribute name="pickerPane" value="/WEB-INF/jsp/pages/category/department/departmentTreePicker.jsp"/>
+        <put-attribute name="leftPane" value="/WEB-INF/jsp/pages/category/department/departmentTree.jsp"/>
+        <put-attribute name="leftPaneTitle" value="Cây đơn vị"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/category/department/department.jsp"/>
+    </definition-->
+
+
+     <definition extends="body.definition" name="department.page">
+        <put-attribute name="title" value="Quản lý phòng ban"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/department/department-Window.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="listUserOfDept.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/department/listUserOfDept.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="tree.page0">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/department/tree.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="prepareChildDept.page">
+        <put-attribute name="title" value="Quản lý phòng ban"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/departmentChild/department-Window.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="tree.page1">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/vsaadmin/departmentChild/treeDept.jsp"/>
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,308 @@
+@charset "utf-8";
+/* CSS Document */
+@font-face {
+    font-family: 'MyriadPro-BoldCond';
+    src: url('MyriadPro-BoldCond.otf');
+    src: url('MyriadPro-BoldCond.otf?#iefix'), /* IE4+ */
+         url('MyriadPro-BoldCond.woff') format('woff'),
+         url('MyriadPro-BoldCond.ttf') format('truetype'), /* font chuan */
+         url('MyriadPro-BoldCond.svg#vni-courinormal') format('svg'); /* iphone, ipad*/
+}
+@font-face {
+    font-family: 'MYRIADPRO-COND';
+    src: url('MYRIADPRO-COND.OTF');
+    src: url('MYRIADPRO-COND.OTF?#iefix'), /* IE4+ */
+         url('MYRIADPRO-COND.woff') format('woff'),
+         url('MYRIADPRO-COND.ttf') format('truetype'), /* font chuan */
+         url('MYRIADPRO-COND.svg#vni-courinormal') format('svg'); /* iphone, ipad*/
+}
+
+body
+{
+	font-family:'MYRIADPRO-COND';
+	font-size:20px;
+	margin:0; padding:0
+}
+ul, li
+{
+	list-style:none outside none;
+	margin:0; padding:0;
+}
+a
+{
+	text-decoration:none;
+}
+.clear
+{
+	clear:both;
+}
+.wrapper
+{
+	width:1200px;
+	margin:0 auto;
+}
+.header_hp
+{
+	height:73px; width:100%; position:relative;
+}
+.logo1
+{
+	float:left;
+}
+.hmenu
+{
+	background:url(../images/bg-menu.png) right bottom no-repeat;
+	width:650px;
+	bottom: 0;
+    height: 50px;
+    position: absolute;
+    right: 0;
+}
+.ul_nav {
+    padding: 16px 0 0 46px;
+}
+.hr_name
+{
+	background:url(../images/hmenu.png) top left no-repeat #0269c8;
+	height:42px; width:100%; line-height:42px;
+	border-top:1px solid #e6f58f;
+}
+.hr_name a
+{
+	color:#fff;
+	font-family:'MyriadPro-BoldCond';
+	font-size:20px;
+	text-transform:uppercase;
+	padding-left:15px;
+}
+.big_banner
+{
+	background:url(../images/bg-big.jpg) top left no-repeat;
+	height:380px;
+}
+.step4
+{
+	background:url(../images/bg-step.jpg) top left no-repeat;
+	height:129px;
+	color:#fff;
+	}
+li.li_nav
+{
+	float:left; padding-top:3px;
+}
+.menu-active
+{
+	background:url(../images/bg-li-hover.png) top left repeat-x !important;
+}
+li.li_nav a
+{
+	color:#fff;
+	font-family:'MYRIADPRO-COND';
+	font-size: 20px;
+    padding: 0 27px 0 24px;
+}
+.iconhome
+{
+	background:url(../images/icon-home.png) left 5px no-repeat;
+}
+.icontt
+{
+	background:url(../images/icon-thutuc.png) left 7px no-repeat;
+}
+.iconSearch
+{
+	background:url(../images/icon-tk.png) left 7px no-repeat;
+}
+.iconContact
+{
+	background:url(../images/icon-contact.png) left 7px no-repeat;
+}
+.statistic {
+    width: 50%; float:left;
+}
+.titTK a
+{
+	background:url(../images/chart.png) top left no-repeat;
+	font-family:'MYRIADPRO-COND'; font-weight:bold;
+	font-size:33px; color:#fff; padding-left:32px;
+}
+.titTK {
+    left: 49px;
+    position: relative;
+    top: 39px;
+}
+.contentTK {
+    margin-left: 65px;
+    margin-top: 50px;
+}
+.contentTK ul li {
+    color: #FFFFFF;
+    list-style: disc outside none;
+}
+.contentTK ul li a
+{
+	color:#fff;
+}
+.titReg a
+{
+	text-transform:uppercase;
+	font-family:'MyriadPro-BoldCond';
+	font-size:36px;
+	color:#013a57;
+	line-height:45px;
+}
+.RegForm
+{
+	float: right;
+    position: relative;
+    right: 5px;
+    top: 15px;
+    width: 41%;
+}
+.Green_btn {
+    background: url("../images/bg-btn.png") no-repeat scroll left top rgba(0, 0, 0, 0);
+    float: left;
+    height: 35px;
+    line-height: 35px;
+    margin-right: 10px;
+    text-align: center;
+    width: 128px;
+}
+.Green_btn a {
+    color: #FFFFFF;
+	font-size:21px;
+}
+.contentReg {
+    line-height: 22px;
+    padding: 10px 0;
+	font-size: 20px;
+}
+.textStep
+{
+	font-family:'MyriadPro-BoldCond';
+	font-size:31px;
+	padding-top:25px;
+	padding-left:15px;
+	 float: left;
+    width: 114px;
+}
+.ContentStep li {
+    float: left;
+    padding: 15px 16px 0 0;
+    text-align: center;
+    width: 206px;
+}
+.ContentStep li a
+{
+	color:#fff;
+}
+.boxImgIcon
+{
+	height:51px;
+}
+.footer
+{
+	/*min-height:237px;*/
+	background:url(../images/old_map.png) repeat;
+	
+}
+.boxInfoFoot
+{
+	color: #4c4b4b;
+    float: left;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-top: 30px;
+    width: 28%;
+}
+.TitleFoot
+{
+	background:url(../images/bg-title.png) top left no-repeat ;
+	height: 33px;
+    padding-left: 26px;
+    width: 250px;
+}
+.iconReport a
+{
+	background:url(../images/icon-tb.png) left 5px no-repeat;
+}
+.iconContact a
+{
+	background:url(../images/icon-contact.png) left 5px no-repeat;
+}
+.TitleFoot a
+{
+	padding: 0 24px;
+	color:#fff;
+	font-size:24px;
+}
+.boxInfoFoot ul li
+{
+	list-style:disc inside url(../images/icon-gray.png);
+	padding:0 25px;
+}
+/*-----------------------------------------------------Trang dang ky------------------------------------------------------------*/
+.body_Reg
+{
+	background:#f9f9f9; padding-top:15px;
+}
+.head_Reg_title
+{
+	background:url(../images/title-dk.gif) left top no-repeat;
+	width:402px; height:49px;
+	color:#7b674f;
+	font-size:24px;
+	font-family:'MyriadPro-BoldCond', Arial, sans-serif;
+	line-height: 49px;
+    padding-left: 70px;
+}
+.table_reg
+{
+	margin:0 auto;
+}
+.Title_list_reg
+{
+	background:url(../images/bg-list-reg.png) left 35px no-repeat;
+	width:210px; height:33px;
+	color:#fff; 
+	padding:35px 0 20px 25px !important;
+}
+.egov-label-bold
+{
+	width:15%;
+	text-align:right;
+	padding-right:30px !important;
+}
+.ego-input-form {
+    width: 35%;
+}
+.ego-input-form input, .ego-input-form select
+{
+	border:1px solid #a7c8db;
+	height:24px;
+}
+.ego-input-form select
+{
+	width:101%;
+}
+.egov-label-bold span
+{
+	color:#F00;
+}
+.table_reg td
+{
+	padding:3px 0;
+}
+.btn_dk
+{
+	background:#2fb6e6;
+	border-radius:5px;
+	-webkit-border-radius:5px;
+    -moz-border-radius:5px;
+	border:none;
+	padding:2px 25px;
+	font-family:'MyriadPro-Cond', Arial, sans-serif;
+	font-size:20px;
+	color:#fff;
+	text-transform:uppercase;
+}

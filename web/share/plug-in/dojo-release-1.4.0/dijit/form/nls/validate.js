@@ -1,0 +1,1 @@
+({"rangeMessage":"This value is out of range.","invalidMessage":"Giá trị đã nhập vào không hợp lệ.","missingMessage":"Bắt buộc nhập."})

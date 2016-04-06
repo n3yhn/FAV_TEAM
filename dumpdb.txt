@@ -1,2 +1,0 @@
-imp attp14/attpvt2345 file="abc.dmp" full=y
-imp attp14/attpvt2345 fromuser=attp14 touser=attp14 table=FILE_FOR_SEARCH row=y file="E:\dumpdb\attp_02042016.dmp" commit=y grants=n statistics=none ignore=y

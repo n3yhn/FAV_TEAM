@@ -1,0 +1,285 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <!--[ LongH says: include your action-config file here-->
+    <!-- VSA -->
+    <include file="com/viettel/config/User.xml"/>
+    <include file="com/viettel/config/object.xml"/>
+    <include file="com/viettel/config/vsaRoles.xml"/>
+    <include file="com/viettel/config/Applications.xml"/>
+    <include file="com/viettel/config/department.xml"/>
+    <include file="com/viettel/config/flow.xml"/>
+    <!-- End Of VSA -->
+    
+    <!-- vOffice BTP -->
+    <!-- Begin SyTV -->
+    <include file="com/viettel/config/category.xml"/>
+    <include file="com/viettel/config/home.xml"/>
+    <!--End SyTV-->
+    
+    <!-- Begin HanPT1 -->
+    <include file="com/viettel/config/position.xml"/>
+    <!--End HanPT1-->
+    
+    <!-- End of vOffice BTP -->
+     
+    <include file="com/viettel/config/process.xml"/>
+    <include file="com/viettel/config/voAttach.xml"/>
+    
+    <include file="com/viettel/config/token.xml"/>
+    <include file="com/viettel/config/uploadIFrame.xml"/>
+    
+    <!-- Email -->
+    <include file="com/viettel/voffice//config/voEmail.xml"/>
+    <!-- End Email -->
+    <include file="com/viettel/config/files.xml"/>
+    <include file="com/viettel/config/report.xml"/>
+    
+
+
+    <!--[ LongH says: Configuration for the default package. -->
+    <package extends="struts-default" name="default">
+        <!--[ LongH says: Result-type configurations-->
+        <result-types>
+            <result-type class="org.apache.struts2.views.tiles.TilesResult" default="false" name="tiles"/>
+            <result-type class="org.apache.struts2.json.JSONResult" default="false" name="json"/>
+        </result-types>
+
+        <interceptors>
+            <interceptor class="com.viettel.framework.interceptor.VSAFilterAdaptInterceptor" name="vsaFilterAdaptInterceptor"/>
+            <interceptor class="com.viettel.framework.interceptor.HibernateConnectInterceptor" name="hibernateConnectInterceptor"/>            
+            <!--interceptor class="com.viettel.framework.interceptor.ModifyParams" name="modifyParams"/-->
+            <interceptor-stack name="wfDefaultStack">
+                <interceptor-ref name="exception"/>
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="i18n"/>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="debugging"/>
+                <interceptor-ref name="scopedModelDriven"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="multiselect"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="actionMappingParams"/>
+                
+                <!--<interceptor-ref name="modifyParams">
+                    <param name="excludeParams">dojo\..*,^struts\..*</param>
+                </interceptor-ref>-->
+                <interceptor-ref name="params">
+                    <param name="excludeParams">dojo\..*,^struts\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+                <interceptor-ref name="workflow">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+            </interceptor-stack>
+            
+            
+            
+            <interceptor-stack name="rdwfInterceptorStack">
+                <interceptor-ref name="wfDefaultStack"/>
+                <interceptor-ref name="exception"/>
+                <interceptor-ref name="hibernateConnectInterceptor"/>                
+                <interceptor-ref name="tokenSession">
+                    <param name="excludeMethods">*</param>
+                </interceptor-ref>
+            </interceptor-stack>
+
+            <!--[ requestTokenRdwfInterceptorStack-->
+            <interceptor-stack name="requestTokenRdwfInterceptorStack">
+                <interceptor-ref name="rdwfInterceptorStack"/>
+                <interceptor-ref name="tokenSession">
+                    <param name="excludeMethods">*</param>
+                </interceptor-ref>
+            </interceptor-stack>
+            <!--] requestTokenRdwfInterceptorStack-->
+
+        </interceptors>
+        <default-interceptor-ref name="rdwfInterceptorStack"/>
+        <default-action-ref name="Whistle"/>
+        <!--] LongH says: Interceptor configurations-->
+
+        <!--[ LongH says: Action configurations-->
+        <global-results>
+            <result name="error" type="tiles">
+                loginError.page
+            </result>
+            <result name="Exception" type="tiles">
+                loginError.page
+            </result>
+            <result name="sessionTimeout">
+                /WEB-INF/jsp/pages/layout/sessionTimeout.jsp
+            </result>
+            <result name="requestOverhead">
+                /WEB-INF/jsp/pages/layout/requestOverhead.jsp
+            </result>
+            <result name="publishDocumentDirection">
+                /WEB-INF/jsp/pages/layout/publishDocumentDirection.jsp
+            </result>
+            <result name="publishDocumentDirectionContent">
+                /WEB-INF/jsp/pages/documentDirection/directionDocumentPublishedListPortal.jsp
+            </result>
+            <result name="VSAError">
+                share/error.jsp
+            </result>
+            <result name="invalid.token">
+                share/error.jsp?errorCode=InvalidToken
+            </result>
+        </global-results>
+<!--        <action class="com.viettel.database.DAO.AuthenticateDAO" method="actionLogin" name="Authentication">
+            <result name="loginSuccess" type="tiles">
+                home.page
+            </result>
+            <result name="loginError" type="tiles">
+                loginError.page
+            </result>
+        </action>
+        <action class="com.viettel.database.DAO.AuthenticateDAO" method="getIndexPage" name="Index">
+            <result name="indexSuccess" type="tiles">
+                index.page
+            </result>
+            <result name="keepAlive">
+                /WEB-INF/jsp/pages/layout/keepAlive.jsp
+            </result>
+        </action>
+        <action class="com.viettel.database.DAO.AuthenticateDAO" method="doExit" name="Exit">
+            <result name="exit">
+                /WEB-INF/jsp/pages/layout/exit.jsp
+            </result>
+        </action>
+        <action class="com.viettel.database.DAO.AuthenticateDAO" method="actionDefault" name="Whistle">
+            <result name="success">
+                /WEB-INF/jsp/pages/layout/whistle.jsp
+            </result>
+        </action>-->
+        <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="actionLogin" name="Authentication">
+            <result name="loginSuccess" type="tiles">
+                home.page
+            </result>
+            <result name="loginError" type="tiles">
+                loginError.page
+            </result>
+        </action>
+        <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="getIndexPage" name="Login">
+            <result name="indexSuccess" type="tiles">
+                index.page
+            </result>
+            <result name="loginErrorPermission" type="tiles">
+                loginErrorPermission.page
+            </result>
+            <result name="selectDept" type="tiles">
+                selectDept.page
+            </result>
+            <result name="waitingContent" type="tiles">
+                waitingContent.page
+            </result>
+            <result name="keepAlive">
+                /WEB-INF/jsp/pages/layout/keepAlive.jsp
+            </result>
+        </action>
+        <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="getIndexPage" name="Index">
+            <result name="indexSuccess" type="tiles">
+                index.page
+            </result>
+            <result name="loginErrorPermission" type="tiles">
+                loginErrorPermission.page
+            </result>
+            <result name="selectDept" type="tiles">
+                selectDept.page
+            </result>
+            <result name="waitingContent" type="tiles">
+                waitingContent.page
+            </result>
+            <result name="keepAlive">
+                /WEB-INF/jsp/pages/layout/keepAlive.jsp
+            </result>
+        </action>
+        <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="getHomePage" name="HomePage">
+            <result name="HomePage.Page" type="tiles">
+                HomePage.Page
+            </result>
+            <result name="LookupBYT.Page" type="tiles">
+                LookupBYT.Page
+            </result>
+        </action>
+        <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="getProcedureHomePage" name="ProcedurePage">
+            <result name="procedureHomePage.Page" type="tiles">
+                procedureHomePage.Page
+            </result>
+        </action>
+        <!-- huong dan dang ky tai khoan doanh nghiep     -->
+           <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="getGuideRegisterHtmlPage" name="GuideRegisterHtmlPage">
+            <result name="guideRegisterHtmlPage.Page" type="tiles">
+                guideRegisterHtmlPage.Page
+            </result>
+        </action>
+<!--            huong dan dang nhap 
+           <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="getLoginHtmlPage" name="LoginHtmlPage">
+            <result name="loginHtmlPage.Page" type="tiles">
+                loginHtmlPage.Page
+            </result>
+        </action>
+            huong dan nop phi tham dinh    
+           <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="getFeePayHtmlPage" name="FeePayHtmlPage">
+            <result name="feePayHtmlPage.Page" type="tiles">
+                feePayHtmlPage.Page
+            </result>
+        </action>
+            huong dan nop le phi 
+           <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="getFeeHtmlPage" name="FeeHtmlPage">
+            <result name="feeHtmlPage.Page" type="tiles">
+                feeHtmlPage.Page
+            </result>
+        </action>-->
+        <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="getContactHomePage" name="ContactPage">
+            <result name="contactHomePage.Page" type="tiles">
+                contactHomePage.Page
+            </result>
+        </action>
+        <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="getRegisterHomePage" name="RegisterPage">
+            <result name="registerHomePage.Page" type="tiles">
+                registerHomePage.Page
+            </result>
+        </action>
+        <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="getResetPasswordHomePage" name="ResetPasswordPage">
+            <result name="resetPasswordHomePage.Page" type="tiles">
+                resetPasswordHomePage.Page
+            </result>
+        </action>
+        <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="getGuideLineHomePage" name="GuideLinePage">
+            <result name="guideLineHomePage.Page" type="tiles">
+                guideLineHomePage.Page
+            </result>
+        </action>
+        <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="getGuideLineVideoHomePage" name="VideoGuideLinePage">
+            <result name="guideLineVideoHomePage.Page" type="tiles">
+                guideLineVideoHomePage.Page
+            </result>
+        </action>
+               <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="getKeypayPage" name="KeypayPage">
+            <result name="KeypayPage.Page" type="tiles">
+                KeypayPage.Page
+            </result>
+        </action>
+        
+        <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="doExit" name="Exit">
+            <result name="exit">
+                /WEB-INF/jsp/pages/layout/exit.jsp
+            </result>
+        </action>
+        <action class="com.viettel.voffice.database.DAO.AuthenticateDAO" method="actionDefault" name="Whistle">
+            <result name="success">
+                /WEB-INF/jsp/pages/layout/whistle.jsp
+            </result>
+        </action>
+        <!--] LongH says: Action configurations-->
+    </package>
+    <!--] LongH says: Configuration for the default package. -->
+</struts>

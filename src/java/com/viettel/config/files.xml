@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="filesPackage" extends="default">
+        <action name="filesAction" class="com.viettel.hqmc.DAO.FilesDAO" >
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onFeedbackReview, onFeedbackReviewSendVt, onFeedbackEvaluate, onInsert, onDelete, onEvaluate, onReview, onApprove, onPropose, onSaveProcess, onSelectFlow, onSigning, onReceived, insertComment, onDeleteComment, onComparison, onUploadFileSign, onAssignApprove, onAssignApproveByCT, onReceivedFile, onReturnFiles, loginUsbCA, onSetCourierAlertComparison, onSaveEditFileStatus, onReturnFilesOldFlow,onReviewManyFiles
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="lookupHomePage.Page">lookupHomePage.Page</result>
+            <result type="tiles" name="businessRegister.Page">businessRegister.Page</result>
+            <result type="tiles" name="businessList.Page">businessLstPage.Page</result>
+            <result type="tiles" name="payFilePage.Page">payFilePage.Page</result>
+            <result type="tiles" name="payFilePageMore.Page">payFilePageMore.Page</result>            
+            <result type="tiles" name="feeManagePage.Page">feeManagePage.Page</result>
+            <result type="tiles" name="feePayManagePage.Page">feePayManagePage.Page</result>            
+            <result type="tiles" name="businessAddition.Page">businessLstAddition.Page</result>
+            <result type="tiles" name="proposeEvaluation.page">proposeEvaluation.page</result>
+            <result type="tiles" name="assignEvaluation.page">assignEvaluation.page</result>
+            <result type="tiles" name="reAssignEvaluation.page">reAssignEvaluation.page</result>
+            <result type="tiles" name="evaluateFile.page">evaluateFile.page</result>
+            <result type="tiles" name="evaluateFileView.page">evaluateFileView.page</result>
+            <result type="tiles" name="evaluateLeaderFile.page">evaluateLeaderFile.page</result>
+            <result type="tiles" name="lookupRepositories.page">lookupRepositories.page</result>
+            <result type="tiles" name="repository.page">repository.page</result>
+            
+            <result type="tiles" name="feedbackEvaluateFile.page">feedbackEvaluateFile.page</result>
+            <result type="tiles" name="reviewFile.page">reviewFile.page</result>
+            <result type="tiles" name="additionReviewFile.page">additionReviewFile.page</result><!-- xem xet SDBS-->
+            <result type="tiles" name="approveFile.page">approveFile.page</result>
+            <result type="tiles" name="approvedFile.page">approvedFile.page</result>
+            <result type="tiles" name="assignApproveFile.page">assignApproveFile.page</result>
+            <result type="tiles" name="approveByCT.page">approveByCT.page</result>
+            <!--            <result type="tiles" name="signingFile.page">signingFile.page</result>-->
+            <!--            <result type="tiles" name="signFile.page">signFile.page</result>-->
+            <result type="tiles" name="coEvaluation.page">coEvaluation.page</result>
+            
+            <!-- Trang them moi -->
+            <result type="tiles" name="announcementFile01">announcementFile01</result>
+            <result type="tiles" name="announcementFile03">announcementFile03</result>
+             <result type="tiles" name="annoucementTL01">annoucementTL01</result>
+              <result type="tiles" name="annoucementTL03">annoucementTL03</result>
+              <result type="tiles" name="confirmTL">confirmTL</result>
+            <result type="tiles" name="reAnnouncement">reAnnouncement</result>
+            <result type="tiles" name="confirmNormalImport">confirmNormalImport</result>
+            <result type="tiles" name="reConfirmNormalImp">reConfirmNormalImp</result>
+            <result type="tiles" name="confirmNormalVN">confirmNormalVN</result>
+            <result type="tiles" name="reConfirmNormalVN">reConfirmNormalVN</result>
+            <result type="tiles" name="confirmFuncImport">confirmFuncImport</result>
+            <result type="tiles" name="reConfirmFuncImport">reConfirmFuncImport</result>
+            <result type="tiles" name="confirmFuncVN">confirmFuncVN</result>
+            <result type="tiles" name="reConfirmFuncVN">reConfirmFuncVN</result>
+            <result type="tiles" name="confirmSatisfactory">confirmSatisfactory</result>
+            <result type="tiles" name="announcement4star">announcement4star</result>
+            <!-- End them moi -->
+            
+            <!-- Trang xem van ban -->
+            <result type="tiles" name="announcementFile01View">announcementFile01View</result>
+             <result type="tiles" name="annoucementTL01View">annoucementTL01View</result>
+             <result type="tiles" name="annoucementTL03View">annoucementTL03View</result>
+             <result type="tiles" name="confirmTLView">confirmTLView</result>
+            <result type="tiles" name="announcementFile03View">announcementFile03View</result>
+            <result type="tiles" name="reAnnouncementView">reAnnouncementView</result>
+            <result type="tiles" name="confirmNormalImportView">confirmNormalImportView</result>
+            <result type="tiles" name="reConfirmNormalImpView">reConfirmNormalImpView</result>
+            <result type="tiles" name="confirmNormalVNView">confirmNormalVNView</result>
+            <result type="tiles" name="reConfirmNormalVNView">reConfirmNormalVNView</result>
+            <result type="tiles" name="confirmFuncImportView">confirmFuncImportView</result>
+            <result type="tiles" name="reConfirmFuncImportView">reConfirmFuncImportView</result>
+            <result type="tiles" name="confirmFuncVNView">confirmFuncVNView</result>
+            <result type="tiles" name="reConfirmFuncVNView">reConfirmFuncVNView</result>
+            <result type="tiles" name="confirmSatisfactoryView">confirmSatisfactoryView</result>
+            <result type="tiles" name="announcement4starView">announcement4starView</result>
+            
+            <result type="tiles" name="announcementFile01DialogView">announcementFile01DialogView</result>
+            <result type="tiles" name="annoucementTL01DialogView">announcementTL01DialogView</result>
+            <result type="tiles" name="annoucementTL03DialogView">announcementTL03DialogView</result>
+            <result type="tiles" name="confirmTLDialogView">confirmTLDialogView</result>
+            <result type="tiles" name="announcementFile03DialogView">announcementFile03DialogView</result>
+            <result type="tiles" name="reAnnouncementDialogView">reAnnouncementDialogView</result>
+            <result type="tiles" name="confirmNormalImportDialogView">confirmNormalImportDialogView</result>
+            <result type="tiles" name="reConfirmNormalImpDialogView">reConfirmNormalImpDialogView</result>
+            <result type="tiles" name="confirmNormalVNDialogView">confirmNormalVNDialogView</result>
+            <result type="tiles" name="reConfirmNormalVNDialogView">reConfirmNormalVNDialogView</result>
+            <result type="tiles" name="confirmFuncImportDialogView">confirmFuncImportDialogView</result>
+            <result type="tiles" name="reConfirmFuncImportDialogView">reConfirmFuncImportDialogView</result>
+            <result type="tiles" name="confirmFuncVNDialogView">confirmFuncVNDialogView</result>
+            <result type="tiles" name="reConfirmFuncVNDialogView">reConfirmFuncVNDialogView</result>
+            <result type="tiles" name="confirmSatisfactoryDialogView">confirmSatisfactoryDialogView</result>
+            <result type="tiles" name="announcement4starDialogView">announcement4starDialogView</result>
+            <!-- End xem trang van ban -->
+            
+            <!-- Trang cap giay tiep nhan cong bo hop qui -->
+            <result type="tiles" name="announcementFile01Provide">announcementFile01Provide</result>
+            <result type="tiles" name="announcementFile03Provide">announcementFile03Provide</result>
+            <result type="tiles" name="reAnnouncementProvide">reAnnouncementProvide</result>
+            <result type="tiles" name="confirmNormalImportProvide">confirmNormalImportProvide</result>
+            <result type="tiles" name="reConfirmNormalImpProvide">reConfirmNormalImpProvide</result>
+            <result type="tiles" name="confirmNormalVNProvide">confirmNormalVNProvide</result>
+            <result type="tiles" name="reConfirmNormalVNProvide">reConfirmNormalVNProvide</result>
+            <result type="tiles" name="confirmFuncImportProvide">confirmFuncImportProvide</result>
+            <result type="tiles" name="reConfirmFuncImportProvide">reConfirmFuncImportProvide</result>
+            <result type="tiles" name="confirmFuncVNProvide">confirmFuncVNProvide</result>
+            <result type="tiles" name="reConfirmFuncVNProvide">reConfirmFuncVNProvide</result>
+            <result type="tiles" name="confirmSatisfactoryProvide">confirmSatisfactoryProvide</result>
+            <!-- End xem trang van ban -->
+            
+            <!-- Trang ky giay tiep nhan cong bo hop qui -->
+            <result type="tiles" name="announcementFile01Sign">announcementFile01Sign</result>
+            <result type="tiles" name="announcementFile03Sign">announcementFile03Sign</result>
+            <result type="tiles" name="reAnnouncementSign">reAnnouncementSign</result>
+            <result type="tiles" name="confirmNormalImportSign">confirmNormalImportSign</result>
+            <result type="tiles" name="reConfirmNormalImpSign">reConfirmNormalImpSign</result>
+            <result type="tiles" name="confirmNormalVNSign">confirmNormalVNSign</result>
+            <result type="tiles" name="reConfirmNormalVNSign">reConfirmNormalVNSign</result>
+            <result type="tiles" name="confirmFuncImportSign">confirmFuncImportSign</result>
+            <result type="tiles" name="reConfirmFuncImportSign">reConfirmFuncImportSign</result>
+            <result type="tiles" name="confirmFuncVNSign">confirmFuncVNSign</result>
+            <result type="tiles" name="reConfirmFuncVNSign">reConfirmFuncVNSign</result>
+            <result type="tiles" name="confirmSatisfactorySign">confirmSatisfactorySign</result>
+            <!-- End xem trang ky -->
+            <!-- LDC phe duyet SDBS -->
+            <result type="tiles" name="lookupFilesByLeaderApproveSdbs.Page">lookupFilesByLeaderApproveSdbs.Page</result>
+            <!-- #Lookup file by user tra cuu ho so boi nguoi dung-->
+            <result type="tiles" name="lookupFilesByLeader.Page">lookupFilesByLeader.Page</result>
+            <result type="tiles" name="lookupFilesByStaff.Page">lookupFilesByStaff.Page</result>
+            <result type="tiles" name="lookupFilesByStaffDonothing.Page">lookupFilesByStaffDonothing.Page</result>
+            <result type="tiles" name="lookupFilesByLeaderOfStaff.Page">lookupFilesByLeaderOfStaff.Page</result>
+            <result type="tiles" name="lookupFilesByClerical.Page">lookupFilesByClerical.Page</result>
+            <result type="tiles" name="reportStaffProcess.Page">reportStaffProcess.Page</result>
+            <result type="tiles" name="reportLOSProcess.Page">reportLOSProcess.Page</result><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->
+            <result type="tiles" name="reportLProcess.Page">reportLProcess.Page</result><!--141215u binhnt53 thong ke lanh dao cuc xu ly ho so-->
+            <result type="tiles" name="returnFileToAddition.Page">returnFileToAddition.Page</result><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->
+            <!-- End #Lookup file by user -->
+            <!-- #RECEIVED van thu tiep nhan ho so tu doanh nghiep-->
+            <result type="tiles" name="received.page">received.page</result>
+            <!-- #COMPARISON van thu doi chieu ho so tu doanh nghiep-->
+            <result type="tiles" name="toComparison.Page">toComparison.Page</result>
+            <result type="tiles" name="toComparisonFail.Page">toComparisonFail.Page</result>
+            <result type="tiles" name="toComparisonAlert.Page">toComparisonAlert.Page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+            <!--hiepvv sdbs sau cong bo-->
+            <result type="tiles" name="businessEditAfterAnnouncedFiles.Page">businessEditAfterAnnouncedFiles.Page</result>
+            <result type="tiles" name="receivedAfterAnnounced.page">receivedAfterAnnounced.page</result>
+            <result type="tiles" name="approvedChangeFile.page">approvedChangeFile.page</result>
+            <result type="tiles" name="reviewFileEditAfterAnnounced.page">reviewFileEditAfterAnnounced.page</result>
+            <result type="tiles" name="approveFileEditAfterAnnounced.page">approveFileEditAfterAnnounced.page</result>
+            <result type="tiles" name="announcementFile05">announcementFile05</result>
+            <result type="tiles" name="announcementFile05View">announcementFile05View</result>
+            <result type="tiles" name="announcementFile05DialogView">announcementFile05DialogView</result>
+            <result type="tiles" name="assignEvaluationEditAfterAnnounced.page">assignEvaluationEditAfterAnnounced.page</result>
+            <result type="tiles" name="evaluateFileEditAfterAnnounced.page">evaluateFileEditAfterAnnounced.page</result>
+            <!--end sdbs sau cong bo-->
+            <!-- Trang xem van ban -->
+            <result type="tiles" name="announcementFile01ViewReceived">announcementFile01ViewReceived</result>
+            <result type="tiles" name="announcementFile03ViewReceived">announcementFile03ViewReceived</result>
+            <result type="tiles" name="reAnnouncementViewReceived">reAnnouncementViewReceived</result>
+            <result type="tiles" name="confirmNormalImportViewReceived">confirmNormalImportViewReceived</result>
+            <result type="tiles" name="reConfirmNormalImpViewReceived">reConfirmNormalImpViewReceived</result>
+            <result type="tiles" name="confirmNormalVNViewReceived">confirmNormalVNViewReceived</result>
+            <result type="tiles" name="reConfirmNormalVNViewReceived">reConfirmNormalVNViewReceived</result>
+            <result type="tiles" name="confirmFuncImportViewReceived">confirmFuncImportViewReceived</result>
+            <result type="tiles" name="reConfirmFuncImportViewReceived">reConfirmFuncImportViewReceived</result>
+            <result type="tiles" name="confirmFuncVNViewReceived">confirmFuncVNViewReceived</result>
+            <result type="tiles" name="reConfirmFuncVNViewReceived">reConfirmFuncVNViewReceived</result>
+            <result type="tiles" name="confirmSatisfactoryViewReceived">confirmSatisfactoryViewReceived</result>
+            <!-- End xem trang van ban -->
+        </action>
+        <action name="exportWord" class="com.viettel.hqmc.DAO.ExportFileDAO">
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+    </package>
+</struts>

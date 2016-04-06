@@ -1,0 +1,61 @@
+.tadalo .dijitMenu,
+.tadalo .dijitMenuBar {
+	border: 1px solid #7eabcd;
+	margin: 0px;
+	padding: 0px;
+	background-color: #f7f7f7;
+	
+}
+.tadalo .dijitBorderContainer .dijitMenuBar {
+	border:1px solid #ccc;
+}
+.tadalo .dijitMenuItem {
+	font-family: sans-serif;
+	margin: 0;
+}
+.tadalo .dijitMenuBar .dijitMenuItem {
+	padding: 4px 5px;
+}
+.tadalo .dijitMenuPreviousButton, .tadalo .dijitMenuNextButton {
+	font-style: italic;
+}
+.tadalo .dijitMenuItem td {
+	padding: 2px;
+}
+.tadalo .dijitMenuPassive .dijitMenuItemHover,
+.tadalo .dijitMenuItemSelected {
+	background-color: #3559ac;
+	color:#fff;
+}
+.tadalo .dijitMenuItemIcon {
+	width: 16px;
+	height: 16px;
+}
+.tadalo .dijitMenuExpand {
+	width: 7px;
+	height: 7px;
+	background-image: url('images/spriteArrows.png');
+	background-position: -14px 0px;
+}
+.dj_ie6 .tadalo .dijitMenuExpand {
+	background-image: url('images/spriteArrows.gif');
+}
+.tadalo .dijitMenuSeparatorTop {
+	border-bottom: 1px solid #9b9b9b;
+}
+.tadalo .dijitMenuSeparatorBottom {
+	border-top: 1px solid #e8e8e8;
+}
+.tadalo .dijitCheckedMenuItemIconChar {
+	display: none;
+}
+.tadalo .dijitCheckedMenuItemIcon {
+	background-image: url('images/checkmark.png');
+	background-position: -80px;
+}
+.dj_ie6 .tadalo .dijitCheckedMenuItemIcon {
+	background-image: url('images/checkmark.gif');
+}
+.tadalo .dijitCheckedMenuItemChecked .dijitCheckedMenuItemIcon {
+	background-position: -64px;
+}

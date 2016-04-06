@@ -1,0 +1,128 @@
+
+	
+.tadalo .dijitCalendarIncrementControl {
+	
+	width:15px;
+	height:15px;
+	background-image: url("images/spriteRoundedIconsSmall.png");
+	background-repeat: no-repeat
+}
+.dj_ie6 .tadalo .dijitCalendarIncrementControl {
+	font-size:.1em;
+	background-image: url("images/spriteRoundedIconsSmall.gif");
+}
+.tadalo .dijitA11ySideArrow {
+	display: none;
+}
+.tadalo .dijitCalendarDecrease {
+	background-position: top left;
+}
+.tadalo .dijitCalendarIncrease {
+	background-position: -30px top;
+}
+.tadalo table.dijitCalendarContainer {
+	font-size: 100%;
+	border-spacing: 0;
+	border-collapse: separate;
+	border: 1px solid #ccc;
+	margin: 0;
+}
+.tadalo .dijitCalendarMonthContainer th {
+	
+	background:#d3d3d3 url("images/titleBar.png") repeat-x top;
+	padding-top:.3em;
+	padding-bottom:.2em;
+	text-align:center;
+}
+.dj_ie6 .tadalo .dijitCalendarMonthContainer th {
+	padding-top:.2em;
+	padding-bottom:.1em;
+}
+.tadalo .dijitCalendarDayLabelTemplate {
+	
+	background:white url("images/calendarDayLabel.png") repeat-x bottom;
+	font-weight:normal;
+	padding-top:.15em;
+	padding-bottom:0em;
+	border-top: 1px solid #eeeeee;
+	color:#293a4b;
+	text-align:center;
+}
+.tadalo .dijitCalendarBodyContainer {
+	border-bottom: 1px solid #eeeeee;	
+}
+.tadalo .dijitCalendarMonthLabel {
+	color:#293a4b;
+	font-weight: bold;
+}
+.tadalo .dijitCalendarDateTemplate {
+	
+	font-size: 0.9em;
+	font-weight: bold;
+	text-align: center;
+	padding: 0.3em 0.3em 0.05em 0.3em;
+	letter-spacing: 1px;
+}
+.dj_ie .tadalo .dijitCalendarDateTemplate {
+	padding: 0.1em .33em 0.02em .33em;
+}
+.tadalo .dijitCalendarPreviousMonth,
+.tadalo .dijitCalendarNextMonth 		{
+	
+	color:#999999;
+	background-color:#f8f8f8 !important;
+}
+.tadalo .dijitCalendarPreviousMonthDisabled,
+.tadalo .dijitCalendarNextMonthDisabled	{
+	
+	background-color:#a4a5a6 !important;
+}
+.tadalo .dijitCalendarCurrentMonth {
+	
+	background-color:white !important;
+}
+.tadalo .dijitCalendarCurrentMonthDisabled {
+		
+	background-color:#bbbbbc !important;
+}
+.tadalo .dijitCalendarDisabledDate {
+	cursor:default !important;
+	text-decoration:line-through !important;
+}
+.tadalo .dijitCalendarCurrentDate {
+	
+	text-decoration:underline;
+	font-weight:bold;
+}
+.tadalo .dijitCalendarHoveredDate {
+	background-color: #e2ebf2 !important;
+}
+.tadalo .dijitCalendarSelectedDate {
+	
+	background-color:#bbc4d0 !important;
+	color:black !important;
+}
+.tadalo .dijitCalendarYearContainer {
+	
+	background:white url("images/calendarYearLabel.png") repeat-x bottom;
+	border-top:1px solid #ccc;
+}
+.tadalo .dijitCalendarYearLabel {
+	
+	margin:0;
+	padding:0.4em 0 0.25em 0;
+	text-align:center;
+}
+.tadalo .dijitCalendarSelectedYear {
+	
+	color:black;
+	padding:0.2em;
+	padding-bottom:0.1em;
+	background-color:#bbc4d0 !important;
+}
+.tadalo .dijitCalendarNextYear,
+.tadalo .dijitCalendarPreviousYear {
+	
+	color:black !important;
+	font-weight:normal;
+}

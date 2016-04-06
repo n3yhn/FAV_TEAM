@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="home" extends="default">
+        <action name="home" class="com.viettel.voffice.database.DAO.HomeDAO" method="getGeneralCount">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onResetPass
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="home">home.page</result>
+            <result type="tiles" name="gotoFirstFunc">gotoFirstFunc.page</result>
+            <result type="tiles" name="log_page">log.page</result>
+            <result type="tiles" name="guidelinePage">guideline.page</result>
+            <result type="tiles" name="website.definition">website.definition</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+    </package>
+</struts>

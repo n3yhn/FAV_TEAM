@@ -1,0 +1,157 @@
+@charset "utf-8";
+
+
+.lltp_fieldset {
+    -webkit-border-top-left-radius: 15px;
+    -khtml-border-radius-topleft: 15px;
+    -moz-border-radius-topleft: 15px;
+    border-top-left-radius: 15px;
+    border:1px solid lightgray;
+}
+
+.lltp_fieldset legend {
+    margin-left: 20px;
+}
+
+.lltp_resultMessageSuccess {
+    margin-bottom: 3px;
+    padding: 2px;
+    border-width: 1px;
+    border-style: solid;
+    background-color:#90EE90;
+    border-color:gray;
+    font-size: 13px;
+    color: green;
+}
+
+.lltp_resultMessageError {
+    margin-bottom: 3px;
+    padding: 2px;
+    border-width: 1px; 
+    border-style: solid;
+    background-color:#FDE5DD;
+    border-color:red;
+    font-size: 13px;
+    color: red;
+}
+.tdBold { 
+    font-weight: bold;
+    color: green;
+    padding-left: 5px;
+}
+
+.lltp_alertBox {
+    background-color: #D9E5F3;
+    border: 1px solid #CCCCCC;
+    padding: 0px 0px 0px 0px;
+    margin-bottom: 5px;
+}
+
+.lltp_headerBox {
+    background: url(../../share/images/layout/alert-panel.png) repeat-x;
+    height: 20px;
+    border-bottom: 1px solid #CCCCCC;
+    color: #1C588B;
+    font-weight: bold;   
+    font-size: 14px;
+    padding: 6px;
+}
+
+.lltp_ul ul{
+    list-style-type:square;
+}
+
+.lltp_ul ul li{
+    margin-bottom: 10px;
+}
+
+.tableViewLOG {
+    width: 100%;
+    height: 100%;
+    empty-cells: show;
+    margin: 5px 5px 5px 5px;
+    border-bottom: 1px gray solid;
+}
+
+.tableViewLOG tr td{
+    border-left: 1px gray solid;
+    border-top: 1px gray solid;
+    empty-cells: show;
+    padding: 2px 2px 2px 2px;
+}
+
+.x-superboxselect {
+    display: block;
+    height: auto !important;
+    margin: 0;
+    outline: medium none !important;
+    overflow: hidden;
+    padding: 2px;
+    position: relative;
+    white-space: normal;
+}
+
+.x-form-text {
+    height: 22px;
+    line-height: 18px;
+    vertical-align: middle;
+    float: left;
+}
+
+.x-superboxselect-btns {
+    height: 22px;
+    line-height: 18px;
+    text-align: right;
+    float: left;
+}
+
+.x-superboxselect ol, ul {
+    list-style: none outside none;
+}
+
+.x-superboxselect li {
+    float: left;
+    line-height: 18px;
+    margin: 1px 1px 2px;
+    padding: 0;
+    word-wrap: break-word;
+    max-width: 800px;
+}
+
+.x-superboxselect-item {
+    background-color: #DEE7F8;
+    border: 1px solid #CAD8F3;
+    border-radius: 6px 6px 6px 6px;
+    padding: 1px 15px 1px 5px !important;
+    position: relative;
+}
+
+.x-superboxselect-item-close {
+    background: url(../../share/images/layout/close.png) no-repeat scroll left 0 transparent;
+    border: medium none;
+    cursor: pointer;
+    display: block;
+    font-size: 1px;
+    height: 16px;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 2px;
+    width: 13px;
+    text-align: left;
+    background-color: transparent;
+    color: #000099;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.x-form-field-wrap  {
+    background: url("../../share/images/layout/text-bg.gif") repeat-x scroll 0 0 #FFFFFF;
+    border: 1px solid #B5B8C8;
+    margin: 0;padding: 0;
+    position: relative;
+    white-space: nowrap;
+    float: left;
+    width: 100%;
+    margin-left: 1px;
+}

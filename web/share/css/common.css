@@ -1,0 +1,327 @@
+@charset "utf-8";
+/* CSS Document */
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+a:hover{
+	text-decoration:underline !important;
+	cursor:pointer;
+	color:#C00;
+}
+
+input:hover{
+	cursor:pointer;
+}
+
+a{
+	text-decoration: none;
+	color:#071e3e;
+	line-height:1.8;
+}
+
+html, body, ul, li , h1{
+	margin:0;
+	padding:0;
+	font-family: Tahoma, Arial, Helvetica, san-serif;
+	font-size: 14px;
+	color:#071e3e;
+	}
+
+#wrapper {
+    margin: 0 auto;
+    width: 1112px;
+}
+#footer {
+    background-image: url("../images/footer_logo.png");
+    background-position: 20px center;
+    background-repeat: no-repeat;
+    border-top: 2px solid #62DAE4;
+    float: left;
+    min-height: 120px;
+    padding-left: 200px;
+    padding-top: 16px;
+    text-align: left;
+    width: 902px;
+}
+
+#content {
+    float: left;
+    padding-bottom: 30px;
+}
+
+#header {
+    float: left;
+}
+
+.slideAnh {
+    overflow: hidden;
+    position: relative;
+}
+.slideAnh img{
+	width: 100%;
+	height: auto;
+}
+.captionAnh {
+    background-color: #CCCCCC;
+    bottom: 0;
+    font-size: 16px;
+    height: 27px;
+    background: none repeat scroll 0 0 rgba(181, 181, 181, 0.7);
+    padding-top: 5px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+.spanName {
+    color: #00722D;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.navBar {
+    background-color: #02B7C7;
+    border-radius: 20px 20px 20px 20px;
+    height: 50px;
+}
+.ul_navBar li {
+    border-left: 1px solid #13CADA;
+    border-right: 1px solid #13CADA;
+    display: inline;
+    list-style: none inside none;
+    margin-left: 0;
+    padding: 16px 10px;
+}
+.subDivTitle {
+    background-color: #02B7C7;
+    color: #FFFFFF;
+    font-size: 18px;
+    height: 37px;
+    padding-left: 15px;
+    padding-top: 10px;
+}
+
+.subDivContent {
+    padding: 10px;
+}
+
+.ul_navBar li a {
+    color: #FFFFFF;
+    font-size: 19px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+ul.ul_navBar {
+    padding-top: 6px;
+    text-align: center;
+}
+
+.ul_navBar li.active, .ul_navBar li:hover {
+    background-image: url("../images/navBar_acbg.png");
+    background-position: left top;
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+}
+
+.ul_navBar li.active > a, .ul_navBar li:hover > a {
+    color: #FFFF00;
+}
+
+.mainContent {
+    float: left;
+    margin-right: 14px;
+    width: 731px;
+}
+
+.subContent {
+    float: left;
+    width: 365px;
+}
+
+
+.divBd {
+    border: 1px solid #ADEFF0;
+    border-radius: 15px 15px 15px 15px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.mainDivTitle {
+    background-image: url("../images/title_bg.png");
+    background-position: left top;
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    font-size: 18px;
+    font-weight: bold;
+    height: 37px;
+    padding-left: 20px;
+    padding-top: 13px;
+	text-transform: uppercase;
+}
+
+.mainDivContent {
+    float: left;
+    padding: 10px;
+}
+
+.mainDivContent li {
+    list-style-image: url("../images/libt.png");
+    list-style-position: inside;
+}
+
+.mainDivContent ul li a {
+    color: #071E3E;
+    font-size: 16px;
+    text-decoration: none;
+	margin-left: 8px;
+}
+
+p {
+    line-height: 1.8;
+    margin: 0;
+}
+
+.more {
+    float: right;
+    font-style: italic;
+    font-weight: bold;
+    margin-right: 20px;
+}
+.activeTinTitle {
+    font-weight: bold;
+    float: left;
+    width: 100%;	
+}
+
+.activeTin {
+    float: left;
+}
+
+.tincu {
+    float: left;
+}
+
+.tincu > a {
+    color: #071E3E;
+    text-decoration: none;
+}
+
+.subDivContent .tailieu li {
+    list-style-image: url("../images/libt1.png");
+    list-style-position: inside;
+}
+
+.li_ttlh li a {
+    float: left;
+    padding-left: 15px;
+    padding-top: 5px;
+    width: 265px;
+}
+
+.li_ttlh li img {
+    float: left;
+}
+
+.li_ttlh > li {
+    float: left;
+    list-style: none outside none;
+    margin-bottom: 10px;
+}
+
+.li_ttlh {
+    float: left;
+}
+
+.tailieu {
+    border-bottom: 2px dashed #008F98;
+    padding-bottom: 20px;
+}
+#tfnewsearch{
+		float:right;
+	}
+	.tftextinput2{
+		margin: 0;
+		padding: 6px 15px 6px 10px;
+		font-size:13px;
+		color:#006f34;
+		border:1px solid #006f34; border-right:0px;
+		border-top-left-radius: 5px 5px;
+		border-bottom-left-radius: 5px 5px;
+	}
+	.tfbutton2 {
+		margin: 0;
+		padding: 5px 20px 6px 7px;
+		font-size:14px;
+		font-weight:bold;
+		outline: none;
+		cursor: pointer;
+		text-align: center;
+		text-decoration: none;
+		color: #ffffff;
+		border: solid 1px #006f34;
+		border-left: none;
+    background-color: #FFFFFF;
+    background-image: url("../images/img7.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+		border-top-right-radius: 5px 5px;
+		border-bottom-right-radius: 5px 5px;
+	}
+	/* Fixes submit button height problem in Firefox */
+	.tfbutton2::-moz-focus-inner {
+	  border: 0;
+	}
+
+.dkydn {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #FFFFFF;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-color: -moz-use-text-color #D9DDDD #D9DDDD;
+    border-image: none;
+    border-right: 1px solid #D9DDDD;
+    border-style: none solid solid;
+    border-width: medium 1px 1px;
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.7);
+    padding: 0 15px 10px;
+    position: absolute;
+    right: 50px;
+    top: 0;
+}
+.btstyle {
+    background-image: url("../images/bt_bg.png");
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    border: 1px solid #D9DDDD;
+    border-radius: 5px 5px 5px 5px;
+    color: #00453F;
+    font-size: 12px;
+	box-shadow: 1px 1px 2px #666666;
+    height: 21px;
+    margin-left: 5px;
+    margin-right: 5px;
+	padding-bottom: 2px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.dkydn img {
+    margin: 8px 5px -8px;
+}
+
+.searchBox {
+    bottom: 10px;
+    position: absolute;
+    right: 15px;
+}
+
+.banner {
+    position: relative;
+}	

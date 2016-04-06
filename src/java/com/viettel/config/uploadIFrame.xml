@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="uploadiframe" extends="default">
+        <action name="uploadiframe" class="com.viettel.voffice.database.DAO.UploadIframeDAO" method="showUploadIframeScreen">
+           <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    uploadFileSh
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="mainUploadIframeScreen">mainUploadIframeScreen.page</result>
+            <result type="tiles" name="uploadIframeCallbackTarget">uploadIframeCallbackTarget.page</result>
+            <result type="tiles" name="uploadResultPage">uploadResultPage.page</result>
+            <result type="tiles" name="uploadResultPageImp">uploadResultPageImp.page</result>
+            <result type="tiles" name="uploadResultPageSh">uploadResultPageSh.page</result>
+            <result type="tiles" name="reportResult">reportResult.page</result>
+            <result type="tiles" name="errorNoFile">errorNoFile.page</result>
+            <result type="json" name="jsonFile">
+                <param name="root">jsonFile</param>
+            </result>
+            <result type="stream" name="download">
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+    </package>
+</struts>

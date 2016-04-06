@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <!-- 
+    <definition name="base.definition" template="/WEB-INF/jsp/pages/layout/layout.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="menu" value="/WEB-INF/jsp/pages/layout/menubar.jsp"/>
+        <put-attribute name="body" value=""/>
+    </definition>
+    <definition name="body.definition" template="/WEB-INF/jsp/pages/layout/bodyLayout.jsp">
+    </definition>
+    <definition name="content.definition" template="/WEB-INF/jsp/pages/layout/contentLayout.jsp">
+    </definition>
+    <definition name="popup.definition" template="/WEB-INF/jsp/pages/layout/popupLayout.jsp">
+    </definition>
+    <definition extends="base.definition" name="home.page">
+        <put-attribute name="title" value="projectName"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/layout/homepage.jsp"/>
+    </definition>
+    <definition extends="base.definition" name="EditUserAction.page">
+        <put-attribute name="title" value="EditUserAction.page"/>
+        <put-attribute name="menu" value=""/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/user/editUser.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="userForm.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/user/userForm.jsp"/>
+    </definition>
+    <definition name="loginError.page" template="/WEB-INF/jsp/pages/layout/error.jsp"/>
+    <definition name="jsForward.page" template="/WEB-INF/jsp/pages/global/jsForward.jsp"/>
+    -->
+
+
+    <!-- [ Custom definitions here -->
+
+    <!-- ] Custom definitions here -->
+       
+    <definition extends="body.definition" name="RolesAction.page">
+        <put-attribute name="title" value="RolesAction.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/rolesCatalog/rolesCatalog-Window.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="LocationAction.page">
+        <put-attribute name="title" value="LocationAction.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/locationCatalog/locationCatalog-Window.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="UnitTreeAction.page">
+        <put-attribute name="title" value="UnitTreeAction.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/unitTreeCatalog/unitTreeCatalog-Window.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="UserReportAction.page">
+        <put-attribute name="title" value="UserReportAction.title"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/userReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="AppReportAction.page">
+        <put-attribute name="title" value="AppReportAction.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/appReport.jsp"/>
+    </definition>
+    <!--dunglt begin-->
+    <definition extends="body.definition" name="DepartmentsReportAction.page">
+        <put-attribute name="title" value="DepartmentsReportAction.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/departmentsReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="FunctionsReportAction.page">
+        <put-attribute name="title" value="FunctionsReportAction.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/functionsReport.jsp"/>
+    </definition>
+        <!-- [catalog page config-->
+    <definition extends="body.definition" name="UserCatalogReport.page">
+        <put-attribute name="title" value="UserCatalogReport.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/userCatalogReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="RoleCatalogReport.page">
+        <put-attribute name="title" value="RoleCatalogReport.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/roleCatalogReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="DeptCatalogReport.page">
+        <put-attribute name="title" value="DeptCatalogReport.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/deptCatalogReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="FunctionCatalogReport.page">
+        <put-attribute name="title" value="FunctionCatalogReport.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/functionCatalogReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="AppCatalogReport.page">
+        <put-attribute name="title" value="AppCatalogReport.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/appCatalogReport.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="FunctionOfUserDialog">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/reportUtils/functionsOfUserDialog.jsp"/>
+    </definition>
+        <!-- catalog page config] -->
+    <!--dunglt end-->
+    <definition extends="body.definition" name="RoleReportAction.page">
+        <put-attribute name="title" value="RoleReportAction.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/roleReport.jsp"/>
+    </definition>
+
+    <!--ThienKQ-->
+    <!--User-->
+    <definition extends="body.definition" name="UserAction.page">
+        <put-attribute name="title" value="menu.user.catalog"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/user/user-Window.jsp"/>
+    </definition>
+
+    <definition extends="content.definition" name="UserDialog.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/user/user-Dialog.jsp"/>
+    </definition>
+
+    <definition extends="content.definition" name="listRoleOfUser.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/user/listRoleOfUser.jsp"/>
+    </definition>
+
+    <definition extends="content.definition" name="listDeptOfUser.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/user/listDeptOfUser.jsp"/>
+    </definition>
+
+    <definition extends="body.definition" name="uploadForm.page">
+        <put-attribute name="title" value="uploadForm.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/user/uploadFileExcel.jsp"/>
+    </definition>
+
+    <definition extends="content.definition" name="uploadMsg.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/user/uploadMsg.jsp"/>
+    </definition>
+
+    <definition extends="content.definition" name="createPage">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/user/createUserFromFile.jsp"/>
+    </definition>
+
+    <definition extends="content.definition" name="lockPage">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/user/lockUserFromFile.jsp"/>
+    </definition>
+    <!--End User-->
+
+    <definition extends="body.definition" name="UserTypeAction.page">
+        <put-attribute name="title" value="menu.user.userType"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/userType/userType-Window.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="DeptTypeAction.page">
+        <put-attribute name="title" value="menu.catalog.deptType"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/deptType/deptType-Window.jsp"/>
+    </definition>
+
+    <!--Department-->
+    <definition extends="body.definition" name="DepartmentAction.page">
+        <put-attribute name="title" value="menu.catalog.dept"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/department/department-Window.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="listUserOfDept.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/department/listUserOfDept.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="ApplicationsAction.page">
+        <put-attribute name="title" value="ApplicationsAction.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/application/applicationsCatalog-Window.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="importResult.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/application/importResult.jsp"/>
+    </definition>
+    
+    <definition extends="body.definition" name="PositionAction.page">
+        <put-attribute name="title" value="PositionAction.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/position/position-Window.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="ObjectsAction.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/application/objectsCatalog-Window.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="objectTree.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/application/objectTree.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="AdAction.page">
+        <put-attribute name="title" value="AdAction.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/adCatalog/adCatalog-Window.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="prepareListUsrOfAd.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/adCatalog/usrOfAd-Window.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="userDetail.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/adCatalog/userDetail.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="AdRoleAction.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/adCatalog/roles-Window.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="prepareListObject.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/adCatalog/roleObjectWindow.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="prepareInsertRole.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/adCatalog/roles-Dialog.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="prepareInsert.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/adCatalog/adCatalog-Dialog.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="prepareSelectRole.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/adCatalog/adSelectRole-Dialog.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="ProfileAction.page">
+        <put-attribute name="title" value="ProfileAction.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/profileCatalog/profileCatalog-Window.jsp"/>
+    </definition>
+
+    <definition extends="body.definition" name="RoleUserReportAction.page">
+        <put-attribute name="title" value="Báo cáo hệ thống phân nhóm quyền cho người dùng"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/roleUserReport.jsp"/>
+    </definition>
+
+    <definition extends="body.definition" name="UserRoleReportAction.page">
+        <put-attribute name="title" value="Báo cáo hệ thống phân nhóm quyền cho người dùng"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/userRoleReport.jsp"/>
+    </definition>
+
+    <definition extends="body.definition" name="GrantSystemReportAction.page">
+        <put-attribute name="title" value="Báo cáo hệ thống phân quyền"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/grantSystemReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="LockUserReportAction.page">
+        <put-attribute name="title" value="Báo cáo khóa người dùng"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/lockUserReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="UnLockUserReportAction.page">
+        <put-attribute name="title" value="Báo cáo mở khóa người dùng"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/unLockUserReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="ChangePasswordReportAction.page">
+        <put-attribute name="title" value="Báo cáo đổi mật khẩu"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/changePasswordReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="CreateUserReportAction.page">
+        <put-attribute name="title" value="Báo cáo cấp mới người dùng"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/createUserReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="ResetPasswordReportAction.page">
+        <put-attribute name="title" value="Báo cáo reset mật khẩu người dùng"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/resetPasswordReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="ChildDeptReportAction.page">
+        <put-attribute name="title" value="Báo cáo hệ thống cửa hàng"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/childDeptReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="RoleObjectReportAction.page">
+        <put-attribute name="title" value="Báo cáo phân nhóm quyền chức năng"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/roleObjectReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="CreateDeptReportAction.page">
+        <put-attribute name="title" value="Báo cáo cấp mới cửa hàng"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/createDeptReport.jsp"/>
+    </definition>
+    <!-- [ congdh add 18/11/2010 -->
+    <definition extends="body.definition" name="causeLockUser-prepare.page">
+        <put-attribute name="title" value="title.manageCauseLockUser"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/causeLockUser/causeLockUser-Window.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="causeLockRole-prepare.page">
+        <put-attribute name="title" value="title.manageCauseLockRole"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/causeLockRole/causeLockRole-Window.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="issueIp-prepare.page">
+        <put-attribute name="title" value="title.manageIssueIp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/issueIp/issueIp-Window.jsp"/>
+    </definition>
+    <!--  congdh add 18/11/2010 ]-->
+    
+    <!-- [ congdh add 29/11/2010 -->
+    <definition extends="body.definition" name="branchAdmin-prepare.page">
+        <put-attribute name="title" value="BranchAdminAction.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/branchAdmin/branchAdmin-Window.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="roleBranchAdminDiv">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/branchAdmin/roleOfBranchAdminDiv.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="commonRoleOfBranchAdminDiv">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/branchAdmin/commonRoleOfBranchAdminDiv.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="prepareInsertRoleDialog">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/branchAdmin/roles-Dialog.jsp"/>
+    </definition>
+    <!--  congdh add 29/11/2010 ]-->
+    
+    <!-- [Period Report -->
+    <definition extends="body.definition" name="PeriodUserReport.page">
+<!--        <put-attribute name="title" value="Báo cáo định kỳ tác động người dùng"/>-->
+        <put-attribute name="title" value="PeriodUserReport.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/periodUserReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="PeriodRoleReport.page">
+        <put-attribute name="title" value="PeriodRoleReport.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/periodRoleReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="PeriodObjectReport.page">
+        <put-attribute name="title" value="PeriodObjectReport.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/periodObjectReport.jsp"/>
+    </definition>
+    <!-- Period Report] -->
+    <definition extends="body.definition" name="LoginReportAction.page">
+        <put-attribute name="title" value="LoginReportAction.page"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/loginReport.jsp"/>
+    </definition>
+    <definition extends="body.definition" name="request-prepare.page">
+        <put-attribute name="title" value="title.manageRequest"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/request/request-Window.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="requestMsg.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/request/requestMsg.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="updatePage">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/user/updateUserFromFile.jsp"/>
+    </definition>
+    <definition extends="content.definition" name="ObjectTree.page">
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/rolesCatalog/objectTree.jsp"/>
+    </definition>
+</tiles-definitions>

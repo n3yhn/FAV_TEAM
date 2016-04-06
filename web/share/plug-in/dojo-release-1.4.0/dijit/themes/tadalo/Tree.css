@@ -1,0 +1,85 @@
+
+.tadalo .dijitTreeNode {
+    background-image : url('images/i.gif');
+    background-repeat : repeat-y;
+    zoom: 1;	
+}
+.tadalo .dijitTreeIsLast {
+    background: url('images/i_half.gif') no-repeat;
+}
+.tadalo .dijitTreeIsRoot {
+    margin-left: 0;
+    background-image: none;
+}
+.tadalo .dijitTreeExpando {
+    width: 18px;
+    height: 18px;
+}
+.tadalo .dijitTreeRow {
+	
+	padding-bottom: 2px;
+}
+.tadalo .dijitTreeContent {
+    min-height: 18px;
+    min-width: 18px;
+ }
+.tadalo .dijitTreeExpand {
+    width: 18px;
+    height: 18px;
+    background-repeat : no-repeat;
+}
+.tadalo .dijitTreeNodeEmphasized {
+    background-color: Highlight;
+    color: HighlightText;
+}
+.tadalo .dijitTreeLabelFocused {
+	outline: 1px invert dotted;
+}
+.tadalo .dijitTreeNodeSelected .dijitTreeLabel {
+	background:#e2ebfe;
+}
+.tadalo .dijitTreeNodeHover {
+	
+	
+	background-image: url(images/treeHover.png);
+	background-repeat: repeat;
+	background-color: none !important;
+}
+.tadalo .dijitTreeExpandoOpened {
+	background-image: url('images/treeExpand_minus.gif');
+}
+.tadalo .dijitTreeExpandoClosed {
+	background-image: url('images/treeExpand_plus.gif');
+}
+.tadalo .dijitTreeExpandoLeaf {
+	background-image: url('images/treeExpand_leaf.gif');
+}
+.tadalo .dijitTreeExpandoLoading {
+	background-image: url('images/treeExpand_loading.gif');
+}
+.tadalo .dijitTreeIcon {
+	width: 16px;
+	height: 16px;
+}
+.tadalo .dijitFolderOpened {
+	background: url('images/folderOpened.gif') no-repeat;
+}
+.tadalo .dijitFolderClosed {
+	background: url('images/folderClosed.gif') no-repeat;
+}
+.tadalo .dijitLeaf {
+	background: url('images/leaf.gif') no-repeat;
+}
+.tadalo .dijitTreeNode .dojoDndItemBefore,
+.tadalo .dijitTreeNode .dojoDndItemAfter {
+	border-bottom: none;
+	border-top: none;
+}
+.tadalo .dijitTreeNode .dojoDndItemBefore .dijitTreeContent {
+	
+	border-top: 2px solid #369;
+}
+.tadalo .dijitTreeNode .dojoDndItemAfter .dijitTreeContent {
+	
+	border-bottom: 2px solid #369;
+}
