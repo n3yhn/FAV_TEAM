@@ -796,18 +796,18 @@
                 page.clearSearch = function() {
                     try
                     {
-                        setCookie("approvePage.searchForm.fileCode", "", 1);
-                        setCookie("approvePage.searchForm.announcementNo", "", 1);
-                        setCookie("approvePage.searchForm.businessName", "", 1);
-                        setCookie("approvePage.searchForm.businessLicence", "", 1);
-                        setCookie("approvePage.searchForm.businessAddress", "", 1);
-                        setCookie("approvePage.searchForm.productName", "", 1);
-                        setCookie("approvePage.searchForm.nationName", "", 1);
-                        setCookie("approvePage.searchForm.manufactureName", "", 1);
-                        setCookie("approvePage.searchForm.manufactureAddress", "", 1);
-                        setCookie("approvePage.searchForm.matchingTarget", "", 1);
-                        setCookie("approvePage.searchForm.Staff", "", 1);
-                        setCookie("approvePage.searchForm.fileType", "-1", 1);
+                        localStorage.setItem("approvePage.searchForm.fileCode","");
+                        localStorage.setItem("approvePage.searchForm.announcementNo","");
+                        localStorage.setItem("approvePage.searchForm.businessName","");
+                        localStorage.setItem("approvePage.searchForm.businessLicence","");
+                        localStorage.setItem("approvePage.searchForm.businessAddress","");
+                        localStorage.setItem("approvePage.searchForm.productName","");
+                        localStorage.setItem("approvePage.searchForm.nationName","");
+                        localStorage.setItem("approvePage.searchForm.manufactureName","");
+                        localStorage.setItem("approvePage.searchForm.manufactureAddress","");
+                        localStorage.setItem("approvePage.searchForm.matchingTarget","");
+                        localStorage.setItem("approvePage.searchForm.Staff","");
+                        localStorage.setItem("approvePage.searchForm.fileType", "-1");
                     }
                     catch (err)
                     {
@@ -818,18 +818,18 @@
                 page.setSearch = function() {
                     try
                     {
-                        setCookie("approvePage.searchForm.fileCode", encodeBase64(dijit.byId("searchForm.fileCode").getValue().toString().trim()), 1);
-                        setCookie("approvePage.searchForm.announcementNo", encodeBase64(dijit.byId("searchForm.announcementNo").getValue().toString().trim()), 1);
-                        setCookie("approvePage.searchForm.businessName", encodeBase64(dijit.byId("searchForm.businessName").getValue().toString().trim()), 1);
-                        setCookie("approvePage.searchForm.businessLicence", encodeBase64(dijit.byId("searchForm.businessLicence").getValue().toString().trim()), 1);
-                        setCookie("approvePage.searchForm.businessAddress", encodeBase64(dijit.byId("searchForm.businessAddress").getValue().toString().trim()), 1);
-                        setCookie("approvePage.searchForm.productName", encodeBase64(dijit.byId("searchForm.productName").getValue().toString().trim()), 1);
-                        setCookie("approvePage.searchForm.nationName", encodeBase64(dijit.byId("searchForm.nationName").getValue().toString().trim()), 1);
-                        setCookie("approvePage.searchForm.manufactureName", encodeBase64(dijit.byId("searchForm.manufactureName").getValue().toString().trim()), 1);
-                        setCookie("approvePage.searchForm.manufactureAddress", encodeBase64(dijit.byId("searchForm.manufactureAddress").getValue().toString().trim()), 1);
-                        setCookie("approvePage.searchForm.matchingTarget", encodeBase64(dijit.byId("searchForm.matchingTarget").getValue().toString().trim()), 1);
-                        setCookie("approvePage.searchForm.Staff", encodeBase64(dijit.byId("searchForm.Staff").getValue().toString().trim()), 1);
-                        setCookie("approvePage.searchForm.fileType", encodeBase64(dijit.byId("searchForm.fileType").getValue()), 1);
+                        localStorage.setItem("approvePage.searchForm.fileCode", encodeBase64(dijit.byId("searchForm.fileCode").getValue().toString().trim());
+                        localStorage.setItem("approvePage.searchForm.announcementNo", encodeBase64(dijit.byId("searchForm.announcementNo").getValue().toString().trim());
+                        localStorage.setItem("approvePage.searchForm.businessName", encodeBase64(dijit.byId("searchForm.businessName").getValue().toString().trim());
+                        localStorage.setItem("approvePage.searchForm.businessLicence", encodeBase64(dijit.byId("searchForm.businessLicence").getValue().toString().trim());
+                        localStorage.setItem("approvePage.searchForm.businessAddress", encodeBase64(dijit.byId("searchForm.businessAddress").getValue().toString().trim());
+                        localStorage.setItem("approvePage.searchForm.productName", encodeBase64(dijit.byId("searchForm.productName").getValue().toString().trim());
+                        localStorage.setItem("approvePage.searchForm.nationName", encodeBase64(dijit.byId("searchForm.nationName").getValue().toString().trim());
+                        localStorage.setItem("approvePage.searchForm.manufactureName", encodeBase64(dijit.byId("searchForm.manufactureName").getValue().toString().trim());
+                        localStorage.setItem("approvePage.searchForm.manufactureAddress", encodeBase64(dijit.byId("searchForm.manufactureAddress").getValue().toString().trim());
+                        localStorage.setItem("approvePage.searchForm.matchingTarget", encodeBase64(dijit.byId("searchForm.matchingTarget").getValue().toString().trim());
+                        localStorage.setItem("approvePage.searchForm.Staff", encodeBase64(dijit.byId("searchForm.Staff").getValue().toString().trim());
+                        localStorage.setItem("approvePage.searchForm.fileType", encodeBase64(dijit.byId("searchForm.fileType").getValue());
                     }
                     catch (err)
                     {
@@ -839,18 +839,18 @@
                 page.getSearch = function() {
                     try
                     {
-                        dijit.byId("searchForm.fileCode").setValue(decodeBase64(getCookie("approvePage.searchForm.fileCode")));
-                        dijit.byId("searchForm.announcementNo").setValue(decodeBase64(getCookie("approvePage.searchForm.announcementNo")));
-                        dijit.byId("searchForm.businessName").setValue(decodeBase64(getCookie("approvePage.searchForm.businessName")));
-                        dijit.byId("searchForm.businessLicence").setValue(decodeBase64(getCookie("approvePage.searchForm.businessLicence")));
-                        dijit.byId("searchForm.businessAddress").setValue(decodeBase64(getCookie("approvePage.searchForm.businessAddress")));
-                        dijit.byId("searchForm.productName").setValue(decodeBase64(getCookie("approvePage.searchForm.productName")));
-                        dijit.byId("searchForm.nationName").setValue(decodeBase64(getCookie("approvePage.searchForm.nationName")));
-                        dijit.byId("searchForm.manufactureName").setValue(decodeBase64(getCookie("approvePage.searchForm.manufactureName")));
-                        dijit.byId("searchForm.manufactureAddress").setValue(decodeBase64(getCookie("approvePage.searchForm.manufactureAddress")));
-                        dijit.byId("searchForm.matchingTarget").setValue(decodeBase64(getCookie("approvePage.searchForm.matchingTarget")));
-                        dijit.byId("searchForm.Staff").setValue(decodeBase64(getCookie("approvePage.searchForm.Staff")));
-                        dijit.byId("searchForm.fileType").setValue(decodeBase64(getCookie("approvePage.searchForm.fileType")));
+                        dijit.byId("searchForm.fileCode").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.fileCode")));
+                        dijit.byId("searchForm.announcementNo").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.announcementNo")));
+                        dijit.byId("searchForm.businessName").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.businessName")));
+                        dijit.byId("searchForm.businessLicence").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.businessLicence")));
+                        dijit.byId("searchForm.businessAddress").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.businessAddress")));
+                        dijit.byId("searchForm.productName").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.productName")));
+                        dijit.byId("searchForm.nationName").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.nationName")));
+                        dijit.byId("searchForm.manufactureName").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.manufactureName")));
+                        dijit.byId("searchForm.manufactureAddress").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.manufactureAddress")));
+                        dijit.byId("searchForm.matchingTarget").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.matchingTarget")));
+                        dijit.byId("searchForm.Staff").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.Staff")));
+                        dijit.byId("searchForm.fileType").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.fileType")));
                     }
                     catch (err)
                     {

@@ -163,11 +163,11 @@
 </div>
 
 <script type="text/javascript">
-    onCloseApprove = function() {
+    onCloseApprove = function () {
         doGoToMenu("filesAction!toEvaluatePage.do");
     };
 
-    onEvaluate = function() {
+    onEvaluate = function () {
 //        if (validateEFOG()) {
 //            sd.connector.post("filesAction!onEvaluate.do?" + token.getTokenParamString(), null, "evaluateForm", null, afterEvaluate);
 //        }
@@ -175,14 +175,14 @@
     };
 
     //hieptq update 160415
-    onEvaluateNew = function() {
+    onEvaluateNew = function () {
         if (validateEFOG()) {
             sd.connector.post("filesAction!onEvaluate.do?" + token.getTokenParamString(), null, "evaluateForm", null, afterEvaluate);
         }
     };
 
 
-    afterEvaluate = function(data) {
+    afterEvaluate = function (data) {
         var obj = dojo.fromJson(data);
         var result = obj.items;
         alert(result[1]);
@@ -191,7 +191,7 @@
         }
     };
 
-    validateEFOG = function() {
+    validateEFOG = function () {
         if (document.getElementById("evaluateForm.statusAccept").checked == false && document.getElementById("evaluateForm.statusDeny").checked == false) {
             alert("Bạn chưa chọn [Kết quả thẩm định]");
             return false;
@@ -252,7 +252,7 @@
         }
         return true;
     };
-    onCloseEvaluate = function() {
+    onCloseEvaluate = function () {
         dijit.byId("evaluateDlg").hide();
         dijit.byId("evaluateForm.staffRequest").setValue("");
         //        dijit.byId("evaluateForm.statusAccept").checked = false;
@@ -267,25 +267,25 @@
         dijit.byId("evaluationRecordsForm.foodSafetyQualityContent").setValue("");
         dijit.byId("evaluationRecordsForm.effectUtilityContent").setValue("");
     };
-    onchangeStatusEFOG = function() {
+    onchangeStatusEFOG = function () {
         if (document.getElementById("evaluateForm.statusDeny").checked) {
             dijit.byId("evaluateForm.staffRequest").setValue("Yêu cầu bổ sung hồ sơ");
         } else {
             dijit.byId("evaluateForm.staffRequest").setValue("");
         }
     };
-    page.clearEvaluateForm = function() {
+    page.clearEvaluateForm = function () {
         try
         {
-            setCookie("evaluateForm.evaluateForm.staffRequest", "", 1);
-            setCookie("evaluateForm.evaluateForm.effectiveDate", "-1", 1);
-            setCookie("evaluateForm.evaluationRecordsForm.legal", "1", 1);
-            setCookie("evaluateForm.evaluationRecordsForm.foodSafetyQuality", "1", 1);
-            setCookie("evaluateForm.evaluationRecordsForm.effectUtility", "1", 1);
-            setCookie("evaluateForm.evaluationRecordsForm.leaderReviewId", "-1", 1);
-            setCookie("evaluateForm.evaluationRecordsForm.legalContent", "", 1);
-            setCookie("evaluateForm.evaluationRecordsForm.foodSafetyQualityContent", "", 1);
-            setCookie("evaluateForm.evaluationRecordsForm.effectUtilityContent", "", 1);
+            localStorage.setItem("evaluateForm.evaluateForm.staffRequest", "");
+            localStorage.setItem("evaluateForm.evaluateForm.effectiveDate", "-1");
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.legal", "1");
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.foodSafetyQuality", "1");
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.effectUtility", "1");
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.leaderReviewId", "-1");
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.legalContent", "");
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.foodSafetyQualityContent", "");
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.effectUtilityContent", "");
             alert("Xóa nội dung thẩm định gần đây thành công!");
         }
         catch (err)
@@ -293,18 +293,19 @@
             alert("Không thể Xóa nội dung thẩm định gần đây!");
         }
     };
-    page.setEvaluateForm = function() {
+    page.setEvaluateForm = function () {
         try
         {
-            setCookie("evaluateForm.evaluateForm.staffRequest", encodeBase64(dijit.byId("evaluateForm.staffRequest").getValue().toString().trim()), 1);
-            setCookie("evaluateForm.evaluateForm.effectiveDate", encodeBase64(dijit.byId("evaluateForm.effectiveDate").getValue().toString().trim()), 1);
-            setCookie("evaluateForm.evaluationRecordsForm.legal", encodeBase64(dijit.byId("evaluationRecordsForm.legal").getValue().toString().trim()), 1);
-            setCookie("evaluateForm.evaluationRecordsForm.foodSafetyQuality", encodeBase64(dijit.byId("evaluationRecordsForm.foodSafetyQuality").getValue().toString().trim()), 1);
-            setCookie("evaluateForm.evaluationRecordsForm.effectUtility", encodeBase64(dijit.byId("evaluationRecordsForm.effectUtility").getValue().toString().trim()), 1);
-            setCookie("evaluateForm.evaluationRecordsForm.leaderReviewId", encodeBase64(dijit.byId("evaluationRecordsForm.leaderReviewId").getValue().toString().trim()), 1);
-            setCookie("evaluateForm.evaluationRecordsForm.legalContent", encodeBase64(dijit.byId("evaluationRecordsForm.legalContent").getValue().toString().trim()), 1);
-            setCookie("evaluateForm.evaluationRecordsForm.foodSafetyQualityContent", encodeBase64(dijit.byId("evaluationRecordsForm.foodSafetyQualityContent").getValue().toString().trim()), 1);
-            setCookie("evaluateForm.evaluationRecordsForm.effectUtilityContent", encodeBase64(dijit.byId("evaluationRecordsForm.effectUtilityContent").getValue().toString().trim()), 1);
+            localStorage.setItem('evaluateFormevaluateFormstaffRequest', encodeBase64(dijit.byId("evaluateForm.staffRequest").getValue().toString().trim()));
+            localStorage.setItem("evaluateForm.evaluateForm.staffRequest", encodeBase64(dijit.byId("evaluateForm.staffRequest").getValue().toString().toString().trim()));
+            localStorage.setItem("evaluateForm.evaluateForm.effectiveDate", encodeBase64(dijit.byId("evaluateForm.effectiveDate").getValue().toString().toString().trim()));
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.legal", encodeBase64(dijit.byId("evaluationRecordsForm.legal").getValue().toString().toString().trim()));
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.foodSafetyQuality", encodeBase64(dijit.byId("evaluationRecordsForm.foodSafetyQuality").getValue().toString().toString().trim()));
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.effectUtility", encodeBase64(dijit.byId("evaluationRecordsForm.effectUtility").getValue().toString().toString().trim()));
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.leaderReviewId", encodeBase64(dijit.byId("evaluationRecordsForm.leaderReviewId").getValue().toString().toString().trim()));
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.legalContent", encodeBase64(dijit.byId("evaluationRecordsForm.legalContent").getValue().toString().toString().trim()));
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.foodSafetyQualityContent", encodeBase64(dijit.byId("evaluationRecordsForm.foodSafetyQualityContent").getValue().toString().toString().trim()));
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.effectUtilityContent", encodeBase64(dijit.byId("evaluationRecordsForm.effectUtilityContent").getValue().toString().toString().trim()));
             alert("Lưu nháp nội dung thẩm định thành công!");
         }
         catch (err)
@@ -313,18 +314,18 @@
         }
     };
     //dang loi
-    page.getEvaluateForm = function() {
+    page.getEvaluateForm = function () {
         try
         {
-            dijit.byId("evaluateForm.staffRequest").setValue(decodeBase64(getCookie("evaluateForm.evaluateForm.staffRequest")));
-            dijit.byId("evaluateForm.effectiveDate").setValue(decodeBase64(getCookie("evaluateForm.evaluateForm.effectiveDate")));
-            dijit.byId("evaluationRecordsForm.legal").setValue(decodeBase64(getCookie("evaluateForm.evaluationRecordsForm.legal")));
-            dijit.byId("evaluationRecordsForm.foodSafetyQuality").setValue(decodeBase64(getCookie("evaluateForm.evaluationRecordsForm.foodSafetyQuality")));
-            dijit.byId("evaluationRecordsForm.effectUtility").setValue(decodeBase64(getCookie("evaluateForm.evaluationRecordsForm.effectUtility")));
-            dijit.byId("evaluationRecordsForm.leaderReviewId").setValue(decodeBase64(getCookie("evaluateForm.evaluationRecordsForm.leaderReviewId")));
-            dijit.byId("evaluationRecordsForm.legalContent").setValue(decodeBase64(getCookie("evaluateForm.evaluationRecordsForm.legalContent")));
-            dijit.byId("evaluationRecordsForm.foodSafetyQualityContent").setValue(decodeBase64(getCookie("evaluateForm.evaluationRecordsForm.foodSafetyQualityContent")));
-            dijit.byId("evaluationRecordsForm.effectUtilityContent").setValue(decodeBase64(getCookie("evaluateForm.evaluationRecordsForm.effectUtilityContent")));
+            dijit.byId("evaluateForm.staffRequest").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluateForm.staffRequest")));
+            dijit.byId("evaluateForm.effectiveDate").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluateForm.effectiveDate")));
+            dijit.byId("evaluationRecordsForm.legal").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.legal")));
+            dijit.byId("evaluationRecordsForm.foodSafetyQuality").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.foodSafetyQuality")));
+            dijit.byId("evaluationRecordsForm.effectUtility").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.effectUtility")));
+            dijit.byId("evaluationRecordsForm.leaderReviewId").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.leaderReviewId")));
+            dijit.byId("evaluationRecordsForm.legalContent").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.legalContent")));
+            dijit.byId("evaluationRecordsForm.foodSafetyQualityContent").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.foodSafetyQualityContent")));
+            dijit.byId("evaluationRecordsForm.effectUtilityContent").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.effectUtilityContent")));
             alert("Tải nội thẩm định gần đây thành công!");
         }
         catch (err)

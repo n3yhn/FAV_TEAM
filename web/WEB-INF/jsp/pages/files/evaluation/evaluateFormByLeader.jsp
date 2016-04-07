@@ -265,14 +265,14 @@
     page.clearCKEFBL = function() {
         try
         {
-            setCookie("evaluateFormByLeader.evaluateFormByLeader.effectiveDate", "-1", 1);
-            setCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.legal", "1", 1);
-            setCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.foodSafetyQuality", "1", 1);
-            setCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.effectUtility", "1", 1);
-            setCookie("evaluateFormByLeader.evaluateFormByLeader.staffRequest", "", 1);
-            setCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.legalContent", "", 1);
-            setCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.foodSafetyQualityContent", "", 1);
-            setCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.effectUtilityContent", "", 1);
+            localStorage.setItem("evaluateFormByLeader.evaluateFormByLeader.effectiveDate", "-1");
+            localStorage.setItem("evaluateFormByLeader.evaluationRecordsFormByLeader.legal", "1");
+            localStorage.setItem("evaluateFormByLeader.evaluationRecordsFormByLeader.foodSafetyQuality", "1");
+            localStorage.setItem("evaluateFormByLeader.evaluationRecordsFormByLeader.effectUtility", "1");
+            localStorage.setItem("evaluateFormByLeader.evaluateFormByLeader.staffRequest", "");
+            localStorage.setItem("evaluateFormByLeader.evaluationRecordsFormByLeader.legalContent", "");
+            localStorage.setItem("evaluateFormByLeader.evaluationRecordsFormByLeader.foodSafetyQualityContent", "");
+            localStorage.setItem("evaluateFormByLeader.evaluationRecordsFormByLeader.effectUtilityContent", "");
             alert("Xóa nội dung thẩm định gần đây thành công!");
         }
         catch (err)
@@ -283,14 +283,14 @@
     page.setCKEFBL = function() {
         try
         {
-            setCookie("evaluateFormByLeader.evaluateFormByLeader.staffRequest", encodeBase64(dijit.byId("evaluateFormByLeader.staffRequest").getValue().toString().trim()), 1);
-            setCookie("evaluateFormByLeader.evaluateFormByLeader.effectiveDate", encodeBase64(dijit.byId("evaluateFormByLeader.effectiveDate").getValue().toString().trim()), 1);
-            setCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.legal", encodeBase64(dijit.byId("evaluationRecordsFormByLeader.legal").getValue().toString().trim()), 1);
-            setCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.foodSafetyQuality", encodeBase64(dijit.byId("evaluationRecordsFormByLeader.foodSafetyQuality").getValue().toString().trim()), 1);
-            setCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.effectUtility", encodeBase64(dijit.byId("evaluationRecordsFormByLeader.effectUtility").getValue().toString().trim()), 1);
-            setCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.legalContent", encodeBase64(dijit.byId("evaluationRecordsFormByLeader.legalContent").getValue().toString().trim()), 1);
-            setCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.foodSafetyQualityContent", encodeBase64(dijit.byId("evaluationRecordsFormByLeader.foodSafetyQualityContent").getValue().toString().trim()), 1);
-            setCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.effectUtilityContent", encodeBase64(dijit.byId("evaluationRecordsFormByLeader.effectUtilityContent").getValue().toString().trim()), 1);
+            localStorage.setItem("evaluateFormByLeader.evaluateFormByLeader.staffRequest", encodeBase64(dijit.byId("evaluateFormByLeader.staffRequest").getValue().toString().trim()));
+            localStorage.setItem("evaluateFormByLeader.evaluateFormByLeader.effectiveDate", encodeBase64(dijit.byId("evaluateFormByLeader.effectiveDate").getValue().toString().trim()));
+            localStorage.setItem("evaluateFormByLeader.evaluationRecordsFormByLeader.legal", encodeBase64(dijit.byId("evaluationRecordsFormByLeader.legal").getValue().toString().trim()));
+            localStorage.setItem("evaluateFormByLeader.evaluationRecordsFormByLeader.foodSafetyQuality", encodeBase64(dijit.byId("evaluationRecordsFormByLeader.foodSafetyQuality").getValue().toString().trim()));
+            localStorage.setItem("evaluateFormByLeader.evaluationRecordsFormByLeader.effectUtility", encodeBase64(dijit.byId("evaluationRecordsFormByLeader.effectUtility").getValue().toString().trim()));
+            localStorage.setItem("evaluateFormByLeader.evaluationRecordsFormByLeader.legalContent", encodeBase64(dijit.byId("evaluationRecordsFormByLeader.legalContent").getValue().toString().trim()));
+            localStorage.setItem("evaluateFormByLeader.evaluationRecordsFormByLeader.foodSafetyQualityContent", encodeBase64(dijit.byId("evaluationRecordsFormByLeader.foodSafetyQualityContent").getValue().toString().trim()));
+            localStorage.setItem("evaluateFormByLeader.evaluationRecordsFormByLeader.effectUtilityContent", encodeBase64(dijit.byId("evaluationRecordsFormByLeader.effectUtilityContent").getValue().toString().trim()));
             alert("Lưu nháp nội dung thẩm định thành công!");
         }
         catch (err)
@@ -301,14 +301,14 @@
     page.getCKEFBL = function() {
         try
         {
-            dijit.byId("evaluateFormByLeader.staffRequest").setValue(decodeBase64(getCookie("evaluateFormByLeader.evaluateFormByLeader.staffRequest")));
-            dijit.byId("evaluateFormByLeader.effectiveDate").setValue(decodeBase64(getCookie("evaluateFormByLeader.evaluateFormByLeader.effectiveDate")));
-            dijit.byId("evaluationRecordsFormByLeader.legal").setValue(decodeBase64(getCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.legal")));
-            dijit.byId("evaluationRecordsFormByLeader.foodSafetyQuality").setValue(decodeBase64(getCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.foodSafetyQuality")));
-            dijit.byId("evaluationRecordsFormByLeader.effectUtility").setValue(decodeBase64(getCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.effectUtility")));
-            dijit.byId("evaluationRecordsFormByLeader.legalContent").setValue(decodeBase64(getCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.legalContent")));
-            dijit.byId("evaluationRecordsFormByLeader.foodSafetyQualityContent").setValue(decodeBase64(getCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.foodSafetyQualityContent")));
-            dijit.byId("evaluationRecordsFormByLeader.effectUtilityContent").setValue(decodeBase64(getCookie("evaluateFormByLeader.evaluationRecordsFormByLeader.effectUtilityContent")));
+            dijit.byId("evaluateFormByLeader.staffRequest").setValue(decodeBase64(localStorage.getItem("evaluateFormByLeader.evaluateFormByLeader.staffRequest")));
+            dijit.byId("evaluateFormByLeader.effectiveDate").setValue(decodeBase64(localStorage.getItem("evaluateFormByLeader.evaluateFormByLeader.effectiveDate")));
+            dijit.byId("evaluationRecordsFormByLeader.legal").setValue(decodeBase64(localStorage.getItem("evaluateFormByLeader.evaluationRecordsFormByLeader.legal")));
+            dijit.byId("evaluationRecordsFormByLeader.foodSafetyQuality").setValue(decodeBase64(localStorage.getItem("evaluateFormByLeader.evaluationRecordsFormByLeader.foodSafetyQuality")));
+            dijit.byId("evaluationRecordsFormByLeader.effectUtility").setValue(decodeBase64(localStorage.getItem("evaluateFormByLeader.evaluationRecordsFormByLeader.effectUtility")));
+            dijit.byId("evaluationRecordsFormByLeader.legalContent").setValue(decodeBase64(localStorage.getItem("evaluateFormByLeader.evaluationRecordsFormByLeader.legalContent")));
+            dijit.byId("evaluationRecordsFormByLeader.foodSafetyQualityContent").setValue(decodeBase64(localStorage.getItem("evaluateFormByLeader.evaluationRecordsFormByLeader.foodSafetyQualityContent")));
+            dijit.byId("evaluationRecordsFormByLeader.effectUtilityContent").setValue(decodeBase64(localStorage.getItem("evaluateFormByLeader.evaluationRecordsFormByLeader.effectUtilityContent")));
             alert("Tải nội thẩm định gần đây thành công!");
         }
         catch (err)

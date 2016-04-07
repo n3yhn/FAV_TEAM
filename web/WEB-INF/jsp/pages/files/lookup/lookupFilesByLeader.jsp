@@ -587,13 +587,13 @@
     page.clearSearch = function() {
         try
         {
-            setCookie("lookupFilesByLeader.searchForm.fileCode", "", 1);
-            setCookie("lookupFilesByLeader.searchForm.fileType", "-1", 1);
-            setCookie("lookupFilesByLeader.searchForm.sendDateFrom", "", 1);
-            setCookie("lookupFilesByLeader.searchForm.sendDateTo", "", 1);
-            setCookie("lookupFilesByLeader.searchForm.businessName", "", 1);
-            setCookie("lookupFilesByLeader.searchForm.status", "-1", 1);
-            setCookie("lookupFilesByLeader.searchForm.nameStaffProcess", "", 1);
+            localStorage.setItem("lookupFilesByLeader.searchForm.fileCode", "");
+            localStorage.setItem("lookupFilesByLeader.searchForm.fileType", "-1");
+            localStorage.setItem("lookupFilesByLeader.searchForm.sendDateFrom", "");
+            localStorage.setItem("lookupFilesByLeader.searchForm.sendDateTo", "");
+            localStorage.setItem("lookupFilesByLeader.searchForm.businessName", "");
+            localStorage.setItem("lookupFilesByLeader.searchForm.status", "-1");
+            localStorage.setItem("lookupFilesByLeader.searchForm.nameStaffProcess", "");
         }
         catch (err)
         {
@@ -604,13 +604,13 @@
     page.setSearch = function() {
         try
         {
-            setCookie("lookupFilesByLeader.searchForm.fileCode", encodeBase64(dijit.byId("searchForm.fileCode").getValue().toString().trim()), 1);
-            setCookie("lookupFilesByLeader.searchForm.fileType", encodeBase64(dijit.byId("searchForm.fileType").getValue()), 1);
-            setCookie("lookupFilesByLeader.searchForm.sendDateFrom", dijit.byId("searchForm.sendDateFrom").getValue(), 1);
-            setCookie("lookupFilesByLeader.searchForm.sendDateTo", dijit.byId("searchForm.sendDateTo").getValue(), 1);
-            setCookie("lookupFilesByLeader.searchForm.businessName", encodeBase64(dijit.byId("searchForm.businessName").getValue().toString().trim()), 1);
-            setCookie("lookupFilesByLeader.searchForm.status", encodeBase64(dijit.byId("searchForm.status").getValue()), 1);
-            setCookie("lookupFilesByLeader.searchForm.nameStaffProcess", encodeBase64(dijit.byId("searchForm.nameStaffProcess").getValue().toString().trim()), 1);
+            localStorage.setItem("lookupFilesByLeader.searchForm.fileCode", encodeBase64(dijit.byId("searchForm.fileCode").getValue().toString().trim()));
+            localStorage.setItem("lookupFilesByLeader.searchForm.fileType", encodeBase64(dijit.byId("searchForm.fileType").getValue()));
+            localStorage.setItem("lookupFilesByLeader.searchForm.sendDateFrom", dijit.byId("searchForm.sendDateFrom").getValue());
+            localStorage.setItem("lookupFilesByLeader.searchForm.sendDateTo", dijit.byId("searchForm.sendDateTo").getValue());
+            localStorage.setItem("lookupFilesByLeader.searchForm.businessName", encodeBase64(dijit.byId("searchForm.businessName").getValue().toString().trim()));
+            localStorage.setItem("lookupFilesByLeader.searchForm.status", encodeBase64(dijit.byId("searchForm.status").getValue()));
+            localStorage.setItem("lookupFilesByLeader.searchForm.nameStaffProcess", encodeBase64(dijit.byId("searchForm.nameStaffProcess").getValue().toString().trim()));
         }
         catch (err)
         {
@@ -621,17 +621,17 @@
     page.getSearch = function() {
         try
         {
-            dijit.byId("searchForm.fileCode").setValue(decodeBase64(getCookie("lookupFilesByLeader.searchForm.fileCode")));
-            dijit.byId("searchForm.fileType").setValue(decodeBase64(getCookie("lookupFilesByLeader.searchForm.fileType")));
+            dijit.byId("searchForm.fileCode").setValue(decodeBase64(localStorage.getItem("lookupFilesByLeader.searchForm.fileCode")));
+            dijit.byId("searchForm.fileType").setValue(decodeBase64(localStorage.getItem("lookupFilesByLeader.searchForm.fileType")));
             var sendDateFrom = getCookie("lookupFilesByLeader.searchForm.sendDateFrom");
             var sendDateTo = getCookie("lookupFilesByLeader.searchForm.sendDateTo");
             if (sendDateFrom != null && sendDateFrom.toString() != "null" && sendDateFrom.toString() != "")
                 dijit.byId("searchForm.sendDateFrom").setValue(new Date(sendDateFrom));
             if (sendDateTo != null && sendDateTo.toString() != "null" && sendDateTo.toString() != "")
                 dijit.byId("searchForm.sendDateTo").setValue(new Date(sendDateTo));
-            dijit.byId("searchForm.businessName").setValue(decodeBase64(getCookie("lookupFilesByLeader.searchForm.businessName")));
-            dijit.byId("searchForm.status").setValue(decodeBase64(getCookie("lookupFilesByLeader.searchForm.status")));
-            dijit.byId("searchForm.nameStaffProcess").setValue(decodeBase64(getCookie("lookupFilesByLeader.searchForm.nameStaffProcess")));
+            dijit.byId("searchForm.businessName").setValue(decodeBase64(localStorage.getItem("lookupFilesByLeader.searchForm.businessName")));
+            dijit.byId("searchForm.status").setValue(decodeBase64(localStorage.getItem("lookupFilesByLeader.searchForm.status")));
+            dijit.byId("searchForm.nameStaffProcess").setValue(decodeBase64(localStorage.getItem("lookupFilesByLeader.searchForm.nameStaffProcess")));
         }
         catch (err)
         {

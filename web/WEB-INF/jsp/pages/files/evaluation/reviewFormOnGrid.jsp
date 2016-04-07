@@ -281,14 +281,14 @@
     page.clearReviewForm = function() {
         try
         {
-            setCookie("reviewForm.reviewForm.leaderApproveId", "-1", 1);
-            setCookie("reviewForm.reviewForm.leaderStaffRequest", "", 1);
-            setCookie("reviewForm.reviewForm.legalL", "1", 1);
-            setCookie("reviewForm.reviewForm.legalContentL", "", 1);
-            setCookie("reviewForm.reviewForm.foodSafetyQualityL", "1", 1);
-            setCookie("reviewForm.reviewForm.foodSafetyQualityContentL", "", 1);
-            setCookie("reviewForm.reviewForm.effectUtilityL", "1", 1);
-            setCookie("reviewForm.reviewForm.effectUtilityContentL", "", 1);
+            localStorage.setItem("reviewForm.reviewForm.leaderApproveId", "-1");
+            localStorage.setItem("reviewForm.reviewForm.leaderStaffRequest", "");
+            localStorage.setItem("reviewForm.reviewForm.legalL", "1");
+            localStorage.setItem("reviewForm.reviewForm.legalContentL", "");
+            localStorage.setItem("reviewForm.reviewForm.foodSafetyQualityL", "1");
+            localStorage.setItem("reviewForm.reviewForm.foodSafetyQualityContentL", "");
+            localStorage.setItem("reviewForm.reviewForm.effectUtilityL", "1");
+            localStorage.setItem("reviewForm.reviewForm.effectUtilityContentL", "");
 
             alert("Xóa nội dung thẩm định gần đây thành công!");
         }
@@ -300,14 +300,14 @@
     page.setRreviewForm = function() {
         try
         {
-            setCookie("reviewForm.reviewForm.leaderApproveId", encodeBase64(dijit.byId("reviewForm.leaderApproveId").getValue().toString().trim()), 1);
-            setCookie("reviewForm.reviewForm.leaderStaffRequest", encodeBase64(dijit.byId("reviewForm.leaderStaffRequest").getValue().toString().trim()), 1);
-            setCookie("reviewForm.reviewForm.legalL", encodeBase64(dijit.byId("reviewForm.legalL").getValue().toString().trim()), 1);
-            setCookie("reviewForm.reviewForm.legalContentL", encodeBase64(dijit.byId("reviewForm.legalContentL").getValue().toString().trim()), 1);
-            setCookie("reviewForm.reviewForm.foodSafetyQualityL", encodeBase64(dijit.byId("reviewForm.foodSafetyQualityL").getValue().toString().trim()), 1);
-            setCookie("reviewForm.reviewForm.foodSafetyQualityContentL", encodeBase64(dijit.byId("reviewForm.foodSafetyQualityContentL").getValue().toString().trim()), 1);
-            setCookie("reviewForm.reviewForm.effectUtilityL", encodeBase64(dijit.byId("reviewForm.effectUtilityL").getValue().toString().trim()), 1);
-            setCookie("reviewForm.reviewForm.effectUtilityContentL", encodeBase64(dijit.byId("reviewForm.effectUtilityContentL").getValue().toString().trim()), 1);
+            localStorage.setItem("reviewForm.reviewForm.leaderApproveId", encodeBase64(dijit.byId("reviewForm.leaderApproveId").getValue().toString().trim()));
+            localStorage.setItem("reviewForm.reviewForm.leaderStaffRequest", encodeBase64(dijit.byId("reviewForm.leaderStaffRequest").getValue().toString().trim()));
+            localStorage.setItem("reviewForm.reviewForm.legalL", encodeBase64(dijit.byId("reviewForm.legalL").getValue().toString().trim()));
+            localStorage.setItem("reviewForm.reviewForm.legalContentL", encodeBase64(dijit.byId("reviewForm.legalContentL").getValue().toString().trim()));
+            localStorage.setItem("reviewForm.reviewForm.foodSafetyQualityL", encodeBase64(dijit.byId("reviewForm.foodSafetyQualityL").getValue().toString().trim()));
+            localStorage.setItem("reviewForm.reviewForm.foodSafetyQualityContentL", encodeBase64(dijit.byId("reviewForm.foodSafetyQualityContentL").getValue().toString().trim()));
+            localStorage.setItem("reviewForm.reviewForm.effectUtilityL", encodeBase64(dijit.byId("reviewForm.effectUtilityL").getValue().toString().trim()));
+            localStorage.setItem("reviewForm.reviewForm.effectUtilityContentL", encodeBase64(dijit.byId("reviewForm.effectUtilityContentL").getValue().toString().trim()));
             alert("Lưu nháp nội dung thẩm định thành công!");
         }
         catch (err)
@@ -318,14 +318,14 @@
     page.getReviewForm = function() {
         try
         {
-            dijit.byId("reviewForm.leaderApproveId").setValue(decodeBase64(getCookie("reviewForm.reviewForm.leaderApproveId")));
-            dijit.byId("reviewForm.leaderStaffRequest").setValue(decodeBase64(getCookie("reviewForm.reviewForm.leaderStaffRequest")));
-            dijit.byId("reviewForm.legalL").setValue(decodeBase64(getCookie("reviewForm.reviewForm.legalL")));
-            dijit.byId("reviewForm.legalContentL").setValue(decodeBase64(getCookie("reviewForm.reviewForm.legalContentL")));
-            dijit.byId("reviewForm.foodSafetyQualityL").setValue(decodeBase64(getCookie("reviewForm.reviewForm.foodSafetyQualityL")));
-            dijit.byId("reviewForm.foodSafetyQualityContentL").setValue(decodeBase64(getCookie("reviewForm.reviewForm.foodSafetyQualityContentL")));
-            dijit.byId("reviewForm.effectUtilityL").setValue(decodeBase64(getCookie("reviewForm.reviewForm.effectUtilityL")));
-            dijit.byId("reviewForm.effectUtilityContentL").setValue(decodeBase64(getCookie("reviewForm.reviewForm.effectUtilityContentL")));
+            dijit.byId("reviewForm.leaderApproveId").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.leaderApproveId")));
+            dijit.byId("reviewForm.leaderStaffRequest").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.leaderStaffRequest")));
+            dijit.byId("reviewForm.legalL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.legalL")));
+            dijit.byId("reviewForm.legalContentL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.legalContentL")));
+            dijit.byId("reviewForm.foodSafetyQualityL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.foodSafetyQualityL")));
+            dijit.byId("reviewForm.foodSafetyQualityContentL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.foodSafetyQualityContentL")));
+            dijit.byId("reviewForm.effectUtilityL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.effectUtilityL")));
+            dijit.byId("reviewForm.effectUtilityContentL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.effectUtilityContentL")));
             alert("Tải nội thẩm định gần đây thành công!");
         }
         catch (err)
