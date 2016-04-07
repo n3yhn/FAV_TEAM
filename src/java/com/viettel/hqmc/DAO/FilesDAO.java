@@ -4768,9 +4768,9 @@ public class FilesDAO extends BaseDAO {
                     barcodeInfo += "Tên sản phẩm: N/A";
                 }
                 if (announcementReceiptPaper.getBusinessName() != null) {
-                    barcodeInfo += "\nĐơn vị đăng ký chứng nhận hợp qui xác nhận phù hợp: " + announcementReceiptPaper.getBusinessName();
+                    barcodeInfo += "\nThương nhân chịu trách nhiệm sản phẩm: " + announcementReceiptPaper.getBusinessName();
                 } else {
-                    barcodeInfo += "\nĐơn vị đăng ký chứng nhận hợp qui xác nhận phù hợp: N/A";
+                    barcodeInfo += "\nThương nhân chịu trách nhiệm sản phẩm: N/A";
                 }
                 if (announcementReceiptPaper.getManufactureName() != null) {
                     barcodeInfo += "\nTên nhà sản xuất: " + announcementReceiptPaper.getManufactureName();
@@ -4787,15 +4787,20 @@ public class FilesDAO extends BaseDAO {
                 } else {
                     //barcodeInfo += "\nTên nước xuất xứ: N/A";
                 }
-                if (announcementReceiptPaper.getMatchingTarget() != null) {
-                    barcodeInfo += "\nSố qui chuẩn KT/QĐATTP: " + announcementReceiptPaper.getMatchingTarget();
-                } else {
-                    barcodeInfo += "\nSố qui chuẩn KT/QĐATTP: N/A";
-                }
+//                if (announcementReceiptPaper.getMatchingTarget() != null) {
+//                    barcodeInfo += "\nSố qui chuẩn KT/QĐATTP: " + announcementReceiptPaper.getMatchingTarget();
+//                } else {
+//                    barcodeInfo += "\nSố qui chuẩn KT/QĐATTP: N/A";
+//                }
                 if (announcementReceiptPaper.getReceiptDeptName() != null) {
-                    barcodeInfo += "\nĐơn vi cấp chứng nhân hợp qui xác nhận phù hợp: " + announcementReceiptPaper.getReceiptDeptName();
+                    barcodeInfo += "\nĐơn vi xác nhận: " + announcementReceiptPaper.getReceiptDeptName();
                 } else {
-                    barcodeInfo += "\nĐơn vi cấp chứng nhân hợp qui xác nhận phù hợp: N/A";
+                    barcodeInfo += "\nĐơn vi xác nhận: N/A";
+                }
+                if (announcementReceiptPaper.getReceiptNo()!= null) {
+                    barcodeInfo += "\nSố chứng nhận sản phẩm: " + announcementReceiptPaper.getReceiptNo();
+                } else {
+                    barcodeInfo += "\nSố chứng nhận sản phẩm: N/A";
                 }
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 if (announcementReceiptPaper.getEffectiveDate() != null) {
