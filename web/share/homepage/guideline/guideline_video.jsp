@@ -4,6 +4,8 @@
     Author     : Administrator
 --%>
 
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.HashMap"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
@@ -64,12 +66,32 @@
                                                                                             <tr class="chan"> 
                                                                                                 <td width="1050" style="text-align: center">
                                                                                                     <div style="width:638px;height:480px;margin-left: 300px">
-                                                                                                        <video id="MY_VIDEO_1" class="video-js vjs-default-skin" controls
-                                                                                                               preload="auto" width="638" height="480"
-                                                                                                               data-setup="{}">
-                                                                                                            <source src="share/homepage/VideoPlayer/1.Cai_dat_moi_truong_CKS.mp4" type='video/mp4'>
-                                                                                                        </video>
-                                                                                                    </div>
+                                                                                                        <iframe id="videoFrame1" width="600" height="480">
+                                                                                                        </iframe> 
+                                                                                                        <%
+                                                                                                            HashMap<String, String> map = (HashMap) application.getAttribute("map");
+                                                                                                            if (map == null) {
+                                                                                                                map = new HashMap<String, String>();
+                                                                                                                application.setAttribute("map", map);
+                                                                                                            }
+                                                                                                            String id = request.getParameter("vid");
+                                                                                                            String title = request.getParameter("title");
+                                                                                                            if (id != null && !"".equals(id.trim())
+                                                                                                                    && title != null && !"".equals(title.trim())) {
+                                                                                                                map.put(id.trim(), title.trim());
+                                                                                                            }
+                                                                                                            Iterator<String> iter = map.keySet().iterator();
+                                                                                                            while (iter.hasNext()) {
+                                                                                                                String i = iter.next();
+                                                                                                                String t = map.get(i);
+                                                                                                                out.print("<a href='?vid=" + i + "&title=" + t + "' >" + t + "</a> ");
+                                                                                                            }
+                                                                                                        %>
+                                                                                                        <script>
+                                                                                                            var url = "http://www.youtube.com/embed/rOEaB009W9Y";
+                                                                                                            document.getElementById("videoFrame1").src = url;
+                                                                                                        </script>
+                                                                                                    </div>                                                                                                    
                                                                                                 </td> 
                                                                                             </tr> 
                                                                                         </tbody>
@@ -89,11 +111,31 @@
                                                                                             <tr class="chan"> 
                                                                                                 <td width="1050" style="text-align: center">
                                                                                                     <div style="width:638px;height:480px;margin-left: 300px">
-                                                                                                        <video id="MY_VIDEO_1" class="video-js vjs-default-skin" controls
-                                                                                                               preload="auto" width="638" height="480"
-                                                                                                               data-setup="{}">
-                                                                                                            <source src="share/homepage/VideoPlayer/2.Dang_ky_CA_TK_doanh_nghiep.mp4" type='video/mp4'>
-                                                                                                        </video>
+                                                                                                        <iframe id="videoFrame2" width="600" height="480">
+                                                                                                        </iframe> 
+                                                                                                        <%
+                                                                                                            map = (HashMap) application.getAttribute("map");
+                                                                                                            if (map == null) {
+                                                                                                                map = new HashMap<String, String>();
+                                                                                                                application.setAttribute("map", map);
+                                                                                                            }
+                                                                                                            id = request.getParameter("vid");
+                                                                                                            title = request.getParameter("title");
+                                                                                                            if (id != null && !"".equals(id.trim())
+                                                                                                                    && title != null && !"".equals(title.trim())) {
+                                                                                                                map.put(id.trim(), title.trim());
+                                                                                                            }
+                                                                                                            iter = map.keySet().iterator();
+                                                                                                            while (iter.hasNext()) {
+                                                                                                                String i = iter.next();
+                                                                                                                String t = map.get(i);
+                                                                                                                out.print("<a href='?vid=" + i + "&title=" + t + "' >" + t + "</a> ");
+                                                                                                            }
+                                                                                                        %>
+                                                                                                        <script>
+                                                                                                            var url = "http://www.youtube.com/embed/C1De34CC--w";
+                                                                                                            document.getElementById("videoFrame2").src = url;
+                                                                                                        </script>
                                                                                                     </div>
                                                                                                 </td> 
                                                                                             </tr> 
@@ -114,11 +156,31 @@
                                                                                             <tr class="chan"> 
                                                                                                 <td width="1050" style="text-align: center">
                                                                                                     <div style="width:638px;height:480px;margin-left: 300px">
-                                                                                                        <video id="MY_VIDEO_1" class="video-js vjs-default-skin" controls
-                                                                                                               preload="auto" width="638" height="480"
-                                                                                                               data-setup="{}">
-                                                                                                            <source src="share/homepage/VideoPlayer/3.Khai_bao_hs.mp4" type='video/mp4'>
-                                                                                                        </video>
+                                                                                                        <iframe id="videoFrame3" width="600" height="480">
+                                                                                                        </iframe> 
+                                                                                                        <%
+                                                                                                            map = (HashMap) application.getAttribute("map");
+                                                                                                            if (map == null) {
+                                                                                                                map = new HashMap<String, String>();
+                                                                                                                application.setAttribute("map", map);
+                                                                                                            }
+                                                                                                            id = request.getParameter("vid");
+                                                                                                            title = request.getParameter("title");
+                                                                                                            if (id != null && !"".equals(id.trim())
+                                                                                                                    && title != null && !"".equals(title.trim())) {
+                                                                                                                map.put(id.trim(), title.trim());
+                                                                                                            }
+                                                                                                            iter = map.keySet().iterator();
+                                                                                                            while (iter.hasNext()) {
+                                                                                                                String i = iter.next();
+                                                                                                                String t = map.get(i);
+                                                                                                                out.print("<a href='?vid=" + i + "&title=" + t + "' >" + t + "</a> ");
+                                                                                                            }
+                                                                                                        %>
+                                                                                                        <script>
+                                                                                                            var url = "http://www.youtube.com/embed/twj1FMDeWP8";
+                                                                                                            document.getElementById("videoFrame3").src = url;
+                                                                                                        </script>
                                                                                                     </div>
                                                                                                 </td> 
                                                                                             </tr> 
@@ -139,11 +201,31 @@
                                                                                             <tr class="chan"> 
                                                                                                 <td width="1050" style="text-align: center">
                                                                                                     <div style="width:638px;height:480px;margin-left: 300px">
-                                                                                                        <video id="MY_VIDEO_1" class="video-js vjs-default-skin" controls
-                                                                                                               preload="auto" width="638" height="480"
-                                                                                                               data-setup="{}">
-                                                                                                            <source src="share/homepage/VideoPlayer/4.Ky_CA_tren_form.mp4" type='video/mp4'>
-                                                                                                        </video>
+                                                                                                        <iframe id="videoFrame4" width="600" height="480">
+                                                                                                        </iframe> 
+                                                                                                        <%
+                                                                                                            map = (HashMap) application.getAttribute("map");
+                                                                                                            if (map == null) {
+                                                                                                                map = new HashMap<String, String>();
+                                                                                                                application.setAttribute("map", map);
+                                                                                                            }
+                                                                                                            id = request.getParameter("vid");
+                                                                                                            title = request.getParameter("title");
+                                                                                                            if (id != null && !"".equals(id.trim())
+                                                                                                                    && title != null && !"".equals(title.trim())) {
+                                                                                                                map.put(id.trim(), title.trim());
+                                                                                                            }
+                                                                                                            iter = map.keySet().iterator();
+                                                                                                            while (iter.hasNext()) {
+                                                                                                                String i = iter.next();
+                                                                                                                String t = map.get(i);
+                                                                                                                out.print("<a href='?vid=" + i + "&title=" + t + "' >" + t + "</a> ");
+                                                                                                            }
+                                                                                                        %>
+                                                                                                        <script>
+                                                                                                            var url = "http://www.youtube.com/embed/AK3WqdkIEbw";
+                                                                                                            document.getElementById("videoFrame4").src = url;
+                                                                                                        </script>
                                                                                                     </div>
                                                                                                 </td> 
                                                                                             </tr> 
@@ -164,11 +246,31 @@
                                                                                             <tr class="chan"> 
                                                                                                 <td width="1050" style="text-align: center">
                                                                                                     <div style="width:638px;height:480px;margin-left: 300px">
-                                                                                                        <video id="MY_VIDEO_1" class="video-js vjs-default-skin" controls
-                                                                                                               preload="auto" width="638" height="480"
-                                                                                                               data-setup="{}">
-                                                                                                            <source src="share/homepage/VideoPlayer/5.Ky_files_upload.mp4" type='video/mp4'>
-                                                                                                        </video>
+                                                                                                        <iframe id="videoFrame5" width="600" height="480">
+                                                                                                        </iframe> 
+                                                                                                        <%
+                                                                                                            map = (HashMap) application.getAttribute("map");
+                                                                                                            if (map == null) {
+                                                                                                                map = new HashMap<String, String>();
+                                                                                                                application.setAttribute("map", map);
+                                                                                                            }
+                                                                                                            id = request.getParameter("vid");
+                                                                                                            title = request.getParameter("title");
+                                                                                                            if (id != null && !"".equals(id.trim())
+                                                                                                                    && title != null && !"".equals(title.trim())) {
+                                                                                                                map.put(id.trim(), title.trim());
+                                                                                                            }
+                                                                                                            iter = map.keySet().iterator();
+                                                                                                            while (iter.hasNext()) {
+                                                                                                                String i = iter.next();
+                                                                                                                String t = map.get(i);
+                                                                                                                out.print("<a href='?vid=" + i + "&title=" + t + "' >" + t + "</a> ");
+                                                                                                            }
+                                                                                                        %>
+                                                                                                        <script>
+                                                                                                            var url = "http://www.youtube.com/embed/rVRhNChYgXc";
+                                                                                                            document.getElementById("videoFrame5").src = url;
+                                                                                                        </script>
                                                                                                     </div>
                                                                                                 </td> 
                                                                                             </tr> 
@@ -189,11 +291,31 @@
                                                                                             <tr class="chan"> 
                                                                                                 <td width="1050" style="text-align: center">
                                                                                                     <div style="width:638px;height:480px;margin-left: 300px">
-                                                                                                        <video id="MY_VIDEO_1" class="video-js vjs-default-skin" controls
-                                                                                                               preload="auto" width="638" height="480"
-                                                                                                               data-setup="{}">
-                                                                                                            <source src="share/homepage/VideoPlayer/6.Thanh_toan.mp4" type='video/mp4'>
-                                                                                                        </video>
+                                                                                                        <iframe id="videoFrame6" width="600" height="480">
+                                                                                                        </iframe> 
+                                                                                                        <%
+                                                                                                            map = (HashMap) application.getAttribute("map");
+                                                                                                            if (map == null) {
+                                                                                                                map = new HashMap<String, String>();
+                                                                                                                application.setAttribute("map", map);
+                                                                                                            }
+                                                                                                            id = request.getParameter("vid");
+                                                                                                            title = request.getParameter("title");
+                                                                                                            if (id != null && !"".equals(id.trim())
+                                                                                                                    && title != null && !"".equals(title.trim())) {
+                                                                                                                map.put(id.trim(), title.trim());
+                                                                                                            }
+                                                                                                            iter = map.keySet().iterator();
+                                                                                                            while (iter.hasNext()) {
+                                                                                                                String i = iter.next();
+                                                                                                                String t = map.get(i);
+                                                                                                                out.print("<a href='?vid=" + i + "&title=" + t + "' >" + t + "</a> ");
+                                                                                                            }
+                                                                                                        %>
+                                                                                                        <script>
+                                                                                                            var url = "http://www.youtube.com/embed/AktcLfx_Rfw";
+                                                                                                            document.getElementById("videoFrame6").src = url;
+                                                                                                        </script>
                                                                                                     </div>
                                                                                                 </td> 
                                                                                             </tr> 
@@ -214,11 +336,31 @@
                                                                                             <tr class="chan"> 
                                                                                                 <td width="1050" style="text-align: center">
                                                                                                     <div style="width:638px;height:480px;margin-left: 300px">
-                                                                                                        <video id="MY_VIDEO_1" class="video-js vjs-default-skin" controls
-                                                                                                               preload="auto" width="638" height="480"
-                                                                                                               data-setup="{}">
-                                                                                                            <source src="share/homepage/VideoPlayer/7.Quan_ly_DS_HS.mp4" type='video/mp4'>
-                                                                                                        </video>
+                                                                                                        <iframe id="videoFrame7" width="600" height="480">
+                                                                                                        </iframe> 
+                                                                                                        <%
+                                                                                                            map = (HashMap) application.getAttribute("map");
+                                                                                                            if (map == null) {
+                                                                                                                map = new HashMap<String, String>();
+                                                                                                                application.setAttribute("map", map);
+                                                                                                            }
+                                                                                                            id = request.getParameter("vid");
+                                                                                                            title = request.getParameter("title");
+                                                                                                            if (id != null && !"".equals(id.trim())
+                                                                                                                    && title != null && !"".equals(title.trim())) {
+                                                                                                                map.put(id.trim(), title.trim());
+                                                                                                            }
+                                                                                                            iter = map.keySet().iterator();
+                                                                                                            while (iter.hasNext()) {
+                                                                                                                String i = iter.next();
+                                                                                                                String t = map.get(i);
+                                                                                                                out.print("<a href='?vid=" + i + "&title=" + t + "' >" + t + "</a> ");
+                                                                                                            }
+                                                                                                        %>
+                                                                                                        <script>
+                                                                                                            var url = "http://www.youtube.com/embed/ufWoZcwtvvQ";
+                                                                                                            document.getElementById("videoFrame7").src = url;
+                                                                                                        </script>
                                                                                                     </div>
                                                                                                 </td> 
                                                                                             </tr> 
@@ -239,11 +381,31 @@
                                                                                             <tr class="chan"> 
                                                                                                 <td width="1050" style="text-align: center">
                                                                                                     <div style="width:638px;height:480px;margin-left: 300px">
-                                                                                                        <video id="MY_VIDEO_1" class="video-js vjs-default-skin" controls
-                                                                                                               preload="auto" width="638" height="480"
-                                                                                                               data-setup="{}">
-                                                                                                            <source src="share/homepage/VideoPlayer/8.Sua_doi_bo_sung.mp4" type='video/mp4'>
-                                                                                                        </video>
+                                                                                                        <iframe id="videoFrame8" width="600" height="480">
+                                                                                                        </iframe> 
+                                                                                                        <%
+                                                                                                            map = (HashMap) application.getAttribute("map");
+                                                                                                            if (map == null) {
+                                                                                                                map = new HashMap<String, String>();
+                                                                                                                application.setAttribute("map", map);
+                                                                                                            }
+                                                                                                            id = request.getParameter("vid");
+                                                                                                            title = request.getParameter("title");
+                                                                                                            if (id != null && !"".equals(id.trim())
+                                                                                                                    && title != null && !"".equals(title.trim())) {
+                                                                                                                map.put(id.trim(), title.trim());
+                                                                                                            }
+                                                                                                            iter = map.keySet().iterator();
+                                                                                                            while (iter.hasNext()) {
+                                                                                                                String i = iter.next();
+                                                                                                                String t = map.get(i);
+                                                                                                                out.print("<a href='?vid=" + i + "&title=" + t + "' >" + t + "</a> ");
+                                                                                                            }
+                                                                                                        %>
+                                                                                                        <script>
+                                                                                                            var url = "http://www.youtube.com/embed/KsCWLStymLE";
+                                                                                                            document.getElementById("videoFrame8").src = url;
+                                                                                                        </script>
                                                                                                     </div>
                                                                                                 </td> 
                                                                                             </tr> 
@@ -264,6 +426,6 @@
                                     document.getElementById("video7").style.display = 'none';
                                     document.getElementById("video8").style.display = 'none';
                                     document.getElementById("video" + ${fn:escapeXml(typeVideo)}).style.display = '';
-                                </script>
+                                </script>                                
                             </body>
                             </html>
