@@ -119,7 +119,7 @@
                             url += " | <img src='share/images/icons/kdevelop_down.png' width='17px' height='17px' title='Hồ sơ đã upload' onClick='page.downloadFileSign(" + item.fileId + ");' />";
                             //url += " | <img src='share/images/icons/send_document.png' width='17px' height='17px' title='Gửi hồ sơ' onClick='page.sendFile(" + row + ");' />";
                         }
-                        if (item.fileType != 3052 && item.fileType != 3051 && item.fileType != 3050) {
+                        if (item.fileType == 3052 || item.fileType == 3051 || item.fileType || 3050) {
                             url += " | <img src='share/images/icons/send_document.png' width='17px' height='17px' title='Gửi hồ sơ' onClick='page.sendFile(" + row + ");' />";
                         }
                         //url += " | <img src='share/images/icons/DownArrow.png' width='17px' height='17px' title='Hồ sơ đã upload' onClick='page.downloadFileSign(" + item.fileId + ");' />";
@@ -190,6 +190,9 @@
                             if (item.fileType != 3052 && item.fileType != 3051 && item.fileType != 3050) {
                                 url += " | <img src='share/images/icons/payment.png' width='17px' height='17px' title='Thanh toán' onClick='page.payFile(" + row + ");' />";
                             }
+                            if ((item.fileType == 3052 || item.fileType == 3051 || item.fileType || 3050)&&(deadlineAddition != null && (deadlineAddition > today || deadlineAddition == today))) {
+                                url += " | <img src='share/images/icons/send_document.png' width='17px' height='17px' title='Gửi hồ sơ' onClick='page.sendFile(" + row + ");' />";
+                            }
                         } else {
 //                            url += " | <img src='share/images/icons/UpArrow.png' width='17px' height='17px' title='Upload' onClick='page.Upload(" + row + ");' />";
                             if (deadlineAddition != null && (deadlineAddition > today || deadlineAddition == today)) {
@@ -197,6 +200,9 @@
                             }
                             if (item.fileType != 3052 && item.fileType != 3051 && item.fileType != 3050) {
                                 url += " | <img src='share/images/icons/payment.png' width='17px' height='17px' title='Thanh toán' onClick='page.payFile(" + row + ");' />";
+                            }
+                            if ((item.fileType == 3052 || item.fileType == 3051 || item.fileType || 3050)&&(deadlineAddition != null && (deadlineAddition > today || deadlineAddition == today))) {
+                                url += " | <img src='share/images/icons/send_document.png' width='17px' height='17px' title='Gửi hồ sơ' onClick='page.sendFile(" + row + ");' />";
                             }
                         }
                     }
