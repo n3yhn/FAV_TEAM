@@ -630,11 +630,11 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     file.setStaffRequest(prefix + form.getStaffRequest());
                 }
                 /*noi dung bi lap binhnt53 141011
-                     if (file.getStaffRequest() != null) {
-                     file.setStaffRequest(prefix + form.getStaffRequest() + "\n" + file.getStaffRequest());
-                     } else {
-                     file.setStaffRequest(prefix + form.getStaffRequest());
-                     }
+                 if (file.getStaffRequest() != null) {
+                 file.setStaffRequest(prefix + form.getStaffRequest() + "\n" + file.getStaffRequest());
+                 } else {
+                 file.setStaffRequest(prefix + form.getStaffRequest());
+                 }
                  */
                 file.setModifyDate(dateNow);
                 if (form.getEffectiveDate() != null) {
@@ -723,10 +723,10 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     }
                     if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATE_TO_ADD)) {//da soan du thao thong bao sdbs ho so                           
                         /*
-                             ho so sau khi da tra lai chuyen vien de soan du thao tb sdbs
-                             cv vao tao ban du thao
-                             sau khi tao xong luu
-                             gui noi dung cho lanh dao phong xem xet
+                         ho so sau khi da tra lai chuyen vien de soan du thao tb sdbs
+                         cv vao tao ban du thao
+                         sau khi tao xong luu
+                         gui noi dung cho lanh dao phong xem xet
                          */
                         Process newP = new Process();
                         newP.setObjectId(form.getFileId());
@@ -920,9 +920,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     }//!140627 THIET LAP HAN SDBS HO SO
                     //sms
                     /* disable send sms binhnt53 150205
-                         MessageSmsDAOHE msdhe = new MessageSmsDAOHE();
-                         String msg = "Ho so ma: " + file.getFileCode() + " cua doanh nghiep: " + file.getBusinessName() + " dang trong trang thai: da thong bao yeu cau sdbs";
-                         msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
+                     MessageSmsDAOHE msdhe = new MessageSmsDAOHE();
+                     String msg = "Ho so ma: " + file.getFileCode() + " cua doanh nghiep: " + file.getBusinessName() + " dang trong trang thai: da thong bao yeu cau sdbs";
+                     msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
                      */
                     //email
                     MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
@@ -1610,7 +1610,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                                 getSession().update(cnbo);
                             }
                         }
-                        if (form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_REVIEW)) {
+                        if (form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_REVIEW)) {//160406
                             //lanh dao cuc tu choi phe duyet cong van thong bao sdbs chuyen cho lanh dao phong xem xet lai
                             if (oldP != null) {
                                 newP.setReceiveGroup(oldP.getSendGroup());
@@ -1618,7 +1618,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                                 newP.setReceiveUser(oldP.getSendUser());
                                 newP.setReceiveUserId(oldP.getSendUserId());
                             }
-//cap nhat noi dung thong bao - tao noi dung thong bao
+                            //cap nhat noi dung thong bao - tao noi dung thong bao
                             RequestComment rcbo = new RequestComment();
                             if (file.getLeaderRequest() != null) {
                                 rcbo.setContent(form.getLeaderRequest());
@@ -2335,7 +2335,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
     /*
      * Luu ke hoach quan ly chat luong
      */
-
     private void saveQualityPlan(List<QualityControlPlan> lstItems, Long fileId) {
         List<Long> lstIdOfQualitys = new ArrayList();
         if (lstItems != null && !lstItems.isEmpty()) {
@@ -2417,7 +2416,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
     /*
      * Luu danh sach san pham
      */
-
     private void saveProductInFile(List<ProductInFile> lstItems, Long fileId) {
         List<Long> lstIdOfProducts = new ArrayList();
         if (lstItems != null && lstItems.size() > 0) {
@@ -2695,117 +2693,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         return true;
     }
 
-    /*
-    *Hiepvv 08/01
-    *Luu phi cua ho so sua doi bo sung sau cong bo
-     */
-    private Boolean saveFeeChangesAfterAnnounced(Long fileId, Long fileType, Long productType, Procedure pro, Long productTypeIdOld) {
-        if (fileId != null) {
-            Date dateNow = null;
-            try {
-                dateNow = getSysdate();
-            } catch (Exception ex) {
-                log.error(ex.getMessage());
-                return false;
-            }
-
-            String hql = "select fpif from FeePaymentInfo fpif where fpif.fileId =:fileId and fpif.isActive = 1";
-            Query query = getSession().createQuery(hql);
-            query.setParameter("fileId", fileId);
-            List<FeePaymentInfo> FeePaymentInfo = query.list();
-            //
-            // truong hop sao chep va luu tam productType co the = null, vi the phai set = -1
-            //
-
-            if (FeePaymentInfo.isEmpty()) {
-                FeeDAOHE fdhe = new FeeDAOHE();
-                List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);
-                // check le phi cap so theo loai ho so
-                if (feenew != null && feenew.size() > 0) {
-                    FeePaymentInfo fpif = new FeePaymentInfo();
-                    for (int i = 0; i < feenew.size(); i++) {
-                        fpif = new FeePaymentInfo();
-                        //Thong tin co ban, status=1 = da dong phi
-                        fpif.setCreateDate(dateNow);
-                        fpif.setStatus(1l);
-                        fpif.setFileId(fileId);
-                        fpif.setIsActive(1l);
-                        fpif.setFeeId(feenew.get(i).getFeeId());
-                        Fee feeTemp = (Fee) findById(Fee.class, "feeId", feenew.get(i).getFeeId());
-                        fpif.setCost(feeTemp.getPrice());
-
-                        //Thong tin fix cung cho du du lieu
-                        fpif.setPaymentPerson("ATTP");
-                        fpif.setPaymentDate(dateNow);
-                        fpif.setFeePaymentTypeId(3L);
-                        fpif.setBillPath("");
-                        fpif.setPaymentConfirm("ATTP");
-                        fpif.setDateConfirm(dateNow);
-                        fpif.setCostCheck(0L);
-
-                        getSession().save(fpif);
-                    }
-                }
-            }
-        } else {
-            return false;
-        }
-        return true;
-    }
-
-    private Boolean saveFee4Star(Long fileId, Long fileType, Long productType, Procedure pro, Long productTypeIdOld) {
-        if (fileId != null) {
-            Date dateNow = null;
-            try {
-                dateNow = getSysdate();
-            } catch (Exception ex) {
-                log.error(ex.getMessage());
-                return false;
-            }
-
-            String hql = "select fpif from FeePaymentInfo fpif where fpif.fileId =:fileId and fpif.isActive = 1";
-            Query query = getSession().createQuery(hql);
-            query.setParameter("fileId", fileId);
-            List<FeePaymentInfo> FeePaymentInfo = query.list();
-            //
-            // truong hop sao chep va luu tam productType co the = null, vi the phai set = -1
-            //
-
-            if (FeePaymentInfo.isEmpty()) {
-                FeeDAOHE fdhe = new FeeDAOHE();
-                List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);
-                // check le phi cap so theo loai ho so
-                if (feenew != null && feenew.size() > 0) {
-                    FeePaymentInfo fpif = new FeePaymentInfo();
-                    for (int i = 0; i < feenew.size(); i++) {
-                        fpif = new FeePaymentInfo();
-                        //Thong tin co ban, status=1 = da dong phi
-                        fpif.setCreateDate(dateNow);
-                        fpif.setStatus(0l);
-                        fpif.setFileId(fileId);
-                        fpif.setIsActive(1l);
-                        fpif.setFeeId(feenew.get(i).getFeeId());
-                        Fee feeTemp = (Fee) findById(Fee.class, "feeId", feenew.get(i).getFeeId());
-                        if (feeTemp.getFeeCode().equals("4SLP")) {
-                            fpif.setCost(feeTemp.getPrice());
-                        } else if (feeTemp.getFeeCode().equals("4STD")) {
-                            String sql = "select count(*) from ProductInFile where file_ID = :fileId";
-                            Query qry1 = getSession().createQuery(sql);
-                            qry1.setParameter("fileId", fileId);
-                            int count = (int) (long) (Long) qry1.uniqueResult();
-                            fpif.setCost(feeTemp.getPrice() * count);
-                        }
-
-                        getSession().save(fpif);
-                    }
-                }
-            }
-        } else {
-            return false;
-        }
-        return true;
-    }
-
     private Boolean saveFileForSearch(Long fileId) {
         try {
             FilesForm viewForm = getFilesFullDetail(fileId);
@@ -3011,7 +2898,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     return null;
                 }
             } else if (pro != null && pro.getDescription().equals("announcement4star")) {
-                if (!saveFee4Star(filesId, createForm.getFileType(), null, pro, productTypeIdOld)) {
+                if (!saveFee4Star(filesId, createForm.getFileType())) {
                     return null;
                 }
             } else if (pro != null && (pro.getTypeFee() == 7)) {
@@ -7135,5 +7022,107 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             return false;
         }
     }
+    /*
+     *Hiepvv 08/01
+     *Luu phi cua ho so sua doi bo sung sau cong bo
+     */
 
+    private Boolean saveFeeChangesAfterAnnounced(Long fileId, Long fileType, Long productType, Procedure pro, Long productTypeIdOld) {
+        if (fileId != null) {
+            Date dateNow = null;
+            try {
+                dateNow = getSysdate();
+            } catch (Exception ex) {
+                log.error(ex.getMessage());
+                return false;
+            }
+
+            String hql = "select fpif from FeePaymentInfo fpif where fpif.fileId =:fileId and fpif.isActive = 1";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("fileId", fileId);
+            List<FeePaymentInfo> FeePaymentInfo = query.list();
+            //
+            // truong hop sao chep va luu tam productType co the = null, vi the phai set = -1
+            //
+
+            if (FeePaymentInfo.isEmpty()) {
+                FeeDAOHE fdhe = new FeeDAOHE();
+                List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);
+                // check le phi cap so theo loai ho so
+                if (feenew != null && feenew.size() > 0) {
+                    FeePaymentInfo fpif = new FeePaymentInfo();
+                    for (int i = 0; i < feenew.size(); i++) {
+                        fpif = new FeePaymentInfo();
+                        //Thong tin co ban, status=1 = da dong phi
+                        fpif.setCreateDate(dateNow);
+                        fpif.setStatus(1l);
+                        fpif.setFileId(fileId);
+                        fpif.setIsActive(1l);
+                        fpif.setFeeId(feenew.get(i).getFeeId());
+                        Fee feeTemp = (Fee) findById(Fee.class, "feeId", feenew.get(i).getFeeId());
+                        fpif.setCost(feeTemp.getPrice());
+
+                        //Thong tin fix cung cho du du lieu
+                        fpif.setPaymentPerson("ATTP");
+                        fpif.setPaymentDate(dateNow);
+                        fpif.setFeePaymentTypeId(3L);
+                        fpif.setBillPath("");
+                        fpif.setPaymentConfirm("ATTP");
+                        fpif.setDateConfirm(dateNow);
+                        fpif.setCostCheck(0L);
+
+                        getSession().save(fpif);
+                    }
+                }
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    private Boolean saveFee4Star(Long fileId, Long fileType) {
+        if (fileId != null) {
+            Date dateNow = getSysdate();
+            String hql = "select fpif from FeePaymentInfo fpif "
+                    + "where fpif.fileId =:fileId "
+                    + "and fpif.isActive = 1";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("fileId", fileId);
+            List<FeePaymentInfo> lstFeePaymentInfo = query.list();
+            // truong hop sao chep va luu tam productType co the = null, vi the phai set = -1
+            if (lstFeePaymentInfo.isEmpty()) {
+                FeeDAOHE fdhe = new FeeDAOHE();
+                List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);
+                //check le phi cap so theo loai ho so
+                if (feenew != null && feenew.size() > 0) {
+                    FeePaymentInfo fpif;
+                    for (int i = 0; i < feenew.size(); i++) {
+                        fpif = new FeePaymentInfo();
+                        //Thong tin co ban, status=1 = da dong phi
+                        fpif.setCreateDate(dateNow);
+                        fpif.setStatus(0l);
+                        fpif.setFileId(fileId);
+                        fpif.setIsActive(1l);
+                        fpif.setFeeId(feenew.get(i).getFeeId());
+                        Fee feeTemp = (Fee) findById(Fee.class, "feeId", feenew.get(i).getFeeId());
+                        if (feeTemp.getFeeCode().equals(Constants.FEE_TYPE.KS4SLP)) {
+                            fpif.setCost(feeTemp.getPrice());
+                        } else if (feeTemp.getFeeCode().equals(Constants.FEE_TYPE.KS4STD)) {
+                            String sql = "select count(*) from ProductInFile "
+                                    + "where file_ID = :fileId";
+                            Query qry1 = getSession().createQuery(sql);
+                            qry1.setParameter("fileId", fileId);
+                            int count = (int) (long) (Long) qry1.uniqueResult();
+                            fpif.setCost(feeTemp.getPrice() * count);
+                        }
+                        getSession().save(fpif);
+                    }
+                }
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
 }

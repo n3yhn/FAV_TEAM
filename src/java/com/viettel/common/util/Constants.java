@@ -108,6 +108,12 @@ public final class Constants {
 
         public static final long LE_PHI = 1L;
         public static final long PHI_THAM_DINH = 2L;
+        public static final String KS4SLP = "4SLP";
+        public static final String KS4STD = "4STD";
+        public static final String TPK = "TPK";
+        public static final String TPCN = "TPCN";
+        public static final String TPDB = "TPDB";
+        public static final String TL = "TL";
     }
 
     public interface SEARCH_TYPE {
@@ -297,7 +303,7 @@ public final class Constants {
         public static String LEADER_CT = "CT";//cuc truong - 140915 binhnt53
         public static String LEADER_PCT = "PCT";//pho cuc truong attp - 140915 binhnt53
         public static String VFA_CV = "VFA_CV";//chuyen vien attp - 150401 binhnt53
-        
+
         public static String GDTT = "GDTT";//giam doc trung tam - 150911 binhnt53
         public static String PGDTT = "PGDTT";//pho giam doc trung tam - 081015 binhnt53
     }
@@ -380,7 +386,7 @@ public final class Constants {
         public static final String ANNOUNCEMENT_FILE01_TL = "annoucementTL01";
         public static final String ANNOUNCEMENT_FILE03_TL = "annoucementTL03";
         public static final String CONFIRM_FUNC_IMP_TL = "confirmTL";
-		//hiepvv SDBS sau cong bo
+        //hiepvv SDBS sau cong bo
         public static final String ANNOUNCEMENT_FILE05 = "announcementFile05";
     }
 
@@ -455,9 +461,10 @@ public final class Constants {
         public static final Long TPCN = 1500000l;
         public static final Long TPT = 500000l;
     }
-    
-        //hieptq update 090715
+
+    //hieptq update 090715
     public interface KEYPAY {
+
         public static final String KEYPAY = "KEYPAY";
     }
 }

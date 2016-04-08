@@ -58,7 +58,13 @@
                                 <tr>
                                     <td style="text-align: right"><sd:Label key="Nội dung  phê duyệt, hoặc yêu cầu xem xét lại"/></td>
                                     <td>
-                                        <sd:Textarea key="" id="approveFormByCT.leaderRequest" name="createForm.leaderRequest" rows="4" cssStyle="width:99%" maxlength="1800" trim="true"/>
+                                        <sd:Textarea key="" 
+                                                     id="approveFormByCT.leaderRequest" 
+                                                     name="createForm.leaderRequest" 
+                                                     rows="4" 
+                                                     cssStyle="width:99%" 
+                                                     maxlength="1800" 
+                                                     trim="true"/>
                                     </td>
                                 </tr>
                                 <tr id="trWait" style="display: none">
@@ -69,7 +75,12 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="text-align: center">
-                                        <sd:Button id="btnStatusAcceptAF" key="" onclick="page.onApproveSign();" cssStyle="display:" cssClass="buttonGroup">
+                                        <sd:Button 
+                                            id="btnStatusAcceptAF" 
+                                            key="" 
+                                            onclick="page.onApproveSign();" 
+                                            cssStyle="display:" 
+                                            cssClass="buttonGroup">
                                             <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Cục trưởng Phê duyệt hồ sơ</span>
                                         </sd:Button>
@@ -246,7 +257,7 @@
             {
                 alert("Ký số không thành công ! " + result[1]);
             }
-        }
+        };
 
 
 
@@ -261,7 +272,7 @@
             {
                 alert("Ký số không thành công !");
             }
-        }
+        };
 
         page.replaceBrTblApproveFormByCT = function() {
             var content = "";
@@ -278,7 +289,7 @@
                 var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
                 document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
             }
-        }
+        };
         deleteAllCookies();
 
     </script>

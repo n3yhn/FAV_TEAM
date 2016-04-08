@@ -65,21 +65,38 @@
                                 <tr>
                                     <td width="30%" style="text-align: right"><sd:Label key="Kết quả phê duyệt"/></td>
                                     <td width="70%">
-                                        <sd:TextBox key="" id="approveForm.fileId" name="createForm.fileId" cssStyle="display:none"/>
-                                        <input type="radio" id="approveForm.statusAccept" name="createForm.status" value="6" onchange="changeStatusApprove();"/>
+                                        <sd:TextBox key="" 
+                                                    id="approveForm.fileId" 
+                                                    name="createForm.fileId" 
+                                                    cssStyle="display:none"/>
+                                        <input type="radio" id="approveForm.statusAccept" 
+                                               name="createForm.status" 
+                                               value="6" 
+                                               onchange="changeStatusApprove();"/>
                                         <sd:Label key="Phê duyệt hồ sơ"/>
                                         <br/>
-                                        <input type="radio" id="approveForm.statusDeny" name="createForm.status" value="27" onchange="changeStatusApprove();"/>
+                                        <input type="radio" id="approveForm.statusDeny" 
+                                               name="createForm.status" 
+                                               value="27" 
+                                               onchange="changeStatusApprove();"/>
                                         <sd:Label key="Phê duyệt công văn SĐBS"/>
                                         <br/>
-                                        <input type="radio" id="approveForm.statusCT" name="createForm.status" value="29" onchange="changeStatusApprove();"/>
+                                        <input type="radio" id="approveForm.statusCT" 
+                                               name="createForm.status" 
+                                               value="29" onchange="changeStatusApprove();"/>
                                         <sd:Label key="Trình Cục Trưởng phê duyệt"/>
+                                        <br/>
+                                        <input type="radio" id="approveForm.statusReReview" 
+                                               name="createForm.status" 
+                                               value="9" onchange="changeStatusApprove();"/>
+                                        <sd:Label key="Trả lại để xem xét lại"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: right"><sd:Label key="Nội dung  phê duyệt hoặc yêu cầu SĐBS"/></td>
                                     <td>
-                                        <sd:Textarea key="" id="approveForm.leaderRequest" name="createForm.leaderRequest" rows="3" cssStyle="width:99%" maxlength="1800" trim="true"/>
+                                        <sd:Textarea key="" id="approveForm.leaderRequest"
+                                                     name="createForm.leaderRequest" rows="3" cssStyle="width:99%" maxlength="1800" trim="true"/>
                                     </td>
                                 </tr>
                                 <tr id="trWait" style="display: none">
@@ -111,30 +128,46 @@
                                                   <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
                                                   <span style="font-size:12px">Phê duyệt hồ sơ</span>
                                               </sd:Button>  --%>
-                                        <sd:Button id="btnStatusAcceptAF" key="" onclick="page.onApproveSignPlugin();" cssStyle="display:none" cssClass="buttonGroup">
+                                        <sd:Button id="btnStatusAcceptAF" key="" 
+                                                   onclick="page.onApproveSignPlugin();" cssStyle="display:none" cssClass="buttonGroup">
                                             <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Phê duyệt hồ sơ</span>
                                         </sd:Button> 
-                                        <sd:Button id="btnStatusAcceptAFN" key="" onclick="page.onApproveSignPdf();" cssStyle="display:none" cssClass="buttonGroup">
-                                            <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
-                                            <span style="font-size:12px">Phê duyệt hồ sơ (xuất File để ký)</span>
-                                        </sd:Button>  
+                                        <%-- 
+                                    <sd:Button id="btnStatusAcceptAFN" key="" 
+                                               onclick="page.onApproveSignPdf();" cssStyle="display:none" cssClass="buttonGroup">
+                                        <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
+                                        <span style="font-size:12px">Phê duyệt hồ sơ (xuất File để ký)</span>
+                                    </sd:Button>  
+                                        --%>
                                         <%--  <sd:Button id="btnStatusDenyAF" key="" onclick="page.onApproveSignSdbs();" cssStyle="display:none" cssClass="buttonGroup">
                                               <img src="share/images/icons/signature-icon.gif" height="14" width="14" alt="Xem truoc"/>
                                               <span style="font-size:12px">Phê duyệt công văn SĐBS</span>
                                           </sd:Button> --%>
-                                        <sd:Button id="btnStatusDenyAF" key="" onclick="page.onApproveSignSdbsPlugin();" cssStyle="display:none" cssClass="buttonGroup">
+                                        <sd:Button id="btnStatusDenyAF" key="" 
+                                                   onclick="page.onApproveSignSdbsPlugin();" cssStyle="display:none" cssClass="buttonGroup">
                                             <img src="share/images/icons/signature-icon.gif" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Phê duyệt công văn SĐBS</span>
                                         </sd:Button>
-                                        <sd:Button id="btnExportAFCV" key="" onclick="page.downloadAFCV();" cssStyle="display:none" cssClass="buttonGroup">
+                                        <sd:Button id="btnExportAFCV" key="" 
+                                                   onclick="page.downloadAFCV();" cssStyle="display:none" cssClass="buttonGroup">
                                             <img src="share/images/icons/process_icon.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Xem trước công văn SĐBS</span>
                                         </sd:Button>
-                                        <sd:Button id="btnStatusCTAF" key="" onclick="page.onApproveSignPlugin();" cssStyle="display:none" cssClass="buttonGroup">
+                                        <sd:Button id="btnStatusCTAF" key="" 
+                                                   onclick="page.onApproveSignPlugin();" cssStyle="display:none" cssClass="buttonGroup">
                                             <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Trình lên Cục Trưởng</span>
-                                        </sd:Button>               
+                                        </sd:Button>   
+                                        <sd:Button id="btnStatusReReview" 
+                                                   key="" 
+                                                   onclick="page.onReReviewPlugin();" 
+                                                   cssStyle="display:none" 
+                                                   cssClass="buttonGroup">
+                                            <img src="share/images/icons/foward_email.png" 
+                                                 height="14" width="14" alt="Xem truoc"/>
+                                            <span style="font-size:12px">Trả lại để xem xét lại</span>
+                                        </sd:Button> 
                                         <%--<sx:ButtonClose onclick="onCloseApprove();"/>--%>
                                     </td>
                                 </tr>
@@ -167,7 +200,7 @@
         var cert;
         var count = 0;
 
-        onCloseApproveDlg = function() {
+        onCloseApproveDlg = function () {
             count = 0;
             var titlePaneViewFileAFP = dijit.byId('titlePaneViewFile_AFP');
             if (titlePaneViewFileAFP) {
@@ -192,7 +225,7 @@
             doGoToMenu("filesAction!toApprovePage.do");
         };
 
-        changeStatusApprove = function() {
+        changeStatusApprove = function () {
             if (document.getElementById("approveForm.statusAccept").checked) {
                 dijit.byId("btnStatusAcceptAF").domNode.style.display = "";
                 //dijit.byId("btnStatusAcceptAFN").domNode.style.display = "";
@@ -200,6 +233,7 @@
                 dijit.byId("btnStatusDenyAF").domNode.style.display = "none";
                 dijit.byId("btnExportAFCV").domNode.style.display = "none";
                 dijit.byId("btnStatusCTAF").domNode.style.display = "none";
+                dijit.byId("btnStatusReReview").domNode.style.display = "none";
             } else {
                 if (document.getElementById("approveForm.statusDeny").checked) {
                     dijit.byId("btnStatusAcceptAF").domNode.style.display = "none";
@@ -207,6 +241,7 @@
                     dijit.byId("btnStatusDenyAF").domNode.style.display = "";
                     dijit.byId("btnExportAFCV").domNode.style.display = "";
                     dijit.byId("btnStatusCTAF").domNode.style.display = "none";
+                    dijit.byId("btnStatusReReview").domNode.style.display = "none";
                 } else {
                     if (document.getElementById("approveForm.statusCT").checked) {
                         dijit.byId("btnStatusAcceptAF").domNode.style.display = "none";
@@ -214,18 +249,30 @@
                         dijit.byId("btnStatusDenyAF").domNode.style.display = "none";
                         dijit.byId("btnExportAFCV").domNode.style.display = "none";
                         dijit.byId("btnStatusCTAF").domNode.style.display = "";
+                        dijit.byId("btnStatusReReview").domNode.style.display = "none";
                     } else {
-                        dijit.byId("btnStatusAcceptAF").domNode.style.display = "none";
-                        //dijit.byId("btnStatusDenyAF").domNode.style.display = "none";
-                        dijit.byId("btnStatusDenyAF").domNode.style.display = "none";
-                        dijit.byId("btnExportAFCV").domNode.style.display = "none";
-                        dijit.byId("btnStatusCTAF").domNode.style.display = "none";
+                        if (document.getElementById("approveForm.statusReReview").checked)//tra lai de xem xet
+                        {
+                            dijit.byId("btnStatusAcceptAF").domNode.style.display = "none";
+                            dijit.byId("btnStatusDenyAF").domNode.style.display = "none";
+                            dijit.byId("btnStatusDenyAF").domNode.style.display = "none";
+                            dijit.byId("btnExportAFCV").domNode.style.display = "none";
+                            dijit.byId("btnStatusCTAF").domNode.style.display = "none";
+                            dijit.byId("btnStatusReReview").domNode.style.display = "";
+                        } else {
+                            dijit.byId("btnStatusAcceptAF").domNode.style.display = "none";
+                            //dijit.byId("btnStatusDenyAF").domNode.style.display = "none";
+                            dijit.byId("btnStatusDenyAF").domNode.style.display = "none";
+                            dijit.byId("btnExportAFCV").domNode.style.display = "none";
+                            dijit.byId("btnStatusCTAF").domNode.style.display = "none";
+                            dijit.byId("btnStatusReReview").domNode.style.display = "none";
+                        }
                     }
                 }
             }
         };
 
-        afterApprove = function(data) {
+        afterApprove = function (data) {
             var obj = dojo.fromJson(data);
             var result = obj.items;
             if (signType == "PDHS")
@@ -239,26 +286,20 @@
                         onCloseApproveDlg();
                         page.search();
                     }
-                }
-                else
-                {
+                }else{
                     if (result[0] == "1") {
-                        if (signIndex == itemsToSign.length - 1)
-                        {
+                        if (signIndex == itemsToSign.length - 1){
                             msg.alert('Ký số thành công', 'Thông báo');
                             document.getElementById("divSignProcess").style.display = "none";
                             document.getElementById("trWait").style.display = "none";
                             onCloseApproveDlg();
                             page.search();
                         }
-                        else
-                        {
+                        else{
                             signIndex++;
                             page.signMoreFilesPlugin();
                         }
-                    }
-                    else
-                    {
+                    }else{
                         msg.alert('Ký số không thành công', 'Lỗi hệ thống');
                         document.getElementById("divSignProcess").style.display = "none";
                         document.getElementById("trWait").style.display = "none";
@@ -279,7 +320,7 @@
         };
 
         //////////////////////////////////////////////////////////////////////////////// Cong van SDBS - MOI BO SUNG
-        page.onApproveSignSdbs = function() {
+        page.onApproveSignSdbs = function () {
             //        flagSign = "CVBS";
             //        var loginPas = '${passwordCa}';
             //        if (loginPas == null || loginPas.toString() == "null" || loginPas.toString() == "")
@@ -299,13 +340,13 @@
         };
 
         //hieptq update 201015
-        page.onApproveSignSdbsPlugin = function() {
+        page.onApproveSignSdbsPlugin = function () {
             signType = "CVBS";
             page.onApproveSignSdbsAffterPlugin();
         };
 
-        page.onApproveSignSdbsAffterPlugin = function() {
-            msg.confirm("Bạn có chắc muốn phê duyệt công văn SĐBS này?", "Phê duyệt công văn", function() {
+        page.onApproveSignSdbsAffterPlugin = function () {
+            msg.confirm("Bạn có chắc muốn phê duyệt công văn SĐBS này?", "Phê duyệt công văn", function () {
                 //  CAP NHAT HAM VALIDATE
                 if (page.validateAFCV()) {
                     var fileId = dijit.byId("approveForm.fileId").getValue();
@@ -319,7 +360,7 @@
         };
 
 
-        page.onApproveSignSdbsAffterLogin = function() {
+        page.onApproveSignSdbsAffterLogin = function () {
             //msg.confirm("Bạn có chắc muốn phê duyệt công văn SĐBS này?", "Phê duyệt công văn", function () {
             //CAP NHAT HAM VALIDATE
             //        if (page.validateAFCV()) {
@@ -334,7 +375,7 @@
         };
 
 
-        page.validateAFCV = function() {
+        page.validateAFCV = function () {
             if (document.getElementById("approveForm.statusDeny").checked) {
                 var leaderRequest = dijit.byId("approveForm.leaderRequest").getValue();
                 if (leaderRequest.trim().length == 0) {
@@ -348,7 +389,7 @@
             return true;
         };
 
-        onFeedbackApproveAFPlugin = function(data) {
+        onFeedbackApproveAFPlugin = function (data) {
             var obj = dojo.fromJson(data);
             var result = obj.items;
             if (result[0] == "1") {
@@ -371,7 +412,7 @@
         };
 
 
-        onFeedbackApproveAF = function(data) {
+        onFeedbackApproveAF = function (data) {
             //        var obj = dojo.fromJson(data);
             //        var result = obj.items;
             //        if (result[0] == "1") {
@@ -385,18 +426,18 @@
             //        }
         };
 
-        page.downloadAFCV = function() {//xuat file ket qua tham dinh
+        page.downloadAFCV = function () {//xuat file ket qua tham dinh
             var fileId = dijit.byId("approveForm.fileId").getValue();
             var content = page.utf8_to_b64AFCV(dijit.byId("approveForm.leaderRequest").getValue());
             content = content.replaceAllAFCV('+', '_');
             document.location = "exportWord!onXuatTBSDBS.do?fileId=" + fileId + "&content=" + content;
         };
 
-        page.utf8_to_b64AFCV = function(str) {
+        page.utf8_to_b64AFCV = function (str) {
             return window.btoa(unescape(encodeURIComponent(str)));
         };
 
-        String.prototype.replaceAllAFCV = function(strTarget, strSubString) {
+        String.prototype.replaceAllAFCV = function (strTarget, strSubString) {
             var strText = this;
             var intIndexOfMatch = strText.indexOf(strTarget);
             while (intIndexOfMatch != -1) {
@@ -406,7 +447,7 @@
             return(strText);
         };
 
-        onApprove = function() {
+        onApprove = function () {
             if (signType == "PDHS")
             {
                 var leaderRequest = dijit.byId("approveForm.leaderRequest").getValue();
@@ -437,7 +478,7 @@
         };
 
 
-        page.onApprovetoCT = function() {
+        page.onApprovetoCT = function () {
             if (signType == "PDHS")
             {
                 var leaderRequest = dijit.byId("approveForm.leaderRequest").getValue();
@@ -460,7 +501,7 @@
             }
         };
 
-        page.afterApprovetoCT = function(data) {
+        page.afterApprovetoCT = function (data) {
             var obj = dojo.fromJson(data);
             var result = obj.items;
             alert(result[1]);
@@ -471,19 +512,20 @@
             }
         };
 
-        onCloseApprove = function() {
+        onCloseApprove = function () {
             dijit.byId("approveDlg").hide();
             dijit.byId("approveForm.leaderRequest").setValue("");
             document.getElementById("approveForm.statusAccept").checked = false;
             document.getElementById("approveForm.statusDeny").checked = false;
             document.getElementById("approveForm.statusCT").checked = false;
+            document.getElementById("approveForm.statusReReview").checked = false;
             document.getElementById("trWait").style.display = "none";
             // page.clearContent();
         };
 
 
         //hieptq update 121015
-        page.onApproveSignPlugin = function() {
+        page.onApproveSignPlugin = function () {
             if (document.getElementById("approveForm.statusAccept").checked) {
                 signType = "PDHS";
                 document.getElementById("trWait").style.display = "";
@@ -496,11 +538,7 @@
             }
         };
 
-
-
-
-
-        page.onApproveSignPdf = function() {
+        page.onApproveSignPdf = function () {
             //        msg.confirm("Bạn có chắc muốn phê duyệt/xin ý kiến Cục trưởng hồ sơ này?", "Phê duyệt/Xin ý kiến Cục trưởng hồ sơ", function() {
             //            page.clearContent();
             //            if (document.getElementById("approveForm.statusAccept").checked) {
@@ -515,7 +553,7 @@
             //        });
         };
 
-        afteronCreatePaper = function(data) {
+        afteronCreatePaper = function (data) {
             var obj = dojo.fromJson(data);
             var result = obj.items;
             if (result[0] == "1") {
@@ -528,7 +566,7 @@
             }
         };
 
-        afteronCreatePaperPdf = function(data) {
+        afteronCreatePaperPdf = function (data) {
             //        var obj = dojo.fromJson(data);
             //        var result = obj.items;
             //        if (result[0] == "1") {
@@ -553,7 +591,7 @@
         ;
 
 
-        page.signAfterAFP = function(data) {
+        page.signAfterAFP = function (data) {
             var obj = dojo.fromJson(data);
             var result = obj.items;
             if (result[0] == "1") {
@@ -576,7 +614,7 @@
         };
 
 
-        page.signPluginAFP = function(data)
+        page.signPluginAFP = function (data)
         {
             var obj = dojo.fromJson(data);
             var result = obj.items;
@@ -597,7 +635,7 @@
                 var signData = encodeBase64(sign);
                 var signData2;
                 var sign2;
-                if (signType=="PDHS") {
+                if (signType == "PDHS") {
                     sign2 = signAndSubmitOriginalFile();
                     signData2 = encodeBase64(sign2)
                 }
@@ -608,7 +646,7 @@
             }
         };
 
-        page.afterSignPluginAFP = function(data)
+        page.afterSignPluginAFP = function (data)
         {
             var obj = dojo.fromJson(data);
             var result = obj.items;
@@ -621,7 +659,7 @@
         };
 
 
-        page.replaceBrTblApproveForm = function() {
+        page.replaceBrTblApproveForm = function () {
             var content = "";
             content = document.getElementById("approveForm.staffRequest").innerHTML;
             content = content.replace(/\n/g, "<br>");
@@ -640,6 +678,25 @@
             }
         }
         deleteAllCookies();
+
+        //160406 luong tra lai de xem xet lai        
+        page.onReReviewPlugin = function () {
+            msg.confirm("Bạn có chắc muốn trả lại y/c xem xét lại hồ sơ này?", "Trả lại y/c xem xét lại hồ sơ này?", function () {
+                sd.connector.post("filesAction!onApprove.do?" + token.getTokenParamString(),
+                        null, "approveForm", null, affterOnReReviewPlugin);
+            });
+        };
+        affterOnReReviewPlugin = function (data) {
+            alert(11111);
+            var obj = dojo.fromJson(data);
+            var result = obj.items;
+            alert(result[1]);
+            if (result[0] == "1") {
+                document.getElementById("trWait").style.display = "none";
+                onCloseApproveDlg();
+                page.search();
+            }
+        };
 </script>
 
 <input type="hidden" id="base64Hash0" value="" />

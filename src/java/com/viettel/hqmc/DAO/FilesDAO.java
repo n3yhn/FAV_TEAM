@@ -178,7 +178,7 @@ import sun.security.provider.certpath.OCSP;
  */
 public class FilesDAO extends BaseDAO {
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FilesDAO.class);    
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FilesDAO.class);
     private final String businessRegisterPage = "businessRegister.Page";
     private final String businessAdditionPage = "businessAddition.Page";
     private final String businessListPage = "businessList.Page";
@@ -195,30 +195,30 @@ public class FilesDAO extends BaseDAO {
     private String toComparisonPage = "toComparison.Page";
     private final String toComparisonFailPage = "toComparisonFail.Page";
     private final String toComparisonAlertPage = "toComparisonAlert.Page";
-    private final String RECEIVED_PAGE = "received.page";    
+    private final String RECEIVED_PAGE = "received.page";
     private final String PROPOSE_EVALUATION_PAGE = "proposeEvaluation.page";
     private final String REPORT_STAFF_PROCESS_PAGE = "reportStaffProcess.Page";
     private final String RETURN_FILE_TO_ADDITION_PAGE = "returnFileToAddition.Page";
     private final String REPORT_LOS_PROCESS_PAGE = "reportLOSProcess.Page";//141215u binhnt53 page thong ke lanh dao phong xu ly ho so
     private final String REPORT_L_PROCESS_PAGE = "reportLProcess.Page";//141215u binhnt53 page thong ke lanh dao cuc xu ly ho so
     private final String ASSIGN_EVALUATION_PAGE = "assignEvaluation.page";
-    private final String RE_ASSIGN_EVALUATION_PAGE = "reAssignEvaluation.page";    
-    private final String EVALUATION_PAGE = "evaluateFile.page";    
+    private final String RE_ASSIGN_EVALUATION_PAGE = "reAssignEvaluation.page";
+    private final String EVALUATION_PAGE = "evaluateFile.page";
     private final String EVALUATION_PAGE_VIEW = "evaluateFileView.page";
     private final String EVALUATION_LEADER_PAGE = "evaluateLeaderFile.page";//pho phong tham dinh ho so
     private final String FEEDBACK_EVALUATION_PAGE = "feedbackEvaluateFile.page";
     private final String COEVALUATION_PAGE = "coEvaluation.page";
-    private final String REVIEW_PAGE = "reviewFile.page";    
+    private final String REVIEW_PAGE = "reviewFile.page";
     private final String ADDITION_REVIEW_PAGE = "additionReviewFile.page";
     private final String SIGNING_PAGE = "signingFile.page";
     private final String SIGN_PAGE = "signFile.page";
-    private final String APPROVE_PAGE = "approveFile.page";   
-    private final String APPROVED_PAGE = "approvedFile.page";  
+    private final String APPROVE_PAGE = "approveFile.page";
+    private final String APPROVED_PAGE = "approvedFile.page";
     private final String ASSIGN_APPROVE_PAGE = "assignApproveFile.page";
     private final String APPROVE_BY_CT_PAGE = "approveByCT.page";
     private final String lookupRepositoriesPage = "lookupRepositories.page";
     private final String REPOSITORY_PAGE = "repository.page";
-    
+
     //hiepvv sdbs
     private final String businessEditAfterAnnouncedFilesPage = "businessEditAfterAnnouncedFiles.Page";//Hiepvv
     private final String announcementFile05 = "announcementFile05";//Hiepvv
@@ -229,7 +229,7 @@ public class FilesDAO extends BaseDAO {
     private final String REVIEW_EDITAFTERANNOUNCE_PAGE = "reviewFileEditAfterAnnounced.page"; //Hiepvv
     private final String EVALUATION_EDITAFTERANNOUNCED_PAGE = "evaluateFileEditAfterAnnounced.page"; //Hiepvv
     private final String ASSIGN_EVALUATION_EDITAFTERANNOUNCED_PAGE = "assignEvaluationEditAfterAnnounced.page"; //Hiepvv
-    
+
     private FilesForm searchForm;
     private FilesForm createForm;
     private FilesForm createFormCompare;
@@ -2513,41 +2513,6 @@ public class FilesDAO extends BaseDAO {
         return businessListPage;
     }
 
-    /*
-     * Danh sach ho so da cong bo cua doanh nghiep
-     */
-    public String toBusinessEditAfterAnnouncedFilesPage() {
-        if (searchForm == null) {
-            searchForm = new FilesForm();
-            searchForm.setStatus(22l);
-        }
-        isEdit = true;
-        ProcedureDAOHE cdhe = new ProcedureDAOHE();
-        List lstTTHC = cdhe.getAllProcedure2();
-        lstCategory = new ArrayList();
-        lstCategory.addAll(lstTTHC);
-        lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
-        getRequest().setAttribute("lstFileType", lstCategory);
-//        CategoryDAOHE che = new CategoryDAOHE();
-//        lstProductType = che.findAllCategory("SP");
-//        getRequest().setAttribute("lstProductType", lstProductType);
-//        BusinessDAOHE bdhe = new BusinessDAOHE();
-//        Business bus = bdhe.findById(getBusinessId());
-//
-//        if (bus.getIsCa() != null && bus.getIsCa() == 1) {
-//            getRequest().setAttribute("isCa", bus.getIsCa());
-//        } else {
-//            getRequest().setAttribute("isCa", 0);
-//        }
-//        DepartmentDAOHE dphe = new DepartmentDAOHE();
-//        Department dept = dphe.findByDeptCode("ATTP");
-//        Long AgencyId = dept.getDeptId();
-//        String AgencyName = dept.getDeptName();
-//        getRequest().setAttribute("AgencyId", AgencyId);
-//        getRequest().setAttribute("AgencyName", AgencyName);
-        return businessEditAfterAnnouncedFilesPage;
-    }
-
     /**
      * Tim kiem ho so cua doanh nghiep
      *
@@ -2577,41 +2542,7 @@ public class FilesDAO extends BaseDAO {
         jsonDataGrid.setItems(gr.getLstResult());
         jsonDataGrid.setTotalRows(gr.getnCount().intValue());
         return GRID_DATA;
-    }
-
-    /**
-     * Hiepvv Tim kiem danh sach ho so sua doi cua mot ho so cua doanh nghiep
-     *
-     * @return
-     */
-    public String onsearchListFilesChangesAfterAnnouned() {
-        getGridInfo();
-
-        FilesNoClobDAOHE fdhe = new FilesNoClobDAOHE();
-        ProcedureDAOHE pdaohe = new ProcedureDAOHE();
-        Procedure p = new Procedure();
-        //Get Procedure SDBS 
-        try {
-            p = pdaohe.getProcedureByDescription(announcementFile05);
-        } catch (Exception ex) {
-            p = null;
-            return GRID_DATA;
-        }
-        GridResult gr;
-        //Get ID File source when click view
-        if (p != null) {
-            if (fileSourceID == null) {
-                fileSourceID = 0L;
-            }
-            gr = fdhe.searchListFilesChangesAfterAnnouned(fileSourceID, start, count, sortField, p.getProcedureId());
-        } else {
-            gr = new GridResult(0, null);
-        }
-
-        jsonDataGrid.setItems(gr.getLstResult());
-        jsonDataGrid.setTotalRows(gr.getnCount().intValue());
-        return GRID_DATA;
-    }
+    }   
 
     /*
      * Xu ly them moi, bo sung ho so savefiles
@@ -3946,12 +3877,12 @@ public class FilesDAO extends BaseDAO {
         if ((totalFeeFile.equals(feeFile) && feeFile > 0l) || (totalFeeFile > feeFile)) {
             customInfo.add(1);
         } else // nop thieu
-         if (totalFeeFile < feeFile && totalFeeFile > 0) {
-                customInfo.add(0);
-            } // chua nop
-            else {
-                customInfo.add(-1);
-            }
+        if (totalFeeFile < feeFile && totalFeeFile > 0) {
+            customInfo.add(0);
+        } // chua nop
+        else {
+            customInfo.add(-1);
+        }
 
         jsonDataGrid.setItems(result.getLstResult());
         jsonDataGrid.setTotalRows(result.getnCount().intValue());
@@ -4768,9 +4699,9 @@ public class FilesDAO extends BaseDAO {
                     barcodeInfo += "Tên sản phẩm: N/A";
                 }
                 if (announcementReceiptPaper.getBusinessName() != null) {
-                    barcodeInfo += "\nThương nhân chịu trách nhiệm sản phẩm: " + announcementReceiptPaper.getBusinessName();
+                    barcodeInfo += "\nĐơn vị đăng ký chứng nhận hợp qui xác nhận phù hợp: " + announcementReceiptPaper.getBusinessName();
                 } else {
-                    barcodeInfo += "\nThương nhân chịu trách nhiệm sản phẩm: N/A";
+                    barcodeInfo += "\nĐơn vị đăng ký chứng nhận hợp qui xác nhận phù hợp: N/A";
                 }
                 if (announcementReceiptPaper.getManufactureName() != null) {
                     barcodeInfo += "\nTên nhà sản xuất: " + announcementReceiptPaper.getManufactureName();
@@ -4787,20 +4718,15 @@ public class FilesDAO extends BaseDAO {
                 } else {
                     //barcodeInfo += "\nTên nước xuất xứ: N/A";
                 }
-//                if (announcementReceiptPaper.getMatchingTarget() != null) {
-//                    barcodeInfo += "\nSố qui chuẩn KT/QĐATTP: " + announcementReceiptPaper.getMatchingTarget();
-//                } else {
-//                    barcodeInfo += "\nSố qui chuẩn KT/QĐATTP: N/A";
-//                }
-                if (announcementReceiptPaper.getReceiptDeptName() != null) {
-                    barcodeInfo += "\nĐơn vi xác nhận: " + announcementReceiptPaper.getReceiptDeptName();
+                if (announcementReceiptPaper.getMatchingTarget() != null) {
+                    barcodeInfo += "\nSố qui chuẩn KT/QĐATTP: " + announcementReceiptPaper.getMatchingTarget();
                 } else {
-                    barcodeInfo += "\nĐơn vi xác nhận: N/A";
+                    barcodeInfo += "\nSố qui chuẩn KT/QĐATTP: N/A";
                 }
-                if (announcementReceiptPaper.getReceiptNo()!= null) {
-                    barcodeInfo += "\nSố chứng nhận sản phẩm: " + announcementReceiptPaper.getReceiptNo();
+                if (announcementReceiptPaper.getReceiptDeptName() != null) {
+                    barcodeInfo += "\nĐơn vi cấp chứng nhân hợp qui xác nhận phù hợp: " + announcementReceiptPaper.getReceiptDeptName();
                 } else {
-                    barcodeInfo += "\nSố chứng nhận sản phẩm: N/A";
+                    barcodeInfo += "\nĐơn vi cấp chứng nhân hợp qui xác nhận phù hợp: N/A";
                 }
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 if (announcementReceiptPaper.getEffectiveDate() != null) {
@@ -7386,6 +7312,7 @@ public class FilesDAO extends BaseDAO {
 
     /**
      * binhnt
+     *
      * @return
      */
     public String loadAllStatus() {
@@ -7744,7 +7671,7 @@ public class FilesDAO extends BaseDAO {
             System.out.println(ex.getMessage());
             result = false;
         } finally {
-            
+
         }
         List resultMessage = new ArrayList();
         if (result) {
@@ -8760,6 +8687,74 @@ public class FilesDAO extends BaseDAO {
 
         getRequest().getSession().setAttribute("reAssignEvaluation.startServer", start);
         getRequest().getSession().setAttribute("reAssignEvaluation.countServer", count);
+
+        jsonDataGrid.setItems(gr.getLstResult());
+        jsonDataGrid.setTotalRows(gr.getnCount().intValue());
+        return GRID_DATA;
+    }
+    /*
+     * Danh sach ho so da cong bo cua doanh nghiep
+     */
+
+    public String toBusinessEditAfterAnnouncedFilesPage() {
+        if (searchForm == null) {
+            searchForm = new FilesForm();
+            searchForm.setStatus(22l);
+        }
+        isEdit = true;
+        ProcedureDAOHE cdhe = new ProcedureDAOHE();
+        List lstTTHC = cdhe.getAllProcedure2();
+        lstCategory = new ArrayList();
+        lstCategory.addAll(lstTTHC);
+        lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+        getRequest().setAttribute("lstFileType", lstCategory);
+//        CategoryDAOHE che = new CategoryDAOHE();
+//        lstProductType = che.findAllCategory("SP");
+//        getRequest().setAttribute("lstProductType", lstProductType);
+//        BusinessDAOHE bdhe = new BusinessDAOHE();
+//        Business bus = bdhe.findById(getBusinessId());
+//
+//        if (bus.getIsCa() != null && bus.getIsCa() == 1) {
+//            getRequest().setAttribute("isCa", bus.getIsCa());
+//        } else {
+//            getRequest().setAttribute("isCa", 0);
+//        }
+//        DepartmentDAOHE dphe = new DepartmentDAOHE();
+//        Department dept = dphe.findByDeptCode("ATTP");
+//        Long AgencyId = dept.getDeptId();
+//        String AgencyName = dept.getDeptName();
+//        getRequest().setAttribute("AgencyId", AgencyId);
+//        getRequest().setAttribute("AgencyName", AgencyName);
+        return businessEditAfterAnnouncedFilesPage;
+    }
+    /**
+     * Hiepvv Tim kiem danh sach ho so sua doi cua mot ho so cua doanh nghiep
+     *
+     * @return
+     */
+    public String onsearchListFilesChangesAfterAnnouned() {
+        getGridInfo();
+
+        FilesNoClobDAOHE fdhe = new FilesNoClobDAOHE();
+        ProcedureDAOHE pdaohe = new ProcedureDAOHE();
+        Procedure p = new Procedure();
+        //Get Procedure SDBS 
+        try {
+            p = pdaohe.getProcedureByDescription(announcementFile05);
+        } catch (Exception ex) {
+            p = null;
+            return GRID_DATA;
+        }
+        GridResult gr;
+        //Get ID File source when click view
+        if (p != null) {
+            if (fileSourceID == null) {
+                fileSourceID = 0L;
+            }
+            gr = fdhe.searchListFilesChangesAfterAnnouned(fileSourceID, start, count, sortField, p.getProcedureId());
+        } else {
+            gr = new GridResult(0, null);
+        }
 
         jsonDataGrid.setItems(gr.getLstResult());
         jsonDataGrid.setTotalRows(gr.getnCount().intValue());
