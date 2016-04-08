@@ -687,7 +687,6 @@
             });
         };
         affterOnReReviewPlugin = function (data) {
-            alert(11111);
             var obj = dojo.fromJson(data);
             var result = obj.items;
             alert(result[1]);
