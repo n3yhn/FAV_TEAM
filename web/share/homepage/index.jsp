@@ -243,6 +243,7 @@
         </td>
 </tr>
                             -->
+                            <!--
                             <tr>
                                 <td>
                                     <br/>
@@ -255,13 +256,13 @@
                                         <span style="font-family:'MyriadPro-BoldCond'">SỐ LƯỢNG TRUY CẬP VÀO HỆ THỐNG</span>
                                     </div>
                                     <div style="margin-top: 15px;margin-left: 20px">
-                                        <!-- Histats.com  START (html only)-->
+                                        <!-- Histats.com  START (html only)
                                         <embed src="http://s10.histats.com/408.swf"  flashvars="jver=1&acsid=2807291&domi=4"  quality="high"  width="270" height="55" name="408.swf"  align="middle" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" wmode="transparent" />
                                         <img  src="http://sstatic1.histats.com/0.gif?2807291&101" alt="web counter" border="0">
-                                            <!-- Histats.com  END  -->
                                     </div>
                                 </td>
                             </tr>
+                            --!>
                         </table>
                     </div>
                     <div class="clear"></div>

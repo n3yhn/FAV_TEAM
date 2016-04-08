@@ -34,8 +34,7 @@
         var url = "";
         if (item != null) {
             var status = parseInt(item.status);
-            switch (status) {
-       
+            switch (status) {       
                 case 22:
                     url = "Đã trả bản công bố";
                     break;
@@ -47,9 +46,9 @@
                 url = "Hồ sơ đã bị kế toán từ chối";
             }
         }
-
         return url;
     };
+    
     page.formatAction = function(inData) {
         var row = inData - 1;
         var item = dijit.byId("filesGrid").getItem(inData - 1);
@@ -64,12 +63,10 @@
             var today = '${sysDate}';
 //            url = "<div style='text-align:left;cursor:pointer;'><img src='share/images/icons/copy_icon.png' width='17px' height='17px' title='Tạo bản sao hồ sơ' onClick='page.copyFile(" + item.fileId + ");' />";
             var status = parseInt(item.status);
-            switch (status) {
-               
+            switch (status) {               
                 case 22:
                     url += " | <img src='share/images/edit.png' width='17px' height='17px' title='Bổ sung hồ sơ' onClick='page.showEditFile(" + item.fileId+"," +item.announcementId+");' />";
-                    break;
-               
+                    break;               
                 default:
                     break;
             }

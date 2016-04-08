@@ -15,13 +15,13 @@
     }
 </style>
 <script>
-    page.getNo = function(index) {
+    page.getNo = function (index) {
         return dijit.byId("filesGrid").currentRow + index + 1;
     };
-    page.getIndex = function(index) {
+    page.getIndex = function (index) {
         return index + 1;
     };
-    page.formatEdit = function(inData) {
+    page.formatEdit = function (inData) {
         var item = dijit.byId("filesGrid").getItem(inData - 1);
         var url = "";
         if (item != null) {
@@ -29,7 +29,7 @@
         }
         return url;
     };
-    page.formatStatus = function(inData) {
+    page.formatStatus = function (inData) {
         var item = dijit.byId("filesGrid").getItem(inData - 1);
         var url = "";
         if (item != null) {
@@ -79,7 +79,7 @@
 
         return url;
     };
-    page.formatAction = function(inData) {
+    page.formatAction = function (inData) {
         var row = inData - 1;
         var item = dijit.byId("filesGrid").getItem(inData - 1);
         var checkCa = '${fn:escapeXml(isCa)}';
@@ -95,17 +95,18 @@
             var fileSourceID = item.filesSourceID;
             var status = parseInt(item.status);
 //            Hiepvv SuaDoiBoSung sau cong bo Fix ID Procedure sua doi sau cong bo
-            if(fileSourceID!=null && fileSourceID>0 && status==0 && (signed == true || item.userSigned == "fileUploaded")){
+            if (fileSourceID != null
+                    && fileSourceID > 0
+                    && status == 0
+                    && (signed == true || item.userSigned == "fileUploaded")) {
                 url += " | <img src='share/images/icons/send_document.png' width='17px' height='17px' title='Gửi hồ sơ' onClick='page.sendFile(" + row + ");' />";
-            }  
+            }
             switch (status) {
                 case 0:
-                    //url += " | <img src='share/images/icons/send_document.png' width='17px' height='17px' title='Gửi hồ sơ' onClick='page.sendFile(" + row + ");' />";
                     if (signed == false)
                     {
                         url += " | <img src='share/images/edit.png' width='17px' height='17px' title='Bổ sung hồ sơ' onClick='page.showEditFile(" + item.fileId + ");' />";
                         url += " | <img src='share/images/signature.png' width='20px' height='20px' title='Ký CA' onClick='page.signCa(" + row + ");' />";
-                        //url += " | <img src='share/images/edit.png' width='17px' height='17px' title='Bổ sung hồ sơ' onClick='page.showEditFile(" + item.fileId + ");' />";
                         url += " | <img src='share/images/icons/UpArrow.png' width='17px' height='17px' title='Upload' onClick='page.Upload(" + row + ");' />";
                     }
                     else
@@ -117,14 +118,13 @@
                         if (item.userSigned == "fileUploaded")
                         {
                             url += " | <img src='share/images/icons/kdevelop_down.png' width='17px' height='17px' title='Hồ sơ đã upload' onClick='page.downloadFileSign(" + item.fileId + ");' />";
-                            //url += " | <img src='share/images/icons/send_document.png' width='17px' height='17px' title='Gửi hồ sơ' onClick='page.sendFile(" + row + ");' />";
                         }
                         if (item.fileType == 3052 || item.fileType == 3051 || item.fileType || 3050) {
                             url += " | <img src='share/images/icons/send_document.png' width='17px' height='17px' title='Gửi hồ sơ' onClick='page.sendFile(" + row + ");' />";
                         }
-                        //url += " | <img src='share/images/icons/DownArrow.png' width='17px' height='17px' title='Hồ sơ đã upload' onClick='page.downloadFileSign(" + item.fileId + ");' />";
                     }
                     break;
+                    
                 case 1:
                     url += " | <img src='share/images/icons/payment.png' width='17px' height='17px' title='Thanh toán' onClick='page.payFile(" + row + ");' />";
                     break;
@@ -190,7 +190,7 @@
                             if (item.fileType != 3052 && item.fileType != 3051 && item.fileType != 3050) {
                                 url += " | <img src='share/images/icons/payment.png' width='17px' height='17px' title='Thanh toán' onClick='page.payFile(" + row + ");' />";
                             }
-                            if ((item.fileType == 3052 || item.fileType == 3051 || item.fileType || 3050)&&(deadlineAddition != null && (deadlineAddition > today || deadlineAddition == today))) {
+                            if ((item.fileType == 3052 || item.fileType == 3051 || item.fileType || 3050) && (deadlineAddition != null && (deadlineAddition > today || deadlineAddition == today))) {
                                 url += " | <img src='share/images/icons/send_document.png' width='17px' height='17px' title='Gửi hồ sơ' onClick='page.sendFile(" + row + ");' />";
                             }
                         } else {
@@ -201,7 +201,7 @@
                             if (item.fileType != 3052 && item.fileType != 3051 && item.fileType != 3050) {
                                 url += " | <img src='share/images/icons/payment.png' width='17px' height='17px' title='Thanh toán' onClick='page.payFile(" + row + ");' />";
                             }
-                            if ((item.fileType == 3052 || item.fileType == 3051 || item.fileType || 3050)&&(deadlineAddition != null && (deadlineAddition > today || deadlineAddition == today))) {
+                            if ((item.fileType == 3052 || item.fileType == 3051 || item.fileType || 3050) && (deadlineAddition != null && (deadlineAddition > today || deadlineAddition == today))) {
                                 url += " | <img src='share/images/icons/send_document.png' width='17px' height='17px' title='Gửi hồ sơ' onClick='page.sendFile(" + row + ");' />";
                             }
                         }
@@ -304,7 +304,7 @@
         url += "</div>";
         return url;
     };
-    page.disabledCheckbox = function(inData) {
+    page.disabledCheckbox = function (inData) {
         var item = dijit.byId("filesGrid").getItem(inData);
         var check = true;
         if (item != null) {
@@ -322,7 +322,7 @@
         }
         return check;
     };
-    page.formatWarning = function(inData) {
+    page.formatWarning = function (inData) {
         var item = dijit.byId("filesGrid").getItem(inData - 1);
         var url = "";
         var strWarning = "";
@@ -414,7 +414,7 @@
         return url;
     };
     // enter key
-    page.searchDefault = function(evt) {
+    page.searchDefault = function (evt) {
         var dk = dojo.keys;
         switch (evt.keyCode) {
             case dk.ENTER:
@@ -613,7 +613,7 @@
 <script type="text/javascript">
     var workingFileId;
     var fileId = 0;
-    backPage = function() {
+    backPage = function () {
 
 //        document.getElementById("searchDiv").style.display = "";
 //        document.getElementById("createDiv").style.display = "none";
@@ -660,31 +660,31 @@
             upload.destroyRecursive(true);
         }
     };
-    page.reset = function() {
+    page.reset = function () {
         dijit.byId("searchForm.fileCode").setValue("");
         dijit.byId("searchForm.fileType").setValue("-1");
         dijit.byId("searchForm.sendDateFrom").setValue("");
         dijit.byId("searchForm.sendDateTo").setValue("");
     };
-    page.search = function() {
+    page.search = function () {
         dijit.byId("filesGrid").vtReload('filesAction!onSearchBusinessFiles.do?', "searchForm");
     };
-    afterLoadForm = function(data) {
+    afterLoadForm = function (data) {
         document.getElementById("searchDiv").style.display = "none";
         document.getElementById("createDiv").style.display = "";
     };
-    page.showViewFile = function(fileId) {
+    page.showViewFile = function (fileId) {
         document.getElementById("searchDiv").style.display = "none";
         document.getElementById("createDiv").style.display = "";
         sd.connector.post("filesAction!loadFileView.do?createForm.fileId=" + fileId + "&createForm.viewType=0", "createDiv", null, null, afterLoadForm);
     };
-    page.showEditFile = function(fileId) {
+    page.showEditFile = function (fileId) {
         document.getElementById("searchDiv").style.display = "none";
         document.getElementById("createDiv").style.display = "";
         sd.connector.post("filesAction!toCreateFilePage.do?createForm.fileId=" + fileId + "&checkEdit=1", "createDiv", null, null, afterLoadForm);
     };
-    
-    page.onDeleteFiles = function() {
+
+    page.onDeleteFiles = function () {
         if (!dijit.byId("filesGrid").vtIsChecked()) {
             msg.alert('<sd:Property>alert.select</sd:Property>', '<sd:Property>confirm.title</sd:Property>');
                     }
@@ -692,17 +692,17 @@
                         msg.confirm("Bạn có chắc muốn hủy hồ sơ không ?", "Xóa hồ sơ", page.deleteFiles);
                     }
                 };
-                page.deleteFiles = function() {
+                page.deleteFiles = function () {
                     var content = dijit.byId("filesGrid").vtGetCheckedDataForPost("lstItemOnGrid");
                     sd.connector.post("filesAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
                 };
-                page.returnMessageDelete = function(data) {
+                page.returnMessageDelete = function (data) {
                     var obj = dojo.fromJson(data);
                     var result = obj.items;
                     resultMessage_show("resultCreateMessage", result[0], result[1], 5000);
                     page.search();
                 };
-                page.showDept = function(row) {
+                page.showDept = function (row) {
                     var item = dijit.byId("filesGrid").getItem(row);
                     workingFileId = item.fileId;
                     //dijit.byId("deptGrid").vtReload("procedureAction!getDeptProcedure.do?procedureId=" + item.fileType);
@@ -711,24 +711,24 @@
                     //dijit.byId("selectDeptDlg").show();
                     var AgencyName = '${fn:escapeXml(AgencyName)}';
                     var AgencyId = '${fn:escapeXml(AgencyId)}';
-                    msg.confirm('<sd:Property>Bạn có chắc chắn muốn gửi hồ sơ đến đơn vị "</sd:Property>' + AgencyName + '<sd:Property>" không?</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', function() {
+                    msg.confirm('<sd:Property>Bạn có chắc chắn muốn gửi hồ sơ đến đơn vị "</sd:Property>' + AgencyName + '<sd:Property>" không?</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', function () {
                                 sd.connector.post("filesAction!onSelectFlow.do?" + token.getTokenParamString() + "&createForm.deptId=" + AgencyId + "&createForm.fileId=" + workingFileId, null, null, null, page.afterSend);
                             });
                         };
-                        page.payFile = function(row)
+                        page.payFile = function (row)
                         {
 
                             var item = dijit.byId("filesGrid").getItem(row);
                             sd.connector.post("filesAction!preparePayment.do?createFeeForm.fileId=" + item.fileId, 'createDiv', null, null, afterLoadPayForm);
                         };
-                        afterLoadPayForm = function(data) {
+                        afterLoadPayForm = function (data) {
                             document.getElementById("searchDiv").style.display = "none";
                             document.getElementById("createDiv").style.display = "";
                         };
-                        page.formatLinkDownloadPdf = function(fileId) {
+                        page.formatLinkDownloadPdf = function (fileId) {
                             document.location = "uploadiframe!openFileUserAttachPdf.do?fileId=" + fileId;
                         };
-                        page.sendFile = function(row) {
+                        page.sendFile = function (row) {
                             var item = dijit.byId("filesGrid").getItem(row);
                             if (item.isFee == 0) {
                                 msg.alert("Do bạn đã đổi sang một nhóm sản phẩm có phí cao hơn nhóm sản phẩm ban đầu nên bạn phải thanh toán thêm tiền còn thiếu để gửi hồ sơ đi, sau khi thanh toán thành công phải đợi kế toán xác nhận lại tiền (chú ý up cả hóa đơn cũ và mới lên)");
@@ -737,9 +737,9 @@
                             }
                         };
 
-                        page.signCa = function(row) {
+                        page.signCa = function (row) {
                             var item = dijit.byId("filesGrid").getItem(row);
-                            sd.connector.post("filesAction!onValidate.do?searchForm.fileId=" + item.fileId, null, null, null, function(data) {
+                            sd.connector.post("filesAction!onValidate.do?searchForm.fileId=" + item.fileId, null, null, null, function (data) {
                                 var obj = dojo.fromJson(data);
                                 var result = obj.items;
                                 if (result[0] == "1") {
@@ -751,27 +751,27 @@
                                 }
                             });
                         };
-                        page.loadView = function() {
+                        page.loadView = function () {
                             page.clearInsertForm();
                             dijit.byId("createDlg").show();
                         };
-                        page.showSearchPanel = function() {
+                        page.showSearchPanel = function () {
                             var panel = document.getElementById("searchDiv");
                             panel.setAttribute("style", "display:;");
                             dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
                         };
                         dijit.byId("searchForm.status").setValue(${fn:escapeXml(searchForm.status)});
                         page.search();
-                        page.copyFile = function(fileId) {
+                        page.copyFile = function (fileId) {
                             document.getElementById("searchDiv").style.display = "none";
                             document.getElementById("createDiv").style.display = "";
-                            sd.connector.post("filesAction!toCopyFilePage.do?createForm.fileId=" + fileId + "&checkEdit=1", "createDiv", null, null, function() {
+                            sd.connector.post("filesAction!toCopyFilePage.do?createForm.fileId=" + fileId + "&checkEdit=1", "createDiv", null, null, function () {
                                 document.getElementById("searchDiv").style.display = "none";
                                 document.getElementById("createDiv").style.display = "";
                                 dijit.byId("createForm.fileId").setValue(null);
                             });
                         };
-                        page.showEvaludateResult = function(row) {//show kết quả thẩm định
+                        page.showEvaludateResult = function (row) {//show kết quả thẩm định
                             var file = dijit.byId("filesGrid").getItem(row);
                             var statusName = page.getStatusName(parseInt(file.status));
                             fileId = file.fileId;
@@ -786,7 +786,7 @@
                             page.replaceNewLineByBr();
                             sd.connector.post("filesAction!showStaffContact.do?objectId=" + fileId, null, null, null, page.afterShowStaffContact);
                         };
-                        page.afterShowStaffContact = function(data) {
+                        page.afterShowStaffContact = function (data) {
                             page.showComment();
                             page.showVersionSDBS();
                             dijit.byId("feedbackEvaluateViewDetailsDlg").show();
@@ -795,7 +795,7 @@
                             document.getElementById("evaluateFormView.staffEmailContact").innerHTML = data.customInfo[1];
                             document.getElementById("evaluateFormView.staffTelContact").innerHTML = data.customInfo[2];
                         };
-                        page.getStatusName = function(status) {
+                        page.getStatusName = function (status) {
                             switch (status) {
                                 case 1:
                                     url = "Mới nộp";
@@ -829,7 +829,7 @@
                             }
                             return url;
                         };
-                        page.showReceiveResult = function(row) {//show ket qua tiep nhan ho so - van thu - 140410 binhnt53
+                        page.showReceiveResult = function (row) {//show ket qua tiep nhan ho so - van thu - 140410 binhnt53
                             var file = dijit.byId("filesGrid").getItem(row);
                             var statusName = page.getStatusName(parseInt(file.status));
                             document.getElementById("receivedFormViewDetails.status").innerHTML = statusName;
@@ -837,7 +837,7 @@
                             page.replaceTblReceivedFormViewDetails();
                             dijit.byId("receivedFormViewDetailsDlg").show();
                         };
-                        page.reloadViewOldVersion = function(oldVersion, thisVersion) {//u140728
+                        page.reloadViewOldVersion = function (oldVersion, thisVersion) {//u140728
                             document.getElementById('createDiv').Value = '';
                             //u140730-dund1
                             var gridRegister = dijit.byId('processCommentGridId_VTGrid');
@@ -846,19 +846,19 @@
                             }//!u140730
                             sd.connector.post("filesAction!loadFilesByOldVersion.do?thisVersion=" + thisVersion + "&oldVersion=" + oldVersion, "createDiv", null, null, afterReloadViewOldVersion);
                         };
-                        afterReloadViewOldVersion = function(data) {
+                        afterReloadViewOldVersion = function (data) {
                         }; //!u140728
-                        page.showAlertComparisonDlg = function(row) {
+                        page.showAlertComparisonDlg = function (row) {
                             var item = dijit.byId("filesGrid").getItem(row);
                             dijit.byId("comparisonForm.fileId").setValue(item.fileId);
                             document.getElementById("comparisonForm.lastContent").innerHTML = item.comparisonContent;
                             page.rplBrTblBusinessComparisonDlg();
                             dijit.byId("comparisonByBusinessDlg").show();
                         }
-                        page.Upload = function(row)
+                        page.Upload = function (row)
                         {
                             var item = dijit.byId("filesGrid").getItem(row);
-                            sd.connector.post("filesAction!onValidate.do?searchForm.fileId=" + item.fileId, null, null, null, function(data) {
+                            sd.connector.post("filesAction!onValidate.do?searchForm.fileId=" + item.fileId, null, null, null, function (data) {
                                 var obj = dojo.fromJson(data);
                                 var result = obj.items;
                                 if (result[0] == "1") {
@@ -870,13 +870,13 @@
                                 }
                             });
                         };
-                        page.downloadFileSign = function(fileId) {
+                        page.downloadFileSign = function (fileId) {
                             document.location = "uploadiframe!openFileUserUpload.do?fileId=" + fileId;
                         };
-                        page.setCreateDiv = function(fileId, fileType) {
+                        page.setCreateDiv = function (fileId, fileType) {
                             var fileTypeTemp = fileType;
                             var fileIdTemp = fileId;
-                            sd.connector.post("filesAction!toCopyFilePage.do?createForm.fileId=" + fileIdTemp + "&fileType=" + fileTypeTemp + "&checkEdit=1", "createDiv", null, null, function() {
+                            sd.connector.post("filesAction!toCopyFilePage.do?createForm.fileId=" + fileIdTemp + "&fileType=" + fileTypeTemp + "&checkEdit=1", "createDiv", null, null, function () {
                                 document.getElementById("searchDiv").style.display = "none";
                                 document.getElementById("createDiv").style.display = "";
                                 dijit.byId("createForm.fileId").setValue(null);
@@ -884,10 +884,10 @@
                             document.getElementById('createDiv').Value = '';
                             //sd.connector.post("filesAction!toCreateFilePage.do?fileType=" + fileTypeTemp, "createDiv", null, null, afterLoadFormChange);
                         };
-                        afterLoadFormChange = function(data) {
+                        afterLoadFormChange = function (data) {
                         };
                         //hieptq update 130115
-                        page.payFileMore = function()
+                        page.payFileMore = function ()
                         {
                             if (!dijit.byId("filesGrid").vtIsChecked()) {
                                 msg.alert('Bạn chưa chọn hồ sơ để thanh toán phí thẩm định', 'Cảnh báo');
@@ -897,7 +897,7 @@
                                         }
 
                                     };
-                                    page.payFileMoreKeyPay = function() {
+                                    page.payFileMoreKeyPay = function () {
                                         var items = dijit.byId("filesGrid").vtGetCheckedItems();
                                         var lstObjectId = "";
                                         var check;
@@ -934,7 +934,7 @@
                                             }
                                         }
                                     };
-                                    page.payFileMoreKeyPayNew = function(lstObjectId)
+                                    page.payFileMoreKeyPayNew = function (lstObjectId)
                                     {
                                         sd.connector.post("filesAction!preparePaymentMore.do?lstObjectId=" + lstObjectId, 'createDiv', null, null, afterLoadPayForm);
                                     };
