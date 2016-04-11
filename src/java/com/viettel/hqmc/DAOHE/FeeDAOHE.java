@@ -9,7 +9,6 @@ import com.viettel.common.util.Constants;
 import com.viettel.common.util.DateTimeUtils;
 import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.BO.CountNo;
-import com.viettel.hqmc.BO.DetailProduct;
 import com.viettel.hqmc.BO.Fee;
 import com.viettel.hqmc.BO.FeePaymentInfo;
 import com.viettel.hqmc.BO.FeeProcedure;
@@ -29,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -392,26 +390,27 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
     }
 
     // danh sach phi doanh nghiep
-    public GridResult getLstPayment(FeeForm searchFeeForm, Long fileId, int start, int count, String sortField) {
+    public GridResult getLstPayment(FeeForm searchFeeForm, Long fileId,
+            int start, int count, String sortField) {
 
         FilesDAOHE fdhe = new FilesDAOHE();
-        Files check = fdhe.findById(fileId);
+        Files filesBo = fdhe.findById(fileId);
         String sql = "";
-        if (check != null
-                && (check.getStatus().equals(Constants.FILE_STATUS.APPROVED)
-                || check.getStatus().equals(Constants.FILE_STATUS.COMPARED)
-                || check.getStatus().equals(Constants.FILE_STATUS.COMPARED_FAIL)
-                || check.getStatus().equals(Constants.FILE_STATUS.ALERT_COMPARISON))
-                && check.getIsSignPdf() != null
-                && (check.getIsSignPdf() != 0)) {
+        if (filesBo != null
+                && (filesBo.getStatus().equals(Constants.FILE_STATUS.APPROVED)
+                || filesBo.getStatus().equals(Constants.FILE_STATUS.COMPARED)
+                || filesBo.getStatus().equals(Constants.FILE_STATUS.COMPARED_FAIL)
+                || filesBo.getStatus().equals(Constants.FILE_STATUS.ALERT_COMPARISON))
+                && filesBo.getIsSignPdf() != null
+                && (filesBo.getIsSignPdf() != 0)) {
             sql = "from fee f inner join fee_payment_info fpi "
                     + "on f.fee_id = fpi.fee_id "
                     + "where fpi.file_id = ? "
                     + "and f.is_Active=1 "
                     + "and fpi.is_Active=1";
         } else {
-            if (check != null && check.getStatus().equals(Constants.FILE_STATUS.GIVE_BACK)
-                    && check.getIsSignPdf() != null && (check.getIsSignPdf() != 0)) {
+            if (filesBo != null && filesBo.getStatus().equals(Constants.FILE_STATUS.GIVE_BACK)
+                    && filesBo.getIsSignPdf() != null && (filesBo.getIsSignPdf() != 0)) {
                 sql = "from fee f inner join fee_payment_info fpi on f.fee_id = fpi.fee_id "
                         + "where fpi.file_id = ? "
                         + "and f.is_Active=1 "
@@ -428,32 +427,47 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
         List lstParam = new ArrayList();
         lstParam.add(fileId);
 
-        if (searchFeeForm.getFeeName() != null && !"".equals(searchFeeForm.getFeeName().trim())) {
-            // 11/11/2014 viethd
-            // modified sql LIKE condition by adding parameter
-            //sql += "and  f.fee_name like '%" + searchFeeForm.getFeeName() + "%'"; // comment 11/11/2014
+        if (searchFeeForm.getFeeName() != null
+                && !"".equals(searchFeeForm.getFeeName().trim())) {
             sql += "and  f.fee_name like ? ";
             String param = "%" + searchFeeForm.getFeeName() + "%";
             lstParam.add(param);
         }
-        if (searchFeeForm.getPrice() != null && !"".equals(searchFeeForm.getPrice())) {
+        if (searchFeeForm.getPrice() != null
+                && !"".equals(searchFeeForm.getPrice())) {
             sql += " and f.price = ?";
             lstParam.add(searchFeeForm.getPrice());
         }
-        if (searchFeeForm.getFeeType() != null && searchFeeForm.getFeeType() != -1) {
+        if (searchFeeForm.getFeeType() != null
+                && searchFeeForm.getFeeType() != -1) {
             sql += " and f.fee_type = ?";
             lstParam.add(searchFeeForm.getFeeType());
         }
-        if (searchFeeForm.getStatus() != null && searchFeeForm.getStatus() != -1) {
+        if (searchFeeForm.getStatus() != null
+                && searchFeeForm.getStatus() != -1) {
             sql += " and fpi.status = ?";
             lstParam.add(searchFeeForm.getStatus());
         }
         SQLQuery countQuery = (SQLQuery) getSession().createSQLQuery("select count(*) " + sql);
         SQLQuery query = (SQLQuery) getSession().createSQLQuery(
-                "select f.fee_Id,f.fee_Name,f.description,fpi.cost,f.fee_Type,fpi.status,fpi.fee_Payment_Type_Id, "
-                + "f.price,fpi.payment_Person,fpi.payment_Date,fpi.payment_Info,"
-                + "fpi.bill_path,fpi.payment_info_id,fpi.payment_code,fpi.payment_confirm,"
-                + "fpi.bill_code,fpi.date_confirm,fpi.comment_reject  " + sql);
+                "select f.fee_Id,"
+                + "f.fee_Name,"
+                + "f.description,"
+                + "fpi.cost,"
+                + "f.fee_Type,"
+                + "fpi.status,"
+                + "fpi.fee_Payment_Type_Id, "
+                + "f.price,"
+                + "fpi.payment_Person,"
+                + "fpi.payment_Date,"
+                + "fpi.payment_Info,"
+                + "fpi.bill_path,"
+                + "fpi.payment_info_id,"
+                + "fpi.payment_code,"
+                + "fpi.payment_confirm,"
+                + "fpi.bill_code,"
+                + "fpi.date_confirm,"
+                + "fpi.comment_reject  " + sql);
         for (int i = 0; i < lstParam.size(); i++) {
             countQuery.setParameter(i, lstParam.get(i));
             query.setParameter(i, lstParam.get(i));
@@ -467,14 +481,21 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
         List result = new ArrayList<FeePaymentFileForm>();
 
         //Hiepvv 4Star
-        boolean is4Star = false;
-        if (check != null && check.getFileType() != null && check.getFileType() > 0L) {
+        boolean isHaveFee = false;
+        if (filesBo != null
+                && filesBo.getFileType() != null
+                && filesBo.getFileType() > 0L) {
             ProcedureDAOHE pDAO = new ProcedureDAOHE();
             Procedure p = new Procedure();
-            p = pDAO.findById(check.getFileType());
+            p = pDAO.findById(filesBo.getFileType());
             if (p != null) {
-                if (p.getDescription() != null && p.getDescription().equals("announcement4star")) {
-                    is4Star = true;
+                if (p.getDescription() != null
+                        && p.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)) {
+                    isHaveFee = true;
+                }
+                if (p.getDescription() != null
+                        && p.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)) {
+                    isHaveFee = true;
                 }
             }
         }
@@ -491,7 +512,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                     item.setDescription(row[2].toString());
                 }
                 //Hiepvv 4Star
-                if (is4Star == true) {
+                if (isHaveFee) {
                     if (row[3] != null && !"".equals(row[3])) {
                         item.setPrice(Long.parseLong(row[3].toString()));
                     }
@@ -540,7 +561,6 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                 if (row[17] != null && !"".equals(row[17])) {
                     item.setCommentReject(row[17].toString());
                 }
-
             }
             result.add(item);
             item = new FeePaymentFileForm();
@@ -1859,7 +1879,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                             || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03)
                             || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01_TL)
                             || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03_TL)) {
-                        
+
                         fileBo.setFileType(proBoNew.getProcedureId());
                         fileBo.setFileTypeName(proBoNew.getName());
                         fileBo.setUserSigned("");
@@ -1871,7 +1891,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
 
                             if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
                                     || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)) {
-                                
+
                                 String hql = "select fpif from FeePaymentInfo fpif "
                                         + "where fpif.fileId =:fileId "
                                         + "and fpif.isActive = 1";

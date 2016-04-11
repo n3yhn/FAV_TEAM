@@ -2754,7 +2754,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             status = createForm.getStatus();
         }
         if (filesId != null) {
-            String hql = "select dt.productType from DetailProduct dt where dt.detailProductId = (select f.detailProductId from Files f where f.fileId =?)";
+            String hql = "select dt.productType from DetailProduct dt "
+                    + "where dt.detailProductId = (select f.detailProductId from Files f "
+                    + "where f.fileId =?)";
             Query query = getSession().createQuery(hql);
             query.setParameter(0, filesId);
             List<Long> lstProductType = query.list();
@@ -2773,7 +2775,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             boRollBack = findById(filesId);
             bo = findById(filesId);
 
-            if (status.equals(Constants.FILE_STATUS.EVALUATED_TO_ADD) && bo.getHaveTemp() != null && bo.getHaveTemp().equals(1l)) {
+            if (status.equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)
+                    && bo.getHaveTemp() != null
+                    && bo.getHaveTemp().equals(1l)) {
                 //
                 // Tao ban ghi backup
                 //
@@ -2846,7 +2850,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             getSession().update(bo);
         } else {
             //update 15092015 binhnt cap nhat lay ma ho so
-            if (createForm.getIsTemp() != null && createForm.getIsTemp().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
+            if (createForm.getIsTemp() != null
+                    && createForm.getIsTemp().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
                 //
                 // voi ho so clone thi ko can tao moi file code
                 //
@@ -2859,53 +2864,51 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         filesId = bo.getFileId();
 
         // Luu thong tin cac danh sach chi tieu chinh
-        //
-        //
         saveMainlytarget(createForm.getLstMainlyTarget(), filesId);
         // Luu thong tin danh sach chi tieu san pham
-        //
         saveProductTarget(createForm.getLstBioTarget(), filesId, Constants.PRODUCT_TARGET_TYPE.BIO);
         saveProductTarget(createForm.getLstHeavyMetal(), filesId, Constants.PRODUCT_TARGET_TYPE.HEAVY_METAL);
         saveProductTarget(createForm.getLstChemical(), filesId, Constants.PRODUCT_TARGET_TYPE.CHEMICAL);
-
-        //140428
         // Luu thong tin danh sach tai lieu
-        //
         saveAttachs(createForm.getLstAttachs(), filesId, createForm.getLstAttachLabel());
 
 //        if ("".equals(createForm.getLstAttachLabel())) {
 //            return null;
 //        }
         // Luu thong tin danh sach ke hoach quan ly chat luong san pham
-        //
         saveQualityPlan(createForm.getLstQualityControl(), filesId);
 
-        // Luu thong tin danh sach san pham nhap khau cho khach san 4 sao
-        //
+        // Luu thong tin danh sach san pham nhap khau cho khach san 4 sao        
         saveProductInFile(createForm.getLstProductInFile(), filesId);
         try {
             ProcedureDAOHE pdheCheck = new ProcedureDAOHE();
             Procedure pro = pdheCheck.getProcedureTypeFee(createForm.getFileType());
-            if (pro != null && (pro.getTypeFee() == 2 || pro.getTypeFee() == 3)
-                    && !pro.getDescription().equals("announcement4star")
-                    && !pro.getDescription().equals("announcementFile05")) {
+            if (pro != null
+                    && (pro.getTypeFee() == 2 || pro.getTypeFee() == 3)
+                    && !pro.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)
+                    && !pro.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)) {
                 if (!saveFee(filesId, createForm.getFileType(), null, pro, productTypeIdOld)) {
                     return null;
                 }
             } //Sua doi sua cong bo. Tao mot ban ghi trong FeePaymentInfo de VanThu nhin thay hoso cua loai nay
-            else if (pro != null && pro.getDescription().equals("announcementFile05")) {
-                if (!saveFeeChangesAfterAnnounced(filesId, createForm.getFileType(), null, pro, productTypeIdOld)) {
+            else if (pro != null
+                    && pro.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)) {
+                if (!saveFeeChangesAfterAnnounced(filesId, createForm.getFileType())) {
                     return null;
                 }
-            } else if (pro != null && pro.getDescription().equals("announcement4star")) {
+            } else if (pro != null
+                    && pro.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)) {
                 if (!saveFee4Star(filesId, createForm.getFileType())) {
                     return null;
                 }
-            } else if (pro != null && (pro.getTypeFee() == 7)) {
-                if (!saveFeeTL(filesId, createForm.getFileType(), createForm.getDetailProduct().getProductType(), pro, productTypeIdOld)) {
+            } else if (pro != null
+                    && (pro.getTypeFee() == 7)) {
+                if (!saveFeeTL(filesId, createForm.getFileType(),
+                        createForm.getDetailProduct().getProductType(), pro, productTypeIdOld)) {
                     return null;
                 }
-            } else if (!saveFee(filesId, createForm.getFileType(), createForm.getDetailProduct().getProductType(), pro, productTypeIdOld)) {
+            } else if (!saveFee(filesId, createForm.getFileType(),
+                    createForm.getDetailProduct().getProductType(), pro, productTypeIdOld)) {
                 return null;
             }
         } catch (Exception ex) {
@@ -7027,24 +7030,16 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
      *Luu phi cua ho so sua doi bo sung sau cong bo
      */
 
-    private Boolean saveFeeChangesAfterAnnounced(Long fileId, Long fileType, Long productType, Procedure pro, Long productTypeIdOld) {
+    private Boolean saveFeeChangesAfterAnnounced(Long fileId, Long fileType) {
         if (fileId != null) {
-            Date dateNow = null;
-            try {
-                dateNow = getSysdate();
-            } catch (Exception ex) {
-                log.error(ex.getMessage());
-                return false;
-            }
-
-            String hql = "select fpif from FeePaymentInfo fpif where fpif.fileId =:fileId and fpif.isActive = 1";
+            Date dateNow = getSysdate();
+            String hql = "select fpif from FeePaymentInfo fpif"
+                    + " where fpif.fileId =:fileId"
+                    + " and fpif.isActive = 1";
             Query query = getSession().createQuery(hql);
             query.setParameter("fileId", fileId);
             List<FeePaymentInfo> FeePaymentInfo = query.list();
-            //
             // truong hop sao chep va luu tam productType co the = null, vi the phai set = -1
-            //
-
             if (FeePaymentInfo.isEmpty()) {
                 FeeDAOHE fdhe = new FeeDAOHE();
                 List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);

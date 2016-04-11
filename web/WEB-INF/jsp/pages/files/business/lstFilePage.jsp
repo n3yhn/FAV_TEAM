@@ -94,13 +94,6 @@
             url = "<div style='text-align:left;cursor:pointer;'><img src='share/images/icons/copy_icon.png' width='17px' height='17px' title='Tạo bản sao hồ sơ' onClick='page.copyFile(" + item.fileId + ");' />";
             var fileSourceID = item.filesSourceID;
             var status = parseInt(item.status);
-//            Hiepvv SuaDoiBoSung sau cong bo Fix ID Procedure sua doi sau cong bo
-            if (fileSourceID != null
-                    && fileSourceID > 0
-                    && status == 0
-                    && (signed == true || item.userSigned == "fileUploaded")) {
-                url += " | <img src='share/images/icons/send_document.png' width='17px' height='17px' title='Gửi hồ sơ' onClick='page.sendFile(" + row + ");' />";
-            }
             switch (status) {
                 case 0:
                     if (signed == false)
@@ -121,10 +114,20 @@
                         }
                         if (item.fileType == 3052 || item.fileType == 3051 || item.fileType || 3050) {
                             url += " | <img src='share/images/icons/send_document.png' width='17px' height='17px' title='Gửi hồ sơ' onClick='page.sendFile(" + row + ");' />";
+                        } else {
+                            //Hiepvv SuaDoiBoSung sau cong bo Fix ID Procedure sua doi sau cong bo
+                            if (fileSourceID != null
+                                    && fileSourceID > 0
+                                    && status == 0
+                                    && (signed == true || item.userSigned == "fileUploaded")) {
+                                url += " | <img src='share/images/icons/send_document.png' width='17px' height='17px' title='Gửi hồ sơ' onClick='page.sendFile(" + row + ");' />";
+                            }
                         }
+
                     }
+
+
                     break;
-                    
                 case 1:
                     url += " | <img src='share/images/icons/payment.png' width='17px' height='17px' title='Thanh toán' onClick='page.payFile(" + row + ");' />";
                     break;

@@ -370,24 +370,27 @@ public final class Constants {
 
     public interface FILE_DESCRIPTION {
 
-        public static final String ANNOUNCEMENT_FILE01 = "announcementFile01";//
-        public static final String RE_ANNOUNCEMENT = "reAnnouncement";//
-        public static final String RE_CONFIRM_FUNC_IMP = "reConfirmFuncImport";
-        public static final String RE_CONFIRM_NORMAL_VN = "reConfirmNormalVN";
-        public static final String RE_CONFIRM_FUNC_VN = "reConfirmFuncVN";
-        public static final String REC_CONFIRM_NORMAL_IMP = "reConfirmNormalImp";
+        public static final String ANNOUNCEMENT_FILE01 = "announcementFile01";
+        public static final String ANNOUNCEMENT_FILE03 = "announcementFile03";
+        public static final String CONFIRM_NORMAL_IMP = "confirmNormalImport";
         public static final String CONFIRM_FUNC_IMP = "confirmFuncImport";
         public static final String CONFIRM_FUNC_VN = "confirmFuncVN";
-        public static final String CONFIRM_NORMAL_IMP = "confirmNormalImport";
-        public static final String ANNOUNCEMENT_FILE03 = "announcementFile03";
-        public static final String ANNOUNCEMENT_4STAR = "announcement4star";
         public static final String CONFIRM_NORMAL_VN = "confirmNormalVN";
         public static final String CONFIRM_SATISFACTORY = "confirmSatisfactory";
+
         public static final String ANNOUNCEMENT_FILE01_TL = "annoucementTL01";
         public static final String ANNOUNCEMENT_FILE03_TL = "annoucementTL03";
+
+        public static final String RE_ANNOUNCEMENT = "reAnnouncement";
+        public static final String RE_CONFIRM_FUNC_IMP = "reConfirmFuncImport";
+        public static final String REC_CONFIRM_NORMAL_IMP = "reConfirmNormalImp";
+        public static final String RE_CONFIRM_FUNC_VN = "reConfirmFuncVN";
+        public static final String RE_CONFIRM_NORMAL_VN = "reConfirmNormalVN";
+
         public static final String CONFIRM_FUNC_IMP_TL = "confirmTL";
         //hiepvv SDBS sau cong bo
         public static final String ANNOUNCEMENT_FILE05 = "announcementFile05";
+        public static final String ANNOUNCEMENT_4STAR = "announcement4star";
     }
 
     public interface RECEIVED_STATUS {

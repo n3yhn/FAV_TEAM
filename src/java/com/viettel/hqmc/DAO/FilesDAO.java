@@ -17,7 +17,6 @@ import com.viettel.common.util.UploadFile;
 import com.viettel.hqmc.BO.Announcement;
 import com.viettel.hqmc.BO.AnnouncementReceiptPaper;
 import com.viettel.hqmc.BO.Business;
-import com.viettel.hqmc.BO.CaUser;
 import com.viettel.hqmc.BO.ConfirmAnnouncementPaper;
 import com.viettel.hqmc.BO.ConfirmImportSatistPaper;
 import com.viettel.hqmc.BO.CountNo;
@@ -94,13 +93,10 @@ import com.viettel.vsaadmin.database.DAOHibernate.DepartmentDAOHE;
 import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import com.viettel.ws.FilesWS;
 import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -119,8 +115,6 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateExpiredException;
 import java.security.cert.CertificateNotYetValidException;
 import java.security.cert.X509Certificate;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -2554,20 +2548,25 @@ public class FilesDAO extends BaseDAO {
         ProcedureDAOHE pdhe = new ProcedureDAOHE();
         Procedure tthc = pdhe.findById(createForm.getFileType());
         Long fee = tthc.getFee();
+        
         try {
             Long filesId = createForm.getFileId();
             Boolean isCreate = true;
             if (filesId == null) {//check la update hay them moi
-                createForm.setCreateDate(new Date());
+                createForm.setCreateDate(getSysdate());
+                
                 createForm.setUserCreateId(getUserId());
                 createForm.setUserCreateName(getUserName());
+                
                 createForm.setDeptId(getBusinessId());
                 createForm.setDeptName(getBusinessName());
                 createForm.setBusinessName(getBusinessName());
-                createForm.setStatus(Constants.FILE_STATUS.NEW_CREATE);
+                
                 createForm.setFeeFile(fee);
+                
                 createForm.setIsDownload(Constants.ACTIVE_STATUS.ACTIVE);//141215u binhnt53
-                if (getBusinessId() != null) {//141214u binhnt53
+                
+                if (getBusinessId() != null) {//141214u binhnt53 bo sung co quan chu quan.
                     BusinessDAOHE busdaohe = new BusinessDAOHE();
                     Business busbo = busdaohe.findById(getBusinessId());
                     if (busbo != null && busbo.getGoverningBody() != null) {
@@ -2576,12 +2575,14 @@ public class FilesDAO extends BaseDAO {
                 }
             } else {
                 isCreate = false;
-                createForm.setModifyDate(new Date());
+                createForm.setModifyDate(getSysdate());
             }
+            
             Procedure fileType = pdhe.findById(createForm.getFileType());
             if (fileType != null) {
                 createForm.setFileTypeName(fileType.getName());
             }
+            
             createForm.setStatus(Constants.FILE_STATUS.NEW_CREATE);
 
             if (createForm.getStatus() != null
@@ -2591,11 +2592,12 @@ public class FilesDAO extends BaseDAO {
                     || createForm.getStatus().equals(Constants.FILE_STATUS.RECEIVED_REJECT_TO_ADD)
                     || createForm.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD))) {//check role
                 if (isCreate) {//insert Files
-                    Files fileSaved = fdhe.saveFiles(createForm);//140410
+                    Files fileSaved = fdhe.saveFiles(createForm);
                     if (fileSaved == null) {
                         resultMessage.clear();
                         resultMessage.add("3");
                         resultMessage.add("Thêm mới hồ sơ không thành công");
+                        
                     } else {
                         resultMessage.add("1");
                         resultMessage.add("Thêm mới hồ sơ thành công");
@@ -2604,6 +2606,7 @@ public class FilesDAO extends BaseDAO {
                         edhe.insertEventLog("Thêm mới hồ sơ", "Thêm mới hồ sơ mã " + fileSaved.getFileCode(), getRequest());
                     }
                 } else {// update File
+                    
                     FilesDAOHE fdaohe = new FilesDAOHE();
                     Files files = fdaohe.findById(filesId);
                     if (files != null) {// update File
@@ -2611,15 +2614,17 @@ public class FilesDAO extends BaseDAO {
                                 && (files.getStatus().equals(Constants.FILE_STATUS.NEW_CREATE)
                                 || files.getStatus().equals(Constants.FILE_STATUS.NEW)
                                 || files.getStatus().equals(Constants.FILE_STATUS.RECEIVED_REJECT)
-                                || files.getStatus().equals(Constants.FILE_STATUS.RECEIVED_REJECT_TO_ADD)//binhnt update 070815 createForm.getStatus().equals
+                                || files.getStatus().equals(Constants.FILE_STATUS.RECEIVED_REJECT_TO_ADD)
                                 || files.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD))
                                 && files.getUserCreateId() != null
                                 && files.getUserCreateId().equals(getUserId())) {
-                            Files fileSaved = fdhe.saveFiles(createForm);//140410
+                            Files fileSaved = fdhe.saveFiles(createForm);
+                            
                             if (fileSaved == null) {
                                 resultMessage.clear();
                                 resultMessage.add("3");
                                 resultMessage.add("Cập nhật hồ sơ không thành công");
+                                
                             } else {
                                 resultMessage.add("1");
                                 resultMessage.add("Cập nhật hồ sơ thành công");
@@ -2627,6 +2632,7 @@ public class FilesDAO extends BaseDAO {
                                 EventLogDAOHE edhe = new EventLogDAOHE();
                                 edhe.insertEventLog("Cập nhật hồ sơ", "Cập nhật hồ sơ mã " + fileSaved.getFileCode(), getRequest());
                             }
+                            
                         }
                     } else {
                         resultMessage.clear();
@@ -6172,7 +6178,7 @@ public class FilesDAO extends BaseDAO {
             FilesDAOHE fdhe = new FilesDAOHE();
             Files files = fdhe.findById(createFeeForm.getFileId());
             String fileCode = files.getFileCode();
-            Base64 encoder = new Base64();
+//            Base64 encoder = new Base64();
             String productName = newStringUtf8(Base64.encodeBase64(files.getProductName().getBytes("UTF-8")));
             String businessName = newStringUtf8(Base64.encodeBase64(files.getBusinessName().getBytes("UTF-8")));
             //String businessName = files.getBusinessName();
