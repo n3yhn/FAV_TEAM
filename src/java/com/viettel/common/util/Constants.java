@@ -316,14 +316,20 @@ public final class Constants {
         public static String CLERICAL_ROLE = "voffice_vt";      // Van thu
         public static String CBLT_CQ = "voffice_cblt_cq"; // Can bo luu tru co quan
         public static String LEAD_UNIT = "voffice_lddv"; // lanh dao don vi
-        // Pho phong
-        public static String LEAD_UNIT_DEPUTY_ROLE = "LDDV_PP"; // lanh dao don vi
-        // Cuc Pho
-        public static String LEAD_MONITOR_ROLE = "voffice_ld_pc";
-        // Cuc truong
-        public static String DIRECTOR_ROLE = "voffice_ld";
-        //QUAN TRI HE THONG
-        public static String ADMIN = "QTHT";
+//CUC ATTP
+        public static String LEAD_UNIT_DEPUTY_ROLE = "LDDV_PP";// Pho phong
+        public static String LEAD_MONITOR_ROLE = "voffice_ld_pc";// Cuc Pho
+        public static String DIRECTOR_ROLE = "voffice_ld";// Cuc truong
+        public static String ADMIN = "QTHT";//QUAN TRI HE THONG
+        public static String LEADER_OF_STAFF_T = "LDTP";//lanh dao don vi attp
+        public static String LEADER_OF_STAFF_P = "LDPP";//lanh dao don vi attp
+        public static String LEADER_CT = "CT";//cuc truong
+        public static String LEADER_PCT = "PCT";//pho cuc truong attp
+        public static String CV = "CV";//chuyen vien attp.
+        public static String VT = "VT";//chuyen vien attp
+        public static String GDTT = "GDTT";//giam doc trung tam
+        public static String PGDTT = "PGDTT";//pho giam doc trung tam
+        public static String PCHS = "PHANCONG_HOSO";//phan cong ho so
     }
 
     public interface DEPARTMENT {
@@ -461,8 +467,8 @@ public final class Constants {
     //hieptq update 090715
     public interface PRICE {
 
-        public static final Long TPCN = 1500000l;
-        public static final Long TPT = 500000l;
+        public static final Long TPCN = 1500000L;
+        public static final Long TPT = 500000L;
     }
 
     //hieptq update 090715

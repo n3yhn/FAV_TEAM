@@ -1005,10 +1005,12 @@ public class UsersDAO extends BaseDAO {
     public Boolean checkUserExist(String fullName, Long userId) throws Exception {
         Boolean isExisted = Boolean.valueOf(false);
         Session session = getSession();
-        if (fullName == null || userId == null) {
+        if (fullName == null || userId == null || fullName.equals("")) {
             return true;
         }
-        String hql = "from Users where userId = ? and status != ? and fullName = ?)";
+        String hql = "from Users where userId = ? "
+                + "and status != ? "
+                + "and fullName = ?)";
         try {
             Query q = session.createQuery(hql);
             q.setParameter(0, userId);

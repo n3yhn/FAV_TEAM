@@ -95,7 +95,7 @@
                     url = "Tổng số hồ sơ trong ngày";
                     break;
                 case 44:
-                    url = "Đã phân công chờ ý kiến";
+                    url = "Đã phân công";
                     break;
                 case 49:
                     url = "Đã gửi phối hợp và có ý kiến";

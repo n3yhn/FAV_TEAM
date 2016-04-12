@@ -46,18 +46,19 @@
         </tr>
         <tr>
             <td align="left">
-                <sx:Label key="status" require=""/>
+                <sx:Label key="STATUS" require=""/>
             </td>
             <td align="left">
-                <sx:Label key="processStatus" require=""/>
-            </td></tr>  
-        <tr>
-            <td style="display:">
+
                 <sd:SelectBox cssStyle="width:100%"
                               id="processAddEditForm.status"
                               key="" valueField="code" labelField="name"
                               name="processAddEditForm.status" >
                 </sd:SelectBox>
+            </td></tr>  
+        <tr>
+            <td style="display:">
+                <sx:Label key="PROCESS_STATUS" require=""/>
             </td>
             <td style="display:">                
                 <sd:SelectBox cssStyle="width:100%"
@@ -76,6 +77,7 @@
                               id="processAddEditForm.sendUserId"
                               key="" valueField="code" labelField="name"
                               name="processAddEditForm.sendUserId" >
+                    <sd:Option value="null" selected="true">-- Không có --</sd:Option> 
                 </sd:SelectBox>
             </td>
         </tr>
@@ -88,6 +90,7 @@
                               id="processAddEditForm.sendGroupId"
                               key="" valueField="code" labelField="name"
                               name="processAddEditForm.sendGroupId" >
+                    <sd:Option value="null" selected="true">-- Không có --</sd:Option> 
                 </sd:SelectBox>
             </td>
         </tr>          
@@ -100,6 +103,7 @@
                               id="processAddEditForm.receiveUserId"
                               key="" valueField="code" labelField="name"
                               name="processAddEditForm.receiveUserId" >
+                    <sd:Option value="null" selected="true">-- Không có --</sd:Option> 
                 </sd:SelectBox>
             </td>
         </tr>
@@ -111,7 +115,8 @@
                 <sd:SelectBox cssStyle="width:100%"
                               id="processAddEditForm.receiveGroupId"
                               key="" valueField="code" labelField="name"
-                              name="processAddEditForm.receiveGroupId" >
+                              name="processAddEditForm.receiveGroupId" >    
+                    <sd:Option value="null" selected="true">-- Không có --</sd:Option> 
                 </sd:SelectBox>                
             </td>
         </tr>     

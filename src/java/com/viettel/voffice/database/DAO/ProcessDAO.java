@@ -20,13 +20,13 @@ import java.util.logging.Logger;
  * @author user
  */
 public class ProcessDAO extends BaseDAO {
-
+    
     private static final String FORWARD_PAGE = "processPage";
     ProcessDAOHE processDAOHE = new ProcessDAOHE();
     private ProcessForm processForm;
     private ProcessForm processAddEditForm, filesStatusEditForm;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProcessDAO.class);
-
+    
     public String prepare() {
         try {
         } catch (Exception ex) {
@@ -34,7 +34,7 @@ public class ProcessDAO extends BaseDAO {
         }
         return FORWARD_PAGE;
     }
-
+    
     public String searchProcess() {
         getGridInfo();
         AtomicInteger countAI = new AtomicInteger(count);
@@ -60,7 +60,7 @@ public class ProcessDAO extends BaseDAO {
             System.out.print(ex.getMessage());
             return null;
         }
-
+        
         return GRID_DATA;
     }
 
@@ -86,7 +86,7 @@ public class ProcessDAO extends BaseDAO {
             System.out.print(ex.getMessage());
             return null;
         }
-
+        
         return GRID_DATA;
     }
 
@@ -121,18 +121,19 @@ public class ProcessDAO extends BaseDAO {
         bo.setReceiveGroupId(processAddEditForm.getReceiveGroupId());
         bo.setReceiveUser(processAddEditForm.getReceiveUser());
         bo.setReceiveUserId(processAddEditForm.getReceiveUserId());
-        UsersDAO udao = new UsersDAO();
-        try {
-            if (!udao.checkUserExist(bo.getReceiveUser(), bo.getReceiveUserId()) || !udao.checkUserExist(bo.getSendUser(), bo.getSendUserId())) {
-                resultMessage.add("3");
-                resultMessage.add("Người dùng không tồn tại");
-            } else {
-                resultMessage.add("1");
-                resultMessage.add("Danh mục chưa tồn tại");
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(ProcessDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        UsersDAO udao = new UsersDAO();
+//        try {
+//            if (!udao.checkUserExist(bo.getReceiveUser(), bo.getReceiveUserId())
+//                    || !udao.checkUserExist(bo.getSendUser(), bo.getSendUserId())) {
+//                resultMessage.add("3");
+//                resultMessage.add("Người dùng không tồn tại");
+//            } else {
+//                resultMessage.add("1");
+//                resultMessage.add("Danh mục chưa tồn tại");
+//            }
+//        } catch (Exception ex) {
+//            Logger.getLogger(ProcessDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         jsonDataGrid.setItems(resultMessage);
         jsonDataGrid.setCustomInfo(customInfo);
         return "gridData";
@@ -151,23 +152,32 @@ public class ProcessDAO extends BaseDAO {
                 ProcessDAOHE pdaohe = new ProcessDAOHE();
                 Process p = pdaohe.findById(processAddEditForm.getProcessId());
                 if (p != null) {
-                    if (processAddEditForm.getSendUser() != null && processAddEditForm.getSendUserId() != null) {
+                    if (processAddEditForm.getSendUser() != null
+                            && !processAddEditForm.getSendUser().equals("")
+                            && processAddEditForm.getSendUserId() != null) {
                         p.setSendUser(processAddEditForm.getSendUser());
                         p.setSendUserId(processAddEditForm.getSendUserId());
                     }
-                    if (processAddEditForm.getReceiveUser() != null && processAddEditForm.getReceiveUserId() != null) {
+                    if (processAddEditForm.getReceiveUser() != null
+                            && processAddEditForm.getReceiveUser().equals("")
+                            && processAddEditForm.getReceiveUserId() != null) {
                         p.setReceiveUser(processAddEditForm.getReceiveUser());
                         p.setReceiveUserId(processAddEditForm.getReceiveUserId());
                     }
-                    if (processAddEditForm.getReceiveGroup() != null && processAddEditForm.getReceiveGroupId() != null) {
+                    if (processAddEditForm.getReceiveGroup() != null
+                            && !processAddEditForm.getReceiveGroup().equals("")
+                            && processAddEditForm.getReceiveGroupId() != null) {
                         p.setReceiveGroup(processAddEditForm.getReceiveGroup());
                         p.setReceiveGroupId(processAddEditForm.getReceiveGroupId());
                     }
-                    if (processAddEditForm.getSendGroup() != null && processAddEditForm.getSendGroupId() != null) {
+                    if (processAddEditForm.getSendGroup() != null
+                            && processAddEditForm.getSendGroup().equals("")
+                            && processAddEditForm.getSendGroupId() != null) {
                         p.setSendGroup(processAddEditForm.getSendGroup());
                         p.setSendGroupId(processAddEditForm.getSendGroupId());
                     }
-                    if (processAddEditForm.getStatus() != null && processAddEditForm.getProcessStatus() != null) {
+                    if (processAddEditForm.getStatus() != null
+                            && processAddEditForm.getProcessStatus() != null) {
                         p.setStatus(processAddEditForm.getStatus());
                         p.setProcessStatus(processAddEditForm.getProcessStatus());
                     }
@@ -216,39 +226,39 @@ public class ProcessDAO extends BaseDAO {
             resultMessage.add("3");
             resultMessage.add("Xóa luồng xử lý không thành công");
         }
-
+        
         jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;
     }
-
+    
     public ProcessDAOHE getProcessDAOHE() {
         return processDAOHE;
     }
-
+    
     public void setProcessDAOHE(ProcessDAOHE processDAOHE) {
         this.processDAOHE = processDAOHE;
     }
-
+    
     public ProcessForm getProcessForm() {
         return processForm;
     }
-
+    
     public void setProcessForm(ProcessForm processForm) {
         this.processForm = processForm;
     }
-
+    
     public ProcessForm getProcessAddEditForm() {
         return processAddEditForm;
     }
-
+    
     public void setProcessAddEditForm(ProcessForm processAddEditForm) {
         this.processAddEditForm = processAddEditForm;
     }
-
+    
     public ProcessForm getFilesStatusEditForm() {
         return filesStatusEditForm;
     }
-
+    
     public void setFilesStatusEditForm(ProcessForm filesStatusEditForm) {
         this.filesStatusEditForm = filesStatusEditForm;
     }

@@ -169,7 +169,7 @@
                     url = "Tổng số hồ sơ trong ngày";
                     break;
                 case 44:
-                    url = "Đã phân công chờ ý kiến";
+                    url = "Đã phân công";
                     break;
                 case 49:
                     url = "Đã gửi phối hợp và có ý kiến";
@@ -534,7 +534,7 @@
                             <sd:Option value="48">Đã trả lại để xem xét lại</sd:Option>
                             <!--<sd:Option value="15">Đã đối chiếu</sd:Option>-->
                             <!--<sd:Option value="16">Đã đối chiếu, có sai lệch</sd:Option>-->
-                            <sd:Option value="44">Đã phân công chờ ý kiến</sd:Option>                            
+                            <sd:Option value="44">Đã phân công</sd:Option>                            
                             <sd:Option value="49">Đã gửi phối hợp và có ý kiến</sd:Option>
                             <sd:Option value="30">Đã thông báo sửa đổi bổ sung</sd:Option>
                             <sd:Option value="22">Đã trả bản công bố</sd:Option>

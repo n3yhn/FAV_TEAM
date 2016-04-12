@@ -1419,7 +1419,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
         Query countQuery = getSession().createQuery("select count(distinct f.fileId) " + hql + " where 1=1 " + condition);
         String finalSql = "select distinct f " + hql + " where 1=1 " + condition + " order by ";
         if (sortCustom.isEmpty()) {
-            finalSql += "f.sendDate DESC";
+            finalSql += "f.modifyDate DESC";
         } else {
             finalSql += sortCustom;
         }
@@ -1727,7 +1727,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
         }
 
         Query countQuery = getSession().createQuery("select count(distinct f.fileId) " + hql);
-        Query query = getSession().createQuery("select distinct f " + hql + " order by f.fileId desc");
+        Query query = getSession().createQuery("select distinct f " + hql + " order by f.modifyDate DESC");
         for (int i = 0; i < lstParam.size(); i++) {
             query.setParameter(i, lstParam.get(i));
             countQuery.setParameter(i, lstParam.get(i));
@@ -1739,6 +1739,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
         GridResult gr = new GridResult(total, lstResult);
         return gr;
     }
+
     public GridResult searchBusinessFilesNoSDBSAnd4Star(FilesForm form, int start, int count, String sortField, Long deptId) {
         String hql = " from FilesNoClob f, Procedure p where f.isActive=1 and (f.isTemp = null or f.isTemp = 0 ) and f.fileType = p.procedureId and p.description!='announcementFile05' and p.description!='announcement4star' ";
         List lstParam = new ArrayList();
@@ -2013,7 +2014,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
         }
 
         Query countQuery = getSession().createQuery("select count(distinct f.fileId) " + hql);
-        Query query = getSession().createQuery("select distinct f " + hql + " order by f.fileId desc");
+        Query query = getSession().createQuery("select distinct f " + hql + " order by f.modifyDate DESC");
         for (int i = 0; i < lstParam.size(); i++) {
             query.setParameter(i, lstParam.get(i));
             countQuery.setParameter(i, lstParam.get(i));
@@ -2026,10 +2027,9 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
         return gr;
     }
 
-    
     /**
-     * Hiepvv
-     * Tìm danh sach hồ sơ bo sung sau cong bo cua mot ho so của doanh nghiệp
+     * Hiepvv Tìm danh sach hồ sơ bo sung sau cong bo cua mot ho so của doanh
+     * nghiệp
      *
      * @param filesID
      * @param start
@@ -2041,15 +2041,15 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
         String hql = " from FilesNoClob f where f.isActive=1 and f.filesSourceID=? and f.fileType = ? ";
 
         Query countQuery = getSession().createQuery("select count(distinct f.fileId) " + hql);
-        Query query = getSession().createQuery("select distinct f " + hql + " order by f.fileId desc");
-        if(fileSourceID!=null && fileSourceID>0L){
-        query.setParameter(0, fileSourceID);
-        query.setParameter(1, fileType);
-        countQuery.setParameter(0, fileSourceID);
-        countQuery.setParameter(1, fileType);
-        }else{
+        Query query = getSession().createQuery("select distinct f " + hql + " order by f.modifyDate DESC");
+        if (fileSourceID != null && fileSourceID > 0L) {
+            query.setParameter(0, fileSourceID);
+            query.setParameter(1, fileType);
+            countQuery.setParameter(0, fileSourceID);
+            countQuery.setParameter(1, fileType);
+        } else {
             return new GridResult(0, null);
-        }   
+        }
         query.setFirstResult(start);
         query.setMaxResults(count);
         int total = Integer.parseInt(countQuery.uniqueResult().toString());
@@ -2058,8 +2058,6 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
         return gr;
     }
 
-    
-    
     /**
      * Tim ho so de phan cong tham dinh
      *
@@ -2082,30 +2080,30 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                     + " and (f.isTemp is null or f.isTemp = 0 ) ";
             //String hql = "from (select * from FilesNoClob where fileId in (select fileId from FilesNoClob f, Process p where f.isActive=1 and f.fileId = p.objectId and p.objectType = 30 and p.isActive = 1";
             /*
-            *Hiepvv 13/01/16
-            *Phan cong cong viec cho ho so sua doi sau cong bo
-            */
-            if (form != null && form.getFileType() != null && form.getFileType().longValue() != -1){
+             *Hiepvv 13/01/16
+             *Phan cong cong viec cho ho so sua doi sau cong bo
+             */
+            if (form != null && form.getFileType() != null && form.getFileType().longValue() != -1) {
                 ProcedureDAOHE pdaohe = new ProcedureDAOHE();
                 Procedure p = new Procedure();
-                p= pdaohe.getProcedureById(form.getFileType());
-                if(p!=null && p.getDescription().equals("announcementFile05")){
+                p = pdaohe.getProcedureById(form.getFileType());
+                if (p != null && p.getDescription().equals("announcementFile05")) {
                     hql = " from FilesNoClob f, Process p "
-                    + " where f.isActive=1"
-                    + " and f.fileId = p.objectId"
-                    + " and p.objectType = ?"
-                    + " and p.isActive = 1"
-                    + " and (f.isTemp is null or f.isTemp = 0 ) ";
+                            + " where f.isActive=1"
+                            + " and f.fileId = p.objectId"
+                            + " and p.objectType = ?"
+                            + " and p.isActive = 1"
+                            + " and (f.isTemp is null or f.isTemp = 0 ) ";
                 }
-                if(p!=null && p.getDescription().equals("announcement4star")){
+                if (p != null && p.getDescription().equals("announcement4star")) {
                     hql = " from FilesNoClob f, Process p "
-                    + " where f.isActive=1"
-                    + " and f.fileId = p.objectId"
-                    + " and p.objectType = ?"
-                    + " and p.isActive = 1"
-                    + " and (f.isTemp is null or f.isTemp = 0 ) ";
+                            + " where f.isActive=1"
+                            + " and f.fileId = p.objectId"
+                            + " and p.objectType = ?"
+                            + " and p.isActive = 1"
+                            + " and (f.isTemp is null or f.isTemp = 0 ) ";
                 }
-            } 
+            }
             List lstParam = new ArrayList();
             lstParam.add(Constants.OBJECT_TYPE.FILES);
             if (form != null) {
@@ -2278,7 +2276,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             }
 
             Query countQuery = getSession().createQuery("select count(distinct f.fileId) " + hql);
-            Query query = getSession().createQuery("select distinct f " + hql + "order by f.sendDate desc)");
+            Query query = getSession().createQuery("select distinct f " + hql + "order by f.modifyDate DESC)");
             for (int i = 0; i < lstParam.size(); i++) {
                 query.setParameter(i, lstParam.get(i));
                 countQuery.setParameter(i, lstParam.get(i));
@@ -2413,7 +2411,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             }
 
             Query countQuery = getSession().createQuery("select count(distinct f.fileId) " + hql);
-            Query query = getSession().createQuery("select distinct f " + hql + "order by f.sendDate desc)");
+            Query query = getSession().createQuery("select distinct f " + hql + "order by f.modifyDate DESC)");
             for (int i = 0; i < lstParam.size(); i++) {
                 query.setParameter(i, lstParam.get(i));
                 countQuery.setParameter(i, lstParam.get(i));
@@ -2590,7 +2588,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                         lstParam.add(Constants.FILE_STATUS.NEW_TO_ADD);
                     }
                     //Hiepvv Tach rieng SDBS sau cong bo
-                    if(form!=null && (form.getNoteEdit()==null || form.getNoteEdit().isEmpty())){
+                    if (form != null && (form.getNoteEdit() == null || form.getNoteEdit().isEmpty())) {
                         hql += " and f.fileType NOT IN (select pr.procedureId from Procedure pr where pr.description=?)";
                         lstParam.add("announcementFile05");
                     }
@@ -2624,8 +2622,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                         hql += " and f.leaderReviewId = ?";
                         lstParam.add(userId);
                     }
-                     //Hiepvv Tach rieng SDBS sau cong bo
-                    if(form!=null && (form.getNoteEdit()==null || form.getNoteEdit().isEmpty())){
+                    //Hiepvv Tach rieng SDBS sau cong bo
+                    if (form != null && (form.getNoteEdit() == null || form.getNoteEdit().isEmpty())) {
                         hql += " and f.fileType NOT IN (select pr.procedureId from Procedure pr where pr.description=?)";
                         lstParam.add("announcementFile05");
                     }
@@ -2641,7 +2639,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                     hql += " and f.agencyId = ?";
                     lstParam.add(deptId);
                     //Hiepvv Tach rieng SDBS sau cong bo
-                    if(form!=null && (form.getNoteEdit()==null || form.getNoteEdit().isEmpty())){
+                    if (form != null && (form.getNoteEdit() == null || form.getNoteEdit().isEmpty())) {
                         hql += " and f.fileType NOT IN (select pr.procedureId from Procedure pr where pr.description=?)";
                         lstParam.add("announcementFile05");
                     }
@@ -4234,13 +4232,19 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
 
                 // hieptq update nhom thuc pham khac 201114
                 case -8:
-                    hql = " from FilesNoClob f, Fee fe, FeePaymentInfo fpi,Category c where f.fileId = fpi.fileId and (f.isTemp=null or f.isTemp=0) and f.isActive=1"
-                            + " and fe.feeId = fpi.feeId and fe.feeType=2 and fe.isActive=1"
-                            + " and f.productTypeId = c.categoryId "
-                            + " and fpi.isActive=1"
-                            + " and fpi.status=1"
-                            + " and f.userSigned is not null"
-                            + " and (f.status=?) and f.agencyId = ?"
+                    hql = " from FilesNoClob f, Fee fe, FeePaymentInfo fpi,Category c"
+                            + " where f.fileId = fpi.fileId"
+                            + " AND (f.isTemp=null or f.isTemp=0)"
+                            + " AND f.isActive=1"
+                            + " AND fe.feeId = fpi.feeId"
+                            + " AND fe.feeType=2"
+                            + " AND fe.isActive=1"
+                            + " AND f.productTypeId = c.categoryId "
+                            + " AND fpi.isActive=1"
+                            + " AND fpi.status=1"
+                            + " AND f.userSigned is not null"
+                            + " AND (f.status=?)"
+                            + " AND f.agencyId = ?"
                             + " AND (c.code = ? or c.code = ?) ";
 
                     lstParam.clear();
@@ -4286,18 +4290,27 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                     break;
 
                 case -7://Hồ sơ chờ kế toán xác nhận
-                    hql = " from FilesNoClob f, Fee fe, FeePaymentInfo fpi where f.fileId = fpi.fileId and (f.isTemp=null or f.isTemp=0) and f.isActive=1"
-                            + " and fe.feeId = fpi.feeId and fe.feeType=2 and fe.isActive=1"
+                    hql = " from FilesNoClob f, Fee fe, FeePaymentInfo fpi"
+                            + " where f.fileId = fpi.fileId"
+                            + " and (f.isTemp=null or f.isTemp=0)"
+                            + " and f.isActive=1"
+                            + " and fe.feeId = fpi.feeId"
+                            + " and fe.feeType=2"
+                            + " and fe.isActive=1"
                             + " and fpi.isActive=1"
                             + " and fpi.status > 2"
                             + " and f.userSigned is not null"
-                            + " and (f.status=?) and f.agencyId = ?";
+                            + " and (f.status=?)"
+                            + " and f.agencyId = ?";
                     lstParam.clear();
                     lstParam.add(Constants.FILE_STATUS.NEW);
                     lstParam.add(deptId);
                     break;
                 case 0:
-                    hql = " from FilesNoClob f, Process p where f.isActive = 1 and f.fileId = p.objectId and (f.isTemp = null or f.isTemp = 0 ) ";
+                    hql = " from FilesNoClob f, Process p"
+                            + " where f.isActive = 1"
+                            + " and f.fileId = p.objectId"
+                            + " and (f.isTemp = null or f.isTemp = 0 ) ";
                     lstParam.clear();
                     hql += " and (f.status = ?)";
                     lstParam.add(status);
@@ -4889,7 +4902,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
          */
     }
 
-    public GridResult searchLookupFilesOnHomePage(FilesForm form, Long deptId, Long userId, String userType, int start, int count, String sortField) {
+    public GridResult searchLookupFilesOnHomePage(FilesForm form,
+            Long deptId, Long userId, String userType, int start, int count, String sortField) {
         try {
             String hql = "";
             List lstParam = new ArrayList();
@@ -4898,12 +4912,18 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                     if (form.getSearchType() != null) {
                         switch (Integer.parseInt(form.getSearchType().toString())) {
                             case 1:
-                                hql = " from FilesNoClob f, Fee fe, FeePaymentInfo fpi where f.fileId = fpi.fileId and (f.isTemp=null or f.isTemp=0) and f.isActive=1"
-                                        + " and fe.feeId = fpi.feeId and fe.feeType=2 and fe.isActive=1"
+                                hql = " from FilesNoClob f, Fee fe, FeePaymentInfo fpi"
+                                        + " where f.fileId = fpi.fileId"
+                                        + " and (f.isTemp=null or f.isTemp=0)"
+                                        + " and f.isActive=1"
+                                        + " and fe.feeId = fpi.feeId"
+                                        + " and fe.feeType=2"
+                                        + " and fe.isActive=1"
                                         + " and fpi.isActive=1"
                                         + " and fpi.status=1"
                                         + " and f.userSigned is not null"
-                                        + " and (f.status=? or f.status=?) and f.deptId = ?";
+                                        + " and (f.status=? or f.status=?)"
+                                        + " and f.deptId = ?";
                                 lstParam.clear();
                                 lstParam.add(Constants.FILE_STATUS.NEW);
                                 lstParam.add(Constants.FILE_STATUS.NEW_TO_ADD);
@@ -4945,8 +4965,13 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
      */
     public GridResult findAllFileForReceived(FilesForm form, Long deptId, int start, int count, String sortField) {
         try {
-            String hql = " from FilesNoClob f, Fee fe, FeePaymentInfo fpi where f.fileId = fpi.fileId and (f.isTemp=null or f.isTemp=0) and f.isActive=1"
-                    + " and fe.feeId = fpi.feeId and fe.feeType=2 and fe.isActive=1"
+            String hql = " from FilesNoClob f, Fee fe, FeePaymentInfo fpi"
+                    + " where f.fileId = fpi.fileId"
+                    + " and (f.isTemp=null or f.isTemp=0)"
+                    + " and f.isActive=1"
+                    + " and fe.feeId = fpi.feeId"
+                    + " and fe.feeType=2"
+                    + " and fe.isActive=1"
                     + " and fpi.isActive=1"
                     + " and fpi.status=1"
                     + " and f.userSigned is not null"
@@ -4978,7 +5003,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             }
 
             Query countQuery = getSession().createQuery("select count(distinct f.fileId) " + hql);
-            Query query = getSession().createQuery("select distinct f " + hql + " order by f.sendDate ASC");
+            Query query = getSession().createQuery("select distinct f " + hql + " "
+                    + "order by f.modifyDate DESC");
             for (int i = 0; i < lstParam.size(); i++) {
                 query.setParameter(i, lstParam.get(i));
                 countQuery.setParameter(i, lstParam.get(i));
@@ -5038,7 +5064,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             }
 
             Query countQuery = getSession().createQuery("select count(distinct f.fileId) " + hql);
-            Query query = getSession().createQuery("select distinct f " + hql + " order by f.fileId desc");
+            Query query = getSession().createQuery("select distinct f " + hql + " order by f.modifyDate desc");
             for (int i = 0; i < lstParam.size(); i++) {
                 query.setParameter(i, lstParam.get(i));
                 countQuery.setParameter(i, lstParam.get(i));
@@ -5391,7 +5417,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
         Query countQuery = getSession().createQuery("select count(f.fileId) " + hql + " where 1=1 " + condition);
         String finalSql = "select distinct f " + hql + " where 1=1 " + condition + " order by ";
         if (sortCustom.isEmpty()) {
-            finalSql += "p.receiveDate ASC";
+            finalSql += "p.modifyDate DESC";
         } else {
             finalSql += sortCustom;
         }

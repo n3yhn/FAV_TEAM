@@ -48,7 +48,7 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
     }
 
     //Hiepvv tach rieng Sua doi sau cong bo
-     public List getAllProcedure2() {
+    public List getAllProcedure2() {
         List<Category> lstCategory = null;
         try {
             StringBuilder stringBuilder = new StringBuilder(" from Procedure a ");
@@ -145,8 +145,9 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
         List<Category> lstCategory = null;
         try {
             StringBuilder stringBuilder = new StringBuilder(" from Procedure a ");
-            stringBuilder.append("  where a.isActive = ? and a.description in (:lstDescription)"
-                    + " order by nlssort(lower(a.name),'nls_sort = Vietnamese') ");
+            stringBuilder.append("  where a.isActive = ? "
+                    + "and a.description in (:lstDescription) "
+                    + "order by nlssort(lower(a.name),'nls_sort = Vietnamese') ");
             Query query = getSession().createQuery(stringBuilder.toString());
             query.setParameter(0, "1");
             if (!"".equals(lstType)) {
@@ -169,7 +170,9 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
     public List getAllProcedure_Status() {
         List<Category> lstCategory = null;
         try {
-            StringBuilder stringBuilder = new StringBuilder(" from (select * from procedure where procedure_id = ( select file_type from files where status = 6))  a ");
+            StringBuilder stringBuilder = new StringBuilder(" from (select * from procedure"
+                    + " where procedure_id = ( select file_type from files"
+                    + " where status = 6))  a ");
             stringBuilder.append("  where a.isActive = ?"
                     + " order by nlssort(lower(a.name),'nls_sort = Vietnamese') ");
             Query query = getSession().createQuery(stringBuilder.toString());
@@ -361,7 +364,8 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
             countQuery.setParameter(0, procedureId);
             int total = Integer.parseInt(countQuery.uniqueResult().toString());
 
-            Query query = getSession().createQuery("select c " + hql + " order by c.deptName");
+            Query query = getSession().createQuery("select c " + hql + " "
+                    + "order by c.deptName");
             query.setParameter(0, procedureId);
             query.setFirstResult(start);
             query.setMaxResults(count);
@@ -370,7 +374,8 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
             hql = " from ProcedureDepartment c ";
             Query countQuery = getSession().createQuery("select count(*) " + hql);
             int total = Integer.parseInt(countQuery.uniqueResult().toString());
-            Query query = getSession().createQuery("select distinct c " + hql + " order by c.deptName");
+            Query query = getSession().createQuery("select distinct c " + hql + " "
+                    + "order by c.deptName");
             query.setFirstResult(start);
             query.setMaxResults(count);
             lstResult = query.list();

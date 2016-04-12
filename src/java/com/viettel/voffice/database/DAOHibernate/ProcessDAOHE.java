@@ -580,7 +580,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
     public List<Process> getLeaderProcess(Long receiveUserId, ProcessForm form, int start, AtomicInteger count, String sortField) {
         List listParam = new ArrayList();
         try {
-            StringBuilder strBuf = new StringBuilder(" from Process p where  p.isActive = 1 ");
+            StringBuilder strBuf = new StringBuilder(" from Process p where p.isActive = 1 ");
             if (form != null) {
                 if (form.getObjectType() != null) {
                     strBuf.append(" and p.objectType = ? ");
@@ -1151,7 +1151,9 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
 //141226 binhnt update view process
         if (lst.size() > 0) {
             for (Process b : lst) {
-                if ((b.getProcessStatus().equals(Constants.FILE_STATUS.NEW) || b.getProcessStatus().equals(Constants.FILE_STATUS.APPROVED)) || b.getStatus().equals(Constants.FILE_STATUS.NEW_CREATE)) {
+                if ((b.getProcessStatus().equals(Constants.FILE_STATUS.NEW)
+                        || b.getProcessStatus().equals(Constants.FILE_STATUS.APPROVED))
+                        || b.getStatus().equals(Constants.FILE_STATUS.NEW_CREATE)) {
                     FilesDAOHE fdaohe = new FilesDAOHE();
                     Files fbo = fdaohe.findById(b.getObjectId());
                     if (fbo != null) {
@@ -1654,7 +1656,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
                                     }
                                 } else {
                                     if (processStatus != null) {
-                                        if (item.getStatusThree()!= null) {
+                                        if (item.getStatusThree() != null) {
                                             item.setStatusThree(Long.parseLong(row[2].toString()) + item.getStatusThree());
                                         } else {
                                             item.setStatusThree(Long.parseLong(row[2].toString()));

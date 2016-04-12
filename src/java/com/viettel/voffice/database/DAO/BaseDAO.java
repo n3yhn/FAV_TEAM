@@ -497,10 +497,15 @@ public class BaseDAO extends BaseDAOMDBAction {
             Long userId = getUserId();
             List listParam = new ArrayList();
             String sqlQuery = "select s from Roles s "
-                    + " where s.roleId in (select ru.roleId from RoleUser ru where ru.isActive = ? and ru.userId = ?) "
-                    + " and s.roleId not in (select rud.roleId from RoleUserDept rud where rud.deptId != ? and rud.userId = ? "
-                    + " and rud.roleId not in (select rud2.roleId from RoleUserDept rud2 where rud2.deptId = ? and rud2.userId = ?)) "
-                    + " and s.status = 1";
+                    + "where s.roleId in (select ru.roleId from RoleUser ru "
+                    + "where ru.isActive = ? and ru.userId = ?) "
+                    + "and s.roleId "
+                    + "not in (select rud.roleId from RoleUserDept rud "
+                    + "where rud.deptId != ? and rud.userId = ? "
+                    + "and rud.roleId "
+                    + "not in (select rud2.roleId from RoleUserDept rud2 "
+                    + "where rud2.deptId = ? and rud2.userId = ?)) "
+                    + "and s.status = 1";
             listParam.add(1L);
             listParam.add(userId);
             listParam.add(deptId);
@@ -706,7 +711,9 @@ public class BaseDAO extends BaseDAOMDBAction {
     }
 
     public String validateColumnName(String name) {
-        Character[] aZ = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'u', 'x', 'y', 'z', '_',
+        Character[] aZ = {'a', 'b', 'c', 'd', 'e', 'f',
+            'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+            'p', 'q', 'r', 's', 't', 'u', 'v', 'u', 'x', 'y', 'z', '_',
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
         List<Character> aToZ = new ArrayList<Character>();
         aToZ.addAll(Arrays.asList(aZ));

@@ -37,16 +37,16 @@ public class HomeDAO extends BaseDAO {
 
     private UsersForm userPasswordForm;
     boolean loadCountFilesNeedToPropose = false;
-    boolean loadCountFilesNeedToAssign = false;
-    boolean loadCountFilesNeedToEvaluate = false;
-    boolean loadCountFilesNeedToCoEvaluate = false;
-    boolean loadCountFilesNeedToReview = false;
-    boolean loadCountFilesNeedToApprove = false;
-    boolean loadCountFilesNeedToSend = false;
-    boolean loadCountFilesNeedToReceive = false;
-    boolean loadCountFilesNeedToComparison = false;
-    boolean loadCountFilesNeedToComparisonFail = false;
-    boolean loadCountFilesPrepareFeePayManage = false;
+    boolean loadCountFilesNeedToAssign = false;//phan cong
+    boolean loadCountFilesNeedToEvaluate = false;//tham dinh
+    boolean loadCountFilesNeedToCoEvaluate = false;//phoi hop tham dinh
+    boolean loadCountFilesNeedToReview = false;//xem xet
+    boolean loadCountFilesNeedToApprove = false;//phe duyet
+    boolean loadCountFilesNeedToSend = false;//
+    boolean loadCountFilesNeedToReceive = false;//tiep nhan
+    boolean loadCountFilesNeedToComparison = false;//doi chieu
+    boolean loadCountFilesNeedToComparisonFail = false;//doi chieu lai
+    boolean loadCountFilesPrepareFeePayManage = false;//thanh toan
     boolean loadCountFilesPrepareFeeManage = false;
     // By role
     boolean loadCountFilesClericalRole = false;
@@ -86,29 +86,34 @@ public class HomeDAO extends BaseDAO {
                     hql += " and( lower(e.userName) like ? escape '/' or lower(e.actor) like ? escape '/' )";
                     listParam.add("%" + StringUtils.escapeSql(searchLogForm.getUserName()) + "%");
                     listParam.add("%" + StringUtils.escapeSql(searchLogForm.getUserName()) + "%");
-
                 }
+
                 if (searchLogForm.getAction() != null && searchLogForm.getAction().trim().length() > 0) {
                     //hql+=" AND "+ convertToSearchVietNamese("action", searchLogForm.getAction(), listParam);
                     hql += " and lower(e.action) like ? escape '/' ";
                     listParam.add("%" + StringUtils.escapeSql(searchLogForm.getAction()) + "%");
                 }
+
                 if (searchLogForm.getEventDateFrom() != null) {
                     hql += " and e.eventDate >= ?";
                     listParam.add(searchLogForm.getEventDateFrom());
                 }
+
                 if (searchLogForm.getEventDateTo() != null) {
                     hql += " and e.eventDate < ?";
                     listParam.add(DateTimeUtils.addOneDay(searchLogForm.getEventDateTo()));
                 }
+
                 if (searchLogForm.getDeptName() != null && searchLogForm.getDeptName().length() > 0) {
                     hql += " and lower(e.deptName) like ? escape '/' ";
                     listParam.add(searchLogForm.getDeptName());
                 }
+
                 if (searchLogForm.getAppName() != null && searchLogForm.getAppName().length() > 0) {
                     hql += " and lower(e.appName) like ? escape '/' ";
                     listParam.add(searchLogForm.getAppName());
                 }
+
                 if (searchLogForm.getObjectName() != null && searchLogForm.getObjectName().length() > 0) {
                     hql += " and lower(e.objectName) like ? escape '/' ";
                     listParam.add(searchLogForm.getObjectName());
@@ -167,13 +172,14 @@ public class HomeDAO extends BaseDAO {
     public String gotoGuidelinePage() {
         return "guidelinePage";
     }
-//1: Hồ sơ chờ thẩm định
-//2: Hồ sơ đang xử lý
-//3: Hồ sơ SĐBS
-//4: Hồ sơ bị trả lại
-//5: Hồ sơ đối chiếu
-//6: Hồ sơ đã xử lý
 
+    /**
+     * 1: Hồ sơ chờ thẩm định 2: Hồ sơ đang xử lý 3: Hồ sơ SĐBS 4: Hồ sơ bị trả
+     * lại 5: Hồ sơ đối chiếu 6: Hồ sơ đã xử lý
+     *
+     * @param ob
+     * @param menu
+     */
     public void checkObjectToken(ObjectToken ob, String menu) {
         try {
             if (ob.getDescription().toLowerCase() != null) {
@@ -215,29 +221,43 @@ public class HomeDAO extends BaseDAO {
                 else if (ob.getObjectUrl().contains("filesAction!prepareFeeManage.do")) {
                     loadCountFilesPrepareFeeManage = true;
                     countFilesNeedToPrepareFeeManage = jsFunction;
+                } else {
+                    // Get Role
+                    List<Roles> roles = getListRolesByUser();
+                    String lstRole = "";
+                    if (roles != null && roles.size() > 0) {
+                        for (int i = 0; i < roles.size(); i++) {
+                            lstRole += roles.get(i).getRoleCode() + ";";
+                            System.out.println(lstRole);
+                        }
+                        if (lstRole.contains(Constants.ROLES.LEAD_UNIT_DEPUTY_ROLE + ";")) {
+                            loadCountFilesClericalRole = true;
+                        } else {
+                            if (lstRole.contains(Constants.ROLES.LEAD_UNIT + ";")) {
+                                loadCountFilesClericalRole = true;
+                            } else {
+                                if (lstRole.contains(Constants.ROLES.CV + ";")) {
+                                    loadCountFilesNeedToEvaluate = true;
+                                } else {
+                                    if (lstRole.contains(Constants.ROLES.LEAD_UNIT + ";")) {
+                                        loadCountFilesClericalRole = true;
+                                    } else {
+                                        if (lstRole.contains(Constants.ROLES.VT + ";")) {
+                                            loadCountFilesClericalRole = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
-
             if (ob.getChildObjects() != null && ob.getChildObjects().size() > 0) {
                 for (int i = 0; i < ob.getChildObjects().size(); i++) {
                     String execMenu = menu + "." + i;
                     checkObjectToken(ob.getChildObjects().get(i), execMenu);
                 }
             }
-
-            // By Role - DuND
-            // Get Role
-            List<Roles> roles = getListRolesByUser();
-            String lstRole = "";
-            if (roles != null && roles.size() > 0) {
-                for (int i = 0; i < roles.size(); i++) {
-                    lstRole += roles.get(i).getRoleCode() + ";";
-                }
-                if (lstRole.contains(Constants.ROLES.LEAD_UNIT_DEPUTY_ROLE + ";")) {
-                    loadCountFilesClericalRole = true;
-                }
-            }
-
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }
@@ -262,12 +282,12 @@ public class HomeDAO extends BaseDAO {
         Long filesNeedToEvaluate;
         Long filesNeedToCoEvaluate;
         Long filesNeedToReview;
-        Long filesNeedToReReview;
+//        Long filesNeedToReReview;
         Long filesApproved;
         Long filesReviewed;
         Long filesNeedToAdd;
         Long filesNeedToApprove;
-        Long filesEvaluated;
+//        Long filesEvaluated;
         Long filesCompared;
         Long filesNeedToReceive;
         Long filesNeedToComparison;
@@ -275,9 +295,9 @@ public class HomeDAO extends BaseDAO {
         Long filesStatistics;
         Long filesAlertComparison;
         Long filesReReview;
-        Long filesReviewComparison;
+//        Long filesReviewComparison;
         Long filesWaiting;
-        Long filesAnnouceToAdd;
+//        Long filesAnnouceToAdd;
         Long filesFeePayManage;
         Long filesFeeManage;
         Long filesFeePayManageUnCheck;
@@ -1343,74 +1363,92 @@ public class HomeDAO extends BaseDAO {
                     if (user != null && user.getBusinessId() != null && user.getBusinessId() > 0) {
                         Business bus = busdaohe.findById(user.getBusinessId());
                         if (userPasswordForm.getBusinessForm() != null) {
-                            if (userPasswordForm.getBusinessForm().getBusinessAddress() != null && userPasswordForm.getBusinessForm().getBusinessAddress().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessAddress() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessAddress().length() > 0) {
                                 bus.setBusinessAddress(userPasswordForm.getBusinessForm().getBusinessAddress());
                             }
 
-                            if (userPasswordForm.getBusinessForm().getBusinessLawRep() != null && userPasswordForm.getBusinessForm().getBusinessLawRep().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessLawRep() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessLawRep().length() > 0) {
                                 bus.setBusinessLawRep(userPasswordForm.getBusinessForm().getBusinessLawRep());
                             }
 
-                            if (userPasswordForm.getBusinessForm().getBusinessEstablishYear() != null && userPasswordForm.getBusinessForm().getBusinessEstablishYear().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessEstablishYear() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessEstablishYear().length() > 0) {
                                 bus.setBusinessEstablishYear(userPasswordForm.getBusinessForm().getBusinessEstablishYear());
                             }
 
-                            if (userPasswordForm.getBusinessForm().getBusinessWebsite() != null && userPasswordForm.getBusinessForm().getBusinessWebsite().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessWebsite() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessWebsite().length() > 0) {
                                 bus.setBusinessWebsite(userPasswordForm.getBusinessForm().getBusinessWebsite());
                             }
 
-                            if (userPasswordForm.getBusinessForm().getBusinessFax() != null && userPasswordForm.getBusinessForm().getBusinessFax().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessFax() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessFax().length() > 0) {
                                 bus.setBusinessFax(userPasswordForm.getBusinessForm().getBusinessFax());
                             }
 
-                            if (userPasswordForm.getBusinessForm().getBusinessTelephone() != null && userPasswordForm.getBusinessForm().getBusinessTelephone().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessTelephone() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessTelephone().length() > 0) {
                                 bus.setBusinessTelephone(userPasswordForm.getBusinessForm().getBusinessTelephone());
                             }
 
-                            if (userPasswordForm.getBusinessForm().getBusinessProvince() != null && userPasswordForm.getBusinessForm().getBusinessProvince().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessProvince() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessProvince().length() > 0) {
                                 bus.setBusinessProvince(userPasswordForm.getBusinessForm().getBusinessProvince());
                             }
 
-                            if (userPasswordForm.getBusinessForm().getBusinessProvinceId() != null && userPasswordForm.getBusinessForm().getBusinessProvinceId() > 0L) {
+                            if (userPasswordForm.getBusinessForm().getBusinessProvinceId() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessProvinceId() > 0L) {
                                 bus.setBusinessProvinceId(userPasswordForm.getBusinessForm().getBusinessProvinceId());
                             }
 
-                            if (userPasswordForm.getBusinessForm().getBusinessAddress() != null && userPasswordForm.getBusinessForm().getBusinessAddress().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessAddress() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessAddress().length() > 0) {
                                 bus.setBusinessAddress(userPasswordForm.getBusinessForm().getBusinessAddress());
                             }
 
-                            if (userPasswordForm.getBusinessForm().getBusinessLicense() != null && userPasswordForm.getBusinessForm().getBusinessLicense().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessLicense() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessLicense().length() > 0) {
                                 bus.setBusinessLicense(userPasswordForm.getBusinessForm().getBusinessLicense());
                             }
 
-                            if (userPasswordForm.getBusinessForm().getBusinessTaxCode() != null && userPasswordForm.getBusinessForm().getBusinessTaxCode().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessTaxCode() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessTaxCode().length() > 0) {
                                 bus.setBusinessTaxCode(userPasswordForm.getBusinessForm().getBusinessTaxCode());
                             }
 
-                            if (userPasswordForm.getBusinessForm().getBusinessNameAlias() != null && userPasswordForm.getBusinessForm().getBusinessNameAlias().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessNameAlias() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessNameAlias().length() > 0) {
                                 bus.setBusinessNameAlias(userPasswordForm.getBusinessForm().getBusinessNameAlias());
                             }
 
-                            if (userPasswordForm.getBusinessForm().getBusinessNameEng() != null && userPasswordForm.getBusinessForm().getBusinessNameEng().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessNameEng() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessNameEng().length() > 0) {
                                 bus.setBusinessNameEng(userPasswordForm.getBusinessForm().getBusinessNameEng());
                             }
 
-                            if (userPasswordForm.getBusinessForm().getBusinessName() != null && userPasswordForm.getBusinessForm().getBusinessName().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessName() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessName().length() > 0) {
                                 bus.setBusinessName(userPasswordForm.getBusinessForm().getBusinessName());
                                 user.setBusinessName(userPasswordForm.getBusinessForm().getBusinessName());//150206 U BINHNT53 UPDATE CAP NHAT TEN DOANH NGHIEP CUA USER KHI UPDATE THONG TIN DOANH NGHIEP
                             }
 
-                            if (userPasswordForm.getBusinessForm().getBusinessTypeName() != null && userPasswordForm.getBusinessForm().getBusinessTypeName().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessTypeName() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessTypeName().length() > 0) {
                                 bus.setBusinessTypeName(userPasswordForm.getBusinessForm().getBusinessTypeName());
                             }
-                            if (userPasswordForm.getBusinessForm().getUserEmail() != null && userPasswordForm.getBusinessForm().getUserEmail().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getUserEmail() != null
+                                    && userPasswordForm.getBusinessForm().getUserEmail().length() > 0) {
                                 bus.setUserEmail(userPasswordForm.getBusinessForm().getUserEmail());
                             }
-                            if (userPasswordForm.getBusinessForm().getBusinessTypeId() != null && userPasswordForm.getBusinessForm().getBusinessTypeId() > 0) {
+                            if (userPasswordForm.getBusinessForm().getBusinessTypeId() != null
+                                    && userPasswordForm.getBusinessForm().getBusinessTypeId() > 0) {
                                 bus.setBusinessTypeId(userPasswordForm.getBusinessForm().getBusinessTypeId());
                             }
                             //141214u binhnt53
-                            if (userPasswordForm.getBusinessForm().getGoverningBody() != null && userPasswordForm.getBusinessForm().getGoverningBody().length() > 0) {
+                            if (userPasswordForm.getBusinessForm().getGoverningBody() != null
+                                    && userPasswordForm.getBusinessForm().getGoverningBody().length() > 0) {
                                 bus.setGoverningBody(userPasswordForm.getBusinessForm().getGoverningBody());
                             }
                             session.update(bus);
@@ -1541,7 +1579,10 @@ public class HomeDAO extends BaseDAO {
     private boolean checkRoleLTCQ(Long userId) {
         boolean result = false;
         try {
-            String sql = "select count(r) from Roles r where r.roleCode = ? and r.roleId in (select ru.roleId from RoleUser ru where ru.isActive = 1 and ru.userId = ?)";
+            String sql = "select count(r) from Roles r "
+                    + "where r.roleCode = ? "
+                    + "and r.roleId in (select ru.roleId from RoleUser ru "
+                    + "where ru.isActive = 1 and ru.userId = ?)";
             Query query = getSession().createQuery(sql);
             query.setParameter(0, Constants.ROLES.CBLT_CQ);
             query.setParameter(1, getUserId());
