@@ -602,7 +602,12 @@ key="Tiếp nhận hồ sơ" showFullscreenButton="false"
         dijit.byId("evaluateFormByLeader.ProductType").setValue(0);
         //var leaderAssignId = dijit.byId("createForm.leaderAssignId").getValue();
         //dijit.byId("evaluationRecordsFormByLeader.leaderReviewId").setValue(leaderAssignId);
-        document.getElementById("evaluateFormByLeader.statusAccept").checked = true;
+        var status = dijit.byId("createForm.status").getValue();
+        if (status == 4) {
+            document.getElementById("evaluateFormByLeader.statusAccept").checked = true;
+        } else if (status == 7) {
+            document.getElementById("evaluateFormByLeader.statusDeny").checked = true;
+        }
         var status = dijit.byId("createForm.status").getValue();
         var statusName = getStatusStaffEvaluate(parseInt(status));
         document.getElementById("evaluateFormByLeader.statusL").innerHTML = statusName;

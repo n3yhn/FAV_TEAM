@@ -21,21 +21,21 @@
 
 <script type="text/javascript">
 
-    page.getNo = function(index) {
+    page.getNo = function (index) {
         return dijit.byId("filesGrid").currentRow + index + 1;
     };
 
-    page.getIndex = function(index) {
+    page.getIndex = function (index) {
         return index + 1;
     };
 
-    page.formatEdit = function(inData) {
+    page.formatEdit = function (inData) {
         var url = "<div class='box' onclick='page.viewFile(" + inData + ");' />" + inData + "</div>";
 
         return url;
     };
 
-    page.formatAction = function(inData) {
+    page.formatAction = function (inData) {
         var item = dijit.byId("filesGrid").getItem(inData - 1);
         var row = inData - 1;
         if (item != null) {
@@ -73,7 +73,7 @@
         return url;
     };
 
-    page.getStatusName = function(status) {
+    page.getStatusName = function (status) {
         switch (status) {
             case 1:
                 url = "Mới nộp";
@@ -114,7 +114,7 @@
         return url;
     };
 
-    page.formatStatus = function(inData) {
+    page.formatStatus = function (inData) {
         var row = inData - 1;
         var item = dijit.byId("filesGrid").getItem(row);
         var url = "";
@@ -129,7 +129,7 @@
         return url;
     };
 
-    page.formatWarning = function(inData) {//binhnt53 141208
+    page.formatWarning = function (inData) {//binhnt53 141208
         var item = dijit.byId("filesGrid").getItem(inData - 1);
         var url = "";
         var strWarning = "";
@@ -380,7 +380,7 @@
     };
 
     // enter key
-    page.searchDefault = function(evt) {
+    page.searchDefault = function (evt) {
         var dk = dojo.keys;
         switch (evt.keyCode) {
             case dk.ENTER:
@@ -390,7 +390,7 @@
     };
 
     // enter key
-    page.loginUsbCaDefault = function(evt) {
+    page.loginUsbCaDefault = function (evt) {
         var dk = dojo.keys;
         switch (evt.keyCode) {
             case dk.ENTER:
@@ -592,10 +592,10 @@
                                                 width="10%"  headerStyles="text-align:center;" />
                             <%--<sd:ColumnDataGrid  key="Số quy chuẩn phù hợp" field="matchingTarget" cellStyles="text-align:left;"
                                                 width="10%"  headerStyles="text-align:center;" />--%>
-                            <sd:ColumnDataGrid  key="Ngày nộp" field="sendDate" format="dd/MM/yyyy" type="date"
-                                                width="7%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Ngày đến" field="modifyDate" format="dd/MM/yyyy" type="date"
-                                                width="5%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />           
+                                                width="7%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />   
+                            <sd:ColumnDataGrid  key="Ngày hẹn trả" field="deadlineApprove" format="dd/MM/yyyy" type="date"
+                                                width="7%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />  
                             <sd:ColumnDataGrid  key="Kết quả xem xét" formatter="page.formatStatus" get="page.getIndex"
                                                 width="10%"  headerStyles="text-align:center;" cellStyles="text-align:center;"/>
                             <sd:ColumnDataGrid  key="Cán bộ xử lý chính" field="nameStaffProcess"  cellStyles="text-align:center;"
@@ -641,31 +641,31 @@
     var itemsToSign = null;
     var signIndex = 0;
 
-    backPage = function() {
+    backPage = function () {
         //doGoToMenu(g_latestClickedMenu);
         document.getElementById("searchDiv").style.display = "";
         document.getElementById("viewDiv").style.display = "none";
     };
 
-    page.search = function() {
+    page.search = function () {
         page.setSearch();
         dijit.byId("filesGrid").vtReload('filesAction!onSearchFileToApprove.do', "searchForm", null, page.afterSearch);
     };
 
-    page.afterSearch = function() {
+    page.afterSearch = function () {
         dijit.byId("searchForm.flagSavePaging").setValue("0");
     }
 
-    afterLoadForm = function(data) {
+    afterLoadForm = function (data) {
         document.getElementById("searchDiv").style.display = "none";
         document.getElementById("viewDiv").style.display = "";
     };
 
-    page.showViewFile = function(fileId) {
+    page.showViewFile = function (fileId) {
         doGoToMenu("filesAction!toFileDlgView.do?fileId=" + fileId + "&viewType=2" + "&backPage=8");
     };
 
-    showEvaludateResult = function(row) {
+    showEvaludateResult = function (row) {
         var file = dijit.byId("filesGrid").getItem(row);
         var statusName = page.getStatusName(parseInt(file.status));
         document.getElementById("evaluateFormView.status").innerHTML = statusName;
@@ -675,7 +675,7 @@
         dijit.byId("evaluateViewDlg").show();
     };
 
-    page.showApproveForm = function(row) {
+    page.showApproveForm = function (row) {
         var file = dijit.byId("filesGrid").getItem(row);
         document.getElementById("trWaitViewFile").style.display = '';
         page.onSign(file, false);
@@ -683,7 +683,7 @@
         dijit.byId("approveDlg").show();
     };
 
-    page.showApproveFormPlugin = function(row) {
+    page.showApproveFormPlugin = function (row) {
         var file = dijit.byId("filesGrid").getItem(row);
         var statusName = page.getStatusName(parseInt(file.status));
         dijit.byId("approveForm.fileId").setValue(file.fileId);
@@ -700,7 +700,7 @@
         dijit.byId("approveDlg").show();
     };
 
-    page.onSign = function(file, isSignMore) {
+    page.onSign = function (file, isSignMore) {
         flagSignMore = isSignMore;
         var statusName = page.getStatusName(parseInt(file.status));
         dijit.byId("approveForm.fileId").setValue(file.fileId);
@@ -716,7 +716,7 @@
         sd.connector.post("filesAction!loadFileView.do?createForm.fileId=" + file.fileId + "&createForm.viewType=2&viewTypeDialog=1", "divViewFile", null, null, afterShowApproveViewFile);
     };
 
-    page.showSignMore = function() {
+    page.showSignMore = function () {
         if (!dijit.byId("filesGrid").vtIsChecked()) {
             msg.alert('Bạn chưa chọn hồ sơ để thực hiện phê duyệt', 'Cảnh báo');
         }
@@ -739,7 +739,7 @@
 
 
                 //hieptq update 191015
-                 page.signMoreFilesPlugin = function() {
+                page.signMoreFilesPlugin = function () {
                     document.getElementById('divProcess').innerHTML = "Hệ thống đang thực hiện phê duyệt:" + (signIndex + 1) + "/" + itemsToSign.length + " hồ sơ  ";
                     document.getElementById("divSignProcess").style.display = "";
                     document.getElementById("trWaitViewFile").style.display = 'none';
@@ -749,7 +749,7 @@
                     dijit.byId("approveDlg").show();
                 };
 
-                afterShowApproveViewFile = function() {
+                afterShowApproveViewFile = function () {
                     document.getElementById("trWaitViewFile").style.display = 'none';
                     if (flagSignMore)
                     {
@@ -757,17 +757,17 @@
                     }
                 };
 
-                page.showSearchPanel = function() {
+                page.showSearchPanel = function () {
                     var panel = document.getElementById("searchDiv");
                     panel.setAttribute("style", "display:;");
                     dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
                 };
 
-                page.downloadWord = function(fileId) {
+                page.downloadWord = function (fileId) {
                     document.location = "exportWord!onExportPaper.do?fileId=" + fileId;
                 };
 
-                page.reset = function() {
+                page.reset = function () {
                     dijit.byId('searchForm.fileCode').attr('value', '');
                     dijit.byId('searchForm.announcementNo').attr('value', '');
                     dijit.byId('searchForm.businessName').attr('value', '');
@@ -785,7 +785,7 @@
                     page.search();
                 };
 
-                page.clearSearch = function() {
+                page.clearSearch = function () {
                     try
                     {
                         localStorage.setItem("approvePage.searchForm.fileCode", "");
@@ -807,7 +807,7 @@
                     }
                 };
 
-                page.setSearch = function() {
+                page.setSearch = function () {
                     try
                     {
                         localStorage.setItem("approvePage.searchForm.fileCode", encodeBase64(dijit.byId("searchForm.fileCode").getValue().toString().trim()));
@@ -828,7 +828,7 @@
                         // nothing
                     }
                 };
-                page.getSearch = function() {
+                page.getSearch = function () {
                     try
                     {
                         dijit.byId("searchForm.fileCode").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.fileCode")));
@@ -850,7 +850,7 @@
                     }
                 };
 
-                page.hideSignMore = function()
+                page.hideSignMore = function ()
                 {
                     var searchType = dijit.byId("searchForm.searchType").getValue();
                     if (searchType != null && searchType == "-3")
@@ -866,7 +866,7 @@
                 page.getSearch();
                 page.search();
 //a150108 binhnt53
-                page.hideContentAF = function() {
+                page.hideContentAF = function () {
                     document.getElementById("approveForm.statusAccept").checked = false;
                     document.getElementById("approveForm.statusDeny").checked = false;
                     document.getElementById("approveForm.statusCT").checked = false;

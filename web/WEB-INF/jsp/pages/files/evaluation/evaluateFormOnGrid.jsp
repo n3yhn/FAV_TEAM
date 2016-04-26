@@ -112,13 +112,18 @@
                                     <td>
                                         <sd:SelectBox cssStyle="width:100%"
                                                       id="evaluationRecordsForm.leaderReviewId"
-                                                      key="" data="lstLeaderOfStaff" valueField="userId" labelField="fullName"
+                                                      key="" data="lstLeaderOfStaff" 
+                                                      valueField="userId" 
+                                                      labelField="fullName"
                                                       name="createForm.leaderReviewId" >
                                         </sd:SelectBox>
-                                        <sd:TextBox id="evaluationRecordsForm.leaderReviewName" name="createForm.leaderReviewName" cssStyle="display:none" key=""/>
+                                        <sd:TextBox id="evaluationRecordsForm.leaderReviewName" 
+                                                    name="createForm.leaderReviewName" 
+                                                    cssStyle="display:none" 
+                                                    key=""/>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr style="display: none">
                                     <td style="text-align: right"><sd:Label key="Gửi lãnh đạo để thẩm định(Đối với thực phẩm chức năng)"/></td>
                                     <td>
                                         <sd:TextBox key="" id="evaluateForm.ProductType" name="createForm.ProductType" cssStyle="display:none"/>
@@ -192,12 +197,16 @@
     };
 
     validateEFOG = function () {
-        if (document.getElementById("evaluateForm.statusAccept").checked == false && document.getElementById("evaluateForm.statusDeny").checked == false) {
+        if (document.getElementById("evaluateForm.statusAccept").checked == false 
+                && document.getElementById("evaluateForm.statusDeny").checked == false) {
             alert("Bạn chưa chọn [Kết quả thẩm định]");
             return false;
         }
         var effectiveDate = dijit.byId("evaluateForm.effectiveDate").getValue();
-        if ((effectiveDate == null || effectiveDate.trim().length == -1 || effectiveDate == "-1") && document.getElementById("evaluateForm.statusAccept").checked == true) {
+        if ((effectiveDate == null 
+                || effectiveDate.trim().length == -1 
+                || effectiveDate == "-1") 
+                && document.getElementById("evaluateForm.statusAccept").checked == true) {
             alert("Bạn chưa chọn thời hạn hiệu lực");
             dijit.byId("evaluateForm.effectiveDate").focus();
             return false;
@@ -219,17 +228,23 @@
                     dijit.byId("evaluateForm.staffRequest").focus();
                     return false;
                 }
-                if ((dijit.byId("evaluationRecordsForm.legal").getValue() == 0 || dijit.byId("evaluationRecordsForm.legal").getValue() == -1) && legalContent.trim().length == 0) {
+                if ((dijit.byId("evaluationRecordsForm.legal").getValue() == 0 
+                        || dijit.byId("evaluationRecordsForm.legal").getValue() == -1) 
+                        && legalContent.trim().length == 0) {
                     alert("[Về pháp chế(Hồ sơ theo Nghị định số 38/2012/NĐ-CP & thông tư hướng dẫn)] chưa nhập lý do");
                     dijit.byId("evaluationRecordsForm.legalContent").focus();
                     return false;
                 }
-                if ((dijit.byId("evaluationRecordsForm.foodSafetyQuality").getValue() == 0 || dijit.byId("evaluationRecordsForm.foodSafetyQuality").getValue() == -1) && foodSafetyQualityContent.trim().length == 0) {
+                if ((dijit.byId("evaluationRecordsForm.foodSafetyQuality").getValue() == 0 
+                        || dijit.byId("evaluationRecordsForm.foodSafetyQuality").getValue() == -1) 
+                        && foodSafetyQualityContent.trim().length == 0) {
                     alert("[Về chỉ tiêu chất lượng an toàn thực phẩm] chưa nhập lý do");
                     dijit.byId("evaluationRecordsForm.foodSafetyQualityContent").focus();
                     return false;
                 }
-                if ((dijit.byId("evaluationRecordsForm.effectUtility").getValue() == 0 || dijit.byId("evaluationRecordsForm.effectUtility").getValue() == -1) && effectUtilityContent.trim().length == 0) {
+                if ((dijit.byId("evaluationRecordsForm.effectUtility").getValue() == 0 
+                        || dijit.byId("evaluationRecordsForm.effectUtility").getValue() == -1) 
+                        && effectUtilityContent.trim().length == 0) {
                     alert("[Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng] chưa nhập lý do");
                     dijit.byId("evaluationRecordsForm.effectUtilityContent").focus();
                     return false;
@@ -245,11 +260,11 @@
             var leaderReviewName = dijit.byId("evaluationRecordsForm.leaderReviewId").attr("displayedValue");
             dijit.byId("evaluationRecordsForm.leaderReviewName").setValue(leaderReviewName);
         }
-        if (document.getElementById("ckbAssignLeader").checked == false) {
-            dijit.byId("evaluateForm.ProductType").setValue(0);
-        } else {
-            dijit.byId("evaluateForm.ProductType").setValue(1);
-        }
+//        if (document.getElementById("ckbAssignLeader").checked == false) {
+//            dijit.byId("evaluateForm.ProductType").setValue(0);
+//        } else {
+//            dijit.byId("evaluateForm.ProductType").setValue(1);
+//        }
         return true;
     };
     onCloseEvaluate = function () {

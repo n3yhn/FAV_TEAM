@@ -46,7 +46,7 @@
                 <sd:TextBox key="" id="createForm.userSigned" name="createForm.userSigned" cssStyle="display:none"/>
                 <sd:TextBox id="createForm.contentXml" key="" name="createForm.contentXml" cssStyle="display:none"/>
                 <sd:TextBox name="validCAStatus" key="" cssStyle="display:none;" id="validCAStatus" value="${fn:escapeXml(validCAStatus)}"/>
-    <sd:Tab id="files_tab" height="400px" width="100%">
+    <sd:Tab id="files_tab" height="600px" width="100%">
          <sd:ContentPane key="Bản công bố" id="tab.annoucement4Star">
             <div id="tabAnnoument4StarFormDiv" style="overflow: auto;">
                 <jsp:include page="../fileViewTab/tabAnnouncement4Star.jsp"/>

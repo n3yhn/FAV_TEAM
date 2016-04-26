@@ -572,25 +572,24 @@
         } else {
             document.getElementById("evaluateFormByLeader.staffRequest").value = "";
         }
-        if (obj.customInfo[4] != -1) {
+        if (obj.customInfo[4] != null) {
             dijit.byId("evaluateFormByLeader.effectiveDate").setValue(obj.customInfo[4]);
         } else {
             dijit.byId("evaluateFormByLeader.effectiveDate").setValue(-1);
         }
 
-        if (obj.customInfo[5] != -1) {
+        if (obj.customInfo[5] != null) {
             dijit.byId("evaluationRecordsFormByLeader.legal").setValue(obj.customInfo[5]);
         } else {
             dijit.byId("evaluationRecordsFormByLeader.legal").setValue(1);
         }
 
-        if (obj.customInfo[6] != -1) {
+        if (obj.customInfo[6] != null) {
             dijit.byId("evaluationRecordsFormByLeader.foodSafetyQuality").setValue(obj.customInfo[6]);
         } else {
             dijit.byId("evaluationRecordsFormByLeader.foodSafetyQuality").setValue(1);
         }
-
-        if (obj.customInfo[7] != -1) {
+        if (obj.customInfo[7] != null) {
             dijit.byId("evaluationRecordsFormByLeader.effectUtility").setValue(obj.customInfo[7]);
         } else {
             dijit.byId("evaluationRecordsFormByLeader.effectUtility").setValue(1);
@@ -599,7 +598,12 @@
         dijit.byId("evaluateFormByLeader.ProductType").setValue(0);
         //var leaderAssignId = dijit.byId("createForm.leaderAssignId").getValue();
         //dijit.byId("evaluationRecordsFormByLeader.leaderReviewId").setValue(leaderAssignId);
-        document.getElementById("evaluateFormByLeader.statusAccept").checked = true;
+        var status = dijit.byId("createForm.status").getValue();
+        if (status == 4) {
+            document.getElementById("evaluateFormByLeader.statusAccept").checked = true;
+        } else if (status == 7) {
+            document.getElementById("evaluateFormByLeader.statusDeny").checked = true;
+        }
         var status = dijit.byId("createForm.status").getValue();
         var statusName = getStatusStaffEvaluate(parseInt(status));
         document.getElementById("evaluateFormByLeader.statusL").innerHTML = statusName;

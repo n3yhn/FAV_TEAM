@@ -8,25 +8,26 @@ import com.viettel.common.util.Constants;
 import com.viettel.voffice.client.form.ProcessForm;
 import com.viettel.voffice.database.BO.Process;
 import com.viettel.voffice.database.DAOHibernate.ProcessDAOHE;
-import com.viettel.vsaadmin.database.DAO.UsersDAO;
+import com.viettel.vsaadmin.database.BO.Department;
+import com.viettel.vsaadmin.database.BO.Users;
+import com.viettel.vsaadmin.database.DAOHibernate.DepartmentDAOHE;
+import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author user
  */
 public class ProcessDAO extends BaseDAO {
-    
+
     private static final String FORWARD_PAGE = "processPage";
     ProcessDAOHE processDAOHE = new ProcessDAOHE();
     private ProcessForm processForm;
     private ProcessForm processAddEditForm, filesStatusEditForm;
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProcessDAO.class);
-    
+
     public String prepare() {
         try {
         } catch (Exception ex) {
@@ -34,7 +35,7 @@ public class ProcessDAO extends BaseDAO {
         }
         return FORWARD_PAGE;
     }
-    
+
     public String searchProcess() {
         getGridInfo();
         AtomicInteger countAI = new AtomicInteger(count);
@@ -51,7 +52,8 @@ public class ProcessDAO extends BaseDAO {
         String objectType = getRequest().getParameter("objectType");
         GridResult gridResult = new GridResult(0, new ArrayList());
         try {
-            if (objectId != null && objectType != null) {
+            if (objectId != null
+                    && objectType != null) {
                 gridResult = processDAOHE.searchProcessOfDoc(Long.valueOf(objectId), Long.valueOf(objectType), start, count, sortField);
                 jsonDataGrid.setItems(gridResult.getLstResult());
                 jsonDataGrid.setTotalRows(gridResult.getnCount().intValue());
@@ -60,7 +62,7 @@ public class ProcessDAO extends BaseDAO {
             System.out.print(ex.getMessage());
             return null;
         }
-        
+
         return GRID_DATA;
     }
 
@@ -72,7 +74,12 @@ public class ProcessDAO extends BaseDAO {
         String processStatusId = getRequest().getParameter("processStatusId");
         GridResult gridResult = new GridResult(0, new ArrayList());
         try {
-            if (objectId != null && !"".equals(objectId) && objectType != null && !"".equals(objectType) && processStatusId != null && !"".equals(processStatusId)) {
+            if (objectId != null
+                    && !"".equals(objectId)
+                    && objectType != null
+                    && !"".equals(objectType)
+                    && processStatusId != null
+                    && !"".equals(processStatusId)) {
                 gridResult = processDAOHE.getProcessDoc(Long.valueOf(objectId), getUserId(), Long.valueOf(objectType), Long.valueOf(processStatusId));
                 if (gridResult != null && !gridResult.getLstResult().isEmpty()) {
                     Process process = (Process) gridResult.getLstResult().get(0);
@@ -86,7 +93,7 @@ public class ProcessDAO extends BaseDAO {
             System.out.print(ex.getMessage());
             return null;
         }
-        
+
         return GRID_DATA;
     }
 
@@ -147,41 +154,90 @@ public class ProcessDAO extends BaseDAO {
     public String onSaveProcess() {
         List resultMessage = new ArrayList();
         List customInfo = new ArrayList();
+
         try {
-            if (processAddEditForm != null && processAddEditForm.getProcessId() != null) {
+            if (processAddEditForm != null
+                    && processAddEditForm.getProcessId() != null) {
                 ProcessDAOHE pdaohe = new ProcessDAOHE();
                 Process p = pdaohe.findById(processAddEditForm.getProcessId());
                 if (p != null) {
+                    DepartmentDAOHE deptdaohe = new DepartmentDAOHE();
+                    Department deptbo = null;
+                    UsersDAOHE usersdaohe = new UsersDAOHE();
+                    Users userbo = null;
+                    
                     if (processAddEditForm.getSendUser() != null
-                            && !processAddEditForm.getSendUser().equals("")
+                            && processAddEditForm.getSendUser().equals("") == false
                             && processAddEditForm.getSendUserId() != null) {
-                        p.setSendUser(processAddEditForm.getSendUser());
                         p.setSendUserId(processAddEditForm.getSendUserId());
+                        
+                        userbo = usersdaohe.findById(processAddEditForm.getSendUserId());
+                        if (userbo != null && userbo.getFullName() != null) {
+                            p.setSendUser(userbo.getFullName());
+                        } else {
+                            p.setSendUser(processAddEditForm.getSendUser());
+                        }
+                    } else {
+                        p.setSendUser(null);
+                        p.setSendUserId(null);
                     }
                     if (processAddEditForm.getReceiveUser() != null
-                            && processAddEditForm.getReceiveUser().equals("")
+                            && processAddEditForm.getReceiveUser().equals("") == false
                             && processAddEditForm.getReceiveUserId() != null) {
-                        p.setReceiveUser(processAddEditForm.getReceiveUser());
                         p.setReceiveUserId(processAddEditForm.getReceiveUserId());
+
+                        userbo = usersdaohe.findById(processAddEditForm.getReceiveUserId());
+                        if (userbo != null && userbo.getFullName() != null) {
+                            p.setReceiveUser(userbo.getFullName());
+                        } else {
+                            p.setReceiveUser(processAddEditForm.getReceiveUser());
+                        }
+
+                    } else {
+                        p.setReceiveUser(null);
+                        p.setReceiveUserId(null);
                     }
+
                     if (processAddEditForm.getReceiveGroup() != null
-                            && !processAddEditForm.getReceiveGroup().equals("")
+                            && processAddEditForm.getReceiveGroup().equals("") == false
                             && processAddEditForm.getReceiveGroupId() != null) {
-                        p.setReceiveGroup(processAddEditForm.getReceiveGroup());
                         p.setReceiveGroupId(processAddEditForm.getReceiveGroupId());
+                        deptbo = new Department();
+                        deptbo = deptdaohe.findBOById(processAddEditForm.getReceiveGroupId());
+                        if (deptbo != null && deptbo.getDeptName() != null) {
+                            p.setReceiveGroup(deptbo.getDeptName());
+                        } else {
+                            p.setReceiveGroup(processAddEditForm.getReceiveGroup());
+                        }
+                    } else {
+                        p.setReceiveGroupId(null);
+                        p.setReceiveGroup(null);
                     }
                     if (processAddEditForm.getSendGroup() != null
-                            && processAddEditForm.getSendGroup().equals("")
+                            && processAddEditForm.getSendGroup().equals("") == false
                             && processAddEditForm.getSendGroupId() != null) {
-                        p.setSendGroup(processAddEditForm.getSendGroup());
                         p.setSendGroupId(processAddEditForm.getSendGroupId());
+                        deptbo = new Department();
+                        deptbo = deptdaohe.findBOById(processAddEditForm.getSendGroupId());
+                        if (deptbo != null && deptbo.getDeptName() != null) {
+                            p.setSendGroup(deptbo.getDeptName());
+                        } else {
+                            p.setSendGroup(processAddEditForm.getSendGroup());
+                        }
+
+                    } else {
+                        p.setSendGroupId(null);
+                        p.setSendGroup(null);
                     }
                     if (processAddEditForm.getStatus() != null
-                            && processAddEditForm.getProcessStatus() != null) {
+                            && processAddEditForm.getProcessStatus() != null
+                            && processAddEditForm.getStatus() > -1L
+                            && processAddEditForm.getProcessStatus() > -1L) {
                         p.setStatus(processAddEditForm.getStatus());
                         p.setProcessStatus(processAddEditForm.getProcessStatus());
                     }
                     getSession().update(p);
+                    getSession().beginTransaction().commit();
                     resultMessage.add("1");
                     resultMessage.add("Cập nhật luồng xử lý thành công");
                 } else {
@@ -226,41 +282,41 @@ public class ProcessDAO extends BaseDAO {
             resultMessage.add("3");
             resultMessage.add("Xóa luồng xử lý không thành công");
         }
-        
+
         jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;
     }
-    
+
     public ProcessDAOHE getProcessDAOHE() {
         return processDAOHE;
     }
-    
+
     public void setProcessDAOHE(ProcessDAOHE processDAOHE) {
         this.processDAOHE = processDAOHE;
     }
-    
+
     public ProcessForm getProcessForm() {
         return processForm;
     }
-    
+
     public void setProcessForm(ProcessForm processForm) {
         this.processForm = processForm;
     }
-    
+
     public ProcessForm getProcessAddEditForm() {
         return processAddEditForm;
     }
-    
+
     public void setProcessAddEditForm(ProcessForm processAddEditForm) {
         this.processAddEditForm = processAddEditForm;
     }
-    
+
     public ProcessForm getFilesStatusEditForm() {
         return filesStatusEditForm;
     }
-    
+
     public void setFilesStatusEditForm(ProcessForm filesStatusEditForm) {
         this.filesStatusEditForm = filesStatusEditForm;
     }
-    
+
 }

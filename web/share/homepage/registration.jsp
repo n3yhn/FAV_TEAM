@@ -95,7 +95,7 @@
                                                                         <td class="Title_list_reg" colspan="4">Thông tin Doanh nghiệp</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td class="egov-label-bold">Tên tiếng Việt<span>*</span></td>
+                                                                        <td class="egov-label-bold">Tên tiếng Việt<font style="color:red">*</font></td>
                                                                         <td class="ego-input-form" colspan="3"><sd:TextBox 
                                                                                 id="createForm.businessNameVi" 
                                                                                 trim="true"
@@ -129,7 +129,7 @@
                                                                                 cssStyle="width:100%"/></td>
                                                                     </tr>                            
                                                                     <tr>
-                                                                        <td class="egov-label-bold">Mã số thuế<span>*</span></td>
+                                                                        <td class="egov-label-bold">Mã số thuế<font style="color:red">*</font></td>
                                                                         <td class="ego-input-form"><sd:TextBox 
                                                                                 id="createForm.businessTaxCode" 
                                                                                 trim="true"
@@ -140,7 +140,7 @@
                                                                                 cssStyle="width:100%"/> </td>
                                                                     </tr>
                                                                     <tr>                                
-                                                                        <td class="egov-label-bold">Loại hình<span>*</span></td>
+                                                                        <td class="egov-label-bold">Loại hình<font style="color:red">*</font></td>
                                                                         <td class="ego-input-form">
                                                                             <sd:SelectBox id="createForm.businessTypeId" 
                                                                                           name="createForm.businessTypeId" 
@@ -154,7 +154,7 @@
                                                                                         key=""
                                                                                         trim="true"/>
                                                                         </td>                                
-                                                                        <td class="egov-label-bold">Số đăng ký KD<span>*</span></td>
+                                                                        <td class="egov-label-bold">Số đăng ký KD<font style="color:red">*</font></td>
                                                                         <td class="ego-input-form"><sd:TextBox 
                                                                                 id="createForm.businessLicense" 
                                                                                 trim="true"
@@ -165,7 +165,7 @@
                                                                                 cssStyle="width:100%"/></td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td class="egov-label-bold">Cơ quan chủ quản</td>
+                                                                        <td class="egov-label-bold">Cơ quan chủ quản<font style="color:red">*</font></td>
                                                                         <td class="ego-input-form" colspan="3"><sd:TextBox 
                                                                                 id="createForm.governingBody" 
                                                                                 trim="true"
@@ -179,7 +179,7 @@
                                                                         <td class="Title_list_reg" colspan="4">Địa chỉ</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td class="egov-label-bold">Tỉnh/Thành phố<span>*</span></td>
+                                                                        <td class="egov-label-bold">Tỉnh/Thành phố<font style="color:red">*</font></td>
                                                                         <td class="ego-input-form">
                                                                             <sd:SelectBox 
                                                                                 id="createForm.businessProvinceId" 
@@ -196,7 +196,7 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td class="egov-label-bold">Địa chỉ chi tiết<span>*</span></td>
+                                                                        <td class="egov-label-bold">Địa chỉ chi tiết<font style="color:red">*</font></td>
                                                                         <td class="ego-input-form" colspan="3"><sd:TextBox 
                                                                                 id="createForm.businessAdd" 
                                                                                 trim="true"
@@ -208,7 +208,7 @@
                                                                         </td>
                                                                     </tr>                            
                                                                     <tr>
-                                                                        <td class="egov-label-bold">Điện thoại<span>*</span></td>
+                                                                        <td class="egov-label-bold">Điện thoại<font style="color:red">*</font></td>
                                                                         <td class="ego-input-form"><sd:TextBox 
                                                                                 id="createForm.businessTelephone" 
                                                                                 trim="true"
@@ -229,16 +229,16 @@
                                                                                 cssStyle="width:100%"/>
                                                                         </td>
                                                                     </tr>
-																	<tr>
+                                                                    <tr>
                                                                         <td></td>
-																		<td>
-																			<span>Ví dụ: 0431234567, 0831234567.. không chứa các ký tự '+84', '()', dấu cách.. chỉ cho phép nhập số!</span>
-																		</td>
-																		<td colspan = "2">
-																		</td>
+                                                                        <td>
+                                                                            <span>Ví dụ: 0431234567, 0831234567.. không chứa các ký tự '+84', '()', dấu cách.. chỉ cho phép nhập số!</span>
+                                                                        </td>
+                                                                        <td colspan = "2">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td class="egov-label-bold">Email<span>*</span></td>
+                                                                        <td class="egov-label-bold">Email<font style="color:red">*</font></td>
                                                                         <td class="ego-input-form" title="Chú ý địa chỉ Email sẽ được sử dụng để Cục thông báo thông tin tài khoản đăng nhập vào hệ thống khi được phê duyệt và các thông tin liên quan nên cần nhập chính xác và chỉ đăng ký 1 Email">
                                                                             <sd:TextBox 
                                                                                 id="createForm.manageEmail" 
@@ -260,19 +260,19 @@
                                                                                 cssStyle="width:100%"/>
                                                                         </td>
                                                                     </tr>
-																	<tr>
+                                                                    <tr>
                                                                         <td></td>
-																		<td>
-																			<span>Chú ý địa chỉ Email sẽ được sử dụng để Cục thông báo thông tin tài khoản đăng nhập vào hệ thống khi được phê duyệt và các thông tin liên quan nên cần nhập chính xác và chỉ đăng ký 1 Email, ví dụ: congtya@tenmien.com</span>
-																		</td>
-																		<td colspan = "2">
-																		</td>
+                                                                        <td>
+                                                                            <span>Chú ý địa chỉ Email sẽ được sử dụng để Cục thông báo thông tin tài khoản đăng nhập vào hệ thống khi được phê duyệt và các thông tin liên quan nên cần nhập chính xác và chỉ đăng ký 1 Email, ví dụ: congtya@tenmien.com</span>
+                                                                        </td>
+                                                                        <td colspan = "2">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="Title_list_reg" colspan="4">Người đại diện</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td class="egov-label-bold">Họ và Tên<span>*</span></td>
+                                                                        <td class="egov-label-bold">Họ và Tên<font style="color:red">*</font></td>
                                                                         <td class="ego-input-form" colspan="3"><sd:TextBox 
                                                                                 id="createForm.userFullName" 
                                                                                 trim="true"
@@ -283,7 +283,7 @@
                                                                                 cssStyle="width:100%"/></td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td class="egov-label-bold">Chức vụ<span>*</span></td>
+                                                                        <td class="egov-label-bold">Chức vụ<font style="color:red">*</font></td>
                                                                         <td class="ego-input-form" title="Nếu bạn không thấy chức vụ tương ứng, bạn có thể chọn 'Chức vụ khác' để có thể nhập chức vụ mới phù hợp">
                                                                             <sd:SelectBox id="createForm.posId" 
                                                                                           name="createForm.posId" 
@@ -300,7 +300,7 @@
                                                                                         cssStyle="display:none" 
                                                                                         key=""
                                                                                         trim="true"/></td>
-                                                                        <td class="egov-label-bold">Số di động<span>*</span></td>
+                                                                        <td class="egov-label-bold">Số di động<font style="color:red">*</font></td>
                                                                         <td class="ego-input-form" title="Chú ý số di động sẽ được sử dụng để Cục thông báo các thông tin liên quan qua tin nhắn nên cần nhập chính xác">
                                                                             <sd:TextBox 
                                                                                 id="createForm.userTelephone" 
@@ -314,18 +314,18 @@
                                                                         <td class="egov-label-bold">&nbsp;</td>
                                                                         <td class="ego-input-form">&nbsp;</td>
                                                                     </tr> 
-																	<tr>
-																		<td></td>
-																		<td>
-																			<span>Nếu bạn không thấy chức vụ tương ứng, bạn có thể chọn 'Chức vụ khác' để có thể nhập chức vụ mới phù hợp</span>
-																		</td>
+                                                                    <tr>
                                                                         <td></td>
-																		<td>
-																			<span>Chú ý số di động sẽ được sử dụng để Cục thông báo các thông tin liên quan qua tin nhắn nên cần nhập chính xác! Ví dụ: 0912345678, 0903868686.. không chứa các ký tự '+84', '()', dấu cách.. chỉ cho phép nhập số!</span>
-																		</td>
+                                                                        <td>
+                                                                            <span>Nếu bạn không thấy chức vụ tương ứng, bạn có thể chọn 'Chức vụ khác' để có thể nhập chức vụ mới phù hợp</span>
+                                                                        </td>
+                                                                        <td></td>
+                                                                        <td>
+                                                                            <span>Chú ý số di động sẽ được sử dụng để Cục thông báo các thông tin liên quan qua tin nhắn nên cần nhập chính xác! Ví dụ: 0912345678, 0903868686.. không chứa các ký tự '+84', '()', dấu cách.. chỉ cho phép nhập số!</span>
+                                                                        </td>
                                                                     </tr>
                                                                     <tr id="trNewPos">
-                                                                        <td class="egov-label-bold">Chức vụ mới<span>*</span></td>
+                                                                        <td class="egov-label-bold">Chức vụ mới<font style="color:red">*</font></td>
                                                                         <td class="ego-input-form" ><sd:TextBox 
                                                                                 id="createForm.newPosName" 
                                                                                 trim="true"
@@ -443,6 +443,15 @@
 
                         return false;
                     }
+
+                    var governingBody = dijit.byId("createForm.governingBody").getValue();
+                    if (governingBody == null
+                            || governingBody.trim().length == 0) {
+                        alert("Bạn chưa nhập nhập Cơ quan chủ quản.");
+                        dijit.byId("createForm.governingBody").focus();
+                        return false;
+                    }
+
                     var businessProvinceId = dijit.byId("createForm.businessProvinceId").getValue();
                     if (businessProvinceId == 0) {
                         alert("Bạn chưa chọn Tỉnh/Thành phố");
@@ -452,7 +461,7 @@
                         var provinceName = dijit.byId("createForm.businessProvinceId").attr("displayedValue");
                         dijit.byId("createForm.businessProvince").setValue(provinceName);
                     }
-                    
+
                     var businessAdd = dijit.byId("createForm.businessAdd").getValue();
                     if (businessAdd != null && businessAdd.trim().length > 0) {
                     } else {

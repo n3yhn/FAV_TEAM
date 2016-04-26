@@ -13,24 +13,24 @@
     }
 </style>
 <script>
-    page.getNo = function(index) {
+    page.getNo = function (index) {
         return dijit.byId("filesGrid").currentRow + index + 1;
     };
 
-    page.getIndex = function(index) {
+    page.getIndex = function (index) {
         return index + 1;
     };
 
-    page.getRow = function(inRow) {
+    page.getRow = function (inRow) {
         return inRow;
     };
-    page.formatEdit = function(inData) {
+    page.formatEdit = function (inData) {
         var url = "<div class='box' onclick='page.viewFile(" + inData + ");' />" + inData + "</div>";
 
         return url;
     };
 
-    page.formatStatus = function(inData) {
+    page.formatStatus = function (inData) {
         var row = inData;
         var item = dijit.byId("filesGrid").getItem(row);
         var url = "";
@@ -42,7 +42,7 @@
         return url;
     };
 
-    page.formatAction = function(inData) {
+    page.formatAction = function (inData) {
         var item = dijit.byId("filesGrid").getItem(inData - 1);
         if (item != null) {
             var fileId = item.fileId;
@@ -77,7 +77,7 @@
         }
         return url;
     };
-    page.formatWarning = function(inData) {//binhnt53 141208
+    page.formatWarning = function (inData) {//binhnt53 141208
         var item = dijit.byId("filesGrid").getItem(inData - 1);
         var url = "";
         var strWarning = "";
@@ -327,7 +327,7 @@
         return url;
     };
     // enter key
-    page.searchDefault = function(evt) {
+    page.searchDefault = function (evt) {
         var dk = dojo.keys;
         switch (evt.keyCode) {
             case dk.ENTER:
@@ -338,11 +338,9 @@
 
     dojo.connect(dojo.byId("searchForm"), "onkeypress", page.searchDefault);
 </script>
-
 <div id="token">
     <s:token id="tokenId"/>
 </div>
-
 <div id="searchDiv">
     <sd:TitlePane key="search.searchCondition" id="categoryTitle">
         <form id="searchForm" name="searchForm">
@@ -517,6 +515,8 @@
                                                 width="15%"  headerStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Ngày nộp" field="sendDate" format="dd/MM/yyyy" type="date"
                                                 width="7%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />
+                            <sd:ColumnDataGrid  key="Ngày hẹn trả" field="deadlineApprove" format="dd/MM/yyyy" type="date"
+                                                width="7%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Kết quả" formatter="page.formatStatus" get="page.getRow"
                                                 width="10%"  headerStyles="text-align:center;" cellStyles="text-align:center;"/>
                             <sd:ColumnDataGrid editable="true" key="Cảnh báo" headerStyles="text-align:center;" width="3%" cellStyles="text-align:center;"
@@ -549,7 +549,7 @@
     <jsp:include page="evaluateFormOnGrid.jsp" flush="false"></jsp:include>
 </sd:Dialog>
 <script type="text/javascript">
-    getCommentEvaluateFormOnGrid = function(fileId, fileType) {
+    getCommentEvaluateFormOnGrid = function (fileId, fileType) {
         dijit.byId("evaluateForm.fileId").setValue(fileId);
         if (fileType != 66750) {
             //error
@@ -561,7 +561,7 @@
         sd.connector.post("filesAction!getCommentEvaluateForm.do?objectId=" + fileId + "&objectType=30", null, null, null, afterCommentEvaluateFormOnGrid);
     };
 
-    afterCommentEvaluateFormOnGrid = function(data) {
+    afterCommentEvaluateFormOnGrid = function (data) {
         var obj = dojo.fromJson(data);
         if (obj.customInfo[0] != "") {
             document.getElementById("evaluationRecordsForm.legalContent").value = obj.customInfo[0];
@@ -601,7 +601,7 @@
         sd.connector.post("filesAction!loadFileView.do?createForm.fileId=" + fileId + "&createForm.viewType=4&viewTypeDialog=1", "divViewFile", null, null, afterLoadViewFile);
     };
 
-    afterLoadViewFile = function() {
+    afterLoadViewFile = function () {
         //document.getElementById('buttonDiv').style.display = "none";
         var leaderAssignId = dijit.byId("createForm.leaderAssignId").getValue();
         dijit.byId("evaluationRecordsForm.leaderReviewId").setValue(leaderAssignId);
@@ -609,12 +609,12 @@
     };
 
     //140704 binhnt53
-    page.showAssignPopup = function(fileId) {
+    page.showAssignPopup = function (fileId) {
         dijit.byId("assignDlg").show();
         page.showAssignDlg(fileId);
     };
 
-    page.showAssignMore = function()
+    page.showAssignMore = function ()
     {
         if (!dijit.byId("filesGrid").vtIsChecked()) {
             msg.alert('Bạn chưa chọn hồ sơ để thực hiện phân công', 'Cảnh báo');
@@ -622,9 +622,9 @@
         else {
             msg.confirm('Bạn có chắc chắn muốn phân công nhiều hồ sơ?', '<sd:Property>confirm.title1</sd:Property>', page.showAssignMorePopup);
                     }
-                }
+                };
 
-                page.showAssignMorePopup = function() {
+                page.showAssignMorePopup = function () {
                     var gridProcess = dijit.byId("processGridId");
                     // check xem da ton tai tren grid chua
                     var i = 0;
@@ -650,20 +650,20 @@
                 };
 
                 //!140704
-                backPage = function() {
+                backPage = function () {
                     document.getElementById("searchDiv").style.display = "";
                     document.getElementById("viewDiv").style.display = "none";
                 };
 
-                page.search = function() {
+                page.search = function () {
                     dijit.byId("filesGrid").vtReload('filesAction!onSearchFileToEvaluate.do', "searchForm", null, page.afterSearch);
                 };
 
-                page.afterSearch = function() {
+                page.afterSearch = function () {
                     dijit.byId("searchForm.flagSavePaging").setValue("0");
                 }
 
-                page.reset = function() {
+                page.reset = function () {
                     dijit.byId('searchForm.fileCode').attr('value', '');
                     dijit.byId('searchForm.announcementNo').attr('value', '');
                     dijit.byId('searchForm.businessName').attr('value', '');
@@ -677,15 +677,15 @@
                     dijit.byId('searchForm.fileType').attr('value', '-1');
                 };
 
-                page.showViewFile = function(fileId) {
+                page.showViewFile = function (fileId) {
                     doGoToMenu("filesAction!toFileDlgView.do?fileId=" + fileId + "&viewType=4" + "&backPage=1");
                 };
-                page.showSearchPanel = function() {
+                page.showSearchPanel = function () {
                     var panel = document.getElementById("searchDiv");
                     panel.setAttribute("style", "display:;");
                     dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
                 };
-                showEvaludateResult = function(row) {//show kết quả thẩm định
+                showEvaludateResult = function (row) {//show kết quả thẩm định
                     var file = dijit.byId("filesGrid").getItem(row);
                     var statusName = page.getStatusName(parseInt(file.status));
                     document.getElementById("evaluateFormView.status").innerHTML = statusName;
@@ -694,7 +694,7 @@
                     document.getElementById("evaluateFormView.leaderRequest").innerHTML = escapeHtml_(file.leaderRequest);
                     dijit.byId("evaluateViewDlg").show();
                 };
-                page.reloadViewOldVersion = function(oldVersion, thisVersion) {//u140728
+                page.reloadViewOldVersion = function (oldVersion, thisVersion) {//u140728
                     document.getElementById('viewDiv').Value = '';
                     var processCommentGridId_VTGrid = dijit.byId('processCommentGridId_VTGrid');
                     if (processCommentGridId_VTGrid) {
@@ -718,7 +718,7 @@
                     }
                     sd.connector.post("filesAction!loadFilesByOldVersion.do?thisVersion=" + thisVersion + "&oldVersion=" + oldVersion, "viewDiv", null, null, afterReloadViewOldVersion);
                 };
-                afterReloadViewOldVersion = function(data) {
+                afterReloadViewOldVersion = function (data) {
                 };//!u140728
                 page.search();
 </script>

@@ -50,27 +50,28 @@
             var url = "<div style='text-align:left;cursor:pointer;'><img src='share/images/icons/view.png' width='17px' height='17px' title='Xem hồ sơ' onClick='page.showViewFile(" + item.fileId + ");' />";
             switch (status) {
                 case 3:
-                    //url += "| <img src='share/images/edit.png' width='17px' height='17px' title='Thẩm định hồ sơ' onClick='page.getCommentEvaluateForm(" + item.fileId + "," + item.fileType + "); ' />";
+//                    url += "| <img src='share/images/edit.png' width='17px' height='17px' title='LĐP thẩm định hồ sơ' onClick='page.getCommentEvaluateForm(" + item.fileId + "," + item.fileType + "); ' />";
                     break;
                 case 4:
-//                    url += "| <img src='share/images/Document.png' width='17px' height='17px' title='Xuất file word' onClick='page.downloadWord(" + item.fileId + ");' />";
-//                    break;
-                    ;
+                    url += "| <img src='share/images/edit.png' width='17px' height='17px' title='LĐP thẩm định hồ sơ' onClick='page.getCommentEvaluateByLeaderFormOnGrid(" + item.fileId + "," + item.fileType + "," + item.status + "); ' />";
+                    break;
+                case 7:
+                    url += "| <img src='share/images/edit.png' width='17px' height='17px' title='LĐP thẩm định hồ sơ' onClick='page.getCommentEvaluateByLeaderFormOnGrid(" + item.fileId + "," + item.fileType + "," + item.status + "); ' />";
+                    break;
                 case 8:
-                    //url += "| <img src='share/images/edit.png' width='17px' height='17px' title='Thẩm định hồ sơ' onClick='page.getCommentEvaluateForm(" + item.fileId + "," + item.fileType + "); ' />";
+//                    url += "| <img src='share/images/edit.png' width='17px' height='17px' title='LĐP thẩm định hồ sơ' onClick='page.getCommentEvaluateForm(" + item.fileId + "," + item.fileType + "); ' />";
                     break;
                 case 17:
-                    //url += "| <img src='share/images/edit.png' width='17px' height='17px' title='Thẩm định hồ sơ' onClick='page.getCommentEvaluateForm(" + item.fileId + "," + item.fileType + "); ' />";
+//                    url += "| <img src='share/images/edit.png' width='17px' height='17px' title='LĐP thẩm định hồ sơ' onClick='page.getCommentEvaluateForm(" + item.fileId + "," + item.fileType + "); ' />";
                     break;
                 default:
                     ;
             }
-            if (item.flowId == null || item.flowId == "") {
+            if (item.flowId == null
+                    || item.flowId == "") {
                 var lstRole = dijit.byId("lstRole").value;
                 if ((lstRole.toString() != "") && (lstRole.toString().indexOf("voffice_lddv") >= 0)) {
-                    url += "| <img src='${contextPath}/share/images/group.png' width='17px' height='17px' \n\
-                                    title='Phân công hồ sơ' \n\
-                                    onclick='page.showAssignPopup(" + fileId + ");' />";
+                    url += "| <img src='${contextPath}/share/images/group.png' width='17px' height='17px' title='Phân công hồ sơ' onclick='page.showAssignPopup(" + fileId + ");' />";
                 }
             }
         }
@@ -78,7 +79,6 @@
         return url;
     };
 
-    // enter key
     page.searchDefault = function (evt) {
         var dk = dojo.keys;
         switch (evt.keyCode) {
@@ -86,16 +86,12 @@
                 page.search();
                 break;
         }
-    }
-
+    };
     dojo.connect(dojo.byId("searchForm"), "onkeypress", page.searchDefault);
-
 </script>
-
 <div id="token">
     <s:token id="tokenId"/>
 </div>
-
 <div id="searchDiv">
     <sd:TitlePane key="search.searchCondition" id="categoryTitle">
         <form id="searchForm" name="searchForm">
@@ -114,7 +110,8 @@
                         <sd:TextBox cssStyle="width:100%"
                                     id="searchForm.fileCode"
                                     key=""
-                                    name="searchForm.fileCode" maxlength="250"/>
+                                    name="searchForm.fileCode" 
+                                    maxlength="250"/>
                     </td>
                     <td align="right">
                         <sd:Label key="Số bản công bố"/>
@@ -123,7 +120,8 @@
                         <sd:TextBox cssStyle="width:100%"
                                     id="searchForm.announcementNo"
                                     key=""
-                                    name="searchForm.announcementNo" maxlength="250"/>
+                                    name="searchForm.announcementNo" 
+                                    maxlength="250"/>
                     </td>
                 </tr>
                 <tr>
@@ -134,7 +132,8 @@
                         <sd:TextBox cssStyle="width:100%"
                                     id="searchForm.businessName"
                                     key=""
-                                    name="searchForm.businessName" maxlength="250"/>
+                                    name="searchForm.businessName" 
+                                    maxlength="250"/>
                     </td>
                     <td align="right">
                         <sd:Label key="Số đăng ký kinh doanh/số CMT"/>
@@ -143,7 +142,8 @@
                         <sd:TextBox cssStyle="width:100%"
                                     id="searchForm.businessLicence"
                                     key=""
-                                    name="searchForm.businessLicence" maxlength="250"/>
+                                    name="searchForm.businessLicence" 
+                                    maxlength="250"/>
                     </td>
 
                 </tr>
@@ -155,7 +155,8 @@
                         <sd:TextBox cssStyle="width:100%"
                                     id="searchForm.businessAddress"
                                     key=""
-                                    name="searchForm.businessAddress" maxlength="250"/>
+                                    name="searchForm.businessAddress" 
+                                    maxlength="250"/>
                     </td>
                     <td align="right">
                         <sd:Label key="Tên sản phẩm"/>
@@ -164,7 +165,8 @@
                         <sd:TextBox cssStyle="width:100%"
                                     id="searchForm.productName"
                                     key=""
-                                    name="searchForm.productName" maxlength="250"/>
+                                    name="searchForm.productName" 
+                                    maxlength="250"/>
                     </td>
 
                 </tr>
@@ -176,7 +178,8 @@
                         <sd:TextBox cssStyle="width:100%"
                                     id="searchForm.nationName"
                                     key=""
-                                    name="searchForm.nationName" maxlength="250"/>
+                                    name="searchForm.nationName" 
+                                    maxlength="250"/>
                     </td>
                     <td align="right">
                         <sd:Label key="Tên nhà sản xuất"/>
@@ -185,7 +188,8 @@
                         <sd:TextBox cssStyle="width:100%"
                                     id="searchForm.manufactureName"
                                     key=""
-                                    name="searchForm.manufactureName" maxlength="250"/>
+                                    name="searchForm.manufactureName" 
+                                    maxlength="250"/>
                     </td>
                 </tr>
                 <tr>
@@ -196,7 +200,8 @@
                         <sd:TextBox cssStyle="width:100%"
                                     id="searchForm.manufactureAddress"
                                     key=""
-                                    name="searchForm.manufactureAddress" maxlength="250"/>
+                                    name="searchForm.manufactureAddress" 
+                                    maxlength="250"/>
                     </td>
                     <td align="right">
                         <sd:Label key="Số ký hiệu QCKT/quy định ATTP"/>
@@ -205,7 +210,8 @@
                         <sd:TextBox cssStyle="width:100%"
                                     id="searchForm.matchingTarget"
                                     key=""
-                                    name="searchForm.matchingTarget" maxlength="250"/>
+                                    name="searchForm.matchingTarget" 
+                                    maxlength="250"/>
                     </td>
                 </tr>
                 <tr>
@@ -215,10 +221,14 @@
                     <td>
                         <sd:SelectBox cssStyle="width:100%"
                                       id="searchForm.fileType"
-                                      key="" data="lstFileType" valueField="procedureId" labelField="name"
+                                      key="" data="lstFileType" 
+                                      valueField="procedureId" 
+                                      labelField="name"
                                       name="searchForm.fileType" >
                         </sd:SelectBox>
-                        <sd:TextBox key="" id="searchForm.status" name="searchForm.status" cssStyle="display:none"/>
+                        <sd:TextBox key="" id="searchForm.status" 
+                                    name="searchForm.status" 
+                                    cssStyle="display:none"/>
                     </td>
                     <td colspan="2"></td>
                 </tr>
@@ -251,7 +261,7 @@
                                      serverPaging="true"
                                      clientSort="false">
                             <sd:ColumnDataGrid key="STT" get="page.getNo" width="5%"  styles="text-align:center;" />
-                            <sd:ColumnDataGrid editable="true" key="column.checkbox" headerCheckbox="true" headerStyles="text-align:center;" type="checkbox" width="5%" cellStyles="text-align:center;" />
+                            <sd:ColumnDataGrid editable="true" key="column.checkbox" headerCheckbox="true" headerStyles="text-align:center;" type="checkbox" width="3%" cellStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Chức năng" 
                                                 width="7%"  headerStyles="text-align:center;"
                                                 formatter="page.formatAction" get="page.getIndex" cellStyles="text-align:center;" />
@@ -264,11 +274,9 @@
                                                 width="15%"  headerStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Tên sản phẩm" field="productName" cellStyles="text-align:left;"
                                                 width="15%"  headerStyles="text-align:center;" />
-                            <sd:ColumnDataGrid  key="Số quy chuẩn phù hợp" field="matchingTarget" cellStyles="text-align:left;"
-                                                width="10%"  headerStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Ngày nộp" field="sendDate" format="dd/MM/yyyy" type="date"
                                                 width="7%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />
-                            <sd:ColumnDataGrid  key="Kết quả" formatter="page.formatStatus" get="page.getRow"
+                            <sd:ColumnDataGrid  key="Trạng thái" formatter="page.formatStatus" get="page.getRow"
                                                 width="10%"  headerStyles="text-align:center;" cellStyles="text-align:center;"/>
                         </sd:DataGrid>
                     </div>
@@ -293,11 +301,136 @@
     <jsp:include page="evaluateForm.jsp" flush="false"></jsp:include>
 </sd:Dialog>--%>
 <sd:Dialog  id="assignDlg" height="auto" width="900px" key="dialog.titleAddEdit">
-    <jsp:include page="assignCoDlg.jsp" flush="false"/>
+    <jsp:include page="../assignCoDlg.jsp" flush="false"/>
+</sd:Dialog>
+<sd:Dialog  id="evaluateByLeaderFormOnGridDlg" height="auto" width="1200px"
+            key="Thẩm định hồ sơ" showFullscreenButton="false"
+            >
+    <jsp:include page="evaluateByLeaderFormOnGrid.jsp" flush="false"></jsp:include>
 </sd:Dialog>
 <div id="viewDiv"></div>
 <script type="text/javascript">
-    //140704 binhnt53
+    //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    page.search = function () {
+        dijit.byId("filesGrid").vtReload('filesAction!onSearchFileToEvaluateLeader.do', "searchForm");
+    };
+
+    page.showViewFile = function (fileId) {
+        doGoToMenu("filesAction!toFileDlgView.do?fileId=" + fileId + "&viewType=3" + "&backPage=1");
+    };
+
+    page.getCommentEvaluateByLeaderFormOnGrid = function (fileId, fileType, status) {
+        dijit.byId("evaluateByLeaderFormOnGrid.fileId").setValue(fileId);
+        dijit.byId("evaluateByLeaderFormOnGrid.status").setValue(status);
+        if (fileType != 66750) {
+            var panel = document.getElementById("effectiveDateDiv");
+            panel.setAttribute("style", "display:;");
+        }
+        dijit.byId("evaluateByLeaderFormOnGridDlg").show();
+        document.getElementById("trWaitViewFile").style.display = '';
+        sd.connector.post("filesAction!getCommentEvaluateFormByLeader.do?objectId=" + fileId, null, null, null, afterCommentEvaluateLeaderFormOnGrid);
+    };
+
+    afterCommentEvaluateLeaderFormOnGrid = function (data) {
+        var obj = dojo.fromJson(data);
+        if (obj.customInfo[0] != "") {
+            document.getElementById("evaluateByLeaderFormOnGrid.legalContent").value = obj.customInfo[0];
+        } else {
+            document.getElementById("evaluateByLeaderFormOnGrid.legalContent").value = "";
+        }
+        if (obj.customInfo[1] != "") {
+            document.getElementById("evaluateByLeaderFormOnGrid.foodSafetyQualityContent").value = obj.customInfo[1];
+        } else {
+            document.getElementById("evaluateByLeaderFormOnGrid.foodSafetyQualityContent").value = "";
+        }
+        if (obj.customInfo[2] != "") {
+            document.getElementById("evaluateByLeaderFormOnGrid.effectUtilityContent").value = obj.customInfo[2];
+        } else {
+            document.getElementById("evaluateByLeaderFormOnGrid.effectUtilityContent").value = "";
+        }
+        if (obj.customInfo[3] != "") {
+            document.getElementById("evaluateByLeaderFormOnGrid.staffRequest").value = obj.customInfo[3];
+        } else {
+            document.getElementById("evaluateByLeaderFormOnGrid.staffRequest").value = "";
+        }
+        if (obj.customInfo[4] != null) {
+            dijit.byId("evaluateByLeaderFormOnGrid.effectiveDate").setValue(obj.customInfo[4]);
+        } else {
+            dijit.byId("evaluateByLeaderFormOnGrid.effectiveDate").setValue(-1);
+        }
+
+        if (obj.customInfo[5] != null) {
+            dijit.byId("evaluateByLeaderFormOnGrid.legal").setValue(obj.customInfo[5]);
+        } else {
+            dijit.byId("evaluateByLeaderFormOnGrid.legal").setValue(1);
+        }
+
+        if (obj.customInfo[6] != null) {
+            dijit.byId("evaluateByLeaderFormOnGrid.foodSafetyQuality").setValue(obj.customInfo[6]);
+        } else {
+            dijit.byId("evaluateByLeaderFormOnGrid.foodSafetyQuality").setValue(1);
+        }
+
+        if (obj.customInfo[7] != null) {
+            dijit.byId("evaluateByLeaderFormOnGrid.effectUtility").setValue(obj.customInfo[7]);
+        } else {
+            dijit.byId("evaluateByLeaderFormOnGrid.effectUtility").setValue(1);
+        }
+
+//        dijit.byId("evaluateByLeaderFormOnGrid.ProductType").setValue(0);
+
+        var status = dijit.byId("evaluateByLeaderFormOnGrid.status").getValue();
+        if (status == 4) {
+            document.getElementById("evaluateByLeaderFormOnGrid.statusAccept").checked = true;
+
+        } else if (status == 7) {
+            document.getElementById("evaluateByLeaderFormOnGrid.statusDeny").checked = true;
+        }
+        var statusName = getStatusStaffEvaluate(parseInt(status));
+        document.getElementById("evaluateByLeaderFormOnGrid.statusL").innerHTML = statusName;
+        var fileId = dijit.byId("evaluateByLeaderFormOnGrid.fileId").getValue();
+        sd.connector.post("filesAction!loadFileView.do?createForm.fileId=" + fileId + "&createForm.viewType=4&viewTypeDialog=1", "divViewFile", null, null, afterLoadViewFileOnGrid);
+    };
+
+    afterLoadViewFileOnGrid = function () {
+        document.getElementById("trWaitViewFile").style.display = 'none';
+    };
+
+    getStatusStaffEvaluate = function (status) {
+        switch (status) {
+            case 1:
+                url = "Mới nộp";
+                break;
+            case 2:
+                url = "Đã được đề xuất xử lý";
+                break;
+            case 3:
+                url = "Đã phân công xử lý";
+                break;
+            case 4:
+                url = "Đã thẩm định hồ sơ đạt";
+                break;
+            case 5:
+                url = "Đã xem xét kết quả";
+                break;
+            case 6:
+                url = "Đã phê duyệt kết quả";
+                break;
+            case 7:
+                url = "Đã thẩm định yêu cầu SĐBS";
+                break;
+            case 8:
+                url = "Đã trả lại để thẩm định lại";
+                break;
+            case 9:
+                url = "Đã trả lại để xem xét lại";
+                break;
+            default:
+                url = "Mới tạo";
+        }
+        return url;
+    };
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     page.showAssignPopup = function (fileId) {
         dijit.byId("assignDlg").show();
         page.showAssignDlg(fileId);
@@ -311,7 +444,7 @@
         else {
             msg.confirm('Bạn có chắc chắn muốn phân công nhiều hồ sơ?', '<sd:Property>confirm.title1</sd:Property>', page.showAssignMorePopup);
                     }
-                }
+                };
 
                 page.showAssignMorePopup = function () {
                     var gridProcess = dijit.byId("processGridId");
@@ -325,7 +458,8 @@
 
                     var items = dijit.byId("filesGrid").vtGetCheckedItems();
                     var lstObjectId = "";
-                    if (items != null && items.length >= 0) {
+                    if (items != null
+                            && items.length >= 0) {
                         for (var i = 0; i < items.length; i++)
                         {
                             if (i != items.length - 1)
@@ -338,14 +472,9 @@
                     }
                 };
 
-                //!140704
                 backPage = function () {
                     document.getElementById("searchDiv").style.display = "";
                     document.getElementById("viewDiv").style.display = "none";
-                };
-
-                page.search = function () {
-                    dijit.byId("filesGrid").vtReload('filesAction!onSearchFileToEvaluateLeader.do', "searchForm");
                 };
 
                 page.reset = function () {
@@ -366,55 +495,6 @@
                     document.getElementById("searchDiv").style.display = "none";
                     document.getElementById("viewDiv").style.display = "";
                 };
-
-                page.showViewFile = function (fileId) {
-                    document.getElementById("searchDiv").style.display = "none";
-                    document.getElementById("viewDiv").style.display = "";
-                    sd.connector.post("filesAction!loadFileView.do?createForm.fileId=" + fileId + "&createForm.viewType=3", "viewDiv", null, null, afterLoadForm);
-                };
-
-//    page.showEvaluateForm = function(fileId, fileType) {
-//        dijit.byId("evaluateForm.fileId").setValue(fileId);
-//        dijit.byId("evaluateDlg").show();
-//        if (fileType != 66750) {
-//            var panel = document.getElementById("effectiveDateDiv");
-//            panel.setAttribute("style", "display:;");
-//        }
-//    };
-                //140704 binhnt53
-//    page.getCommentEvaluateForm = function (fileId, fileType) {
-//        dijit.byId("evaluateForm.fileId").setValue(fileId);
-//        if (fileType != 66750) {//error
-//            var panel = document.getElementById("effectiveDateDiv");
-//            panel.setAttribute("style", "display:;");
-//        }
-//        sd.connector.post("filesAction!getCommentEvaluateForm.do?objectId=" + fileId + "&objectType=30", null, null, null, afterCommentEvaluateForm);
-//    };
-//    afterCommentEvaluateForm = function (data) {
-//        var obj = dojo.fromJson(data);
-//        if (obj.customInfo[0] != "") {
-//            document.getElementById("evaluationRecordsForm.legalContent").value = obj.customInfo[0];
-//        } else {
-//            document.getElementById("evaluationRecordsForm.legalContent").value = "";
-//        }
-//        if (obj.customInfo[1] != "") {
-//            document.getElementById("evaluationRecordsForm.foodSafetyQualityContent").value = obj.customInfo[1];
-//        } else {
-//            document.getElementById("evaluationRecordsForm.foodSafetyQualityContent").value = "";
-//        }
-//        if (obj.customInfo[2] != "") {
-//            document.getElementById("evaluationRecordsForm.effectUtilityContent").value = obj.customInfo[2];
-//        } else {
-//            document.getElementById("evaluationRecordsForm.effectUtilityContent").value = "";
-//        }
-//        if (obj.customInfo[3] != "") {
-//            document.getElementById("evaluateForm.staffRequest").value = obj.customInfo[3];
-//        } else {
-//            document.getElementById("evaluateForm.staffRequest").value  = "";
-//        }
-//        dijit.byId("evaluateDlg").show();
-//    };
-                //!140704 binhnt53
                 page.showSearchPanel = function () {
                     var panel = document.getElementById("searchDiv");
                     panel.setAttribute("style", "display:;");
@@ -429,7 +509,7 @@
                     document.getElementById("evaluateFormView.leaderRequest").innerHTML = escapeHtml_(file.leaderRequest);
                     dijit.byId("evaluateViewDlg").show();
                 };
-                page.reloadViewOldVersion = function (oldVersion, thisVersion) {//u140728
+                page.reloadViewOldVersion = function (oldVersion, thisVersion) {
                     document.getElementById('viewDiv').Value = '';
                     var processCommentGridId_VTGrid = dijit.byId('processCommentGridId_VTGrid');
                     if (processCommentGridId_VTGrid) {

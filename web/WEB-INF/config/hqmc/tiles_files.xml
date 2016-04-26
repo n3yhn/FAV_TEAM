@@ -138,8 +138,8 @@
     </definition>
     <!-- pho phong tham dinh ho so -->
     <definition name="evaluateLeaderFile.page" extends="body.definition" >
-        <put-attribute name="title" value="Lãnh đạo xử lý hồ sơ"/>
-        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/evaluatePageByLeader.jsp"/>
+        <put-attribute name="title" value="Lãnh đạo thẩm định hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/evaluate/evaluateByLeaderPage.jsp"/>
     </definition>
     <!-- thong bao ket qia tham dinh ho so -->
     <definition name="feedbackEvaluateFile.page" extends="body.definition" >

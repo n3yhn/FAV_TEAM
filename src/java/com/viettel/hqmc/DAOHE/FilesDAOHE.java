@@ -99,20 +99,36 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             if (entity != null) {
                 form = new FilesForm(entity);
                 if (entity.getAnnouncementId() != null) {
-                    Announcement ann = (Announcement) findById(Announcement.class, "announcementId", entity.getAnnouncementId());
+                    Announcement ann = (Announcement) findById(
+                            Announcement.class,
+                            "announcementId",
+                            entity.getAnnouncementId()
+                    );
                     form.setAnnouncement(new AnnouncementForm(ann));
                     form.setAnnouncementReceiptPaperForm(new AnnouncementReceiptPaperForm());
                 }
                 if (entity.getReIssueFormId() != null) {
-                    ReIssueForm re = (ReIssueForm) findById(ReIssueForm.class, "reIssueFormId", entity.getReIssueFormId());
+                    ReIssueForm re = (ReIssueForm) findById(
+                            ReIssueForm.class,
+                            "reIssueFormId",
+                            entity.getReIssueFormId()
+                    );
                     form.setReIssueForm(new ReIssueFormForm(re));
                 }
                 if (entity.getDetailProductId() != null) {
-                    DetailProduct ann = (DetailProduct) findById(DetailProduct.class, "detailProductId", entity.getDetailProductId());
+                    DetailProduct ann = (DetailProduct) findById(
+                            DetailProduct.class,
+                            "detailProductId",
+                            entity.getDetailProductId()
+                    );
                     form.setDetailProduct(new DetailProductForm(ann));
                 }
                 if (entity.getTestRegistrationId() != null) {
-                    TestRegistration ann = (TestRegistration) findById(TestRegistration.class, "testRegistrationId", entity.getTestRegistrationId());
+                    TestRegistration ann = (TestRegistration) findById(
+                            TestRegistration.class,
+                            "testRegistrationId",
+                            entity.getTestRegistrationId()
+                    );
                     form.setTestRegistration(new TestRegistrationForm(ann));
                     form.setConfirmImportSatistPaperForm(new ConfirmImportSatistPaperForm());
                 }
@@ -125,11 +141,19 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
                 try {
                     if (entity.getAnnouncementReceiptPaperId() != null) {
-                        AnnouncementReceiptPaper annp = (AnnouncementReceiptPaper) findById(AnnouncementReceiptPaper.class, "announcementReceiptPaperId", entity.getAnnouncementReceiptPaperId());
+                        AnnouncementReceiptPaper annp = (AnnouncementReceiptPaper) findById(
+                                AnnouncementReceiptPaper.class,
+                                "announcementReceiptPaperId",
+                                entity.getAnnouncementReceiptPaperId()
+                        );
                         form.setAnnouncementReceiptPaperForm(new AnnouncementReceiptPaperForm(annp));
                     }
                     if (entity.getConfirmImportSatistPaperId() != null) {
-                        ConfirmImportSatistPaper arp = (ConfirmImportSatistPaper) findById(AnnouncementReceiptPaper.class, "confirmImportSatistPaperId", entity.getAnnouncementReceiptPaperId());
+                        ConfirmImportSatistPaper arp = (ConfirmImportSatistPaper) findById(
+                                AnnouncementReceiptPaper.class,
+                                "confirmImportSatistPaperId",
+                                entity.getAnnouncementReceiptPaperId()
+                        );
                         form.setConfirmImportSatistPaperForm(new ConfirmImportSatistPaperForm(arp));
                     }
 
@@ -155,29 +179,44 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             if (entity != null) {
                 form = new FilesForm(entity);
                 if (entity.getAnnouncementId() != null) {
-                    Announcement ann = (Announcement) findById(Announcement.class, "announcementId", entity.getAnnouncementId());
+                    Announcement ann = (Announcement) findById(
+                            Announcement.class,
+                            "announcementId",
+                            entity.getAnnouncementId()
+                    );
                     form.setAnnouncement(new AnnouncementForm(ann));
                 }
                 if (entity.getReIssueFormId() != null) {
-                    ReIssueForm re = (ReIssueForm) findById(ReIssueForm.class, "reIssueFormId", entity.getReIssueFormId());
+                    ReIssueForm re = (ReIssueForm) findById(
+                            ReIssueForm.class,
+                            "reIssueFormId",
+                            entity.getReIssueFormId()
+                    );
                     form.setReIssueForm(new ReIssueFormForm(re));
                 }
                 if (entity.getDetailProductId() != null) {
-                    DetailProduct ann = (DetailProduct) findById(DetailProduct.class, "detailProductId", entity.getDetailProductId());
+                    DetailProduct ann = (DetailProduct) findById(
+                            DetailProduct.class,
+                            "detailProductId",
+                            entity.getDetailProductId()
+                    );
                     form.setDetailProduct(new DetailProductForm(ann));
                 }
                 if (entity.getTestRegistrationId() != null) {
-                    TestRegistration ann = (TestRegistration) findById(TestRegistration.class, "testRegistrationId", entity.getTestRegistrationId());
+                    TestRegistration ann = (TestRegistration) findById(
+                            TestRegistration.class,
+                            "testRegistrationId",
+                            entity.getTestRegistrationId()
+                    );
                     form.setTestRegistration(new TestRegistrationForm(ann));
                 }
+
                 form.setLstMainlyTarget(getMainlyTargetOfFile(fileId));
                 form.setLstBioTarget(getProductTargetOfFile(fileId, 1l));
                 form.setLstHeavyMetal(getProductTargetOfFile(fileId, 2l));
                 form.setLstChemical(getProductTargetOfFile(fileId, 3l));
-
                 form.setLstAttachs(getAttachsOfFile(fileId));
                 form.setLstQualityControl(getQualityControlOfFile(fileId));
-
             }
         } catch (Exception e) {
             log.error(e);
@@ -196,12 +235,19 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         Files entity = findIsItempObj(0L, fileId, 0L, true);
         FilesForm form = null;
         try {
-            if (entity != null && entity.getFileId() != null && entity.getFileId() > 0L) {
+            if (entity != null
+                    && entity.getFileId() != null
+                    && entity.getFileId() > 0L) {
                 form = new FilesForm(entity);
                 if (entity.getAnnouncementId() != null) {
 //                    Announcement objClone = (Announcement) findById(Announcement.class, "announcementId", entity.getAnnouncementId());
                     AnnouncementDAOHE objDaohe = new AnnouncementDAOHE();
-                    Announcement objClone = objDaohe.findIsItempObj(entity.getAnnouncementId(), 0L, 0L, true);
+                    Announcement objClone = objDaohe.findIsItempObj(
+                            entity.getAnnouncementId(),
+                            0L,
+                            0L,
+                            true
+                    );
                     if (objClone != null && objClone.getAnnouncementId() != null) {
                         form.setAnnouncement(new AnnouncementForm(objClone));
                         form.setAnnouncementReceiptPaperForm(new AnnouncementReceiptPaperForm());
@@ -284,7 +330,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 Date dt = DateTimeUtils.getAddDate(dateNow, 0, pro.getDeadline().intValue());
                 bo.setDeadline(dt);
             }
-            if (bo.getStatus().equals(Constants.FILE_STATUS.NEW_CREATE) || bo.getStatus().equals(Constants.FILE_STATUS.RECEIVED_REJECT)) {
+            if (bo.getStatus().equals(Constants.FILE_STATUS.NEW_CREATE)
+                    || bo.getStatus().equals(Constants.FILE_STATUS.RECEIVED_REJECT)) {
                 bo.setStatus(Constants.FILE_STATUS.NEW);
                 bo.setDisplayStatus(getFileStatusName(Constants.FILE_STATUS.NEW));
                 if (processStatus.equals(Constants.FILE_STATUS.RECEIVED_REJECT)) {
@@ -297,7 +344,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     }
                 }
             }
-            if (processStatus.equals(Constants.FILE_STATUS.EVALUATED_TO_ADD) || processStatus.equals(Constants.FILE_STATUS.RECEIVED_REJECT_TO_ADD)) {
+            if (processStatus.equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)
+                    || processStatus.equals(Constants.FILE_STATUS.RECEIVED_REJECT_TO_ADD)) {
                 bo.setStatus(Constants.FILE_STATUS.NEW_TO_ADD);
                 bo.setDisplayStatus(getFileStatusName(Constants.FILE_STATUS.NEW_TO_ADD));
                 //update process
@@ -386,7 +434,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
              */
             p.setProcessType(Constants.PROCESS_TYPE.MAIN);
             //140404 binhnt53
-            if (bo.getStatus().equals(Constants.FILE_STATUS.NEW) || bo.getStatus().equals(Constants.FILE_STATUS.RECEIVED_REJECT)) {
+            if (bo.getStatus().equals(Constants.FILE_STATUS.NEW)
+                    || bo.getStatus().equals(Constants.FILE_STATUS.RECEIVED_REJECT)) {
                 p.setProcessStatus(Constants.FILE_STATUS.NEW); // De xu ly
             } else {
                 p.setProcessStatus(Constants.FILE_STATUS.NEW_TO_ADD); // De xu ly
@@ -548,7 +597,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
      * @param userName ten nguoi dung
      * @return
      */
-    public boolean onEvaluate(FilesForm form, Long deptId, String deptName, Long userId, String userName) {
+    public boolean onEvaluateOld(FilesForm form, Long deptId, String deptName, Long userId, String userName) {
         boolean bReturn = true;
         try {
             Files file = findById(form.getFileId());//lay thong tin chi tiet ho so
@@ -556,7 +605,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             if (file == null) {
                 bReturn = false;
             } else// Cap nhat trang thai ho so
-            if ((file.getStatus() != null && form.getStatus() != null)//141225 binhnt update phan quyen ho so tham dinh
+            if ((file.getStatus() != null
+                    && form.getStatus() != null)//141225 binhnt update phan quyen ho so tham dinh
                     && (file.getStatus().equals(Constants.FILE_STATUS.ASSIGNED)//da phan cong
                     || file.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE)//tra lai tham dinh lai
                     || file.getStatus().equals(Constants.FILE_STATUS.EVALUATED)//tra lai tham dinh lai
@@ -566,7 +616,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     || file.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_ADD)//da tra lai bo sung ho so
                     || file.getStatus().equals(Constants.FILE_STATUS.RECEIVED_TO_ADD))) {//da tiep nhan ho so sdbs
                 Long processStatus = file.getStatus();
-                if (form.getProductType() != null && form.getProductType() == 1L && form.getLeaderReviewId() != null) {//gui lanh dao tham dinh
+                if (form.getProductType() != null
+                        && form.getProductType() == 1L
+                        && form.getLeaderReviewId() != null) {//gui lanh dao tham dinh
                     //150114 binhn53 add check TP k dc tham dinh ho so
                     //new binhnt update 08102015
                     UsersDAOHE udaohe = new UsersDAOHE();
@@ -578,7 +630,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     //List<Users> lstUser = udaohe.findLstUserByPosition(deptId, Constants.POSITION.LEADER_OF_STAFF_T);//old 08102015 bbinhnt
                     if (lstUser != null) {
                         for (Users users : lstUser) {
-                            if (users.getUserId() != null && form.getLeaderReviewId().equals(users.getUserId())) {
+                            if (users.getUserId() != null
+                                    && form.getLeaderReviewId().equals(users.getUserId())) {
                                 return false;
                             }
                         }
@@ -589,14 +642,11 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     file.setLeaderReviewName(null);
                     file.setLeaderApproveId(null);
                     file.setLeaderApproveName(null);
-                } else//gui lanh dao de xem xet
-                if (form.getLeaderReviewId() != null) {
+                } else if (form.getLeaderReviewId() != null) {//gui lanh dao de xem xet
                     file.setLeaderReviewId(form.getLeaderReviewId());
                     file.setLeaderReviewName(form.getLeaderReviewName());
-                    //hieptq update 250415
                     file.setLeaderEvaluateId(null);
                     file.setLeaderEvaluateName(null);
-                    //hieptq update 250415
                     file.setLeaderApproveId(null);
                     file.setLeaderApproveName(null);
                 } else {
@@ -607,7 +657,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     lstLeader.add(Constants.POSITION.GDTT);
                     Users ubo = null;
                     List<Users> lstLeaderOfDept = udaohe.findLstUserByLstPosition(deptId, lstLeader);
-                    if (lstLeaderOfDept != null && lstLeaderOfDept.size() > 0) {
+                    if (lstLeaderOfDept != null
+                            && lstLeaderOfDept.size() > 0) {
                         ubo = lstLeaderOfDept.get(0);
                         file.setLeaderReviewId(ubo.getUserId());
                         file.setLeaderReviewName(ubo.getFullName());
@@ -616,9 +667,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     }
                 }
                 file.setStatus(form.getStatus());
-                //
                 // neu tra lai de bo sung -> thiet lap bien have_temp = 1 de biet ma tao ra history khi sua doi
-                //
                 if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {
                     file.setHaveTemp(1l);
                 }
@@ -626,21 +675,15 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 String dateTime = DateTimeUtils.convertDateToString(dateNow, "dd/MM/yyyy HH:mm");
                 //file.setStaffRequest(userName + " " + dateTime + ":\n" + form.getStaffRequest());
                 String prefix = userName + " " + dateTime + ":\n";
-                if (form.getStaffRequest() != null && form.getStaffRequest().trim().length() > 0) {
+                if (form.getStaffRequest()
+                        != null && form.getStaffRequest().trim().length() > 0) {
                     file.setStaffRequest(prefix + form.getStaffRequest());
                 }
-                /*noi dung bi lap binhnt53 141011
-                 if (file.getStaffRequest() != null) {
-                 file.setStaffRequest(prefix + form.getStaffRequest() + "\n" + file.getStaffRequest());
-                 } else {
-                 file.setStaffRequest(prefix + form.getStaffRequest());
-                 }
-                 */
                 file.setModifyDate(dateNow);
                 if (form.getEffectiveDate() != null) {
                     file.setEffectiveDate(form.getEffectiveDate());
                 } else {
-                    file.setEffectiveDate(3L);
+                    file.setEffectiveDate(Constants.EFFECTIVEDATE.THREE);
                 }
                 file.setIsTypeChange(form.getIsTypeChange());
                 file.setLastType(form.getLastType());
@@ -653,8 +696,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     getSession().update(p);
                 }
                 //!Cap nhat process cu
-
-                if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED) || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_ADD)) {
+                if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED)
+                        || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_ADD)) {
                     //tham xet dat, tham xet khong dat deu gui len cho to truong to tham xet xem xet
                     Process newP = new Process();
                     newP.setObjectId(form.getFileId());
@@ -668,7 +711,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     newP.setSendUser(userName);
 
                     newP.setReceiveDate(dateNow);
-                    if (form.getProductType() != null && form.getProductType() == 1L && file.getLeaderEvaluateId() != null) {
+                    if (form.getProductType()
+                            != null && form.getProductType() == 1L
+                            && file.getLeaderEvaluateId() != null) {
                         newP.setReceiveUserId(file.getLeaderEvaluateId());
                         newP.setReceiveUser(file.getLeaderEvaluateName());
                     } else if (file.getLeaderReviewId() != null) {
@@ -682,7 +727,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     newP.setStatus(0l); // Moi den chua xu ly
                     newP.setIsActive(1l);
                     getSession().save(newP);
-//                        boolean bInsertRC = insertRequestComment(file.getFileId(), form, userId, userName, deptId, deptName, dateNow);//binhnt53 150130
                 } else {
                     if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {
                         //tao thong bao yeu cau sdbs gui toi doanh nghiep
@@ -699,7 +743,13 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 
                         newP.setReceiveDate(dateNow);
                         ProcessDAOHE psdhe = new ProcessDAOHE();
-                        Process pold = psdhe.getProcessByAction(form.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, Constants.FILE_STATUS.NEW, Constants.FILE_STATUS.RECEIVED);
+                        Process pold = psdhe.getProcessByAction(
+                                form.getFileId(),
+                                Constants.Status.ACTIVE,
+                                Constants.OBJECT_TYPE.FILES,
+                                Constants.FILE_STATUS.NEW,
+                                Constants.FILE_STATUS.RECEIVED
+                        );
                         if (pold != null) {
                             newP.setReceiveGroupId(pold.getSendGroupId());
                             newP.setReceiveGroup(pold.getSendGroup());
@@ -755,6 +805,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         newP.setReceiveGroup(deptName);
                         newP.setReceiveGroupId(deptId);
                         getSession().save(newP);
+
 //cap nhat noi dung thong bao - tao noi dung thong bao
                         RequestComment rcbo = new RequestComment();
                         if (form.getStaffRequest() != null) {
@@ -803,11 +854,19 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         if (p != null) {
                             //lay process tham dinh ho so
                             ProcessDAOHE psdhe = new ProcessDAOHE();
-                            Process pold = psdhe.getProcessByAction(form.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, Constants.FILE_STATUS.EVALUATED, p.getStatus());
+                            Process pold = psdhe.getProcessByAction(
+                                    form.getFileId(),
+                                    Constants.Status.ACTIVE,
+                                    Constants.OBJECT_TYPE.FILES,
+                                    Constants.FILE_STATUS.EVALUATED,
+                                    p.getStatus()
+                            );
                             if (pold != null) {
                                 newP.setReceiveGroup(pold.getSendGroup());
                                 newP.setReceiveGroupId(pold.getSendGroupId());
-                                if (file != null && file.getStaffProcess() != null && file.getNameStaffProcess() != null) {
+                                if (file != null
+                                        && file.getStaffProcess() != null
+                                        && file.getNameStaffProcess() != null) {
                                     newP.setReceiveUser(file.getNameStaffProcess());
                                     newP.setReceiveUserId(file.getStaffProcess());
                                 } else {
@@ -815,11 +874,19 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                                     newP.setReceiveUserId(pold.getSendUserId());
                                 }
                             } else {//141218u binhnt53 fix loi ho so lanh dao phong tra lai voi
-                                pold = psdhe.getProcessByAction(form.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, Constants.FILE_STATUS.FEDBACK_TO_ADD, p.getStatus());
+                                pold = psdhe.getProcessByAction(
+                                        form.getFileId(),
+                                        Constants.Status.ACTIVE,
+                                        Constants.OBJECT_TYPE.FILES,
+                                        Constants.FILE_STATUS.FEDBACK_TO_ADD,
+                                        p.getStatus()
+                                );
                                 if (pold != null) {
                                     newP.setReceiveGroup(pold.getSendGroup());
                                     newP.setReceiveGroupId(pold.getSendGroupId());
-                                    if (file != null && file.getStaffProcess() != null && file.getNameStaffProcess() != null) {
+                                    if (file != null
+                                            && file.getStaffProcess() != null
+                                            && file.getNameStaffProcess() != null) {
                                         newP.setReceiveUser(file.getNameStaffProcess());
                                         newP.setReceiveUserId(file.getStaffProcess());
                                     } else {
@@ -839,65 +906,81 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
                 //insert noi dung tham dinh
                 if (form.getEvaluationRecordsForm() != null) {
-                    EvaluationRecordsForm evaluationRecordsForm = new EvaluationRecordsForm();
+                    EvaluationRecordsForm evaRecordForm = new EvaluationRecordsForm();
 
-                    evaluationRecordsForm.setCreateDate(dateNow);
-                    evaluationRecordsForm.setSendDate(file.getSendDate());
-                    evaluationRecordsForm.setBusinessName(file.getBusinessName());
-                    evaluationRecordsForm.setBusinessAddress(file.getBusinessAddress());
-                    evaluationRecordsForm.setProductName(file.getProductName());
-                    evaluationRecordsForm.setLegal(form.getEvaluationRecordsForm().getLegal());
-                    evaluationRecordsForm.setLegalContent(form.getEvaluationRecordsForm().getLegalContent());
-                    evaluationRecordsForm.setFoodSafetyQuality(form.getEvaluationRecordsForm().getFoodSafetyQuality());
-                    evaluationRecordsForm.setFoodSafetyQualityContent(form.getEvaluationRecordsForm().getFoodSafetyQualityContent());
-                    evaluationRecordsForm.setEffectUtility(form.getEvaluationRecordsForm().getEffectUtility());
-                    evaluationRecordsForm.setEffectUtilityContent(form.getEvaluationRecordsForm().getEffectUtilityContent());
-                    evaluationRecordsForm.setFilesStatus(file.getStatus());
-                    evaluationRecordsForm.setMainContent(file.getStaffRequest());
-                    evaluationRecordsForm.setFirstStaffId(userId);
-                    evaluationRecordsForm.setFirstStaffName(userName);
-                    evaluationRecordsForm.setSecondStaffId(userId);
-                    evaluationRecordsForm.setSecondStaffName(userName);
-                    evaluationRecordsForm.setThirdStaffId(userId);
-                    evaluationRecordsForm.setThirdStaffName(userName);
-                    evaluationRecordsForm.setLeederStaffId(userId);
-                    evaluationRecordsForm.setLeederStaffName(userName);
-                    evaluationRecordsForm.setFilesId(file.getFileId());
+                    evaRecordForm.setCreateDate(dateNow);
+                    evaRecordForm.setSendDate(file.getSendDate());
+                    evaRecordForm.setBusinessName(file.getBusinessName());
+                    evaRecordForm.setBusinessAddress(file.getBusinessAddress());
+                    evaRecordForm.setProductName(file.getProductName());
+                    evaRecordForm.setLegal(form.getEvaluationRecordsForm().getLegal());
+                    evaRecordForm.setLegalContent(form.getEvaluationRecordsForm().getLegalContent());
+                    evaRecordForm.setFoodSafetyQuality(form.getEvaluationRecordsForm().getFoodSafetyQuality());
+                    evaRecordForm.setFoodSafetyQualityContent(form.getEvaluationRecordsForm().getFoodSafetyQualityContent());
+                    evaRecordForm.setEffectUtility(form.getEvaluationRecordsForm().getEffectUtility());
+                    evaRecordForm.setEffectUtilityContent(form.getEvaluationRecordsForm().getEffectUtilityContent());
+                    evaRecordForm.setFilesStatus(file.getStatus());
+                    evaRecordForm.setMainContent(file.getStaffRequest());
+                    evaRecordForm.setFirstStaffId(userId);
+                    evaRecordForm.setFirstStaffName(userName);
+                    evaRecordForm.setSecondStaffId(userId);
+                    evaRecordForm.setSecondStaffName(userName);
+                    evaRecordForm.setThirdStaffId(userId);
+                    evaRecordForm.setThirdStaffName(userName);
+                    evaRecordForm.setLeederStaffId(userId);
+                    evaRecordForm.setLeederStaffName(userName);
+                    evaRecordForm.setFilesId(file.getFileId());
 
                     EvaluationRecords evaluationRecordsBo;
-                    evaluationRecordsBo = evaluationRecordsForm.convertToEntity();
+                    evaluationRecordsBo = evaRecordForm.convertToEntity();
                     getSession().save(evaluationRecordsBo);
-                    boolean bInsertRC = insertRequestComment(file.getFileId(), form, userId, userName, deptId, deptName, dateNow);//binhnt53 150130
+                    boolean bInsertRC = insertRequestComment(
+                            file.getFileId(),
+                            form,
+                            userId,
+                            userName,
+                            deptId,
+                            deptName,
+                            dateNow
+                    );//binhnt53 150130
                 } else if (form.getEvaluationRecordsFormOnGrid() != null) {
-                    EvaluationRecordsFormOnGrid evaluationRecordsForm = new EvaluationRecordsFormOnGrid();
+                    EvaluationRecordsFormOnGrid evaRecordForm = new EvaluationRecordsFormOnGrid();
 
-                    evaluationRecordsForm.setCreateDate(dateNow);
-                    evaluationRecordsForm.setSendDate(file.getSendDate());
-                    evaluationRecordsForm.setBusinessName(file.getBusinessName());
-                    evaluationRecordsForm.setBusinessAddress(file.getBusinessAddress());
-                    evaluationRecordsForm.setProductName(file.getProductName());
-                    evaluationRecordsForm.setLegal(form.getEvaluationRecordsForm().getLegal());
-                    evaluationRecordsForm.setLegalContent(form.getEvaluationRecordsForm().getLegalContent());
-                    evaluationRecordsForm.setFoodSafetyQuality(form.getEvaluationRecordsForm().getFoodSafetyQuality());
-                    evaluationRecordsForm.setFoodSafetyQualityContent(form.getEvaluationRecordsForm().getFoodSafetyQualityContent());
-                    evaluationRecordsForm.setEffectUtility(form.getEvaluationRecordsForm().getEffectUtility());
-                    evaluationRecordsForm.setEffectUtilityContent(form.getEvaluationRecordsForm().getEffectUtilityContent());
-                    evaluationRecordsForm.setFilesStatus(file.getStatus());
-                    evaluationRecordsForm.setMainContent(file.getStaffRequest());
-                    evaluationRecordsForm.setFirstStaffId(userId);
-                    evaluationRecordsForm.setFirstStaffName(userName);
-                    evaluationRecordsForm.setSecondStaffId(userId);
-                    evaluationRecordsForm.setSecondStaffName(userName);
-                    evaluationRecordsForm.setThirdStaffId(userId);
-                    evaluationRecordsForm.setThirdStaffName(userName);
-                    evaluationRecordsForm.setLeederStaffId(userId);
-                    evaluationRecordsForm.setLeederStaffName(userName);
-                    evaluationRecordsForm.setFilesId(file.getFileId());
+                    evaRecordForm.setCreateDate(dateNow);
+                    evaRecordForm.setSendDate(file.getSendDate());
+                    evaRecordForm.setBusinessName(file.getBusinessName());
+                    evaRecordForm.setBusinessAddress(file.getBusinessAddress());
+                    evaRecordForm.setProductName(file.getProductName());
+                    evaRecordForm.setLegal(form.getEvaluationRecordsForm().getLegal());
+                    evaRecordForm.setLegalContent(form.getEvaluationRecordsForm().getLegalContent());
+                    evaRecordForm.setFoodSafetyQuality(form.getEvaluationRecordsForm().getFoodSafetyQuality());
+                    evaRecordForm.setFoodSafetyQualityContent(form.getEvaluationRecordsForm().getFoodSafetyQualityContent());
+                    evaRecordForm.setEffectUtility(form.getEvaluationRecordsForm().getEffectUtility());
+                    evaRecordForm.setEffectUtilityContent(form.getEvaluationRecordsForm().getEffectUtilityContent());
+                    evaRecordForm.setFilesStatus(file.getStatus());
+                    evaRecordForm.setMainContent(file.getStaffRequest());
+                    evaRecordForm.setFirstStaffId(userId);
+                    evaRecordForm.setFirstStaffName(userName);
+                    evaRecordForm.setSecondStaffId(userId);
+                    evaRecordForm.setSecondStaffName(userName);
+                    evaRecordForm.setThirdStaffId(userId);
+                    evaRecordForm.setThirdStaffName(userName);
+                    evaRecordForm.setLeederStaffId(userId);
+                    evaRecordForm.setLeederStaffName(userName);
+                    evaRecordForm.setFilesId(file.getFileId());
 
                     EvaluationRecords evaluationRecordsBo;
-                    evaluationRecordsBo = evaluationRecordsForm.convertToEntity();
+                    evaluationRecordsBo = evaRecordForm.convertToEntity();
                     getSession().save(evaluationRecordsBo);
-                    boolean bInsertRC = insertRequestComment(file.getFileId(), form, userId, userName, deptId, deptName, dateNow);//binhnt53 150130
+                    boolean bInsertRC = insertRequestComment(
+                            file.getFileId(),
+                            form,
+                            userId,
+                            userName,
+                            deptId,
+                            deptName,
+                            dateNow
+                    );//binhnt53 150130
                 }
 
                 if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {//140721 binhnt
@@ -926,7 +1009,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                      */
                     //email
                     MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
-                    String msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: Đã thông báo yêu cầu sửa đổi bổ sung.";
+                    String msge = "Hồ sơ mã: " + file.getFileCode()
+                            + " của doanh nghiệp: " + file.getBusinessName()
+                            + " đang trong trạng thái: Đã thông báo yêu cầu sửa đổi bổ sung.";
                     msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
                 }//!140721
                 update(file);
@@ -7119,5 +7204,471 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             return false;
         }
         return true;
+    }
+
+    public boolean onEvaluate(FilesForm form, Long deptId, String deptName, Long userId, String userName) {
+        boolean bReturn = true;
+        try {
+            Files file = findById(form.getFileId());//lay thong tin chi tiet ho so
+            Date dateNow = getSysdate();
+            UsersDAOHE udaohe = new UsersDAOHE();
+            if (file == null) {
+                bReturn = false;
+            } else// Cap nhat trang thai ho so
+            if ((file.getStatus() != null
+                    && form.getStatus() != null)//141225 binhnt update phan quyen ho so tham dinh
+                    && (file.getStatus().equals(Constants.FILE_STATUS.ASSIGNED)//da phan cong
+                    || file.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE)//tra lai tham dinh lai
+                    || file.getStatus().equals(Constants.FILE_STATUS.EVALUATED)//tham dinh
+                    || file.getStatus().equals(Constants.FILE_STATUS.REVIEW_TO_ADD)//đã xem xét nội dung cv sđbs LDC
+                    || file.getStatus().equals(Constants.FILE_STATUS.REVIEWED_TO_ADD)//Đã xem xét yêu cầu SĐBS LDC
+                    || file.getStatus().equals(Constants.FILE_STATUS.APPROVE_TO_ADD)//đã phê duyệt nội dung thông báo VT
+                    || file.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_ADD)//da tra lai bo sung ho so
+                    || file.getStatus().equals(Constants.FILE_STATUS.RECEIVED_TO_ADD))) {//da tiep nhan ho so sdbs
+                Long processStatus = file.getStatus();
+                file.setStatus(form.getStatus());
+                /*
+                 khi tham dinh ho so cvien thuc hien tham dinh
+                 neu la cv chuyen pp hoac truong phong
+                 neu la pp chuyen tp hoac ldc
+                 */
+                boolean isReview = false;
+                if (form.getLeaderReviewId() != null) {//gui lanh dao tham dinh
+                    udaohe = new UsersDAOHE();
+                    Users uReceive = udaohe.findById(form.getLeaderReviewId());
+                    if (form.getLeaderReviewName() == null || form.getLeaderReviewName().equals("")) {
+                        form.setLeaderReviewName(uReceive.getFullName());
+                    }
+                    List<String> lstStaff = new ArrayList<String>();
+                    lstStaff.add(Constants.POSITION.VFA_CV);
+                    lstStaff.add(Constants.POSITION.NV);
+                    if (udaohe.checkRoleUserOfLst(deptId, userId, lstStaff)) {
+                        if (udaohe.checkTruongPhong(form.getLeaderReviewId())) {
+                            file.setLeaderReviewId(form.getLeaderReviewId());
+                            file.setLeaderReviewName(form.getLeaderReviewName());
+                            file.setLeaderEvaluateId(null);
+                            file.setLeaderEvaluateName(null);
+                            file.setLeaderApproveId(null);
+                            file.setLeaderApproveName(null);
+                        } else {
+                            file.setLeaderEvaluateId(form.getLeaderReviewId());
+                            file.setLeaderEvaluateName(form.getLeaderReviewName());
+                            file.setLeaderReviewId(null);
+                            file.setLeaderReviewName(null);
+                            file.setLeaderApproveId(null);
+                            file.setLeaderApproveName(null);
+                        }
+                    } else {
+                        List<String> lstTP = new ArrayList<String>();
+                        lstTP.add(Constants.POSITION.LEADER_OF_STAFF_T);
+                        lstTP.add(Constants.POSITION.GDTT);
+                        if (udaohe.checkRoleUserOfLst(deptId, form.getLeaderReviewId(), lstTP)) {
+                            file.setLeaderReviewId(form.getLeaderReviewId());
+                            file.setLeaderReviewName(form.getLeaderReviewName());
+                            file.setLeaderEvaluateId(null);
+                            file.setLeaderEvaluateName(null);
+                            file.setLeaderApproveId(null);
+                            file.setLeaderApproveName(null);
+                        } else {
+                            file.setLeaderReviewId(null);
+                            file.setLeaderReviewName(null);
+                            file.setLeaderEvaluateId(null);
+                            file.setLeaderEvaluateName(null);
+                            file.setLeaderApproveId(form.getLeaderReviewId());
+                            file.setLeaderApproveName(form.getLeaderReviewName());
+                            if (file.getStatus().equals(Constants.FILE_STATUS.EVALUATED)) {
+                                file.setStatus(Constants.FILE_STATUS.REVIEWED);
+                            } else {
+                                if (file.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_ADD)) {
+                                    file.setStatus(Constants.FILE_STATUS.REVIEW_TO_ADD);
+                                }
+                            }
+                            isReview = true;
+                        }
+                    }
+                } else {
+                    udaohe = new UsersDAOHE();
+                    List<String> lstLeader = new ArrayList<String>();
+                    lstLeader.add(Constants.POSITION.LEADER_OF_STAFF_T);
+                    lstLeader.add(Constants.POSITION.GDTT);
+                    Users ubo = null;
+                    List<Users> lstLeaderOfDept = udaohe.findLstUserByLstPosition(deptId, lstLeader);
+                    if (lstLeaderOfDept != null
+                            && lstLeaderOfDept.size() > 0) {
+                        ubo = lstLeaderOfDept.get(0);
+                        file.setLeaderReviewId(ubo.getUserId());
+                        file.setLeaderReviewName(ubo.getFullName());
+                        file.setLeaderApproveId(null);
+                        file.setLeaderApproveName(null);
+                    }
+                }
+                // neu tra lai de bo sung -> thiet lap bien have_temp = 1 de biet ma tao ra history khi sua doi
+                if (file.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {
+                    file.setHaveTemp(1l);
+                }
+                file.setDisplayStatus(getFileStatusName(file.getStatus()));
+                String dateTime = DateTimeUtils.convertDateToString(dateNow, "dd/MM/yyyy HH:mm");
+                //file.setStaffRequest(userName + " " + dateTime + ":\n" + form.getStaffRequest());
+                String prefix = userName + " " + dateTime + ":\n";
+                if (form.getStaffRequest()
+                        != null && form.getStaffRequest().trim().length() > 0) {
+                    file.setStaffRequest(prefix + form.getStaffRequest());
+                }
+                file.setModifyDate(dateNow);
+                if (form.getEffectiveDate() != null) {
+                    file.setEffectiveDate(form.getEffectiveDate());
+                } else {
+                    file.setEffectiveDate(Constants.EFFECTIVEDATE.THREE);
+                }
+                file.setIsTypeChange(form.getIsTypeChange());
+                file.setLastType(form.getLastType());
+                //Cap nhat process cu
+                ProcessDAOHE pdhe = new ProcessDAOHE();
+                Process p = pdhe.getProcessByAction(
+                        form.getFileId(),
+                        Constants.Status.ACTIVE,
+                        Constants.OBJECT_TYPE.FILES,
+                        processStatus,
+                        Constants.FILE_STATUS.NEW_CREATE
+                );
+                if (p != null) {
+                    p.setStatus(file.getStatus());
+                    p.setLastestComment(form.getStaffRequest());
+                    getSession().update(p);
+                }
+                //!Cap nhat process cu
+                if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED)
+                        || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_ADD)) {
+                    //tham xet dat, tham xet khong dat deu gui len cho to truong to tham xet xem xet
+                    Process newP = new Process();
+                    newP.setObjectId(form.getFileId());
+                    newP.setObjectType(Constants.OBJECT_TYPE.FILES);
+                    newP.setProcessType(Constants.PROCESS_TYPE.MAIN);
+
+                    newP.setSendDate(dateNow);
+                    newP.setSendGroup(deptName);
+                    newP.setSendGroupId(deptId);
+                    newP.setSendUserId(userId);
+                    newP.setSendUser(userName);
+
+                    newP.setReceiveDate(dateNow);
+                    if (file.getLeaderEvaluateId() != null) {
+                        newP.setReceiveUserId(file.getLeaderEvaluateId());
+                        newP.setReceiveUser(file.getLeaderEvaluateName());
+                    } else if (file.getLeaderReviewId() != null) {
+                        newP.setReceiveUserId(file.getLeaderReviewId());
+                        newP.setReceiveUser(file.getLeaderReviewName());
+                    } else if (file.getLeaderApproveId() != null) {
+                        newP.setReceiveUserId(file.getLeaderApproveId());
+                        newP.setReceiveUser(file.getLeaderApproveName());
+                    }
+
+                    if (!isReview) {
+                        newP.setReceiveGroup(deptName);
+                        newP.setReceiveGroupId(deptId);
+                    } else {
+                        Users leaderApprove = udaohe.findById(file.getLeaderApproveId());
+                        newP.setReceiveGroup(leaderApprove.getDeptName());
+                        newP.setReceiveGroupId(leaderApprove.getDeptId());
+                    }
+
+                    newP.setProcessStatus(file.getStatus()); // De xu ly
+                    newP.setStatus(0l); // Moi den chua xu ly
+                    newP.setIsActive(1l);
+                    getSession().save(newP);
+                } else {
+                    if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {
+                        //tao thong bao yeu cau sdbs gui toi doanh nghiep
+                        Process newP = new Process();
+                        newP.setObjectId(form.getFileId());
+                        newP.setObjectType(Constants.OBJECT_TYPE.FILES);
+                        newP.setProcessType(Constants.PROCESS_TYPE.MAIN);
+
+                        newP.setSendDate(dateNow);
+                        newP.setSendGroup(deptName);
+                        newP.setSendGroupId(deptId);
+                        newP.setSendUserId(userId);
+                        newP.setSendUser(userName);
+
+                        newP.setReceiveDate(dateNow);
+                        ProcessDAOHE psdhe = new ProcessDAOHE();
+                        Process pold = psdhe.getProcessByAction(
+                                form.getFileId(),
+                                Constants.Status.ACTIVE,
+                                Constants.OBJECT_TYPE.FILES,
+                                Constants.FILE_STATUS.NEW,
+                                Constants.FILE_STATUS.RECEIVED
+                        );
+                        if (pold != null) {
+                            newP.setReceiveGroupId(pold.getSendGroupId());
+                            newP.setReceiveGroup(pold.getSendGroup());
+                            newP.setReceiveUserId(pold.getSendUserId());
+                            newP.setReceiveUser(pold.getSendUser());
+                        } else {
+                            newP.setReceiveGroup(deptName);
+                            newP.setReceiveGroupId(deptId);
+                        }
+
+                        newP.setProcessStatus(file.getStatus()); //De xu ly
+                        newP.setStatus(0l); //Moi den chua xu ly
+                        newP.setIsActive(1l);
+
+                        getSession().save(newP);
+                        //xóa bản ghi temp trước nếu có (lưu vào vùng lưu trữ)
+                        updateSetNotLastIsTemp(file.getFileId());
+                        //xóa bản ghi temp trước nếu có (lưu vào vùng lưu trữ)
+                        ProcessCommentDAOHE pcdaohe = new ProcessCommentDAOHE();
+                        int a = pcdaohe.updateSetNotLastIsTemp(file.getFileId());
+                    } else if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATE_TO_ADD)) {//da soan du thao thong bao sdbs ho so                           
+                        /*
+                         ho so sau khi da tra lai chuyen vien de soan du thao tb sdbs
+                         cv vao tao ban du thao
+                         sau khi tao xong luu
+                         gui noi dung cho lanh dao phong xem xet
+                         */
+                        Process newP = new Process();
+                        newP.setObjectId(form.getFileId());
+                        newP.setObjectType(Constants.OBJECT_TYPE.FILES);
+                        newP.setProcessType(Constants.PROCESS_TYPE.MAIN);
+                        newP.setProcessStatus(file.getStatus()); // De xu ly
+                        newP.setStatus(Constants.ACTIVE_STATUS.DEACTIVE);// Moi den chua xu ly-150120
+                        newP.setIsActive(Constants.ACTIVE_STATUS.ACTIVE);//-150120
+
+                        newP.setSendDate(dateNow);
+                        newP.setSendGroup(deptName);
+                        newP.setSendGroupId(deptId);
+                        newP.setSendUserId(userId);
+                        newP.setSendUser(userName);
+
+                        newP.setReceiveDate(dateNow);
+                        if (form.getLeaderReviewId() != null) {
+                            newP.setReceiveUserId(form.getLeaderReviewId());
+                            file.setLeaderReviewId(form.getLeaderReviewId());
+
+                        }
+                        if (form.getLeaderReviewName() != null) {
+                            newP.setReceiveUser(form.getLeaderReviewName());
+                            file.setLeaderReviewName(form.getLeaderReviewName());
+                        }
+                        newP.setReceiveGroup(deptName);
+                        newP.setReceiveGroupId(deptId);
+                        getSession().save(newP);
+
+//cap nhat noi dung thong bao - tao noi dung thong bao
+                        RequestComment rcbo = new RequestComment();
+                        if (form.getStaffRequest() != null) {
+                            rcbo.setContent(form.getStaffRequest());
+                        } else {
+                            rcbo.setContent("Chuyên viên chưa có nội dung.");
+                        }
+                        rcbo.setCreateBy(userId);
+                        rcbo.setCreateDate(dateNow);
+                        rcbo.setUserId(userId);
+                        rcbo.setUserName(userName);
+                        rcbo.setStatus(1L);
+                        rcbo.setIsActive(1L);
+                        rcbo.setGroupId(deptId);
+                        rcbo.setGroupName(deptName);
+                        rcbo.setObjectId(form.getFileId());
+                        rcbo.setRequestType(Constants.REQUEST_COMMENT_TYPE.TBSDBS);//-150120
+                        rcbo.setIsLastChange(Constants.ACTIVE_STATUS.ACTIVE);//-150120
+                        //!luu noi dung du thao
+                        //u150119 binhnt53 update lại nội dung thông tin.
+                        RequestCommentDAOHE rqdaohe = new RequestCommentDAOHE();
+                        RequestComment lastRQBo = rqdaohe.findLastRequestComment(file.getFileId(), Constants.ACTIVE_STATUS.ACTIVE);
+                        if (lastRQBo != null) {
+                            rcbo.setLastContent(lastRQBo.getContent());
+                            lastRQBo.setIsLastChange(Constants.ACTIVE_STATUS.DEACTIVE);
+                            getSession().update(lastRQBo);
+                        }
+                        getSession().save(rcbo);
+//!u150119 binhnt53 update lại nội dung thông tin.
+                    } else if ((form.getStatus()).equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE)) {//hieptq update 230415
+                        Process newP = new Process();
+                        newP.setObjectId(form.getFileId());
+                        newP.setObjectType(Constants.OBJECT_TYPE.FILES);
+                        newP.setSendDate(dateNow);
+                        newP.setSendGroup(deptName);
+                        newP.setSendGroupId(deptId);
+                        newP.setSendUserId(userId);
+                        newP.setSendUser(userName);
+                        newP.setProcessStatus(p.getStatus()); // De xu ly
+                        newP.setProcessType(Constants.PROCESS_TYPE.MAIN);
+                        newP.setStatus(Constants.FILE_STATUS.NEW_CREATE); // Moi den chua xu ly
+                        newP.setIsActive(Constants.ACTIVE_STATUS.ACTIVE);
+                        newP.setReceiveDate(dateNow);
+                        if (p != null) {
+                            //lay process tham dinh ho so
+                            ProcessDAOHE psdhe = new ProcessDAOHE();
+                            Process pold = psdhe.getProcessByAction(
+                                    form.getFileId(),
+                                    Constants.Status.ACTIVE,
+                                    Constants.OBJECT_TYPE.FILES,
+                                    Constants.FILE_STATUS.EVALUATED,
+                                    p.getStatus()
+                            );
+                            if (pold != null) {
+                                newP.setReceiveGroup(pold.getSendGroup());
+                                newP.setReceiveGroupId(pold.getSendGroupId());
+                                if (file != null
+                                        && file.getStaffProcess() != null
+                                        && file.getNameStaffProcess() != null) {
+                                    newP.setReceiveUser(file.getNameStaffProcess());
+                                    newP.setReceiveUserId(file.getStaffProcess());
+                                } else {
+                                    newP.setReceiveUser(pold.getSendUser());
+                                    newP.setReceiveUserId(pold.getSendUserId());
+                                }
+                            } else {//141218u binhnt53 fix loi ho so lanh dao phong tra lai voi
+                                pold = psdhe.getProcessByAction(
+                                        form.getFileId(),
+                                        Constants.Status.ACTIVE,
+                                        Constants.OBJECT_TYPE.FILES,
+                                        Constants.FILE_STATUS.FEDBACK_TO_ADD,
+                                        p.getStatus()
+                                );
+                                if (pold != null) {
+                                    newP.setReceiveGroup(pold.getSendGroup());
+                                    newP.setReceiveGroupId(pold.getSendGroupId());
+                                    if (file != null
+                                            && file.getStaffProcess() != null
+                                            && file.getNameStaffProcess() != null) {
+                                        newP.setReceiveUser(file.getNameStaffProcess());
+                                        newP.setReceiveUserId(file.getStaffProcess());
+                                    } else {
+                                        newP.setReceiveUser(pold.getSendUser());
+                                        newP.setReceiveUserId(pold.getSendUserId());
+                                    }
+                                } else if (p != null) {// Gui lai cho chinh nguoi gui
+                                    newP.setReceiveGroup(p.getSendGroup());
+                                    newP.setReceiveGroupId(p.getSendGroupId());
+                                    newP.setReceiveUser(p.getSendUser());
+                                    newP.setReceiveUserId(p.getSendUserId());
+                                }
+                            }
+                        }
+                        getSession().save(newP);
+                    }
+                }
+                //insert noi dung tham dinh
+                if (form.getEvaluationRecordsForm() != null) {
+                    EvaluationRecordsForm evaRecordForm = new EvaluationRecordsForm();
+
+                    evaRecordForm.setCreateDate(dateNow);
+                    evaRecordForm.setSendDate(file.getSendDate());
+                    evaRecordForm.setBusinessName(file.getBusinessName());
+                    evaRecordForm.setBusinessAddress(file.getBusinessAddress());
+                    evaRecordForm.setProductName(file.getProductName());
+                    evaRecordForm.setLegal(form.getEvaluationRecordsForm().getLegal());
+                    evaRecordForm.setLegalContent(form.getEvaluationRecordsForm().getLegalContent());
+                    evaRecordForm.setFoodSafetyQuality(form.getEvaluationRecordsForm().getFoodSafetyQuality());
+                    evaRecordForm.setFoodSafetyQualityContent(form.getEvaluationRecordsForm().getFoodSafetyQualityContent());
+                    evaRecordForm.setEffectUtility(form.getEvaluationRecordsForm().getEffectUtility());
+                    evaRecordForm.setEffectUtilityContent(form.getEvaluationRecordsForm().getEffectUtilityContent());
+                    evaRecordForm.setFilesStatus(file.getStatus());
+                    evaRecordForm.setMainContent(file.getStaffRequest());
+                    evaRecordForm.setFirstStaffId(userId);
+                    evaRecordForm.setFirstStaffName(userName);
+                    evaRecordForm.setSecondStaffId(userId);
+                    evaRecordForm.setSecondStaffName(userName);
+                    evaRecordForm.setThirdStaffId(userId);
+                    evaRecordForm.setThirdStaffName(userName);
+                    evaRecordForm.setLeederStaffId(userId);
+                    evaRecordForm.setLeederStaffName(userName);
+                    evaRecordForm.setFilesId(file.getFileId());
+
+                    EvaluationRecords evaluationRecordsBo;
+                    evaluationRecordsBo = evaRecordForm.convertToEntity();
+                    getSession().save(evaluationRecordsBo);
+                    boolean bInsertRC = insertRequestComment(
+                            file.getFileId(),
+                            form,
+                            userId,
+                            userName,
+                            deptId,
+                            deptName,
+                            dateNow
+                    );//binhnt53 150130
+                } else if (form.getEvaluationRecordsFormOnGrid() != null) {
+                    EvaluationRecordsFormOnGrid evaRecordForm = new EvaluationRecordsFormOnGrid();
+
+                    evaRecordForm.setCreateDate(dateNow);
+                    evaRecordForm.setSendDate(file.getSendDate());
+                    evaRecordForm.setBusinessName(file.getBusinessName());
+                    evaRecordForm.setBusinessAddress(file.getBusinessAddress());
+                    evaRecordForm.setProductName(file.getProductName());
+                    evaRecordForm.setLegal(form.getEvaluationRecordsForm().getLegal());
+                    evaRecordForm.setLegalContent(form.getEvaluationRecordsForm().getLegalContent());
+                    evaRecordForm.setFoodSafetyQuality(form.getEvaluationRecordsForm().getFoodSafetyQuality());
+                    evaRecordForm.setFoodSafetyQualityContent(form.getEvaluationRecordsForm().getFoodSafetyQualityContent());
+                    evaRecordForm.setEffectUtility(form.getEvaluationRecordsForm().getEffectUtility());
+                    evaRecordForm.setEffectUtilityContent(form.getEvaluationRecordsForm().getEffectUtilityContent());
+                    evaRecordForm.setFilesStatus(file.getStatus());
+                    evaRecordForm.setMainContent(file.getStaffRequest());
+                    evaRecordForm.setFirstStaffId(userId);
+                    evaRecordForm.setFirstStaffName(userName);
+                    evaRecordForm.setSecondStaffId(userId);
+                    evaRecordForm.setSecondStaffName(userName);
+                    evaRecordForm.setThirdStaffId(userId);
+                    evaRecordForm.setThirdStaffName(userName);
+                    evaRecordForm.setLeederStaffId(userId);
+                    evaRecordForm.setLeederStaffName(userName);
+                    evaRecordForm.setFilesId(file.getFileId());
+
+                    EvaluationRecords evaluationRecordsBo;
+                    evaluationRecordsBo = evaRecordForm.convertToEntity();
+                    getSession().save(evaluationRecordsBo);
+                    boolean bInsertRC = insertRequestComment(
+                            file.getFileId(),
+                            form,
+                            userId,
+                            userName,
+                            deptId,
+                            deptName,
+                            dateNow
+                    );//binhnt53 150130
+                }
+
+                if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {//140721 binhnt
+                    try {//140627 THIET LAP HAN SDBS HO SO
+                        ResourceBundle rb = ResourceBundle.getBundle("config");
+                        Procedure procedurebo;
+                        ProcedureDAOHE procedureDAOHE = new ProcedureDAOHE();
+                        procedurebo = procedureDAOHE.findById(file.getFileType());
+                        int SD = 0;
+                        try {
+                            SD = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_SD"));
+                        } catch (NumberFormatException ex) {
+                            log.error(ex.getMessage());
+                        }
+                        if (SD > 0) {
+                            file.setDeadlineAddition(getDateWorkingTime(SD));
+                        }
+                    } catch (Exception ex) {
+                        log.error(ex.getMessage());
+                    }//!140627 THIET LAP HAN SDBS HO SO
+                    //sms
+                    /* disable send sms binhnt53 150205
+                     MessageSmsDAOHE msdhe = new MessageSmsDAOHE();
+                     String msg = "Ho so ma: " + file.getFileCode() + " cua doanh nghiep: " + file.getBusinessName() + " dang trong trang thai: da thong bao yeu cau sdbs";
+                     msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
+                     */
+                    //email
+                    MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
+                    String msge = "Hồ sơ mã: " + file.getFileCode()
+                            + " của doanh nghiệp: " + file.getBusinessName()
+                            + " đang trong trạng thái: Đã thông báo yêu cầu sửa đổi bổ sung.";
+                    msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
+                }//!140721
+                update(file);
+            } else {
+                log.error("Lỗi hệ thống: Phân quyền xử lý hồ sơ: " + file.getFileCode());
+                return false;
+            }
+        } catch (Exception en) {
+            log.error(en.getMessage());
+            bReturn = false;
+        }
+        return bReturn;
     }
 }

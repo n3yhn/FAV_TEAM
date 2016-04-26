@@ -52,13 +52,13 @@
                                                                                             <td width="200"><strong>Hướng dẫn sử dụng hệ thống</strong></td> 
                                                                                             <td width="850">
                                                                                                 <p class="texttble">
-                                                                                                    1. <a href="share/homepage/Share/HDSD_QT01_13004_HQMC_ATTP_Kytudacbiet_v1.2.docx"> Hướng dẫn nhập ký tự đặc biệt </a>
+                                                                                                    1. <a href="http://vfa.gov.vn/HDSD_QT01_13004_HQMC_ATTP_Kytudacbiet_v1.2.rar"> Hướng dẫn nhập ký tự đặc biệt </a>
                                                                                                 </p>
                                                                                                 <p class="texttble">
-                                                                                                    2. <a href="share/homepage/Share/HDSD_QT01_13004_HQMC_ATTP_Doanhnghiep_v1.3.docx"> Hướng dẫn sử dụng dành cho Doanh nghiệp </a><span style="color:red">*</span>
+                                                                                                    2. <a href="http://vfa.gov.vn/HDSD_QT01_13004_HQMC_ATTP_Doanhnghiep_v1.3.rar"> Hướng dẫn sử dụng dành cho Doanh nghiệp </a><span style="color:red">*</span>
                                                                                                 </p>
                                                                                                 <p class="texttble">
-                                                                                                    3. <a href="share/homepage/Share/HDSD_ATTP_Dang_ky_khai_bao_truc_tuyen (Quy trinh 4 buoc)_v1.1.docx"> Hướng dẫn khai báo trực tuyến - Quy trình 4 bước </a>
+                                                                                                    3. <a href="http://vfa.gov.vn/HDSD_ATTP_Dang_ky_khai_bao_truc_tuyen (Quy trinh 4 buoc)_v1.1.rar"> Hướng dẫn khai báo trực tuyến - Quy trình 4 bước </a>
                                                                                                 </p>
                                                                                             </td> 
                                                                                         </tr> 

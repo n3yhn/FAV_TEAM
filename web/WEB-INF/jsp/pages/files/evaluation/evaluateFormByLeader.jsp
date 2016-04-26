@@ -92,19 +92,19 @@
                 <sd:Textarea key="" id="evaluationRecordsFormByLeader.effectUtilityContent" name="createForm.evaluationRecordsForm.effectUtilityContent" rows="5" cssStyle="width:98%" maxlength="2000" trim="true"/>
             </td>
         </tr>
-        <!--        <tr>                    
-                    <td align="right">
-        <sd:Label key="Chọn cán bộ xem xét"/>
-    </td>
-    <td>
-        <sd:SelectBox  cssStyle="width:98%"
-                       id="evaluationRecordsFormByLeader.leaderReviewId"
-                       key="" data="lstLeaderOfStaff" valueField="userId" labelField="fullName"
-                       name="createForm.leaderReviewId" >
-        </sd:SelectBox>
-        <sd:TextBox id="evaluationRecordsFormByLeader.leaderReviewName" name="createForm.leaderReviewName" cssStyle="display:none" key=""/>
-    </td>
-</tr>-->
+        <tr>                    
+            <td align="right">
+                <sd:Label key="Chọn cán bộ xem xét"/>
+            </td>
+            <td>
+                <sd:SelectBox  cssStyle="width:98%"
+                               id="evaluationRecordsFormByLeader.leaderReviewId"
+                               key="" data="lstLeaderOfStaff" valueField="userId" labelField="fullName"
+                               name="createForm.leaderReviewId" >
+                </sd:SelectBox>
+                <sd:TextBox id="evaluationRecordsFormByLeader.leaderReviewName" name="createForm.leaderReviewName" cssStyle="display:none" key=""/>
+            </td>
+        </tr>
         <tr>
             <td colspan="2" style="text-align: center">
                 <sx:ButtonSave onclick="onEvaluateLeader();"/>
@@ -128,7 +128,7 @@
 </form>
 
 <script type="text/javascript">
-    onEvaluateLeader = function() {
+    onEvaluateLeader = function () {
 //        if (validateLeader()) {
 //            sd.connector.post("filesAction!onEvaluate.do?" + token.getTokenParamString(), null, "evaluateFormByLeader", null, afterEvaluateLeader);
 //        }
@@ -136,13 +136,13 @@
     };
 
     //hieptq update 160415
-    onEvaluateLeaderNew = function() {
+    onEvaluateLeaderNew = function () {
         if (validateLeader()) {
             sd.connector.post("filesAction!onEvaluate.do?" + token.getTokenParamString(), null, "evaluateFormByLeader", null, afterEvaluateLeader);
         }
     };
 
-    afterEvaluateLeader = function(data) {
+    afterEvaluateLeader = function (data) {
         var obj = dojo.fromJson(data);
         var result = obj.items;
         alert(result[1]);
@@ -153,7 +153,7 @@
         }
     };
 
-    validateLeader = function() {
+    validateLeader = function () {
         if (document.getElementById("evaluateFormByLeader.statusAccept").checked == false && document.getElementById("evaluateFormByLeader.statusDeny").checked == false && document.getElementById("evaluateFormByLeader.statusDenyCV").checked == false) {
             alert("Bạn chưa chọn [Kết quả thẩm định]");
             return false;
@@ -163,6 +163,15 @@
             alert("Bạn chưa chọn thời hạn hiệu lực");
             dijit.byId("evaluateFormByLeader.effectiveDate").focus();
             return false;
+        }
+        var leaderReviewId = dijit.byId("evaluationRecordsFormByLeader.leaderReviewId").getValue();
+        if (leaderReviewId == -1) {
+            alert("Bạn chưa chọn lãnh đạo thực hiện");
+            dijit.byId("evaluationRecordsFormByLeader.leaderReviewId").focus();
+            return false;
+        } else {
+            var leaderReviewName = dijit.byId("evaluationRecordsFormByLeader.leaderReviewId").attr("displayedValue");
+            dijit.byId("evaluationRecordsFormByLeader.leaderReviewName").setValue(leaderReviewName);
         }
         var staffRequest = dijit.byId("evaluateFormByLeader.staffRequest").getValue();
         var legalContent = dijit.byId("evaluationRecordsFormByLeader.legalContent").getValue();
@@ -200,18 +209,18 @@
             }
             else {
                 if (document.getElementById("evaluateFormByLeader.statusDenyCV").checked) {
-                   if (staffRequest.trim().length == 0) {
-                    alert("Nội dung trình quản lý xem xét, hoặc nội dung yêu cầu bổ sung");
-                    dijit.byId("evaluateFormByLeader.staffRequest").focus();
-                    return false;
-                }
+                    if (staffRequest.trim().length == 0) {
+                        alert("Nội dung trình quản lý xem xét, hoặc nội dung yêu cầu bổ sung");
+                        dijit.byId("evaluateFormByLeader.staffRequest").focus();
+                        return false;
+                    }
                 }
             }
-        }
+        }        
         return true;
     };
 
-    onCloseEvaluateLeader = function() {
+    onCloseEvaluateLeader = function () {
         dijit.byId("evaluateFormByLeader.staffRequest").setValue("");
         document.getElementById("evaluateFormByLeader.statusAccept").checked = false;
         document.getElementById("evaluateFormByLeader.statusDeny").checked = false;
@@ -227,7 +236,7 @@
         dijit.byId("evaluationRecordsFormByLeader.effectUtilityContent").setValue("");
         dijit.byId("evaluateLeaderDlg").hide();
     };
-    getStatusStaffEvaluate = function(status) {
+    getStatusStaffEvaluate = function (status) {
         switch (status) {
             case 1:
                 url = "Mới nộp";
@@ -262,7 +271,7 @@
         return url;
     };
 
-    page.clearCKEFBL = function() {
+    page.clearCKEFBL = function () {
         try
         {
             localStorage.setItem("evaluateFormByLeader.evaluateFormByLeader.effectiveDate", "-1");
@@ -280,7 +289,7 @@
             alert("Không thể Xóa nội dung thẩm định gần đây!");
         }
     };
-    page.setCKEFBL = function() {
+    page.setCKEFBL = function () {
         try
         {
             localStorage.setItem("evaluateFormByLeader.evaluateFormByLeader.staffRequest", encodeBase64(dijit.byId("evaluateFormByLeader.staffRequest").getValue().toString().trim()));
@@ -298,7 +307,7 @@
             alert("Không thể Lưu nháp nội dung thẩm định!");
         }
     };
-    page.getCKEFBL = function() {
+    page.getCKEFBL = function () {
         try
         {
             dijit.byId("evaluateFormByLeader.staffRequest").setValue(decodeBase64(localStorage.getItem("evaluateFormByLeader.evaluateFormByLeader.staffRequest")));

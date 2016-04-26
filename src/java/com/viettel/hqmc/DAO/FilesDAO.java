@@ -814,10 +814,27 @@ public class FilesDAO extends BaseDAO {
             lstCategory.add(1, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
             getRequest().setAttribute("lstFileType", lstCategory);
             UsersDAOHE udaohe = new UsersDAOHE();
-            List lstLDP = udaohe.getAllLeaderOfStaffInOffice(getDepartmentId());
-            if (lstLDP != null) {
+            List<String> lstStaff = new ArrayList<String>();
+            lstStaff.add(Constants.POSITION.VFA_CV);
+            lstStaff.add(Constants.POSITION.NV);
+            if (udaohe.checkUserByLstPosition(getDepartmentId(), getUserId(), lstStaff)) {//la chuyen vien
+                List lstLDP = udaohe.getAllLeaderOfStaffInOffice(getDepartmentId());
+                if (lstLDP != null) {
+                    List lstLeaderOfStaffOnGrid = new ArrayList();
+                    lstLeaderOfStaffOnGrid.addAll(lstLDP);
+                    lstLeaderOfStaffOnGrid.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+                    getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaffOnGrid);
+                }
+            } else {//la pho phong - lay danh sach ldc va truong phong
+                List lstLDC = udaohe.getLeaderByUser(getDepartmentId());
+                List lstLDP = udaohe.getTruongPhong(getDepartmentId());
                 List lstLeaderOfStaffOnGrid = new ArrayList();
-                lstLeaderOfStaffOnGrid.addAll(lstLDP);
+                if (lstLDC != null) {
+                    lstLeaderOfStaffOnGrid.addAll(lstLDC);
+                }
+                if (lstLDP != null) {
+                    lstLeaderOfStaffOnGrid.addAll(lstLDP);
+                }
                 lstLeaderOfStaffOnGrid.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
                 getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaffOnGrid);
             }
@@ -832,10 +849,27 @@ public class FilesDAO extends BaseDAO {
             lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
             getRequest().setAttribute("lstFileType", lstCategory);
             UsersDAOHE udaohe = new UsersDAOHE();
-            List lstLDP = udaohe.getAllLeaderOfStaffInOffice(getDepartmentId());
-            if (lstLDP != null) {
+            List<String> lstStaff = new ArrayList<String>();
+            lstStaff.add(Constants.POSITION.VFA_CV);
+            lstStaff.add(Constants.POSITION.NV);
+            if (udaohe.checkUserByLstPosition(getDepartmentId(), getUserId(), lstStaff)) {//la chuyen vien
+                List lstLDP = udaohe.getAllLeaderOfStaffInOffice(getDepartmentId());
+                if (lstLDP != null) {
+                    List lstLeaderOfStaffOnGrid = new ArrayList();
+                    lstLeaderOfStaffOnGrid.addAll(lstLDP);
+                    lstLeaderOfStaffOnGrid.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+                    getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaffOnGrid);
+                }
+            } else {//la pho phong - lay danh sach ldc va truong phong
+                List lstLDC = udaohe.getLeaderByUser(getDepartmentId());
+                List lstLDP = udaohe.getTruongPhong(getDepartmentId());
                 List lstLeaderOfStaffOnGrid = new ArrayList();
-                lstLeaderOfStaffOnGrid.addAll(lstLDP);
+                if (lstLDC != null) {
+                    lstLeaderOfStaffOnGrid.addAll(lstLDC);
+                }
+                if (lstLDP != null) {
+                    lstLeaderOfStaffOnGrid.addAll(lstLDP);
+                }
                 lstLeaderOfStaffOnGrid.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
                 getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaffOnGrid);
             }
@@ -880,6 +914,31 @@ public class FilesDAO extends BaseDAO {
         }
         getRequest().setAttribute("lstRole", lstRole);
 
+        UsersDAOHE udaohe = new UsersDAOHE();
+        List<String> lstStaff = new ArrayList<String>();
+        lstStaff.add(Constants.POSITION.VFA_CV);
+        lstStaff.add(Constants.POSITION.NV);
+        if (udaohe.checkUserByLstPosition(getDepartmentId(), getUserId(), lstStaff)) {//la chuyen vien
+            List lstLDP = udaohe.getAllLeaderOfStaffInOffice(getDepartmentId());
+            if (lstLDP != null) {
+                List lstLeaderOfStaffOnGrid = new ArrayList();
+                lstLeaderOfStaffOnGrid.addAll(lstLDP);
+                lstLeaderOfStaffOnGrid.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+                getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaffOnGrid);
+            }
+        } else {//la pho phong - lay danh sach ldc va truong phong
+            List lstLDC = udaohe.getLeaderByUser(getDepartmentId());
+            List lstLDP = udaohe.getTruongPhong(getDepartmentId());
+            List lstLeaderOfStaffOnGrid = new ArrayList();
+            if (lstLDC != null) {
+                lstLeaderOfStaffOnGrid.addAll(lstLDC);
+            }
+            if (lstLDP != null) {
+                lstLeaderOfStaffOnGrid.addAll(lstLDP);
+            }
+            lstLeaderOfStaffOnGrid.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+            getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaffOnGrid);
+        }
         return EVALUATION_LEADER_PAGE;
     }
 
@@ -2220,14 +2279,29 @@ public class FilesDAO extends BaseDAO {
                 getRequest().setAttribute("agencyName", agencyName);
 
                 UsersDAOHE udaohe = new UsersDAOHE();
-                List lstLDP = udaohe.getAllLeaderOfStaffInOffice(getDepartmentId());
-                if (lstLDP != null) {
-                    lstLeaderOfStaff = new ArrayList();
+                List<String> lstStaff = new ArrayList<String>();
+                lstStaff.add(Constants.POSITION.VFA_CV);
+                lstStaff.add(Constants.POSITION.NV);
+                if (udaohe.checkUserByLstPosition(getDepartmentId(), getUserId(), lstStaff)) {//la chuyen vien
+                    List lstLDP = udaohe.getAllLeaderOfStaffInOffice(getDepartmentId());
                     if (lstLDP != null) {
-                        lstLeaderOfStaff.addAll(lstLDP);
+                        List lstLeaderOfStaffOnGrid = new ArrayList();
+                        lstLeaderOfStaffOnGrid.addAll(lstLDP);
+                        lstLeaderOfStaffOnGrid.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+                        getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaffOnGrid);
                     }
-                    lstLeaderOfStaff.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
-                    getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaff);
+                } else {//la pho phong - lay danh sach ldc va truong phong
+                    List lstLDC = udaohe.getLeaderByUser(getDepartmentId());
+                    List lstLDP = udaohe.getTruongPhong(getDepartmentId());
+                    List lstLeaderOfStaffOnGrid = new ArrayList();
+                    if (lstLDC != null) {
+                        lstLeaderOfStaffOnGrid.addAll(lstLDC);
+                    }
+                    if (lstLDP != null) {
+                        lstLeaderOfStaffOnGrid.addAll(lstLDP);
+                    }
+                    lstLeaderOfStaffOnGrid.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+                    getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaffOnGrid);
                 }
                 if (createForm.getAgencyId() != null) {
                     List lstLDC = udaohe.getLeader(createForm.getAgencyId());
@@ -2536,7 +2610,7 @@ public class FilesDAO extends BaseDAO {
         jsonDataGrid.setItems(gr.getLstResult());
         jsonDataGrid.setTotalRows(gr.getnCount().intValue());
         return GRID_DATA;
-    }   
+    }
 
     /*
      * Xu ly them moi, bo sung ho so savefiles
@@ -2548,24 +2622,24 @@ public class FilesDAO extends BaseDAO {
         ProcedureDAOHE pdhe = new ProcedureDAOHE();
         Procedure tthc = pdhe.findById(createForm.getFileType());
         Long fee = tthc.getFee();
-        
+
         try {
             Long filesId = createForm.getFileId();
             Boolean isCreate = true;
             if (filesId == null) {//check la update hay them moi
                 createForm.setCreateDate(getSysdate());
-                
+
                 createForm.setUserCreateId(getUserId());
                 createForm.setUserCreateName(getUserName());
-                
+
                 createForm.setDeptId(getBusinessId());
                 createForm.setDeptName(getBusinessName());
                 createForm.setBusinessName(getBusinessName());
-                
+
                 createForm.setFeeFile(fee);
-                
+
                 createForm.setIsDownload(Constants.ACTIVE_STATUS.ACTIVE);//141215u binhnt53
-                
+
                 if (getBusinessId() != null) {//141214u binhnt53 bo sung co quan chu quan.
                     BusinessDAOHE busdaohe = new BusinessDAOHE();
                     Business busbo = busdaohe.findById(getBusinessId());
@@ -2577,12 +2651,12 @@ public class FilesDAO extends BaseDAO {
                 isCreate = false;
                 createForm.setModifyDate(getSysdate());
             }
-            
+
             Procedure fileType = pdhe.findById(createForm.getFileType());
             if (fileType != null) {
                 createForm.setFileTypeName(fileType.getName());
             }
-            
+
             createForm.setStatus(Constants.FILE_STATUS.NEW_CREATE);
 
             if (createForm.getStatus() != null
@@ -2597,7 +2671,7 @@ public class FilesDAO extends BaseDAO {
                         resultMessage.clear();
                         resultMessage.add("3");
                         resultMessage.add("Thêm mới hồ sơ không thành công");
-                        
+
                     } else {
                         resultMessage.add("1");
                         resultMessage.add("Thêm mới hồ sơ thành công");
@@ -2606,7 +2680,7 @@ public class FilesDAO extends BaseDAO {
                         edhe.insertEventLog("Thêm mới hồ sơ", "Thêm mới hồ sơ mã " + fileSaved.getFileCode(), getRequest());
                     }
                 } else {// update File
-                    
+
                     FilesDAOHE fdaohe = new FilesDAOHE();
                     Files files = fdaohe.findById(filesId);
                     if (files != null) {// update File
@@ -2619,12 +2693,12 @@ public class FilesDAO extends BaseDAO {
                                 && files.getUserCreateId() != null
                                 && files.getUserCreateId().equals(getUserId())) {
                             Files fileSaved = fdhe.saveFiles(createForm);
-                            
+
                             if (fileSaved == null) {
                                 resultMessage.clear();
                                 resultMessage.add("3");
                                 resultMessage.add("Cập nhật hồ sơ không thành công");
-                                
+
                             } else {
                                 resultMessage.add("1");
                                 resultMessage.add("Cập nhật hồ sơ thành công");
@@ -2632,7 +2706,7 @@ public class FilesDAO extends BaseDAO {
                                 EventLogDAOHE edhe = new EventLogDAOHE();
                                 edhe.insertEventLog("Cập nhật hồ sơ", "Cập nhật hồ sơ mã " + fileSaved.getFileCode(), getRequest());
                             }
-                            
+
                         }
                     } else {
                         resultMessage.clear();
@@ -4734,7 +4808,7 @@ public class FilesDAO extends BaseDAO {
                 } else {
                     barcodeInfo += "\nĐơn vi cấp chứng nhận: N/A";
                 }
-                if (announcementReceiptPaper.getReceiptNo()!= null) {
+                if (announcementReceiptPaper.getReceiptNo() != null) {
                     barcodeInfo += "\nSố công bố: " + announcementReceiptPaper.getReceiptNo();
                 } else {
                     barcodeInfo += "\nSố công bố: N/A";
@@ -5726,6 +5800,7 @@ public class FilesDAO extends BaseDAO {
         return GRID_DATA;
     }//!140704
 
+    //get noi dung tham dinh - tham dinh lanh dao phong
     public String getCommentEvaluateFormByLeader() {
         getGridInfo();
         List customInfo = new ArrayList();
@@ -5746,10 +5821,10 @@ public class FilesDAO extends BaseDAO {
         String foodSafetyQuality = "";
         String effectUtility = "";
         String standard = "";
-        Long llegal = -1L;
-        Long lfoodSafetyQuality = -1L;
-        Long leffectUtility = -1L;
-        Long lstandard = -1L;
+        Long llegal = null;
+        Long lfoodSafetyQuality = null;
+        Long leffectUtility = null;
+        Long lstandard = null;
         if (erbo != null && fbo != null) {
             legal = erbo.getLegalContent();
             foodSafetyQuality = erbo.getFoodSafetyQualityContent();
@@ -8738,6 +8813,7 @@ public class FilesDAO extends BaseDAO {
 //        getRequest().setAttribute("AgencyName", AgencyName);
         return businessEditAfterAnnouncedFilesPage;
     }
+
     /**
      * Hiepvv Tim kiem danh sach ho so sua doi cua mot ho so cua doanh nghiep
      *
@@ -8769,6 +8845,46 @@ public class FilesDAO extends BaseDAO {
 
         jsonDataGrid.setItems(gr.getLstResult());
         jsonDataGrid.setTotalRows(gr.getnCount().intValue());
+        return GRID_DATA;
+    }
+    public String onEvaluateNew() {
+        FilesDAOHE fdhe = new FilesDAOHE();
+        List resultMessage = new ArrayList();
+        boolean check = fdhe.validateRoleUser(createForm.getFileId(), createForm, getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());
+        if (check) {
+            boolean bReturn = fdhe.onEvaluate(createForm, getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());//thuc hien tham dinh ho so
+            if (bReturn) {
+                resultMessage.add("1");
+                resultMessage.add("Lưu dữ liệu thành công");
+                // Hiepvv_Home Update Title And Content of File SDBS after announced
+                Files fo = fdhe.findById(createForm.getFileId());
+                if (fo.getFilesSourceID() != null && fo.getFilesSourceID() > 0 && fo.getFileSourceCode() != null) {
+                    if (createForm.getTitleEditATTP() != null) {
+                        fo.setTitleEditATTP(createForm.getTitleEditATTP());
+                    } else {
+                        fo.setTitleEditATTP(createForm.getTitleEdit());
+                    }
+                    if (createForm.getContentsEditATTP() != null) {
+                        fo.setContentsEditATTP(createForm.getContentsEditATTP());
+                    } else {
+                        fo.setContentsEditATTP(createForm.getContentsEdit());
+                    }
+                    getSession().update(fo);
+                }
+                //End Hiepvv_Home
+                Files file = fdhe.findById(createForm.getFileId());
+                fdhe.saveStatusFiles(file, "Hồ sơ mã: " + file.getFileCode() + " Đã được thẩm định");
+            } else {
+                resultMessage.add("3");
+                resultMessage.add("Lưu dữ liệu không thành công");
+            }
+        } else {
+            resultMessage.add("3");
+            resultMessage.add("Lưu dữ liệu không thành công - Lỗi phân quyền người dùng");
+        }
+        jsonDataGrid.setItems(resultMessage);
+        EventLogDAOHE edhe = new EventLogDAOHE();
+        edhe.insertEventLog("Thẩm định hồ sơ", "hồ sơ có id=" + createForm.getFileId(), getRequest());
         return GRID_DATA;
     }
 }

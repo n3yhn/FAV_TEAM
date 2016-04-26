@@ -154,9 +154,10 @@
         resultMessage_show("processResultMessage", result[0], result[1], 5000);
         page.getViewProcess(workingFileId);
         if (result0 == "3") {
-//            resultMessage_show("processResultMessage", result[0], result[1], 5000);
+            resultMessage_show("processResultMessage", result[0], result[1], 5000);
         } else {
-            page.onCloseEPdlg();
+            resultMessage_show("processResultMessage", result[0], result[1], 5000);
+//            page.onCloseEPdlg();
             //grid.vtReload('category!search.do?', "categorySearchForm", null, null);
         }
     };

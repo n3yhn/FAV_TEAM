@@ -81,7 +81,7 @@
             inpProductName.setAttribute("id", preName + "productName");
             inpProductName.setAttribute("style", "width:100%");
             inpProductName.setAttribute("value", productName);
-            inpProductName.setAttribute("maxlength", "200");
+            inpProductName.setAttribute("maxlength", "2000");
             tdProductName.appendChild(inpProductName);
 
             var inpProductInFileId = document.createElement("input");
@@ -99,7 +99,7 @@
             inpComponent.setAttribute("id", preName + "component");
             inpComponent.setAttribute("value", component);
             inpComponent.setAttribute("style", "width:100%");
-            inpComponent.setAttribute("maxlength", "200");
+            inpComponent.setAttribute("maxlength", "2000");
             tdComponent.appendChild(inpComponent);
         }
 
@@ -111,7 +111,7 @@
             inpMainlyTarget.setAttribute("id", preName + "mainlyTarget");
             inpMainlyTarget.setAttribute("value", mainlyTarget);
             inpMainlyTarget.setAttribute("style", "width:100%");
-            inpMainlyTarget.setAttribute("maxlength", "200");
+            inpMainlyTarget.setAttribute("maxlength", "2000");
             tdMainlyTarget.appendChild(inpMainlyTarget);
         }
 
@@ -123,7 +123,7 @@
             inpManufacture.setAttribute("id", preName + "manufacture");
             inpManufacture.setAttribute("value", manufacture);
             inpManufacture.setAttribute("style", "width:100%");
-            inpManufacture.setAttribute("maxlength", "200");
+            inpManufacture.setAttribute("maxlength", "2000");
             tdManufacture.appendChild(inpManufacture);
         }
 
@@ -136,7 +136,7 @@
             inpDeadline.setAttribute("id", preName + "deadline");
             inpDeadline.setAttribute("value", deadline);
             inpDeadline.setAttribute("style", "width:100%");
-            inpDeadline.setAttribute("maxlength", "200");
+            inpDeadline.setAttribute("maxlength", "2000");
             tdDeadline.appendChild(inpDeadline);
         }
 
@@ -148,7 +148,7 @@
             inpPackageRecipe.setAttribute("id", preName + "packageRecipe");
             inpPackageRecipe.setAttribute("value", packageRecipe);
             inpPackageRecipe.setAttribute("style", "width:100%");
-            inpPackageRecipe.setAttribute("maxlength", "200");
+            inpPackageRecipe.setAttribute("maxlength", "2000");
             tdPackageRecipe.appendChild(inpPackageRecipe);
         }
         var tdUseFor = document.createElement("td");
@@ -159,7 +159,7 @@
             inpUseFor.setAttribute("id", preName + "useFor");
             inpUseFor.setAttribute("value", useFor);
             inpUseFor.setAttribute("style", "width:100%");
-            inpUseFor.setAttribute("maxlength", "200");
+            inpUseFor.setAttribute("maxlength", "2000");
             tdUseFor.appendChild(inpUseFor);
         }
         var tdDelete = document.createElement("td");
@@ -292,55 +292,55 @@
                 alert("[Tên sản phẩm dòng " + (i) + "] chưa nhập");
                 inputs[0].focus();
                 return false;
-            } else if (content.length > 200) {
-                alert("[Tên sản phẩm dòng " + (i) + "] dài hơn 200 ký tự");
+            } else if (content.length > 2000) {
+                alert("[Tên sản phẩm dòng " + (i) + "] dài hơn 2000 ký tự");
                 inputs[0].focus();
                 return false;
             }
 
             content = inputs[2].value.trim();
             inputs[2].value = content;
-            if (content.length > 200) {
-                alert("[Thành phần cấu tạo dòng " + (i - 1) + "] dài hơn 200 ký tự");
+            if (content.length > 2000) {
+                alert("[Thành phần cấu tạo dòng " + (i - 1) + "] dài hơn 2000 ký tự");
                 inputs[1].focus();
                 return false;
             }
 
             content = inputs[3].value.trim();
             inputs[3].value = content;
-            if (content.length > 200) {
-                alert("[Chỉ tiêu chất lượng, an toàn dòng " + (i - 1) + "] dài hơn 200 ký tự");
+            if (content.length > 2000) {
+                alert("[Chỉ tiêu chất lượng, an toàn dòng " + (i - 1) + "] dài hơn 2000 ký tự");
                 inputs[3].focus();
                 return false;
             }
 
             content = inputs[4].value.trim();
             inputs[4].value = content;
-            if (content.length > 200) {
-                alert("[Tên hãng sản xuất, tên nước dòng " + (i - 1) + "] dài hơn 200 ký tự");
+            if (content.length > 2000) {
+                alert("[Tên hãng sản xuất, tên nước dòng " + (i - 1) + "] dài hơn 2000 ký tự");
                 inputs[4].focus();
                 return false;
             }
             content = inputs[5].value.trim();
             inputs[5].value = content;
-            if (content.length > 200) {
-                alert("[Thời hạn sử dụng dòng " + (i - 1) + "] dài hơn 200 ký tự");
+            if (content.length > 2000) {
+                alert("[Thời hạn sử dụng dòng " + (i - 1) + "] dài hơn 2000 ký tự");
                 inputs[5].focus();
                 return false;
             }
 
             content = inputs[6].value.trim();
             inputs[6].value = content;
-            if (content.length > 200) {
-                alert("[Quy cách bao gói dòng " + (i - 1) + "] dài hơn 200 ký tự");
+            if (content.length > 2000) {
+                alert("[Quy cách bao gói dòng " + (i - 1) + "] dài hơn 2000 ký tự");
                 inputs[6].focus();
                 return false;
             }
 
             content = inputs[7].value.trim();
             inputs[7].value = content;
-            if (content.length > 200) {
-                alert("[Sản phẩm sử dụng " + (i - 1) + "] dài hơn 200 ký tự");
+            if (content.length > 2000) {
+                alert("[Sản phẩm sử dụng " + (i - 1) + "] dài hơn 2000 ký tự");
                 inputs[7].focus();
                 return false;
             }

@@ -1540,7 +1540,7 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
      * @return
      */
     public List<Users> findAllUser() {
-        List<Users> result = new ArrayList<Users>();
+        List<Users> result = new ArrayList<>();
         try {
             Query query = getSession().createQuery("SELECT u FROM Users u "
                     + " WHERE u.status = ? "
@@ -1552,6 +1552,121 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
 
         } catch (Exception ex) {
             log.error(ex.getMessage());
+        }
+        return result;
+    }
+
+    public boolean checkUserByLstPosition(Long deptId, Long userId, List<String> lstPosCode) {
+        boolean result = false;
+        List<Users> user = new ArrayList<>();
+        try {
+            Query query = getSession().createQuery(
+                    "select u from Users u"
+                    + " where u.status= ?"
+                    + " and u.deptId = ?"
+                    + " and u.userId = ?"
+                    + " and u.posId in (select p.posId"
+                    + " from Position p"
+                    + " where p.posCode in (:lstPosCode)"
+                    + " and p.status = 1"
+                    + " and p.posType = 1)");
+            query.setParameter(0, Constants.Status.ACTIVE);
+            query.setParameter(1, deptId);
+            query.setParameter(2, userId);
+            query.setParameterList("lstPosCode", lstPosCode);
+            user = (List<Users>) query.list();
+            if (user.size() > 0) {
+                result = true;
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     *
+     * @param deptId
+     * @param userId
+     * @param lstPosCode
+     * @return
+     */
+    public boolean checkRoleUserOfLst(Long deptId, Long userId, List<String> lstPosCode) {
+        boolean result = false;
+        List<Users> user = new ArrayList<Users>();
+        try {
+            Query query = getSession().createQuery(
+                    "select u from Users u"
+                    + " where u.status= ?"
+                    + " and u.deptId = ?"
+                    + " and u.userId = ?"
+                    + " and u.posId in (select p.posId"
+                    + " from Position p"
+                    + " where p.posCode in (:lstPosCode)"
+                    + " and p.status = 1"
+                    + " and p.posType = 1)");
+            query.setParameter(0, Constants.Status.ACTIVE);
+            query.setParameter(1, deptId);
+            query.setParameter(2, userId);
+            query.setParameterList("lstPosCode", lstPosCode);
+            user = (List<Users>) query.list();
+            if (user.size() > 0) {
+                result = true;
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
+        return result;
+    }
+
+    //tim kiem truong phong
+    public List<Users> getTruongPhong(Long deptId) {
+        List<Users> user = new ArrayList<Users>();
+        try {
+            Query query = getSession().createQuery(
+                    "SELECT u FROM Users u WHERE "
+                    + "u.status = ? AND "
+                    + "((u.deptId = ? OR u.deptRepresentId = ?) "
+                    + " AND u.posId IN (SELECT p.posId FROM Position p"
+                    + " WHERE p.posCode LIKE ? escape '!'"
+                    + " or p.posCode LIKE ? escape '!'))"
+                    + " order by u.posId asc, nlssort(lower(u.fullName),'nls_sort = Vietnamese') ");
+            query.setParameter(0, Constants.Status.ACTIVE);
+            query.setParameter(1, deptId);
+            query.setParameter(2, deptId);
+            query.setParameter(3, "%" + Constants.POSITION.LEADER_OF_STAFF_T + "%");
+            query.setParameter(4, "%" + Constants.POSITION.GDTT + "%");
+            user = query.list();
+            return user;
+        } catch (Exception e) {
+            log.error(e);
+            return null;
+        }
+    }
+
+    public boolean checkTruongPhong(Long userId) {
+        boolean result = false;
+        List<Users> user = new ArrayList<Users>();
+        try {
+            Query query = getSession().createQuery(
+                    "SELECT u FROM Users u WHERE "
+                    + "u.status = ? AND "
+                    + "((u.userId = ?) "
+                    + " AND u.posId IN (SELECT p.posId FROM Position p"
+                    + " WHERE p.posCode LIKE ? escape '!'"
+                    + " or p.posCode LIKE ? escape '!'))"
+                    + " order by u.posId asc, nlssort(lower(u.fullName),'nls_sort = Vietnamese') ");
+            query.setParameter(0, Constants.Status.ACTIVE);
+            query.setParameter(1, userId);
+            query.setParameter(2, "%" + Constants.POSITION.LEADER_OF_STAFF_T + "%");
+            query.setParameter(3, "%" + Constants.POSITION.GDTT + "%");
+            user = query.list();
+            if (user != null && user.size() > 0) {
+                result = true;
+            }
+        } catch (Exception e) {
+            log.error(e);
+            return result;
         }
         return result;
     }

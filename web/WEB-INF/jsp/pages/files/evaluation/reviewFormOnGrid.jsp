@@ -1,9 +1,3 @@
-<%-- 
-    Document   : reviewForm
-    Created on : Jun 26, 2013, 4:09:25 PM
-    Author     : vtit_havm2
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="sd" uri="struts-dojo-tags" %>
 <%@taglib prefix="sx" tagdir="/WEB-INF/tags" %>

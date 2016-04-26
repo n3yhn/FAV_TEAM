@@ -42,9 +42,9 @@
             <!-- Trang them moi -->
             <result type="tiles" name="announcementFile01">announcementFile01</result>
             <result type="tiles" name="announcementFile03">announcementFile03</result>
-             <result type="tiles" name="annoucementTL01">annoucementTL01</result>
-              <result type="tiles" name="annoucementTL03">annoucementTL03</result>
-              <result type="tiles" name="confirmTL">confirmTL</result>
+            <result type="tiles" name="annoucementTL01">annoucementTL01</result>
+            <result type="tiles" name="annoucementTL03">annoucementTL03</result>
+            <result type="tiles" name="confirmTL">confirmTL</result>
             <result type="tiles" name="reAnnouncement">reAnnouncement</result>
             <result type="tiles" name="confirmNormalImport">confirmNormalImport</result>
             <result type="tiles" name="reConfirmNormalImp">reConfirmNormalImp</result>
@@ -60,9 +60,9 @@
             
             <!-- Trang xem van ban -->
             <result type="tiles" name="announcementFile01View">announcementFile01View</result>
-             <result type="tiles" name="annoucementTL01View">annoucementTL01View</result>
-             <result type="tiles" name="annoucementTL03View">annoucementTL03View</result>
-             <result type="tiles" name="confirmTLView">confirmTLView</result>
+            <result type="tiles" name="annoucementTL01View">annoucementTL01View</result>
+            <result type="tiles" name="annoucementTL03View">annoucementTL03View</result>
+            <result type="tiles" name="confirmTLView">confirmTLView</result>
             <result type="tiles" name="announcementFile03View">announcementFile03View</result>
             <result type="tiles" name="reAnnouncementView">reAnnouncementView</result>
             <result type="tiles" name="confirmNormalImportView">confirmNormalImportView</result>

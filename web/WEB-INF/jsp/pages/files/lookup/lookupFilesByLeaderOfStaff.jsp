@@ -783,7 +783,7 @@
 
     page.afterSearch = function () {
         dijit.byId("searchForm.flagSavePaging").setValue("0");
-    }
+    };
 
     afterLoadForm = function (data) {
         document.getElementById("searchDiv").style.display = "none";

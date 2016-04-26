@@ -152,9 +152,10 @@
     };
 
     page.onCloseESFD = function () {
-        msg.confirm('<sd:Property>confirm.close</sd:Property>', '<sd:Property>confirm.title</sd:Property>', page.closeExecute);
+        viewStatusFilesDlg.hide();
+//        msg.confirm('<sd:Property>confirm.close</sd:Property>', '<sd:Property>confirm.title</sd:Property>', page.closeExecute);
             };
-            page.closeExecute = function () {
-                viewStatusFilesDlg.hide();
-            };
+//            page.closeExecute = function () {
+//                viewStatusFilesDlg.hide();
+//            };
 </script>

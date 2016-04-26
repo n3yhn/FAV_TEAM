@@ -287,15 +287,11 @@ public final class Constants {
 
     public interface POSITION {
         //BTP
-
         public static String LEAD_CODE = "BTP_LD_P"; // Lanh dao
         public static String LEAD_OFFICE_CODE = "BTP_LD_VP"; // Lanh dao van phong
         public static String LEADER_CODE = "BTP_LD";
         public static String STAFF_CODE = "POS8"; // Nhan vien
         //CUC ATTP
-//        public static String LEAD_CODE = "VOFFICE_LD"; // Lanh dao
-//        public static String LEAD_OFFICE_CODE = "VOFFICE_LD_VP"; // Lanh dao van phong
-//        public static String LEADER_CODE = "VOFFICE_LD";
         public static String LEAD_SMS_CODE = "^BTP_LD(.*)SMS$";
         public static String SMS_CODE = "_SMS";
         public static String LEADER_OF_STAFF_T = "LDTP";//lanh dao don vi attp - 140915 binhnt53
@@ -303,9 +299,14 @@ public final class Constants {
         public static String LEADER_CT = "CT";//cuc truong - 140915 binhnt53
         public static String LEADER_PCT = "PCT";//pho cuc truong attp - 140915 binhnt53
         public static String VFA_CV = "VFA_CV";//chuyen vien attp - 150401 binhnt53
-
         public static String GDTT = "GDTT";//giam doc trung tam - 150911 binhnt53
         public static String PGDTT = "PGDTT";//pho giam doc trung tam - 081015 binhnt53
+        public static String VT = "VT";//van thu
+        public static String NV = "NV";//nhan vien
+        
+        public static String LST_CV = "NV;VFA_CV;VT";
+        public static String LST_LDP_P = "LDPP;PGDTT";
+        public static String LST_LDP_T = "GDTT;LDTP";
     }
 
     public interface ROLES {
@@ -475,5 +476,10 @@ public final class Constants {
     public interface KEYPAY {
 
         public static final String KEYPAY = "KEYPAY";
+    }
+    public interface EFFECTIVEDATE {
+
+        public static final Long FIVE = 5L;
+        public static final Long THREE = 3L;
     }
 }

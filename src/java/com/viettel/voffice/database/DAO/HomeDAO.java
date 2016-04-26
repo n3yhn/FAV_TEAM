@@ -228,7 +228,7 @@ public class HomeDAO extends BaseDAO {
                     if (roles != null && roles.size() > 0) {
                         for (int i = 0; i < roles.size(); i++) {
                             lstRole += roles.get(i).getRoleCode() + ";";
-                            System.out.println(lstRole);
+//                            System.out.println(lstRole);
                         }
                         if (lstRole.contains(Constants.ROLES.LEAD_UNIT_DEPUTY_ROLE + ";")) {
                             loadCountFilesClericalRole = true;
