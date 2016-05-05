@@ -52,16 +52,15 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
         List<Category> lstCategory = null;
         try {
             StringBuilder stringBuilder = new StringBuilder(" from Procedure a ");
-            stringBuilder.append("  where a.isActive = ? and a.description != 'announcementFile05'"
+            stringBuilder.append(" where a.isActive = ?"
+                    + " and a.description != 'announcementFile05'"
                     + " order by a.createDate ASC");
-//                    + " order by nlssort(lower(a.name),'nls_sort = Vietnamese') ");
             Query query = getSession().createQuery(stringBuilder.toString());
             query.setParameter(0, "1");
             lstCategory = query.list();
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }
-
         return lstCategory;
     }
 
@@ -483,5 +482,21 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
             return null;
         }
         return null;
+    }
+
+    public List getAllProcedureAfterAnnounced() {
+        List<Category> lstCategory = null;
+        try {
+            StringBuilder stringBuilder = new StringBuilder(" from Procedure a ");
+            stringBuilder.append(" where a.isActive = ?"
+                    + " and a.description = 'announcementFile05'"
+                    + " order by a.createDate ASC");
+            Query query = getSession().createQuery(stringBuilder.toString());
+            query.setParameter(0, "1");
+            lstCategory = query.list();
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
+        return lstCategory;
     }
 }

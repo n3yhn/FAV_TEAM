@@ -46,7 +46,7 @@ public class ExportFileDAO extends BaseDAO {
 
     //giay cong bo + files_details    
     private final String tempSignCongbohopquiTHTL = "/WEB-INF/template/signCongbohopquiTHsubTL.docx";
-    private final String tempSignCongbophuhopCNTL = "/WEB-INF/template/signCongBoPhuHopCN.docx";
+    private final String tempSignCongbophuhopCNTL = "/WEB-INF/template/signCongBoPhuHopCNTL.docx";
     private final String tempSignCongbophuhopTHTL = "/WEB-INF/template/signCongbophuhopTHTL.docx";
 
     private final String tempSignCongbohopquiTH = "/WEB-INF/template/signCongbohopquiTH.docx";
@@ -2070,7 +2070,7 @@ public class ExportFileDAO extends BaseDAO {
                             wU.replaceTable(wmp, 6, lstChemicalTarget);
                         } else {
                             wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01BB))));
-                            if (filesForm.getAnnouncement() != null 
+                            if (filesForm.getAnnouncement() != null
                                     && filesForm.getDetailProduct() != null) {
                                 BusinessDAOHE busdaohe = new BusinessDAOHE();
                                 Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2209,7 +2209,7 @@ public class ExportFileDAO extends BaseDAO {
                         wU.replaceTable(wmp, 6, lstChemicalTarget);
                     } else {
                         wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbohopqui01BBsub))));
-                        if (filesForm.getAnnouncement() != null 
+                        if (filesForm.getAnnouncement() != null
                                 && filesForm.getDetailProduct() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
                             Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2230,10 +2230,10 @@ public class ExportFileDAO extends BaseDAO {
                     }
                     break;
                 case Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP:
-                    if (filesForm.getIsHaveSubLabel() != null 
+                    if (filesForm.getIsHaveSubLabel() != null
                             && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
                         wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopCN))));
-                        if (filesForm.getDetailProduct() != null 
+                        if (filesForm.getDetailProduct() != null
                                 && filesForm.getAnnouncement() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
                             Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2285,10 +2285,10 @@ public class ExportFileDAO extends BaseDAO {
                     }
                     break;
                 case Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP_TL:
-                    if (filesForm.getIsHaveSubLabel() != null 
+                    if (filesForm.getIsHaveSubLabel() != null
                             && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
                         wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopCNTL))));
-                        if (filesForm.getDetailProduct() != null 
+                        if (filesForm.getDetailProduct() != null
                                 && filesForm.getAnnouncement() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
                             Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2317,7 +2317,7 @@ public class ExportFileDAO extends BaseDAO {
                         wU.replaceTable(wmp, 6, lstChemicalTarget);
                     } else {
                         wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopCNsubTL))));
-                        if (filesForm.getDetailProduct() != null 
+                        if (filesForm.getDetailProduct() != null
                                 && filesForm.getAnnouncement() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
                             Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2371,7 +2371,7 @@ public class ExportFileDAO extends BaseDAO {
                         wU.replaceTable(wmp, 6, lstChemicalTarget);
                     } else {
                         wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbophuhopCNsub))));
-                        if (filesForm.getDetailProduct() != null 
+                        if (filesForm.getDetailProduct() != null
                                 && filesForm.getAnnouncement() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
                             Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2398,12 +2398,12 @@ public class ExportFileDAO extends BaseDAO {
                     }
                     break;
                 case Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN:
-                    if (filesForm.getIsHaveSubLabel() != null 
+                    if (filesForm.getIsHaveSubLabel() != null
                             && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
-                        if (catebo != null 
+                        if (catebo != null
                                 && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
                             wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopTH))));
-                            if (filesForm.getDetailProduct() != null 
+                            if (filesForm.getDetailProduct() != null
                                     && filesForm.getAnnouncement() != null) {
                                 BusinessDAOHE busdaohe = new BusinessDAOHE();
                                 Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2429,7 +2429,7 @@ public class ExportFileDAO extends BaseDAO {
                             wU.replaceTable(wmp, 6, lstChemicalTarget);
                         } else {
                             wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopBB))));
-                            if (filesForm.getDetailProduct() != null 
+                            if (filesForm.getDetailProduct() != null
                                     && filesForm.getAnnouncement() != null) {
                                 BusinessDAOHE busdaohe = new BusinessDAOHE();
                                 Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2450,7 +2450,7 @@ public class ExportFileDAO extends BaseDAO {
                         }
                     } else if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
                         wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbophuhopTHsub))));
-                        if (filesForm.getDetailProduct() != null 
+                        if (filesForm.getDetailProduct() != null
                                 && filesForm.getAnnouncement() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
                             Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2476,7 +2476,7 @@ public class ExportFileDAO extends BaseDAO {
                         wU.replaceTable(wmp, 6, lstChemicalTarget);
                     } else {
                         wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbophuhopBBsub))));
-                        if (filesForm.getDetailProduct() != null 
+                        if (filesForm.getDetailProduct() != null
                                 && filesForm.getAnnouncement() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
                             Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2500,7 +2500,7 @@ public class ExportFileDAO extends BaseDAO {
                     if (filesForm.getIsHaveSubLabel() != null && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
                         if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
                             wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopTH))));
-                            if (filesForm.getDetailProduct() != null 
+                            if (filesForm.getDetailProduct() != null
                                     && filesForm.getAnnouncement() != null) {
                                 BusinessDAOHE busdaohe = new BusinessDAOHE();
                                 Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -3207,7 +3207,7 @@ public class ExportFileDAO extends BaseDAO {
                     if (filesForm.getIsHaveSubLabel() != null && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
                         wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignCongbophuhopCNTL))));
                     } else {
-                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignCongbophuhopCNsub))));
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignCongbophuhopCNTL))));
                     }
                     break;
                 case Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN:
@@ -3465,6 +3465,38 @@ public class ExportFileDAO extends BaseDAO {
                         wU.replaceTable(wmp, 5, lstMainlyTarget);
                     }
                     break;
+                case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01_TL:
+                    wU.replacePlaceholder(wmp, signedDate, "${signDate}");
+                    if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
+                        BusinessDAOHE busdaohe = new BusinessDAOHE();
+                        Business busbo = busdaohe.findById(filesForm.getDeptId());
+                        if (filesForm.getDetailProduct().getSignDate() != null) {
+                            if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                            }
+                        } else if (busbo != null) {
+                            filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                        } else {
+                            filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày... tháng... năm 20..");
+                        }
+                        filesForm.getAnnouncement().setMatchingTarget(filesForm.getAnnouncement().getMatchingTarget().replace(";", "\n\r"));
+                    }
+                    if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                        lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                        lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                        wU.replaceTable(wmp, 5, lstMainlyTarget);
+                        wU.replaceTable(wmp, 6, lstBiologisTarget);
+                        wU.replaceTable(wmp, 7, lstHeavyMetalTarget);
+                        wU.replaceTable(wmp, 8, lstChemicalTarget);
+                    } else {
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        wU.replaceTable(wmp, 5, lstMainlyTarget);
+                    }
+                    break;
                 case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03:
                     if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
                         BusinessDAOHE busdaohe = new BusinessDAOHE();
@@ -3496,7 +3528,64 @@ public class ExportFileDAO extends BaseDAO {
                         wU.replaceTable(wmp, 5, lstMainlyTarget);
                     }
                     break;
+                case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03_TL:
+                    if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
+                        BusinessDAOHE busdaohe = new BusinessDAOHE();
+                        Business busbo = busdaohe.findById(filesForm.getDeptId());
+                        if (filesForm.getDetailProduct().getSignDate() != null) {
+                            if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                            }
+                        } else if (busbo != null) {
+                            filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                        } else {
+                            filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày... tháng... năm 20..");
+                        }
+                    }
+                    wU.replacePlaceholder(wmp, signedDate, "${signDate}");
+                    if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                        lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                        lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                        wU.replaceTable(wmp, 5, lstMainlyTarget);
+                        wU.replaceTable(wmp, 6, lstBiologisTarget);
+                        wU.replaceTable(wmp, 7, lstHeavyMetalTarget);
+                        wU.replaceTable(wmp, 8, lstChemicalTarget);
+                    } else {
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        wU.replaceTable(wmp, 5, lstMainlyTarget);
+                    }
+                    break;
                 case Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP:
+                    if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
+                        BusinessDAOHE busdaohe = new BusinessDAOHE();
+                        Business busbo = busdaohe.findById(filesForm.getDeptId());
+                        if (filesForm.getDetailProduct().getSignDate() != null) {
+                            if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                            }
+                        } else if (busbo != null) {
+                            filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                        } else {
+                            filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày... tháng... năm 20..");
+                        }
+                    }
+                    wU.replacePlaceholder(wmp, signedDate, "${signDate}");
+                    lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                    lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                    lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                    lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                    wU.replaceTable(wmp, 5, lstMainlyTarget);//u150122 binhnt53
+                    wU.replaceTable(wmp, 6, lstBiologisTarget);
+                    wU.replaceTable(wmp, 7, lstHeavyMetalTarget);
+                    wU.replaceTable(wmp, 8, lstChemicalTarget);//u150122 binhnt53
+                    break;
+                case Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP_TL:
                     if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
                         BusinessDAOHE busdaohe = new BusinessDAOHE();
                         Business busbo = busdaohe.findById(filesForm.getDeptId());

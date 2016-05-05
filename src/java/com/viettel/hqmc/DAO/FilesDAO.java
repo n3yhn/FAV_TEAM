@@ -196,6 +196,7 @@ public class FilesDAO extends BaseDAO {
     private final String REPORT_LOS_PROCESS_PAGE = "reportLOSProcess.Page";//141215u binhnt53 page thong ke lanh dao phong xu ly ho so
     private final String REPORT_L_PROCESS_PAGE = "reportLProcess.Page";//141215u binhnt53 page thong ke lanh dao cuc xu ly ho so
     private final String ASSIGN_EVALUATION_PAGE = "assignEvaluation.page";
+    private final String ASSIGN_EVALUATION_AFTER_ANNOUNCED_PAGE = "assignEvaluationAfterAnnounced.page";
     private final String RE_ASSIGN_EVALUATION_PAGE = "reAssignEvaluation.page";
     private final String EVALUATION_PAGE = "evaluateFile.page";
     private final String EVALUATION_PAGE_VIEW = "evaluateFileView.page";
@@ -8847,6 +8848,7 @@ public class FilesDAO extends BaseDAO {
         jsonDataGrid.setTotalRows(gr.getnCount().intValue());
         return GRID_DATA;
     }
+
     public String onEvaluateNew() {
         FilesDAOHE fdhe = new FilesDAOHE();
         List resultMessage = new ArrayList();
@@ -8886,5 +8888,52 @@ public class FilesDAO extends BaseDAO {
         EventLogDAOHE edhe = new EventLogDAOHE();
         edhe.insertEventLog("Thẩm định hồ sơ", "hồ sơ có id=" + createForm.getFileId(), getRequest());
         return GRID_DATA;
+    }
+
+    public String onAssignEvaluationAfterAnnounced() {
+        getGridInfo();
+
+        if (searchForm.getFlagSavePaging() != null && searchForm.getFlagSavePaging() == 1) {
+            try {
+                String startServerStr = getRequest().getSession().getAttribute("assignEvaluation.startServer") == null ? "" : getRequest().getSession().getAttribute("assignEvaluation.startServer").toString();
+                String countServerStr = getRequest().getSession().getAttribute("assignEvaluation.countServer") == null ? "" : getRequest().getSession().getAttribute("assignEvaluation.countServer").toString();
+
+                if (!startServerStr.isEmpty() && !countServerStr.isEmpty()) {
+                    count = Integer.parseInt(countServerStr);
+                    start = Integer.parseInt(startServerStr);
+                }
+            } catch (Exception ex) {
+                log.error(ex.getMessage());
+            }
+        }
+
+        if (searchForm == null) {
+            searchForm = new FilesForm();
+            searchForm.setDeptId(getDepartmentId());
+        }
+        FilesNoClobDAOHE bdhe = new FilesNoClobDAOHE();
+        GridResult gr = bdhe.findAllFileForAssignEvaluationAfterAnnounced(searchForm, getDepartmentId(), getUserId(), start, count, sortField);
+
+        getRequest().getSession().setAttribute("assignEvaluation.startServer", start);
+        getRequest().getSession().setAttribute("assignEvaluation.countServer", count);
+
+        jsonDataGrid.setItems(gr.getLstResult());
+        jsonDataGrid.setTotalRows(gr.getnCount().intValue());
+        return GRID_DATA;
+    }
+
+    public String toAssignEvaluationAfterAnnounced() {
+        ProcedureDAOHE cdhe = new ProcedureDAOHE();
+        //Hiepvv tach rieng chuc nang sua doi sau cong bo
+        List lstTTHC = cdhe.getAllProcedureAfterAnnounced();
+        lstCategory = new ArrayList();
+        lstCategory.addAll(lstTTHC);
+        lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+        getRequest().setAttribute("lstFileType", lstCategory);
+        if (searchForm == null) {
+            searchForm = new FilesForm();
+            searchForm.setDeptId(getDepartmentId());
+        }
+        return ASSIGN_EVALUATION_AFTER_ANNOUNCED_PAGE;
     }
 }

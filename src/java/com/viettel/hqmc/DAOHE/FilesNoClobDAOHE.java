@@ -5438,4 +5438,117 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
         List<FilesNoClob> lstResult = query.list();
         return new GridResult(total, lstResult);
     }
+
+    public GridResult findAllFileForAssignEvaluationAfterAnnounced(FilesForm form, Long deptId, Long userId, int start, int count, String sortField) {
+        try {
+            String hql = " from FilesNoClob f, Process p "
+                    + " where f.isActive=1"
+                    + " and f.fileType = ?"
+                    + " and f.fileId = p.objectId"
+                    + " and p.objectType = ?"
+                    + " and p.isActive = 1"
+                    + " and (f.isTemp is null or f.isTemp = 0 ) ";
+            /*
+             *Hiepvv 13/01/16
+             *Phan cong cong viec cho ho so sua doi sau cong bo
+             */
+            Procedure pbo = new Procedure();
+            ProcedureDAOHE pdaohe = new ProcedureDAOHE();
+            pbo = pdaohe.getProcedureByDescription(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05);
+            List lstParam = new ArrayList();
+            lstParam.add(pbo.getProcedureId());
+            lstParam.add(Constants.OBJECT_TYPE.FILES);
+            if (form != null) {
+                if (form.getStatus() == null) {
+                    hql += " and (f.status = ?)";
+                    lstParam.add(Constants.FILE_STATUS.RECEIVED);
+                } else {
+                    hql += " and (f.status = ?)";
+                    lstParam.add(form.getStatus());
+                }
+                if (form.getBusinessName() != null && !"".equals(form.getBusinessName().trim())) {
+                    hql += " AND lower(f.businessName) like ? ESCAPE '/' ";
+                    lstParam.add(StringUtils.toLikeString(form.getBusinessName().toLowerCase().trim()));
+                }
+
+                if (form.getProductName() != null && form.getProductName().length() > 0) {
+                    hql += " AND lower(f.productName) like ? ESCAPE '/'";
+                    lstParam.add(StringUtils.toLikeString(form.getProductName().toLowerCase().trim()));
+                }
+                if (form.getFileCode() != null && !"".equals(form.getFileCode().trim())) {
+                    hql += "AND lower(f.fileCode) like ? ESCAPE '/' ";
+                    lstParam.add(StringUtils.toLikeString(form.getFileCode().toLowerCase().trim()));
+                }
+                if (form.getFileType() != null && form.getFileType().longValue() != -1) {
+                    hql += "AND f.fileType = ? ";
+                    lstParam.add(form.getFileType());
+                }
+                if (form.getSendDateFrom() != null) {
+                    hql += "AND f.sendDate >= ? ";
+                    lstParam.add(form.getSendDateFrom());
+                }
+                if (form.getSendDateTo() != null) {
+                    hql += "AND f.sendDate <= ? ";
+                    lstParam.add(form.getSendDateTo());
+                }
+                if (deptId != null) {
+                    hql += "AND (f.agencyId = ? or p.receiveUserId = ? or p.receiveGroupId=? ) and (p.processStatus=? or p.processStatus=? or p.processStatus =? ) ";
+
+                    lstParam.add(deptId);
+                    lstParam.add(userId);
+                    lstParam.add(deptId);
+                    lstParam.add(Constants.FILE_STATUS.NEW);
+                    lstParam.add(Constants.FILE_STATUS.RECEIVED);
+                    lstParam.add(Constants.FILE_STATUS.PROPOSED);
+                } else {
+                    hql += "AND (p.receiveUserId = ? and (p.processStatus=?) and p.status=? ) ";
+                    lstParam.add(userId);
+                    lstParam.add(Constants.FILE_STATUS.RECEIVED);
+                    lstParam.add(0l);
+                }
+            }
+            // loc file_id nhom san pham khac
+            if (form.getProductTypeNew() != null && form.getProductTypeNew().longValue() != -1) {
+                if (form.getProductTypeNew() == 1) {
+                    hql += " and (c.code <> ? and c.code <> ?)";
+                    lstParam.add("TPCN");
+                    lstParam.add("DBT");
+                } else {
+                    hql += " and (c.code = ? or c.code = ?)";
+                    lstParam.add("TPCN");
+                    lstParam.add("DBT");
+                }
+            }
+
+            // hieptq update 251114
+            if (form.getSearchTypeNew() != null) {
+                if (form.getSearchTypeNew() == 1) {
+                    hql += " and (c.code <> ? and c.code <> ?)";
+                    lstParam.add("TPCN");
+                    lstParam.add("DBT");
+                } else {
+                    hql += " and (c.code = ? or c.code = ?)";
+                    lstParam.add("TPCN");
+                    lstParam.add("DBT");
+                }
+            }
+
+            Query countQuery = getSession().createQuery("select count(distinct f.fileId) " + hql);
+            Query query = getSession().createQuery("select distinct f " + hql + "order by f.modifyDate DESC)");
+            for (int i = 0; i < lstParam.size(); i++) {
+                query.setParameter(i, lstParam.get(i));
+                countQuery.setParameter(i, lstParam.get(i));
+            }
+
+            query.setFirstResult(start);
+            query.setMaxResults(count);
+            int total = Integer.parseInt(countQuery.uniqueResult().toString());
+            List<FilesNoClob> lstResult = query.list();
+            GridResult gr = new GridResult(total, lstResult);
+            return gr;
+        } catch (Exception e) {
+            log.error(e);
+            return new GridResult(0, null);
+        }
+    }
 }

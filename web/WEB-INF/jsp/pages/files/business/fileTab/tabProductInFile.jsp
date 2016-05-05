@@ -28,7 +28,7 @@
         }
         var str = date + "/" + month + "/" + year;
         return str;
-    }
+    };
 
     createNewRowOfProductInFile = function(productInFileId, productName, component, mainlyTarget, manufacture, deadline, packageRecipe, forProduct, useFor, tableId) {
         if (productInFileId == null) {
@@ -268,14 +268,14 @@
             inputs[7].setAttribute("name", preName + (i - 1) + "].useFor");
             inputs[7].setAttribute("id", preName + (i - 1) + "].useFor");
         }
-    }
+    };
 
     page.deleteProductInFile = function(rowElement) {
         msg.confirm("Bạn có chắc muốn xóa không ?", "Xác nhận xóa", function() {
             rowElement.parentNode.removeChild(rowElement);
             page.renameElementOfProductInFile();
         });
-    }
+    };
 
     page.validateProductInFileData = function() {
         var tabs = dijit.byId("files_tab");
@@ -346,7 +346,7 @@
             }
         }
         return true;
-    }
+    };
 
     page.validateProductInFile = function() {
 
@@ -356,7 +356,7 @@
 
         return true;
 
-    }
+    };
 
     page.afterLoadProductInfile = function(data) {
         var obj = dojo.fromJson(data);
@@ -367,7 +367,7 @@
                 createNewRowOfProductInFile(item.productInFileId, item.productName, item.component, item.mainlyTarget, item.manufacture, item.deadline, item.packageRecipe, item.forProduct, item.useFor, 'productInFileTbl');
             }
         }
-    }
+    };
 
     page.loadInitProductInFile = function() {
         var fileId = dijit.byId("createForm.fileId").getValue();
@@ -376,7 +376,7 @@
         } else {
             sd.connector.post("filesAction!loadProductInFiles.do?createForm.fileId=" + fileId, null, null, null, page.afterLoadProductInfile);
         }
-    }
+    };
     page.loadInitProductInFile();
     
     dojo.connect(dijit.byId('files_tab_tablist_tab.productInFile'), "onClick", loadFormFromAnnounTab = function() {

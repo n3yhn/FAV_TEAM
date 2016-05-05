@@ -20,7 +20,7 @@
         <br/>
         <span style="color: red">
             <label id="labelWaitLoadFile" style="color: red">Vui lòng chờ  </label>
-                <img src="/share/images/loading/loading2.gif" width="20px" height="20px">
+            <img src="/share/images/loading/loading2.gif" width="20px" height="20px">
         </span>
     </div>
 </div>
@@ -74,15 +74,19 @@
         // Cuc truong Phe duyet ho so
         backPageStr = "filesAction!toApproveByCTPage.do";
     }
-
-    backPage = function() {
+    else if (backPageType == 10)
+    {
+        // Cuc truong Phe duyet ho so
+        backPageStr = "filesAction!toAssignEvaluationAfterAnnounced.do";
+    }
+    backPage = function () {
         doGoToMenu(backPageStr);
     };
-    showViewFile = function() {
+    showViewFile = function () {
         sd.connector.post("filesAction!loadFileView.do?createForm.fileId=" + fileId + "&createForm.viewType=" + viewType, "viewDiv", null, null, null);
     };
-    page.b64_to_utf8 = function(str) {
+    page.b64_to_utf8 = function (str) {
         return unescape(decodeURIComponent(window.atob(str)));
-    }
+    };
     showViewFile();
 </script>
