@@ -328,7 +328,7 @@
             alert("Không thể Lưu nháp nội dung thẩm định!");
         }
     };
-    //dang loi
+
     page.getEvaluateForm = function () {
         try
         {
