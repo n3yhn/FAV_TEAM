@@ -163,15 +163,15 @@
                                         <sx:ButtonSave onclick="onEvaluateByLeaderFormOnGrid();"/>
                                         <sx:ButtonClose onclick="onCloseEvaluateLeader();"/>
                                         <br>
-                                        <sd:Button id="btnLoadCookieEFBL" key="" onclick="page.getCKEFBLOG();" cssStyle="display:" cssClass="buttonGroup">
+                                        <sd:Button id="btnLoadCookieEFBLOG" key="" onclick="page.getCKEFBLOG();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Tải ND thẩm định gần đây</span>
                                         </sd:Button>
-                                        <sd:Button id="btnSaveCookieEFBL" key="" onclick="page.setCKEFBLOG();" cssStyle="display:" cssClass="buttonGroup">
+                                        <sd:Button id="btnSaveCookieEFBLOG" key="" onclick="page.setCKEFBLOG();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Lưu nháp ND thẩm định</span>
                                         </sd:Button>
-                                        <sd:Button id="btnClearCookieEFBL" key="" onclick="page.clearCKEFBLOG();" cssStyle="display:" cssClass="buttonGroup">
+                                        <sd:Button id="btnClearCookieEFBLOG" key="" onclick="page.clearCKEFBLOG();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Xóa ND thẩm định gần đây</span>
                                         </sd:Button>
