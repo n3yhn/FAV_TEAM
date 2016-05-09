@@ -545,10 +545,12 @@
                                                 width="15%"  headerStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Tên sản phẩm" field="productName" cellStyles="text-align:left;"
                                                 width="10%"  headerStyles="text-align:center;" />
-                            <sd:ColumnDataGrid  key="Ngày nộp" field="sendDate" format="dd/MM/yyyy" type="date"
-                                                width="5%"  headerStyles="text-align:center;" cellStyles="text-align:center;"/>
+                            <%--<sd:ColumnDataGrid  key="Ngày nộp" field="sendDate" format="dd/MM/yyyy" type="date"
+                                                width="5%"  headerStyles="text-align:center;" cellStyles="text-align:center;"/>--%>
                             <sd:ColumnDataGrid  key="Ngày đến" field="modifyDate" format="dd/MM/yyyy" type="date"
-                                                width="5%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />           
+                                                width="7%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />   
+                            <sd:ColumnDataGrid  key="Ngày hẹn trả" field="deadlineApprove" format="dd/MM/yyyy" type="date"
+                                                width="7%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />           
                             <sd:ColumnDataGrid  key="Kết quả thẩm định" formatter="page.formatStatus" get="page.getRow"
                                                 width="7%"  headerStyles="text-align:center;" cellStyles="text-align:center;"/>
                             <sd:ColumnDataGrid  key="Cán bộ xử lý chính" field="nameStaffProcess"  cellStyles="text-align:center;"

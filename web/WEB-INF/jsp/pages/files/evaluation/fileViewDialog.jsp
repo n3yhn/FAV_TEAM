@@ -79,6 +79,11 @@
         // Cuc truong Phe duyet ho so
         backPageStr = "filesAction!toAssignEvaluationAfterAnnounced.do";
     }
+    else if (backPageType == 11)
+    {
+        // Cuc truong Phe duyet ho so
+        backPageStr = "filesAction!toEvaluateLeaderPage.do";
+    }
     backPage = function () {
         doGoToMenu(backPageStr);
     };
