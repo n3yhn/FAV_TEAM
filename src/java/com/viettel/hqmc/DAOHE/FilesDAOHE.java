@@ -6363,7 +6363,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         RequestComment rcbo = new RequestComment();
         if (form.getStatus() != null) {
             String staffContent = "";
-            if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED) || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_ADD) || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE)) {
+            if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED)
+                    || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_ADD)
+                    || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE)) {
 
                 if (form.getStaffRequest() != null && !form.getStaffRequest().equals("null")) {
                     staffContent += "* Ý kiến chung:" + "\n";
@@ -6373,7 +6375,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                    staffContent += "Không có nội dung." + "\n";
 //                }
 
-                if (form.getEvaluationRecordsForm().getLegalContent() != null && !form.getEvaluationRecordsForm().getLegalContent().equals("null")) {
+                if (form.getEvaluationRecordsForm().getLegalContent() != null
+                        && !form.getEvaluationRecordsForm().getLegalContent().equals("null")) {
                     staffContent += "* Về pháp chế:" + "\n";
                     staffContent += form.getEvaluationRecordsForm().getLegalContent() + "\n";
                 }
@@ -6381,7 +6384,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                    staffContent += "Không có nội dung." + "\n";
 //                }
 
-                if (form.getEvaluationRecordsForm().getFoodSafetyQualityContent() != null && !form.getEvaluationRecordsForm().getFoodSafetyQualityContent().equals("null")) {
+                if (form.getEvaluationRecordsForm().getFoodSafetyQualityContent() != null
+                        && !form.getEvaluationRecordsForm().getFoodSafetyQualityContent().equals("null")) {
                     staffContent += "* Về chỉ tiêu chất lượng an toàn thực phẩm:" + "\n";
                     staffContent += form.getEvaluationRecordsForm().getFoodSafetyQualityContent() + "\n";
                 }
@@ -6389,9 +6393,97 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                    staffContent += "Không có nội dung." + "\n";
 //                }
 
-                if (form.getEvaluationRecordsForm().getEffectUtilityContent() != null && !form.getEvaluationRecordsForm().getEffectUtilityContent().equals("null")) {
+                if (form.getEvaluationRecordsForm().getEffectUtilityContent() != null
+                        && !form.getEvaluationRecordsForm().getEffectUtilityContent().equals("null")) {
                     staffContent += "* Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng:" + "\n";
                     staffContent += form.getEvaluationRecordsForm().getEffectUtilityContent() + "\n";
+                }
+//                else {
+//                    staffContent += "Không có nội dung." + "\n";
+//                }
+
+                if (staffContent.trim().length() > 0) {
+                    rcbo.setContent(staffContent);
+                } else {
+                    rcbo.setContent("Không có nội dung.");
+                }
+
+            } else {
+                rcbo.setContent("Không có nội dung.");
+            }
+            rcbo.setCreateBy(userId);
+            rcbo.setCreateDate(dateNow);
+            rcbo.setUserId(userId);
+            rcbo.setUserName(userName);
+            rcbo.setStatus(1L);
+            rcbo.setIsActive(1L);
+            rcbo.setGroupId(deptId);
+            rcbo.setGroupName(deptName);
+            rcbo.setObjectId(form.getFileId());
+            rcbo.setRequestType(Constants.REQUEST_COMMENT_TYPE.TD);//-150120
+            rcbo.setIsLastChange(Constants.ACTIVE_STATUS.ACTIVE);//-150120
+            //!luu noi dung du thao
+            RequestCommentDAOHE rqdaohe = new RequestCommentDAOHE();
+            RequestComment lastRQBo = rqdaohe.findLastRequestComment(objectId, Constants.ACTIVE_STATUS.ACTIVE);
+            if (lastRQBo != null) {
+                rcbo.setLastContent(lastRQBo.getContent());
+                lastRQBo.setIsLastChange(Constants.ACTIVE_STATUS.DEACTIVE);
+                getSession().update(lastRQBo);
+            }
+            getSession().save(rcbo);
+        } else {
+            return false;
+        }
+        return result;
+    }
+
+    public boolean insertRequestCommentOnGrid(
+            Long objectId,
+            FilesForm form,
+            Long userId,
+            String userName,
+            Long deptId,
+            String deptName,
+            Date dateNow
+    ) {
+        boolean result = false;
+        RequestComment rcbo = new RequestComment();
+        if (form.getStatus() != null) {
+            String staffContent = "";
+            if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED)
+                    || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_ADD)
+                    || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE)) {
+
+                if (form.getStaffRequest() != null && !form.getStaffRequest().equals("null")) {
+                    staffContent += "* Ý kiến chung:" + "\n";
+                    staffContent += form.getStaffRequest() + "\n";
+                }
+//                else {
+//                    staffContent += "Không có nội dung." + "\n";
+//                }
+
+                if (form.getEvaluationRecordsFormOnGrid().getLegalContent() != null
+                        && !form.getEvaluationRecordsFormOnGrid().getLegalContent().equals("null")) {
+                    staffContent += "* Về pháp chế:" + "\n";
+                    staffContent += form.getEvaluationRecordsFormOnGrid().getLegalContent() + "\n";
+                }
+//                else {
+//                    staffContent += "Không có nội dung." + "\n";
+//                }
+
+                if (form.getEvaluationRecordsFormOnGrid().getFoodSafetyQualityContent() != null
+                        && !form.getEvaluationRecordsFormOnGrid().getFoodSafetyQualityContent().equals("null")) {
+                    staffContent += "* Về chỉ tiêu chất lượng an toàn thực phẩm:" + "\n";
+                    staffContent += form.getEvaluationRecordsFormOnGrid().getFoodSafetyQualityContent() + "\n";
+                }
+//                else {
+//                    staffContent += "Không có nội dung." + "\n";
+//                }
+
+                if (form.getEvaluationRecordsFormOnGrid().getEffectUtilityContent() != null
+                        && !form.getEvaluationRecordsFormOnGrid().getEffectUtilityContent().equals("null")) {
+                    staffContent += "* Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng:" + "\n";
+                    staffContent += form.getEvaluationRecordsFormOnGrid().getEffectUtilityContent() + "\n";
                 }
 //                else {
 //                    staffContent += "Không có nội dung." + "\n";
@@ -6449,7 +6541,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         RequestComment rcbo = new RequestComment();
         if (form.getStatus() != null) {
             String leaderContent = "";
-            if (form.getStatus().equals(Constants.FILE_STATUS.REVIEWED) || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE) || form.getStatus().equals(Constants.FILE_STATUS.REVIEW_TO_ADD)) {
+            if (form.getStatus().equals(Constants.FILE_STATUS.REVIEWED)
+                    || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE)
+                    || form.getStatus().equals(Constants.FILE_STATUS.REVIEW_TO_ADD)) {
 
                 if (form.getLeaderStaffRequest() != null && !form.getLeaderStaffRequest().equals("null")) {
                     leaderContent += "* Ý kiến chung:" + "\n";
@@ -6459,7 +6553,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                    leaderContent += "Không có nội dung." + "\n";
 //                }
 
-                if (form.getEvaluationRecordsForm().getLegalContentL() != null && !form.getEvaluationRecordsForm().getLegalContentL().equals("null")) {
+                if (form.getEvaluationRecordsForm().getLegalContentL() != null
+                        && !form.getEvaluationRecordsForm().getLegalContentL().equals("null")) {
                     leaderContent += "* Về pháp chế:" + "\n";
                     leaderContent += form.getEvaluationRecordsForm().getLegalContentL() + "\n";
                 }
@@ -6467,7 +6562,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                    leaderContent += "Không có nội dung." + "\n";
 //                }
 
-                if (form.getEvaluationRecordsForm().getFoodSafetyQualityContentL() != null && !form.getEvaluationRecordsForm().getFoodSafetyQualityContentL().equals("null")) {
+                if (form.getEvaluationRecordsForm().getFoodSafetyQualityContentL() != null
+                        && !form.getEvaluationRecordsForm().getFoodSafetyQualityContentL().equals("null")) {
                     leaderContent += "* Về chỉ tiêu chất lượng an toàn thực phẩm:" + "\n";
                     leaderContent += form.getEvaluationRecordsForm().getFoodSafetyQualityContentL() + "\n";
                 }
@@ -6475,7 +6571,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                    leaderContent += "Không có nội dung." + "\n";
 //                }
 
-                if (form.getEvaluationRecordsForm().getEffectUtilityContentL() != null && !form.getEvaluationRecordsForm().getEffectUtilityContentL().equals("null")) {
+                if (form.getEvaluationRecordsForm().getEffectUtilityContentL() != null
+                        && !form.getEvaluationRecordsForm().getEffectUtilityContentL().equals("null")) {
                     leaderContent += "* Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng:" + "\n";
                     leaderContent += form.getEvaluationRecordsForm().getEffectUtilityContentL() + "\n";
                 }
@@ -7597,12 +7694,12 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     evaRecordForm.setBusinessName(file.getBusinessName());
                     evaRecordForm.setBusinessAddress(file.getBusinessAddress());
                     evaRecordForm.setProductName(file.getProductName());
-                    evaRecordForm.setLegal(form.getEvaluationRecordsForm().getLegal());
-                    evaRecordForm.setLegalContent(form.getEvaluationRecordsForm().getLegalContent());
-                    evaRecordForm.setFoodSafetyQuality(form.getEvaluationRecordsForm().getFoodSafetyQuality());
-                    evaRecordForm.setFoodSafetyQualityContent(form.getEvaluationRecordsForm().getFoodSafetyQualityContent());
-                    evaRecordForm.setEffectUtility(form.getEvaluationRecordsForm().getEffectUtility());
-                    evaRecordForm.setEffectUtilityContent(form.getEvaluationRecordsForm().getEffectUtilityContent());
+                    evaRecordForm.setLegal(form.getEvaluationRecordsFormOnGrid().getLegal());
+                    evaRecordForm.setLegalContent(form.getEvaluationRecordsFormOnGrid().getLegalContent());
+                    evaRecordForm.setFoodSafetyQuality(form.getEvaluationRecordsFormOnGrid().getFoodSafetyQuality());
+                    evaRecordForm.setFoodSafetyQualityContent(form.getEvaluationRecordsFormOnGrid().getFoodSafetyQualityContent());
+                    evaRecordForm.setEffectUtility(form.getEvaluationRecordsFormOnGrid().getEffectUtility());
+                    evaRecordForm.setEffectUtilityContent(form.getEvaluationRecordsFormOnGrid().getEffectUtilityContent());
                     evaRecordForm.setFilesStatus(file.getStatus());
                     evaRecordForm.setMainContent(file.getStaffRequest());
                     evaRecordForm.setFirstStaffId(userId);
@@ -7618,7 +7715,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     EvaluationRecords evaluationRecordsBo;
                     evaluationRecordsBo = evaRecordForm.convertToEntity();
                     getSession().save(evaluationRecordsBo);
-                    boolean bInsertRC = insertRequestComment(
+                    boolean bInsertRC = insertRequestCommentOnGrid(
                             file.getFileId(),
                             form,
                             userId,

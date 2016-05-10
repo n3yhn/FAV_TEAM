@@ -520,8 +520,8 @@
 </sd:Dialog>
 <script type="text/javascript">
     getCommentEvaluateByPPFormOnGrid = function (fileId, fileType, status) {
-        dijit.byId("evaluationRecordsFormOnGrid.fileId").setValue(fileId);
-        dijit.byId("evaluationRecordsFormOnGrid.status").setValue(status);
+        dijit.byId("evaluationRecord.fileId").setValue(fileId);
+        dijit.byId("evaluationRecord.status").setValue(status);
         if (fileType != 66750) {
             var panel = document.getElementById("effectiveDateDiv");
             panel.setAttribute("style", "display:;");
@@ -534,55 +534,55 @@
     afterCELFOG = function (data) {
         var obj = dojo.fromJson(data);
         if (obj.customInfo[0] != "") {
-            document.getElementById("evaluationRecordsFormOnGrid.legalContent").value = obj.customInfo[0];
+            document.getElementById("evaluationRecord.legalContent").value = obj.customInfo[0];
         } else {
-            document.getElementById("evaluationRecordsFormOnGrid.legalContent").value = "";
+            document.getElementById("evaluationRecord.legalContent").value = "";
         }
         if (obj.customInfo[1] != "") {
-            document.getElementById("evaluationRecordsFormOnGrid.foodSafetyQualityContent").value = obj.customInfo[1];
+            document.getElementById("evaluationRecord.foodSafetyQualityContent").value = obj.customInfo[1];
         } else {
-            document.getElementById("evaluationRecordsFormOnGrid.foodSafetyQualityContent").value = "";
+            document.getElementById("evaluationRecord.foodSafetyQualityContent").value = "";
         }
         if (obj.customInfo[2] != "") {
-            document.getElementById("evaluationRecordsFormOnGrid.effectUtilityContent").value = obj.customInfo[2];
+            document.getElementById("evaluationRecord.effectUtilityContent").value = obj.customInfo[2];
         } else {
-            document.getElementById("evaluationRecordsFormOnGrid.effectUtilityContent").value = "";
+            document.getElementById("evaluationRecord.effectUtilityContent").value = "";
         }
         if (obj.customInfo[3] != "") {
-            document.getElementById("evaluationRecordsFormOnGrid.staffRequest").value = obj.customInfo[3];
+            document.getElementById("evaluationRecord.staffRequest").value = obj.customInfo[3];
         } else {
-            document.getElementById("evaluateevaluationRecordsFormOnGridByLeaderForm.staffRequest").value = "";
+            document.getElementById("evaluateevaluationRecordByLeaderForm.staffRequest").value = "";
         }
         if (obj.customInfo[4] != null) {
-            dijit.byId("evaluationRecordsFormOnGrid.effectiveDate").setValue(obj.customInfo[4]);
+            dijit.byId("evaluationRecord.effectiveDate").setValue(obj.customInfo[4]);
         } else {
-            dijit.byId("evaluationRecordsFormOnGrid.effectiveDate").setValue(-1);
+            dijit.byId("evaluationRecord.effectiveDate").setValue(-1);
         }
         if (obj.customInfo[5] != null) {
-            dijit.byId("evaluationRecordsFormOnGrid.legal").setValue(obj.customInfo[5]);
+            dijit.byId("evaluationRecord.legal").setValue(obj.customInfo[5]);
         } else {
-            dijit.byId("evaluationRecordsFormOnGrid.legal").setValue(1);
+            dijit.byId("evaluationRecord.legal").setValue(1);
         }
         if (obj.customInfo[6] != null) {
-            dijit.byId("evaluationRecordsFormOnGrid.foodSafetyQuality").setValue(obj.customInfo[6]);
+            dijit.byId("evaluationRecord.foodSafetyQuality").setValue(obj.customInfo[6]);
         } else {
-            dijit.byId("evaluationRecordsFormOnGrid.foodSafetyQuality").setValue(1);
+            dijit.byId("evaluationRecord.foodSafetyQuality").setValue(1);
         }
         if (obj.customInfo[7] != null) {
-            dijit.byId("evaluationRecordsFormOnGrid.effectUtility").setValue(obj.customInfo[7]);
+            dijit.byId("evaluationRecord.effectUtility").setValue(obj.customInfo[7]);
         } else {
-            dijit.byId("evaluationRecordsFormOnGrid.effectUtility").setValue(1);
+            dijit.byId("evaluationRecord.effectUtility").setValue(1);
         }
-        var status = dijit.byId("evaluationRecordsFormOnGrid.status").getValue();
+        var status = dijit.byId("evaluationRecord.status").getValue();
         if (status == 4) {
-            document.getElementById("evaluationRecordsFormOnGrid.statusAccept").checked = true;
+            document.getElementById("evaluationRecord.statusAccept").checked = true;
 
         } else if (status == 7) {
-            document.getElementById("evaluationRecordsFormOnGrid.statusDeny").checked = true;
+            document.getElementById("evaluationRecord.statusDeny").checked = true;
         }
         var statusName = getStatusEBLP(parseInt(status));
-        document.getElementById("evaluationRecordsFormOnGrid.statusL").innerHTML = statusName;
-        var fileId = dijit.byId("evaluationRecordsFormOnGrid.fileId").getValue();
+        document.getElementById("evaluationRecord.statusL").innerHTML = statusName;
+        var fileId = dijit.byId("evaluationRecord.fileId").getValue();
         sd.connector.post("filesAction!loadFileView.do?createForm.fileId=" + fileId + "&createForm.viewType=3&viewTypeDialog=1", "divViewFile", null, null, afterLVFByPPOG);
     };
     getStatusEBLP = function (status) {

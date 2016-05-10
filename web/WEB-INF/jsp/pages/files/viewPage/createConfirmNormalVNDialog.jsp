@@ -32,10 +32,12 @@
         <span style="font-size:12px">Chuyên viên kết luận thẩm định hồ sơ</span>
     </sd:Button>
     --%>
+    <%--
     <sd:Button id="btnEvaluateLeaderFiles" key="" onclick="page.getCommentEvaluateLeaderForm();" cssStyle="display:none" cssClass="buttonGroup">
         <img src="share/images/edit.png" height="14" width="14" alt="Kết luận thẩm định"/>
         <span style="font-size:12px">Lãnh đạo kết luận thẩm định</span>
     </sd:Button>
+    --%>
     <sd:Button id="btnCommnetEvaluation" key="" onclick="page.showComment();" cssStyle="display:none" cssClass="buttonGroup">
         <img src="share/images/icons/chat.png" height="14" width="14" alt="Ý kiến thẩm định"/>
         <span style="font-size:12px">Trao đổi Ý kiến thẩm định</span>
@@ -885,7 +887,7 @@ key="Tiếp nhận hồ sơ" showFullscreenButton="false"
             page.showReturnFilesButton();
             page.showBtnOldVersion();
             //page.showBtnEvaluateFiles();
-            page.showEvaluateLeaderFiles();
+            //page.showEvaluateLeaderFiles();
             //page.showBtnReviewFiles();
             page.showBtnFeedbackEvaluateForm();
             page.showBtnFeedbackReviewForm();

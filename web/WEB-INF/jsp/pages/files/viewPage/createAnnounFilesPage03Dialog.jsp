@@ -32,10 +32,12 @@
     <span style="font-size:12px">Chuyên viên kết luận thẩm định hồ sơ</span>
 </sd:Button>
     --%>
+    <%--
     <sd:Button id="btnEvaluateLeaderFiles" key="" onclick="page.getCommentEvaluateLeaderForm();" cssStyle="display:none" cssClass="buttonGroup">
         <img src="share/images/edit.png" height="14" width="14" alt="Kết luận thẩm định"/>
         <span style="font-size:12px">Phó phòng kết luận thẩm định</span>
     </sd:Button>
+    --%>
     <sd:Button id="btnCommnetEvaluation" key="" onclick="page.showComment();" cssStyle="display:none" cssClass="buttonGroup">
         <img src="share/images/icons/chat.png" height="14" width="14" alt="Ý kiến thẩm định"/>
         <span style="font-size:12px">Trao đổi Ý kiến thẩm định</span>
@@ -257,21 +259,22 @@ key="Kết luận thẩm định" showFullscreenButton="false"
     <jsp:include page="../evaluation/reviewForm.jsp" flush="false"></jsp:include>
 </sd:Dialog>
 --%>
+<%--
 <sd:Dialog  id="evaluateLeaderDlg" height="auto" width="600px"
             key="Phó phòng kết luận thẩm định" showFullscreenButton="false"
             >
     <jsp:include page="../evaluation/evaluateFormByLeader.jsp" flush="false"></jsp:include>
 </sd:Dialog>
-
+--%>
 <script>
-    page.showReceivedButton = function() {//hien thi nut tiep nhan ho so - voi van thu
+    page.showReceivedButton = function () {//hien thi nut tiep nhan ho so - voi van thu
         var status = dijit.byId("createForm.status").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
         if ((status == 1 || status == 18) && viewType == 1) {
             dijit.byId("btnReceived").domNode.style.display = "";
         }
     };
-    page.showCommentEvalutionButton = function() {//hiển thị kết quả thẩm định
+    page.showCommentEvalutionButton = function () {//hiển thị kết quả thẩm định
 //        var status = dijit.byId("createForm.status").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
 //         if ((status == 3 || status == 4 || status == 5 || status == 6 || status == 8 || status == 9 || status == 14 || status == 15 || status == 19 || status == 17 || status == 20 || status == 21) && (viewType == 4 || viewType == 2 || viewType == 3)) {
@@ -279,21 +282,21 @@ key="Kết luận thẩm định" showFullscreenButton="false"
             dijit.byId("btnCommnetEvaluation").domNode.style.display = "";
         }
     };
-    page.showResultEvaluationButton = function() {//hiển thị kết quả thẩm định
+    page.showResultEvaluationButton = function () {//hiển thị kết quả thẩm định
         var status = dijit.byId("createForm.status").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
         if ((status == 7 || status == 4 || status == 5 || status == 6 || status == 8 || status == 9 || status == 14 || status == 15 || status == 19 || status == 17) && (viewType == 4 || viewType == 2 || viewType == 3)) {
             dijit.byId("btnEvaluationDetails").domNode.style.display = "";
         }
     };
-    page.showAnnouncementReceiptPaperButton = function() {//kiem tra ton tai giay cong bo
+    page.showAnnouncementReceiptPaperButton = function () {//kiem tra ton tai giay cong bo
         var status = dijit.byId("createForm.status").getValue();
         if (status == 6 || status == 14 || status == 15) {
             var fileId = dijit.byId("createForm.fileId").getValue();
             sd.connector.post("filesAction!oncheckAnnouncementReceiptPaper.do?createForm.fileId=" + fileId, null, null, null, page.aftershowAnnouncementReceiptPaperButton);
         }
     };
-    page.aftershowAnnouncementReceiptPaperButton = function(data) {//sau khi kiem tra ton tai cong bo
+    page.aftershowAnnouncementReceiptPaperButton = function (data) {//sau khi kiem tra ton tai cong bo
         var obj = dojo.fromJson(data);
         var result = obj.items;
         var result0 = result[0];
@@ -303,13 +306,13 @@ key="Kết luận thẩm định" showFullscreenButton="false"
             dijit.byId("btnAnnouncementReceiptPaper").domNode.style.display = "";
         }
     };
-    page.showComparisonButton = function() {
+    page.showComparisonButton = function () {
         var status = dijit.byId("createForm.status").getValue();
         if (status == 15 || status == 16) {
             dijit.byId("btnComparison").domNode.style.display = "";
         }
     };
-    page.showBtnCheckCA = function() {
+    page.showBtnCheckCA = function () {
         var userSigned = dijit.byId("createForm.userSigned").getValue();
         if (userSigned != null && userSigned.trim().length > 0) {
             if (userSigned != "fileUploaded") {
@@ -317,11 +320,11 @@ key="Kết luận thẩm định" showFullscreenButton="false"
             }
         }
     };
-    page.checkAnnouncementReceiptPaper = function() {//kiem tra ton tai giay cong bo
+    page.checkAnnouncementReceiptPaper = function () {//kiem tra ton tai giay cong bo
         var fileId = dijit.byId("createForm.fileId").getValue();
         sd.connector.post("filesAction!oncheckAnnouncementReceiptPaper.do?createForm.fileId=" + fileId, null, null, null, page.aftercheckAnnouncementReceiptPaper);
     };
-    page.aftercheckAnnouncementReceiptPaper = function(data) {//sau khi kiem tra ton tai cong bo
+    page.aftercheckAnnouncementReceiptPaper = function (data) {//sau khi kiem tra ton tai cong bo
         var obj = dojo.fromJson(data);
         var result = obj.items;
         var result0 = result[0];
@@ -331,21 +334,21 @@ key="Kết luận thẩm định" showFullscreenButton="false"
             dijit.byId("btnAnnouncementReceiptPaperSign").domNode.style.display = "";
         }
     };
-    page.showBtnViewFLow = function() {//hien thi btn xem luong ho so
+    page.showBtnViewFLow = function () {//hien thi btn xem luong ho so
         var status = dijit.byId("createForm.status").getValue();
         if (status >= 0) {
             dijit.byId("btnViewFLow").domNode.style.display = "";
         }
     };
-    page.downloadFileDetails = function() {
+    page.downloadFileDetails = function () {
         var fileId = dijit.byId("createForm.fileId").getValue();
         document.location = "exportWord!onExportFileDetails.do?fileId=" + fileId;
     };
-    page.showViewComparisonForm = function() {//hien thi ket qua doi chieu ho so
+    page.showViewComparisonForm = function () {//hien thi ket qua doi chieu ho so
         var fileId = dijit.byId("createForm.fileId").getValue();
         sd.connector.post("filesAction!getComparisonRecordsDetails.do?createForm.fileId=" + fileId, null, null, null, afterLoadViewComparisonForm);
     };
-    afterLoadViewComparisonForm = function(data) {
+    afterLoadViewComparisonForm = function (data) {
         var obj = dojo.fromJson(data);
         var item = obj.items;
         document.getElementById("filesForm.isComparison").innerHTML = escapeHtml_(returnStatusComparison(item[0]));
@@ -353,7 +356,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         page.replaceTbleComparisonFormViewDetails();
         dijit.byId("comparisonViewDetailsDlg").show();
     };
-    returnStatusComparison = function(status) {
+    returnStatusComparison = function (status) {
         var strStatus = "";
         switch (status) {
             case 1:
@@ -365,7 +368,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         }
         return strStatus;
     };
-    page.showAnnouncementReceiptPaperDlg = function() {//show form khai báo giấy tiếp nhận công bố hợp quy
+    page.showAnnouncementReceiptPaperDlg = function () {//show form khai báo giấy tiếp nhận công bố hợp quy
         var fileId = dijit.byId("createForm.fileId").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
         if (viewType == 4) {
@@ -373,23 +376,23 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         }
         sd.connector.post("filesAction!loadSignPage.do?signForm.fileId=" + fileId, "signForm", null, null, afterLoadPaperReceipt);
     };
-    afterLoadPaperReceipt = function(data) {//sau khi load giay tiep nhan cong bo
+    afterLoadPaperReceipt = function (data) {//sau khi load giay tiep nhan cong bo
         dijit.byId("announcementReceiptPaperSignDlg").show();
     };
-    page.checkCAValidNew = function() {
+    page.checkCAValidNew = function () {
         page.checkCAValid(validCAStatus);
     };
-    page.viewFlow = function() {//xem luong
+    page.viewFlow = function () {//xem luong
         var lookupProcessDlg = dijit.byId("lookupProcessDlg");
         var fileId = dijit.byId("createForm.fileId").getValue();
         lookupProcessDlg.show();
         page.getProcess(fileId);
     };
-    page.showEvaluateDetailsForm = function() {//hien thi y kien tham dinh ho so
+    page.showEvaluateDetailsForm = function () {//hien thi y kien tham dinh ho so
         var fileId = dijit.byId("createForm.fileId").getValue();
         sd.connector.post("filesAction!getEvaluationRecordsDetails.do?createForm.fileId=" + fileId, null, null, null, afterLoadEvaluateDetailsForm);
     };
-    afterLoadEvaluateDetailsForm = function(data) {
+    afterLoadEvaluateDetailsForm = function (data) {
         var obj = dojo.fromJson(data);
         //var result = obj.items;
         var customInfo = obj.customInfo;
@@ -402,7 +405,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         page.replaceTblReviewFormViewDetailsEvaluate();
         dijit.byId("ctkqthamdinhDlg").show();
     };
-    returnStatus = function(status) {
+    returnStatus = function (status) {
         var strStatus = "";
         switch (status) {
             case -1:
@@ -419,7 +422,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         return strStatus;
     };
 //Check xac minh ky CA
-    page.checkCAValid = function(data) {
+    page.checkCAValid = function (data) {
         if (data == "NG") {
             document.getElementById("approveCAInValid").style.display = "";
             return false;
@@ -430,7 +433,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
     };
     var validCAStatus = dijit.byId("validCAStatus").value;
     // page.checkCAValid(validCAStatus);
-    page.checkTimeProcessFile = function() {
+    page.checkTimeProcessFile = function () {
         var viewType = dijit.byId("createForm.viewType").getValue();
         if (viewType == 0) {
             var status = parseInt(dijit.byId("createForm.status").getValue());
@@ -493,14 +496,14 @@ key="Kết luận thẩm định" showFullscreenButton="false"
             }
         }
     };
-    page.showReturnFilesButton = function() {
+    page.showReturnFilesButton = function () {
         var status = dijit.byId("createForm.status").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
         if (status == 15 && viewType == 1) {
             dijit.byId("btnReturnFiles").domNode.style.display = "";
         }
     };
-    page.showBtnOldVersion = function() {
+    page.showBtnOldVersion = function () {
         //binhnt 141125
         var viewType = dijit.byId("createForm.viewType").getValue();
         if (viewType != 0) {
@@ -515,11 +518,11 @@ key="Kết luận thẩm định" showFullscreenButton="false"
 //            }
 //        }
     };
-    page.downloadFileSignNew = function() {
+    page.downloadFileSignNew = function () {
         var fileId = dijit.byId("createForm.fileId").getValue();
         document.location = "uploadiframe!openFileUserUpload.do?fileId=" + fileId;
     };
-    page.checkButtonFileSign = function() {
+    page.checkButtonFileSign = function () {
         var userSigned = dijit.byId("createForm.userSigned").getValue();
         if (userSigned != null && userSigned.trim().length > 0) {
             if (userSigned == "fileUploaded") {
@@ -528,7 +531,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         }
     };
     //140916
-    page.showBtnEvaluateFiles = function() {
+    page.showBtnEvaluateFiles = function () {
         var status = dijit.byId("createForm.status").getValue();
         var staffProcess = dijit.byId("createForm.staffProcess").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
@@ -536,7 +539,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
             dijit.byId("btnEvaluateFiles").domNode.style.display = "";
         }
     };
-    page.showBtnReviewFiles = function() {
+    page.showBtnReviewFiles = function () {
         var status = dijit.byId("createForm.status").getValue();
         var leaderReviewId = dijit.byId("createForm.leaderReviewId").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
@@ -544,87 +547,93 @@ key="Kết luận thẩm định" showFullscreenButton="false"
             dijit.byId("btnReviewFiles").domNode.style.display = "";
         }
     };
-    page.showEvaluateLeaderFiles = function() {
-        var status = dijit.byId("createForm.status").getValue();
-        var leaderEvaluateId = dijit.byId("createForm.leaderEvaluateId").getValue();
-        var viewType = dijit.byId("createForm.viewType").getValue();
-        if ((status == 4 || status == 7) && (viewType == 3) && leaderEvaluateId == '${userId}') {
-            dijit.byId("btnEvaluateLeaderFiles").domNode.style.display = "";
-        }
-    };
-    page.getCommentEvaluateLeaderForm = function() {
-        var fileId = dijit.byId("createForm.fileId").getValue();
-        var fileType = dijit.byId("createForm.fileType").getValue();
-        dijit.byId("evaluateFormByLeader.fileId").setValue(fileId);
-        if (fileType != 66750) {//error
-            var panel = document.getElementById("effectiveDateDiv");
-            panel.setAttribute("style", "display:;");
-        }
-        sd.connector.post("filesAction!getCommentEvaluateFormByLeader.do?objectId=" + fileId, null, null, null, afterCommentEvaluateLeaderForm);
-    };
-    afterCommentEvaluateLeaderForm = function(data) {
-
-        var obj = dojo.fromJson(data);
-        if (obj.customInfo[0] != "") {
-            document.getElementById("evaluationRecordsFormByLeader.legalContent").value = obj.customInfo[0];
-        } else {
-            document.getElementById("evaluationRecordsFormByLeader.legalContent").value = "";
-        }
-        if (obj.customInfo[1] != "") {
-            document.getElementById("evaluationRecordsFormByLeader.foodSafetyQualityContent").value = obj.customInfo[1];
-        } else {
-            document.getElementById("evaluationRecordsFormByLeader.foodSafetyQualityContent").value = "";
-        }
-        if (obj.customInfo[2] != "") {
-            document.getElementById("evaluationRecordsFormByLeader.effectUtilityContent").value = obj.customInfo[2];
-        } else {
-            document.getElementById("evaluationRecordsFormByLeader.effectUtilityContent").value = "";
-        }
-        if (obj.customInfo[3] != "") {
-            document.getElementById("evaluateFormByLeader.staffRequest").value = obj.customInfo[3];
-        } else {
-            document.getElementById("evaluateFormByLeader.staffRequest").value = "";
-        }
-        if (obj.customInfo[4] != null) {
-            dijit.byId("evaluateFormByLeader.effectiveDate").setValue(obj.customInfo[4]);
-        } else {
-            dijit.byId("evaluateFormByLeader.effectiveDate").setValue(-1);
-        }
-
-        if (obj.customInfo[5] != null) {
-            dijit.byId("evaluationRecordsFormByLeader.legal").setValue(obj.customInfo[5]);
-        } else {
-            dijit.byId("evaluationRecordsFormByLeader.legal").setValue(1);
-        }
-
-        if (obj.customInfo[6] != null) {
-            dijit.byId("evaluationRecordsFormByLeader.foodSafetyQuality").setValue(obj.customInfo[6]);
-        } else {
-            dijit.byId("evaluationRecordsFormByLeader.foodSafetyQuality").setValue(1);
-        }
-
-        if (obj.customInfo[7] != null) {
-            dijit.byId("evaluationRecordsFormByLeader.effectUtility").setValue(obj.customInfo[7]);
-        } else {
-            dijit.byId("evaluationRecordsFormByLeader.effectUtility").setValue(1);
-        }
-
-        dijit.byId("evaluateFormByLeader.ProductType").setValue(0);
-        //var leaderAssignId = dijit.byId("createForm.leaderAssignId").getValue();
-        //dijit.byId("evaluationRecordsFormByLeader.leaderReviewId").setValue(leaderAssignId);
-        var status = dijit.byId("createForm.status").getValue();
-        if (status == 4) {
-            document.getElementById("evaluateFormByLeader.statusAccept").checked = true;
-        } else if (status == 7) {
-            document.getElementById("evaluateFormByLeader.statusDeny").checked = true;
-        }
-        var status = dijit.byId("createForm.status").getValue();
-        var statusName = getStatusStaffEvaluate(parseInt(status));
-        document.getElementById("evaluateFormByLeader.statusL").innerHTML = statusName;
-
-        dijit.byId("evaluateLeaderDlg").show();
-    };
-    page.getCommentEvaluateForm = function() {
+    /*
+     page.showEvaluateLeaderFiles = function () {
+     var status = dijit.byId("createForm.status").getValue();
+     var leaderEvaluateId = dijit.byId("createForm.leaderEvaluateId").getValue();
+     var viewType = dijit.byId("createForm.viewType").getValue();
+     if ((status == 4 || status == 7) && (viewType == 3) && leaderEvaluateId == '${userId}') {
+     dijit.byId("btnEvaluateLeaderFiles").domNode.style.display = "";
+     }
+     };
+     */
+    /*
+     page.getCommentEvaluateLeaderForm = function () {
+     var fileId = dijit.byId("createForm.fileId").getValue();
+     var fileType = dijit.byId("createForm.fileType").getValue();
+     dijit.byId("evaluateFormByLeader.fileId").setValue(fileId);
+     if (fileType != 66750) {//error
+     var panel = document.getElementById("effectiveDateDiv");
+     panel.setAttribute("style", "display:;");
+     }
+     sd.connector.post("filesAction!getCommentEvaluateFormByLeader.do?objectId=" + fileId, null, null, null, afterCommentEvaluateLeaderForm);
+     };
+     */
+    /*
+     afterCommentEvaluateLeaderForm = function (data) {
+     
+     var obj = dojo.fromJson(data);
+     if (obj.customInfo[0] != "") {
+     document.getElementById("evaluationRecordsFormByLeader.legalContent").value = obj.customInfo[0];
+     } else {
+     document.getElementById("evaluationRecordsFormByLeader.legalContent").value = "";
+     }
+     if (obj.customInfo[1] != "") {
+     document.getElementById("evaluationRecordsFormByLeader.foodSafetyQualityContent").value = obj.customInfo[1];
+     } else {
+     document.getElementById("evaluationRecordsFormByLeader.foodSafetyQualityContent").value = "";
+     }
+     if (obj.customInfo[2] != "") {
+     document.getElementById("evaluationRecordsFormByLeader.effectUtilityContent").value = obj.customInfo[2];
+     } else {
+     document.getElementById("evaluationRecordsFormByLeader.effectUtilityContent").value = "";
+     }
+     if (obj.customInfo[3] != "") {
+     document.getElementById("evaluateFormByLeader.staffRequest").value = obj.customInfo[3];
+     } else {
+     document.getElementById("evaluateFormByLeader.staffRequest").value = "";
+     }
+     if (obj.customInfo[4] != null) {
+     dijit.byId("evaluateFormByLeader.effectiveDate").setValue(obj.customInfo[4]);
+     } else {
+     dijit.byId("evaluateFormByLeader.effectiveDate").setValue(-1);
+     }
+     
+     if (obj.customInfo[5] != null) {
+     dijit.byId("evaluationRecordsFormByLeader.legal").setValue(obj.customInfo[5]);
+     } else {
+     dijit.byId("evaluationRecordsFormByLeader.legal").setValue(1);
+     }
+     
+     if (obj.customInfo[6] != null) {
+     dijit.byId("evaluationRecordsFormByLeader.foodSafetyQuality").setValue(obj.customInfo[6]);
+     } else {
+     dijit.byId("evaluationRecordsFormByLeader.foodSafetyQuality").setValue(1);
+     }
+     
+     if (obj.customInfo[7] != null) {
+     dijit.byId("evaluationRecordsFormByLeader.effectUtility").setValue(obj.customInfo[7]);
+     } else {
+     dijit.byId("evaluationRecordsFormByLeader.effectUtility").setValue(1);
+     }
+     
+     dijit.byId("evaluateFormByLeader.ProductType").setValue(0);
+     //var leaderAssignId = dijit.byId("createForm.leaderAssignId").getValue();
+     //dijit.byId("evaluationRecordsFormByLeader.leaderReviewId").setValue(leaderAssignId);
+     var status = dijit.byId("createForm.status").getValue();
+     if (status == 4) {
+     document.getElementById("evaluateFormByLeader.statusAccept").checked = true;
+     } else if (status == 7) {
+     document.getElementById("evaluateFormByLeader.statusDeny").checked = true;
+     }
+     var status = dijit.byId("createForm.status").getValue();
+     var statusName = getStatusStaffEvaluate(parseInt(status));
+     document.getElementById("evaluateFormByLeader.statusL").innerHTML = statusName;
+     
+     dijit.byId("evaluateLeaderDlg").show();
+     };
+     */
+    page.getCommentEvaluateForm = function () {
         var fileId = dijit.byId("createForm.fileId").getValue();
         var fileType = dijit.byId("createForm.fileType").getValue();
         var productType = dijit.byId("createForm.detailProduct.productType").getValue();
@@ -635,7 +644,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         }
         sd.connector.post("filesAction!getCommentEvaluateForm.do?objectId=" + fileId + "&objectType=30&productType=" + productType, null, null, null, afterCommentEvaluateForm);
     };
-    afterCommentEvaluateForm = function(data) {
+    afterCommentEvaluateForm = function (data) {
         var obj = dojo.fromJson(data);
         if (obj.customInfo[0] != "") {
             document.getElementById("evaluationRecordsForm.legalContent").value = obj.customInfo[0];
@@ -674,12 +683,12 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         dijit.byId("evaluateDlg").show();
     };
     //!140916
-    page.showReviewForm = function() {//show form kết luận xem xét hồ sơ
+    page.showReviewForm = function () {//show form kết luận xem xét hồ sơ
         var fileId = dijit.byId("createForm.fileId").getValue();
         dijit.byId("reviewForm.fileId").setValue(fileId);
         sd.connector.post("filesAction!getCommentEvaluateFormByLeader.do?objectId=" + fileId, null, null, null, afterShowReviewForm);
     };
-    afterShowReviewForm = function(data) {
+    afterShowReviewForm = function (data) {
         var obj = dojo.fromJson(data);
         if (obj.customInfo[0] != "") {
             document.getElementById("reviewForm.legalContentL").value = obj.customInfo[0];
@@ -714,7 +723,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         dijit.byId("reviewDlg").show();
         page.replaceBrTblReviewForm();//on reviewForm.jsp
     };
-    page.getStatusName = function(status) {
+    page.getStatusName = function (status) {
         switch (status) {
             case 1:
                 url = "Mới nộp";
@@ -749,7 +758,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         return url;
     };
     //------14 10 08 -------
-    page.showBtnFeedbackEvaluateForm = function() {
+    page.showBtnFeedbackEvaluateForm = function () {
         var status = dijit.byId("createForm.status").getValue();
         var staffProcess = dijit.byId("createForm.staffProcess").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
@@ -757,12 +766,12 @@ key="Kết luận thẩm định" showFullscreenButton="false"
             dijit.byId("btnFeedbackEvaluateForm").domNode.style.display = "";
         }
     };
-    page.showFeedbackEvaluateForm = function() {
+    page.showFeedbackEvaluateForm = function () {
         var fileId = dijit.byId("createForm.fileId").getValue();
         dijit.byId("feedbackEvaluateForm.fileId").setValue(fileId);
         sd.connector.post("filesAction!getCommentEvaluateFeedbackEvaluate.do?objectId=" + fileId, null, null, null, afterShowFeedbackEvaluateForm);
     };
-    afterShowFeedbackEvaluateForm = function(data) {
+    afterShowFeedbackEvaluateForm = function (data) {
         var obj = dojo.fromJson(data);
         if (obj.customInfo[0] != "") {
             document.getElementById("feedbackEvaluateForm.staffContent").innerHTML = obj.customInfo[0];
@@ -780,7 +789,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         dijit.byId("feedbackEvaluateFormDlg").show();
     };
     //--
-    page.showBtnFeedbackReviewForm = function() {
+    page.showBtnFeedbackReviewForm = function () {
         var status = dijit.byId("createForm.status").getValue();
         var leaderReviewId = dijit.byId("createForm.leaderReviewId").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
@@ -788,7 +797,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
             dijit.byId("btnFeedbackReviewForm").domNode.style.display = "";
         }
     };
-    page.showFeedbackReviewForm = function() {
+    page.showFeedbackReviewForm = function () {
         var fileId = dijit.byId("createForm.fileId").getValue();
         var isTypeChange = dijit.byId("createForm.isTypeChange").getValue();
         if (isTypeChange == '1') {
@@ -799,7 +808,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         dijit.byId("feedbackReviewForm.fileId").setValue(fileId);
         sd.connector.post("filesAction!getCommentFeedbackReview.do?objectId=" + fileId, null, null, null, afterShowFeedbackReviewForm);
     };
-    afterShowFeedbackReviewForm = function(data) {
+    afterShowFeedbackReviewForm = function (data) {
         var obj = dojo.fromJson(data);
         if (obj.customInfo[0] != "") {
             dijit.byId("feedbackReviewForm.leaderStaffRequest").setValue(obj.customInfo[0]);
@@ -810,24 +819,24 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         dijit.byId("feedbackReviewFormDlg").show();
     };
 
-    page.checkIs30 = function()
+    page.checkIs30 = function ()
     {
         msg.confirm('Xác nhận hồ sơ theo thông tư 30 ?', '<sd:Property>confirm.title1</sd:Property>', page.checkIs30New);
             };
 
-            page.checkIs30New = function()
+            page.checkIs30New = function ()
             {
                 var fileId = dijit.byId("createForm.fileId").getValue();
                 sd.connector.post("filesAction!check30.do?fileId=" + fileId, null, null, null, page.back1);
             };
 
-            page.back1 = function()
+            page.back1 = function ()
             {
                 document.getElementById("30").style.display = "";
                 dijit.byId("is30").domNode.style.display = "none";
                 dijit.byId("unCheck30").domNode.style.display = "";
             };
-            page.checkIs30New1 = function()
+            page.checkIs30New1 = function ()
             {
                 var is30 = dijit.byId("createForm.is30").getValue();
                 var status = dijit.byId("createForm.status").getValue();
@@ -848,7 +857,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
                     }
                 }
             };
-            page.checkIs30New2 = function()
+            page.checkIs30New2 = function ()
             {
                 var is30 = dijit.byId("createForm.is30").getValue();
                 var status = dijit.byId("createForm.status").getValue();
@@ -869,16 +878,16 @@ key="Kết luận thẩm định" showFullscreenButton="false"
                     }
                 }
             };
-            page.UnCheckIs30 = function() {
+            page.UnCheckIs30 = function () {
 
                 msg.confirm('Xác nhận hồ sơ không theo thông tư 30 ?', '<sd:Property>confirm.title1</sd:Property>', page.UnCheckIs30New);
                     };
-                    page.UnCheckIs30New = function()
+                    page.UnCheckIs30New = function ()
                     {
                         var fileId = dijit.byId("createForm.fileId").getValue();
                         sd.connector.post("filesAction!UnCheck30.do?fileId=" + fileId, null, null, null, page.back2);
                     };
-                    page.back2 = function()
+                    page.back2 = function ()
                     {
                         document.getElementById("30").style.display = "none";
                         dijit.byId("is30").domNode.style.display = "";
@@ -902,7 +911,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
                     page.showReturnFilesButton();
                     page.showBtnOldVersion();
                     //page.showBtnEvaluateFiles();
-                    page.showEvaluateLeaderFiles();
+                    //page.showEvaluateLeaderFiles();
                     //page.showBtnReviewFiles();
                     page.showBtnFeedbackEvaluateForm();
                     page.showBtnFeedbackReviewForm();

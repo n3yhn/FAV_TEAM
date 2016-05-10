@@ -1634,8 +1634,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             query.setParameter(0, Constants.Status.ACTIVE);
             query.setParameter(1, deptId);
             query.setParameter(2, deptId);
-            query.setParameter(3, "%" + Constants.POSITION.LEADER_OF_STAFF_T + "%");
-            query.setParameter(4, "%" + Constants.POSITION.GDTT + "%");
+            query.setParameter(3, Constants.POSITION.LEADER_OF_STAFF_T);
+            query.setParameter(4, Constants.POSITION.GDTT);
             user = query.list();
             return user;
         } catch (Exception e) {
@@ -1658,8 +1658,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                     + " order by u.posId asc, nlssort(lower(u.fullName),'nls_sort = Vietnamese') ");
             query.setParameter(0, Constants.Status.ACTIVE);
             query.setParameter(1, userId);
-            query.setParameter(2, "%" + Constants.POSITION.LEADER_OF_STAFF_T + "%");
-            query.setParameter(3, "%" + Constants.POSITION.GDTT + "%");
+            query.setParameter(2, Constants.POSITION.LEADER_OF_STAFF_T);
+            query.setParameter(3, Constants.POSITION.GDTT);
             user = query.list();
             if (user != null && user.size() > 0) {
                 result = true;

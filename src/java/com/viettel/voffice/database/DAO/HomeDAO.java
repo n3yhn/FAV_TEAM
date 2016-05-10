@@ -239,12 +239,14 @@ public class HomeDAO extends BaseDAO {
                                 if (lstRole.contains(Constants.ROLES.CV + ";")) {
                                     loadCountFilesNeedToEvaluate = true;
                                 } else {
-                                    if (lstRole.contains(Constants.ROLES.LEAD_UNIT + ";")) {
+                                    if (lstRole.contains(Constants.ROLES.VT + ";")) {
                                         loadCountFilesClericalRole = true;
                                     } else {
-                                        if (lstRole.contains(Constants.ROLES.VT + ";")) {
-                                            loadCountFilesClericalRole = true;
+                                        if (lstRole.contains(Constants.ROLES.PGDTT + ";")
+                                                || lstRole.contains(Constants.ROLES.LEADER_OF_STAFF_P + ";")) {
+                                            loadCountFilesNeedToEvaluate = true;
                                         }
+
                                     }
                                 }
                             }

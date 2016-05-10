@@ -1385,7 +1385,6 @@ public class FilesDAO extends BaseDAO {
         edhe.insertEventLog("Thẩm định hồ sơ", "hồ sơ có id=" + createForm.getFileId(), getRequest());
         return GRID_DATA;
     }
-
     /**
      * soan thao noi dung cong van thong bao sdbs
      *
