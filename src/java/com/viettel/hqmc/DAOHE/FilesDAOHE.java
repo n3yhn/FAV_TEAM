@@ -2824,7 +2824,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
      * @param createForm
      * @return
      */
-    public Files saveFiles(FilesForm createForm) {//
+    public Files saveFiles(FilesForm createForm) {
         Files bo = null;
         Files boRollBack = null;
         Long filesId = createForm.getFileId();
@@ -2840,8 +2840,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         }
         if (filesId != null) {
             String hql = "select dt.productType from DetailProduct dt "
-                    + "where dt.detailProductId = (select f.detailProductId from Files f "
-                    + "where f.fileId =?)";
+                    + "where "
+                    + "dt.detailProductId = (select f.detailProductId from Files f where f.fileId =?)";
             Query query = getSession().createQuery(hql);
             query.setParameter(0, filesId);
             List<Long> lstProductType = query.list();
@@ -7343,17 +7343,17 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         if (udaohe.checkTruongPhong(form.getLeaderReviewId())) {
                             file.setLeaderReviewId(form.getLeaderReviewId());
                             file.setLeaderReviewName(form.getLeaderReviewName());
-                            file.setLeaderEvaluateId(null);
-                            file.setLeaderEvaluateName(null);
-                            file.setLeaderApproveId(null);
-                            file.setLeaderApproveName(null);
+//                            file.setLeaderEvaluateId(null);
+//                            file.setLeaderEvaluateName(null);
+//                            file.setLeaderApproveId(null);
+//                            file.setLeaderApproveName(null);
                         } else {
                             file.setLeaderEvaluateId(form.getLeaderReviewId());
                             file.setLeaderEvaluateName(form.getLeaderReviewName());
-                            file.setLeaderReviewId(null);
-                            file.setLeaderReviewName(null);
-                            file.setLeaderApproveId(null);
-                            file.setLeaderApproveName(null);
+//                            file.setLeaderReviewId(null);
+//                            file.setLeaderReviewName(null);
+//                            file.setLeaderApproveId(null);
+//                            file.setLeaderApproveName(null);
                         }
                     } else {
                         List<String> lstTP = new ArrayList<String>();
@@ -7362,15 +7362,15 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         if (udaohe.checkRoleUserOfLst(deptId, form.getLeaderReviewId(), lstTP)) {
                             file.setLeaderReviewId(form.getLeaderReviewId());
                             file.setLeaderReviewName(form.getLeaderReviewName());
-                            file.setLeaderEvaluateId(null);
-                            file.setLeaderEvaluateName(null);
-                            file.setLeaderApproveId(null);
-                            file.setLeaderApproveName(null);
+//                            file.setLeaderEvaluateId(null);
+//                            file.setLeaderEvaluateName(null);
+//                            file.setLeaderApproveId(null);
+//                            file.setLeaderApproveName(null);
                         } else {
-                            file.setLeaderReviewId(null);
-                            file.setLeaderReviewName(null);
-                            file.setLeaderEvaluateId(null);
-                            file.setLeaderEvaluateName(null);
+//                            file.setLeaderReviewId(null);
+//                            file.setLeaderReviewName(null);
+//                            file.setLeaderEvaluateId(null);
+//                            file.setLeaderEvaluateName(null);
                             file.setLeaderApproveId(form.getLeaderReviewId());
                             file.setLeaderApproveName(form.getLeaderReviewName());
                             if (file.getStatus().equals(Constants.FILE_STATUS.EVALUATED)) {
@@ -7449,16 +7449,18 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     newP.setSendUser(userName);
 
                     newP.setReceiveDate(dateNow);
-                    if (file.getLeaderEvaluateId() != null) {
-                        newP.setReceiveUserId(file.getLeaderEvaluateId());
-                        newP.setReceiveUser(file.getLeaderEvaluateName());
-                    } else if (file.getLeaderReviewId() != null) {
-                        newP.setReceiveUserId(file.getLeaderReviewId());
-                        newP.setReceiveUser(file.getLeaderReviewName());
-                    } else if (file.getLeaderApproveId() != null) {
-                        newP.setReceiveUserId(file.getLeaderApproveId());
-                        newP.setReceiveUser(file.getLeaderApproveName());
-                    }
+                    newP.setReceiveUserId(form.getLeaderReviewId());
+                    newP.setReceiveUser(form.getLeaderReviewName());
+//                    if (file.getLeaderEvaluateId() != null) {
+//                        newP.setReceiveUserId(file.getLeaderEvaluateId());
+//                        newP.setReceiveUser(file.getLeaderEvaluateName());
+//                    } else if (file.getLeaderReviewId() != null) {
+//                        newP.setReceiveUserId(file.getLeaderReviewId());
+//                        newP.setReceiveUser(file.getLeaderReviewName());
+//                    } else if (file.getLeaderApproveId() != null) {
+//                        newP.setReceiveUserId(file.getLeaderApproveId());
+//                        newP.setReceiveUser(file.getLeaderApproveName());
+//                    }
 
                     if (!isReview) {
                         newP.setReceiveGroup(deptName);

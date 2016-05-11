@@ -16,7 +16,7 @@
                 </sd:TitlePane>
             </td>
             <td style="width: 38%">
-                <sd:TitlePane key="Kết luận thẩm định" id="titlePaneEvaluate">
+                <sd:TitlePane key="Lãnh đạo phòng Kết luận thẩm định" id="titlePaneEvaluate">
                     <div style="overflow-y: auto;max-height: 600px">
                         <form id="evaluationRecord" name="createForm">
                             <table width="100%" class="viewTable">
