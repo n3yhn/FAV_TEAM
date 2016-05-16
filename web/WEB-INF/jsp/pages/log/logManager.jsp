@@ -95,7 +95,7 @@
                 <sd:ColumnDataGrid headerStyles="text-align:center;font-weight: bold" editable="false" key="usersFormOnDialog.userName" field="userName" width="10%" />
                 <sd:ColumnDataGrid headerStyles="text-align:center;font-weight: bold" editable="false" key="usersFormOnDialog.fullName" field="actor" width="15%" />
                 <sd:ColumnDataGrid headerStyles="text-align:center;font-weight: bold" editable="false" key="report.ip" field="ip" width="20%" />
-                <sd:ColumnDataGrid headerStyles="text-align:center;font-weight: bold" cellStyles="text-align:center;" editable="false" key="report.eventDate" field="eventDate" type="date" format="dd/MM/yyyy hh:hm:s aaa" width="15%" />
+                <sd:ColumnDataGrid headerStyles="text-align:center;font-weight: bold" cellStyles="text-align:center;" editable="false" key="report.eventDate" field="eventDate" type="date" format="dd/MM/yyyy hh:m:s a" width="15%" />
                 <sd:ColumnDataGrid headerStyles="text-align:center;font-weight: bold" editable="false" key="positionAddEditForm.description" field="description" width="15%" />
             </sd:DataGrid>
         </div>

@@ -598,7 +598,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
      }
      sd.connector.post("filesAction!getCommentEvaluateFormByLeader.do?objectId=" + fileId, null, null, null, afterCommentEvaluateLeaderForm);
      };
-     */\
+     */
             /*
              afterCommentEvaluateLeaderForm = function (data) {
              
@@ -944,7 +944,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
                     page.showReturnFilesButton();
                     page.showBtnOldVersion();
                     //page.showBtnEvaluateFiles();
-                    page.showEvaluateLeaderFiles();
+                    //page.showEvaluateLeaderFiles();
                     //page.showBtnReviewFiles();
                     page.showBtnFeedbackEvaluateForm();
                     page.showBtnFeedbackReviewForm();

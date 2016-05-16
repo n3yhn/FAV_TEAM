@@ -520,18 +520,26 @@
                             <sd:ColumnDataGrid  key="Chức năng" formatter="page.formatAction" get="page.getRow"
                                                 width="5%"  headerStyles="text-align:center;" cellStyles="text-align:center;"/>
                             <sd:ColumnDataGrid  key="Mã hồ sơ" field="fileCode" width="5%"  headerStyles="text-align:center;" />
+                            <%--
                             <sd:ColumnDataGrid  key="Số bản công bố" field="announcementNo" cellStyles="text-align:left;"
                                                 width="7%"  headerStyles="text-align:center;" />
+                            --%>
                             <sd:ColumnDataGrid  key="Loại hồ sơ" field="fileTypeName"
                                                 width="10%"  headerStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Tên tổ chức, cá nhân" field="businessName" cellStyles="text-align:left;"
                                                 width="10%"  headerStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Tên sản phẩm" field="productName" cellStyles="text-align:left;"
                                                 width="10%"  headerStyles="text-align:center;" />
+                            <%--
                             <sd:ColumnDataGrid  key="Số quy chuẩn phù hợp" field="matchingTarget" cellStyles="text-align:left;"
                                                 width="10%"  headerStyles="text-align:center;" />
-                            <sd:ColumnDataGrid  key="Ngày nộp" field="sendDate" format="dd/MM/yyyy" type="date"
-                                                width="5%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />
+                            --%>
+                            <sd:ColumnDataGrid  key="Cán bộ xử lý chính" field="nameStaffProcess"  cellStyles="text-align:center;"
+                                                width="7%"  headerStyles="text-align:center;" />
+                            <sd:ColumnDataGrid  key="Ngày đến" field="modifyDate" format="dd/MM/yyyy" type="date"
+                                                width="7%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />   
+                            <sd:ColumnDataGrid  key="Ngày hẹn trả" field="deadlineApprove" format="dd/MM/yyyy" type="date"
+                                                width="7%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Kết quả thẩm định" formatter="page.formatStatus" get="page.getRow"
                                                 width="10%"  headerStyles="text-align:center;" cellStyles="text-align:center;"/>
                             <sd:ColumnDataGrid editable="true" key="Cảnh báo" headerStyles="text-align:center;" width="3%" cellStyles="text-align:center;"

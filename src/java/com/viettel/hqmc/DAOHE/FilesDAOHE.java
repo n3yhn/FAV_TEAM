@@ -7345,15 +7345,15 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             file.setLeaderReviewName(form.getLeaderReviewName());
 //                            file.setLeaderEvaluateId(null);
 //                            file.setLeaderEvaluateName(null);
-//                            file.setLeaderApproveId(null);
-//                            file.setLeaderApproveName(null);
+                            file.setLeaderApproveId(null);
+                            file.setLeaderApproveName(null);
                         } else {
                             file.setLeaderEvaluateId(form.getLeaderReviewId());
                             file.setLeaderEvaluateName(form.getLeaderReviewName());
-//                            file.setLeaderReviewId(null);
-//                            file.setLeaderReviewName(null);
-//                            file.setLeaderApproveId(null);
-//                            file.setLeaderApproveName(null);
+                            file.setLeaderReviewId(null);
+                            file.setLeaderReviewName(null);
+                            file.setLeaderApproveId(null);
+                            file.setLeaderApproveName(null);
                         }
                     } else {
                         List<String> lstTP = new ArrayList<String>();
@@ -7364,8 +7364,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             file.setLeaderReviewName(form.getLeaderReviewName());
 //                            file.setLeaderEvaluateId(null);
 //                            file.setLeaderEvaluateName(null);
-//                            file.setLeaderApproveId(null);
-//                            file.setLeaderApproveName(null);
+                            file.setLeaderApproveId(null);
+                            file.setLeaderApproveName(null);
                         } else {
 //                            file.setLeaderReviewId(null);
 //                            file.setLeaderReviewName(null);
