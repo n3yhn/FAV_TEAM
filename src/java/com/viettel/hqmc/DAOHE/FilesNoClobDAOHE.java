@@ -5551,4 +5551,1091 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             return new GridResult(0, null);
         }
     }
+
+    public GridResult searchLookupFilesAfterAnnounced(
+            FilesForm form,
+            Long deptId,
+            Long userId,
+            String userType,
+            int start,
+            int count,
+            String sortField,
+            String sortCustom
+    ) {
+        try {
+            return createQueryLookupFilesAfterAnnounced(form, deptId, userId, userType, start, count, sortField, sortCustom);
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            return new GridResult(0, null);
+        }
+    }
+
+    public GridResult createQueryLookupFilesAfterAnnounced(
+            FilesForm form,
+            Long deptId,
+            Long userId,
+            String userType,
+            int start,
+            int count,
+            String sortField,
+            String sortCustom
+    ) {
+        List lstParam = new ArrayList();
+        String hql = " from FilesNoClob f, Process p, Business b ";
+        String condition = "";
+        condition += " and f.fileId = p.objectId";
+        condition += " and f.deptId = b.businessId";
+        condition += " and f.isActive = 1"
+                + " and f.fileId = p.objectId"
+                + "  and (f.isTemp = null or f.isTemp = 0 )";
+        if (userType.equals(Constants.ROLES.LEAD_OFFICE_ROLE)
+                || userType.equals(Constants.ROLES.STAFF_ROLE)
+                || userType.equals(Constants.ROLES.LEAD_UNIT)) {
+        }
+        if (form != null) {
+            if (userType.equals(Constants.ROLES.STAFF_ROLE)
+                    && form.getSearchType() != null) {//vcv
+                switch (Integer.parseInt(form.getSearchType().toString())) {
+                    case 42:
+                        condition += " and (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.EVALUATED);
+                        condition += " and f.staffProcess =?";
+                        lstParam.add(userId);
+                        break;
+                    case 47:
+                        condition += " and (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.FEDBACK_TO_ADD);
+                        condition += " and f.staffProcess =?";
+                        lstParam.add(userId);
+                        break;
+                    case -26://Hồ sơ đã xem xét cv sđbs chờ phê duyệt công văn
+                        lstParam.clear();
+                        hql = "from FilesNoClob f, Process p";
+                        condition = " AND f.isActive = 1"
+                                + " AND (f.isTemp = null or f.isTemp = 0 )"
+                                + " AND f.fileId = p.objectId"
+                                + " AND f.status = ?"
+                                + " AND p.receiveGroupId = ?"
+                                + " AND p.receiveUserId = ?";
+                        lstParam.add(Constants.FILE_STATUS.REVIEW_TO_ADD);
+                        lstParam.add(deptId);
+                        lstParam.add(userId);
+                        break;
+                    case -20://Ho so da gui thong bao sdbs cho doanh nghiep
+                        lstParam.clear();
+                        hql = "from FilesNoClob f";
+                        condition = " AND f.isActive=1";
+                        condition += " AND (f.status = ?)";
+                        condition += " AND f.staffProcess=?";
+                        condition += " AND (f.isTemp = null or f.isTemp = 0 ) ";
+                        lstParam.add(Constants.FILE_STATUS.EVALUATED_TO_ADD);
+                        lstParam.add(userId);
+                        break;
+                    case 33://Hồ sơ chờ thẩm định SĐBS CV
+                        lstParam.clear();
+                        hql = " from FilesNoClob f, Process p";
+                        condition = " AND f.fileId = p.objectId";
+                        condition += " AND f.isActive = 1"
+                                + " and f.fileId = p.objectId"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
+                        condition += " AND p.receiveGroupId = ?";
+                        lstParam.add(deptId);
+                        if (userId != null) {
+                            condition += " and f.staffProcess=?";
+                            lstParam.add(userId);
+                        }
+                        condition += " AND f.status = ?";
+                        lstParam.add(Constants.FILE_STATUS.RECEIVED_TO_ADD);
+                        break;
+                    case 19://Hồ sơ lãnh đạo cục yêu cầu bổ sung CV
+                        lstParam.clear();
+                        hql = " from FilesNoClob f";
+                        condition = " AND f.fileId = p.objectId";
+                        condition += " AND f.isActive = 1"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
+                        condition += " AND p.receiveGroupId = ?";
+                        lstParam.add(deptId);
+                        if (userId != null) {
+                            condition += " and p.receiveUserId=?";
+                            lstParam.add(userId);
+                        }
+                        condition += " AND f.status = ?";
+                        lstParam.add(Constants.FILE_STATUS.REVIEWED_TO_ADD);
+                        break;
+                    case 5://Hồ sơ cần thông báo đối chiếu
+                        lstParam.clear();
+                        hql = " from FilesNoClob f, Process p";
+                        condition = " and f.fileId = p.objectId";
+                        condition += " AND f.isActive = 1"
+                                + " and f.fileId = p.objectId"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
+                        condition += " AND p.receiveGroupId = ?";
+                        lstParam.add(deptId);
+                        if (userId != null) {
+                            condition += " and p.receiveUserId=?";
+                            lstParam.add(userId);
+                        }
+                        condition += " AND f.status = ?";
+                        lstParam.add(Constants.FILE_STATUS.REVIEWED);
+                        break;
+                    case 50:
+                        lstParam.clear();
+                        hql = " from FilesNoClob f, Process p";
+                        condition = " and f.fileId = p.objectId";
+                        condition += " AND f.isActive = 1 and f.fileId = p.objectId"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
+                        condition += " AND (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.ASSIGNED);
+                        condition += " AND p.receiveGroupId = ?";
+                        lstParam.add(deptId);
+                        if (userId != null) {
+                            condition += " and p.receiveUserId=?";
+                            lstParam.add(userId);
+                        }
+                        break;
+                    case 417:
+                        lstParam.clear();
+                        hql = " from FilesNoClob f";
+                        condition = " AND f.isActive = 1"
+                                + " and (f.isTemp = null or f.isTemp = 0)";
+                        condition += " AND (f.status =?)";
+                        lstParam.add(Constants.FILE_STATUS.APPROVED);
+                        if (userId != null) {
+                            condition += " and f.staffProcess=?";
+                            lstParam.add(userId);
+                        }
+                        condition += " AND f.isSignPdf <> 2";
+                        break;
+                    case 422:
+                        lstParam.clear();
+                        hql = " from FilesNoClob f";
+                        condition = " AND f.isActive = 1"
+                                + " and (f.isTemp = null or f.isTemp = 0)";
+                        condition += " AND (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.GIVE_BACK);
+                        if (userId != null) {
+                            condition += " and f.staffProcess=?";
+                            lstParam.add(userId);
+                        }
+                        condition += " AND f.isSignPdf = 2";
+                        break;
+                    case 423:
+                        lstParam.clear();
+                        hql = " from FilesNoClob f";
+                        condition = " AND f.isActive = 1"
+                                + " and (f.isTemp = null or f.isTemp = 0)";
+                        condition += " AND (f.status <> ?)";
+                        lstParam.add(Constants.FILE_STATUS.GIVE_BACK);
+                        if (userId != null) {
+                            condition += " and f.staffProcess=?";
+                            lstParam.add(userId);
+                        }
+                        condition += " AND f.isSignPdf = 2";
+                        break;
+                    case 447:
+                        lstParam.clear();
+                        hql = " from FilesNoClob f";
+                        condition = " AND f.isActive = 1 and (f.isTemp = null or f.isTemp = 0)";
+                        condition += " AND f.staffProcess=?";
+                        lstParam.add(userId);
+                        condition += " AND (f.status =?)";
+                        lstParam.add(Constants.FILE_STATUS.EVALUATED);
+                        break;
+                    case 448:
+                        lstParam.clear();
+                        hql = " from FilesNoClob f";
+                        condition = " AND f.isActive = 1 and (f.isTemp = null or f.isTemp = 0)";
+                        condition += " AND f.staffProcess=?";
+                        lstParam.add(userId);
+                        condition += " AND (f.status =?)";
+                        lstParam.add(Constants.FILE_STATUS.FEDBACK_TO_ADD);
+                        break;
+                    case 20://Hồ sơ chờ chuyên viên trong tổ thẩm định
+                        lstParam.clear();
+                        hql = "from FilesNoClob f, Process p";
+                        condition = " AND f.isActive = 1";
+                        condition += " AND (f.isTemp = null or f.isTemp = 0 )";
+                        condition += " AND f.fileId = p.objectId";
+                        if (userId != null) {
+                            condition += " and p.receiveUserId=?";
+                            lstParam.add(userId);
+                        }
+                        condition += " and p.processType=0";
+                        condition += " and f.status = ?";
+                        lstParam.add(Constants.FILE_STATUS.ASSIGNED);
+                        break;
+                    case 21://Hồ sơ gửi phối hợp chưa cho ý kiến 21
+                        lstParam.clear();
+                        hql = " from FilesNoClob f, Process p";
+                        condition = " AND f.isActive = 1 ";
+                        condition += " AND (f.isTemp = null or f.isTemp = 0 ) ";
+                        condition += " AND f.fileId = p.objectId ";
+                        condition += " AND p.receiveGroupId = ? ";
+                        lstParam.add(deptId);
+                        if (userId != null) {
+                            condition += " AND p.sendUserId = ? ";
+                            lstParam.add(userId);
+                        }
+                        condition += " AND (f.status = ?) ";
+                        condition += " AND p.processStatus = ?";
+                        lstParam.add(Constants.FILE_STATUS.ASSIGNED);
+                        lstParam.add(Constants.FILE_STATUS.ASSIGNED);
+                        condition += " AND (p.processId in (select p.processId from Process p where p.processId not in (select distinct pc.processId from ProcessComment pc))) ";
+                        condition += " AND (p.processType=0 or p.processType=4) ";
+                        break;
+                    case 22://Hồ sơ chuyên viên đã gửi thông báo sửa đổi bổ sung
+                        lstParam.clear();
+                        hql = " from FilesNoClob f, Process p";
+                        condition = " AND f.fileId = p.objectId";
+                        condition += " AND f.isActive = 1 and (f.isTemp = null or f.isTemp = 0)";
+                        condition += " AND p.receiveGroupId =?";
+                        lstParam.add(deptId);
+                        if (userId != null) {
+                            condition += " and p.receiveUserId=?";
+                            lstParam.add(userId);
+                        }
+                        condition += " AND (f.status =?)";
+                        lstParam.add(Constants.FILE_STATUS.EVALUATED_TO_ADD);
+                        break;
+                    case 26:
+                        lstParam.clear();
+                        hql = "from FilesNoClob f, Process p";
+                        condition = " AND f.isActive=1";
+                        condition += " AND f.fileId = p.objectId";
+                        condition += " AND f.status = ?";
+                        condition += " AND p.receiveUserId=?";
+                        condition += " AND p.processType=1";
+                        condition += " AND (f.isTemp = null or f.isTemp = 0 ) ";
+                        lstParam.add(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE);
+                        lstParam.add(userId);
+                        break;
+                    case 27:
+                        lstParam.clear();
+                        hql = " from FilesNoClob f, Process p";
+                        condition = " AND f.isActive = 1 ";
+                        condition += " AND (f.isTemp = null or f.isTemp = 0 ) ";
+                        condition += " AND f.fileId = p.objectId ";
+                        condition += " AND p.receiveGroupId = ? ";
+                        lstParam.add(deptId);
+                        if (userId != null) {
+                            condition += " AND p.sendUserId = ? ";
+                            lstParam.add(userId);
+                        }
+                        condition += " AND (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.EVALUATED_TO_ADD);
+                        condition += " AND sysdate - f.evaluateAddDate >= 54";
+                        break;
+                }
+            }
+            if (userType.equals(Constants.ROLES.CLERICAL_ROLE) && form.getSearchType() != null) {//vvt
+                switch (Integer.parseInt(form.getSearchType().toString())) {
+                    case -11:
+                        /*tim kiem bao cao van thu xu ly ho so trong khoang thoi gian.
+                         binhnt53 add 150211
+                         */
+                        lstParam.clear();
+                        hql = " from FilesNoClob f, Process p";
+                        condition = " AND f.fileId = p.objectId";
+                        condition += " AND f.isActive = 1 and (f.isTemp = null or f.isTemp = 0)";
+                        if (form.getStatus() != null) {
+                            condition += " AND p.status = ?";
+                            lstParam.add(form.getStatus());
+                        }
+                        if (form.getSearchDateFrom() != null) {
+                            condition += " and p.sendDate >= ?";
+                            lstParam.add(form.getSearchDateFrom());
+                        }
+                        if (form.getSearchDateTo() != null) {
+                            condition += " and p.sendDate <= ?";
+                            lstParam.add(form.getSearchDateTo());
+                        }
+                        break;
+                    case 1623://hồ sơ cần đối chiếu
+                        lstParam.clear();
+                        hql = " from FilesNoClob f, Process p";
+                        condition = " AND f.fileId = p.objectId";
+                        condition += " AND f.isActive = 1 and (f.isTemp = null or f.isTemp = 0)";
+                        condition += " AND (f.status =? )";
+                        //lstParam.add(Constants.FILE_STATUS.COMPARED_FAIL);
+                        lstParam.add(Constants.FILE_STATUS.ALERT_COMPARISON);
+                        break;
+                    case 22:
+                        hql = " from FilesNoClob f, Process p";
+                        lstParam.clear();
+                        condition = " and f.isActive = 1"
+                                + " and f.fileId = p.objectId"
+                                + " and (f.isTemp = null or f.isTemp = 0)";
+                        condition += " and (f.status = ? or f.status = ? or f.status = ? or f.status = ? or f.status = ? or f.status = ?)";
+//                        lstParam.add(Constants.FILE_STATUS.APPROVED);
+                        lstParam.add(Constants.FILE_STATUS.REVIEW_COMPARISON_FAIL);
+                        lstParam.add(Constants.FILE_STATUS.COMPARED_FAIL);
+                        lstParam.add(Constants.FILE_STATUS.REVIEW_COMPARISON);
+                        lstParam.add(Constants.FILE_STATUS.COMPARED);
+                        lstParam.add(Constants.FILE_STATUS.ALERT_COMPARISON);
+                        lstParam.add(Constants.FILE_STATUS.GIVE_BACK);
+                        condition += " and p.receiveGroupId = ?";
+                        lstParam.add(deptId);
+                        break;
+                    case 15:
+                        hql = " from FilesNoClob f, Process p";
+
+                        lstParam.clear();
+                        condition = " and f.isActive = 1"
+                                + " and f.fileId = p.objectId"
+                                + " and (f.isTemp = null or f.isTemp = 0)"
+                                + " and (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.COMPARED);
+                        condition += " and p.receiveGroupId = ?";
+                        condition += " and f.isFee = 1 and f.isSignPdf = 2";
+                        lstParam.add(deptId);
+                        break;
+                    case 6:
+                        hql = " from FilesNoClob f, Process p";
+
+                        lstParam.clear();
+                        condition = " and f.isActive = 1"
+                                + " and f.fileId = p.objectId"
+                                + " and (f.isTemp = null or f.isTemp = 0)"
+                                + " and (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.APPROVED);
+                        condition += " and p.receiveGroupId = ?";
+                        condition += " and f.isFee = 1 and f.isSignPdf = 2";
+                        condition += " and f.isDownload <> 1";//u150112 binhnt53
+                        lstParam.add(deptId);
+                        break;
+                    case 20:
+                        hql = " from FilesNoClob f, Process p";
+
+                        lstParam.clear();
+                        condition = " and f.isActive = 1"
+                                + " and f.fileId = p.objectId"
+                                + " and (f.isTemp = null or f.isTemp = 0)"
+                                + " and (f.status = ?)";
+                        lstParam.add(form.getStatus());
+                        condition += " and p.sendGroupId = ?";
+                        lstParam.add(deptId);
+                        break;
+                    case -27:
+                        hql = " from FilesNoClob f, Process p";
+
+                        lstParam.clear();
+                        condition = " and f.isActive = 1"
+                                + " and f.fileId = p.objectId"
+                                + " and (f.isTemp = null or f.isTemp = 0)"
+                                + " and (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.APPROVE_TO_ADD);
+                        condition += " and p.receiveGroupId = ?";
+                        lstParam.add(deptId);
+                        break;
+                    case -6://hồ sơ cần kí xác thực văn thư: hồ sơ đã đối chiếu, đã thanh toán
+                        hql = " from FilesNoClob f, Process p";
+                        condition = " and f.fileId = p.objectId"
+                                + " and (f.isTemp=null or f.isTemp=0)"
+                                + " and f.isActive= 1"
+                                + " and f.isSignPdf = 1"
+                                + " and f.isFee = 1"
+                                + " and f.status = ?"
+                                + " and p.receiveGroupId = ?";
+                        lstParam.clear();
+                        lstParam.add(Constants.FILE_STATUS.APPROVED);
+                        lstParam.add(deptId);
+                        break;
+                    case -4:
+                        hql = " from FilesNoClob f";
+                        condition = " and (f.isTemp=null or f.isTemp=0)"
+                                + " and f.isActive=1 "
+                                + " and f.isFee <> 1 and f.isSignPdf <> 2"
+                                + " and (f.status=?)"
+                                + " and f.agencyId = ?";
+                        lstParam.clear();
+                        lstParam.add(Constants.FILE_STATUS.APPROVED);
+                        lstParam.add(deptId);
+                        break;
+                    case 0:
+                        hql = " from FilesNoClob f, Process p";
+                        lstParam.clear();
+                        condition = " and f.isActive = 1"
+                                + " and f.fileId = p.objectId"
+                                + " and (f.isTemp = null or f.isTemp = 0)"
+                                + " and (f.status = ?)";
+                        lstParam.add(form.getStatus());
+                        condition += " and p.receiveGroupId = ?";
+                        lstParam.add(deptId);
+                        break;
+                    case 110://danh sach ho so can luu tru
+                        hql = " from FilesNoClob f, Process p";
+                        lstParam.clear();
+                        condition = " and f.isActive = 1"
+                                + " and f.fileId = p.objectId"
+                                + " and (f.isTemp = null or f.isTemp = 0)"
+                                + " and f.status <> ?"
+                                + " and f.isFee <> 2";
+                        condition += " and p.receiveGroupId = ?";
+                        lstParam.add(Constants.FILE_STATUS.NEW_CREATE);
+                        lstParam.add(deptId);
+                        break;
+                    default:;
+                }
+            }
+            if (userType.equals(Constants.ROLES.LEAD_UNIT) && form.getSearchType() != null) {//vldp
+                switch (Integer.parseInt(form.getSearchType().toString())) {
+                    case 39:
+                        condition += " and f.isActive = 1"
+                                + " and f.fileId = p.objectId"
+                                + " AND f.status = ?"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
+                        lstParam.add(Constants.FILE_STATUS.FEDBACK_TO_REVIEW);
+                        if (userId != null) {
+                            condition += " and f.leaderReviewId=?";
+                            lstParam.add(userId);
+                        }
+                        break;
+                    case 30:
+                        condition += " and f.isActive = 1"
+                                + " and f.fileId = p.objectId"
+                                + " AND f.status = ?"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
+                        lstParam.add(Constants.FILE_STATUS.EVALUATED_TO_ADD);
+                        if (userId != null) {
+                            condition += " and p.receiveUserId=?";
+                            lstParam.add(userId);
+                        }
+                        if (deptId != null) {
+                            condition += " AND p.receiveGroupId = ? ";
+                            lstParam.add(deptId);
+                        }
+                        break;
+                    case 2:
+                        condition += " and (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.EVALUATED);
+                        condition += " and p.receiveGroupId = ?"
+                                + " and p.receiveUserId = ?";
+                        lstParam.add(deptId);
+                        lstParam.add(userId);
+                        condition += " and ((f.leaderEvaluateId = ?"
+                                + " and f.leaderReviewId = null) or f.leaderReviewId =?)";
+                        lstParam.add(userId);
+                        lstParam.add(userId);
+                        break;
+                    case 7:
+                        condition += " and (f.status = ?)";////150204 binhnt53 update
+                        lstParam.add(Constants.FILE_STATUS.FEDBACK_TO_ADD);
+                        condition += " and p.receiveGroupId = ?"
+                                + " and p.receiveUserId = ?";
+                        lstParam.add(deptId);
+                        lstParam.add(userId);
+                        condition += " and (f.leaderReviewId =?)";
+                        lstParam.add(userId);
+                        break;
+                    case 8:// ho so cho xem xet du thao sdbs
+                        condition += " and (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.EVALUATE_TO_ADD);
+                        condition += " and p.receiveGroupId = ?";
+                        lstParam.add(deptId);
+                        condition += " and p.receiveUserId = ?";
+                        lstParam.add(userId);
+                        condition += " and f.leaderReviewId = ?";
+                        lstParam.add(userId);
+                        break;
+                    case 5://ho so cho lanh dao cuc phe duyet, lanh dao phong da duyet
+                        condition += " and (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.REVIEWED);
+                        condition += " and p.receiveGroupId = ?"
+                                + " and p.receiveUserId = ?";
+                        lstParam.add(deptId);
+                        lstParam.add(userId);
+                        break;
+                    case 22://ho so cho lanh dao cuc phe duyet, lanh dao phong da duyet
+                        condition += " and (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.GIVE_BACK);
+                        break;
+                }
+            }
+            if (userType.equals(Constants.ROLES.LEAD_OFFICE_ROLE) && form.getSearchType() != null) {//vldc
+                switch (Integer.parseInt(form.getSearchType().toString())) {
+                    case 3:
+                        condition += " and (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.REVIEWED);
+                        condition += " and p.receiveGroupId = ?"
+                                + " and p.receiveUserId = ?";
+                        lstParam.add(deptId);
+                        lstParam.add(userId);
+                        break;
+                    case 10:
+                        condition += " and (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.APPROVED);
+                        condition += " and p.receiveGroupId = ?"
+                                + " and p.receiveUserId = ?";
+                        lstParam.add(deptId);
+                        lstParam.add(userId);
+                        break;
+                    case 26:
+                        condition += " and (f.status = ?)";
+                        lstParam.add(Constants.FILE_STATUS.REVIEW_TO_ADD);
+                        condition += " and p.receiveGroupId = ?"
+                                + " and p.receiveUserId = ?";
+                        lstParam.add(deptId);
+                        lstParam.add(userId);
+                        break;
+                    case 36://a260515 binhnt
+                        condition += " and f.status in (?,?,?,?,?,?)"
+                                + " and f.isActive = 1 "
+                                + " and (f.isTemp is null or f.isTemp = 0)";
+                        lstParam.add(Constants.FILE_STATUS.GIVE_BACK);
+                        lstParam.add(Constants.FILE_STATUS.ALERT_COMPARISON);
+                        lstParam.add(Constants.FILE_STATUS.COMPARED);
+                        lstParam.add(Constants.FILE_STATUS.REVIEW_COMPARISON);
+                        lstParam.add(Constants.FILE_STATUS.COMPARED_FAIL);
+                        lstParam.add(Constants.FILE_STATUS.REVIEW_COMPARISON_FAIL);
+                        break;
+                }
+            }
+            if (userType.equals(Constants.ROLES.ADMIN)
+                    && form.getSearchType() != null) {//vQTHT
+                switch (Integer.parseInt(form.getSearchType().toString())) {
+                    case 110://hồ sơ cần đối chiếu
+                        lstParam.clear();
+                        hql = " from FilesNoClob f, Process p";
+                        condition = " AND f.fileId = p.objectId";
+                        condition += " AND f.isActive = 1"
+                                + " and (f.isTemp = null or f.isTemp = 0)";
+                        condition += " AND (f.staffProcess <> null)";
+                        break;
+                }
+            }
+            if (form.getSearchType() == null) {
+                if (form.getStatus() != null
+                        && form.getSearchType() == null
+                        && (form.getStatus() == 40l
+                        || form.getStatus() == 41l
+                        || form.getStatus() == 42l
+                        || form.getStatus() == 43l
+                        || form.getStatus() == 44l
+                        || form.getStatus() == 45l
+                        || form.getStatus() == 46l
+                        || form.getStatus() == 47l
+                        || form.getStatus() == 48l
+                        || form.getStatus() == 49l
+                        || form.getStatus() == 30l
+                        || form.getStatus().equals(Constants.FILE_STATUS.REVIEW_COMPARISON_FAIL)
+                        || form.getStatus() == 50l)) {
+                    lstParam.clear();
+                    hql = " from FilesNoClob f, Process p, Business b";
+                    condition = " and f.fileId = p.objectId"
+                            + " and f.deptId = b.businessId";
+                    // Nhà sản xuất
+                    if (form.getManufactureName() != null
+                            && form.getManufactureName().length() > 0) {
+                        hql += ", Announcement ann";
+                        condition += " and f.announcementId = ann.announcementId"
+                                + " and lower(ann.manufactureName) like ? ESCAPE '/'";
+                        lstParam.add(StringUtils.toLikeString(form.getManufactureName().toLowerCase().trim()));
+                    }
+                    // Số chứng nhận công bố
+                    if (form.getAnnouncementNo() != null && form.getAnnouncementNo().length() > 0) {
+                        hql += ", AnnouncementReceiptPaper ann";
+                        condition += " and f.announcementReceiptPaperId = ann.announcementReceiptPaperId and lower(ann.receiptNo) like ? ESCAPE '/'";
+                        lstParam.add(StringUtils.toLikeString(form.getAnnouncementNo().toLowerCase().trim()));
+                    }
+//                // thong ke ho so trong ngay
+                    if (form.getStatus() != null && form.getStatus() == 40l) {
+                        condition += " and f.isActive = 1"
+                                + " and (f.status = ? or f.status = ?)"
+                                + " and  to_date(f.sendDate,'yyyy/mm/dd') = to_date(sysdate,'yyyy/mm/dd')  ";
+                        lstParam.add(3l);
+                        lstParam.add(5l);
+                        if (userId != null) {
+                            condition += " and p.receiveUserId=?";
+                            lstParam.add(userId);
+                        }
+                    }
+                    if (form.getStatus() != null && form.getStatus() == 41l) {
+                        condition += " AND f.isActive = 1"
+                                + " AND (f.status = ? or f.status = ?)"
+                                + " AND  to_date(f.sendDate,'yyyy/mm/dd') = to_date(sysdate,'yyyy/mm/dd')"
+                                + " AND (f.isTemp = null or f.isTemp = 0 )";
+                        lstParam.add(4l);
+                        lstParam.add(5l);
+                    }
+                    if (form.getStatus() != null && form.getStatus() == 42l) {
+                        condition += " and f.isActive = 1"
+                                + " and (f.status = ? or f.status = ?)"
+                                + " and  to_date(f.sendDate,'yyyy/mm/dd') = to_date(sysdate,'yyyy/mm/dd')"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
+                        lstParam.add(6l);
+                        lstParam.add(5l);
+                    }
+                    // ho so bi tra tham dinh lai
+                    if (form.getStatus() != null && form.getStatus() == 43l) {
+                        condition += " and f.isActive=1"
+                                + " and f.status = ?"
+                                + " and p.processType=1"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
+                        lstParam.add(8l);
+                        if (userId != null) {
+                            condition += " and p.receiveUserId=?";
+                            lstParam.add(userId);
+                        }
+                    }
+                    // ho so cho phoi hop tham dinh chua cho y kien
+                    if (form.getStatus() != null && form.getStatus() == 44l) {
+                        condition += " and f.isActive=1"
+                                + " and (f.status = ?)"
+                                + " and (p.processType=0 or p.processType=4)"
+                                + " and (p.processId in (select p.processId from Process p where p.processId not in (select distinct pc.processId from ProcessComment pc)))"
+                                + " and p.processStatus = ?";
+                        lstParam.add(3l);
+                        lstParam.add(3l);
+                    }
+
+                    //ho so cho xem xet
+                    if (form.getStatus() != null && form.getStatus() == 48L) {
+                        condition += " and f.isActive=1"
+                                + " and (f.status = ? or f.status = ?)"
+                                + " and (p.processType=1 or p.processType=0)"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
+                        lstParam.add(Constants.FILE_STATUS.EVALUATED);
+                        lstParam.add(Constants.FILE_STATUS.FEDBACK_TO_ADD);
+                        if (userId != null) {
+                            condition += " and p.receiveUserId=?";
+                            lstParam.add(userId);
+                        }
+                    }
+                    // ho so lanh dao phong da xem xet
+                    if (form.getStatus() != null && form.getStatus() == 46l) {
+                        condition += " and f.isActive=1"
+                                + " and f.status = ?"
+                                + " and p.processType=1"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
+                        lstParam.add(5l);
+                        if (userId != null) {
+                            condition += " and p.receiveUserId=?";
+                            lstParam.add(userId);
+                        }
+                    }
+                    //ho so da phe duyet
+                    if (form.getStatus() != null && form.getStatus() == 47l) {
+                        condition += " and f.isActive=1"
+                                + " and f.status = ?"
+                                + " and p.processType=1"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
+                        lstParam.add(Constants.FILE_STATUS.APPROVED);
+                        if (userId != null) {
+                            condition += " and p.receiveUserId=?";
+                            lstParam.add(userId);
+                        }
+                    }
+                    // ho so tham dịnh da gui ý kiễn phản hồi
+                    if (form.getStatus() != null && form.getStatus() == 49l) {
+                        lstParam.clear();
+                        hql = " from FilesNoClob f, Process p, ProcessComment pc";
+                        condition = " AND f.isActive=1"
+                                + " AND f.fileId = p.objectId"
+                                + " AND p.objectType = 30"
+                                + " AND (f.status = ?)"
+                                + " AND (p.processType=0 or p.processType=1)"
+                                + " AND pc.processId = p.processId"
+                                + " AND (f.isTemp = null or f.isTemp = 0 )";
+                        lstParam.add(3l);
+                        if (userId != null) {
+                            condition += " AND p.receiveGroupId = (select distinct p.receiveGroupId from Process p where p.receiveUserId = ?)";
+                            lstParam.add(userId);
+                        }
+                    }
+                    if (form.getStatus() != null && form.getStatus() == 50l) {
+                        condition += " and f.isActive=1"
+                                + " and f.status = ?"
+                                + " and p.processType=1"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
+                        lstParam.add(3l);
+                        if (userId != null) {
+                            condition += " and p.receiveUserId=?";
+                            lstParam.add(userId);
+                        }
+                    }
+                    // da thong bao SDBS
+                    if (form.getStatus() != null && form.getStatus() == 30l) {
+                        condition += " and f.isActive=1"
+                                + " and f.status = ?"
+                                + " and p.processType=1"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
+                        lstParam.add(20l);
+                        if (userId != null) {
+                            condition += " and p.receiveUserId=?";
+                            lstParam.add(userId);
+                        }
+                    }
+
+                    // da tham dinh - hieptq
+                    if (form.getStatus() != null && form.getStatus() == 45l) {
+                        condition += " and f.isActive=1"
+                                + " and f.status = ?"
+                                + " and p.processType=1"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
+                        lstParam.add(4l);
+                        if (userId != null) {
+                            condition += " and p.receiveUserId=?";
+                            lstParam.add(userId);
+                        }
+                    }
+
+                    //
+                    if (form.getStatus() != null
+                            && form.getStatus() == Constants.FILE_STATUS.REVIEW_COMPARISON_FAIL) {
+                        condition += " and f.isActive = 1"
+                                + " and f.status = ?"
+                                + " and (f.isTemp = null or f.isTemp = 0)";
+                        lstParam.add(25l);
+                    }
+                } else {
+                    if (form.getStatus() != null
+                            && form.getStatus() >= 0l) {
+                        condition += " AND f.status = ?";
+                        lstParam.add(form.getStatus());
+                    } else {
+                    }
+                }
+
+                if (userType.equals(Constants.ROLES.LEAD_OFFICE_ROLE)) {
+                    if (deptId != null) {
+                        condition += " and p.receiveGroupId = ? ";
+                        lstParam.add(deptId);
+                    }
+                }
+                if (userType.equals(Constants.ROLES.STAFF_ROLE)) {
+                    if (deptId != null) {
+                        if (form.getStatus() != null && form.getStatus() != 40l) {
+                            condition += " and p.receiveGroupId = ? ";
+                            lstParam.add(deptId);
+                        }
+                    }
+                    if (userId != null) {
+                        condition += " and p.receiveUserId = ? ";
+                        lstParam.add(userId);
+                    }
+                }
+                if (userType.equals(Constants.ROLES.LEAD_UNIT)) {
+                    if (deptId != null) {
+                        condition += " and p.receiveGroupId = ?"
+                                + " and ( p.receiveUserId = null or p.receiveUserId = ?) ";
+                        lstParam.add(deptId);
+                        lstParam.add(userId);
+                    }
+                }
+                if (userType.equals(Constants.ROLES.CLERICAL_ROLE)) {
+                    if (deptId != null) {
+//                    hql += "AND f.agencyId = ?)";
+//                    lstParam.add(deptId);
+                        condition += " and p.receiveGroupId = ? ";
+                        lstParam.add(deptId);
+                    }
+                }
+            }
+            // Nhà sản xuất
+            if (form.getManufactureName() != null
+                    && form.getManufactureName().length() > 0) {
+                String str = ", Announcement ann";
+                if (!str.contains(hql)) {
+                    hql += ", Announcement ann";
+                }
+                condition += " and f.announcementId = ann.announcementId"
+                        + " and lower(ann.manufactureName) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getManufactureName().toLowerCase().trim()));
+            }
+            // Số chứng nhận công bố
+            if (form.getAnnouncementNo() != null && form.getAnnouncementNo().length() > 0) {
+                String str = ", AnnouncementReceiptPaper arp";
+                if (!str.contains(hql)) {
+                    hql += ", AnnouncementReceiptPaper arp";
+                    condition += " and f.announcementReceiptPaperId = arp.announcementReceiptPaperId";
+                }
+                condition += " and lower(arp.receiptNo) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getAnnouncementNo().toLowerCase().trim()));
+            }
+            // ngay cap
+            if (form.getReceiptDate() != null) {
+                String str = ", AnnouncementReceiptPaper arp";
+                if (!str.contains(hql)) {
+                    hql += ", AnnouncementReceiptPaper arp";
+                    condition += " and f.announcementReceiptPaperId = arp.announcementReceiptPaperId";
+                }
+                condition += " and lower(arp.receiptDate) = ?";
+                lstParam.add(form.getReceiptDate());
+            }
+            //thương nhân chịu trách nhiệm
+            if (form.getOrigin() != null && form.getOrigin().length() > 0) {
+                String str = ", DetailProduct d";
+                if (!hql.contains(str)) {
+                    hql += ", DetailProduct d";
+                    condition += " and f.detailProductId = d.detailProductId";
+                }
+                condition += " and lower(d.origin) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getOrigin().toLowerCase().trim()));
+            }
+            // điện thoại doanh nghiệp
+            if (form.getBusinessTelephone() != null && form.getBusinessTelephone().length() > 0) {
+                String str = ", Announcement ann";
+                if (!hql.contains(str)) {
+                    hql += ", Announcement ann";
+                    condition += " and f.announcementId = ann.announcementId";
+                }
+                condition += " and lower(ann.businessTelephone) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getBusinessTelephone().toLowerCase().trim()));
+            }
+            // fax doanh nghiệp
+            if (form.getBusinessFax() != null && form.getBusinessFax().length() > 0) {
+                String str = ", Announcement ann";
+                if (!hql.contains(str)) {
+                    hql += ", Announcement ann";
+                    condition += " and f.announcementId = ann.announcementId";
+                }
+                condition += " and lower(ann.businessFax) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getBusinessFax().toLowerCase().trim()));
+            }
+            // mã hồ sơ
+            if (form.getFileCode() != null && !"".equals(form.getFileCode().trim())) {
+                condition += " AND lower(f.fileCode) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getFileCode().toLowerCase().trim()));
+            }
+            if (form.getFileType() != null && form.getFileType().longValue() != -1) {
+                condition += " AND f.fileType = ?";
+                lstParam.add(form.getFileType());
+            }
+            if (form.getSignDate() != null) {
+                condition += " AND f.signDate = ?";
+                lstParam.add(form.getSignDate());
+            }
+            if (form.getSendDateFrom() != null) {
+                condition += " AND f.sendDate >= ?";
+                lstParam.add(minDayToCompare(form.getSendDateFrom()));
+            }
+            if (form.getSendDateTo() != null) {
+                condition += " AND f.sendDate <= ?";
+                lstParam.add(maxDayToCompare(form.getSendDateTo()));
+            }
+            if (form.getSignDateFrom() != null) {
+                condition += " AND f.signDate >= ? ";
+                lstParam.add(minDayToCompare(form.getSignDateFrom()));
+            }
+            if (form.getSignDateTo() != null) {
+                condition += " AND f.signDate <= ? ";
+                lstParam.add(maxDayToCompare(form.getSignDateTo()));
+            }
+            if (form.getSignDateFrom() != null || form.getSignDateFrom() != null) {
+                condition += " AND f.status = ? ";
+                lstParam.add(22l);
+            }
+            if (form.getRepDateFrom() != null) {
+                condition += " AND f.repDate >= ?";
+                lstParam.add(minDayToCompare(form.getRepDateFrom()));
+            }
+            if (form.getRepDateTo() != null) {
+                condition += " AND f.repDate <= ?";
+                lstParam.add(maxDayToCompare(form.getRepDateTo()));
+            }
+            if (form.getApproveDateFrom() != null) {
+                condition += " AND f.approveDate >= ?";
+                lstParam.add(minDayToCompare(form.getApproveDateFrom()));
+            }
+            if (form.getApproveDateTo() != null) {
+                condition += " AND f.approveDate <= ?";
+                lstParam.add(maxDayToCompare(form.getApproveDateTo()));
+            }
+            if (form.getLeaderStaffSignName() != null
+                    && form.getLeaderStaffSignName().length() > 0) {
+                condition += " AND lower(f.leaderStaffSignName) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getLeaderStaffSignName().toLowerCase().trim()));
+            }
+            if (form.getBusinessName() != null
+                    && form.getBusinessName().length() > 0) {
+                condition += " AND lower(f.businessName) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getBusinessName().toLowerCase().trim()));
+            }
+            if (form.getNationName() != null
+                    && form.getNationName().length() > 0) {
+                condition += " AND lower(f.nationName) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getNationName().toLowerCase().trim()));
+            }
+            // Người thẩm định
+            if (form.getReceiveUser() != null && form.getReceiveUser().length() > 0) {
+                condition += " AND lower(p.receiveUser) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getReceiveUser().toLowerCase().trim()));
+            }
+            // Số đăng ký kinh doanh
+            if (form.getBusinessLicence() != null
+                    && form.getBusinessLicence().length() > 0) {
+                condition += " AND lower(b.businessLicense) like ? ESCAPE '/' ";
+                lstParam.add(StringUtils.toLikeString(form.getBusinessLicence().toLowerCase().trim()));
+            }
+            // Địa chỉ doanh nghiệp
+            if (form.getBusinessAddress() != null
+                    && form.getBusinessAddress().length() > 0) {
+                condition += " AND lower(f.businessAddress) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getBusinessAddress().toLowerCase().trim()));
+            }
+            // Tên sản phẩm
+            if (form.getProductName() != null
+                    && form.getProductName().length() > 0) {
+                condition += " AND lower(f.productName) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getProductName().toLowerCase().trim()));
+            }
+            // Nhóm sản phẩm
+            if (form.getProductType() != null
+                    && form.getProductType() != -1l) {
+                condition += " AND d.productType = ?";
+                lstParam.add(form.getProductType());
+            }
+            // Lãnh đạo phòng
+            if (form.getLeaderStaff() != null
+                    && form.getLeaderStaff().length() > 0) {
+                condition += " AND lower(p.receiveUser) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getLeaderStaff().toLowerCase().trim()));
+            }
+            // Người thẩm xét
+            if (form.getStaff() != null
+                    && form.getStaff().trim().length() > 0) {
+                condition += " AND lower(f.nameStaffProcess) like ? ESCAPE '/' ";
+                lstParam.add(StringUtils.toLikeString(form.getStaff().toLowerCase().trim()));
+            }
+            if (form.getNameStaffProcess() != null
+                    && form.getNameStaffProcess().length() > 0) {
+                condition += " AND lower(f.nameStaffProcess) like ? ESCAPE '/' ";
+                lstParam.add(StringUtils.toLikeString(form.getNameStaffProcess().toLowerCase().trim()));
+            }
+            if (form.getLeaderApproveName() != null
+                    && form.getLeaderApproveName().length() > 0) {
+                condition += " AND lower(f.leaderApproveName) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getLeaderApproveName().toLowerCase().trim()));
+            }
+            if (form.getLeaderAssignName() != null
+                    && form.getLeaderAssignName().length() > 0) {
+                condition += " AND lower(f.leaderAssignName) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getLeaderAssignName().toLowerCase().trim()));
+            }
+            if (form.getLeaderReviewName() != null
+                    && form.getLeaderReviewName().length() > 0) {
+                condition += " AND lower(f.leaderReviewName) like ? ESCAPE '/'";
+                lstParam.add(StringUtils.toLikeString(form.getLeaderReviewName().toLowerCase().trim()));
+            }
+            // Tỉnh -  Thành Phố
+            if (form.getProductType() != null
+                    && form.getBusinessProvinceId() != -1l) {
+                condition += " AND b.businessProvinceId = ? ";
+                lstParam.add(form.getBusinessProvinceId());
+            }
+            // Nơi lưu trữ
+            if (form.getRepositoriesId() != null
+                    && form.getRepositoriesId() != -1l) {
+                condition += " AND (f.repositoriesId = ? ) ";
+                lstParam.add(form.getRepositoriesId());
+            }
+            // Lọc theo người tạo ( lưu trữ hồ sơ giấy )
+            if (form.getRepCreator() != null
+                    && (form.getSearchType() == 0
+                    || form.getSearchType() == 2)) {
+            }
+            // Kho lưu trữ
+            if (form.getRepName() != null
+                    && form.getRepName() != -1l) {
+                condition += " AND (f.repositoriesId = ? )";
+                lstParam.add(form.getRepName());
+            }
+            // Trạng thái lưu trữ
+            // Đã lưu trữ
+            if (form.getRepStatus() != null && form.getRepStatus() == 1) {
+                condition += " AND (f.repositoriesId <> null )";
+            }
+            // Chưa lưu trữ
+            if (form.getRepStatus() != null && form.getRepStatus() == 2) {
+                condition += " AND (f.repositoriesId = null )";
+            }
+            //lãnh đạo phân công - 140915 binhnt53
+            if (form.getLeaderAssignId() != null && form.getLeaderAssignId() > 0L) {
+                condition += " AND (f.leaderAssignId = ? )";
+                lstParam.add(form.getLeaderAssignId());
+            }
+            // tra cuc van thu ngay tiep nhan tu ngay den ngay
+            if (form.getReceivedDate() != null) {
+                condition += " and f.receivedDate >= ?";
+                lstParam.add(minDayToCompare(form.getReceivedDate()));
+            }
+            if (form.getReceivedDateTo() != null) {
+                condition += " and f.receivedDate <= ?";
+                lstParam.add(maxDayToCompare(form.getReceivedDateTo()));
+            }
+            if (form.getReceiveNo() != null
+                    && !form.getReceiveNo().equals("")
+                    && !form.getReceiveNo().trim().equals("")) {
+                condition += " and f.receiveNo like ?";
+                lstParam.add(form.getReceiveNo().trim());
+            }
+            if (form.getIs30() != null && form.getIs30() != -1l) {
+                if (form.getIs30() == 1) {
+                    condition += " AND (f.is30 = 1 )";
+                } else {
+                    condition += " AND (f.is30 = null )";
+                }
+            }
+            if (form.getSearchFullText() != null
+                    && form.getSearchFullText().trim().length() > 0) {
+                condition += " and f.fileId in (select ffs.fileId from FileForSearch ffs where lower(ffs.content) like ? ESCAPE '/')";
+                lstParam.add(StringUtils.toLikeString(form.getSearchFullText()));
+            }
+        }
+        if (form.getProductTypeNew() != null
+                && form.getProductTypeNew().longValue() != -1) {
+            String str = ", Category c";
+            if (!hql.contains(str)) {
+                hql += ", Category c";
+                condition += " and  f.productTypeId = c.categoryId";
+            }
+            if (form.getProductTypeNew() == 1) {
+                condition += " AND (c.code <> ? and c.code <> ?) ";
+                lstParam.add(Constants.CATEGORY_TYPE.TPCN);
+                lstParam.add(Constants.CATEGORY_TYPE.DBT);
+            } else {
+                condition += " AND (c.code = ? or c.code = ?) ";
+                lstParam.add(Constants.CATEGORY_TYPE.TPCN);
+                lstParam.add(Constants.CATEGORY_TYPE.DBT);
+            }
+        }
+        if (form.getSearchTypeNew() != null) {
+            if (form.getSearchTypeNew() == 1) {
+                condition += " AND (c.code <> ? and c.code <> ?) ";
+                lstParam.add(Constants.CATEGORY_TYPE.TPCN);
+                lstParam.add(Constants.CATEGORY_TYPE.DBT);
+            } else {
+                condition += " AND (c.code = ? or c.code = ?) ";
+                lstParam.add(Constants.CATEGORY_TYPE.TPCN);
+                lstParam.add(Constants.CATEGORY_TYPE.DBT);
+            }
+        }
+        //!hieptq update
+        Query countQuery = getSession().createQuery("select count(distinct f.fileId) " + hql + " where 1=1 " + condition);
+        String finalSql = "select distinct f " + hql + " where 1=1 " + condition + " order by ";
+        if (sortCustom.isEmpty()) {
+            finalSql += "f.modifyDate DESC";
+        } else {
+            finalSql += sortCustom;
+        }
+        Query query = getSession().createQuery(finalSql);
+
+        for (int i = 0;
+                i < lstParam.size();
+                i++) {
+            query.setParameter(i, lstParam.get(i));
+            countQuery.setParameter(i, lstParam.get(i));
+        }
+
+        int total = Integer.parseInt(countQuery.uniqueResult().toString());
+        query.setFirstResult(start);
+        if (count > 0) {
+            query.setMaxResults(count);
+        } else {
+            query.setMaxResults(total);
+        }
+        List<FilesNoClob> lstResult = query.list();
+
+        return new GridResult(total, lstResult);
+    }
 }

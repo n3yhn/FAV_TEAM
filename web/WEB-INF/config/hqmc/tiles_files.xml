@@ -143,7 +143,7 @@
     <!-- pho phong tham dinh ho so -->
     <definition name="evaluateLeaderFile.page" extends="body.definition" >
         <put-attribute name="title" value="Lãnh đạo thẩm định hồ sơ"/>
-        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/evaluate/evaluateByLeaderPage.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/evaluateByLeader/evaluateByLeaderPage.jsp"/>
     </definition>
     <!-- thong bao ket qia tham dinh ho so -->
     <definition name="feedbackEvaluateFile.page" extends="body.definition" >
@@ -589,5 +589,12 @@
     </definition>
     <definition name="announcementFile05View" extends="content.definition" ><!--Hiepvv-->
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createAnnounFilesPage05.jsp"/>
+    </definition>
+    <definition name="lookupAfterAnnounced.Page" extends="content.definition" ><!--Hiepvv-->
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/afterAnnounced/lookupAfterAnnounced.jsp"/>
+    </definition>
+        <definition name="evaluateLeaderFileAA.page" extends="body.definition" >
+        <put-attribute name="title" value="Lãnh đạo thẩm định hồ sơ"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/afterAnnounced/evaluateByLeaderPageAA.jsp"/>
     </definition>
 </tiles-definitions>

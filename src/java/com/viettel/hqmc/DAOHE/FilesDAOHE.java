@@ -7292,6 +7292,10 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             qry1.setParameter("fileId", fileId);
                             int count = (int) (long) (Long) qry1.uniqueResult();
                             fpif.setCost(feeTemp.getPrice() * count);
+                        } else if (feeTemp.getPrice() != null) {
+                            fpif.setCost(feeTemp.getPrice());
+                        } else {
+                            fpif.setCost(0L);
                         }
                         getSession().save(fpif);
                     }
@@ -7397,6 +7401,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         file.setLeaderReviewName(ubo.getFullName());
                         file.setLeaderApproveId(null);
                         file.setLeaderApproveName(null);
+                        form.setLeaderReviewId(ubo.getUserId());
+                        form.setLeaderReviewName(ubo.getFullName());
                     }
                 }
                 // neu tra lai de bo sung -> thiet lap bien have_temp = 1 de biet ma tao ra history khi sua doi

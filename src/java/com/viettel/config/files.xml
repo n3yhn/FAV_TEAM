@@ -157,6 +157,8 @@
             <result type="tiles" name="announcementFile05DialogView">announcementFile05DialogView</result>
             <result type="tiles" name="assignEvaluationEditAfterAnnounced.page">assignEvaluationEditAfterAnnounced.page</result>
             <result type="tiles" name="evaluateFileEditAfterAnnounced.page">evaluateFileEditAfterAnnounced.page</result>
+            <result type="tiles" name="lookupAfterAnnounced.Page">lookupAfterAnnounced.Page</result>
+            <result type="tiles" name="evaluateLeaderFileAA.page">evaluateLeaderFileAA.page</result>
             <!--end sdbs sau cong bo-->
             <!-- Trang xem van ban -->
             <result type="tiles" name="announcementFile01ViewReceived">announcementFile01ViewReceived</result>

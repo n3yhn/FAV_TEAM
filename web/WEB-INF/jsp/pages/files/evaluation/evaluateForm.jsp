@@ -101,7 +101,7 @@
                 <sd:TextBox id="evaluationRecordsForm.leaderReviewName" name="createForm.leaderReviewName" cssStyle="display:none" key=""/>
             </td>
         </tr>
-        <tr>
+        <tr style="display: none">
             <td style="text-align: right"><sd:Label key="Gửi lên Lãnh đạo thẩm định?"/></td>
             <td>
                 <sd:TextBox key="" id="evaluateForm.ProductType" name="createForm.ProductType" cssStyle="display:none"/>
@@ -132,21 +132,21 @@
 </form>
 
 <script type="text/javascript">
-    onEvaluate = function() {
+    onEvaluate = function () {
 //        if (validateEF()) {
 //            sd.connector.post("filesAction!onEvaluate.do?" + token.getTokenParamString(), null, "evaluateForm", null, afterEvaluate);
 //        }
-     msg.confirm("Bạn có chắc chắn về kết quả thẩm định này không ?", "Thẩm định hồ sơ", onEvaluateNew);
+        msg.confirm("Bạn có chắc chắn về kết quả thẩm định này không ?", "Thẩm định hồ sơ", onEvaluateNew);
     };
 
     //hieptq update 160415
-    onEvaluateNew = function() {
+    onEvaluateNew = function () {
         if (validateEF()) {
             sd.connector.post("filesAction!onEvaluate.do?" + token.getTokenParamString(), null, "evaluateForm", null, afterEvaluate);
         }
     };
 
-    afterEvaluate = function(data) {
+    afterEvaluate = function (data) {
         var obj = dojo.fromJson(data);
         var result = obj.items;
         alert(result[1]);
@@ -157,7 +157,7 @@
         }
     };
 
-    validateEF = function() {
+    validateEF = function () {
         if (document.getElementById("evaluateForm.statusAccept").checked == false && document.getElementById("evaluateForm.statusDeny").checked == false) {
             alert("Bạn chưa chọn [Kết quả thẩm định]");
             return false;
@@ -211,15 +211,15 @@
             var leaderReviewName = dijit.byId("evaluationRecordsForm.leaderReviewId").attr("displayedValue");
             dijit.byId("evaluationRecordsForm.leaderReviewName").setValue(leaderReviewName);
         }
-        if (document.getElementById("ckbAssignLeader").checked == false) {
-            dijit.byId("evaluateForm.ProductType").setValue(0);
-        } else {
-            dijit.byId("evaluateForm.ProductType").setValue(1);
-        }
-        return true;
+//        if (document.getElementById("ckbAssignLeader").checked == false) {
+//            dijit.byId("evaluateForm.ProductType").setValue(0);
+//        } else {
+//            dijit.byId("evaluateForm.ProductType").setValue(1);
+//        }
+//        return true;
     };
 
-    onCloseEvaluate = function() {
+    onCloseEvaluate = function () {
         dijit.byId("evaluateDlg").hide();
         dijit.byId("evaluateForm.staffRequest").setValue("");
         //        dijit.byId("evaluateForm.statusAccept").checked = false;
@@ -235,7 +235,7 @@
         dijit.byId("evaluationRecordsForm.effectUtilityContent").setValue("");
     };
 
-    onchangeStatusEF = function() {
+    onchangeStatusEF = function () {
         if (document.getElementById("evaluateForm.statusDeny").checked) {
             dijit.byId("evaluateForm.staffRequest").setValue("Yêu cầu bổ sung hồ sơ");
         } else {
@@ -243,7 +243,7 @@
         }
     };
 
-    page.clearEvaluateForm = function() {
+    page.clearEvaluateForm = function () {
         try
         {
             localStorage.setItem("evaluateForm.evaluateForm.staffRequest", "");
@@ -263,7 +263,7 @@
         }
     };
 
-    page.setEvaluateForm = function() {
+    page.setEvaluateForm = function () {
         try
         {
             localStorage.setItem("evaluateForm.evaluateForm.staffRequest", encodeBase64(dijit.byId("evaluateForm.staffRequest").getValue().toString().trim()));
@@ -283,7 +283,7 @@
         }
     };
 
-    page.getEvaluateForm = function() {
+    page.getEvaluateForm = function () {
         try
         {
             dijit.byId("evaluateForm.staffRequest").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluateForm.staffRequest")));

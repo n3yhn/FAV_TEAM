@@ -185,6 +185,7 @@ public class FilesDAO extends BaseDAO {
     private String lookupFilesByStaffPage = "lookupFilesByStaff.Page";
     private String lookupFilesByStaffDonothingPage = "lookupFilesByStaffDonothing.Page";
     private final String lookupFilesByClericalPage = "lookupFilesByClerical.Page";
+    private final String lookupAfterAnnouncedPage = "lookupAfterAnnounced.Page";
     private String lookupFilesByStaffOfStaffPage = "lookupFilesByLeaderOfStaff.Page";
     private String toComparisonPage = "toComparison.Page";
     private final String toComparisonFailPage = "toComparisonFail.Page";
@@ -201,6 +202,7 @@ public class FilesDAO extends BaseDAO {
     private final String EVALUATION_PAGE = "evaluateFile.page";
     private final String EVALUATION_PAGE_VIEW = "evaluateFileView.page";
     private final String EVALUATION_LEADER_PAGE = "evaluateLeaderFile.page";//pho phong tham dinh ho so
+    private final String EVALUATION_LEADER_PAGE_AA = "evaluateLeaderFileAA.page";//ldp tham dinh hso bsung sau cong bo
     private final String FEEDBACK_EVALUATION_PAGE = "feedbackEvaluateFile.page";
     private final String COEVALUATION_PAGE = "coEvaluation.page";
     private final String REVIEW_PAGE = "reviewFile.page";
@@ -1385,6 +1387,7 @@ public class FilesDAO extends BaseDAO {
         edhe.insertEventLog("Thẩm định hồ sơ", "hồ sơ có id=" + createForm.getFileId(), getRequest());
         return GRID_DATA;
     }
+
     /**
      * soan thao noi dung cong van thong bao sdbs
      *
@@ -8934,5 +8937,103 @@ public class FilesDAO extends BaseDAO {
             searchForm.setDeptId(getDepartmentId());
         }
         return ASSIGN_EVALUATION_AFTER_ANNOUNCED_PAGE;
+    }
+
+    public String onsearchLookupFilesAfterAnnounced() {
+        getGridInfo();
+
+        if (searchForm.getFlagSavePaging() != null && searchForm.getFlagSavePaging() == 1) {
+            try {
+                String startServerStr = getRequest().getSession().getAttribute("lookupAfterAnnounced.startServer") == null ? "" : getRequest().getSession().getAttribute("lookupFilesByClerical.startServer").toString();
+                String countServerStr = getRequest().getSession().getAttribute("lookupAfterAnnounced.countServer") == null ? "" : getRequest().getSession().getAttribute("lookupFilesByClerical.countServer").toString();
+
+                if (!startServerStr.isEmpty() && !countServerStr.isEmpty()) {
+                    count = Integer.parseInt(countServerStr);
+                    start = Integer.parseInt(startServerStr);
+                }
+            } catch (Exception ex) {
+                log.error(ex.getMessage());
+            }
+        }
+
+        FilesNoClobDAOHE bdhe = new FilesNoClobDAOHE();
+        if (searchForm == null) {
+            searchForm = new FilesForm();
+            searchForm.setDeptId(getDepartmentId());
+        }
+        GridResult gr = bdhe.searchLookupFilesAfterAnnounced(searchForm, getDepartmentId(), getUserId(), Constants.ROLES.CLERICAL_ROLE, start, count, sortField, "");
+
+        getRequest().getSession().setAttribute("lookupAfterAnnounced.startServer", start);
+        getRequest().getSession().setAttribute("lookupAfterAnnounced.countServer", count);
+
+        jsonDataGrid.setItems(gr.getLstResult());
+        jsonDataGrid.setTotalRows(gr.getnCount().intValue());
+        return GRID_DATA;
+    }
+
+    public String lookupFilesAfterAnnounced() {
+        ProcedureDAOHE cdhe = new ProcedureDAOHE();
+        List lstTTHC = cdhe.getAllProcedure();
+        lstCategory = new ArrayList();
+        lstCategory.addAll(lstTTHC);
+        lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+        getRequest().setAttribute("lstFileType", lstCategory);
+        UsersDAOHE udaohe = new UsersDAOHE();
+        List lstLDP = udaohe.findLstUserByPosition(getDepartmentId(), Constants.POSITION.LEADER_OF_STAFF_T);
+        if (lstLDP == null || lstLDP.isEmpty()) {
+            List<String> lstLeader = new ArrayList<String>();
+            lstLeader.add(Constants.POSITION.LEADER_OF_STAFF_T);
+            lstLeader.add(Constants.POSITION.GDTT);
+            lstLDP = udaohe.findLstUserByLstPosition(getDepartmentId(), lstLeader);
+        }
+        lstLeaderOfStaff = new ArrayList();
+        lstLeaderOfStaff.addAll(lstLDP);
+        lstLeaderOfStaff.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+        getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaff);
+        return lookupAfterAnnouncedPage;
+    }
+    public String toEvaluateLeaderAAPage() {
+        ProcedureDAOHE cdhe = new ProcedureDAOHE();
+        List lstTTHC = cdhe.getAllProcedure();
+        lstCategory = new ArrayList();
+        lstCategory.addAll(lstTTHC);
+        lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+        getRequest().setAttribute("lstFileType", lstCategory);
+        // Get Role
+        List<Roles> roles = getListRolesByUser();
+        String lstRole = "";
+        if (roles != null && roles.size() > 0) {
+            for (int i = 0; i < roles.size(); i++) {
+                lstRole += roles.get(i).getRoleCode() + ";";
+            }
+        }
+        getRequest().setAttribute("lstRole", lstRole);
+
+        UsersDAOHE udaohe = new UsersDAOHE();
+        List<String> lstStaff = new ArrayList<String>();
+        lstStaff.add(Constants.POSITION.VFA_CV);
+        lstStaff.add(Constants.POSITION.NV);
+        if (udaohe.checkUserByLstPosition(getDepartmentId(), getUserId(), lstStaff)) {//la chuyen vien
+            List lstLDP = udaohe.getAllLeaderOfStaffInOffice(getDepartmentId());
+            if (lstLDP != null) {
+                List lstLeaderOfStaffOnGrid = new ArrayList();
+                lstLeaderOfStaffOnGrid.addAll(lstLDP);
+                lstLeaderOfStaffOnGrid.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+                getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaffOnGrid);
+            }
+        } else {//la pho phong - lay danh sach ldc va truong phong
+            List lstLDC = udaohe.getLeaderByUser(getDepartmentId());
+            List lstLDP = udaohe.getTruongPhong(getDepartmentId());
+            List lstLeaderOfStaffOnGrid = new ArrayList();
+            if (lstLDC != null) {
+                lstLeaderOfStaffOnGrid.addAll(lstLDC);
+            }
+            if (lstLDP != null) {
+                lstLeaderOfStaffOnGrid.addAll(lstLDP);
+            }
+            lstLeaderOfStaffOnGrid.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+            getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaffOnGrid);
+        }
+        return EVALUATION_LEADER_PAGE_AA;
     }
 }

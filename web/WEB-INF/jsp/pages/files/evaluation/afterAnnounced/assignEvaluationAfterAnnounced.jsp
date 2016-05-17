@@ -105,7 +105,12 @@
 <div id="searchDiv">
     <sd:TitlePane key="search.searchCondition" id="categoryTitle">
         <form id="searchForm" name="searchForm">
-            <sd:TextBox key="" id="searchForm.searchTypeNew" name="searchForm.searchTypeNew" cssStyle="display:none" />
+            <sd:TextBox 
+                key="" 
+                id="searchForm.searchTypeNew" 
+                name="searchForm.searchTypeNew" 
+                cssStyle="display:none" 
+                />
             <s:hidden id="deptId" name="searchForm.deptId"/>
             <table width="100%;" cellpadding="0px" cellspacing="5px">
                 <tr>
@@ -122,16 +127,21 @@
                         <sd:TextBox cssStyle="width:100%"
                                     id="searchForm.fileCode"
                                     key=""
-                                    name="searchForm.fileCode" maxlength="250"/>
+                                    name="searchForm.fileCode" 
+                                    maxlength="250"/>
                     </td>
                     <td align="right">
                         <sd:Label key="Tên loại hồ sơ"/>
                     </td>
                     <td>
-                        <sd:SelectBox cssStyle="width:100%"
-                                      id="searchForm.fileType"
-                                      key="" data="lstFileType" valueField="procedureId" labelField="name"
-                                      name="searchForm.fileType" >
+                        <sd:SelectBox 
+                            cssStyle="width:100%"
+                            id="searchForm.fileType"
+                            key="" data="lstFileType"
+                            valueField="procedureId"
+                            labelField="name"
+                            name="searchForm.fileType"
+                            readonly="true">
                         </sd:SelectBox>
                     </td>
                 </tr>
@@ -140,10 +150,12 @@
                         <sd:Label key="Tên doanh nghiệp"/>
                     </td>
                     <td>
-                        <sd:TextBox cssStyle="width:100%"
-                                    id="searchForm.businessName"
-                                    key=""
-                                    name="searchForm.businessName" maxlength="250"/>
+                        <sd:TextBox 
+                            cssStyle="width:100%"
+                            id="searchForm.businessName"
+                            key=""
+                            name="searchForm.businessName" 
+                            maxlength="250"/>
                     </td>
                     <td align="right">
                         <sd:Label key="Tên sản phẩm"/>
@@ -160,20 +172,26 @@
                         <sd:Label key="Gửi Từ ngày"/>
                     </td>
                     <td>
-                        <sd:DatePicker cssStyle="width:100%"
-                                       id="searchForm.sendDateFrom"
-                                       key="" format="dd/MM/yyyy"
-                                       name="searchForm.sendDateFrom"/>
+                        <sd:DatePicker 
+                            cssStyle="width:100%"
+                            id="searchForm.sendDateFrom"
+                            key="" format="dd/MM/yyyy"
+                            name="searchForm.sendDateFrom"/>
                     </td>
                     <td align="right">
                         <sd:Label key="Đến ngày"/>
                     </td>
                     <td>
-                        <sd:DatePicker cssStyle="width:100%"
-                                       id="searchForm.sendDateTo"
-                                       key="" format="dd/MM/yyyy"
-                                       name="searchForm.sendDateTo"/>
-                        <sd:TextBox key="" id="searchForm.status" name="searchForm.status" cssStyle="display:none"/>
+                        <sd:DatePicker 
+                            cssStyle="width:100%"
+                            id="searchForm.sendDateTo"
+                            key="" format="dd/MM/yyyy"
+                            name="searchForm.sendDateTo"/>
+                        <sd:TextBox 
+                            key="" 
+                            id="searchForm.status" 
+                            name="searchForm.status" 
+                            cssStyle="display:none"/>
                     </td>
                 </tr>
 
