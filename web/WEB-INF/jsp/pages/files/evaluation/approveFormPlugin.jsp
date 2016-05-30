@@ -637,7 +637,7 @@
                 var sign2;
                 if (signType == "PDHS") {
                     sign2 = signAndSubmitOriginalFile();
-                    signData2 = encodeBase64(sign2)
+                    signData2 = encodeBase64(sign2);
                 }
                 sd.connector.post("filesAction!onSignPlugin.do?fileId=" + fileId + "&outPutPath=" + outPutPath + "&signData=" + signData + "&signType=" + signType + "&fileName=" + fileName + "&outPutPath2=" + outPutPath2 + "&fileName0=" + fileName0 + "&signDataOriginal=" + signData2, null, null, null, page.afterSignPluginAFP);
             } else

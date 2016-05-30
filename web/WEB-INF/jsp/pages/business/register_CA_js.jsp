@@ -29,7 +29,7 @@
         String calink = rb.getString("CA_LINK");
     %>
         var applet = "<applet WIDTH=\"300px\" HEIGHT=\"300px\" code=\"com.viettel.QLLLTP.ca.applet.DataSignApplet\" name=\"signApplet\" id=\"signApplet\" >\n"
-                + "        <param value=\"Applet_Sign_CA.jar,\n"
+                + "        <param value=\"AppletSignCA_160527.jar,\n"
                 + "               \"\n"
                 + "               name=\"archive\">\n"
                 + "        <param value=\"yes\" name=\"mayscript\">\n"

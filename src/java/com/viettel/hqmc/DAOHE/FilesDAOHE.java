@@ -2799,14 +2799,20 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
     }
 
     public int getUpdateCount() {
-        String hql = "select count(f) from Files f where f.isActive = 1 and f.isTemp is null and f.fileId not in (select ffs.fileId from FileForSearch ffs)";
+        String hql = "select count(f) from Files f"
+                + " where f.isActive = 1"
+                + " and f.isTemp is null"
+                + " and f.fileId not in (select ffs.fileId from FileForSearch ffs)";
         Query query = session.createQuery(hql);
         Long count = (Long) query.uniqueResult();
         return count.intValue();
     }
 
     public Boolean updateIndex(int start, int length) {
-        String hql = "select f.fileId from Files f where f.isActive = 1 and f.isTemp is null and f.fileId not in (select ffs.fileId from FileForSearch ffs)";
+        String hql = "select f.fileId from Files f"
+                + " where f.isActive = 1"
+                + " and f.isTemp is null"
+                + " and f.fileId not in (select ffs.fileId from FileForSearch ffs)";
         Query query = session.createQuery(hql);
         query.setFirstResult(start);
         query.setMaxResults(length);
@@ -2992,10 +2998,14 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         createForm.getDetailProduct().getProductType(), pro, productTypeIdOld)) {
                     return null;
                 }
-            } else if (!saveFee(filesId, createForm.getFileType(),
-                    createForm.getDetailProduct().getProductType(), pro, productTypeIdOld)) {
-                return null;
+            } else if (createForm.getDetailProduct() != null
+                    && createForm.getDetailProduct().getProductType() != null) {
+                if (!saveFee(filesId, createForm.getFileType(),
+                        createForm.getDetailProduct().getProductType(), pro, productTypeIdOld)) {
+                    return null;
+                }
             }
+
         } catch (Exception ex) {
             log.error(ex.getMessage());
             if (isCreateNew) {
@@ -3070,12 +3080,16 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             return error;
         }
         //Hiepvv Khong validate voi ho so sua doi sau cong bo
-        if (!(typeFile.equalsIgnoreCase("announcementFile05")) && (form.getManufactureName() == null || form.getManufactureName().trim().isEmpty())) {
+        if (!(typeFile.equalsIgnoreCase("announcementFile05"))
+                && (form.getManufactureName() == null
+                || form.getManufactureName().trim().isEmpty())) {
             error = "Chưa nhập tên nhà sản xuất";
             return error;
         }
         //Hiepvv Khong validate voi ho so sua doi sau cong bo
-        if (!(typeFile.equalsIgnoreCase("announcementFile05")) && (form.getManufactureAddress() == null || form.getManufactureAddress().trim().isEmpty())) {
+        if (!(typeFile.equalsIgnoreCase("announcementFile05"))
+                && (form.getManufactureAddress() == null
+                || form.getManufactureAddress().trim().isEmpty())) {
             error = "Chưa nhập địa chỉ nhà sản xuất";
             return error;
         }
@@ -7270,19 +7284,19 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             // truong hop sao chep va luu tam productType co the = null, vi the phai set = -1
             if (lstFeePaymentInfo.isEmpty()) {
                 FeeDAOHE fdhe = new FeeDAOHE();
-                List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);
+                List<FeeProcedure> lstFee = fdhe.findAllFeeByProcedureId(fileType);
                 //check le phi cap so theo loai ho so
-                if (feenew != null && feenew.size() > 0) {
+                if (lstFee != null && lstFee.size() > 0) {
                     FeePaymentInfo fpif;
-                    for (int i = 0; i < feenew.size(); i++) {
+                    for (int i = 0; i < lstFee.size(); i++) {
                         fpif = new FeePaymentInfo();
                         //Thong tin co ban, status=1 = da dong phi
                         fpif.setCreateDate(dateNow);
                         fpif.setStatus(0l);
                         fpif.setFileId(fileId);
                         fpif.setIsActive(1l);
-                        fpif.setFeeId(feenew.get(i).getFeeId());
-                        Fee feeTemp = (Fee) findById(Fee.class, "feeId", feenew.get(i).getFeeId());
+                        fpif.setFeeId(lstFee.get(i).getFeeId());
+                        Fee feeTemp = (Fee) findById(Fee.class, "feeId", lstFee.get(i).getFeeId());
                         if (feeTemp.getFeeCode().equals(Constants.FEE_TYPE.KS4SLP)) {
                             fpif.setCost(feeTemp.getPrice());
                         } else if (feeTemp.getFeeCode().equals(Constants.FEE_TYPE.KS4STD)) {
@@ -7769,6 +7783,87 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             } else {
                 log.error("Lỗi hệ thống: Phân quyền xử lý hồ sơ: " + file.getFileCode());
                 return false;
+            }
+        } catch (Exception en) {
+            log.error(en.getMessage());
+            bReturn = false;
+        }
+        return bReturn;
+    }
+
+    public boolean onEvaluateByLeaderManyFiles(FilesForm form, Long deptId, String deptName, Long userId, String userName) {//SOS
+        boolean bReturn = true;
+        try {
+            Files file = findById(form.getFileId());
+            Date dateNow = getSysdate();
+            boolean isReview = false;
+            if (file == null) {
+                bReturn = false;
+            } else {
+                Long processStatus = file.getStatus();//trang thai ho so truoc khi thay doi
+                Long status = form.getStatus();
+                file.setStatus(status);
+                file.setDisplayStatus(getFileStatusName(status));
+                String dateTime = DateTimeUtils.convertDateToString(dateNow, "dd/MM/yyyy HH:mm");
+                file.setLeaderStaffRequest(userName + " " + dateTime + ":\n" + form.getLeaderStaffRequest());
+                file.setDisplayRequest(form.getLeaderStaffRequest());
+                file.setModifyDate(dateNow);
+                file.setEvaluateAddDate(dateNow);
+
+                UsersDAOHE udaohe = new UsersDAOHE();
+                List<String> lstTP = new ArrayList<String>();
+                lstTP.add(Constants.POSITION.LEADER_OF_STAFF_T);
+                lstTP.add(Constants.POSITION.GDTT);
+                if (udaohe.checkRoleUserOfLst(deptId, form.getLeaderReviewId(), lstTP)) {
+                    file.setLeaderReviewId(form.getLeaderReviewId());
+                    file.setLeaderReviewName(form.getLeaderReviewName());
+                    file.setLeaderApproveId(null);
+                    file.setLeaderApproveName(null);
+                } else {
+                    file.setLeaderApproveId(form.getLeaderReviewId());
+                    file.setLeaderApproveName(form.getLeaderReviewName());
+                    file.setStatus(Constants.FILE_STATUS.REVIEWED);
+                    file.setDisplayStatus(getFileStatusName(Constants.FILE_STATUS.REVIEWED));
+                    isReview = true;
+                }
+                // Cap nhat process
+                ProcessDAOHE pdhe = new ProcessDAOHE();
+
+                Process newP = new Process();
+                newP.setObjectId(form.getFileId());
+                newP.setObjectType(Constants.OBJECT_TYPE.FILES);
+                newP.setSendDate(dateNow);
+                newP.setSendGroup(deptName);
+                newP.setSendGroupId(deptId);
+                newP.setSendUserId(userId);
+                newP.setSendUser(userName);
+                newP.setProcessStatus(file.getStatus()); // De xu ly
+                newP.setProcessType(Constants.PROCESS_TYPE.MAIN);
+                newP.setStatus(Constants.FILE_STATUS.NEW_CREATE); // Moi den chua xu ly
+                newP.setIsActive(Constants.ACTIVE_STATUS.ACTIVE);
+                newP.setReceiveDate(dateNow);
+                newP.setReceiveUser(form.getLeaderReviewName());
+                newP.setReceiveUserId(form.getLeaderReviewId());
+                if (isReview) {
+                    Users leaderApprove = udaohe.findById(file.getLeaderApproveId());
+                    newP.setReceiveGroup(leaderApprove.getDeptName());
+                    newP.setReceiveGroupId(leaderApprove.getDeptId());
+                } else {
+                    newP.setReceiveGroup(deptName);
+                    newP.setReceiveGroupId(deptId);
+                }
+                getSession().save(newP);
+
+                Process p = pdhe.getProcessByAction(form.getFileId(),
+                        Constants.Status.ACTIVE,
+                        Constants.OBJECT_TYPE.FILES,
+                        processStatus,
+                        Constants.FILE_STATUS.NEW_CREATE);
+                p.setStatus(file.getStatus());
+                p.setLastestComment(form.getLeaderStaffRequest());
+                getSession().update(p);
+
+                update(file);
             }
         } catch (Exception en) {
             log.error(en.getMessage());

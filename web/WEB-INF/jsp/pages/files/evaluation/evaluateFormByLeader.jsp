@@ -154,7 +154,9 @@
     };
 
     validateLeader = function () {
-        if (document.getElementById("evaluateFormByLeader.statusAccept").checked == false && document.getElementById("evaluateFormByLeader.statusDeny").checked == false && document.getElementById("evaluateFormByLeader.statusDenyCV").checked == false) {
+        if (document.getElementById("evaluateFormByLeader.statusAccept").checked == false
+                && document.getElementById("evaluateFormByLeader.statusDeny").checked == false
+                && document.getElementById("evaluateFormByLeader.statusDenyCV").checked == false) {
             alert("Bạn chưa chọn [Kết quả thẩm định]");
             return false;
         }
@@ -165,7 +167,7 @@
             return false;
         }
         var leaderReviewId = dijit.byId("evaluationRecordsFormByLeader.leaderReviewId").getValue();
-        if (leaderReviewId == -1) {
+        if (leaderReviewId == -1 && document.getElementById("evaluateFormByLeader.statusDenyCV").checked == false) {
             alert("Bạn chưa chọn lãnh đạo thực hiện");
             dijit.byId("evaluationRecordsFormByLeader.leaderReviewId").focus();
             return false;

@@ -8,51 +8,51 @@
 <!DOCTYPE html>
 <script>
     var VtPlugin = {
-        initPlugin: function()
+        initPlugin: function ()
         {
             return document.getElementById('plugin0').getVersion == null ? false : true;
         },
-        getVersion: function()
+        getVersion: function ()
         {
             return document.getElementById('plugin0').getVersion();
         },
-        getFileName: function()
+        getFileName: function ()
         {
             return document.getElementById('plugin0').getFileName();
         },
-        getCert: function()
+        getCert: function ()
         {
             return document.getElementById('plugin0').getCert();
         },
-        getCertChain: function()
+        getCertChain: function ()
         {
             return document.getElementById('plugin0').getCertChain();
         },
-        signHash: function(base64Hash, certSerial)
+        signHash: function (base64Hash, certSerial)
         {
             return document.getElementById('plugin0').signHash(base64Hash, certSerial);
         },
-        signPdf: function(filePath, reason, location)
+        signPdf: function (filePath, reason, location)
         {
             return document.getElementById('plugin0').signPdf(filePath, reason, location);
         },
-        signPdf : function(filePath, reason, location, fileDest)
+        signPdf : function (filePath, reason, location, fileDest)
         {
             return document.getElementById('plugin0').signPdf(filePath, reason, location, fileDest);
         },
-                signOOXml: function(filePath)
+                signOOXml: function (filePath)
                 {
                     return document.getElementById('plugin0').signOOXml(filePath);
                 },
-        signOOXml : function(filePath, fileDest)
+        signOOXml : function (filePath, fileDest)
         {
             return document.getElementById('plugin0').signOOXml(filePath, fileDest);
         },
-                signXml: function(filePath)
+                signXml: function (filePath)
                 {
                     return document.getElementById('plugin0').signOOXml(filePath);
                 },
-        signXml : function(filePath, fileDest)
+        signXml : function (filePath, fileDest)
         {
             return document.getElementById('plugin0').signXml(filePath, fileDest);
         }
@@ -85,7 +85,7 @@
             alert("Ký số không thành công !");
             return false;
         }
-    }
+    };
 
     function initPlugin() {
         if (!(VtPlugin.initPlugin()) || VtPlugin.getVersion() !== '1.1.0.0') {
@@ -97,7 +97,7 @@
             return false;
         }
         return true;
-    }
+    };
 
     function signAndSubmit() {
         try {
@@ -117,6 +117,24 @@
             alert("Ký số không thành công !");
             return false;
         }
-
-    }
+    };
+    function signAndSubmitOriginalFile() {//binhnt add 160520
+        try {
+            var base64Hash = dijit.byId("txtBase64HashAFP0").getValue();
+            var certSerial = dijit.byId("txtCertSerialFAFP").getValue();
+            if (base64Hash !== '' && certSerial !== '') {
+                var base64Signature = new String(VtPlugin.signHash(base64Hash, certSerial));
+                console.log('base64: ' + base64Hash);
+                console.log('certSerial: ' + certSerial);
+                base64Signature = base64Signature.replace(/\n|\r/g, "");
+                return base64Signature;
+            } else {
+                alert("Ký số không thành công !");
+                return false;
+            }
+        } catch (e) {
+            alert("Ký số không thành công !");
+            return false;
+        }
+    };
 </script>

@@ -45,7 +45,7 @@ import com.viettel.voffice.database.BO.Process;
 public class ExportFileDAO extends BaseDAO {
 
     //giay cong bo + files_details    
-    private final String tempSignCongbohopquiTHTL = "/WEB-INF/template/signCongbohopquiTHsubTL.docx";
+    private final String tempSignCongbohopquiTHTL = "/WEB-INF/template/signCongbohopquiTHTL.docx";
     private final String tempSignCongbophuhopCNTL = "/WEB-INF/template/signCongBoPhuHopCNTL.docx";
     private final String tempSignCongbophuhopTHTL = "/WEB-INF/template/signCongbophuhopTHTL.docx";
 
@@ -168,14 +168,19 @@ public class ExportFileDAO extends BaseDAO {
                     String proName = "";
                     String busiName = "";
                     String busiAdd = "";
+                    String titleEdit = "";
+                    String receiptNoOld = "";
+                    receiptNo = "0000";
                     if (filesForm.getContentsEditATTP() != null && !filesForm.getContentsEditATTP().isEmpty()) {
                         contentEdit = filesForm.getContentsEditATTP();
                     } else {
                         contentEdit = filesForm.getContentsEdit();
                     }
-                    if (filesForm.getAnnouncement().getPublishDate() != null) {
-                        publishDate = DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "yyyy");
-                    }
+//                    if (filesForm.getAnnouncement().getPublishDate() != null) {
+//                        publishDate = DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "dd")
+//                                + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "MM")
+//                                + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "yyyy");
+//                    }
                     if (filesForm.getAnnouncement().getAnnouncementNo() != null) {
                         announmentNo = filesForm.getAnnouncement().getAnnouncementNo();
                     }
@@ -187,6 +192,31 @@ public class ExportFileDAO extends BaseDAO {
                     }
                     if (filesForm.getAnnouncement().getBusinessName() != null) {
                         busiName = filesForm.getAnnouncement().getBusinessName();
+                    }
+                    if (filesForm.getFilesSourceID() != null
+                            && filesForm.getFilesSourceID() > 0L) {
+                        Files fboOld = fdhe.findById(filesForm.getFilesSourceID());
+                        if (fboOld != null
+                                && fboOld.getAnnouncementReceiptPaperId() != null) {
+                            AnnouncementReceiptPaperDAOHE arpDaohe = new AnnouncementReceiptPaperDAOHE();
+                            AnnouncementReceiptPaper arpbo = arpDaohe.findById(fboOld.getAnnouncementReceiptPaperId());
+                            if (arpbo != null
+                                    && arpbo.getReceiptDate() != null
+                                    && arpbo.getSignDate() != null
+                                    && arpbo.getReceiptNo() != null) {
+                                receiptNo = arpbo.getReceiptNo();
+                                publishDate = " ngày " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "MM") + " năm "
+                                        + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "yyyy");
+                            }
+                        }
+                    }
+                    if (filesForm.getTitleEdit() != null) {
+                        titleEdit = filesForm.getTitleEdit();
+                    } else if (filesForm.getTitleEditATTP() != null) {
+                        titleEdit = filesForm.getTitleEditATTP();
+                    } else {
+                        titleEdit = "sửa đổi bổ sung hồ sơ đã công bố";
                     }
                     Date dateNow = getSysdate();
                     String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd") + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM") + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
@@ -213,6 +243,15 @@ public class ExportFileDAO extends BaseDAO {
                     wU.replacePlaceholder(wmp, busiAdd, "${busiAdd}");
                     wU.replacePlaceholder(wmp, busiName, "${busiName}");
                     wU.replacePlaceholder(wmp, signedDate, "${signDate}");
+                    wU.replacePlaceholder(wmp, titleEdit, "${titleEdit}");
+                    wU.replacePlaceholder(wmp, receiptNoOld, "${receiptNoOld}");
+                    ProcessDAOHE pDaohe = new ProcessDAOHE();
+                    Process pBo = pDaohe.getProcessByAction(filesForm.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, filesForm.getStatus(), Constants.FILE_STATUS.NEW_CREATE);
+                    DepartmentDAOHE deptDaohe = new DepartmentDAOHE();
+                    Department deptBo = deptDaohe.findBOById(pBo.getSendGroupId());
+                    if (deptBo != null && deptBo.getDeptCode() != null) {
+                        wU.replacePlaceholder(wmp, deptBo.getDeptCode(), "${deptCode}");
+                    }
                     break;
                 case Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT:
                     wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(reReceiptPaperAnnounementSign))));
@@ -1219,13 +1258,17 @@ public class ExportFileDAO extends BaseDAO {
                     String proName = "";
                     String busiName = "";
                     String busiAdd = "";
+                    String titleEdit = "";
+                    String receiptNoOld = "";
                     if (filesForm.getContentsEditATTP() != null && !filesForm.getContentsEditATTP().isEmpty()) {
                         contentEdit = filesForm.getContentsEditATTP();
                     } else {
                         contentEdit = filesForm.getContentsEdit();
                     }
                     if (filesForm.getAnnouncement().getPublishDate() != null) {
-                        publishDate = DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "yyyy");
+                        publishDate = DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "dd")
+                                + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "MM")
+                                + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "yyyy");
                     }
                     if (filesForm.getAnnouncement().getAnnouncementNo() != null) {
                         announmentNo = filesForm.getAnnouncement().getAnnouncementNo();
@@ -1240,12 +1283,39 @@ public class ExportFileDAO extends BaseDAO {
                         busiName = filesForm.getAnnouncement().getBusinessName();
                     }
                     dateNow = getSysdate();
-                    String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd") + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM") + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
+                    String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd")
+                            + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM")
+                            + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
                     receiptDeptName = "";
                     if (filesForm.getAnnouncementReceiptPaperForm() != null) {
                         receiptDeptName = filesForm.getAnnouncementReceiptPaperForm().getReceiptDeptName();
                     } else if (filesForm.getConfirmImportSatistPaperForm() != null) {
                         receiptDeptName = filesForm.getConfirmImportSatistPaperForm().getTestAgencyName();
+                    }
+                    if (filesForm.getFilesSourceID() != null
+                            && filesForm.getFilesSourceID() > 0L) {
+                        Files fboOld = fdhe.findById(filesForm.getFilesSourceID());
+                        if (fboOld != null
+                                && fboOld.getAnnouncementReceiptPaperId() != null) {
+                            AnnouncementReceiptPaperDAOHE arpDaohe = new AnnouncementReceiptPaperDAOHE();
+                            AnnouncementReceiptPaper arpbo = arpDaohe.findById(fboOld.getAnnouncementReceiptPaperId());
+                            if (arpbo != null
+                                    && arpbo.getReceiptDate() != null
+                                    && arpbo.getSignDate() != null
+                                    && arpbo.getReceiptNo() != null) {
+                                receiptNo = arpbo.getReceiptNo();
+                                publishDate = " ngày " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "yyyy");
+                            }
+                        }
+                    }
+                    if (filesForm.getTitleEdit() != null) {
+                        titleEdit = filesForm.getTitleEdit();
+                    } else if (filesForm.getTitleEditATTP() != null) {
+                        titleEdit = filesForm.getTitleEditATTP();
+                    } else {
+                        titleEdit = "sửa đổi bổ sung hồ sơ đã công bố";
                     }
                     wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignsuadoisaucongbo))));
                     //Các biến truyền vào Công văn
@@ -1265,6 +1335,15 @@ public class ExportFileDAO extends BaseDAO {
                     wU.replacePlaceholder(wmp, busiAdd, "${busiAdd}");
                     wU.replacePlaceholder(wmp, busiName, "${busiName}");
                     wU.replacePlaceholder(wmp, signedDate, "${signDate}");
+                    wU.replacePlaceholder(wmp, titleEdit, "${titleEdit}");
+                    wU.replacePlaceholder(wmp, receiptNoOld, "${receiptNoOld}");
+                    ProcessDAOHE pDaohe = new ProcessDAOHE();
+                    Process pBo = pDaohe.getProcessByAction(filesForm.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, filesForm.getStatus(), Constants.FILE_STATUS.NEW_CREATE);
+                    DepartmentDAOHE deptDaohe = new DepartmentDAOHE();
+                    Department deptBo = deptDaohe.findBOById(pBo.getSendGroupId());
+                    if (deptBo != null && deptBo.getDeptCode() != null) {
+                        wU.replacePlaceholder(wmp, deptBo.getDeptCode(), "${deptCode}");
+                    }
                     break;
                 case Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT:
                     //wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempReAnnounFiles))));
@@ -2686,13 +2765,18 @@ public class ExportFileDAO extends BaseDAO {
                         String proName = "";
                         String busiName = "";
                         String busiAdd = "";
+                        String receiptNoOld = "";
+                        String receiptNo = "0000";
+                        String titleEdit = "";
                         if (filesForm.getContentsEditATTP() != null && !filesForm.getContentsEditATTP().isEmpty()) {
                             contentEdit = filesForm.getContentsEditATTP();
                         } else {
                             contentEdit = filesForm.getContentsEdit();
                         }
                         if (filesForm.getAnnouncement().getPublishDate() != null) {
-                            publishDate = DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "yyyy");
+                            publishDate = DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "dd")
+                                    + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "MM")
+                                    + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "yyyy");
                         }
                         if (filesForm.getAnnouncement().getAnnouncementNo() != null) {
                             announmentNo = filesForm.getAnnouncement().getAnnouncementNo();
@@ -2707,12 +2791,39 @@ public class ExportFileDAO extends BaseDAO {
                             busiName = filesForm.getAnnouncement().getBusinessName();
                         }
                         Date dateNow = getSysdate();
-                        String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd") + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM") + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
+                        String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd")
+                                + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM")
+                                + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
                         String receiptDeptName = "";
                         if (filesForm.getAnnouncementReceiptPaperForm() != null) {
                             receiptDeptName = filesForm.getAnnouncementReceiptPaperForm().getReceiptDeptName();
                         } else if (filesForm.getConfirmImportSatistPaperForm() != null) {
                             receiptDeptName = filesForm.getConfirmImportSatistPaperForm().getTestAgencyName();
+                        }
+                        if (filesForm.getFilesSourceID() != null
+                                && filesForm.getFilesSourceID() > 0L) {
+                            Files fboOld = fdhe.findById(filesForm.getFilesSourceID());
+                            if (fboOld != null
+                                    && fboOld.getAnnouncementReceiptPaperId() != null) {
+                                AnnouncementReceiptPaperDAOHE arpDaohe = new AnnouncementReceiptPaperDAOHE();
+                                AnnouncementReceiptPaper arpbo = arpDaohe.findById(fboOld.getAnnouncementReceiptPaperId());
+                                if (arpbo != null
+                                        && arpbo.getReceiptDate() != null
+                                        && arpbo.getSignDate() != null
+                                        && arpbo.getReceiptNo() != null) {
+                                    receiptNoOld = arpbo.getReceiptNo();
+                                    publishDate = " ngày " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "dd")
+                                            + " tháng " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "MM") + " năm "
+                                            + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "yyyy");
+                                }
+                            }
+                        }
+                        if (filesForm.getTitleEdit() != null) {
+                            titleEdit = filesForm.getTitleEdit();
+                        } else if (filesForm.getTitleEditATTP() != null) {
+                            titleEdit = filesForm.getTitleEditATTP();
+                        } else {
+                            titleEdit = "sửa đổi bổ sung hồ sơ đã công bố";
                         }
                         wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignsuadoisaucongbo))));
                         //Các biến truyền vào Công văn
@@ -2732,30 +2843,24 @@ public class ExportFileDAO extends BaseDAO {
                         wU.replacePlaceholder(wmp, busiAdd, "${busiAdd}");
                         wU.replacePlaceholder(wmp, busiName, "${busiName}");
                         wU.replacePlaceholder(wmp, signedDate, "${signDate}");
+                        wU.replacePlaceholder(wmp, receiptNoOld, "${receiptNoOld}");
+                        wU.replacePlaceholder(wmp, receiptNo, "${receiptNo}");
+                        wU.replacePlaceholder(wmp, titleEdit, "${titleEdit}");
+                        ProcessDAOHE pDaohe = new ProcessDAOHE();
+                        Process pBo = pDaohe.getProcessByAction(filesForm.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, filesForm.getStatus(), Constants.FILE_STATUS.NEW_CREATE);
+                        DepartmentDAOHE deptDaohe = new DepartmentDAOHE();
+                        Department deptBo = deptDaohe.findBOById(pBo.getSendGroupId());
+                        if (deptBo != null && deptBo.getDeptCode() != null) {
+                            wU.replacePlaceholder(wmp, deptBo.getDeptCode(), "${deptCode}");
+                        } else {
+                            wU.replacePlaceholder(wmp, "SP", "${deptCode}");
+                        }
                     } else {
                         wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSuadoisaucongbo))));
                     }
 //                    End Hiepvv_Home
                     break;
                 case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR:
-//                    String pubDate = "";
-//                    String annouNo = "";
-//                    String effDate = "";
-//                    if (filesForm.getAnnouncement().getPublishDate() != null) {
-//                        pubDate = "ngày " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "yyyy");
-//                    }
-//                    if (filesForm.getEffectiveDate() != null) {
-//                        if (filesForm.getEffectiveDate() > 0L) {
-//                            effDate = filesForm.getEffectiveDate().toString();
-//                        } else {
-//                            effDate = "3";
-//                        }
-//                    } else {
-//                        effDate = "3";
-//                    }
-//                    if (filesForm.getAnnouncement() != null && filesForm.getAnnouncement().getAnnouncementNo() != null) {
-//                        annouNo = filesForm.getAnnouncement().getAnnouncementNo();
-//                    }
                     if (filesForm.getAnnouncement() != null) {
                         BusinessDAOHE busdaohe = new BusinessDAOHE();
                         Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2871,18 +2976,14 @@ public class ExportFileDAO extends BaseDAO {
                 wU.replacePlaceholder(wmp, deptBo.getDeptCode() + "e", "${deptCodeE}");
             }
 
-            String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd") + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM") + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
+            String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd")
+                    + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM")
+                    + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
             wU.replacePlaceholder(wmp, signedDate, "${signDateStr}");
             wU.replacePlaceholder(wmp, businessName, "${businessName}");
 
             ResourceBundle rb = ResourceBundle.getBundle("config");
-            //UsersDAOHE udhe = new UsersDAOHE();
             String cuctruong = rb.getString("cuctruong");
-//            String tencuctruong = udhe.getFullNameByUserName(cuctruong);
-//            String phocuctruong = rb.getString("phocuctruong");
-//            String tenphocuctruong = udhe.getFullNameByUserName(phocuctruong);
-//            String tentruongphongnghiepvu = udhe.getFullNameByUserName(truongphongnghiepvu);
-//            String tentruongphongnghiepvu = udhe.getFullNameByUserName(truongphongnghiepvu);
 
             String signer = "";
             String rolesigner = "";
@@ -2919,17 +3020,6 @@ public class ExportFileDAO extends BaseDAO {
             }
 
             String leaderSinged = getUserName();
-            /*
-             if (phocuctruong.equals(getUserLogin())) {
-             leaderSinged = tenphocuctruong;
-             } else if (cuctruong.equals(getUserLogin())) {
-             leaderSinged = tencuctruong;
-             } else if (truongphongnghiepvu.equals(getUserLogin())) {
-             leaderSinged = tentruongphongnghiepvu;
-             } else {
-             leaderSinged = getUserName();
-             }
-             */
             wU.replacePlaceholder(wmp, leaderSinged, "${LeaderSigned}");
             HashMap map = new HashMap();
             map.put("createForm", form);
@@ -3013,13 +3103,7 @@ public class ExportFileDAO extends BaseDAO {
             wU.replacePlaceholder(wmp, businessName, "${businessName}");
 
             ResourceBundle rb = ResourceBundle.getBundle("config");
-            //UsersDAOHE udhe = new UsersDAOHE();
             String cuctruong = rb.getString("cuctruong");
-//            String tencuctruong = udhe.getFullNameByUserName(cuctruong);
-//            String phocuctruong = rb.getString("phocuctruong");
-//            String tenphocuctruong = udhe.getFullNameByUserName(phocuctruong);
-//            String tentruongphongnghiepvu = udhe.getFullNameByUserName(truongphongnghiepvu);
-//            String tentruongphongnghiepvu = udhe.getFullNameByUserName(truongphongnghiepvu);
 
             String signer = "";
             String rolesigner = "";
@@ -3056,17 +3140,6 @@ public class ExportFileDAO extends BaseDAO {
             }
 
             String leaderSinged = getUserName();
-            /*
-             if (phocuctruong.equals(getUserLogin())) {
-             leaderSinged = tenphocuctruong;
-             } else if (cuctruong.equals(getUserLogin())) {
-             leaderSinged = tencuctruong;
-             } else if (truongphongnghiepvu.equals(getUserLogin())) {
-             leaderSinged = tentruongphongnghiepvu;
-             } else {
-             leaderSinged = getUserName();
-             }
-             */
             wU.replacePlaceholder(wmp, leaderSinged, "${LeaderSigned}");
             HashMap map = new HashMap();
             map.put("createForm", form);
@@ -3254,6 +3327,9 @@ public class ExportFileDAO extends BaseDAO {
                     String proName = "";
                     String busiName = "";
                     String busiAdd = "";
+                    String titleEdit = "";
+                    String receiptNoOld = "";
+                    receiptNo = "0000";
                     if (filesForm.getContentsEditATTP() != null && !filesForm.getContentsEditATTP().isEmpty()) {
                         contentEdit = filesForm.getContentsEditATTP();
                     } else {
@@ -3274,6 +3350,13 @@ public class ExportFileDAO extends BaseDAO {
                     if (filesForm.getAnnouncement().getBusinessName() != null) {
                         busiName = filesForm.getAnnouncement().getBusinessName();
                     }
+                    if (filesForm.getTitleEdit() != null) {
+                        titleEdit = filesForm.getTitleEdit();
+                    } else if (filesForm.getTitleEditATTP() != null) {
+                        titleEdit = filesForm.getTitleEditATTP();
+                    } else {
+                        titleEdit = "sửa đổi bổ sung hồ sơ đã công bố";
+                    }
                     wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignsuadoisaucongbo))));
                     //Các biến truyền vào Công văn
                     wU.replacePlaceholder(wmp, contentEdit, "${contentEdit}");
@@ -3282,6 +3365,15 @@ public class ExportFileDAO extends BaseDAO {
                     wU.replacePlaceholder(wmp, proName, "${proName}");
                     wU.replacePlaceholder(wmp, busiAdd, "${busiAdd}");
                     wU.replacePlaceholder(wmp, busiName, "${busiName}");
+                    wU.replacePlaceholder(wmp, titleEdit, "${titleEdit}");
+                    wU.replacePlaceholder(wmp, receiptNoOld, "${receiptNoOld}");
+                    ProcessDAOHE pDaohe = new ProcessDAOHE();
+                    Process pBo = pDaohe.getProcessByAction(filesForm.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, filesForm.getStatus(), Constants.FILE_STATUS.NEW_CREATE);
+                    DepartmentDAOHE deptDaohe = new DepartmentDAOHE();
+                    Department deptBo = deptDaohe.findBOById(pBo.getSendGroupId());
+                    if (deptBo != null && deptBo.getDeptCode() != null) {
+                        wU.replacePlaceholder(wmp, deptBo.getDeptCode(), "${deptCode}");
+                    }
                     break;
                 case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR:
                     String pubDate = "";
@@ -3324,7 +3416,9 @@ public class ExportFileDAO extends BaseDAO {
                     break;
             }
             //binhnt update 260216
-            String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd") + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM") + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
+            String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd")
+                    + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM")
+                    + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
             if (filesForm.getAnnouncementReceiptPaperForm() != null) {
                 receiptDeptName = filesForm.getAnnouncementReceiptPaperForm().getReceiptDeptName();
                 receiptNo = filesForm.getAnnouncementReceiptPaperForm().getReceiptNo();
@@ -3357,7 +3451,9 @@ public class ExportFileDAO extends BaseDAO {
                 }
                 //binhnt update 260216
                 if (filesForm.getAnnouncementReceiptPaperForm().getSignDate() != null) {
-                    signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getAnnouncementReceiptPaperForm().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncementReceiptPaperForm().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncementReceiptPaperForm().getSignDate(), "yyyy");
+                    signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getAnnouncementReceiptPaperForm().getSignDate(), "dd")
+                            + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncementReceiptPaperForm().getSignDate(), "MM")
+                            + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncementReceiptPaperForm().getSignDate(), "yyyy");
                 }
             } else if (filesForm.getConfirmImportSatistPaperForm() != null) {
 //                wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempPaperWordStatisImport))));
@@ -3373,13 +3469,16 @@ public class ExportFileDAO extends BaseDAO {
             }
             if (filesForm.getDetailProduct() != null) {
                 productTypeName = filesForm.getDetailProduct().getProductTypeName();
-                if (filesForm.getDetailProduct().getUseage() == null || filesForm.getDetailProduct().getUseage().trim().length() == 0) {
+                if (filesForm.getDetailProduct().getUseage() == null
+                        || filesForm.getDetailProduct().getUseage().trim().length() == 0) {
                     filesForm.getDetailProduct().setUseage("Không có.");
                 }
-                if (filesForm.getDetailProduct().getObjectUse() == null || filesForm.getDetailProduct().getObjectUse().trim().length() == 0) {
+                if (filesForm.getDetailProduct().getObjectUse() == null
+                        || filesForm.getDetailProduct().getObjectUse().trim().length() == 0) {
                     filesForm.getDetailProduct().setObjectUse("Không có.");
                 }
-                if (filesForm.getDetailProduct().getGuideline() == null || filesForm.getDetailProduct().getGuideline().trim().length() == 0) {
+                if (filesForm.getDetailProduct().getGuideline() == null
+                        || filesForm.getDetailProduct().getGuideline().trim().length() == 0) {
                     filesForm.getDetailProduct().setGuideline("Không có.");
                 }
                 if (filesForm.getDetailProduct().getDateOfManufacture() != null) {
@@ -3440,9 +3539,14 @@ public class ExportFileDAO extends BaseDAO {
                         Business busbo = busdaohe.findById(filesForm.getDeptId());
                         if (filesForm.getDetailProduct().getSignDate() != null) {
                             if (busbo != null) {
-                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince()
+                                        + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             } else {
-                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             }
                         } else if (busbo != null) {
                             filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
@@ -3472,9 +3576,14 @@ public class ExportFileDAO extends BaseDAO {
                         Business busbo = busdaohe.findById(filesForm.getDeptId());
                         if (filesForm.getDetailProduct().getSignDate() != null) {
                             if (busbo != null) {
-                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince()
+                                        + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             } else {
-                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             }
                         } else if (busbo != null) {
                             filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
@@ -3503,9 +3612,13 @@ public class ExportFileDAO extends BaseDAO {
                         Business busbo = busdaohe.findById(filesForm.getDeptId());
                         if (filesForm.getDetailProduct().getSignDate() != null) {
                             if (busbo != null) {
-                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             } else {
-                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             }
                         } else if (busbo != null) {
                             filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
@@ -3534,9 +3647,14 @@ public class ExportFileDAO extends BaseDAO {
                         Business busbo = busdaohe.findById(filesForm.getDeptId());
                         if (filesForm.getDetailProduct().getSignDate() != null) {
                             if (busbo != null) {
-                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince()
+                                        + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             } else {
-                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             }
                         } else if (busbo != null) {
                             filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
@@ -3565,9 +3683,14 @@ public class ExportFileDAO extends BaseDAO {
                         Business busbo = busdaohe.findById(filesForm.getDeptId());
                         if (filesForm.getDetailProduct().getSignDate() != null) {
                             if (busbo != null) {
-                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince()
+                                        + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             } else {
-                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             }
                         } else if (busbo != null) {
                             filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
@@ -3591,9 +3714,14 @@ public class ExportFileDAO extends BaseDAO {
                         Business busbo = busdaohe.findById(filesForm.getDeptId());
                         if (filesForm.getDetailProduct().getSignDate() != null) {
                             if (busbo != null) {
-                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince()
+                                        + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             } else {
-                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             }
                         } else if (busbo != null) {
                             filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
@@ -3618,9 +3746,14 @@ public class ExportFileDAO extends BaseDAO {
                         if (filesForm.getDetailProduct().getSignDate() != null) {
 
                             if (busbo != null) {
-                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince()
+                                        + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             } else {
-                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             }
                         } else if (busbo != null) {
                             filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
@@ -3644,9 +3777,14 @@ public class ExportFileDAO extends BaseDAO {
                         Business busbo = busdaohe.findById(filesForm.getDeptId());
                         if (filesForm.getDetailProduct().getSignDate() != null) {
                             if (busbo != null) {
-                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince()
+                                        + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             } else {
-                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             }
                         } else if (busbo != null) {
                             filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
@@ -3676,9 +3814,14 @@ public class ExportFileDAO extends BaseDAO {
                         Business busbo = busdaohe.findById(filesForm.getDeptId());
                         if (filesForm.getDetailProduct().getSignDate() != null) {
                             if (busbo != null) {
-                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince()
+                                        + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             } else {
-                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                filesForm.getAnnouncement().setSignDateStr("Hà Nội, ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
                             }
                         } else if (busbo != null) {
                             filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
@@ -3713,7 +3856,9 @@ public class ExportFileDAO extends BaseDAO {
                     if (filesForm.getReIssueForm() != null && filesForm.getReIssueForm().getReIssueDate() != null) {
                         if (filesForm.getReIssueForm() != null && filesForm.getReIssueForm().getReIssueDate() != null) {
                             if (filesForm.getReIssueForm().getReIssueDate() != null) {
-                                filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
+                                filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
                             } else {
                                 filesForm.getReIssueForm().setReIssueDateStr("ngày... tháng... năm 20..");
                             }
@@ -3724,7 +3869,9 @@ public class ExportFileDAO extends BaseDAO {
                     if (filesForm.getReIssueForm() != null && filesForm.getReIssueForm().getReIssueDate() != null) {
                         if (filesForm.getReIssueForm() != null && filesForm.getReIssueForm().getReIssueDate() != null) {
                             if (filesForm.getReIssueForm().getReIssueDate() != null) {
-                                filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
+                                filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
                             } else {
                                 filesForm.getReIssueForm().setReIssueDateStr("ngày... tháng... năm 20..");
                             }
@@ -3735,7 +3882,9 @@ public class ExportFileDAO extends BaseDAO {
                     if (filesForm.getReIssueForm() != null && filesForm.getReIssueForm().getReIssueDate() != null) {
                         if (filesForm.getReIssueForm() != null && filesForm.getReIssueForm().getReIssueDate() != null) {
                             if (filesForm.getReIssueForm().getReIssueDate() != null) {
-                                filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
+                                filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
                             } else {
                                 filesForm.getReIssueForm().setReIssueDateStr("ngày... tháng... năm 20..");
                             }
@@ -3746,7 +3895,9 @@ public class ExportFileDAO extends BaseDAO {
                     if (filesForm.getReIssueForm() != null && filesForm.getReIssueForm().getReIssueDate() != null) {
                         if (filesForm.getReIssueForm() != null && filesForm.getReIssueForm().getReIssueDate() != null) {
                             if (filesForm.getReIssueForm().getReIssueDate() != null) {
-                                filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
+                                filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
                             } else {
                                 filesForm.getReIssueForm().setReIssueDateStr("ngày... tháng... năm 20..");
                             }
@@ -3759,7 +3910,9 @@ public class ExportFileDAO extends BaseDAO {
                         if (filesForm.getReIssueForm() != null
                                 && filesForm.getReIssueForm().getReIssueDate() != null) {
                             if (filesForm.getReIssueForm().getReIssueDate() != null) {
-                                filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
+                                filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
                             } else {
                                 filesForm.getReIssueForm().setReIssueDateStr("ngày... tháng... năm 20..");
                             }
@@ -3777,7 +3930,8 @@ public class ExportFileDAO extends BaseDAO {
             String fullFile = wU.writePDFToStreamSignPlugin(wmp, getResponse(), fileId, fileCode, filesForm.getQrCode(), "PDHS", true, 1, true);
             //End create file temp
             //Hiepvv SDBS sau cong bo
-            if (procedure != null && procedure.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)) {
+            if (procedure != null
+                    && procedure.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)) {
                 if (!fullFile.equals("false")) {
 //                    Copy file Công văn và các file đính kèm của hs SĐBS sau công bố vào hồ sơ gốc
 

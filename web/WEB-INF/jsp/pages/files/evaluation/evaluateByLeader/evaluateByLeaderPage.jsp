@@ -488,6 +488,7 @@
                                      serverPaging="true"
                                      clientSort="false">
                             <sd:ColumnDataGrid key="STT" get="page.getNo" width="3%"  styles="text-align:center;" />
+                            <sd:ColumnDataGrid editable="true" key="column.checkbox" headerCheckbox="true" headerStyles="text-align:center;" type="checkbox" width="2%" cellStyles="text-align:center;" setDisabled="page.disabledCheckbox"/>
                             <sd:ColumnDataGrid  key="Chức năng" 
                                                 width="5%"  headerStyles="text-align:center;"
                                                 formatter="page.formatAction" get="page.getIndex" cellStyles="text-align:center;" />
@@ -498,7 +499,7 @@
                                                 width="15%"  headerStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Tên sản phẩm" field="productName" cellStyles="text-align:left;"
                                                 width="15%"  headerStyles="text-align:center;" />
-                            <sd:ColumnDataGrid  key="Ngày nộp" field="sendDate" format="dd/MM/yyyy" type="date"
+                            <sd:ColumnDataGrid  key="Ngày đến" field="modifyDate" format="dd/MM/yyyy" type="date"
                                                 width="7%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Ngày hẹn trả" field="deadlineApprove" format="dd/MM/yyyy" type="date"
                                                 width="7%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />
@@ -512,6 +513,15 @@
                     </div>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <sd:Button key="" onclick="page.onReviewManyFiles();" >
+                        <img src="share/images/signature.png" height="14" width="18" alt="Hủy">
+                        <span style="font-size:12px">Thẩm định đạt nhiều hồ sơ</span>
+                    </sd:Button>
+                </td>
+
+            </tr>
         </table>
     </sd:TitlePane>
 </div>
@@ -519,6 +529,11 @@
             key="Kết luận thẩm định" showFullscreenButton="false"
             >
     <jsp:include page="evaluateByLeaderFormOnGrid.jsp" flush="false"></jsp:include>
+</sd:Dialog>
+<sd:Dialog  id="evaluateByLeaderManyFilesDlg" height="auto" width="600px"
+            key="Thẩm định nhiều hồ sơ" showFullscreenButton="false"
+            >
+    <jsp:include page="evaluateByLeaderManyFilesForm.jsp" flush="false"></jsp:include>
 </sd:Dialog>
 <script type="text/javascript">
     getCommentEvaluateByPPFormOnGrid = function (fileId, fileType, status) {
@@ -685,6 +700,13 @@
         sd.connector.post("filesAction!loadFilesByOldVersion.do?thisVersion=" + thisVersion + "&oldVersion=" + oldVersion, "viewDiv", null, null, afterReloadViewOldVersion);
     };
     afterReloadViewOldVersion = function (data) {
+    };
+    page.onReviewManyFiles = function () {
+        if (!dijit.byId("filesGrid").vtIsChecked()) {
+            msg.alert('Bạn chưa chọn hồ sơ để thực hiện thẩm định đạt nhiều hồ sơ', 'Cảnh báo');
+        } else {
+            dijit.byId("evaluateByLeaderManyFilesDlg").show();
+        }
     };
     page.search();
 </script>

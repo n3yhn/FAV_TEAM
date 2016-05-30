@@ -234,7 +234,7 @@
             return false;
         }
         var leaderReviewId = dijit.byId("evaluationRecord.leaderReviewId").getValue();
-        if (leaderReviewId == -1) {
+        if (leaderReviewId == -1 && document.getElementById("evaluationRecord.statusDenyCV").checked == false) {
             alert("Bạn chưa chọn lãnh đạo thực hiện");
             dijit.byId("evaluationRecord.leaderReviewId").focus();
             return false;

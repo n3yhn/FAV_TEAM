@@ -32,11 +32,17 @@
                                     <td width="30%" style="text-align: right"><sd:Label key="Yêu cầu bổ sung"/></td>
                                     <td width="70%">
                                         <sd:TextBox key="" id="feedbackApproveForm.fileId" name="createForm.fileId" cssStyle="display:none"/>
-                                        <input type="radio" id="feedbackApproveForm.statusDeny" name="createForm.status" value="27" checked="true"/>
+                                        <input type="radio"
+                                               id="feedbackApproveForm.statusDeny"
+                                               name="createForm.status" value="27" checked="true"/>
                                         </br>
-                                        <input type="radio" id="feedbackApproveForm.statusAccept" name="createForm.status" value="9"/>
+                                        <input type="radio"
+                                               id="feedbackApproveForm.statusAccept"
+                                               name="createForm.status" value="9"/>
                                         </br>
-                                        <input type="radio" id="feedbackApproveForm.statusApprove" name="createForm.status" value="6"/>
+                                        <input type="radio"
+                                               id="feedbackApproveForm.statusApprove"
+                                               name="createForm.status" value="6"/>
                                         <sd:Label key=""/>
                                     </td>
                                 </tr>
@@ -55,15 +61,23 @@
                                 <tr>
                                     <td width="30%" style="text-align: right"><sd:Label key="Nội dung thông báo yêu cầu sđbs/Lý do phê duyệt hồ sơ"/></td>
                                     <td width="70%">
-                                        <sd:Textarea key="" id="feedbackApproveForm.leaderRequest" name="createForm.leaderRequest" rows="15" cssStyle="width:99%" maxlength="2000" trim="true"/>
-                                        <sd:Textarea key="" id="feedbackApproveForm.leaderStaffRequest" name="createForm.leaderStaffRequest" rows="10" cssStyle="width:99%;display:none" trim="true"/>
+                                        <sd:Textarea key=""
+                                                     id="feedbackApproveForm.leaderRequest"
+                                                     name="createForm.leaderRequest"
+                                                     rows="15" cssStyle="width:99%" maxlength="2000" trim="true"/>
+                                        <sd:Textarea key=""
+                                                     id="feedbackApproveForm.leaderStaffRequest"
+                                                     name="createForm.leaderStaffRequest"
+                                                     rows="10" cssStyle="width:99%;display:none" trim="true"/>
                                     </td>
                                 </tr>
                                 <tr style="display: none">
                                     <td style="text-align: right"><sd:Label key="Yêu cầu chuyển loại hồ sơ"/></td>
                                     <td>
                                         <sd:CheckBox key="" id="ckbIsTypeChangeLDC" name="ckbIsTypeChangeLDC" value=""/>
-                                        <sd:TextBox key="" id="feedbackApproveForm.isTypeChange" name="createForm.isTypeChange" cssStyle="display:none" />
+                                        <sd:TextBox key=""
+                                                    id="feedbackApproveForm.isTypeChange"
+                                                    name="createForm.isTypeChange" cssStyle="display:none" />
                                     </td>
                                 </tr>                                
                                 <tr>
@@ -72,15 +86,18 @@
                                             <img src="share/images/icons/signature-icon.gif" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Phê duyệt công văn SĐBS</span>
                                         </sd:Button>       --%>     
-                                        <sd:Button id="btnAcceptFBAF" key="" onclick="page.onApproveSignPlugin();" cssStyle="display:" cssClass="buttonGroup">
+                                        <sd:Button id="btnAcceptFBAF" key=""
+                                                   onclick="page.onApproveSignPlugin();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/signature-icon.gif" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Phê duyệt công văn SĐBS</span>
                                         </sd:Button>
-                                        <sd:Button id="btnExportFBAF" key="" onclick="page.downloadFBAF();" cssStyle="display:" cssClass="buttonGroup">
+                                        <sd:Button id="btnExportFBAF" key=""
+                                                   onclick="page.downloadFBAF();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/process_icon.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Xem trước công văn</span>
                                         </sd:Button>
-                                        <sd:Button id="btnDenyFBAF" key="" onclick="page.onDenyApproveFBAF();" cssStyle="display:" cssClass="buttonGroup">
+                                        <sd:Button id="btnDenyFBAF" key=""
+                                                   onclick="page.onDenyApproveFBAF();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/deleteStand.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Từ chối phê duyệt công văn SĐBS</span>
                                         </sd:Button>
@@ -88,7 +105,8 @@
                                             <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Phê duyệt hồ sơ</span>
                                         </sd:Button>--%>
-                                        <sd:Button id="btnStatusAcceptAF" key="" onclick="page.onApproveSignPDPlugin();" cssStyle="display:" cssClass="buttonGroup">
+                                        <sd:Button id="btnStatusAcceptAF" key=""
+                                                   onclick="page.onApproveSignPDPlugin();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Phê duyệt hồ sơ</span>
                                         </sd:Button> 
@@ -140,7 +158,7 @@
         var passwordCa;
         var signType;
 
-        onCloseApprove = function() {
+        onCloseApprove = function () {
             count = 0;
             var titlePaneViewFile_FAFP = dijit.byId('titlePaneViewFile_FAFP');
             if (titlePaneViewFile_FAFP) {
@@ -154,13 +172,17 @@
             if (txtBase64HashFAFPCheck) {
                 txtBase64HashFAFPCheck.destroyRecursive(true);
             }
+            var txtBase64HashAFP0Check = dijit.byId('txtBase64HashAFP0');
+            if (txtBase64HashAFP0Check) {
+                txtBase64HashAFP0Check.destroyRecursive(true);
+            }
             var txtCertSerialFAFPCheck = dijit.byId('txtCertSerialFAFP');
             if (txtCertSerialFAFPCheck) {
                 txtCertSerialFAFPCheck.destroyRecursive(true);
             }
             doGoToMenu("filesAction!lookupFilesByLeaderApproveSdbs.do?searchForm.searchType=26");
         };
-        afterFeedbackApproveAction = function(data) {
+        afterFeedbackApproveAction = function (data) {
             var obj = dojo.fromJson(data);
             var result = obj.items;
             if (!flagSignMore)
@@ -205,7 +227,7 @@
                 }
             }
         };
-        page.onDenyApproveFBAF = function() {
+        page.onDenyApproveFBAF = function () {
             //msg.confirm("Bạn có chắc muốn từ chối phê duyệt công văn SĐBS này?", "Từ chối phê duyệt công văn", function () {
             if (page.validateFeedbackApproveForm()) {
                 document.getElementById("feedbackApproveForm.statusAccept").checked = true;
@@ -216,7 +238,7 @@
             //});
         };
 
-        onApprove = function() {
+        onApprove = function () {
             page.clearContentFBAF();
             if (signType == "CVBS")
             {
@@ -263,7 +285,7 @@
         //    };
 
         //hieptq update 221015
-        page.onApproveSignPlugin = function() {
+        page.onApproveSignPlugin = function () {//phe duyet ho so
             dijit.byId("btnAcceptFBAF").domNode.style.display = "none";
             dijit.byId("btnDenyFBAF").domNode.style.display = "none";
             dijit.byId("btnExportFBAF").domNode.style.display = "none";
@@ -281,7 +303,7 @@
             }
         };
 
-        page.onApproveSignSdbsAffterLogin = function() {
+        page.onApproveSignSdbsAffterLogin = function () {//ki so phe duyet ho so
             //msg.confirm("Bạn có chắc muốn phê duyệt công văn SĐBS này?", "Phê duyệt công văn", function () {
             page.clearContentFBAF();
             var fileId = dijit.byId("feedbackApproveForm.fileId").getValue();
@@ -295,7 +317,7 @@
         var count = 0;
         var cert;
 
-        page.onFeedbackApproveAction = function(data) {
+        page.onFeedbackApproveAction = function (data) {
             var obj = dojo.fromJson(data);
             var result = obj.items;
             if (result[0] == "1") {
@@ -321,7 +343,7 @@
 
         /*********************  PHE DUYET HO SO *************************/
 
-        page.onApproveSignPDPlugin = function() {
+        page.onApproveSignPDPlugin = function () {
             signType = "PDHS";
             document.getElementById("feedbackApproveForm.statusAccept").checked = false;
             document.getElementById("feedbackApproveForm.statusDeny").checked = false;
@@ -335,14 +357,14 @@
             }
         };
 
-        page.onApproveSignAffterLogin = function() {
+        page.onApproveSignAffterLogin = function () {
             dijit.byId("feedbackApproveForm.leaderStaffRequest").setValue(dijit.byId("feedbackApproveForm.leaderRequest").getValue());
             document.getElementById("trWait").style.display = "";
             document.getElementById("labelWait").innerHTML = "Hệ thống đang tạo bản công bố, vui lòng chờ  ";
             sd.connector.post("filesAction!onCreatePaper.do?" + token.getTokenParamString(), null, "feedbackApproveForm", null, afteronCreatePaper);
         };
 
-        afteronCreatePaper = function(data) {
+        afteronCreatePaper = function (data) {
             var obj = dojo.fromJson(data);
             var result = obj.items;
             if (result[0] == "1") {
@@ -355,7 +377,7 @@
             }
         };
 
-        page.signAfterFAFP = function(data) {
+        page.signAfterFAFP = function (data) {
             var obj = dojo.fromJson(data);
             var result = obj.items;
             if (result[0] == "1") {
@@ -376,7 +398,7 @@
 
         };
 
-        page.validateApproveForm = function() {
+        page.validateApproveForm = function () {
             if (document.getElementById("feedbackApproveForm.statusApprove").checked == false) {
                 alert("Ký duyệt hồ sơ không thành công: Trạng thái chuyển không đúng!");
                 return false;
@@ -391,7 +413,7 @@
         };
 
         /*********************  END - PHE DUYET HO SO *************************/
-        page.clearContentFBAF = function() {
+        page.clearContentFBAF = function () {
             //        document.getElementById('showContent').innerHTML = '';
             //        document.getElementById("showContent").style.display = "none";
             dijit.byId("btnAcceptFBAF").domNode.style.display = "";
@@ -400,7 +422,7 @@
             dijit.byId("btnStatusAcceptAF").domNode.style.display = "";
         };
 
-        page.signPluginFAFP = function(data)
+        page.signPluginFAFP = function (data)
         {
             var obj = dojo.fromJson(data);
             var result = obj.items;
@@ -410,18 +432,30 @@
                 var fileId = result[4];
                 var outPutPath = result[5];
                 var fileName = result[6];
+                var txtBase64HashNew0 = result[7];
+                var outPutPath2 = result[8];
+                var fileName0 = result[9];
                 dijit.byId("txtBase64HashFAFP").setValue(txtBase64HashNew);
                 dijit.byId("txtCertSerialFAFP").setValue(certSerialNew);
+                dijit.byId("txtBase64HashAFP0").setValue(txtBase64HashNew0);
                 var sign = signAndSubmit();
                 var signData = encodeBase64(sign);
-                sd.connector.post("filesAction!onSignPlugin.do?fileId=" + fileId + "&outPutPath=" + outPutPath + "&signData=" + signData + "&signType=" + signType + "&fileName=" + fileName, null, null, null, page.afterSignPluginFAFP);
+                var signData2;
+                var sign2;
+                if (signType == "PDHS") {
+                    sign2 = signAndSubmitOriginalFile();
+                    signData2 = encodeBase64(sign2);
+                }
+                //binhnt update 160520
+                //sd.connector.post("filesAction!onSignPlugin.do?fileId=" + fileId + "&outPutPath=" + outPutPath + "&signData=" + signData + "&signType=" + signType + "&fileName=" + fileName, null, null, null, page.afterSignPluginFAFP);
+                sd.connector.post("filesAction!onSignPlugin.do?fileId=" + fileId + "&outPutPath=" + outPutPath + "&signData=" + signData + "&signType=" + signType + "&fileName=" + fileName + "&outPutPath2=" + outPutPath2 + "&fileName0=" + fileName0 + "&signDataOriginal=" + signData2, null, null, null, page.afterSignPluginFAFP);
             } else
             {
                 alert("Ký số không thành công !" + result[1]);
             }
-        }
+        };
 
-        page.afterSignPluginFAFP = function(data)
+        page.afterSignPluginFAFP = function (data)
         {
             var obj = dojo.fromJson(data);
             var result = obj.items;
@@ -431,9 +465,9 @@
             {
                 alert("Ký số không thành công !" + result[1]);
             }
-        }
+        };
 
-        page.validateFeedbackApproveForm = function() {
+        page.validateFeedbackApproveForm = function () {
             document.getElementById("feedbackApproveForm.statusDeny").checked = true;
             if (document.getElementById("ckbIsTypeChangeLDC").checked == false) {
                 dijit.byId("feedbackApproveForm.isTypeChange").setValue(0);
@@ -449,7 +483,7 @@
             return true;
         };
 
-        onCloseFeedbackApproveForm = function() {
+        onCloseFeedbackApproveForm = function () {
             dijit.byId("feedbackApproveFormDlgPlugin").hide();
             dijit.byId("feedbackApproveForm.leaderRequest").setValue("");
             document.getElementById("trWait").style.display = "none";
@@ -458,16 +492,16 @@
             document.getElementById("feedbackApproveForm.statusApprove").checked = false;
             page.clearContentFBAF();
         };
-        page.downloadFBAF = function() {//xuat file ket qua tham dinh
+        page.downloadFBAF = function () {//xuat file ket qua tham dinh
             var fileId = dijit.byId("feedbackApproveForm.fileId").getValue();
             var content = page.utf8_to_b64FBAF(dijit.byId("feedbackApproveForm.leaderRequest").getValue());
             content = content.replaceAllFBAF('+', '_');
             document.location = "exportWord!onXuatTBSDBS.do?fileId=" + fileId + "&content=" + content;
         };
-        page.utf8_to_b64FBAF = function(str) {
+        page.utf8_to_b64FBAF = function (str) {
             return window.btoa(unescape(encodeURIComponent(str)));
         };
-        String.prototype.replaceAllFBAF = function(strTarget, strSubString) {
+        String.prototype.replaceAllFBAF = function (strTarget, strSubString) {
             var strText = this;
             var intIndexOfMatch = strText.indexOf(strTarget);
             while (intIndexOfMatch != -1) {
@@ -476,7 +510,7 @@
             }
             return(strText);
         };
-        
+
         function deleteAllCookies() {
             var cookies = document.cookie.split(";");
             for (var i = 0; i < cookies.length; i++) {
@@ -488,6 +522,8 @@
         }
         deleteAllCookies();
 </script>
+<input type="hidden" id="base64Hash0" value="" />
+<sd:TextBox id="txtBase64HashAFP0" key="" name="txtBase64Hash0" type="hidden"/>
 <input type="hidden" id="base64Hash" value="" />
 <sd:TextBox id="txtBase64HashFAFP" key="" name="txtBase64Hash" type="hidden"/>
 <input type="hidden" id="certSerial" value="" />

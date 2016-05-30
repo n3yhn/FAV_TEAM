@@ -216,7 +216,7 @@
 //        } else {
 //            dijit.byId("evaluateForm.ProductType").setValue(1);
 //        }
-//        return true;
+        return true;
     };
 
     onCloseEvaluate = function () {

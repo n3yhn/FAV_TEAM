@@ -7629,7 +7629,8 @@ public class FilesDAO extends BaseDAO {
 //                                result = false;
 //                            }
 //                        } else 
-                        if (fileToSign == null && fileToSign.equals("") || fileToSign0 == null && fileToSign0.equals("")) {
+                        if (fileToSign == null && fileToSign.equals("")
+                                || fileToSign0 == null && fileToSign0.equals("")) {
                             errorCode = "SI_009";
                             result = false;
                         }
@@ -8312,7 +8313,10 @@ public class FilesDAO extends BaseDAO {
             Long checkTSA = Long.parseLong(checkTsaStr);
             pdfSig = (SignPdfFile) getRequest().getSession().getAttribute("PDFSignature");
             //Hiepvv hoso SDBS sau cong bo khong can cai nay
-            if (fileName0 != null && fileName0.length() > 0 && (signType.equals("PDHS") || signType.equals("PDHS_VT"))) {
+            if (fileName0 != null
+                    && fileName0.length() > 0
+                    && (signType.equals("PDHS")
+                    || signType.equals("PDHS_VT"))) {
                 signatureOriginal = new String(decoder.decode(getRequest().getParameter("signDataOriginal").replace("_", "+").getBytes()), "UTF-8");
                 pdfSig0 = (SignPdfFile) getRequest().getSession().getAttribute("PDFSignature2");
             }
@@ -8992,6 +8996,7 @@ public class FilesDAO extends BaseDAO {
         getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaff);
         return lookupAfterAnnouncedPage;
     }
+
     public String toEvaluateLeaderAAPage() {
         ProcedureDAOHE cdhe = new ProcedureDAOHE();
         List lstTTHC = cdhe.getAllProcedure();
@@ -9035,5 +9040,53 @@ public class FilesDAO extends BaseDAO {
             getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaffOnGrid);
         }
         return EVALUATION_LEADER_PAGE_AA;
+    }
+
+    public String onEvaluateByLeaderManyFiles() {
+
+        List resultMessage = new ArrayList();
+        jsonDataGrid.setItems(resultMessage);
+        FilesDAOHE fdhe = new FilesDAOHE();
+        int nSuccess = 0;
+        int nError = 0;
+        String sid = "";
+        Long id = getRequest().getParameter("leaderId") == null ? 0L : Long.parseLong(getRequest().getParameter("leaderId"));
+        String name = "";
+        try {
+            Base64 decoder = new Base64();
+            name = new String(decoder.decode(getRequest().getParameter("leaderName").replace("_", "+").getBytes()), "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (int i = 0; i < lstItemOnGrid.size(); i++) {
+            FilesForm form = lstItemOnGrid.get(i);
+            if (form != null && form.getFileId() != null && form.getFileId() != 0D) {
+                boolean check = fdhe.validateRoleUser(form.getFileId(), form, getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());
+                if (check) {
+                    form.setStatus(Constants.FILE_STATUS.EVALUATED);
+                    form.setLeaderStaffRequest("Đã thẩm định nhiều hồ sơ đạt.");
+                    form.setLeaderReviewId(id);
+                    form.setLeaderReviewName(name);
+                    boolean bReturn = fdhe.onEvaluateByLeaderManyFiles(form, getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());
+                    sid += form.getFileId() + ",";
+                    if (bReturn) {
+                        nSuccess++;
+                    } else {
+                        nError++;
+                    }
+                } else {
+                    resultMessage.add("3");
+                    resultMessage.add("Lưu dữ liệu không thành công - Lỗi phân quyền người dùng");
+                }
+            }
+        }
+        String strAlert = "Thẩm định nhiều hồ sơ thành công, có " + nSuccess + " hồ sơ thành công và " + nError + " hồ sơ thẩm định không thành công";
+        resultMessage.add("1");
+        resultMessage.add(strAlert);
+        EventLogDAOHE edhe = new EventLogDAOHE();
+        edhe.insertEventLog("Thẩm định nhiều hồ sơ", "Thẩm định nhiều hồ sơ id=" + sid, getRequest());
+        jsonDataGrid.setItems(resultMessage);
+        return GRID_DATA;
+
     }
 }
