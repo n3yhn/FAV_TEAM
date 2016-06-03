@@ -7871,4 +7871,84 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         }
         return bReturn;
     }
+    public boolean onEvaluateByLeaderManyFilesToAdd(FilesForm form, Long deptId, String deptName, Long userId, String userName) { 
+        boolean bReturn = true;
+        try {
+            Files file = findById(form.getFileId());
+            Date dateNow = getSysdate();
+            boolean isReview = false;
+            if (file == null) {
+                bReturn = false;
+            } else {
+                Long processStatus = file.getStatus();//trang thai ho so truoc khi thay doi
+                Long status = form.getStatus();
+                file.setStatus(status);
+                file.setDisplayStatus(getFileStatusName(status));
+                String dateTime = DateTimeUtils.convertDateToString(dateNow, "dd/MM/yyyy HH:mm");
+                file.setLeaderStaffRequest(userName + " " + dateTime + ":\n" + form.getLeaderStaffRequest());
+                file.setDisplayRequest(form.getLeaderStaffRequest());
+                file.setModifyDate(dateNow);
+                file.setEvaluateAddDate(dateNow);
+
+                UsersDAOHE udaohe = new UsersDAOHE();
+                List<String> lstTP = new ArrayList<String>();
+                lstTP.add(Constants.POSITION.LEADER_OF_STAFF_T);
+                lstTP.add(Constants.POSITION.GDTT);
+                if (udaohe.checkRoleUserOfLst(deptId, form.getLeaderReviewId(), lstTP)) {
+                    file.setLeaderReviewId(form.getLeaderReviewId());
+                    file.setLeaderReviewName(form.getLeaderReviewName());
+                    file.setLeaderApproveId(null);
+                    file.setLeaderApproveName(null);
+                } else {
+                    file.setLeaderApproveId(form.getLeaderReviewId());
+                    file.setLeaderApproveName(form.getLeaderReviewName());
+                    file.setStatus(Constants.FILE_STATUS.REVIEWED_TO_ADD);
+                    file.setDisplayStatus(getFileStatusName(Constants.FILE_STATUS.REVIEWED_TO_ADD));
+                    isReview = true;
+                }
+                // Cap nhat process
+                ProcessDAOHE pdhe = new ProcessDAOHE();
+
+                Process newP = new Process();
+                newP.setObjectId(form.getFileId());
+                newP.setObjectType(Constants.OBJECT_TYPE.FILES);
+                newP.setSendDate(dateNow);
+                newP.setSendGroup(deptName);
+                newP.setSendGroupId(deptId);
+                newP.setSendUserId(userId);
+                newP.setSendUser(userName);
+                newP.setProcessStatus(file.getStatus()); // De xu ly
+                newP.setProcessType(Constants.PROCESS_TYPE.MAIN);
+                newP.setStatus(Constants.FILE_STATUS.NEW_CREATE); // Moi den chua xu ly
+                newP.setIsActive(Constants.ACTIVE_STATUS.ACTIVE);
+                newP.setReceiveDate(dateNow);
+                newP.setReceiveUser(form.getLeaderReviewName());
+                newP.setReceiveUserId(form.getLeaderReviewId());
+                if (isReview) {
+                    Users leaderApprove = udaohe.findById(file.getLeaderApproveId());
+                    newP.setReceiveGroup(leaderApprove.getDeptName());
+                    newP.setReceiveGroupId(leaderApprove.getDeptId());
+                } else {
+                    newP.setReceiveGroup(deptName);
+                    newP.setReceiveGroupId(deptId);
+                }
+                getSession().save(newP);
+
+                Process p = pdhe.getProcessByAction(form.getFileId(),
+                        Constants.Status.ACTIVE,
+                        Constants.OBJECT_TYPE.FILES,
+                        processStatus,
+                        Constants.FILE_STATUS.NEW_CREATE);
+                p.setStatus(file.getStatus());
+                p.setLastestComment(form.getLeaderStaffRequest());
+                getSession().update(p);
+
+                update(file);
+            }
+        } catch (Exception en) {
+            log.error(en.getMessage());
+            bReturn = false;
+        }
+        return bReturn;
+    }
 }

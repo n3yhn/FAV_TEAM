@@ -519,6 +519,10 @@
                         <img src="share/images/signature.png" height="14" width="18" alt="Hủy">
                         <span style="font-size:12px">Thẩm định đạt nhiều hồ sơ</span>
                     </sd:Button>
+                        <sd:Button key="" onclick="page.onReviewManyFilesToAdd();" >
+                        <img src="share/images/signature.png" height="14" width="18" alt="Hủy">
+                        <span style="font-size:12px">Thẩm định Yêu cầu Bổ sung nhiều hồ sơ</span>
+                    </sd:Button>
                 </td>
 
             </tr>
@@ -534,6 +538,11 @@
             key="Thẩm định nhiều hồ sơ" showFullscreenButton="false"
             >
     <jsp:include page="evaluateByLeaderManyFilesForm.jsp" flush="false"></jsp:include>
+</sd:Dialog>
+<sd:Dialog  id="evaluateByLeaderManyFilesToAddForm" height="auto" width="600px"
+            key="Thẩm định nhiều hồ sơ" showFullscreenButton="false"
+            >
+    <jsp:include page="evaluateByLeaderManyFilesToAddForm.jsp" flush="false"></jsp:include>
 </sd:Dialog>
 <script type="text/javascript">
     getCommentEvaluateByPPFormOnGrid = function (fileId, fileType, status) {
@@ -706,6 +715,13 @@
             msg.alert('Bạn chưa chọn hồ sơ để thực hiện thẩm định đạt nhiều hồ sơ', 'Cảnh báo');
         } else {
             dijit.byId("evaluateByLeaderManyFilesDlg").show();
+        }
+    };
+    page.onReviewManyFilesToAdd = function () {
+        if (!dijit.byId("filesGrid").vtIsChecked()) {
+            msg.alert('Bạn chưa chọn hồ sơ để thực hiện thẩm định bổ sung nhiều hồ sơ', 'Cảnh báo');
+        } else {
+            dijit.byId("evaluateByLeaderManyFilesToAddForm").show();
         }
     };
     page.search();

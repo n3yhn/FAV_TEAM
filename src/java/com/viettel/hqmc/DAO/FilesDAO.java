@@ -9089,4 +9089,51 @@ public class FilesDAO extends BaseDAO {
         return GRID_DATA;
 
     }
+    public String onEvaluateByLeaderManyFilesToAdd() {
+
+        List resultMessage = new ArrayList();
+        jsonDataGrid.setItems(resultMessage);
+        FilesDAOHE fdhe = new FilesDAOHE();
+        int nSuccess = 0;
+        int nError = 0;
+        String sid = "";
+        Long id = getRequest().getParameter("leaderId") == null ? 0L : Long.parseLong(getRequest().getParameter("leaderId"));
+        String name = "";
+        try {
+            Base64 decoder = new Base64();
+            name = new String(decoder.decode(getRequest().getParameter("leaderName").replace("_", "+").getBytes()), "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (int i = 0; i < lstItemOnGrid.size(); i++) {
+            FilesForm form = lstItemOnGrid.get(i);
+            if (form != null && form.getFileId() != null && form.getFileId() != 0D) {
+                boolean check = fdhe.validateRoleUser(form.getFileId(), form, getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());
+                if (check) {
+                    form.setStatus(Constants.FILE_STATUS.FEDBACK_TO_ADD);
+                    form.setLeaderStaffRequest("Phó phòng đồng ý với kết luận yêu cầu sđbs của chuyên viên.");
+                    form.setLeaderReviewId(id);
+                    form.setLeaderReviewName(name);
+                    boolean bReturn = fdhe.onEvaluateByLeaderManyFilesToAdd(form, getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());
+                    sid += form.getFileId() + ",";
+                    if (bReturn) {
+                        nSuccess++;
+                    } else {
+                        nError++;
+                    }
+                } else {
+                    resultMessage.add("3");
+                    resultMessage.add("Lưu dữ liệu không thành công - Lỗi phân quyền người dùng");
+                }
+            }
+        }
+        String strAlert = "Thẩm định bổ sung nhiều hồ sơ thành công, có " + nSuccess + " hồ sơ thành công và " + nError + " hồ sơ thẩm định bổ sung không thành công";
+        resultMessage.add("1");
+        resultMessage.add(strAlert);
+        EventLogDAOHE edhe = new EventLogDAOHE();
+        edhe.insertEventLog("Thẩm định nhiều hồ sơ", "Thẩm định nhiều hồ sơ id=" + sid, getRequest());
+        jsonDataGrid.setItems(resultMessage);
+        return GRID_DATA;
+
+    }
 }
