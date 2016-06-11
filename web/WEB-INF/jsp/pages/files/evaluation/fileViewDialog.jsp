@@ -69,6 +69,11 @@
         // LDC Phe duyet ho so
         backPageStr = "filesAction!toApprovePage.do";
     }
+    else if (backPageType == 12)
+    {
+        // LDC Phe duyet ho so
+        backPageStr = "filesAction!toApprovePageAA.do";
+    }
     else if (backPageType == 9)
     {
         // Cuc truong Phe duyet ho so

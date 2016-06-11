@@ -363,7 +363,6 @@
                                                 //alert(uploadId1);
                                                 console.log(file);
                                                 var files = file.files;
-                                                //alert(2);
                                                 if (!files) {//for IE
                                                     if (file.size > 0) {
                                                         var fileName = file.value;
