@@ -809,7 +809,7 @@
                 var signTypeCheck = "CVBS_VT";
             }
             var path = result[1];
-            sd.connector.post("filesAction!actionSignCA.do?fileId=" + fileId + "&cert=" + cert + "&signType=" + signTypeCheck + "&path=" + path, null, null, null, page.signPluginC);
+            sd.connector.post("filesAction!actionSignCAForAA.do?fileId=" + fileId + "&cert=" + cert + "&signType=" + signTypeCheck + "&path=" + path, null, null, null, page.signPluginC);
             count++;
         }
         else

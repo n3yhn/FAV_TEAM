@@ -141,4 +141,25 @@
             return false;
         }
     }
+        function signAndSubmitOriginalFileAA() {
+        try {
+            var base64Hash = dijit.byId("txtBase64HashAFP").getValue();
+            var certSerial = dijit.byId("txtCertSerialAFP").getValue();
+            alert(base64Hash);
+            alert(certSerial);
+            if (base64Hash !== '' && certSerial !== '') {
+                var base64Signature = new String(VtPlugin.signHash(base64Hash, certSerial));
+                console.log('base64: ' + base64Hash);
+                console.log('certSerial: ' + certSerial);
+                base64Signature = base64Signature.replace(/\n|\r/g, "");
+                return base64Signature;
+            } else {
+                alert("Ký số không thành công !");
+                return false;
+            }
+        } catch (e) {
+            alert("Ký số không thành công !");
+            return false;
+        }
+    }
 </script>

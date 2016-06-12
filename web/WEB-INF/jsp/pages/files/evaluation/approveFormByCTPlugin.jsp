@@ -107,7 +107,7 @@
 </div>
 <jsp:include page="pluginJSCT.jsp" flush="false"></jsp:include>
     <script type="text/javascript">
-        afterApprove = function(data) {
+        afterApprove = function (data) {
             var obj = dojo.fromJson(data);
             var result = obj.items;
             alert(result[1]);
@@ -118,11 +118,11 @@
             }
         };
 
-        onApprove = function() {
+        onApprove = function () {
             sd.connector.post("filesAction!onApprove.do?" + token.getTokenParamString(), null, "approveFormByCT", null, afterApprove);
         };
 
-        onCloseApprove = function() {
+        onCloseApprove = function () {
             count = 0;
             dijit.byId("approveDlg").hide();
             dijit.byId("approveFormByCT.leaderRequest").setValue("");
@@ -147,7 +147,7 @@
             doGoToMenu("filesAction!toApproveByCTPage.do");
         };
 
-        page.onApproveSign = function() {
+        page.onApproveSign = function () {
             if (document.getElementById("approveFormByCT.statusAccept").checked) {
                 document.getElementById("trWait").style.display = "";
                 document.getElementById("labelWait").innerHTML = "Hệ thống đang tạo bản công bố, vui lòng chờ  ";
@@ -160,7 +160,7 @@
              }
              */
         };
-        afteronCreatePaper = function(data) {
+        afteronCreatePaper = function (data) {
             var obj = dojo.fromJson(data);
             var result = obj.items;
             if (result[0] == "1") {
@@ -183,7 +183,7 @@
         var count = 0;
         var cert;
         var signType;
-        page.signAfterCT = function(data)
+        page.signAfterCT = function (data)
         {
             var obj = dojo.fromJson(data);
             var result = obj.items;
@@ -227,7 +227,7 @@
 //            }
 //        }
 
-        page.signPluginCT = function(data)
+        page.signPluginCT = function (data)
         {
             var obj = dojo.fromJson(data);
             var result = obj.items;
@@ -259,10 +259,8 @@
             }
         };
 
-
-
         // hiepq update 231015
-        page.afterSignPluginCT = function(data)
+        page.afterSignPluginCT = function (data)
         {
             var obj = dojo.fromJson(data);
             var result = obj.items;
@@ -274,7 +272,7 @@
             }
         };
 
-        page.replaceBrTblApproveFormByCT = function() {
+        page.replaceBrTblApproveFormByCT = function () {
             var content = "";
             content = document.getElementById("approveFormByCT.leaderRequest").innerHTML;
             content = content.replace(/\n/g, "<br>");
@@ -289,7 +287,7 @@
                 var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
                 document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
             }
-        };
+        };        
         deleteAllCookies();
 
     </script>

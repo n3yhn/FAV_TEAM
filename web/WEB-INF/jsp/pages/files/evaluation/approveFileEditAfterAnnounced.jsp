@@ -3,6 +3,7 @@
 <%@taglib prefix="sd" uri="struts-dojo-tags" %>
 <%@taglib prefix="sx" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <%
     request.setAttribute("contextPath", request.getContextPath());
 %>
@@ -13,7 +14,9 @@
         cursor: pointer;
     }
 </style>
+
 <script type="text/javascript">
+
     page.getNo = function (index) {
         return dijit.byId("filesGrid").currentRow + index + 1;
     };
@@ -36,9 +39,6 @@
             var isSignPdf = parseInt(item.isSignPdf);
             var url = "<div style='text-align:center;cursor:pointer;display:inline'><img src='share/images/icons/view.png' width='17px' height='17px' title='Xem hồ sơ' onClick='page.showViewFile(" + item.fileId + ");' />";
             switch (status) {
-//                case 5:
-//                    url += " | <img src='share/images/signature.png' width='20px' height='20px' title='Phê duyệt hồ sơ' onClick='page.showApproveForm(" + row + ");' />";
-//                    break;
                 case 6:
                     if ((item.announcementReceiptPaperId != null && item.announcementReceiptPaperId > 0) || (item.confirmImportSatistPaperId != null && item.confirmImportSatistPaperId > 0)) {
                         url += " | <img src='share/images/Document.png' width='17px' height='17px' title='Xuất giấy công bố' onClick='page.downloadWord(" + item.fileId + ");' />";
@@ -48,12 +48,7 @@
                     }
                     break;
                 case 5:
-                    // nut ky goc hieptq
-                    //url += " | <img src='share/images/signature.png' width='20px' height='20px' title='Phê duyệt hồ sơ' onClick='page.showApproveForm(" + row + ");' />";
-
                     url += " | <img src='share/images/signature.png' width='20px' height='20px' title='Phê duyệt hồ sơ test' onClick='page.showApproveFormPlugin(" + row + ");' />";
-                    //hieptq xuat ho so dat
-
                     break;
                 case 26:
                     url += " | <img src='share/images/signature.png' width='20px' height='20px' title='Phê duyệt hồ sơ' onClick='page.showApproveForm(" + row + ");' />";
@@ -583,16 +578,12 @@
                             <sd:ColumnDataGrid  key="Chức năng" formatter="page.formatAction" get="page.getIndex"
                                                 width="5%"  headerStyles="text-align:center;" cellStyles="text-align:center;"/>
                             <sd:ColumnDataGrid  key="Mã hồ sơ" field="fileCode" width="10%"  headerStyles="text-align:center;" />
-                            <%--<sd:ColumnDataGrid  key="Số bản công bố" field="announcementNo" cellStyles="text-align:left;"
-                                                width="10%"  headerStyles="text-align:center;" />--%>
                             <sd:ColumnDataGrid  key="Loại hồ sơ" field="fileTypeName"
                                                 width="10%"  headerStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Tên tổ chức, cá nhân" field="businessName" cellStyles="text-align:left;"
                                                 width="25%"  headerStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Tên sản phẩm" field="productName" cellStyles="text-align:left;"
                                                 width="10%"  headerStyles="text-align:center;" />
-                            <%--<sd:ColumnDataGrid  key="Số quy chuẩn phù hợp" field="matchingTarget" cellStyles="text-align:left;"
-                                                width="10%"  headerStyles="text-align:center;" />--%>
                             <sd:ColumnDataGrid  key="Ngày nộp" field="sendDate" format="dd/MM/yyyy" type="date"
                                                 width="7%"  headerStyles="text-align:center;" cellStyles="text-align:center;" />
                             <sd:ColumnDataGrid  key="Ngày đến" field="modifyDate" format="dd/MM/yyyy" type="date"
@@ -619,22 +610,16 @@
     </sd:TitlePane>
 </div>
 
-<%--<sd:Dialog  id="approveDlg" height="auto" width="1200px"
-            key="Nhập kết quả phê duyệt" showFullscreenButton="false"
-            >
-    <jsp:include page="approveForm.jsp" flush="false"></jsp:include>
-</sd:Dialog>--%>
-
 <sd:Dialog  id="approveDlg" height="auto" width="1200px"
             key="Nhập kết quả phê duyệt" showFullscreenButton="false"
             >
-    <jsp:include page="approveFormPlugin.jsp" flush="false"></jsp:include>
+    <jsp:include page="approveFormPluginAA.jsp" flush="false"></jsp:include>
 </sd:Dialog>
 
 <sd:Dialog  id="evaluateViewDlg" height="auto" width="600px"
             key="Kết quả xem xét" showFullscreenButton="false"
             >
-    <jsp:include page="reviewFormView.jsp" flush="false"></jsp:include>
+    <jsp:include page="reviewFormViewAA.jsp" flush="false"></jsp:include>
 </sd:Dialog>
 <script type="text/javascript">
     var flagSignMore = false;
@@ -642,14 +627,13 @@
     var signIndex = 0;
 
     backPage = function () {
-        //doGoToMenu(g_latestClickedMenu);
         document.getElementById("searchDiv").style.display = "";
         document.getElementById("viewDiv").style.display = "none";
     };
 
     page.search = function () {
         page.setSearch();
-        dijit.byId("filesGrid").vtReload('filesAction!onSearchFileToApprove.do', "searchForm", null, page.afterSearch);
+        dijit.byId("filesGrid").vtReload('filesAction!onSearchFileToApproveAA.do', "searchForm", null, page.afterSearch);
     };
 
     page.afterSearch = function () {
@@ -719,26 +703,14 @@
     page.showSignMore = function () {
         if (!dijit.byId("filesGrid").vtIsChecked()) {
             msg.alert('Bạn chưa chọn hồ sơ để thực hiện phê duyệt', 'Cảnh báo');
-        }
-        else {
+        } else {
             itemsToSign = dijit.byId("filesGrid").vtGetCheckedItems();
             signIndex = 0;
             msg.confirm('Bạn có chắc chắn muốn phê duyệt nhiều hồ sơ?', '<sd:Property>confirm.title1</sd:Property>', page.signMoreFilesPlugin);
                     }
                 };
 
-//                page.signMoreFiles = function() {
-//                    document.getElementById('divProcess').innerHTML = "Hệ thống đang thực hiện phê duyệt:" + (signIndex + 1) + "/" + itemsToSign.length + " hồ sơ  ";
-//                    document.getElementById("divSignProcess").style.display = "";
-//                    document.getElementById("trWaitViewFile").style.display = 'none';
-//
-//                    page.onSign(itemsToSign[signIndex], true);
-//                    document.getElementById("approveForm.statusAccept").checked = true;
-//                    dijit.byId("approveDlg").show();
-//                };
 
-
-                //hieptq update 191015
                 page.signMoreFilesPlugin = function () {
                     document.getElementById('divProcess').innerHTML = "Hệ thống đang thực hiện phê duyệt:" + (signIndex + 1) + "/" + itemsToSign.length + " hồ sơ  ";
                     document.getElementById("divSignProcess").style.display = "";
@@ -800,8 +772,7 @@
                         localStorage.setItem("approvePage.searchForm.matchingTarget", "");
                         localStorage.setItem("approvePage.searchForm.Staff", "");
                         localStorage.setItem("approvePage.searchForm.fileType", "-1");
-                    }
-                    catch (err)
+                    } catch (err)
                     {
                         // nothing
                     }
@@ -822,8 +793,7 @@
                         localStorage.setItem("approvePage.searchForm.matchingTarget", encodeBase64(dijit.byId("searchForm.matchingTarget").getValue().toString().trim()));
                         localStorage.setItem("approvePage.searchForm.Staff", encodeBase64(dijit.byId("searchForm.Staff").getValue().toString().trim()));
                         localStorage.setItem("approvePage.searchForm.fileType", encodeBase64(dijit.byId("searchForm.fileType").getValue()));
-                    }
-                    catch (err)
+                    } catch (err)
                     {
                         // nothing
                     }
@@ -843,8 +813,7 @@
                         dijit.byId("searchForm.matchingTarget").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.matchingTarget")));
                         dijit.byId("searchForm.Staff").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.Staff")));
                         dijit.byId("searchForm.fileType").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.fileType")));
-                    }
-                    catch (err)
+                    } catch (err)
                     {
                         // nothing
                     }
@@ -855,12 +824,11 @@
                     if (searchType != null && searchType == "-3")
                     {
                         document.getElementById("trSignMore").style.display = "";
-                    }
-                    else
+                    } else
                     {
                         document.getElementById("trSignMore").style.display = "none";
                     }
-                }
+                };
                 //page.hideSignMore();
                 page.getSearch();
                 page.search();

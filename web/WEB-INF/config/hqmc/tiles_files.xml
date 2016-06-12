@@ -480,6 +480,10 @@
         <put-attribute name="title" value="Tra cứu hồ sơ"/>
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/lookup/lookupFilesByClerical.jsp"/>
     </definition>
+    <definition name="lookupFilesByClericalForAA.Page" extends="body.definition" >
+        <put-attribute name="title" value="Tra cứu hồ sơ bổ sung sau công bố"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/lookup/lookupFilesByClericalForAA.jsp"/>
+    </definition>
     <definition name="reportStaffProcess.Page" extends="body.definition" >
         <put-attribute name="title" value="Thống kê chuyên viên xử lý hồ sơ"/>
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/lookup/reportStaffProcessPage.jsp"/>
@@ -573,8 +577,8 @@
         <put-attribute name="title" value="Thẩm định hồ sơ"/>
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/evaluateFileEditAfterAnnounced.jsp"/>
     </definition>
-    <definition name="approveFileEditAfterAnnounced.page" extends="body.definition" >
-        <put-attribute name="title" value="Phê duyệt hồ sơ"/>
+    <definition name="approveEditFileAfterAnnounced.page" extends="body.definition" >
+        <put-attribute name="title" value="Phê duyệt hồ sơ bổ sung sau công bố"/>
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/approveFileEditAfterAnnounced.jsp"/><!--Hiepvv-->
     </definition>
     <definition name="businessEditAfterAnnouncedFiles.Page" extends="body.definition" ><!--Hiepvv-->
@@ -593,7 +597,7 @@
     <definition name="lookupAfterAnnounced.Page" extends="content.definition" ><!--Hiepvv-->
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/afterAnnounced/lookupAfterAnnounced.jsp"/>
     </definition>
-        <definition name="evaluateLeaderFileAA.page" extends="body.definition" >
+    <definition name="evaluateLeaderFileAA.page" extends="body.definition" >
         <put-attribute name="title" value="Lãnh đạo thẩm định hồ sơ"/>
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/afterAnnounced/evaluateByLeaderPageAA.jsp"/>
     </definition>
