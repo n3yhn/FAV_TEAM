@@ -185,6 +185,7 @@ public class FilesDAO extends BaseDAO {
     private String lookupFilesByStaffPage = "lookupFilesByStaff.Page";
     private String lookupFilesByStaffDonothingPage = "lookupFilesByStaffDonothing.Page";
     private final String lookupFilesByClericalPage = "lookupFilesByClerical.Page";
+    private final String lookupFilesByClericalForAAPage = "lookupFilesByClericalForAA.Page";
     private final String lookupAfterAnnouncedPage = "lookupAfterAnnounced.Page";
     private String lookupFilesByStaffOfStaffPage = "lookupFilesByLeaderOfStaff.Page";
     private String toComparisonPage = "toComparison.Page";
@@ -222,10 +223,10 @@ public class FilesDAO extends BaseDAO {
     //end
     private final String APPROVED_CHANGEFILE_PAGE = "approvedChangeFile.page";//Hiepvv
     private final String RECEIVEDAFTERANNOUNED_PAGE = "receivedAfterAnnounced.page";//Hiepvv
-    private final String APPROVE_EDITAFTERANNOUNCED_PAGE = "approveFileEditAfterAnnounced.page";//Hiepvv
+    private final String APPROVE_EDITAFTERANNOUNCED_PAGE = "approveEditFileAfterAnnounced.page";//Hiepvv
     private final String REVIEW_EDITAFTERANNOUNCE_PAGE = "reviewFileEditAfterAnnounced.page"; //Hiepvv
     private final String EVALUATION_EDITAFTERANNOUNCED_PAGE = "evaluateFileEditAfterAnnounced.page"; //Hiepvv
-    private final String ASSIGN_EVALUATION_EDITAFTERANNOUNCED_PAGE = "assignEvaluationEditAfterAnnounced.page"; //Hiepvv
+//    private final String ASSIGN_EVALUATION_EDITAFTERANNOUNCED_PAGE = "assignEvaluationEditAfterAnnounced.page"; //Hiepvv
 
     private FilesForm searchForm;
     private FilesForm createForm;
@@ -1018,29 +1019,29 @@ public class FilesDAO extends BaseDAO {
      */
     public String toApprovePage() {
         ProcedureDAOHE cdhe = new ProcedureDAOHE();//Hiepvv tach rieng tham dinh ho so SDBS sau cong bo
-        Long isChangeAfteAnnounce = getRequest().getParameter("IsChange") == null ? 0L : Long.parseLong(getRequest().getParameter("IsChange"));
-        if (isChangeAfteAnnounce > 0) {
-            isEdit = true;
-            Procedure p = new Procedure();
-            try {
-                p = cdhe.getProcedureByDescription(announcementFile05);
-            } catch (Exception e) {
-                p = null;
-            }
-            lstCategory = new ArrayList();
-            lstCategory.add(p);
-            lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
-            getRequest().setAttribute("lstFileType", lstCategory);
-            return APPROVE_EDITAFTERANNOUNCED_PAGE;
-        } else {
-            isEdit = false;
-            List lstTTHC = cdhe.getAllProcedure2();
-            lstCategory = new ArrayList();
-            lstCategory.addAll(lstTTHC);
-            lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
-            getRequest().setAttribute("lstFileType", lstCategory);
-            return APPROVE_PAGE;
+        isEdit = false;
+        List lstTTHC = cdhe.getAllProcedure2();
+        lstCategory = new ArrayList();
+        lstCategory.addAll(lstTTHC);
+        lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+        getRequest().setAttribute("lstFileType", lstCategory);
+        return APPROVE_PAGE;
+    }
+
+    public String toApprovePageAA() {//bổ sung sau công bố
+        ProcedureDAOHE cdhe = new ProcedureDAOHE();//Hiepvv tach rieng tham dinh ho so SDBS sau cong bo
+        isEdit = true;
+        Procedure p = new Procedure();
+        try {
+            p = cdhe.getProcedureByDescription(announcementFile05);
+        } catch (Exception e) {
+            p = null;
         }
+        lstCategory = new ArrayList();
+        lstCategory.add(p);
+        lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+        getRequest().setAttribute("lstFileType", lstCategory);
+        return APPROVE_EDITAFTERANNOUNCED_PAGE;
     }
 
     /**
@@ -1265,19 +1266,44 @@ public class FilesDAO extends BaseDAO {
                 log.error(ex.getMessage());
             }
         }
-        //Hiepvv tách riêng SDBS sau công bố
-        if (isEdit) {
-            ProcedureDAOHE pHE = new ProcedureDAOHE();
-            Procedure p = new Procedure();
+        FilesNoClobDAOHE fdhe = new FilesNoClobDAOHE();
+        GridResult gr = fdhe.searchFilesToProcess(searchForm, getDepartmentId(), getUserId(), 3L, start, count, sortField);
+
+        getRequest().getSession().setAttribute("feeSearch.startServer", start);
+        getRequest().getSession().setAttribute("feeSearch.countServer", count);
+
+        jsonDataGrid.setItems(gr.getLstResult());
+        jsonDataGrid.setTotalRows(gr.getnCount().intValue());
+        return GRID_DATA;
+    }
+
+    public String onSearchFileToApproveAA() {//
+        getGridInfo();
+
+        if (searchForm.getFlagSavePaging() != null && searchForm.getFlagSavePaging() == 1) {
             try {
-                p = pHE.getProcedureByDescription(announcementFile05);
-            } catch (Exception ee) {
-                log.error(ee.getMessage());
+                String startServerStr = getRequest().getSession().getAttribute("feeSearch.startServer") == null ? "" : getRequest().getSession().getAttribute("feeSearch.startServer").toString();
+                String countServerStr = getRequest().getSession().getAttribute("feeSearch.countServer") == null ? "" : getRequest().getSession().getAttribute("feeSearch.countServer").toString();
+
+                if (!startServerStr.isEmpty() && !countServerStr.isEmpty()) {
+                    count = Integer.parseInt(countServerStr);
+                    start = Integer.parseInt(startServerStr);
+                }
+            } catch (Exception ex) {
+                log.error(ex.getMessage());
             }
-            if (p != null) {
-                searchForm.setFileType(p.getProcedureId());
-                searchForm.setNoteEdit(announcementFile05);
-            }
+        }
+
+        ProcedureDAOHE pHE = new ProcedureDAOHE();
+        Procedure p = new Procedure();
+        try {
+            p = pHE.getProcedureByDescription(announcementFile05);
+        } catch (Exception ee) {
+            log.error(ee.getMessage());
+        }
+        if (p != null) {
+            searchForm.setFileType(p.getProcedureId());
+            searchForm.setNoteEdit(announcementFile05);
         }
         FilesNoClobDAOHE fdhe = new FilesNoClobDAOHE();
         GridResult gr = fdhe.searchFilesToProcess(searchForm, getDepartmentId(), getUserId(), 3L, start, count, sortField);
@@ -3353,6 +3379,16 @@ public class FilesDAO extends BaseDAO {
 //        lstStatus.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
 //        getRequest().setAttribute("lstStatus", lstStatus);
         return lookupFilesByClericalPage;
+    }
+
+    public String lookupFilesByClericalForAA() {
+        ProcedureDAOHE cdhe = new ProcedureDAOHE();
+        List lstTTHC = cdhe.getAllProcedure();
+        lstCategory = new ArrayList();
+        lstCategory.addAll(lstTTHC);
+        lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+        getRequest().setAttribute("lstFileType", lstCategory);
+        return lookupFilesByClericalForAAPage;
     }
 
     /**
@@ -7629,8 +7665,7 @@ public class FilesDAO extends BaseDAO {
 //                                result = false;
 //                            }
 //                        } else 
-                        if (fileToSign == null && fileToSign.equals("")
-                                || fileToSign0 == null && fileToSign0.equals("")) {
+                        if (fileToSign == null && fileToSign.equals("") || fileToSign0 == null && fileToSign0.equals("")) {
                             errorCode = "SI_009";
                             result = false;
                         }
@@ -7744,6 +7779,7 @@ public class FilesDAO extends BaseDAO {
                                 new Certificate[]{x509Cert}, pageNumber, linkImageSign, lx + 80, ly + 150, 120, 70, "LD");
                     }
                 } catch (Exception ex) {
+                    System.out.println("ERROR SI_012|" + ex.getMessage());
                     errorCode = "SI_012";
                     result = false;
                 }
@@ -7779,6 +7815,227 @@ public class FilesDAO extends BaseDAO {
             resultMessage.add(base64Hash0);
             resultMessage.add(outPutFileFinal2);
             resultMessage.add(fileName0);
+        } else {
+            resultMessage.add("0");
+            resultMessage.add("Lưu dữ liệu không thành công " + errorCode);
+        }
+        jsonDataGrid.setItems(resultMessage);
+        return GRID_DATA;
+    }
+
+    public String actionSignCAForAA() throws IOException {
+        boolean result = true;
+        String base64Hash = "";
+//        String base64Hash0 = "";
+        String certSerial = "";
+        String outPutFileFinal = "";
+//        String outPutFileFinal2 = "";
+        String fileId = "";
+        String fileName = "";
+//        String fileName0 = "";
+        String fileToSign = "";
+//        String fileToSign0 = "";
+        String errorCode = "";
+        SignPdfFile pdfSig = new SignPdfFile();
+//        SignPdfFile pdfSig0 = new SignPdfFile();
+        try {
+            fileId = getRequest().getParameter("fileId");
+            String rootCert = null, base64Certificate = null, certChain = null;
+            Base64 decoder = new Base64();
+            certChain = new String(decoder.decode(getRequest().getParameter("cert").replace("_", "+").getBytes()), "UTF-8");
+            String sToFind = getRequest().getParameter("signType");
+            String path = getRequest().getParameter("path");
+            String[] pathArr = path.split(";");
+            fileToSign = pathArr[0];
+            fileName = pathArr[1];
+
+            String[] chain;
+            try {
+                chain = certChain.split(",");
+                rootCert = chain[1];
+                base64Certificate = chain[0];
+            } catch (Exception e) {
+                errorCode = "SI_001";
+                result = false;
+            }
+            if (base64Certificate == null) {
+                errorCode = "SI_002";
+                result = false;
+            }
+            X509Certificate x509Cert = null;
+            X509Certificate x509CertChain = null;
+            try {
+                x509Cert = CertUtils.getX509Cert(base64Certificate);
+                x509CertChain = CertUtils.getX509Cert(rootCert);
+            } catch (Exception e) {
+                errorCode = "SI_003";
+                result = false;
+            }
+
+            PDFServerClientSignature pdfSCS = new PDFServerClientSignature();
+            ResourceBundle rb = ResourceBundle.getBundle("config");
+            String TSA_LINK = rb.getString("tsaUrl");
+            pdfSCS.setTSA_LINK(TSA_LINK);
+            String checkOcspStr = rb.getString("checkOCSP");
+            Long checkOCSP = Long.parseLong(checkOcspStr);
+            try {
+                certSerial = x509Cert.getSerialNumber().toString(16);
+            } catch (Exception e) {
+                errorCode = "SI_004";
+                result = false;
+            }
+            String filePath = rb.getString("sign_temp_plugin");
+            File f = new File(filePath);
+            if (!f.exists()) {
+                f.mkdirs();
+            }
+            outPutFileFinal = filePath + fileName;
+//            outPutFileFinal2 = filePath + fileName0;
+            CaUserDAOHE ca = new CaUserDAOHE();
+            boolean checkCaUser = true;
+            if (!ca.checkCaSerial("SerialNumber:[" + certSerial + "]")) {
+                errorCode = "SI_005";
+                result = false;
+            }
+            try {
+                if (checkOCSP == 1l) {
+                    OCSP.RevocationStatus.CertStatus status = checkRevocationStatus((X509Certificate) x509Cert, (X509Certificate) x509CertChain);
+                    if (status != OCSP.RevocationStatus.CertStatus.GOOD) {
+                        errorCode = "SI_006";
+                        result = false;
+                    }
+                }
+            } catch (Exception e) {
+                errorCode = "SI_007";
+                result = false;
+            }
+            if (checkCaUser) {
+                String folderPath = ResourceBundleUtil.getString("sign_image");
+                String linkImageSign = folderPath + getUserId() + ".png";
+                String linkImageStamp = folderPath + "attpStamp.png";
+                if ((linkImageSign == null && linkImageSign.equals("")) || (linkImageStamp == null && linkImageStamp.equals(""))) {
+                    errorCode = "SI_008";
+                    result = false;
+                }
+                try {
+                    if (sToFind.equals("PDHS")) {
+                        if (fileToSign == null
+                                && fileToSign.equals("")) {
+                            errorCode = "SI_009";
+                            result = false;
+                        }
+                        sToFind = "<SI>";
+                        SearchTextLocations ptl = new SearchTextLocations();
+                        List local = ptl.searchLocation(sToFind, fileToSign,
+                                SearchTextLocations.SEARCH_TOPDOWN, SearchTextLocations.FIND_ONE);
+                        String location = local.get(0).toString();
+                        int pageNumber, lx, ly;
+                        String[] parts = location.split(";");
+                        pageNumber = Integer.parseInt(parts[0]);
+                        lx = (int) Float.parseFloat(parts[1]);
+                        ly = (int) Float.parseFloat(parts[2]);
+                        ly = convertLocation(ly);
+                        base64Hash = pdfSig.createHash(fileToSign, outPutFileFinal,
+                                new Certificate[]{x509Cert}, pageNumber, linkImageSign, lx + 70, ly + 130, 120, 70, "LD");
+                    }
+                    if (sToFind.equals("PDHS_VT")) {
+                        // ky van thu
+                        if (fileToSign == null && fileToSign.equals("")) {
+                            errorCode = "SI_010";
+                            result = false;
+                        }
+                        String sToFindtemp = "<SI>";
+                        SearchTextLocations ptl = new SearchTextLocations();
+                        List local = ptl.searchLocation(sToFindtemp, fileToSign,
+                                SearchTextLocations.SEARCH_TOPDOWN, SearchTextLocations.FIND_ONE);
+                        String location = local.get(0).toString();
+                        int pageNumber, lx, ly;
+                        String[] parts = location.split(";");
+                        pageNumber = Integer.parseInt(parts[0]);
+                        lx = (int) Float.parseFloat(parts[1]);
+                        ly = (int) Float.parseFloat(parts[2]);
+                        ly = convertLocation(ly);
+                        base64Hash = pdfSig.createHash(fileToSign, outPutFileFinal,
+                                new Certificate[]{x509Cert}, pageNumber, linkImageStamp, lx + 23, ly + 115, 90, 90, "VT");
+                    }
+                    if (sToFind.equals("CVBS_VT")) {
+                        // ky van thu
+                        if (fileToSign == null && fileToSign.equals("")) {
+                            errorCode = "SI_026";
+                            result = false;
+                        }
+                        String sToFindtemp = "<SI>";
+                        SearchTextLocations ptl = new SearchTextLocations();
+                        List local = ptl.searchLocation(sToFindtemp, fileToSign,
+                                SearchTextLocations.SEARCH_TOPDOWN, SearchTextLocations.FIND_ONE);
+                        String location = local.get(0).toString();
+                        int pageNumber, lx, ly;
+                        String[] parts = location.split(";");
+                        pageNumber = Integer.parseInt(parts[0]);
+                        lx = (int) Float.parseFloat(parts[1]);
+                        ly = (int) Float.parseFloat(parts[2]);
+                        ly = convertLocation(ly);
+                        base64Hash = pdfSig.createHash(fileToSign, outPutFileFinal,
+                                new Certificate[]{x509Cert}, pageNumber, linkImageStamp, lx + 23, ly + 130, 90, 90, "VT");
+                    }
+
+                    if (sToFind.equals("CVBS")) {
+                        // ky lanh dao
+                        if (fileToSign == null && fileToSign.equals("")) {
+                            errorCode = "SI_011";
+                            result = false;
+                        }
+                        String sToFindtemp = "<SI>";
+                        SearchTextLocations ptl = new SearchTextLocations();
+                        List local = ptl.searchLocation(sToFindtemp, fileToSign,
+                                SearchTextLocations.SEARCH_BOTTOMUP, SearchTextLocations.FIND_ONE);
+                        String location = local.get(0).toString();
+                        int pageNumber, lx, ly;
+                        String[] parts = location.split(";");
+                        pageNumber = Integer.parseInt(parts[0]);
+                        lx = (int) Float.parseFloat(parts[1]);
+                        ly = (int) Float.parseFloat(parts[2]);
+                        ly = convertLocation(ly);
+                        base64Hash = pdfSig.createHash(fileToSign, outPutFileFinal,
+                                new Certificate[]{x509Cert}, pageNumber, linkImageSign, lx + 80, ly + 150, 120, 70, "LD");
+                    }
+                } catch (Exception ex) {
+                    System.out.println("ERROR SI_012|" + ex.getMessage());
+                    errorCode = "SI_012";
+                    result = false;
+                }
+
+            } else {
+                errorCode = "SI_013";
+                result = false;
+            }
+        } catch (JsonSyntaxException jsonSyntaxException) {
+            errorCode = "SI_014";
+            result = false;
+        } catch (Exception ex) {
+            errorCode = "SI_015";
+            ex.printStackTrace();
+            System.out.println(ex.getMessage());
+            result = false;
+        } finally {
+
+        }
+        List resultMessage = new ArrayList();
+        if (result) {
+            HttpServletRequest req = getRequest();
+            HttpSession session = req.getSession();
+            session.setAttribute("PDFSignature", pdfSig);
+//            session.setAttribute("PDFSignature2", pdfSig0);
+            resultMessage.add("1");
+            resultMessage.add("Lưu dữ liệu thành công");
+            resultMessage.add(base64Hash);
+            resultMessage.add(certSerial);
+            resultMessage.add(fileId);
+            resultMessage.add(outPutFileFinal);
+            resultMessage.add(fileName);
+//            resultMessage.add(base64Hash0);
+//            resultMessage.add(outPutFileFinal2);
+//            resultMessage.add(fileName0);
         } else {
             resultMessage.add("0");
             resultMessage.add("Lưu dữ liệu không thành công " + errorCode);
@@ -8313,10 +8570,7 @@ public class FilesDAO extends BaseDAO {
             Long checkTSA = Long.parseLong(checkTsaStr);
             pdfSig = (SignPdfFile) getRequest().getSession().getAttribute("PDFSignature");
             //Hiepvv hoso SDBS sau cong bo khong can cai nay
-            if (fileName0 != null
-                    && fileName0.length() > 0
-                    && (signType.equals("PDHS")
-                    || signType.equals("PDHS_VT"))) {
+            if (fileName0 != null && fileName0.length() > 0 && (signType.equals("PDHS") || signType.equals("PDHS_VT"))) {
                 signatureOriginal = new String(decoder.decode(getRequest().getParameter("signDataOriginal").replace("_", "+").getBytes()), "UTF-8");
                 pdfSig0 = (SignPdfFile) getRequest().getSession().getAttribute("PDFSignature2");
             }
@@ -8397,6 +8651,145 @@ public class FilesDAO extends BaseDAO {
                         result = false;
                     }
                 }
+            } catch (Exception ex) {
+                errorCode = "SI_024";
+                result = false;
+            }
+        } catch (Exception e) {
+            errorCode = "SI_025";
+            result = false;
+
+        }
+        List resultMessage = new ArrayList();
+        if (result) {
+            resultMessage.add("1");
+        } else {
+            resultMessage.add("0");
+            resultMessage.add(errorCode);
+        }
+        jsonDataGrid.setItems(resultMessage);
+        return GRID_DATA;
+    }
+
+    public String onSignPluginAA() {
+        boolean result = true;
+        String errorCode = "";
+        try {
+//            String signType = getRequest().getParameter("signType");
+            String fileName = getRequest().getParameter("fileName");
+//            String fileName0 = getRequest().getParameter("fileName0");
+            //hieptq update vi tri luu file
+            ResourceBundle rb = ResourceBundle.getBundle("config");
+            String PATH1 = rb.getString("sign_upload");
+            String copyPath = rb.getString("file_sign_link");
+//            String paperOnly = "";
+            String[] parts = fileName.split("_");
+            if (parts.length != 4 && parts.length != 5 && parts.length != 6) {
+                errorCode = "SI_015";
+                result = false;
+            }
+//            if (parts.length == 5 && parts[0].equals("LD")) {
+//                paperOnly = parts[0] + "_" + parts[1] + "_" + parts[2] + "_" + parts[3] + "_" + "2" + ".pdf";
+//            }
+//            if (parts.length == 6 && parts[0].equals("VT")) {
+//                paperOnly = parts[0] + "_" + parts[1] + "_" + parts[2] + "_" + parts[3] + "_" + parts[4] + "_" + "2" + ".pdf";
+//            }
+            //hieptq update 106015
+            String outputFile = PATH1 + fileName;
+//            String outputFileOriginal = "";
+//            if (fileName0 != null && fileName0 != "") {
+//                outputFileOriginal = PATH1 + fileName0;
+//            }
+            String signature;
+//            String signatureOriginal = null;
+            Base64 decoder = new Base64();
+            signature = new String(decoder.decode(getRequest().getParameter("signData").replace("_", "+").getBytes()), "UTF-8");
+
+            SignPdfFile pdfSig = new SignPdfFile();
+//            SignPdfFile pdfSig0 = new SignPdfFile();
+            String checkTsaStr = rb.getString("checkTSA");
+            Long checkTSA = Long.parseLong(checkTsaStr);
+            pdfSig = (SignPdfFile) getRequest().getSession().getAttribute("PDFSignature");
+            //Hiepvv hoso SDBS sau cong bo khong can cai nay
+//            if (fileName0 != null && fileName0.length() > 0 && (signType.equals("PDHS") || signType.equals("PDHS_VT"))) {
+//                signatureOriginal = new String(decoder.decode(getRequest().getParameter("signDataOriginal").replace("_", "+").getBytes()), "UTF-8");
+//                pdfSig0 = (SignPdfFile) getRequest().getSession().getAttribute("PDFSignature2");
+//            }
+            //hieptq update 110615
+            String fileSignOutLink = getRequest().getParameter("outPutPath");
+//            String fileSignOutLink2 = getRequest().getParameter("outPutPath2");
+            try {
+                if (checkTSA == 1l) {
+                    pdfSig.insertSignatureFinal(signature, fileSignOutLink, outputFile, true);
+//                    if (signType.equals("PDHS") || signType.equals("PDHS_VT")) {
+//                        if (!outputFileOriginal.equals("")) {
+//                            pdfSig0.insertSignatureFinal(signatureOriginal, fileSignOutLink2, outputFileOriginal, true);
+//                        }
+//                    }
+                } else {
+                    pdfSig.insertSignatureFinal(signature, fileSignOutLink, outputFile, false);
+//                    if (fileSignOutLink2 != null && fileSignOutLink2.length() > 0 && (signType.equals("PDHS") || signType.equals("PDHS_VT"))) {
+//                        if (!outputFileOriginal.equals("")) {
+//                            pdfSig0.insertSignatureFinal(signatureOriginal, fileSignOutLink2, outputFileOriginal, false);
+//                        }                        
+//                    }
+                }
+            } catch (IOException ex) {
+                errorCode = "SI_016";
+                System.out.println("IOException " + ex.toString());
+                result = false;
+            } catch (Exception ex) {
+                errorCode = "SI_017";
+                System.out.println("Exception " + ex.getMessage());
+                result = false;
+            } finally {
+                try {
+                    if (deleteFile(fileSignOutLink)) {
+                        System.out.println("Deleted file: " + fileSignOutLink);
+                    } else {
+                        errorCode = "SI_018";
+                        result = false;
+                    }
+                    //Hiepvv SDBS sau cong bo khong co file 2
+//                    if ((signType.equals("PDHS") || signType.equals("PDHS_VT"))
+//                            && fileSignOutLink2 != null && fileSignOutLink2.length() > 0 && !outputFileOriginal.equals("")) {
+//                        if (deleteFile(copyPath + paperOnly)) {
+//                            System.out.println("Deleted file: " + copyPath + paperOnly);
+//                        } else {
+//                            errorCode = "SI_020";
+//                            result = false;
+//                        }
+//                        if (deleteFile(fileSignOutLink2)) {
+//                            System.out.println("Deleted file: " + fileSignOutLink2);
+//                        } else {
+//                            errorCode = "SI_019";
+//                            result = false;
+//                        }
+//                    }
+                    if (deleteFile(copyPath + fileName)) {
+                        System.out.println("Deleted file: " + copyPath + fileName);
+                    } else {
+                        errorCode = "SI_021";
+                        result = false;
+                    }
+                } catch (Exception ex) {
+                    System.out.println("Delete file fail ! " + ex.toString());
+                }
+            }
+            System.out.println("Signed file: " + outputFile);
+            try {
+                if (updateSignPlugin(fileName) == false) {
+                    errorCode = "SI_022";
+                    result = false;
+                }
+//                if ((signType.equals("PDHS") || signType.equals("PDHS_VT"))
+//                        //Hiepvv
+//                        && fileSignOutLink2 != null && fileSignOutLink2.length() > 0) {
+//                    if (updateSignPlugin(paperOnly) == false) {
+//                        errorCode = "SI_023";
+//                        result = false;
+//                    }
+//                }
             } catch (Exception ex) {
                 errorCode = "SI_024";
                 result = false;
@@ -8785,10 +9178,10 @@ public class FilesDAO extends BaseDAO {
         jsonDataGrid.setTotalRows(gr.getnCount().intValue());
         return GRID_DATA;
     }
+
     /*
      * Danh sach ho so da cong bo cua doanh nghiep
      */
-
     public String toBusinessEditAfterAnnouncedFilesPage() {
         if (searchForm == null) {
             searchForm = new FilesForm();
@@ -9089,6 +9482,7 @@ public class FilesDAO extends BaseDAO {
         return GRID_DATA;
 
     }
+
     public String onEvaluateByLeaderManyFilesToAdd() {
 
         List resultMessage = new ArrayList();
