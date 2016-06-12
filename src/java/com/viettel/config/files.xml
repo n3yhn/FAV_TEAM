@@ -132,6 +132,7 @@
             <result type="tiles" name="lookupFilesByStaffDonothing.Page">lookupFilesByStaffDonothing.Page</result>
             <result type="tiles" name="lookupFilesByLeaderOfStaff.Page">lookupFilesByLeaderOfStaff.Page</result>
             <result type="tiles" name="lookupFilesByClerical.Page">lookupFilesByClerical.Page</result>
+            <result type="tiles" name="lookupFilesByClericalForAA.Page">lookupFilesByClericalForAA.Page</result>
             <result type="tiles" name="reportStaffProcess.Page">reportStaffProcess.Page</result>
             <result type="tiles" name="reportLOSProcess.Page">reportLOSProcess.Page</result><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->
             <result type="tiles" name="reportLProcess.Page">reportLProcess.Page</result><!--141215u binhnt53 thong ke lanh dao cuc xu ly ho so-->
@@ -151,7 +152,7 @@
             <result type="tiles" name="receivedAfterAnnounced.page">receivedAfterAnnounced.page</result>
             <result type="tiles" name="approvedChangeFile.page">approvedChangeFile.page</result>
             <result type="tiles" name="reviewFileEditAfterAnnounced.page">reviewFileEditAfterAnnounced.page</result>
-            <result type="tiles" name="approveFileEditAfterAnnounced.page">approveFileEditAfterAnnounced.page</result>
+            <result type="tiles" name="approveEditFileAfterAnnounced.page">approveEditFileAfterAnnounced.page</result>
             <result type="tiles" name="announcementFile05">announcementFile05</result>
             <result type="tiles" name="announcementFile05View">announcementFile05View</result>
             <result type="tiles" name="announcementFile05DialogView">announcementFile05DialogView</result>

@@ -427,7 +427,7 @@ public class UploadIframeDAO extends BaseDAO {
     /*
      * DiuLTT - mở file version cũ gồm cả file có isActive = 0;
      */
-    /*  public String openOldFile() {
+ /*  public String openOldFile() {
      String linkFile = "";
      try {
 
@@ -874,6 +874,41 @@ public class UploadIframeDAO extends BaseDAO {
             return "errorNoFile";
         }
     }
+    public String openFileLDCSignApproveForAA() {
+        String linkFile = "";
+        boolean noError = false;
+        try {
+            ResourceBundle rb = ResourceBundle.getBundle("config");
+            String dir = rb.getString("directory");
+            VoAttachsDAOHE daoHe = new VoAttachsDAOHE();
+            Long id = Long.parseLong(getRequest().getParameter("fileId"));
+            try {
+                VoAttachs bo = daoHe.getLstVoAttachByFilesIdForAA(id, "PDHS");
+                if (!bo.getAttachName().startsWith("CongvanSDBSsaucongbo_LD")) {
+                    return "errorNoFile";
+                }
+                linkFile = bo.getAttachPath();
+                linkFile = dir + linkFile;
+                File file = new File(linkFile);
+                inputStream = new FileInputStream(file);
+                HttpServletResponse response = getResponse();
+                response.setHeader("Cache-Control", "no-cache");
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + bo.getAttachName() + "\"");
+                response.flushBuffer();
+                noError = true;
+            } catch (Exception ex) {
+                log.error(ex.getMessage());
+            }
+
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
+        if (noError) {
+            return "download";
+        } else {
+            return "errorNoFile";
+        }
+    }
 
     public String openFileSignPublic() {
         String linkFile = "";
@@ -1009,10 +1044,13 @@ public class UploadIframeDAO extends BaseDAO {
             if (lstRole != null && lstRole.size() > 0) {
                 for (Integer i = 0; i < lstRole.size(); i++) {
                     code = lstRole.get(i).getRoleCode();
-                    if (!"".equals(code) && (code.equals("voffice_vtb") || code.equals(Constants.ROLES.LEAD_MONITOR_ROLE) || code.equals(Constants.ROLES.DIRECTOR_ROLE))) {
+                    if (!"".equals(code) && (code.equals("voffice_vtb")
+                            || code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
+                            || code.equals(Constants.ROLES.DIRECTOR_ROLE))) {
                         if (code.equals("voffice_vtb")) {
                             code = "VT";
-                        } else if (code.equals(Constants.ROLES.LEAD_MONITOR_ROLE) || code.equals(Constants.ROLES.DIRECTOR_ROLE)) {
+                        } else if (code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
+                                || code.equals(Constants.ROLES.DIRECTOR_ROLE)) {
                             code = "LD";
                         }
                         break;
@@ -1052,6 +1090,119 @@ public class UploadIframeDAO extends BaseDAO {
                     fileName = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + ".pdf";
                 }
                 File fileRead = new File(dir + lstBo.get(i).getAttachPath());
+                byte[] pdfByte = read(fileRead);
+                // Check file exist
+                Path path = Paths.get(fileName);
+                File file = new File(fileName);
+                if (java.nio.file.Files.exists(path)) {
+                    file.delete();
+                }
+                try (FileOutputStream fop = new FileOutputStream(file)) {
+                    fop.write(pdfByte);
+                    fop.flush();
+                }
+                fullPath = file.getPath();
+                fullName = file.getName();
+                flagSave = true;
+                if (!lstBo.get(i).getObjectType().equals(40L) && !lstBo.get(i).getObjectType().equals(41L)) {
+                    // Read and save only file
+                    break;
+                }
+            }
+            if (!flagSave) {
+                Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, "Quá trình xử lý file ký Văn thư không thành công: Lưu file ký không thành công");
+                resultMessage.add("error");
+                jsonFile.setItems(resultMessage);
+                return "jsonFile";
+            }
+            resultMessage.add("success");
+            resultMessage.add(fullPath + ";" + fullName + ";" + filePath0 + ";" + fileName0);
+        } catch (NumberFormatException | IOException ex) {
+            Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            resultMessage.add("error");
+        }
+        jsonFile.setItems(resultMessage);
+        return "jsonFile";
+    }
+
+    public String openFileUserAttachPdfSignForAA() {
+        List resultMessage = new ArrayList();
+        String fullPath = "";
+        String fullName = "";
+        String fileName0 = "";
+        String filePath0 = "";
+        try {
+            ResourceBundle rb = ResourceBundle.getBundle("config");
+            Long fileId = Long.parseLong(getRequest().getParameter("fileId"));
+            String signType = getRequest().getParameter("signType");
+            String pathSaveFile = rb.getString("file_sign_link");
+            VoAttachsDAOHE daoHe = new VoAttachsDAOHE();
+            List<VoAttachs> lstBo = daoHe.getLstVoAttachSignByFilesId(fileId, signType);
+            String dir = rb.getString("directory");
+
+            if (lstBo == null || lstBo.isEmpty()) {
+                Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, "Quá trình xử lý file ký Văn thư không thành công: File ký không tồn tại");
+                resultMessage.add("error");
+                jsonFile.setItems(resultMessage);
+                return "jsonFile";
+            }
+
+            // Get user info
+            Long userId = getUserId();
+            List<Roles> lstRole = getListRolesByUser();
+            String code = "";
+            if (lstRole != null && lstRole.size() > 0) {
+                for (Integer i = 0; i < lstRole.size(); i++) {
+                    code = lstRole.get(i).getRoleCode();
+                    if (!"".equals(code) && (code.equals("voffice_vtb")
+                            || code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
+                            || code.equals(Constants.ROLES.DIRECTOR_ROLE))) {
+                        if (code.equals("voffice_vtb")) {
+                            code = "VT";
+                        } else if (code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
+                                || code.equals(Constants.ROLES.DIRECTOR_ROLE)) {
+                            code = "LD";
+                        }
+                        break;
+                    } else {
+                        code = "";
+                    }
+                }
+            } else {
+                Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, "Quá trình xử lý file ký Văn thư không thành công: Không xác định được vai trò User đăng nhập");
+                resultMessage.add("error");
+                jsonFile.setItems(resultMessage);
+                return "jsonFile";
+            }
+
+            if ("".equals(code)) {
+                Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, "Quá trình xử lý file ký Văn thư không thành công: Không xác định được vai trò User đăng nhập");
+                resultMessage.add("error");
+                jsonFile.setItems(resultMessage);
+                return "jsonFile";
+            }
+            Boolean flagSave = false;
+            Date dateId = new Date();
+            Long time = dateId.getTime();
+            for (int i = 0; i < lstBo.size(); i++) {
+                flagSave = false;
+                if (!lstBo.get(i).getAttachName().contains("LD")) {
+                    continue;
+                }
+                String fileName = "";
+                if (lstBo.get(i).getObjectType().equals(40L)) {
+                    fileName = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + "_1.pdf";
+                    filePath0 = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + "_2.pdf";
+                    fileName0 = code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + "_2.pdf";
+                } else if (lstBo.get(i).getObjectType().equals(41L)) {
+                    fileName = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + "_2.pdf";
+                } else {
+                    fileName = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + ".pdf";
+                }
+                File fileRead = new File(dir + lstBo.get(i).getAttachPath());
+                if (fileRead.getPath().contains("PDHS_2")) {
+                    continue;
+                }
                 byte[] pdfByte = read(fileRead);
                 // Check file exist
                 Path path = Paths.get(fileName);
@@ -1151,4 +1302,113 @@ public class UploadIframeDAO extends BaseDAO {
         return ous.toByteArray();
     }
 
+    public String openFileUserAttachPdfSignAA() {
+        List resultMessage = new ArrayList();
+        String fullPath = "";
+        String fullName = "";
+        String fileName0 = "";
+        String filePath0 = "";
+        try {
+            ResourceBundle rb = ResourceBundle.getBundle("config");
+            Long fileId = Long.parseLong(getRequest().getParameter("fileId"));
+            String signType = getRequest().getParameter("signType");
+            String pathSaveFile = rb.getString("file_sign_link");
+            VoAttachsDAOHE daoHe = new VoAttachsDAOHE();
+            List<VoAttachs> lstBo = daoHe.getLstVoAttachSignByFilesId(fileId, signType);
+            String dir = rb.getString("directory");
+
+            if (lstBo == null || lstBo.isEmpty()) {
+                Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, "Quá trình xử lý file ký Văn thư không thành công: File ký không tồn tại");
+                resultMessage.add("error");
+                jsonFile.setItems(resultMessage);
+                return "jsonFile";
+            }
+
+            // Get user info
+            Long userId = getUserId();
+            List<Roles> lstRole = getListRolesByUser();
+            String code = "";
+            if (lstRole != null && lstRole.size() > 0) {
+                for (Integer i = 0; i < lstRole.size(); i++) {
+                    code = lstRole.get(i).getRoleCode();
+                    if (!"".equals(code) && (code.equals("voffice_vtb")
+                            || code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
+                            || code.equals(Constants.ROLES.DIRECTOR_ROLE))) {
+                        if (code.equals("voffice_vtb")) {
+                            code = "VT";
+                        } else if (code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
+                                || code.equals(Constants.ROLES.DIRECTOR_ROLE)) {
+                            code = "LD";
+                        }
+                        break;
+                    } else {
+                        code = "";
+                    }
+                }
+            } else {
+                Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, "Quá trình xử lý file ký Văn thư không thành công: Không xác định được vai trò User đăng nhập");
+                resultMessage.add("error");
+                jsonFile.setItems(resultMessage);
+                return "jsonFile";
+            }
+
+            if ("".equals(code)) {
+                Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, "Quá trình xử lý file ký Văn thư không thành công: Không xác định được vai trò User đăng nhập");
+                resultMessage.add("error");
+                jsonFile.setItems(resultMessage);
+                return "jsonFile";
+            }
+            Boolean flagSave = false;
+            Date dateId = new Date();
+            Long time = dateId.getTime();
+            for (int i = 0; i < lstBo.size(); i++) {
+                flagSave = false;
+                if (!lstBo.get(i).getAttachName().contains("LD")) {
+                    continue;
+                }
+                String fileName = "";
+                if (lstBo.get(i).getObjectType().equals(40L)) {
+                    fileName = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + "_1.pdf";
+                    filePath0 = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + "_2.pdf";
+                    fileName0 = code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + "_2.pdf";
+                } else if (lstBo.get(i).getObjectType().equals(41L)) {
+                    fileName = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + "_2.pdf";
+                } else {
+                    fileName = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + ".pdf";
+                }
+                File fileRead = new File(dir + lstBo.get(i).getAttachPath());
+                byte[] pdfByte = read(fileRead);
+                // Check file exist
+                Path path = Paths.get(fileName);
+                File file = new File(fileName);
+                if (java.nio.file.Files.exists(path)) {
+                    file.delete();
+                }
+                try (FileOutputStream fop = new FileOutputStream(file)) {
+                    fop.write(pdfByte);
+                    fop.flush();
+                }
+                fullPath = file.getPath();
+                fullName = file.getName();
+                flagSave = true;
+                if (!lstBo.get(i).getObjectType().equals(40L) && !lstBo.get(i).getObjectType().equals(41L)) {
+                    // Read and save only file
+                    break;
+                }
+            }
+            if (!flagSave) {
+                Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, "Quá trình xử lý file ký Văn thư không thành công: Lưu file ký không thành công");
+                resultMessage.add("error");
+                jsonFile.setItems(resultMessage);
+                return "jsonFile";
+            }
+            resultMessage.add("success");
+            resultMessage.add(fullPath + ";" + fullName + ";" + filePath0 + ";" + fileName0);
+        } catch (NumberFormatException | IOException ex) {
+            Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            resultMessage.add("error");
+        }
+        jsonFile.setItems(resultMessage);
+        return "jsonFile";
+    }
 }

@@ -515,7 +515,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
     public void saveDbNotCommit(VoAttachs vo) throws Exception {
         getSession().save(vo);
     }
-    
+
     public void commitDb() throws Exception {
         getSession().getTransaction().commit();
     }
@@ -542,20 +542,19 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
             lstFiles = query.list();
             //Hiepvv Xuat Cong bo cong van cua ho so. Uu tien Cong van neu la ho so goc
             if (lstFiles != null && lstFiles.size() > 0) {
-                if(lstFiles.size()==1){
+                if (lstFiles.size() == 1) {
                     return lstFiles.get(0);
-                }
-                else{
+                } else {
                     VoAttachs voAtt = new VoAttachs();
                     boolean check = false;
-                    for(int i =0; i<lstFiles.size(); i++){
+                    for (int i = 0; i < lstFiles.size(); i++) {
                         voAtt = lstFiles.get(i);
-                        if(voAtt.getAttachName().startsWith("Bancongbo_VT")){
+                        if (voAtt.getAttachName().startsWith("Bancongbo_VT")) {
                             check = true;
                             return lstFiles.get(i);
                         }
                     }
-                    if(check==false){
+                    if (check == false) {
                         return lstFiles.get(0);
                     }
                 }
@@ -566,7 +565,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
         }
         return null;
     }
-    
+
     public List<VoAttachs> getLstVoAttachSignByFilesId(Long filesId, String signType) {//n140729 - get lst cac phien ban cua ho so
         try {
             StringBuilder stringBuilder = new StringBuilder(" from VoAttachs a ");
@@ -610,7 +609,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
     public GridResult getAttachsByIdType(Long objectId, Long objectType, int start, int count, String sortField) {
         List voAttachsList = new ArrayList();
         GridResult gridResult = new GridResult();
-        try {                       
+        try {
             StringBuilder strBuf = new StringBuilder("from VoAttachs a where a.isActive = ? and lower(a.attachName) like ? ESCAPE '/'");
             strBuf.append(" and a.objectId = ?");
             strBuf.append(" and a.objectType = ?");
@@ -666,7 +665,9 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
             return null;
         }
     }
+
     //Hiepvv Get List VO_ATTACHS BY Object_ID: List file đính kèm của một hồ sơ SĐBS
+
     public List<VoAttachs> getLstVoAttachByObjectId(Long filesId) {
         try {
             StringBuilder stringBuilder = new StringBuilder(" from VoAttachs a ");
@@ -681,5 +682,45 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
         }
     }
 
-    
+    public VoAttachs getLstVoAttachByFilesIdForAA(Long filesId, String signType) {//n140729 - get lst cac phien ban cua ho so
+        List<VoAttachs> lstFiles = null;
+        try {
+            StringBuilder stringBuilder = new StringBuilder(" from VoAttachs a ");
+            stringBuilder.append(" where a.objectId = ? and a.objectType = ? and a.isActive = 1"
+                    + " order by (CASE WHEN a.createDate IS NULL THEN 1 ELSE 0 END), a.createDate ASC, a.attachId ASC");
+            Query query = getSession().createQuery(stringBuilder.toString());
+            query.setParameter(0, filesId);
+            if (signType.equals("PDHS")) {
+                query.setParameter(1, 40L);
+            } else if (signType.equals("PDHS_PUBLIC")) {
+                query.setParameter(1, 41L);
+            } else if (signType.equals("CVBS")) {
+                query.setParameter(1, 71L);
+            }
+            lstFiles = query.list();
+            //Hiepvv Xuat Cong bo cong van cua ho so. Uu tien Cong van neu la ho so goc
+            if (lstFiles != null && lstFiles.size() > 0) {
+                if (lstFiles.size() == 1) {
+                    return lstFiles.get(0);
+                } else {
+                    VoAttachs voAtt = new VoAttachs();
+                    boolean check = false;
+                    for (int i = 0; i < lstFiles.size(); i++) {
+                        voAtt = lstFiles.get(i);
+                        if (voAtt.getAttachName().startsWith("Bancongbo_VT")) {
+                            check = true;
+                            return lstFiles.get(i);
+                        }
+                    }
+                    if (check == false) {
+                        return lstFiles.get(0);
+                    }
+                }
+            }
+        } catch (HibernateException ex) {
+            log.error(ex.getMessage());
+            return null;
+        }
+        return null;
+    }
 }
