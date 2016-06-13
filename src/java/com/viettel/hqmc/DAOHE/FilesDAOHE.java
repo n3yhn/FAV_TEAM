@@ -2971,7 +2971,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 
         // Luu thong tin danh sach san pham nhap khau cho khach san 4 sao        
         saveProductInFile(createForm.getLstProductInFile(), filesId);
-        try {
+        try {//lưu phí thẩm định hồ sơ
             ProcedureDAOHE pdheCheck = new ProcedureDAOHE();
             Procedure pro = pdheCheck.getProcedureTypeFee(createForm.getFileType());
             if (pro != null

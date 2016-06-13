@@ -122,6 +122,10 @@
         <put-attribute name="title" value="Phân công thẩm định"/>
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/assignEvaluation.jsp"/>
     </definition>
+    <definition name="assignEvaluationForRE.page" extends="body.definition" >
+        <put-attribute name="title" value="Phân công thẩm định cấp lại"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/assignEvaluationForRE.jsp"/>
+    </definition>
     <definition name="assignEvaluationAfterAnnounced.page" extends="body.definition" >
         <put-attribute name="title" value="Phân công thẩm định bổ sung sau công bố"/>
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/afterAnnounced/assignEvaluationAfterAnnounced.jsp"/>

@@ -1095,12 +1095,10 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                                 + " and (f.isTemp = null or f.isTemp = 0)";
                         lstParam.add(25l);
                     }
+                } else if (form.getStatus() != null && form.getStatus() >= 0l) {
+                    condition += " AND f.status = ?";
+                    lstParam.add(form.getStatus());
                 } else {
-                    if (form.getStatus() != null && form.getStatus() >= 0l) {
-                        condition += " AND f.status = ?";
-                        lstParam.add(form.getStatus());
-                    } else {
-                    }
                 }
 
                 if (userType.equals(Constants.ROLES.LEAD_OFFICE_ROLE)) {
@@ -1463,23 +1461,17 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                     hql += " AND ( f.status = ? or f.status = ? )";
                     lstParam.add(Constants.FILE_STATUS.COMPARED);
                     lstParam.add(Constants.FILE_STATUS.COMPARED_FAIL);
-                } else {
-                    if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {
-                        hql += " AND ( f.status = ? or f.status = ?)";
-                        lstParam.add(Constants.FILE_STATUS.EVALUATED_TO_ADD);
-                        lstParam.add(Constants.FILE_STATUS.RECEIVED_REJECT);
-                    } else {
-                        if (form.getStatus().equals(Constants.FILE_STATUS.NEW)) {
-                            hql += " AND ( f.status = ? or f.status = ?)";
-                            lstParam.add(Constants.FILE_STATUS.NEW);
-                            lstParam.add(Constants.FILE_STATUS.NEW_TO_ADD);
-                        } else {
-                            if (form.getStatus() != null) {
-                                hql += " AND ( f.status = ?)";
-                                lstParam.add(form.getStatus());
-                            }
-                        }
-                    }
+                } else if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {
+                    hql += " AND ( f.status = ? or f.status = ?)";
+                    lstParam.add(Constants.FILE_STATUS.EVALUATED_TO_ADD);
+                    lstParam.add(Constants.FILE_STATUS.RECEIVED_REJECT);
+                } else if (form.getStatus().equals(Constants.FILE_STATUS.NEW)) {
+                    hql += " AND ( f.status = ? or f.status = ?)";
+                    lstParam.add(Constants.FILE_STATUS.NEW);
+                    lstParam.add(Constants.FILE_STATUS.NEW_TO_ADD);
+                } else if (form.getStatus() != null) {
+                    hql += " AND ( f.status = ?)";
+                    lstParam.add(form.getStatus());
                 }
             }
             if (form.getSearchType() != null) {
@@ -1750,23 +1742,17 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                     hql += " AND ( f.status = ? or f.status = ? )";
                     lstParam.add(Constants.FILE_STATUS.COMPARED);
                     lstParam.add(Constants.FILE_STATUS.COMPARED_FAIL);
-                } else {
-                    if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {
-                        hql += " AND ( f.status = ? or f.status = ?)";
-                        lstParam.add(Constants.FILE_STATUS.EVALUATED_TO_ADD);
-                        lstParam.add(Constants.FILE_STATUS.RECEIVED_REJECT);
-                    } else {
-                        if (form.getStatus().equals(Constants.FILE_STATUS.NEW)) {
-                            hql += " AND ( f.status = ? or f.status = ?)";
-                            lstParam.add(Constants.FILE_STATUS.NEW);
-                            lstParam.add(Constants.FILE_STATUS.NEW_TO_ADD);
-                        } else {
-                            if (form.getStatus() != null) {
-                                hql += " AND ( f.status = ?)";
-                                lstParam.add(form.getStatus());
-                            }
-                        }
-                    }
+                } else if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {
+                    hql += " AND ( f.status = ? or f.status = ?)";
+                    lstParam.add(Constants.FILE_STATUS.EVALUATED_TO_ADD);
+                    lstParam.add(Constants.FILE_STATUS.RECEIVED_REJECT);
+                } else if (form.getStatus().equals(Constants.FILE_STATUS.NEW)) {
+                    hql += " AND ( f.status = ? or f.status = ?)";
+                    lstParam.add(Constants.FILE_STATUS.NEW);
+                    lstParam.add(Constants.FILE_STATUS.NEW_TO_ADD);
+                } else if (form.getStatus() != null) {
+                    hql += " AND ( f.status = ?)";
+                    lstParam.add(form.getStatus());
                 }
             }
             if (form.getSearchType() != null) {
@@ -6306,13 +6292,11 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                                 + " and (f.isTemp = null or f.isTemp = 0)";
                         lstParam.add(25l);
                     }
+                } else if (form.getStatus() != null
+                        && form.getStatus() >= 0l) {
+                    condition += " AND f.status = ?";
+                    lstParam.add(form.getStatus());
                 } else {
-                    if (form.getStatus() != null
-                            && form.getStatus() >= 0l) {
-                        condition += " AND f.status = ?";
-                        lstParam.add(form.getStatus());
-                    } else {
-                    }
                 }
 
                 if (userType.equals(Constants.ROLES.LEAD_OFFICE_ROLE)) {
@@ -6656,5 +6640,103 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
         List<FilesNoClob> lstResult = query.list();
 
         return new GridResult(total, lstResult);
+    }
+
+    /**
+     * 160613 tim kiem phan cong cap lai
+     *
+     * @param form
+     * @param deptId
+     * @param userId
+     * @param start
+     * @param count
+     * @param sortField
+     * @return
+     */
+    public GridResult findAllFileForAssignEvaluationForRE(FilesForm form, Long deptId, Long userId, int start, int count, String sortField) {
+        try {
+            String hql = " from FilesNoClob f, Process p"
+                    + " where f.isActive=1"
+                    + " and f.fileId = p.objectId"
+                    + " and (f.productTypeId is null or f.productTypeId = 0)"
+                    + " and p.objectType = ?"
+                    + " and p.isActive = 1"
+                    + " and (f.isTemp is null or f.isTemp = 0 ) ";
+            List lstParam = new ArrayList();
+            lstParam.add(Constants.OBJECT_TYPE.FILES);
+            if (form != null) {
+                if (form.getStatus() == null) {
+                    hql += " and (f.status = ?)";
+                    lstParam.add(Constants.FILE_STATUS.RECEIVED);
+                } else {
+                    hql += " and (f.status = ?)";
+                    lstParam.add(form.getStatus());
+                }
+                if (form.getBusinessName() != null && !"".equals(form.getBusinessName().trim())) {
+                    hql += " AND lower(f.businessName) like ? ESCAPE '/' ";
+                    lstParam.add(StringUtils.toLikeString(form.getBusinessName().toLowerCase().trim()));
+                }
+
+                if (form.getProductName() != null && form.getProductName().length() > 0) {
+                    hql += " AND lower(f.productName) like ? ESCAPE '/'";
+                    lstParam.add(StringUtils.toLikeString(form.getProductName().toLowerCase().trim()));
+                }
+                if (form.getFileCode() != null && !"".equals(form.getFileCode().trim())) {
+                    hql += "AND lower(f.fileCode) like ? ESCAPE '/' ";
+                    lstParam.add(StringUtils.toLikeString(form.getFileCode().toLowerCase().trim()));
+                }
+                if (form.getFileType() != null && form.getFileType().longValue() != -1) {
+                    hql += "AND f.fileType = ? ";
+                    lstParam.add(form.getFileType());
+                }
+                if (form.getSendDateFrom() != null) {
+                    hql += "AND f.sendDate >= ? ";
+                    lstParam.add(form.getSendDateFrom());
+                }
+                if (form.getSendDateTo() != null) {
+                    hql += "AND f.sendDate <= ? ";
+                    lstParam.add(form.getSendDateTo());
+                }
+                if (deptId != null) {
+                    hql += "AND (f.agencyId = ?"
+                            + " or p.receiveUserId = ?"
+                            + " or p.receiveGroupId=? )"
+                            + " and (p.processStatus=?"
+                            + " or p.processStatus=?"
+                            + " or p.processStatus =? ) ";
+
+                    lstParam.add(deptId);
+                    lstParam.add(userId);
+                    lstParam.add(deptId);
+                    lstParam.add(Constants.FILE_STATUS.NEW);
+                    lstParam.add(Constants.FILE_STATUS.RECEIVED);
+                    lstParam.add(Constants.FILE_STATUS.PROPOSED);
+                } else {
+                    hql += "AND (p.receiveUserId = ?"
+                            + " and (p.processStatus=?)"
+                            + " and p.status=? ) ";
+                    lstParam.add(userId);
+                    lstParam.add(Constants.FILE_STATUS.RECEIVED);
+                    lstParam.add(0l);
+                }
+            }            
+
+            Query countQuery = getSession().createQuery("select count(distinct f.fileId) " + hql);
+            Query query = getSession().createQuery("select distinct f " + hql + "order by f.modifyDate DESC)");
+            for (int i = 0; i < lstParam.size(); i++) {
+                query.setParameter(i, lstParam.get(i));
+                countQuery.setParameter(i, lstParam.get(i));
+            }
+
+            query.setFirstResult(start);
+            query.setMaxResults(count);
+            int total = Integer.parseInt(countQuery.uniqueResult().toString());
+            List<FilesNoClob> lstResult = query.list();
+            GridResult gr = new GridResult(total, lstResult);
+            return gr;
+        } catch (Exception e) {
+            log.error(e);
+            return new GridResult(0, null);
+        }
     }
 }

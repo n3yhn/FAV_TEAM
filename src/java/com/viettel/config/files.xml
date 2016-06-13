@@ -21,6 +21,7 @@
             <result type="tiles" name="businessAddition.Page">businessLstAddition.Page</result>
             <result type="tiles" name="proposeEvaluation.page">proposeEvaluation.page</result>
             <result type="tiles" name="assignEvaluation.page">assignEvaluation.page</result>
+            <result type="tiles" name="assignEvaluationForRE.page">assignEvaluationForRE.page</result>
             <result type="tiles" name="assignEvaluationAfterAnnounced.page">assignEvaluationAfterAnnounced.page</result>
             <result type="tiles" name="reAssignEvaluation.page">reAssignEvaluation.page</result>
             <result type="tiles" name="evaluateFile.page">evaluateFile.page</result>

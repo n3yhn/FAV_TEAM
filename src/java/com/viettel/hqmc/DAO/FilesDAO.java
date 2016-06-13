@@ -198,6 +198,7 @@ public class FilesDAO extends BaseDAO {
     private final String REPORT_LOS_PROCESS_PAGE = "reportLOSProcess.Page";//141215u binhnt53 page thong ke lanh dao phong xu ly ho so
     private final String REPORT_L_PROCESS_PAGE = "reportLProcess.Page";//141215u binhnt53 page thong ke lanh dao cuc xu ly ho so
     private final String ASSIGN_EVALUATION_PAGE = "assignEvaluation.page";
+    private final String ASSIGN_EVALUATION_FORRE_PAGE = "assignEvaluationForRE.page";
     private final String ASSIGN_EVALUATION_AFTER_ANNOUNCED_PAGE = "assignEvaluationAfterAnnounced.page";
     private final String RE_ASSIGN_EVALUATION_PAGE = "reAssignEvaluation.page";
     private final String EVALUATION_PAGE = "evaluateFile.page";
@@ -407,6 +408,20 @@ public class FilesDAO extends BaseDAO {
             searchForm.setDeptId(getDepartmentId());
         }
         return ASSIGN_EVALUATION_PAGE;
+    }
+
+    public String toAssignEvaluationForRE() {
+        ProcedureDAOHE cdhe = new ProcedureDAOHE();
+        List lstTTHC = cdhe.getAllProcedure2();
+        lstCategory = new ArrayList();
+        lstCategory.addAll(lstTTHC);
+        lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+        getRequest().setAttribute("lstFileType", lstCategory);
+        if (searchForm == null) {
+            searchForm = new FilesForm();
+            searchForm.setDeptId(getDepartmentId());
+        }
+        return ASSIGN_EVALUATION_FORRE_PAGE;
     }
 
     /**
@@ -3996,12 +4011,12 @@ public class FilesDAO extends BaseDAO {
         if ((totalFeeFile.equals(feeFile) && feeFile > 0l) || (totalFeeFile > feeFile)) {
             customInfo.add(1);
         } else // nop thieu
-        if (totalFeeFile < feeFile && totalFeeFile > 0) {
-            customInfo.add(0);
-        } // chua nop
-        else {
-            customInfo.add(-1);
-        }
+         if (totalFeeFile < feeFile && totalFeeFile > 0) {
+                customInfo.add(0);
+            } // chua nop
+            else {
+                customInfo.add(-1);
+            }
 
         jsonDataGrid.setItems(result.getLstResult());
         jsonDataGrid.setTotalRows(result.getnCount().intValue());
@@ -9528,6 +9543,37 @@ public class FilesDAO extends BaseDAO {
         edhe.insertEventLog("Thẩm định nhiều hồ sơ", "Thẩm định nhiều hồ sơ id=" + sid, getRequest());
         jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;
+    }
 
+    public String onAssignEvaluationForRE() {
+        getGridInfo();
+
+        if (searchForm.getFlagSavePaging() != null && searchForm.getFlagSavePaging() == 1) {
+            try {
+                String startServerStr = getRequest().getSession().getAttribute("assignEvaluation.startServer") == null ? "" : getRequest().getSession().getAttribute("assignEvaluation.startServer").toString();
+                String countServerStr = getRequest().getSession().getAttribute("assignEvaluation.countServer") == null ? "" : getRequest().getSession().getAttribute("assignEvaluation.countServer").toString();
+
+                if (!startServerStr.isEmpty() && !countServerStr.isEmpty()) {
+                    count = Integer.parseInt(countServerStr);
+                    start = Integer.parseInt(startServerStr);
+                }
+            } catch (Exception ex) {
+                log.error(ex.getMessage());
+            }
+        }
+
+        if (searchForm == null) {
+            searchForm = new FilesForm();
+            searchForm.setDeptId(getDepartmentId());
+        }
+        FilesNoClobDAOHE bdhe = new FilesNoClobDAOHE();
+        GridResult gr = bdhe.findAllFileForAssignEvaluationForRE(searchForm, getDepartmentId(), getUserId(), start, count, sortField);
+
+        getRequest().getSession().setAttribute("assignEvaluation.startServer", start);
+        getRequest().getSession().setAttribute("assignEvaluation.countServer", count);
+
+        jsonDataGrid.setItems(gr.getLstResult());
+        jsonDataGrid.setTotalRows(gr.getnCount().intValue());
+        return GRID_DATA;
     }
 }
