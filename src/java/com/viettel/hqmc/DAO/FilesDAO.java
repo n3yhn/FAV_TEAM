@@ -4011,12 +4011,12 @@ public class FilesDAO extends BaseDAO {
         if ((totalFeeFile.equals(feeFile) && feeFile > 0l) || (totalFeeFile > feeFile)) {
             customInfo.add(1);
         } else // nop thieu
-         if (totalFeeFile < feeFile && totalFeeFile > 0) {
-                customInfo.add(0);
-            } // chua nop
-            else {
-                customInfo.add(-1);
-            }
+        if (totalFeeFile < feeFile && totalFeeFile > 0) {
+            customInfo.add(0);
+        } // chua nop
+        else {
+            customInfo.add(-1);
+        }
 
         jsonDataGrid.setItems(result.getLstResult());
         jsonDataGrid.setTotalRows(result.getnCount().intValue());
@@ -9399,7 +9399,9 @@ public class FilesDAO extends BaseDAO {
             lstLDP = udaohe.findLstUserByLstPosition(getDepartmentId(), lstLeader);
         }
         lstLeaderOfStaff = new ArrayList();
-        lstLeaderOfStaff.addAll(lstLDP);
+        if (lstLDP != null && !lstLDP.isEmpty()) {
+            lstLeaderOfStaff.addAll(lstLDP);
+        }
         lstLeaderOfStaff.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
         getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaff);
         return lookupAfterAnnouncedPage;
