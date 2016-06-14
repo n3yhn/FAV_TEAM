@@ -9399,9 +9399,7 @@ public class FilesDAO extends BaseDAO {
             lstLDP = udaohe.findLstUserByLstPosition(getDepartmentId(), lstLeader);
         }
         lstLeaderOfStaff = new ArrayList();
-        if (lstLDP != null && !lstLDP.isEmpty()) {//160614
-            lstLeaderOfStaff.addAll(lstLDP);
-        }        
+        lstLeaderOfStaff.addAll(lstLDP);
         lstLeaderOfStaff.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
         getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaff);
         return lookupAfterAnnouncedPage;
