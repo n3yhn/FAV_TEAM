@@ -24,7 +24,7 @@ public class TestRefection {
         FilesForm ff = new FilesForm();
         ANNOUNCESENDDtoType ann = new ANNOUNCESENDDtoType();
         ANNOUNCESENDDmapFILESFORM af = new ANNOUNCESENDDmapFILESFORM();
-        //int a = getObject(ann);
+        int a = getObject(ann);
         //int b = getObject(wmv);
         //validateObj(ann, af);
 //        Class<?> enclosingClass = getClass().getEnclosingClass();

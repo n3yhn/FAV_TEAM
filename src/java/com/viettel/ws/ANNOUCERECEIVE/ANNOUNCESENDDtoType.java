@@ -7,14 +7,16 @@
 package com.viettel.ws.ANNOUCERECEIVE;
 
 import com.viettel.hqmc.BO.MainlyTarget;
+import com.viettel.hqmc.BO.Procedure;
 import com.viettel.hqmc.BO.ProductTarget;
-import com.viettel.hqmc.BO.QualityControlPlan;
 import com.viettel.hqmc.DAOHE.ProcedureDAOHE;
 import com.viettel.hqmc.FORM.AnnouncementForm;
 import com.viettel.hqmc.FORM.DetailProductForm;
 import com.viettel.hqmc.FORM.FilesForm;
 import com.viettel.voffice.database.BO.Category;
 import com.viettel.voffice.database.DAOHibernate.CategoryDAOHE;
+import com.viettel.vsaadmin.database.BO.Users;
+import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import com.viettel.ws.validateData.Helper;
 import com.viettel.ws.validateData.Validator;
 import java.io.IOException;
@@ -113,6 +115,8 @@ import org.xml.sax.SAXException;
 @XmlType(name = "ANNOUNCESENDDtoType", propOrder = {
     "authenticate",
     "id",
+    "fileType",
+    "isFee",
     "components",
     "timeinuse",
     "objectusage",
@@ -152,12 +156,14 @@ import org.xml.sax.SAXException;
     "productcolor",
     "productdetailtypecode",
     "productotherstate",
+    "origin",
     "announcesigndate",
     "createdate",
     "createdby",
     "modifydate",
     "modifiedby",
     "matchingtargetlist",
+    "matchingtarget",
     "mainlytargetslist",
     "biotargetlist",
     "heavymetallist",
@@ -169,25 +175,29 @@ import org.xml.sax.SAXException;
 })
 public class ANNOUNCESENDDtoType {
 
-    @XmlElement(name = "AUTHENTICATE", required = true)
+    @XmlElement(name = "AUTHENTICATE")
     public String authenticate;
     @XmlElement(name = "ID")
     public String id;
-    @XmlElement(name = "COMPONENTS", required = true)
+    @XmlElement(name = "FILE_TYPE")
+    public String fileType;
+    @XmlElement(name = "IS_FEE")
+    public String isFee;
+    @XmlElement(name = "COMPONENTS")
     public String components;
-    @XmlElement(name = "TIME_IN_USE", required = true)
+    @XmlElement(name = "TIME_IN_USE")
     public String timeinuse;
-    @XmlElement(name = "OBJECT_USAGE", required = true)
+    @XmlElement(name = "OBJECT_USAGE")
     public String objectusage;
-    @XmlElement(name = "USEAGE", required = true)
+    @XmlElement(name = "USEAGE")
     public String useage;
-    @XmlElement(name = "GUIDELINE", required = true)
+    @XmlElement(name = "GUIDELINE")
     public String guideline;
-    @XmlElement(name = "PACKATE_MATERIAL", required = true)
+    @XmlElement(name = "PACKATE_MATERIAL")
     public String packatematerial;
-    @XmlElement(name = "PRODUCTION_PROCESS", required = true)
+    @XmlElement(name = "PRODUCTION_PROCESS")
     public String productionprocess;
-    @XmlElement(name = "PRODUCT_COMPARE", required = true)
+    @XmlElement(name = "PRODUCT_COMPARE")
     public String productcompare;
     @XmlElement(name = "NSW_FILE_CODE")
     public String nswfilecode;
@@ -197,92 +207,96 @@ public class ANNOUNCESENDDtoType {
     public String filetypecode;
     @XmlElement(name = "STATUS_CODE")
     public String statuscode;
-    @XmlElement(name = "DEPT_CODE", required = true)
+    @XmlElement(name = "DEPT_CODE")
     public String deptcode;
     @XmlElement(name = "BUSSINESS_CODE")
     public String bussinesscode;
-    @XmlElement(name = "BUSINESS_NAME", required = true)
+    @XmlElement(name = "BUSINESS_NAME")
     public String businessname;
-    @XmlElement(name = "BUSINESS_ADDRESS", required = true)
+    @XmlElement(name = "BUSINESS_ADDRESS")
     public String businessaddress;
-    @XmlElement(name = "BUSINESS_PHONE", required = true)
+    @XmlElement(name = "BUSINESS_PHONE")
     public String businessphone;
-    @XmlElement(name = "BUSINESS_FAX", required = true)
+    @XmlElement(name = "BUSINESS_FAX")
     public String businessfax;
-    @XmlElement(name = "BUSINESS_EMAIL", required = true)
+    @XmlElement(name = "BUSINESS_EMAIL")
     public String businessemail;
     @XmlElement(name = "HS_CODE")
     public String hscode;
-    @XmlElement(name = "PRODUCT_TYPE_CODE", required = true)
+    @XmlElement(name = "PRODUCT_TYPE_CODE")
     public String producttypecode;
-    @XmlElement(name = "PRODUCT_NAME", required = true)
+    @XmlElement(name = "PRODUCT_NAME")
     public String productname;
-    @XmlElement(name = "PRODUCT_NO", required = true)
+    @XmlElement(name = "PRODUCT_NO")
     public String productno;
-    @XmlElement(name = "MANUFACTURE_NAME", required = true)
+    @XmlElement(name = "MANUFACTURE_NAME")
     public String manufacturename;
-    @XmlElement(name = "MANUFACTURE_PHONE", required = true)
+    @XmlElement(name = "MANUFACTURE_PHONE")
     public String manufacturephone;
-    @XmlElement(name = "MANUFACTURE_ADDRESS", required = true)
+    @XmlElement(name = "MANUFACTURE_ADDRESS")
     public String manufactureaddress;
-    @XmlElement(name = "MANUFACTURE_EMAIL", required = true)
+    @XmlElement(name = "MANUFACTURE_EMAIL")
     public String manufactureemail;
-    @XmlElement(name = "MANUFACTURE_FAX", required = true)
+    @XmlElement(name = "MANUFACTURE_FAX")
     public String manufacturefax;
-    @XmlElement(name = "REGION_FROM", required = true)
+    @XmlElement(name = "REGION_FROM")
     public String regionfrom;
-    @XmlElement(name = "ANNOUNCE_NUMBER", required = true)
+    @XmlElement(name = "ANNOUNCE_NUMBER")
     public String announcenumber;
-    @XmlElement(name = "ANNOUNCE_DATE", required = true)
+    @XmlElement(name = "ANNOUNCE_DATE")
     @XmlSchemaType(name = "dateTime")
     public String announcedate;
-    @XmlElement(name = "ANNOUNCE_SIGN_NAME", required = true)
+    @XmlElement(name = "ANNOUNCE_SIGN_NAME")
     public String announcesignname;
-    @XmlElement(name = "ANNOUNCE_METHOD", required = true)
+    @XmlElement(name = "ANNOUNCE_METHOD")
     public String announcemethod;
-    @XmlElement(name = "SEND_DATE", required = true)
+    @XmlElement(name = "SEND_DATE")
     @XmlSchemaType(name = "dateTime")
     public String senddate;
-    @XmlElement(name = "PRODUCT_SMELL", required = true)
+    @XmlElement(name = "PRODUCT_SMELL")
     public String productsmell;
-    @XmlElement(name = "PRODUCT_STATUS", required = true)
+    @XmlElement(name = "PRODUCT_STATUS")
     public String productstatus;
-    @XmlElement(name = "PRODUCT_COLOR", required = true)
+    @XmlElement(name = "PRODUCT_COLOR")
     public String productcolor;
-    @XmlElement(name = "PRODUCT_DETAIL_TYPE_CODE", required = true)
+    @XmlElement(name = "PRODUCT_DETAIL_TYPE_CODE")
     public String productdetailtypecode;
-    @XmlElement(name = "PRODUCT_OTHER_STATE", required = true)
+    @XmlElement(name = "PRODUCT_OTHER_STATE")
     public String productotherstate;
-    @XmlElement(name = "ANNOUNCE_SIGN_DATE", required = true)
+    @XmlElement(name = "ORIGIN")
+    public String origin;
+    @XmlElement(name = "ANNOUNCE_SIGN_DATE")
     @XmlSchemaType(name = "dateTime")
     public String announcesigndate;
-    @XmlElement(name = "CREATE_DATE", required = true)
+    @XmlElement(name = "CREATE_DATE")
     @XmlSchemaType(name = "dateTime")
     public String createdate;
     @XmlElement(name = "CREATED_BY")
     public String createdby;
-    @XmlElement(name = "MODIFY_DATE", required = true)
+    @XmlElement(name = "MODIFY_DATE")
     @XmlSchemaType(name = "dateTime")
     public String modifydate;
     @XmlElement(name = "MODIFIED_BY")
     public String modifiedby;
-    @XmlElement(name = "MATCHING_TARGET_LIST", required = true)
+    @XmlElement(name = "MATCHING_TARGET_LIST")
     public MATCHINGTARGETLISTType matchingtargetlist;
-    @XmlElement(name = "MAINLY_TARGETS_LIST", required = true)
+    @XmlElement(name = "MATCHING_TARGET")
+    public String matchingtarget;
+    @XmlElement(name = "MAINLY_TARGETS_LIST")
     public MAINLYTARGETSLISTType mainlytargetslist;
-    @XmlElement(name = "BIO_TARGET_LIST", required = true)
+    @XmlElement(name = "BIO_TARGET_LIST")
     public BIOTARGETLISTType biotargetlist;
-    @XmlElement(name = "HEAVY_METAL_LIST", required = true)
+    @XmlElement(name = "HEAVY_METAL_LIST")
     public HEAVYMETALLISTType heavymetallist;
-    @XmlElement(name = "UNEX_CHEMICAL_LIST", required = true)
+    @XmlElement(name = "UNEX_CHEMICAL_LIST")
     public UNEXCHEMICALLISTType unexchemicallist;
-    @XmlElement(name = "IMPACT_TARGETS_LIST", required = true)
+    @XmlElement(name = "IMPACT_TARGETS_LIST")
     public IMPACTTARGETSLISTType impacttargetslist;
-    @XmlElement(name = "QUALITY_CONTROL_PLAN", required = true)
+    @XmlElement(name = "QUALITY_CONTROL_PLAN")
     public QUALITYCONTROLPLANType qualitycontrolplan;
-    @XmlElement(name = "ATTACHMENTS", required = true)
+    @XmlElement(name = "ATTACHMENTS")
     public ATTACHMENTSType attachments;
-    @XmlElement(name = "Signature", required = true)
+    @XmlElement(name = "Signature")
     public SignatureType signature;
 
     /**
@@ -1346,30 +1360,65 @@ public class ANNOUNCESENDDtoType {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         FilesForm form = new FilesForm();
         form.setAnnouncement(new AnnouncementForm());
+        //form.setFileId(id);
         //form.setFileCode();
+//        form.setFileTypeName("Cấp giấy tiếp nhận bản công bố hợp quy(bên thứ nhất)");
+        //convert tim kiem trong db lay id file type
+//        form.setFileType(TYPE);
+        ProcedureDAOHE proDaohe = new ProcedureDAOHE();
+        Procedure proBo = null;
+        try {
+            proBo = proDaohe.getProcedureByDescription(fileType);
+            if (proBo != null) {
+                form.setFileType(proBo.getProcedureId());
+                form.setFileTypeName(proBo.getName());
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ANNOUNCESENDDtoType.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        CategoryDAOHE cateDaohe = new CategoryDAOHE();
+        Category cateBo = cateDaohe.findCategoryByTypeAndCode("SP", producttypecode);
+        if (cateBo != null) {
+            form.setProductTypeId(cateBo.getCategoryId());
+            form.setProductTypeName(cateBo.getName());
+        }
         if (!senddate.isEmpty()) {
             form.setSendDate(formatter.parse(senddate.substring(0, 10)));
         }
         form.setIsActive(Long.getLong(isdeleted));
         //  bat buoc
-        form.getAnnouncement().setBusinessName(businessname);
-        form.setDeptId(Long.parseLong(deptcode));
+        form.setIsFee(Long.parseLong(isFee));
+//        form.setFileType(Long.parseLong(fileType));
+        form.setBusinessAddress(businessaddress);
+        form.setBusinessName(businessname);
+        form.setDeptId(Long.parseLong("1"));
         form.setUserCreateId(8171804l);
+//        form.setAgencyId(Long.MAX_VALUE);
+
+        form.getAnnouncement().setBusinessName(businessname);
         form.getAnnouncement().setBusinessAddress(businessaddress);
         form.getAnnouncement().setManufactureName(manufacturename);
         form.getAnnouncement().setManufactureAddress(manufactureaddress);
         form.getAnnouncement().setNationName(regionfrom);
         form.getAnnouncement().setProductName(productname);
-        String m_name = hp.getMATCHINGTARGET_NAME(matchingtargetlist.getMATCHINGTARGETDto());
-        form.getAnnouncement().setMatchingTarget(m_name);
-        //form.setFileId(id);
-        form.setFileTypeName("Cấp giấy tiếp nhận bản công bố hợp quy(bên thứ nhất)");
-        //convert tim kiem trong db lay id file type
-//        form.setFileType(TYPE);
+//        CategoryDAOHE daoHE = new CategoryDAOHE();
+//        List lst = daoHE.findAll();
+//        String m_name = hp.getMATCHINGTARGET_NAME(matchingtargetlist.getMATCHINGTARGETDto());
+//        form.getAnnouncement().setMatchingTarget(m_name);
         ProcedureDAOHE pd = new ProcedureDAOHE();
-        form.setFileType(pd.getByProperty("code", filetypecode).get(0).getProcedureId());
+//        form.setFileType(pd.getByProperty("code", filetypecode).get(0).getProcedureId());//err
         //lay status trong
         form.setStatus(Long.parseLong(statuscode));
+        form.setUserCreateId(Long.parseLong(createdby));
+        if (form.getUserCreateId() != null) {
+            UsersDAOHE udaohe = new UsersDAOHE();
+            Users ubo = udaohe.findById(form.getUserCreateId());
+            if (ubo != null) {
+                form.setUserCreateName(ubo.getFullName());
+                form.setDeptId(ubo.getBusinessId());
+                form.setDeptName(ubo.getBusinessName());
+            }
+        }
 //        form.getAnnouncement().setAnnouncementId(21212132L);
         form.getAnnouncement().setBusinessEmail(businessemail);
         form.getAnnouncement().setBusinessFax(businessfax);
@@ -1379,6 +1428,7 @@ public class ANNOUNCESENDDtoType {
         form.getAnnouncement().setManufactureTel(manufacturephone);
         form.getAnnouncement().setAnnouncementNo(announcenumber);
         form.getAnnouncement().setAssessmentMethod(announcemethod);
+        form.getAnnouncement().setMatchingTarget(matchingtarget);
         if (!announcedate.isEmpty()) {
             form.getAnnouncement().setPublishDate(formatter.parse(announcedate.substring(0, 10)));
         }
@@ -1386,12 +1436,16 @@ public class ANNOUNCESENDDtoType {
 
         form.setDetailProduct(new DetailProductForm());
         form.getDetailProduct().setProductNo(productno);
+        if (form.getFileType() != null && form.getFileTypeName() != null) {
+            form.getDetailProduct().setProductType(form.getProductTypeId());
+            form.getDetailProduct().setProductTypeName(form.getProductTypeName());
+        }
         //Sua sang lay Id
         CategoryDAOHE cth = new CategoryDAOHE();
 
-        Long type = cth.findCategoryByTypeAndCode("SP", producttypecode).getCategoryId();
-        form.getDetailProduct().setProductType(type);
-
+        //err
+//        Long type = cth.findCategoryByTypeAndCode("SP", producttypecode).getCategoryId();
+//        form.getDetailProduct().setProductType(type);
         form.getDetailProduct().setProductSmell(productsmell);
         form.getDetailProduct().setProductStatus(productstatus);
         form.getDetailProduct().setProductColor(productcolor);
@@ -1407,6 +1461,7 @@ public class ANNOUNCESENDDtoType {
         form.getDetailProduct().setProductionProcess(productionprocess);
         form.getDetailProduct().setCounterfeitDistinctive(productcompare);
         form.getDetailProduct().setProductTypeName(productname);
+        form.getDetailProduct().setOrigin(id);
         if (impacttargetslist.getIMPACTTARGETDto() != null && impacttargetslist.getIMPACTTARGETDto().size() > 0) {
             form.getDetailProduct().setOtherTarget(hp.getIMPACTTARGET_NAME(impacttargetslist.getIMPACTTARGETDto()));
         }
@@ -1468,22 +1523,21 @@ public class ANNOUNCESENDDtoType {
         //form.setMatchingTarget(null);
 
         //heavy metal
-        List<ProductTarget> lstHeavyMetal = new ArrayList<ProductTarget>();
-        for (HEAVYTARGETDtoType bo : heavymetallist.heavytargetDto) {
-            ProductTarget temp = new ProductTarget();
-            temp.setMaxLevel(bo.getMAXLEVEL());
-            temp.setTargetName(bo.getTARGETNAME());
-            CategoryDAOHE catedaohe = new CategoryDAOHE();
-            Category cate = catedaohe.findCategoryByTypeAndCode("DVI", bo.getUNITCODE());
-            if (cate != null && cate.getName().isEmpty() == false) {
-                temp.setUnitName(cate.getName());
-                temp.setUnitId(cate.getCategoryId().toString());
-            }
-            temp.setTargetType(2L);
-            lstHeavyMetal.add(temp);
-        }
-        form.setLstHeavyMetal(lstHeavyMetal);
-
+//        List<ProductTarget> lstHeavyMetal = new ArrayList<ProductTarget>();
+//        for (HEAVYTARGETDtoType bo : heavymetallist.heavytargetDto) {
+//            ProductTarget temp = new ProductTarget();
+//            temp.setMaxLevel(bo.getMAXLEVEL());
+//            temp.setTargetName(bo.getTARGETNAME());
+//            CategoryDAOHE catedaohe = new CategoryDAOHE();
+//            Category cate = catedaohe.findCategoryByTypeAndCode("DVI", bo.getUNITCODE());
+//            if (cate != null && cate.getName().isEmpty() == false) {
+//                temp.setUnitName(cate.getName());
+//                temp.setUnitId(cate.getCategoryId().toString());
+//            }
+//            temp.setTargetType(2L);
+//            lstHeavyMetal.add(temp);
+//        }
+//        form.setLstHeavyMetal(lstHeavyMetal);
         // attach - pending
 //        List<VoAttachs> lstAttachs = new ArrayList<VoAttachs>();
 //        for (ATTACHType bo : attachments.attach) {
@@ -1494,20 +1548,19 @@ public class ANNOUNCESENDDtoType {
 //        }
 //        form.setLstAttachs(null);
         //Quality control plan
-        List<QualityControlPlan> lstQualityControl = new ArrayList<QualityControlPlan>();
-        for (CONTROLPLANDtoType bo : qualitycontrolplan.controlplanDto) {
-            QualityControlPlan temp = new QualityControlPlan();
-            temp.setControlTarget(bo.getCONTROLTARGET());
-            temp.setNoteForm(bo.getNOTEFORM());
-            temp.setPatternFrequence(bo.getPATTERNFREQUENCE());
-            temp.setProductProcessDetail(bo.getPRODUCTPROCESSDETAIL());
-            temp.setTechnicalRegulation(bo.getTECHNICALREGULATION());
-            temp.setTestDevice(bo.getTESTDEVICE());
-            temp.setTestMethod(bo.getTESTMETHOD());
-            lstQualityControl.add(temp);
-        }
-        form.setLstQualityControl(lstQualityControl);
-
+//        List<QualityControlPlan> lstQualityControl = new ArrayList<QualityControlPlan>();
+//        for (CONTROLPLANDtoType bo : qualitycontrolplan.controlplanDto) {
+//            QualityControlPlan temp = new QualityControlPlan();
+//            temp.setControlTarget(bo.getCONTROLTARGET());
+//            temp.setNoteForm(bo.getNOTEFORM());
+//            temp.setPatternFrequence(bo.getPATTERNFREQUENCE());
+//            temp.setProductProcessDetail(bo.getPRODUCTPROCESSDETAIL());
+//            temp.setTechnicalRegulation(bo.getTECHNICALREGULATION());
+//            temp.setTestDevice(bo.getTESTDEVICE());
+//            temp.setTestMethod(bo.getTESTMETHOD());
+//            lstQualityControl.add(temp);
+//        }
+//        form.setLstQualityControl(lstQualityControl);        
         return form;
     }
 

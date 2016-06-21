@@ -5,11 +5,22 @@
  */
 package com.viettel.ws.validateData;
 
+import com.viettel.common.util.ResourceBundleUtil;
+import com.viettel.hqmc.BO.AnnouncementReceiptPaper;
+import com.viettel.hqmc.BO.Files;
+import com.viettel.hqmc.DAOHE.AnnouncementReceiptPaperDAOHE;
+import com.viettel.hqmc.DAOHE.FilesDAOHE;
+import com.viettel.voffice.database.BO.VoAttachs;
+import com.viettel.voffice.database.DAOHibernate.VoAttachsDAOHE;
 import com.viettel.ws.ANNOUCERECEIVE.*;
 import com.viettel.ws.BO.*;
 import com.viettel.ws.ErrorType;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.lang.reflect.Field;
@@ -19,8 +30,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.bind.JAXBContext;
@@ -32,6 +49,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.stream.StreamSource;
+import org.apache.xml.security.exceptions.Base64DecodingException;
+import org.apache.xml.security.utils.Base64;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -45,6 +64,7 @@ import org.xml.sax.SAXException;
 public class Helper {
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Helper.class);
+
     public Helper() {
 
     }
@@ -382,37 +402,31 @@ public class Helper {
 //        com.viettel.ws.client.INSWGatewaySyncService port = service.getBasicHttpBindingINSWGatewaySyncService();
 //        return port.unitGetByCode(code);
 //    }
-
 //    private static STATUSDto statusGetByCode(java.lang.Integer code) {
 //        com.viettel.ws.client.NSWGatewaySyncService service = new com.viettel.ws.client.NSWGatewaySyncService();
 //        com.viettel.ws.client.INSWGatewaySyncService port = service.getBasicHttpBindingINSWGatewaySyncService();
 //        return port.statusGetByCode(code);
 //    }
-
 //    private static PRODUCTTYPEDto producttypeGetByCode(java.lang.String code) {
 //        com.viettel.ws.client.NSWGatewaySyncService service = new com.viettel.ws.client.NSWGatewaySyncService();
 //        com.viettel.ws.client.INSWGatewaySyncService port = service.getBasicHttpBindingINSWGatewaySyncService();
 //        return port.producttypeGetByCode(code);
 //    }
-
 //    private static PROCESSDEPTDto processdeptGetByCode(java.lang.String code) {
 //        com.viettel.ws.client.NSWGatewaySyncService service = new com.viettel.ws.client.NSWGatewaySyncService();
 //        com.viettel.ws.client.INSWGatewaySyncService port = service.getBasicHttpBindingINSWGatewaySyncService();
 //        return port.processdeptGetByCode(code);
 //    }
-
 //    private static TECHNICALSTANDARDDto technicalstandardGetByCode(java.lang.String code) {
 //        com.viettel.ws.client.NSWGatewaySyncService service = new com.viettel.ws.client.NSWGatewaySyncService();
 //        com.viettel.ws.client.INSWGatewaySyncService port = service.getBasicHttpBindingINSWGatewaySyncService();
 //        return port.technicalstandardGetByCode(code);
 //    }
-
 //    private static FILETYPEDto filetypeGetByCode(java.lang.String code) {
 //        com.viettel.ws.client.NSWGatewaySyncService service = new com.viettel.ws.client.NSWGatewaySyncService();
 //        com.viettel.ws.client.INSWGatewaySyncService port = service.getBasicHttpBindingINSWGatewaySyncService();
 //        return port.filetypeGetByCode(code);
 //    }
-
 //    private Boolean UNIT_Insert(UNITDto obj, Connection conn) {
 //        Boolean rs = false;
 //        try {
@@ -432,7 +446,6 @@ public class Helper {
 //        }
 //        return rs;
 //    }
-
 //    private Boolean STATUS_Insert(STATUSDto obj, Connection conn) {
 //        Boolean rs = false;
 //        try {
@@ -452,7 +465,6 @@ public class Helper {
 //        }
 //        return rs;
 //    }
-
 //    private Boolean PRODUCTTYPE_Insert(PRODUCTTYPEDto obj, Connection conn) {
 //        Boolean rs = false;
 //        try {
@@ -472,7 +484,6 @@ public class Helper {
 //        }
 //        return rs;
 //    }
-
 //    private Boolean PROCESSDEPT_Insert(PROCESSDEPTDto obj, Connection conn) {
 //        Boolean rs = false;
 //        String hql = "";
@@ -522,7 +533,6 @@ public class Helper {
 //        }
 //        return rs;
 //    }
-
 //    private Boolean FILETYPE_Insert(FILETYPEDto obj, Connection conn) {
 //
 //        Boolean rs = false;
@@ -541,7 +551,6 @@ public class Helper {
 //        }
 //        return rs;
 //    }
-
 //    private Boolean TECHNICALSTANDARD_Insert(TECHNICALSTANDARDDto obj, Boolean vn, Connection conn) {
 //        Boolean rs = false;
 //        try {
@@ -591,7 +600,6 @@ public class Helper {
 //        }
 //        return rs;
 //    }
-
     public String senddresponsedToToXml(Object obj) {
         String result = "";
         java.io.StringWriter sw = new StringWriter();
@@ -622,9 +630,8 @@ public class Helper {
             PreparedStatement preparedStatement = conn.prepareStatement(hql);
             preparedStatement.setString(1, mATCHINGTARGETDtoType.getTARGETCODE());
             ResultSet emps = preparedStatement.executeQuery();
-            if(emps.next())
-            {
-            rs += ";" + emps.getString("VIETNAMESE_NAME");
+            if (emps.next()) {
+                rs += ";" + emps.getString("VIETNAMESE_NAME");
             }
         }
         rs = rs.trim().substring(1);
@@ -681,5 +688,156 @@ public class Helper {
 //        }
 //
 //        return senddresponsedToToXml(annouceResult);
+//    }    
+//    public Boolean sendMs(Envelope envelop) throws FileNotFoundException, IOException, Base64DecodingException {
+//        Boolean rs = true;
+//        if ("false".equals(ResourceBundleUtil.getString("send_service", "config"))) {
+//            return true;
+//        }
+//        try {
+//            writeXmlToFile(envelop);
+////            String evlrs = ObjectToXml(envelop);
+//////           
+////            // hàm nhận kết quả
+//////            String response = clientGW.receive(evlrs);
+////            Envelope enveloprs = xmlToEnvelope(response);
+////
+////            writeXmlToFile(enveloprs);
+////            String function = enveloprs.getHeader().getSubject().getFunction();            
+//        } catch (IOException ex) {
+//            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+//            rs = false;
+//        }
+//        return rs;
 //    }
+//    private void writeXmlToFile(Envelope envelop) throws FileNotFoundException, IOException {
+//        String evlrs = ObjectToXml(envelop);
+//        System.out.println(evlrs);
+//        if ("true".equals(ResourceBundleUtil.getString("export_service_message_to_file", "config"))) {
+//            String type = envelop.getHeader().getSubject().getType();
+//            String function = envelop.getHeader().getSubject().getFunction();
+//            String reference = envelop.getHeader().getSubject().getReference();
+//            String fileName = type + "_" + function + "_" + reference;
+//            writeXmlToFile(evlrs, "sendMs", fileName);
+//        }
+//    }
+    public String ObjectToXml(Object obj) {
+
+        String result = "";
+        java.io.StringWriter sw = new StringWriter();
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(obj.getClass());
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+            // output pretty printed
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            jaxbMarshaller.marshal(obj, sw);
+            result = sw.toString();
+        } catch (JAXBException ex) {
+            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result.trim();
+    }
+
+    public String sendARP(Long fileId)
+            throws FileNotFoundException, IOException, Base64DecodingException {
+        try {
+            // khai bao
+            FilesDAOHE fdhe = new FilesDAOHE();
+            Files files = fdhe.findById(fileId);
+            Envelope evl = makeEnvelopeSend("111", "222",
+                    files.getFileCode(), files.getFileCode(), files.getFileId().toString());
+            Body bd = new Body();
+            Content ct = new Content();
+
+            AnnouncementReceiptPaper cosPermit = new AnnouncementReceiptPaper();
+            AnnouncementReceiptPaperDAOHE arpdaohe = new AnnouncementReceiptPaperDAOHE();
+            cosPermit = arpdaohe.findById(files.getAnnouncementReceiptPaperId());
+
+            // set trong body
+            AcceptRequestProductNotification acceptRequestProductNotification = new AcceptRequestProductNotification();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            acceptRequestProductNotification.setNSWFileCode(files.getFileCode());
+            if (cosPermit != null) {
+                Date day = cosPermit.getEffectiveDate();
+                String receiveDate = df.format(day);
+                acceptRequestProductNotification.setProductNotificationNo(cosPermit.getReceiptNo());
+                acceptRequestProductNotification.setProductNotificationDate(receiveDate);
+            }
+
+            ct.setAcceptRequestProductNotification(acceptRequestProductNotification);
+
+            Attachment att = new Attachment();
+            VoAttachsDAOHE attdhe = new VoAttachsDAOHE();
+            VoAttachs lstAttach = attdhe.getLstVoAttachByFilesId(fileId, "PDHS_PUBLIC");
+            String filePath = lstAttach.getAttachName();
+            ResourceBundle rb = ResourceBundle.getBundle("config");
+            String signPdf = rb.getString("sign_upload");
+            String filePathFinal = signPdf + filePath;
+            File fileSign = new File(filePathFinal);
+            att.setAttachmentName(lstAttach.getAttachName());
+            att.setBase64FileContent(Base64.encode(read(fileSign)));
+            List<Attachment> listatt = new ArrayList<Attachment>();
+            listatt.add(att);
+            ct.setAttachment(att);
+
+            bd.setContent(ct);
+            evl.setBody(bd);
+            return sendMs(evl);
+        } catch (Exception ex) {
+            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+
+            return "";
+        }
+    }
+    private final SimpleDateFormat formatterYear = new SimpleDateFormat("yyyy");
+    private final SimpleDateFormat formatterDateTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+    public Envelope makeEnvelopeSend(String type, String function, String ref, String pref, String msId) {
+        Envelope ev = new Envelope();
+        Header hd = new Header();
+
+        hd.setReference(new Reference("1.0", msId));
+        hd.setFrom(new From("Cục an toàn thực phẩm - Bộ Y tế", "ATTP"));
+        hd.setTo(new To("Hệ thống NSW", "NSW"));
+        Date d = new Date();
+        hd.setSubject(new Subject(type, function, ref, pref, formatterYear.format(d), formatterDateTime.format(d)));
+        ev.setHeader(hd);
+        return ev;
+    }
+
+    public byte[] read(File file) throws IOException {
+        // if (file.length() > MAX_FILE_SIZE) {
+        // throw new FileTooBigException(file);
+        // }
+        ByteArrayOutputStream ous = null;
+        InputStream ios = null;
+        try {
+            byte[] buffer = new byte[4096];
+            ous = new ByteArrayOutputStream();
+            ios = new FileInputStream(file);
+            int read = 0;
+            while ((read = ios.read(buffer)) != -1) {
+                ous.write(buffer, 0, read);
+            }
+        } finally {
+            try {
+                if (ous != null) {
+                    ous.close();
+                }
+            } catch (IOException e) {
+//                LogUtils.addLog(e);
+            }
+            if (ios != null) {
+                ios.close();
+            }
+        }
+        return ous.toByteArray();
+    }
+
+    public String sendMs(Envelope envelop) throws FileNotFoundException, IOException, Base64DecodingException {
+        if ("false".equals(ResourceBundleUtil.getString("send_service", "config"))) {
+            return "";
+        }
+        return ObjectToXml(envelop);
+    }
 }

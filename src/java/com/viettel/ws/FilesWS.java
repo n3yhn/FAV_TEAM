@@ -20,7 +20,6 @@ import com.viettel.voffice.database.BO.VoAttachs;
 import com.viettel.voffice.database.DAO.GridResult;
 import com.viettel.voffice.database.DAOHibernate.VoAttachsDAOHE;
 import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
-import com.viettel.ws.ANNOUCERECEIVE.ANNOUNCESENDDmapFILESFORM;
 import com.viettel.ws.ANNOUCERECEIVE.ANNOUNCESENDDtoType;
 import com.viettel.ws.BO.ANNOUNCERESULTDto;
 import com.viettel.ws.BO.ERRORDto;
@@ -40,11 +39,15 @@ import com.viettel.ws.validateData.Helper;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -66,6 +69,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import org.apache.xml.security.exceptions.Base64DecodingException;
+import org.apache.xml.security.utils.Base64;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -75,29 +80,32 @@ import org.w3c.dom.Element;
  */
 @WebService(serviceName = "FilesWS")
 public class FilesWS extends BaseWS {
-    
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FilesWS.class);
+    private final SimpleDateFormat formatterDateTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     // service tiep nhan ban cong bo hop quy/phu hop - hieptq 07052014
     public String sendAnnouncement(@WebParam(name = "tokenString") String tokenString, @WebParam(name = "xml") String xml) {
         SENDRESPONSEDto sENDRESPONSEDto = new SENDRESPONSEDto();
         ERRORLIST eRRORLIST = new ERRORLIST();
         FilesForm createForm = null;
-        if (!tokenString.isEmpty() && !ServiceSessionManager.validToken(tokenString)) {
-            //validate authemcation
-            ERRORDto eRRORDto = new ERRORDto();
-            eRRORDto.setERRORCODE("A0001-ANNOUNCESEND-0000");
-            eRRORDto.setERRORID("");
-            eRRORDto.setERRORNAME("Lỗi token");
-            eRRORLIST.getERRORDto().add(eRRORDto);
-        }
+//        linhdx comment
+//        if (!tokenString.isEmpty() && !ServiceSessionManager.validToken(tokenString)) {
+//            //validate authemcation
+//            ERRORDto eRRORDto = new ERRORDto();
+//            eRRORDto.setERRORCODE("A0001-ANNOUNCESEND-0000");
+//            eRRORDto.setERRORID("");
+//            eRRORDto.setERRORNAME("Lỗi token");
+//            eRRORLIST.getERRORDto().add(eRRORDto);
+//        }
         // check convert
         try {
             createForm = null;
             ANNOUNCESENDDtoType file = XmlToObjectFile(xml);
-            Helper vali = new Helper();
-            ANNOUNCESENDDmapFILESFORM a = new ANNOUNCESENDDmapFILESFORM();
-            eRRORLIST.getERRORDto().addAll(vali.validateANNOUNCESENDDto(file));
+//            Helper vali = new Helper();
+//            ANNOUNCESENDDmapFILESFORM a = new ANNOUNCESENDDmapFILESFORM();
+            //linhdx
+            //eRRORLIST.getERRORDto().addAll(vali.validateANNOUNCESENDDto(file));
 //            FILEITEMSType fileitem;
 //            FILELISTType filelist;
 //            filelist = file.getFILELIST();
@@ -117,6 +125,7 @@ public class FilesWS extends BaseWS {
                     eRRORDto.setERRORID("");
                     eRRORDto.setERRORNAME("Nhận hồ sơ thành công");
                     eRRORLIST.getERRORDto().add(eRRORDto);
+
                 }
             }
         } catch (Exception ex) {
@@ -130,19 +139,21 @@ public class FilesWS extends BaseWS {
         sENDRESPONSEDto.setERRORLIST(eRRORLIST);
         return senddresponsedToToXml(sENDRESPONSEDto);
     }
-    
+    private final SimpleDateFormat formatterYear = new SimpleDateFormat("yyyy");
+
     public boolean sendFiles(@WebParam(name = "tokenString") String tokenString, @WebParam(name = "searchForm") FilesForm createForm) {
-        if (!tokenString.isEmpty() && !ServiceSessionManager.validToken(tokenString)) {
-            return false;
-        }
+        //linhdx
+//        if (!tokenString.isEmpty() && !ServiceSessionManager.validToken(tokenString)) {
+//            return false;
+//        }
         boolean bReturn = true;
         try {
             FilesDAOHE fdhe = new FilesDAOHE();
-            fdhe.saveFiles(createForm);
+            fdhe.saveFilesWS(createForm);
+
         } catch (Exception en) {
             bReturn = false;
             log.error(en.getMessage());
-            //System.out.println(en.getMessage());
         }
         return bReturn;
     }
@@ -164,7 +175,7 @@ public class FilesWS extends BaseWS {
         }
         return xml;
     }
-    
+
     public String login(@WebParam(name = "userName") String userName, @WebParam(name = "password") String password) {
         UsersDAOHE udhe = new UsersDAOHE();
         boolean bReturn = udhe.checkUserPass(userName, password);
@@ -174,11 +185,11 @@ public class FilesWS extends BaseWS {
         }
         return strReturn;
     }
-    
+
     public boolean logout(@WebParam(name = "tokenString") String tokenString) {
         return ServiceSessionManager.removeToken(tokenString);
     }
-    
+
     private String toXML(GridResult gr) {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder;
@@ -188,13 +199,13 @@ public class FilesWS extends BaseWS {
             Element root = doc.createElement("lstFiles");
             doc.appendChild(root);
             root.setAttribute("count", gr.getnCount().toString());
-            
+
             if (gr.getLstResult() != null && gr.getLstResult().size() > 0) {
                 for (int i = 0; i < gr.getLstResult().size(); i++) {
                     Files form = (Files) gr.getLstResult().get(i);
                     Element file = doc.createElement("file");
                     root.appendChild(file);
-                    
+
                     file.setAttribute("fileId", form.getFileId().toString());
                     file.setAttribute("fileType", form.getFileType().toString());
                     file.setAttribute("fileTypeName", form.getFileTypeName());
@@ -233,51 +244,51 @@ public class FilesWS extends BaseWS {
                     } else {
                         file.setAttribute("reIssueFormId", "");
                     }
-                    
+
                     if (form.getAnnouncementId() != null) {
                         file.setAttribute("announcementId", form.getAnnouncementId().toString());
                     } else {
                         file.setAttribute("announcementId", "");
                     }
-                    
+
                     if (form.getDetailProductId() != null) {
                         file.setAttribute("detailProductId", form.getDetailProductId().toString());
                     } else {
                         file.setAttribute("detailProductId", "");
                     }
-                    
+
                     if (form.getTestRegistrationId() != null) {
                         file.setAttribute("testRegistrationId", form.getTestRegistrationId().toString());
                     } else {
                         file.setAttribute("testRegistrationId", "");
                     }
                     file.setAttribute("businessName", form.getBusinessName());
-                    
+
                     if (form.getUserCreateId() != null) {
                         file.setAttribute("userCreateId", form.getUserCreateId().toString());
                     } else {
                         file.setAttribute("userCreateId", "");
                     }
                     file.setAttribute("userCreateName", form.getUserCreateName());
-                    
+
                     if (form.getNodeId() != null) {
                         file.setAttribute("nodeId", form.getNodeId().toString());
                     } else {
                         file.setAttribute("nodeId", "");
                     }
-                    
+
                     if (form.getFlowId() != null) {
                         file.setAttribute("flowId", form.getFlowId().toString());
                     } else {
                         file.setAttribute("flowId", "");
                     }
-                    
+
                     if (form.getPreviousVersion() != null) {
                         file.setAttribute("previousVersion", form.getPreviousVersion().toString());
                     } else {
                         file.setAttribute("previousVersion", "");
                     }
-                    
+
                     if (form.getDeptId() != null) {
                         file.setAttribute("deptId", form.getDeptId().toString());
                     } else {
@@ -301,30 +312,31 @@ public class FilesWS extends BaseWS {
                         file.setAttribute("agencyId", "");
                     }
                     file.setAttribute("agencyName", form.getAgencyName());
-                    
+
                 }
-                
+
             }
-            
+
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
             StringWriter writer = new StringWriter();
             StreamResult result = new StreamResult(writer);
-            
+
             transformer.transform(source, result);
             writer.flush();
             return writer.toString();
-            
+
         } catch (Exception en) {
             log.error(en.getMessage());
             return "";
         }
-        
+
     }
-    
+
     public static ANNOUNCESENDDtoType XmlToObjectFile(String xml) {
         try {
+            //xml = xml.replaceAll("[^\\x20-\\x7e\\x0A]", "");
             JAXBContext jc = JAXBContext.newInstance(ANNOUNCESENDDtoType.class);
             Unmarshaller unmarshaller = jc.createUnmarshaller();
             StreamSource streamSource = new StreamSource(new StringReader(xml));
@@ -345,7 +357,7 @@ public class FilesWS extends BaseWS {
         RESULT lstError = new RESULT();
         if (!ServiceSessionManager.validToken(tokenString)) {
             err = new ERROR();
-            
+
             lstError.getLstERROR().add(err);
             return false;
         }
@@ -354,38 +366,38 @@ public class FilesWS extends BaseWS {
         } catch (Exception ex) {
             Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
             err = new ERROR();
-            
+
             lstError.getLstERROR().add(err);
         }
         //validate data
         if (reAnnounce.getANNOUNCE_NUMBER().length() > 50) {
             err = new ERROR();
-            
+
             lstError.getLstERROR().add(err);
         }
         if (reAnnounce.getBUSSINESS_CODE().length() > 50) {
             err = new ERROR();
-            
+
             lstError.getLstERROR().add(err);
         }
         if (reAnnounce.getDOCUMENT_NUMBER().length() > 50) {
             err = new ERROR();
-            
+
             lstError.getLstERROR().add(err);
         }
         if (reAnnounce.getFILE_ATTP_CODE().length() > 50) {
             err = new ERROR();
-            
+
             lstError.getLstERROR().add(err);
         }
         if (reAnnounce.getFILE_CODE().length() > 50) {
             err = new ERROR();
-            
+
             lstError.getLstERROR().add(err);
         }
         if (reAnnounce.getTYPE().length() > 50) {
             err = new ERROR();
-            
+
             lstError.getLstERROR().add(err);
         }
         //!//validate data
@@ -614,6 +626,7 @@ public class FilesWS extends BaseWS {
 
     /**
      * Web service operation
+     *
      * @param userId
      * @param fileId
      * @param signType
@@ -622,7 +635,7 @@ public class FilesWS extends BaseWS {
      */
     public String deletePdf(String userId, String fileId, String signType, Integer indexFile) {
         try {
-            if(!deleteFileSign(userId, fileId, signType, indexFile)){
+            if (!deleteFileSign(userId, fileId, signType, indexFile)) {
                 return "error";
             }
         } catch (Exception ex) {

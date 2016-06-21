@@ -99,8 +99,8 @@ public final class Constants {
 
         public static final long DA_TU_CHOI = 2L;
         public static final long DA_XAC_NHAN = 1L;
-        public static final long CHO_XU_LY_TIEN_MAT = 3L;
-        public static final long CHO_XU_LY_CHUYEN_KHOAN = 4L;
+        public static final long CHO_XU_LY_TIEN_MAT = 4L;
+        public static final long CHO_XU_LY_CHUYEN_KHOAN = 3L;
         public static final long CHO_XU_LY_ONLINE = 5L;
     }
 
@@ -398,6 +398,13 @@ public final class Constants {
         //hiepvv SDBS sau cong bo
         public static final String ANNOUNCEMENT_FILE05 = "announcementFile05";
         public static final String ANNOUNCEMENT_4STAR = "announcement4star";
+        
+        public static final String ANNOUNCEMENT_TL01 = "annoucementTL01";
+        public static final String ANNOUNCEMENT_TL03 = "annoucementTL03";
+        public static final String CONFIRMTL = "confirmTL";
+        
+        
+        
     }
 
     public interface RECEIVED_STATUS {
