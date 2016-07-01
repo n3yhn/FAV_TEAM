@@ -1,9 +1,3 @@
-<%-- 
-    Document   : reviewForm
-    Created on : Jun 26, 2013, 4:09:25 PM
-    Author     : vtit_havm2
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="sd" uri="struts-dojo-tags" %>
 <%@taglib prefix="sx" tagdir="/WEB-INF/tags" %>
@@ -28,45 +22,87 @@
                         <form id="reviewForm" name="createForm">
                             <table width="100%" class="viewTable" id="tblReviewForm">
                                 <tr>
-                                    <td width="30%" style="text-align: right"><sd:Label key="Kết quả thẩm định"/></td>
+                                    <td width="30%" style="text-align: right">
+                                        <sd:Label key="Kết quả thẩm định"/>
+                                    </td>
                                     <td width="70%">
                                         <div id="reviewForm.status"></div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width="30%" style="text-align: right"><sd:Label key="Nội dung thẩm định"/></td>
+                                    <td width="30%" style="text-align: right">
+                                        <sd:Label key="Nội dung thẩm định"/>
+                                    </td>
                                     <td width="70%">
-                                        <div id="reviewForm.staffRequest"></div>
+                                        <div id="reviewForm.staffRequest">
+
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width="30%" style="text-align: right"><sd:Label key="Kết quả xem xét"/></td>
+                                    <td width="30%" style="text-align: right">
+                                        <sd:Label key="Kết quả xem xét"/>
+                                    </td>
                                     <td width="70%">
                                         <sd:TextBox key="" id="reviewForm.fileId" name="createForm.fileId" cssStyle="display:none"/>
-                                        <input type="radio" id="reviewForm.statusAccept" name="createForm.status" value="5"/>
+                                        <input type="radio" value="5"
+                                               id="reviewForm.statusAccept"
+                                               name="createForm.status"
+                                               onchange="onchangeStatusREAAFOG();"/>
                                         <sd:Label key="Duyệt: Hồ sơ đạt"/>   
                                         </br>
-                                        <input type="radio" id="reviewForm.statusDeny" name="createForm.status" value="26"/>
+                                        <input type="radio" value="26" 
+                                               id="reviewForm.statusDeny" 
+                                               name="createForm.status"
+                                               onchange="onchangeStatusREAAFOG();"/>
                                         <sd:Label key="Duyệt: Yêu cầu bổ sung HS"/>
                                         </br>
-                                        <input type="radio" id="reviewForm.statusDenyCV" name="createForm.status" value="8"/>
+                                        <input type="radio" value="8"
+                                               id="reviewForm.statusDenyCV"
+                                               name="createForm.status"
+                                               onchange="onchangeStatusREAAFOG();"/>
                                         <sd:Label key="Yêu cầu: Chuyển hồ sơ cho chuyên viên thẩm định lại"/>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td style="text-align: right"><sd:Label key="Nội dung trình quản lý phê duyệt, hoặc nội dung yêu cầu bổ sung"/></td>
+                                <tr id="trTitleEditATTP" style="display:">
+                                    <td style="text-align: right">
+                                        <sd:Label key="Tiêu đề công văn trả lời doanh nghiệp"/>
+                                    </td>
                                     <td>
-                                        <sd:Textarea key="" id="reviewForm.leaderStaffRequest" name="createForm.leaderStaffRequest" rows="15" cssStyle="width:99%" maxlength="2000"/>
+                                        <sd:Textarea 
+                                            id="reviewForm.titleEditATTP" 
+                                            name="createForm.titleEditATTP"
+                                            key="" rows="1" cssStyle="width:99%" maxlength="255" trim="true"
+
+                                            />
                                     </td>
                                 </tr>
-<!--                                <tr>
-                                    <td style="text-align: right"><sd:Label key="Tiêu đề hồ sơ SĐBS"/></td>
-                                    <td>
-                                        <sd:Textarea key="" id="evaluateForm.titleEditATTP" name="createForm.titleEditATTP" rows="3" cssStyle="width:99%" maxlength="255" trim="true"/>
+                                <tr id="trContentsEditATTP" style="display:">
+                                    <td style="text-align: right">
+                                        <sd:Label key="Nội dung công văn trả lời doanh nghiệp"/>
                                     </td>
-                                </tr>-->
+                                    <td>
+                                        <sd:Textarea 
+                                            id="reviewForm.contentsEditATTP" 
+                                            name="createForm.contentsEditATTP"
+                                            key="" rows="10" cssStyle="width:99%" maxlength="2000" trim="true"
+                                            />
+                                    </td>
+                                </tr>
+                                <tr id="trLeaderStaffRequest" style="display: none">
+                                    <td style="text-align: right">
+                                        <sd:Label key="Nội dung trình quản lý phê duyệt, hoặc nội dung yêu cầu bổ sung"/>
+                                    </td>
+                                    <td>
+                                        <sd:Textarea key="" rows="15" cssStyle="width:99%" maxlength="2000"
+                                                     id="reviewForm.leaderStaffRequest" 
+                                                     name="createForm.leaderStaffRequest" />
+                                    </td>
+                                </tr>                               
                                 <tr style="display: none">
-                                    <td style="text-align: right"><sd:Label key="Về pháp chế(Hồ sơ theo Nghị định số 38/2012/NĐ-CP & thông tư hướng dẫn)"/></td>
+                                    <td style="text-align: right">
+                                        <sd:Label key="Về pháp chế(Hồ sơ theo Nghị định số 38/2012/NĐ-CP & thông tư hướng dẫn)"/>
+                                    </td>
                                     <td>
                                         <sd:SelectBox id="reviewForm.legalL" name="createForm.evaluationRecordsForm.legalL" key="" >
                                             <sd:Option value='1'>Đồng ý</sd:Option>
@@ -76,15 +112,24 @@
                                     </td>
                                 </tr>
                                 <tr style="display: none">
-                                    <td style="text-align: right"><sd:Label key="Lý do không cấp hoặc yêu cầu bổ sung"/></td>
+                                    <td style="text-align: right">
+                                        <sd:Label key="Lý do không cấp hoặc yêu cầu bổ sung"/>
+                                    </td>
                                     <td>
-                                        <sd:Textarea key="" id="reviewForm.legalContentL" name="createForm.evaluationRecordsForm.legalContentL" rows="4" cssStyle="width:99%" maxlength="2000" trim="true"/>
+                                        <sd:Textarea key="" id="reviewForm.legalContentL"
+                                                     name="createForm.evaluationRecordsForm.legalContentL"
+                                                     rows="4" cssStyle="width:99%" maxlength="2000" trim="true"/>
                                     </td>
                                 </tr>
                                 <tr style="display: none">
-                                    <td style="text-align: right"><sd:Label key="Về chỉ tiêu chất lượng an toàn thực phẩm"/></td>
+                                    <td style="text-align: right">
+                                        <sd:Label key="Về chỉ tiêu chất lượng an toàn thực phẩm"/>
+                                    </td>
                                     <td>
-                                        <sd:SelectBox id="reviewForm.foodSafetyQualityL" name="createForm.evaluationRecordsForm.foodSafetyQualityL" key="" >
+                                        <sd:SelectBox 
+                                            id="reviewForm.foodSafetyQualityL"
+                                            name="createForm.evaluationRecordsForm.foodSafetyQualityL"
+                                            key="" >
                                             <sd:Option value='1'>Đồng ý</sd:Option>
                                             <sd:Option value='0'>Không đồng ý</sd:Option>
                                             <sd:Option value='-1'>Bổ sung</sd:Option>
@@ -94,13 +139,19 @@
                                 <tr style="display: none">
                                     <td style="text-align: right"><sd:Label key="Lý do không cấp hoặc yêu cầu bổ sung"/></td>
                                     <td>
-                                        <sd:Textarea key="" id="reviewForm.foodSafetyQualityContentL" name="createForm.evaluationRecordsForm.foodSafetyQualityContentL" rows="4" cssStyle="width:99%" maxlength="2000" trim="true"/>
+                                        <sd:Textarea key="" rows="4" cssStyle="width:99%" maxlength="2000" trim="true"
+                                                     id="reviewForm.foodSafetyQualityContentL"
+                                                     name="createForm.evaluationRecordsForm.foodSafetyQualityContentL"/>
                                     </td>
                                 </tr>
                                 <tr style="display: none">
-                                    <td style="text-align: right"><sd:Label key="Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng"/></td>
+                                    <td style="text-align: right">
+                                        <sd:Label key="Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng"/>
+                                    </td>
                                     <td>
-                                        <sd:SelectBox id="reviewForm.effectUtilityL" name="createForm.evaluationRecordsForm.effectUtilityL" key="" >
+                                        <sd:SelectBox key="" 
+                                                      id="reviewForm.effectUtilityL" 
+                                                      name="createForm.evaluationRecordsForm.effectUtilityL" >
                                             <sd:Option value='1'>Đồng ý</sd:Option>
                                             <sd:Option value='0'>Không đồng ý</sd:Option>
                                             <sd:Option value='-1'>Bổ sung</sd:Option>
@@ -110,7 +161,9 @@
                                 <tr style="display: none">
                                     <td style="text-align: right"><sd:Label key="Lý do không cấp hoặc yêu cầu bổ sung"/></td>
                                     <td>
-                                        <sd:Textarea key="" id="reviewForm.effectUtilityContentL" name="createForm.evaluationRecordsForm.effectUtilityContentL" rows="4" cssStyle="width:99%" maxlength="2000" trim="true"/>
+                                        <sd:Textarea key="" rows="4" cssStyle="width:99%" maxlength="2000" trim="true"
+                                                     id="reviewForm.effectUtilityContentL"
+                                                     name="createForm.evaluationRecordsForm.effectUtilityContentL"/>
                                     </td>
                                 </tr>
                                 <tr>                    
@@ -118,27 +171,38 @@
                                         <sd:Label key="Chọn lãnh đạo phê duyệt"/>
                                     </td>
                                     <td>
-                                        <sd:SelectBox  cssStyle="width:98%"
-                                                       id="reviewForm.leaderApproveId"
-                                                       key="" data="lstLeader" valueField="userId" labelField="fullName"
-                                                       name="createForm.leaderApproveId" >
+                                        <sd:SelectBox  
+                                            cssStyle="width:98%" key="" data="lstLeader" valueField="userId" labelField="fullName"
+                                            id="reviewForm.leaderApproveId"                                                       
+                                            name="createForm.leaderApproveId" >
                                         </sd:SelectBox>
-                                        <sd:TextBox id="reviewForm.leaderApproveName" name="createForm.leaderApproveName" cssStyle="display:none" key=""/>
+                                        <sd:TextBox 
+                                            id="reviewForm.leaderApproveName" 
+                                            name="createForm.leaderApproveName" 
+                                            cssStyle="display:none" key=""/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="text-align: center">
                                         <sx:ButtonSave onclick="onReviewFormSave();"/>
                                         <br>
-                                        <sd:Button id="btnLoadCookieRFOG" key="" onclick="page.getReviewForm();" cssStyle="display:" cssClass="buttonGroup">
+                                        <sd:Button 
+                                            key=""  cssStyle="display:" cssClass="buttonGroup"
+                                            id="btnLoadCookieRFOG" 
+                                            onclick="page.getReviewForm();">
                                             <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Tải ND thẩm định gần đây</span>
                                         </sd:Button>
-                                        <sd:Button id="btnSaveCookieRFOG" key="" onclick="page.setRreviewForm();" cssStyle="display:" cssClass="buttonGroup">
+                                        <sd:Button id="btnSaveCookieRFOG" 
+                                                   onclick="page.setRreviewForm();"
+                                                   key="" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Lưu nháp ND thẩm định</span>
                                         </sd:Button>
-                                        <sd:Button id="btnClearCookieRFOG" key="" onclick="page.clearReviewForm();" cssStyle="display:" cssClass="buttonGroup">
+                                        <sd:Button 
+                                            id="btnClearCookieRFOG"
+                                            onclick="page.clearReviewForm();"
+                                            key="" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Xóa ND thẩm định gần đây</span>
                                         </sd:Button>
@@ -164,12 +228,12 @@
 </div>
 
 <script type="text/javascript">
-    onCloseReviewForm = function() {
+    onCloseReviewForm = function () {
         //clearReviewFormOnGrid();
-        doGoToMenu("filesAction!toReviewPage.do");
+        doGoToMenu("filesAction!toReviewPage.do?IsChange=1");
     };
 
-    afterReviewFormSave = function(data) {
+    afterReviewFormSave = function (data) {
         var obj = dojo.fromJson(data);
         var result = obj.items;
         alert(result[1]);
@@ -177,20 +241,21 @@
             onCloseReviewForm();
         }
     };
-    onReviewFormSave = function() {
+    
+    onReviewFormSave = function () {
 //        if (validateReviewForm()) {
 //            sd.connector.post("filesAction!onReview.do?" + token.getTokenParamString(), null, "reviewForm", null, afterReviewFormSave);
 //        }
         msg.confirm("Bạn có chắc chắn về kết quả xem xét này không ?", "Xem xét hồ sơ", onReviewFormSaveAction);
     };
 
-    onReviewFormSaveAction = function() {
+    onReviewFormSaveAction = function () {
         if (validateReviewForm()) {
             sd.connector.post("filesAction!onReview.do?" + token.getTokenParamString(), null, "reviewForm", null, afterReviewFormSave);
         }
     };
 
-    validateReviewForm = function() {
+    validateReviewForm = function () {
         if (document.getElementById("reviewForm.statusAccept").checked == false
                 && document.getElementById("reviewForm.statusDeny").checked == false
                 && document.getElementById("reviewForm.statusDenyCV").checked == false) {
@@ -277,14 +342,14 @@
      dijit.byId("reviewDlg").hide();
      };
      */
-    page.replaceBrTblReviewForm = function() {
+    page.replaceBrTblReviewForm = function () {
         var content = "";
         content = document.getElementById("reviewForm.staffRequest").innerHTML;
         content = content.replace(/\n/g, "<br>");
         document.getElementById("reviewForm.staffRequest").innerHTML = content;
     };
 
-    page.clearReviewForm = function() {
+    page.clearReviewForm = function () {
         try
         {
             localStorage.setItem("reviewForm.reviewForm.leaderApproveId", "-1");
@@ -297,13 +362,12 @@
             localStorage.setItem("reviewForm.reviewForm.effectUtilityContentL", "");
 
             alert("Xóa nội dung thẩm định gần đây thành công!");
-        }
-        catch (err)
+        } catch (err)
         {
             alert("Không thể Xóa nội dung thẩm định gần đây!");
         }
     };
-    page.setRreviewForm = function() {
+    page.setRreviewForm = function () {
         try
         {
             localStorage.setItem("reviewForm.reviewForm.leaderApproveId", encodeBase64(dijit.byId("reviewForm.leaderApproveId").getValue().toString().trim()));
@@ -315,13 +379,12 @@
             localStorage.setItem("reviewForm.reviewForm.effectUtilityL", encodeBase64(dijit.byId("reviewForm.effectUtilityL").getValue().toString().trim()));
             localStorage.setItem("reviewForm.reviewForm.effectUtilityContentL", encodeBase64(dijit.byId("reviewForm.effectUtilityContentL").getValue().toString().trim()));
             alert("Lưu nháp nội dung thẩm định thành công!");
-        }
-        catch (err)
+        } catch (err)
         {
             alert("Không thể Lưu nháp nội dung thẩm định!");
         }
     };
-    page.getReviewForm = function() {
+    page.getReviewForm = function () {
         try
         {
             dijit.byId("reviewForm.leaderApproveId").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.leaderApproveId")));
@@ -333,10 +396,24 @@
             dijit.byId("reviewForm.effectUtilityL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.effectUtilityL")));
             dijit.byId("reviewForm.effectUtilityContentL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.effectUtilityContentL")));
             alert("Tải nội thẩm định gần đây thành công!");
-        }
-        catch (err)
+        } catch (err)
         {
             alert("Không thể Tải nội thẩm định gần đây!");
+        }
+    };
+
+    onchangeStatusREAAFOG = function () {
+        var trTitleEditATTP = document.getElementById('trTitleEditATTP');
+        var trContentsEditATTP = document.getElementById('trContentsEditATTP');
+        var trLeaderStaffRequest = document.getElementById('trLeaderStaffRequest');
+        if (document.getElementById("reviewForm.statusAccept").checked) {
+            trTitleEditATTP.style.display = '';//
+            trContentsEditATTP.style.display = '';//
+            trLeaderStaffRequest.style.display = 'none';//
+        } else {
+            trTitleEditATTP.style.display = 'none';
+            trContentsEditATTP.style.display = 'none';
+            trLeaderStaffRequest.style.display = '';
         }
     };
 </script>

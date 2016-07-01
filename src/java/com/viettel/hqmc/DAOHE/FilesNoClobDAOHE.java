@@ -408,7 +408,9 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                         lstParam.clear();
                         hql = " from FilesNoClob f, Process p";
                         condition = " and f.fileId = p.objectId";
-                        condition += " AND f.isActive = 1 and f.fileId = p.objectId  and (f.isTemp = null or f.isTemp = 0 )";
+                        condition += " AND f.isActive = 1"
+                                + " and f.fileId = p.objectId"
+                                + " and (f.isTemp = null or f.isTemp = 0 )";
                         condition += " AND p.receiveGroupId = ?";
                         lstParam.add(deptId);
                         if (userId != null) {
@@ -3214,7 +3216,9 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
      */
     public int getCountFileToProcess(Long userId, Long deptId, Long searchType, Long status) {//
         try {
-            String hql = " from FilesNoClob f, Process p"
+            String hql = " from"
+                    + " FilesNoClob f,"
+                    + " Process p"
                     + " where f.isActive=1"
                     + " and f.fileId = p.objectId"
                     + " and p.objectType = ?"
@@ -3224,14 +3228,16 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             switch (Integer.parseInt(searchType.toString())) {
                 case -29:
                     //tim de cuc truong phe duyet
-                    hql += " and (f.status = ?) and p.receiveGroupId = ?";
+                    hql += " and (f.status = ?)"
+                            + " and p.receiveGroupId = ?";
                     lstParam.add(Constants.FILE_STATUS.REVIEW_TO_BOSS);
                     lstParam.add(deptId);
                     hql += " and f.agencyId = ?";
                     lstParam.add(deptId);
                     break;
                 case -23:// tim de phan cong phe duyet
-                    hql += " and (f.status = ?) and p.receiveGroupId = ?";
+                    hql += " and (f.status = ?)"
+                            + " and p.receiveGroupId = ?";
                     lstParam.add(Constants.FILE_STATUS.REVIEWED);
                     lstParam.add(deptId);
                     // Phe duyet cac ho so ban dau gui den cho don vi minh
@@ -3242,7 +3248,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                     hql += " and (f.status = ?)";
                     lstParam.add(Constants.FILE_STATUS.ASSIGNED);
                     // Chi tim ho so giao cho ca nhan xu ly thoi
-                    hql += " and p.receiveGroupId = ? and p.receiveUserId = ?";
+                    hql += " and p.receiveGroupId = ?"
+                            + " and p.receiveUserId = ?";
                     lstParam.add(deptId);
                     lstParam.add(userId);
                     break;
@@ -3301,21 +3308,44 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
 //                        lstParam.add(userId);
 //                    }
                     break;
-                case 5://Hồ sơ đã trình, chờ lãnh đạo cục phê duyệt
+                case 5://Hồ sơ đã trình, chờ lãnh đạo cục phê duyệt 
                     lstParam.clear();
-                    hql = "from FilesNoClob f, Process p where f.isActive = 1 and f.fileId = p.objectId AND f.status = ?  and (f.isTemp = null or f.isTemp = 0 ) ";
+                    hql = " FROM"
+                            + " FilesNoClob f,"
+                            + " Process p"
+                            + " WHERE f.isActive = 1"
+                            + " AND f.fileId = p.objectId"
+                            + " AND f.status = ?"
+                            + " AND (f.isTemp = null or f.isTemp = 0 )";
                     lstParam.add(Constants.FILE_STATUS.REVIEWED);
                     hql += " and p.receiveGroupId = ? ";
                     lstParam.add(deptId);
                     hql += " and p.receiveUserId = ? ";
                     lstParam.add(userId);
                     break;
+                case -5://A 160701 - Hồ sơ đã trình, chờ lãnh đạo cục phê duyệt 
+                    lstParam.clear();
+                    hql = " FROM"
+                            + " FilesNoClob f,"
+                            + " Process p,"
+                            + " DetailProduct d"
+                            + " WHERE f.isActive = 1"
+                            + " AND f.fileId = p.objectId"
+                            + " AND f.detailProductId = d.detailProductId"
+                            + " AND f.status = ?"
+                            + " AND (f.isTemp = null or f.isTemp = 0 )";
+                    lstParam.add(Constants.FILE_STATUS.REVIEWED);
+                    hql += " AND p.receiveGroupId = ? ";
+                    lstParam.add(deptId);
+                    hql += " AND p.receiveUserId = ? ";
+                    lstParam.add(userId);
+                    break;
                 case -22://Hồ sơ đã cấp giấy chứng nhận
                     if (status == null) {
-                        hql += " and f.status = ?";
+                        hql += " AND f.status = ?";
                         lstParam.add(Constants.FILE_STATUS.GIVE_BACK);
                     } else {
-                        hql += " and f.status = ?";
+                        hql += " AND f.status = ?";
                         lstParam.add(status);
                     }
                     break;
@@ -3324,13 +3354,16 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                     hql += " and (f.status = ?)";
                     lstParam.add(Constants.FILE_STATUS.ASSIGNED);
                     if (deptId != null) {
-                        hql += " AND (f.agencyId = ? or p.receiveUserId = ? or p.receiveGroupId=? ) and (p.processStatus=?) ";
+                        hql += " AND (f.agencyId = ? or p.receiveUserId = ? or p.receiveGroupId=? )"
+                                + " AND (p.processStatus=?) ";
                         lstParam.add(deptId);
                         lstParam.add(userId);
                         lstParam.add(deptId);
                         lstParam.add(Constants.FILE_STATUS.ASSIGNED);
                     } else {
-                        hql += "AND (p.receiveUserId = ? and (p.processStatus=?) and p.status=? ) ";
+                        hql += "AND (p.receiveUserId = ?"
+                                + " AND (p.processStatus=?)"
+                                + " AND p.status=? ) ";
                         lstParam.add(userId);
                         lstParam.add(Constants.FILE_STATUS.ASSIGNED);
                         lstParam.add(0l);
@@ -3362,8 +3395,21 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
 //                    break;
                 //hieptq update 191114 dem thuc pham thuong
                 case 211:
-                    hql = "from FilesNoClob f, Process p, Category c where f.isActive=1 and f.fileId = p.objectId and f.productTypeId = c.categoryId  and p.objectType = ? and p.isActive = 1 and (f.isTemp = null or f.isTemp = 0 )  and (f.status = ?)AND (f.agencyId = ? or p.receiveUserId = ? or p.receiveGroupId=? ) and (p.processStatus=? or p.processStatus=? or p.processStatus =? ) "
-                            + " and (c.code <> ? and c.code <> ?) ";
+                    hql = "from"
+                            + " FilesNoClob f,"
+                            + " Process p,"
+                            + " Category c"
+                            + " where"
+                            + " f.isActive=1"
+                            + " AND f.fileId = p.objectId"
+                            + " AND f.productTypeId = c.categoryId"
+                            + " AND p.objectType = ?"
+                            + " AND p.isActive = 1"
+                            + " AND (f.isTemp = null or f.isTemp = 0 )"
+                            + " AND (f.status = ?)"
+                            + " AND (f.agencyId = ? or p.receiveUserId = ? or p.receiveGroupId=? )"
+                            + " AND (p.processStatus=? or p.processStatus=? or p.processStatus =? ) "
+                            + " AND (c.code <> ? AND c.code <> ?) ";
                     lstParam.clear();
                     lstParam.add(30l);
                     lstParam.add(14l);
@@ -3412,8 +3458,21 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                     break;
 
                 case 212:
-                    hql = "from FilesNoClob f, Process p, Category c where f.isActive=1 and f.fileId = p.objectId and f.productTypeId = c.categoryId and p.objectType = ? and p.isActive = 1 and (f.isTemp = null or f.isTemp = 0 )  and (f.status = ?)AND (f.agencyId = ? or p.receiveUserId = ? or p.receiveGroupId=? ) and (p.processStatus=? or p.processStatus=? or p.processStatus =? )"
-                            + " and (c.code = ? or c.code = ? )";
+                    hql = "from"
+                            + " FilesNoClob f,"
+                            + " Process p,"
+                            + " Category c"
+                            + " where"
+                            + " f.isActive=1"
+                            + " AND f.fileId = p.objectId"
+                            + " AND f.productTypeId = c.categoryId"
+                            + " AND p.objectType = ?"
+                            + " AND p.isActive = 1"
+                            + " AND (f.isTemp = null or f.isTemp = 0 )"
+                            + " AND (f.status = ?)"
+                            + " AND (f.agencyId = ? or p.receiveUserId = ? or p.receiveGroupId=? )"
+                            + " AND (p.processStatus=? or p.processStatus=? or p.processStatus =? )"
+                            + " AND (c.code = ? or c.code = ? )";
                     lstParam.clear();
                     lstParam.add(30l);
                     lstParam.add(14l);
@@ -3519,7 +3578,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                             + " and p.receiveUserId = ?";
                     lstParam.add(deptId);
                     lstParam.add(userId);
-                    hql += " and ((f.leaderEvaluateId = ? and f.leaderReviewId = null)"
+                    hql += " and ((f.leaderEvaluateId = ?"
+                            + " and f.leaderReviewId = null)"
                             + " or f.leaderReviewId =?)";
                     lstParam.add(userId);
                     lstParam.add(userId);
@@ -3536,7 +3596,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                     // tim de review
                     hql += " and (f.status = ?)";
                     lstParam.add(Constants.FILE_STATUS.EVALUATED);
-                    hql += " and p.receiveGroupId = ? and p.receiveUserId = ?";
+                    hql += " and p.receiveGroupId = ?"
+                            + " and p.receiveUserId = ?";
                     lstParam.add(deptId);
                     lstParam.add(userId);
                     hql += " and f.leaderReviewId = ?";
@@ -4297,16 +4358,16 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                 case -7://Hồ sơ chờ kế toán xác nhận
                     hql = " from FilesNoClob f, Fee fe, FeePaymentInfo fpi"
                             + " where f.fileId = fpi.fileId"
-                            + " and (f.isTemp=null or f.isTemp=0)"
-                            + " and f.isActive=1"
-                            + " and fe.feeId = fpi.feeId"
-                            + " and fe.feeType=2"
-                            + " and fe.isActive=1"
-                            + " and fpi.isActive=1"
-                            + " and fpi.status > 2"
-                            + " and f.userSigned is not null"
-                            + " and (f.status=?)"
-                            + " and f.agencyId = ?";
+                            + " AND (f.isTemp=null or f.isTemp=0)"
+                            + " AND f.isActive=1"
+                            + " AND fe.feeId = fpi.feeId"
+                            + " AND fe.feeType=2"
+                            + " AND fe.isActive=1"
+                            + " AND fpi.isActive=1"
+                            + " AND fpi.status > 2"
+                            + " AND f.userSigned is not null"
+                            + " AND (f.status=?)"
+                            + " AND f.agencyId = ?";
                     lstParam.clear();
                     lstParam.add(Constants.FILE_STATUS.NEW);
                     lstParam.add(deptId);
@@ -6719,7 +6780,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                     lstParam.add(Constants.FILE_STATUS.RECEIVED);
                     lstParam.add(0l);
                 }
-            }            
+            }
 
             Query countQuery = getSession().createQuery("select count(distinct f.fileId) " + hql);
             Query query = getSession().createQuery("select distinct f " + hql + "order by f.modifyDate DESC)");

@@ -1783,12 +1783,16 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             if (!procedure.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01) && !procedure.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03)) {
                                 //sms
                                 MessageSmsDAOHE msdhe = new MessageSmsDAOHE();
-                                String msg = "Ho so ma: " + file.getFileCode() + " cua doanh nghiep: " + file.getBusinessName() + " dang trong trang thai: da phe duyet, doanh nghiep luu y dong le phi cap so de duoc cap ban cong bo";
+                                String msg = "Ho so ma: " + file.getFileCode() 
+                                        + " cua doanh nghiep: " + file.getBusinessName() 
+                                        + " dang trong trang thai: da phe duyet, doanh nghiep luu y dong le phi cap so de duoc cap ban cong bo";
                                 msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
                                 //email
                                 MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
                                 String msge = "";
-                                msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: đã phê duyệt, doanh nghiệp lưu ý đóng lệ phí cấp số để được cấp bản công bố";
+                                msge = "Hồ sơ mã: " + file.getFileCode() 
+                                        + " của doanh nghiệp: " + file.getBusinessName() 
+                                        + " đang trong trạng thái: đã phê duyệt, doanh nghiệp lưu ý đóng lệ phí cấp số để được cấp bản công bố";
                                 msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
                             }
                         }
@@ -1796,7 +1800,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 } else {
                     return false;
                 }
-            }            
+            }
         } catch (Exception ex) {
             log.error(ex.getMessage());
             bReturn = false;
@@ -2023,7 +2027,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         Procedure type = cdhe.findById(fileType);
 
 //        String hql = "select count(f) from Files f where f.fileType = ? and (f.isTemp = null or f.isTemp = 0 ) ";
-        String hql = "select count(f) from Files f where (f.isTemp = null or f.isTemp = 0 ) ";//u150129 dund cap nhat ma ho so
+//        String hql = "select count(f) from Files f where (f.isTemp = null or f.isTemp = 0 ) ";//u150129 dund cap nhat ma ho so
+        String hql = "select count(f) from Files f ";//u150129 dund cap nhat ma ho so
 //        String hql = "select count(f) from Files f where f.fileType = ? ";
         Query query = getSession().createQuery(hql);
 //        query.setParameter(0, fileType);
@@ -2035,7 +2040,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }
-        String fileCode = DateTimeUtils.convertDateToString(currentDate, "yy.MM.") + type.getCode() + "." + nCount;
+        String fileCode = DateTimeUtils.convertDateToString(currentDate, "yy.MM.")
+                + type.getCode()
+                + "." + nCount;
         return fileCode;
     }
 
@@ -2327,19 +2334,19 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
      * Luu cac file attach
      */
     private void saveAttachs(List<VoAttachs> lstItems, Long fileId, String lstAttachLabel) {
-        List<Long> lstIdOfAttachs = new ArrayList();
+        List<Long> lstIdOfAttachs = new ArrayList();//danh sach id cua lst Attach
         if (lstItems != null && !lstItems.isEmpty()) {
-            boolean isEdit = false;
-            if (fileId != null && fileId > 0L) {
+            boolean isEdit = false;//la sua
+            if (fileId != null && fileId > 0L) {//neu ton tai id la sua
                 isEdit = true;
             }
-            if (lstAttachLabel != null) {
+            if (lstAttachLabel != null) {//danh sach nhan
                 lstAttachLabel = ";" + lstAttachLabel;
             } else {
                 lstAttachLabel = "";
             }
-            Long previousVersionId = getLastVersionIdOfFile(fileId);
-            List lstPreviousVersionAtt = null;
+            Long previousVersionId = getLastVersionIdOfFile(fileId);//tim version moi nhat cua attach
+            List lstPreviousVersionAtt = null;//danh sach version 
             if (previousVersionId != null) {
                 lstPreviousVersionAtt = getAttachsOfFile(previousVersionId);
             }
@@ -2361,19 +2368,15 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             for (int i = 0; i < lstItems.size(); i++) {
                 VoAttachs item = lstItems.get(i);
                 Long attachId = item.getAttachId();
-
                 if (lstAttachLabel.indexOf(";" + i + ";") >= 0) {
                     item.setObjectType(com.viettel.common.util.Constants.OBJECT_TYPE.FILES_LABEL);
                 } else {
                     item.setObjectType(com.viettel.common.util.Constants.OBJECT_TYPE.FILES);
                 }
                 item.setObjectId(fileId);
-
                 if (attachId == null) {
-
                     item.setIsActive(1l);
                     getSession().save(item);
-
                 } else {
                     for (VoAttachs oldItem : lstOldAttachs) {
                         if (oldItem.getAttachId().equals(attachId)) {
@@ -2390,7 +2393,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         item.setIsTemp(0l);
                     }
                     item.setObjectId(fileId);
-                    if (item.getAttachId() != null && fileId != null && fileId > 0L) {
+                    if (item.getAttachId() != null
+                            && fileId != null && fileId > 0L) {
                         getSession().merge(item);
                     } else if (!isEdit) {
                         getSession().save(item);
@@ -2401,20 +2405,42 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 lstIdOfAttachs.add(id);
             }
         }
-        if (fileId != null && fileId > 0L) {
-            //la sua moi thuc hien xoa khong thi k xoa gi ca
-            String hql = "delete from VoAttachs m where m.objectId = :filesId and (m.objectType= :objectType1 or m.objectType= :objectType2)  ";
-            if (!lstIdOfAttachs.isEmpty()) {
-                hql += " and m.attachId not in (:lstIdOfAttachs)";
+        if (fileId != null && fileId > 0L) {//sua ho so hay khong sua ho so
+            FilesDAOHE fdaohe = new FilesDAOHE();
+            Files fbo = fdaohe.findById(fileId);
+            if (fbo == null || !fbo.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {
+                //la sua moi thuc hien xoa khong thi k xoa gi ca
+                String hql = "delete from VoAttachs m"
+                        + " where m.objectId = :filesId"
+                        + " and (m.objectType= :objectType1 or m.objectType= :objectType2)  ";
+                if (!lstIdOfAttachs.isEmpty()) {
+                    hql += " and m.attachId not in (:lstIdOfAttachs)";
+                }
+                Query query = getSession().createQuery(hql);
+                query.setParameter("filesId", fileId);
+                query.setParameter("objectType1", com.viettel.common.util.Constants.OBJECT_TYPE.FILES);
+                query.setParameter("objectType2", com.viettel.common.util.Constants.OBJECT_TYPE.FILES_LABEL);
+                if (!lstIdOfAttachs.isEmpty()) {
+                    query.setParameterList("lstIdOfAttachs", lstIdOfAttachs);
+                }
+                query.executeUpdate();
+            } else {
+                //la sua moi thuc hien xoa khong thi k xoa gi ca
+                String hql = "update VoAttachs m set m.isActive = -1"
+                        + " where m.objectId = :filesId"
+                        + " and (m.objectType= :objectType1 or m.objectType= :objectType2) ";
+                if (!lstIdOfAttachs.isEmpty()) {
+                    hql += " and m.attachId not in (:lstIdOfAttachs)";
+                }
+                Query query = getSession().createQuery(hql);
+                query.setParameter("filesId", fileId);
+                query.setParameter("objectType1", com.viettel.common.util.Constants.OBJECT_TYPE.FILES);
+                query.setParameter("objectType2", com.viettel.common.util.Constants.OBJECT_TYPE.FILES_LABEL);
+                if (!lstIdOfAttachs.isEmpty()) {
+                    query.setParameterList("lstIdOfAttachs", lstIdOfAttachs);
+                }
+                query.executeUpdate();
             }
-            Query query = getSession().createQuery(hql);
-            query.setParameter("filesId", fileId);
-            query.setParameter("objectType1", com.viettel.common.util.Constants.OBJECT_TYPE.FILES);
-            query.setParameter("objectType2", com.viettel.common.util.Constants.OBJECT_TYPE.FILES_LABEL);
-            if (!lstIdOfAttachs.isEmpty()) {
-                query.setParameterList("lstIdOfAttachs", lstIdOfAttachs);
-            }
-            query.executeUpdate();
         }
     }
 
@@ -3019,7 +3045,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             return null;
         }
 
-        if (createForm.getIsTemp() == null || (createForm.getIsTemp() != null && !createForm.getIsTemp().equals(1l))) {
+        if (createForm.getIsTemp() == null
+                || (createForm.getIsTemp() != null
+                && !createForm.getIsTemp().equals(1l))) {
             saveFileForSearch(filesId);
         }
 
@@ -3185,8 +3213,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         ProcedureDAOHE pdhe = new ProcedureDAOHE();
         Procedure tthc = pdhe.findById(file.getFileType());
         //Hiepvv Khong validate voi ho so sua doi sau cong bo va KS4s
-        if (tthc.getDescription().equalsIgnoreCase("announcement4star") || tthc.getDescription().equalsIgnoreCase("announcementFile05")) {
-
+        if (tthc.getDescription().equalsIgnoreCase("announcement4star")
+                || tthc.getDescription().equalsIgnoreCase("announcementFile05")) {
+//do nothing
         } else if (createForm.getDetailProduct() != null) {
             //
             // validate thong tin chi tiet
@@ -5594,7 +5623,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
      * @param userName
      * @return
      */
-    public boolean onReviewEvaluate(FilesForm form, Long deptId, String deptName, Long userId, String userName) {//SOS
+    public boolean onReviewEvaluate(FilesForm form, Long deptId, String deptName, Long userId, String userName) {
         boolean bReturn = true;
         try {
             Files file = findById(form.getFileId());
@@ -5859,6 +5888,22 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             getSession().update(pFeedbacktoAdd);
                         }
                     }
+                    // Hiepvv_Home Update Title And Content of File SDBS after announced
+                    if (form.getContentsEditATTP() != null
+                            && form.getTitleEditATTP() != null
+                            && (!form.getContentsEditATTP().trim().equals("")
+                            || !form.getTitleEditATTP().trim().equals(""))
+                            && (file.getFilesSourceID() != null
+                            && file.getFilesSourceID() > 0
+                            && file.getFileSourceCode() != null)) {
+                        if (form.getTitleEditATTP() != null) {
+                            file.setTitleEditATTP(form.getTitleEditATTP());
+                        }
+                        if (form.getContentsEditATTP() != null) {
+                            file.setContentsEditATTP(form.getContentsEditATTP());
+                        }
+                    }
+                    //End Hiepvv                    
                     update(file);
                 } else {
                     return false;
@@ -7024,7 +7069,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
      *
      *
      */
-    public boolean onReviewManyFiles(FilesForm form, Long deptId, String deptName, Long userId, String userName) {//SOS
+    public boolean onReviewManyFiles(FilesForm form, Long deptId, String deptName, Long userId, String userName) {
         boolean bReturn = true;
         try {
             Files file = findById(form.getFileId());
@@ -7773,6 +7818,22 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                                 + " đang trong trạng thái: Đã thông báo yêu cầu sửa đổi bổ sung.";
                         msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
                     }//!140721
+                    // Hiepvv_Home Update Title And Content of File SDBS after announced
+                    if (form.getContentsEditATTP() != null
+                            && form.getTitleEditATTP() != null
+                            && (!form.getContentsEditATTP().trim().equals("")
+                            || !form.getTitleEditATTP().trim().equals(""))
+                            && (file.getFilesSourceID() != null
+                            && file.getFilesSourceID() > 0
+                            && file.getFileSourceCode() != null)) {
+                        if (form.getTitleEditATTP() != null) {
+                            file.setTitleEditATTP(form.getTitleEditATTP());
+                        }
+                        if (form.getContentsEditATTP() != null) {
+                            file.setContentsEditATTP(form.getContentsEditATTP());
+                        }
+                    }
+                    //End Hiepvv
                     update(file);
                 } else {
                     log.error("Lỗi hệ thống: Phân quyền xử lý hồ sơ: " + file.getFileCode());
@@ -7785,7 +7846,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         return bReturn;
     }
 
-    public boolean onEvaluateByLeaderManyFiles(FilesForm form, Long deptId, String deptName, Long userId, String userName) {//SOS
+    public boolean onEvaluateByLeaderManyFiles(FilesForm form, Long deptId, String deptName, Long userId, String userName) {
         boolean bReturn = true;
         try {
             Files file = findById(form.getFileId());

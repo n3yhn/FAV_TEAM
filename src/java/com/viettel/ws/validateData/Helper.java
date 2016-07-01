@@ -769,9 +769,9 @@ public class Helper {
             Attachment att = new Attachment();
             VoAttachsDAOHE attdhe = new VoAttachsDAOHE();
             VoAttachs lstAttach = attdhe.getLstVoAttachByFilesId(fileId, "PDHS_PUBLIC");
-            String filePath = lstAttach.getAttachName();
+            String filePath = lstAttach.getAttachPath();
             ResourceBundle rb = ResourceBundle.getBundle("config");
-            String signPdf = rb.getString("sign_upload");
+            String signPdf = rb.getString("directory");
             String filePathFinal = signPdf + filePath;
             File fileSign = new File(filePathFinal);
             att.setAttachmentName(lstAttach.getAttachName());

@@ -171,12 +171,7 @@ public class ExportFileDAO extends BaseDAO {
                     String titleEdit = "";
                     String receiptNoOld = "";
                     receiptNo = "0000";
-                    if (filesForm.getContentsEditATTP() != null && !filesForm.getContentsEditATTP().isEmpty()) {
-                        contentEdit = filesForm.getContentsEditATTP();
-                    } else {
-                        contentEdit = filesForm.getContentsEdit();
-                    }
-//                    if (filesForm.getAnnouncement().getPublishDate() != null) {
+                    //                    if (filesForm.getAnnouncement().getPublishDate() != null) {
 //                        publishDate = DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "dd")
 //                                + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "MM")
 //                                + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "yyyy");
@@ -211,13 +206,6 @@ public class ExportFileDAO extends BaseDAO {
                             }
                         }
                     }
-                    if (filesForm.getTitleEdit() != null) {
-                        titleEdit = filesForm.getTitleEdit();
-                    } else if (filesForm.getTitleEditATTP() != null) {
-                        titleEdit = filesForm.getTitleEditATTP();
-                    } else {
-                        titleEdit = "sửa đổi bổ sung hồ sơ đã công bố";
-                    }
                     Date dateNow = getSysdate();
                     String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd") + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM") + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
                     if (filesForm.getAnnouncementReceiptPaperForm() != null) {
@@ -225,6 +213,21 @@ public class ExportFileDAO extends BaseDAO {
                     } else if (filesForm.getConfirmImportSatistPaperForm() != null) {
                         receiptDeptName = filesForm.getConfirmImportSatistPaperForm().getTestAgencyName();
                     }
+
+                    if (filesForm.getTitleEditATTP() != null) {
+                        titleEdit = filesForm.getTitleEditATTP();
+                    } else if (filesForm.getTitleEdit() != null) {
+                        titleEdit = filesForm.getTitleEdit();
+                    } else {
+                        titleEdit = "sửa đổi bổ sung hồ sơ đã công bố";
+                    }
+                    if (filesForm.getContentsEditATTP() != null
+                            && !filesForm.getContentsEditATTP().isEmpty()) {
+                        contentEdit = filesForm.getContentsEditATTP();
+                    } else {
+                        contentEdit = filesForm.getContentsEdit();
+                    }
+
                     wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignsuadoisaucongbo))));
                     //Các biến truyền vào Công văn
                     if (receiptDeptName == null || receiptDeptName.equals("Cục ATTP")) {

@@ -33,6 +33,7 @@ import com.viettel.hqmc.BO.Repositories;
 import com.viettel.hqmc.BO.RequestComment;
 import com.viettel.hqmc.BO.TechnicalStandard;
 import com.viettel.hqmc.BO.UserAttachs;
+import com.viettel.hqmc.BO.XmlWs;
 import com.viettel.hqmc.DAOHE.AnnouncementReceiptPaperDAOHE;
 import com.viettel.hqmc.DAOHE.BusinessDAOHE;
 import com.viettel.hqmc.DAOHE.CaUserDAOHE;
@@ -80,6 +81,7 @@ import com.viettel.voffice.database.BO.ProcessComment;
 import com.viettel.voffice.database.BO.VoAttachs;
 import com.viettel.voffice.database.DAO.BaseDAO;
 import com.viettel.voffice.database.DAO.GridResult;
+import static com.viettel.voffice.database.DAO.UploadIframeDAO.getSafeFileName;
 import com.viettel.voffice.database.DAOHibernate.CategoryDAOHE;
 import com.viettel.voffice.database.DAOHibernate.EventLogDAOHE;
 import com.viettel.voffice.database.DAOHibernate.ProcessCommentDAOHE;
@@ -92,6 +94,7 @@ import com.viettel.vsaadmin.database.DAO.UsersDAO;
 import com.viettel.vsaadmin.database.DAOHibernate.DepartmentDAOHE;
 import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import com.viettel.ws.FilesWS;
+import com.viettel.ws.validateData.Helper;
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -118,6 +121,7 @@ import java.security.cert.X509Certificate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
@@ -138,6 +142,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.xml.security.exceptions.Base64DecodingException;
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
@@ -267,6 +272,7 @@ public class FilesDAO extends BaseDAO {
     private LoginCAForm loginCAForm;
     private static Long fileSourceID;
     private static boolean isEdit = false;
+    private static final String separatorFile = String.valueOf(File.separatorChar);
 
     /**
      *
@@ -1397,22 +1403,6 @@ public class FilesDAO extends BaseDAO {
             if (bReturn) {
                 resultMessage.add("1");
                 resultMessage.add("Lưu dữ liệu thành công");
-                // Hiepvv_Home Update Title And Content of File SDBS after announced
-                Files fo = fdhe.findById(createForm.getFileId());
-                if (fo.getFilesSourceID() != null && fo.getFilesSourceID() > 0 && fo.getFileSourceCode() != null) {
-                    if (createForm.getTitleEditATTP() != null) {
-                        fo.setTitleEditATTP(createForm.getTitleEditATTP());
-                    } else {
-                        fo.setTitleEditATTP(createForm.getTitleEdit());
-                    }
-                    if (createForm.getContentsEditATTP() != null) {
-                        fo.setContentsEditATTP(createForm.getContentsEditATTP());
-                    } else {
-                        fo.setContentsEditATTP(createForm.getContentsEdit());
-                    }
-                    getSession().update(fo);
-                }
-                //End Hiepvv_Home
                 Files file = fdhe.findById(createForm.getFileId());
                 fdhe.saveStatusFiles(file, "Hồ sơ mã: " + file.getFileCode() + " Đã được thẩm định");
             } else {
@@ -1768,12 +1758,27 @@ public class FilesDAO extends BaseDAO {
 
             EventLogDAOHE edhe = new EventLogDAOHE();
             edhe.insertEventLog("Phê duyệt hồ sơ", "hồ sơ có id=" + createForm.getFileId(), getRequest());
+            //160620 binhnt add gui service den hai quan ban tin cong bo.
+//            Helper h = new Helper();
+//            try {
+//                XmlWs xmlBo = new XmlWs();
+//                xmlBo.setContent(h.sendARP(createForm.getFileId()));
+//                xmlBo.setUserCreateId(getUserId());
+//                xmlBo.setUserCreateName(getUserName());
+//                getSession().save(xmlBo);
+//
+//            } catch (IOException ex) {
+//                Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (Base64DecodingException ex) {
+//                Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            }
             getSession().getTransaction().commit();
         } catch (Exception ex) {
             resultMessage.add("3");
             resultMessage.add("Phê duyệt không thành công");
             log.error(ex.getMessage());
         }
+
         jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;
     }
@@ -1785,7 +1790,8 @@ public class FilesDAO extends BaseDAO {
      */
     public String onCreatePaper() {
         FilesDAOHE fdhe = new FilesDAOHE();
-        boolean bReturn = fdhe.onCreatePaper(createForm, getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());
+        boolean bReturn = fdhe.onCreatePaper(createForm, getDepartmentId(),
+                getDepartment().getDeptName(), getUserId(), getUserName());
         List resultMessage = new ArrayList();
         if (bReturn) {
             resultMessage.add("1");
@@ -1921,6 +1927,8 @@ public class FilesDAO extends BaseDAO {
         String manuEmail = "";
         String manuFax = "";
         String matchingTaget = "";
+        String nameStaffProcess = "";
+        Long staffProcessId = 0L;
         Date publishDate = null;
         String strReturn = ERROR_PERMISSION;
         if (createForm.getFileId() != null && createForm.getFileId() > 0l) {
@@ -1930,6 +1938,8 @@ public class FilesDAO extends BaseDAO {
             if (isEdits > 0L) {
                 String fileSourceCode = createForm.getFileCode();
                 Long fileSource = createForm.getFileId();
+                staffProcessId = createForm.getStaffProcess();
+                nameStaffProcess = createForm.getNameStaffProcess();
                 //Thong tin ho so cu
                 proName = createForm.getAnnouncement().getProductName();
                 manuName = createForm.getAnnouncement().getManufactureName();
@@ -1954,6 +1964,8 @@ public class FilesDAO extends BaseDAO {
                 }
                 createForm.setFilesSourceID(fileSource);
                 createForm.setFileSourceCode(fileSourceCode);
+                createForm.setStaffProcess(staffProcessId);//them nguoi tham dinh ho so truoc day
+                createForm.setNameStaffProcess(nameStaffProcess);//them nguoi tham dinh ho so truoc day
             }
 //            if (!createForm.getFileType().equals(0L)) {
 //                ProcedureDAOHE cdhe = new ProcedureDAOHE();
@@ -1977,8 +1989,7 @@ public class FilesDAO extends BaseDAO {
 
             if (tthc != null) {
 
-                //lstProductType = cdhe.findAllCategory("SP");
-                //hieptq update 150415
+                //lstProductType = cdhe.findAllCategory("SP");//hieptq update 150415                
                 if (checkEdit == 1) {
                     typeFee = cdhe.findTypeFee(tthc.getProcedureId());
                     lstProductType = cdhe.findAllCategoryByFee("SP", typeFee);
@@ -2015,7 +2026,8 @@ public class FilesDAO extends BaseDAO {
                 getRequest().setAttribute("checkEdit", checkEdit);
                 strReturn = tthc.getDescription();
                 if (createForm.getAnnouncement() != null) {
-                    if (createForm.getAnnouncement().getAnnouncementNo() != null && createForm.getAnnouncement().getAnnouncementNo().length() > 0l
+                    if (createForm.getAnnouncement().getAnnouncementNo() != null
+                            && createForm.getAnnouncement().getAnnouncementNo().length() > 0l
                             && isEdits != 1L) {
                         CategoryDAOHE ctdhe = new CategoryDAOHE();
                         Category cate = ctdhe.findCategoryByTypeAndCode("SP", "TPCN");
@@ -4011,11 +4023,13 @@ public class FilesDAO extends BaseDAO {
         if ((totalFeeFile.equals(feeFile) && feeFile > 0l) || (totalFeeFile > feeFile)) {
             customInfo.add(1);
         } else // nop thieu
-        if (totalFeeFile < feeFile && totalFeeFile > 0) {
-            customInfo.add(0);
-        } // chua nop
-        else {
-            customInfo.add(-1);
+        {
+            if (totalFeeFile < feeFile && totalFeeFile > 0) {
+                customInfo.add(0);
+            } // chua nop
+            else {
+                customInfo.add(-1);
+            }
         }
 
         jsonDataGrid.setItems(result.getLstResult());
@@ -5838,6 +5852,28 @@ public class FilesDAO extends BaseDAO {
         customInfo.add(foodSafetyQuality);
         customInfo.add(effectUtility);
         customInfo.add(standard);
+        //160628 bo sung noi dung sua sau cong bo
+        FilesDAOHE filesDaohe = new FilesDAOHE();
+        Files filebo = filesDaohe.findById(objectId);
+        String titleEditATTP = "";
+        String contentsEditATTP = "";
+        if (filebo != null) {
+            if (filebo.getTitleEditATTP() != null
+                    && !filebo.getTitleEditATTP().trim().equals("")) {
+                titleEditATTP = filebo.getTitleEditATTP();
+            } else {
+                titleEditATTP = filebo.getTitleEdit();
+            }
+            if (filebo.getContentsEditATTP() != null
+                    && !filebo.getContentsEditATTP().trim().equals("")) {
+                contentsEditATTP = filebo.getContentsEditATTP();
+            } else {
+                contentsEditATTP = filebo.getContentsEdit();
+            }
+        }
+        customInfo.add(titleEditATTP);
+        customInfo.add(contentsEditATTP);
+        //!160628
         /*
          CategoryDAOHE catedaohe = new CategoryDAOHE();
          Category catebo = catedaohe.findById(productType);
@@ -6306,14 +6342,26 @@ public class FilesDAO extends BaseDAO {
             getRequest().setAttribute("calink", calink);
             FilesDAOHE fdhe = new FilesDAOHE();
             Files files = fdhe.findById(createFeeForm.getFileId());
-            String fileCode = files.getFileCode();
+            if (files != null) {
+                String fileCode = files.getFileCode();
 //            Base64 encoder = new Base64();
-            String productName = newStringUtf8(Base64.encodeBase64(files.getProductName().getBytes("UTF-8")));
-            String businessName = newStringUtf8(Base64.encodeBase64(files.getBusinessName().getBytes("UTF-8")));
-            //String businessName = files.getBusinessName();
-            getRequest().setAttribute("fileCode", fileCode);
-            getRequest().setAttribute("businessName", businessName);
-            getRequest().setAttribute("productName", productName);
+                String productName = "";
+                String businessName = newStringUtf8(Base64.encodeBase64(files.getBusinessName().getBytes("UTF-8")));;
+                ProcedureDAOHE prodaohe = new ProcedureDAOHE();
+                Procedure probo = prodaohe.findById(files.getFileType());
+                if (probo != null) {
+                    if (probo.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)) {
+                        productName = newStringUtf8(Base64.encodeBase64("KS4S".getBytes("UTF-8")));
+                    } else {
+                        productName = newStringUtf8(Base64.encodeBase64(files.getProductName().getBytes("UTF-8")));
+                    }
+
+                }
+                //String businessName = files.getBusinessName();
+                getRequest().setAttribute("fileCode", fileCode);
+                getRequest().setAttribute("businessName", businessName);
+                getRequest().setAttribute("productName", productName);
+            }
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }
@@ -8546,20 +8594,43 @@ public class FilesDAO extends BaseDAO {
         return y;
     }
 
-    // hieptq update 141015
+    /**
+     * hieptq update 141015 sign file using plugin
+     *
+     * @return
+     */
     public String onSignPlugin() {
         boolean result = true;
         String errorCode = "";
+        Calendar cal = Calendar.getInstance();
         try {
             String signType = getRequest().getParameter("signType");
             String fileName = getRequest().getParameter("fileName");
             String fileName0 = getRequest().getParameter("fileName0");
             //hieptq update vi tri luu file
             ResourceBundle rb = ResourceBundle.getBundle("config");
-            String PATH1 = rb.getString("sign_upload");
-            String uploadPath = rb.getString("upload_path");
+            String uploadPath = rb.getString("PERMIT_path");//160629 binhnt update duong dan luu file cong bo
+            String subDir = String.valueOf(cal.getTime().getYear() + 1900)
+                    + separatorFile + String.valueOf(cal.getTime().getMonth() + 1)
+                    + separatorFile + String.valueOf(cal.getTime().getDate())
+                    + separatorFile;//ex: 2016\6\29\
+            String strPath = rb.getString("PERMIT_upload") + subDir;
             String copyPath = rb.getString("file_sign_link");
+            
             String paperOnly = "";
+
+            File folderExisting = new File(strPath);
+            if (!folderExisting.isDirectory()) {
+                folderExisting.mkdir();
+            }
+            if (folderExisting.isDirectory()) {
+                //tao folder theo ngay thang
+                File temp = new File(strPath);
+                if (!temp.isDirectory()) {
+                    temp.mkdirs();
+                }
+            }
+
             String[] parts = fileName.split("_");
             if (parts.length != 4 && parts.length != 5 && parts.length != 6) {
                 errorCode = "SI_015";
@@ -8572,8 +8643,8 @@ public class FilesDAO extends BaseDAO {
                 paperOnly = parts[0] + "_" + parts[1] + "_" + parts[2] + "_" + parts[3] + "_" + parts[4] + "_" + "2" + ".pdf";
             }
             //hieptq update 106015
-            String outputFile = PATH1 + fileName;
-            String outputFileOriginal = PATH1 + fileName0;
+            String outputFile = strPath + fileName;
+            String outputFileOriginal = strPath + fileName0;
             String signature;
             String signatureOriginal = null;
             Base64 decoder = new Base64();
@@ -8654,14 +8725,14 @@ public class FilesDAO extends BaseDAO {
             }
             System.out.println("Signed file: " + outputFile);
             try {
-                if (updateSignPlugin(fileName) == false) {
+                if (updateSignPlugin(fileName, subDir, uploadPath) == false) {
                     errorCode = "SI_022";
                     result = false;
                 }
                 if ((signType.equals("PDHS") || signType.equals("PDHS_VT"))
                         //Hiepvv
                         && fileSignOutLink2 != null && fileSignOutLink2.length() > 0) {
-                    if (updateSignPlugin(paperOnly) == false) {
+                    if (updateSignPlugin(paperOnly, subDir, uploadPath) == false) {
                         errorCode = "SI_023";
                         result = false;
                     }
@@ -8689,15 +8760,33 @@ public class FilesDAO extends BaseDAO {
     public String onSignPluginAA() {
         boolean result = true;
         String errorCode = "";
+        Calendar cal = Calendar.getInstance();
         try {
 //            String signType = getRequest().getParameter("signType");
             String fileName = getRequest().getParameter("fileName");
 //            String fileName0 = getRequest().getParameter("fileName0");
             //hieptq update vi tri luu file
             ResourceBundle rb = ResourceBundle.getBundle("config");
-            String PATH1 = rb.getString("sign_upload");
+            String uploadPath = rb.getString("PERMIT_path");
+            String subDir = String.valueOf(cal.getTime().getYear() + 1900)
+                    + separatorFile + String.valueOf(cal.getTime().getMonth() + 1)
+                    + separatorFile + String.valueOf(cal.getTime().getDate())
+                    + separatorFile;//ex: 2016\6\29\
+            String PATH1 = rb.getString("PERMIT_upload") + subDir;
             String copyPath = rb.getString("file_sign_link");
-//            String paperOnly = "";
+            
+            File folderExisting = new File(PATH1);
+            if (!folderExisting.isDirectory()) {
+                folderExisting.mkdir();
+            }
+            if (folderExisting.isDirectory()) {
+                //tao folder theo ngay thang
+                File temp = new File(PATH1);
+                if (!temp.isDirectory()) {
+                    temp.mkdirs();
+                }
+            }
+                        
             String[] parts = fileName.split("_");
             if (parts.length != 4 && parts.length != 5 && parts.length != 6) {
                 errorCode = "SI_015";
@@ -8793,7 +8882,7 @@ public class FilesDAO extends BaseDAO {
             }
             System.out.println("Signed file: " + outputFile);
             try {
-                if (updateSignPlugin(fileName) == false) {
+                if (updateSignPlugin(fileName, subDir, uploadPath) == false) {
                     errorCode = "SI_022";
                     result = false;
                 }
@@ -8841,16 +8930,19 @@ public class FilesDAO extends BaseDAO {
     }
 // Insert cac file dc ky vao DB
 
-    public Boolean updateSignPlugin(String fileName) {
+    /**
+     *
+     * @param fileName
+     * @return
+     */
+    public Boolean updateSignPlugin(String fileName, String destination, String uploadPath) {
         boolean result = true;
         try {
-            // Upload file
-            ResourceBundle rb1 = ResourceBundle.getBundle("config");
-            String PATH1 = rb1.getString("sign_upload");
-            String uploadPath = rb1.getString("upload_path");
             // Save info to DB
             String[] parts = fileName.split("_");
-            if (parts.length != 4 && parts.length != 5 && parts.length != 6) {
+            if (parts.length != 4
+                    && parts.length != 5
+                    && parts.length != 6) {
                 result = false;
             }
             String signType = "";
@@ -8911,7 +9003,7 @@ public class FilesDAO extends BaseDAO {
                     Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình upload file ký lên server: Tên File không đúng định dạng");
                     result = false;
                 }
-                voUpload.setAttachPath(uploadPath + fileName);
+                voUpload.setAttachPath(uploadPath + destination + fileName);
                 vdhe.saveDbNotCommit(voUpload);
             } else if (parts[0].equals("VT")) {
                 List<VoAttachs> voa;
@@ -8964,7 +9056,7 @@ public class FilesDAO extends BaseDAO {
                     Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình upload file ký lên server: Tên File không đúng định dạng");
                     result = false;
                 }
-                voUpload.setAttachPath(uploadPath + fileName);
+                voUpload.setAttachPath(uploadPath + destination + fileName);
                 vdhe.saveDbNotCommit(voUpload);
             }
             // Update status to File
@@ -9373,7 +9465,8 @@ public class FilesDAO extends BaseDAO {
             searchForm = new FilesForm();
             searchForm.setDeptId(getDepartmentId());
         }
-        GridResult gr = bdhe.searchLookupFilesAfterAnnounced(searchForm, getDepartmentId(), getUserId(), Constants.ROLES.CLERICAL_ROLE, start, count, sortField, "");
+        GridResult gr = bdhe.searchLookupFilesAfterAnnounced(searchForm,
+                getDepartmentId(), getUserId(), Constants.ROLES.CLERICAL_ROLE, start, count, sortField, "");
 
         getRequest().getSession().setAttribute("lookupAfterAnnounced.startServer", start);
         getRequest().getSession().setAttribute("lookupAfterAnnounced.countServer", count);
@@ -9388,7 +9481,8 @@ public class FilesDAO extends BaseDAO {
         List lstTTHC = cdhe.getAllProcedure();
         lstCategory = new ArrayList();
         lstCategory.addAll(lstTTHC);
-        lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+        lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE,
+                Constants.COMBOBOX_HEADER_TEXT_SELECT));
         getRequest().setAttribute("lstFileType", lstCategory);
         UsersDAOHE udaohe = new UsersDAOHE();
         List lstLDP = udaohe.findLstUserByPosition(getDepartmentId(), Constants.POSITION.LEADER_OF_STAFF_T);
@@ -9399,10 +9493,9 @@ public class FilesDAO extends BaseDAO {
             lstLDP = udaohe.findLstUserByLstPosition(getDepartmentId(), lstLeader);
         }
         lstLeaderOfStaff = new ArrayList();
-        if (lstLDP != null && !lstLDP.isEmpty()) {
-            lstLeaderOfStaff.addAll(lstLDP);
-        }
-        lstLeaderOfStaff.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+        lstLeaderOfStaff.addAll(lstLDP);
+        lstLeaderOfStaff.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE,
+                Constants.COMBOBOX_HEADER_TEXT_SELECT));
         getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaff);
         return lookupAfterAnnouncedPage;
     }
@@ -9412,7 +9505,8 @@ public class FilesDAO extends BaseDAO {
         List lstTTHC = cdhe.getAllProcedure();
         lstCategory = new ArrayList();
         lstCategory.addAll(lstTTHC);
-        lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+        lstCategory.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE,
+                Constants.COMBOBOX_HEADER_TEXT_SELECT));
         getRequest().setAttribute("lstFileType", lstCategory);
         // Get Role
         List<Roles> roles = getListRolesByUser();
@@ -9433,7 +9527,8 @@ public class FilesDAO extends BaseDAO {
             if (lstLDP != null) {
                 List lstLeaderOfStaffOnGrid = new ArrayList();
                 lstLeaderOfStaffOnGrid.addAll(lstLDP);
-                lstLeaderOfStaffOnGrid.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+                lstLeaderOfStaffOnGrid.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE,
+                        Constants.COMBOBOX_HEADER_TEXT_SELECT));
                 getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaffOnGrid);
             }
         } else {//la pho phong - lay danh sach ldc va truong phong
@@ -9446,7 +9541,8 @@ public class FilesDAO extends BaseDAO {
             if (lstLDP != null) {
                 lstLeaderOfStaffOnGrid.addAll(lstLDP);
             }
-            lstLeaderOfStaffOnGrid.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
+            lstLeaderOfStaffOnGrid.add(0, new Users(Constants.COMBOBOX_HEADER_VALUE,
+                    Constants.COMBOBOX_HEADER_TEXT_SELECT));
             getRequest().setAttribute("lstLeaderOfStaff", lstLeaderOfStaffOnGrid);
         }
         return EVALUATION_LEADER_PAGE_AA;
@@ -9519,13 +9615,15 @@ public class FilesDAO extends BaseDAO {
         for (int i = 0; i < lstItemOnGrid.size(); i++) {
             FilesForm form = lstItemOnGrid.get(i);
             if (form != null && form.getFileId() != null && form.getFileId() != 0D) {
-                boolean check = fdhe.validateRoleUser(form.getFileId(), form, getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());
+                boolean check = fdhe.validateRoleUser(form.getFileId(), form,
+                        getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());
                 if (check) {
                     form.setStatus(Constants.FILE_STATUS.FEDBACK_TO_ADD);
                     form.setLeaderStaffRequest("Phó phòng đồng ý với kết luận yêu cầu sđbs của chuyên viên.");
                     form.setLeaderReviewId(id);
                     form.setLeaderReviewName(name);
-                    boolean bReturn = fdhe.onEvaluateByLeaderManyFilesToAdd(form, getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());
+                    boolean bReturn = fdhe.onEvaluateByLeaderManyFilesToAdd(form,
+                            getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());
                     sid += form.getFileId() + ",";
                     if (bReturn) {
                         nSuccess++;
@@ -9538,7 +9636,8 @@ public class FilesDAO extends BaseDAO {
                 }
             }
         }
-        String strAlert = "Thẩm định bổ sung nhiều hồ sơ thành công, có " + nSuccess + " hồ sơ thành công và " + nError + " hồ sơ thẩm định bổ sung không thành công";
+        String strAlert = "Thẩm định bổ sung nhiều hồ sơ thành công, có "
+                + nSuccess + " hồ sơ thành công và " + nError + " hồ sơ thẩm định bổ sung không thành công";
         resultMessage.add("1");
         resultMessage.add(strAlert);
         EventLogDAOHE edhe = new EventLogDAOHE();
@@ -9569,13 +9668,82 @@ public class FilesDAO extends BaseDAO {
             searchForm.setDeptId(getDepartmentId());
         }
         FilesNoClobDAOHE bdhe = new FilesNoClobDAOHE();
-        GridResult gr = bdhe.findAllFileForAssignEvaluationForRE(searchForm, getDepartmentId(), getUserId(), start, count, sortField);
+        GridResult gr = bdhe.findAllFileForAssignEvaluationForRE(searchForm,
+                getDepartmentId(), getUserId(), start, count, sortField);
 
         getRequest().getSession().setAttribute("assignEvaluation.startServer", start);
         getRequest().getSession().setAttribute("assignEvaluation.countServer", count);
 
         jsonDataGrid.setItems(gr.getLstResult());
         jsonDataGrid.setTotalRows(gr.getnCount().intValue());
+        return GRID_DATA;
+    }
+
+    public String getCommentEvaluateFormByLeaderForAA() {
+        getGridInfo();
+        List customInfo = new ArrayList();
+        String strObjectId = getRequest().getParameter("objectId");
+        Long objectId = 0l;
+        try {
+            objectId = Long.parseLong(strObjectId);
+        } catch (Exception en) {
+            log.error(en.getMessage());
+        }
+        FilesDAOHE fdaohe = new FilesDAOHE();
+        Files fbo = fdaohe.findById(objectId);
+        EvaluationRecords erbo = new EvaluationRecords();
+        EvaluationRecordsDAOHE erdaohe = new EvaluationRecordsDAOHE();
+
+        erbo = erdaohe.findFilesByFileId(fbo);
+        String legal = "";
+        String foodSafetyQuality = "";
+        String effectUtility = "";
+        String standard = "";
+        Long llegal = null;
+        Long lfoodSafetyQuality = null;
+        Long leffectUtility = null;
+        Long lstandard = null;
+        if (erbo != null && fbo != null) {
+            legal = erbo.getLegalContent();
+            foodSafetyQuality = erbo.getFoodSafetyQualityContent();
+            effectUtility = erbo.getEffectUtilityContent();
+            standard = fbo.getStaffRequest();
+            lstandard = fbo.getEffectiveDate();
+            llegal = erbo.getLegal();
+            lfoodSafetyQuality = erbo.getFoodSafetyQuality();
+            leffectUtility = erbo.getEffectUtility();
+        }
+        customInfo.add(legal);
+        customInfo.add(foodSafetyQuality);
+        customInfo.add(effectUtility);
+        customInfo.add(standard);
+        customInfo.add(lstandard);
+        customInfo.add(llegal);
+        customInfo.add(lfoodSafetyQuality);
+        customInfo.add(leffectUtility);
+
+        //160628 bo sung noi dung sua sau cong bo
+        String titleEditATTP = "";
+        String contentsEditATTP = "";
+        if (fbo != null) {
+            if (fbo.getTitleEditATTP() != null
+                    && !fbo.getTitleEditATTP().trim().equals("")) {
+                titleEditATTP = fbo.getTitleEditATTP();
+            } else {
+                titleEditATTP = fbo.getTitleEdit();
+            }
+            if (fbo.getContentsEditATTP() != null
+                    && !fbo.getContentsEditATTP().trim().equals("")) {
+                contentsEditATTP = fbo.getContentsEditATTP();
+            } else {
+                contentsEditATTP = fbo.getContentsEdit();
+            }
+        }
+        customInfo.add(titleEditATTP);
+        customInfo.add(contentsEditATTP);
+        //!160628
+
+        jsonDataGrid.setCustomInfo(customInfo);
         return GRID_DATA;
     }
 }

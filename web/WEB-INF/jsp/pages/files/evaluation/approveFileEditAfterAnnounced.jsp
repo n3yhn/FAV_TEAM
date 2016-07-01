@@ -40,7 +40,10 @@
             var url = "<div style='text-align:center;cursor:pointer;display:inline'><img src='share/images/icons/view.png' width='17px' height='17px' title='Xem hồ sơ' onClick='page.showViewFile(" + item.fileId + ");' />";
             switch (status) {
                 case 6:
-                    if ((item.announcementReceiptPaperId != null && item.announcementReceiptPaperId > 0) || (item.confirmImportSatistPaperId != null && item.confirmImportSatistPaperId > 0)) {
+                    if ((item.announcementReceiptPaperId != null
+                            && item.announcementReceiptPaperId > 0)
+                            || (item.confirmImportSatistPaperId != null
+                                    && item.confirmImportSatistPaperId > 0)) {
                         url += " | <img src='share/images/Document.png' width='17px' height='17px' title='Xuất giấy công bố' onClick='page.downloadWord(" + item.fileId + ");' />";
                     }
                     if ((isSignPdf == 1 || isSignPdf == 2) && item.isDownload == 1) {
@@ -168,7 +171,8 @@
                     break;
                 case 3:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn thẩm định&#13;";
                             flag = 1;
@@ -178,7 +182,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn thẩm định&#13;";
                                 flag = 1;
@@ -211,7 +218,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 13) {
                                 strWarning += "- Quá hạn xem xét&#13;";
                                 flag = 1;
@@ -236,7 +246,8 @@
                     break;
                 case 7:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn xem xét&#13;";
                             flag = 1;
@@ -246,7 +257,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 13) {
                                 strWarning += "- Quá hạn xem xét&#13;";
                                 flag = 1;
@@ -256,7 +270,8 @@
                                 }
                             }
                         } else {
-                            if (fileType == 66746 || fileType == 66748) {
+                            if (fileType == 66746
+                                    || fileType == 66748) {
                                 if (diffDays > 4) {
                                     strWarning += "- Quá hạn xem xét&#13;";
                                     flag = 1;
@@ -271,7 +286,8 @@
                     break;
                 case 5:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn phê duyệt&#13;";
                             flag = 1;
@@ -281,7 +297,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn phê duyệt&#13;";
                                 flag = 1;
@@ -291,7 +310,8 @@
                                 }
                             }
                         } else {
-                            if (fileType == 66746 || fileType == 66748) {
+                            if (fileType == 66746
+                                    || fileType == 66748) {
                                 if (diffDays > 4) {
                                     strWarning += "- Quá hạn phê duyệt&#13;";
                                     flag = 1;
@@ -331,7 +351,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn thẩm định&#13;";
                                 flag = 1;
@@ -621,7 +644,7 @@
             >
     <jsp:include page="reviewFormViewAA.jsp" flush="false"></jsp:include>
 </sd:Dialog>
-<script type="text/javascript">
+<script type="text/javascript">                                                                                                              ;
     var flagSignMore = false;
     var itemsToSign = null;
     var signIndex = 0;
@@ -663,7 +686,6 @@
         var file = dijit.byId("filesGrid").getItem(row);
         document.getElementById("trWaitViewFile").style.display = '';
         page.onSign(file, false);
-        //dijit.byId("approveDlg").show();
         dijit.byId("approveDlg").show();
     };
 
@@ -677,6 +699,10 @@
         document.getElementById("approveForm.staffRequest").innerHTML = escapeHtml_(file.staffRequest);
         document.getElementById("approveForm.leaderStaffRequest").innerHTML = escapeHtml_(file.leaderStaffRequest);
         dijit.byId("approveForm.leaderRequest").setValue("");
+
+        document.getElementById("approveForm.titleEditATTP").innerHTML = escapeHtml_(file.titleEditATTP);
+        document.getElementById("approveForm.contentsEditATTP").innerHTML = escapeHtml_(file.contentsEditATTP);
+
         page.hideContentAF();//a150108 binhnt53
         page.replaceBrTblApproveForm();
         sd.connector.post("filesAction!loadFileView.do?createForm.fileId=" + file.fileId + "&createForm.viewType=2&viewTypeDialog=1", "divViewFile", null, null, afterShowApproveViewFile);
@@ -697,7 +723,8 @@
 //        document.getElementById("trWait").style.display = "";
         page.hideContentAF();//a150108 binhnt53
         page.replaceBrTblApproveForm();
-        sd.connector.post("filesAction!loadFileView.do?createForm.fileId=" + file.fileId + "&createForm.viewType=2&viewTypeDialog=1", "divViewFile", null, null, afterShowApproveViewFile);
+        sd.connector.post("filesAction!loadFileView.do?createForm.fileId="
+                + file.fileId + "&createForm.viewType=2&viewTypeDialog=1", "divViewFile", null, null, afterShowApproveViewFile);
     };
 
     page.showSignMore = function () {
@@ -706,141 +733,168 @@
         } else {
             itemsToSign = dijit.byId("filesGrid").vtGetCheckedItems();
             signIndex = 0;
-            msg.confirm('Bạn có chắc chắn muốn phê duyệt nhiều hồ sơ?', '<sd:Property>confirm.title1</sd:Property>', page.signMoreFilesPlugin);
-                    }
-                };
+            msg.confirm('Bạn có chắc chắn muốn phê duyệt nhiều hồ sơ?',
+                    '<sd:Property>confirm.title1</sd:Property>', page.signMoreFilesPlugin);
+                            }
+                        };
 
 
-                page.signMoreFilesPlugin = function () {
-                    document.getElementById('divProcess').innerHTML = "Hệ thống đang thực hiện phê duyệt:" + (signIndex + 1) + "/" + itemsToSign.length + " hồ sơ  ";
-                    document.getElementById("divSignProcess").style.display = "";
-                    document.getElementById("trWaitViewFile").style.display = 'none';
+                        page.signMoreFilesPlugin = function () {
+                            document.getElementById('divProcess').innerHTML = "Hệ thống đang thực hiện phê duyệt:" + (signIndex + 1) + "/" + itemsToSign.length + " hồ sơ  ";
+                            document.getElementById("divSignProcess").style.display = "";
+                            document.getElementById("trWaitViewFile").style.display = 'none';
 
-                    page.onSign(itemsToSign[signIndex], true);
-                    document.getElementById("approveForm.statusAccept").checked = true;
-                    dijit.byId("approveDlg").show();
-                };
+                            page.onSign(itemsToSign[signIndex], true);
+                            document.getElementById("approveForm.statusAccept").checked = true;
+                            dijit.byId("approveDlg").show();
+                        };
 
-                afterShowApproveViewFile = function () {
-                    document.getElementById("trWaitViewFile").style.display = 'none';
-                    if (flagSignMore)
-                    {
-                        page.onApproveSignPlugin();
-                    }
-                };
+                        afterShowApproveViewFile = function () {
+                            document.getElementById("trWaitViewFile").style.display = 'none';
+                            if (flagSignMore)
+                            {
+                                page.onApproveSignPlugin();
+                            }
+                        };
 
-                page.showSearchPanel = function () {
-                    var panel = document.getElementById("searchDiv");
-                    panel.setAttribute("style", "display:;");
-                    dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
-                };
+                        page.showSearchPanel = function () {
+                            var panel = document.getElementById("searchDiv");
+                            panel.setAttribute("style", "display:;");
+                            dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
+                        };
 
-                page.downloadWord = function (fileId) {
-                    document.location = "exportWord!onExportPaper.do?fileId=" + fileId;
-                };
+                        page.downloadWord = function (fileId) {
+                            document.location = "exportWord!onExportPaper.do?fileId=" + fileId;
+                        };
 
-                page.reset = function () {
-                    dijit.byId('searchForm.fileCode').attr('value', '');
-                    dijit.byId('searchForm.announcementNo').attr('value', '');
-                    dijit.byId('searchForm.businessName').attr('value', '');
-                    dijit.byId('searchForm.businessLicence').attr('value', '');
-                    dijit.byId('searchForm.businessAddress').attr('value', '');
-                    dijit.byId('searchForm.productName').attr('value', '');
-                    dijit.byId('searchForm.nationName').attr('value', '');
-                    dijit.byId('searchForm.manufactureName').attr('value', '');
-                    dijit.byId('searchForm.manufactureAddress').attr('value', '');
-                    dijit.byId('searchForm.matchingTarget').attr('value', '');
-                    dijit.byId('searchForm.Staff').attr('value', '');
-                    dijit.byId('searchForm.fileType').attr('value', '-1');
+                        page.reset = function () {
+                            dijit.byId('searchForm.fileCode').attr('value', '');
+                            dijit.byId('searchForm.announcementNo').attr('value', '');
+                            dijit.byId('searchForm.businessName').attr('value', '');
+                            dijit.byId('searchForm.businessLicence').attr('value', '');
+                            dijit.byId('searchForm.businessAddress').attr('value', '');
+                            dijit.byId('searchForm.productName').attr('value', '');
+                            dijit.byId('searchForm.nationName').attr('value', '');
+                            dijit.byId('searchForm.manufactureName').attr('value', '');
+                            dijit.byId('searchForm.manufactureAddress').attr('value', '');
+                            dijit.byId('searchForm.matchingTarget').attr('value', '');
+                            dijit.byId('searchForm.Staff').attr('value', '');
+                            dijit.byId('searchForm.fileType').attr('value', '-1');
 
-                    page.clearSearch();
-                    page.search();
-                };
+                            page.clearSearch();
+                            page.search();
+                        };
 
-                page.clearSearch = function () {
-                    try
-                    {
-                        localStorage.setItem("approvePage.searchForm.fileCode", "");
-                        localStorage.setItem("approvePage.searchForm.announcementNo", "");
-                        localStorage.setItem("approvePage.searchForm.businessName", "");
-                        localStorage.setItem("approvePage.searchForm.businessLicence", "");
-                        localStorage.setItem("approvePage.searchForm.businessAddress", "");
-                        localStorage.setItem("approvePage.searchForm.productName", "");
-                        localStorage.setItem("approvePage.searchForm.nationName", "");
-                        localStorage.setItem("approvePage.searchForm.manufactureName", "");
-                        localStorage.setItem("approvePage.searchForm.manufactureAddress", "");
-                        localStorage.setItem("approvePage.searchForm.matchingTarget", "");
-                        localStorage.setItem("approvePage.searchForm.Staff", "");
-                        localStorage.setItem("approvePage.searchForm.fileType", "-1");
-                    } catch (err)
-                    {
-                        // nothing
-                    }
-                };
+                        page.clearSearch = function () {
+                            try
+                            {
+                                localStorage.setItem("approvePage.searchForm.fileCode", "");
+                                localStorage.setItem("approvePage.searchForm.announcementNo", "");
+                                localStorage.setItem("approvePage.searchForm.businessName", "");
+                                localStorage.setItem("approvePage.searchForm.businessLicence", "");
+                                localStorage.setItem("approvePage.searchForm.businessAddress", "");
+                                localStorage.setItem("approvePage.searchForm.productName", "");
+                                localStorage.setItem("approvePage.searchForm.nationName", "");
+                                localStorage.setItem("approvePage.searchForm.manufactureName", "");
+                                localStorage.setItem("approvePage.searchForm.manufactureAddress", "");
+                                localStorage.setItem("approvePage.searchForm.matchingTarget", "");
+                                localStorage.setItem("approvePage.searchForm.Staff", "");
+                                localStorage.setItem("approvePage.searchForm.fileType", "-1");
+                            } catch (err)
+                            {
+                                // nothing
+                            }
+                        };
 
-                page.setSearch = function () {
-                    try
-                    {
-                        localStorage.setItem("approvePage.searchForm.fileCode", encodeBase64(dijit.byId("searchForm.fileCode").getValue().toString().trim()));
-                        localStorage.setItem("approvePage.searchForm.announcementNo", encodeBase64(dijit.byId("searchForm.announcementNo").getValue().toString().trim()));
-                        localStorage.setItem("approvePage.searchForm.businessName", encodeBase64(dijit.byId("searchForm.businessName").getValue().toString().trim()));
-                        localStorage.setItem("approvePage.searchForm.businessLicence", encodeBase64(dijit.byId("searchForm.businessLicence").getValue().toString().trim()));
-                        localStorage.setItem("approvePage.searchForm.businessAddress", encodeBase64(dijit.byId("searchForm.businessAddress").getValue().toString().trim()));
-                        localStorage.setItem("approvePage.searchForm.productName", encodeBase64(dijit.byId("searchForm.productName").getValue().toString().trim()));
-                        localStorage.setItem("approvePage.searchForm.nationName", encodeBase64(dijit.byId("searchForm.nationName").getValue().toString().trim()));
-                        localStorage.setItem("approvePage.searchForm.manufactureName", encodeBase64(dijit.byId("searchForm.manufactureName").getValue().toString().trim()));
-                        localStorage.setItem("approvePage.searchForm.manufactureAddress", encodeBase64(dijit.byId("searchForm.manufactureAddress").getValue().toString().trim()));
-                        localStorage.setItem("approvePage.searchForm.matchingTarget", encodeBase64(dijit.byId("searchForm.matchingTarget").getValue().toString().trim()));
-                        localStorage.setItem("approvePage.searchForm.Staff", encodeBase64(dijit.byId("searchForm.Staff").getValue().toString().trim()));
-                        localStorage.setItem("approvePage.searchForm.fileType", encodeBase64(dijit.byId("searchForm.fileType").getValue()));
-                    } catch (err)
-                    {
-                        // nothing
-                    }
-                };
-                page.getSearch = function () {
-                    try
-                    {
-                        dijit.byId("searchForm.fileCode").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.fileCode")));
-                        dijit.byId("searchForm.announcementNo").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.announcementNo")));
-                        dijit.byId("searchForm.businessName").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.businessName")));
-                        dijit.byId("searchForm.businessLicence").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.businessLicence")));
-                        dijit.byId("searchForm.businessAddress").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.businessAddress")));
-                        dijit.byId("searchForm.productName").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.productName")));
-                        dijit.byId("searchForm.nationName").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.nationName")));
-                        dijit.byId("searchForm.manufactureName").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.manufactureName")));
-                        dijit.byId("searchForm.manufactureAddress").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.manufactureAddress")));
-                        dijit.byId("searchForm.matchingTarget").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.matchingTarget")));
-                        dijit.byId("searchForm.Staff").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.Staff")));
-                        dijit.byId("searchForm.fileType").setValue(decodeBase64(localStorage.getItem("approvePage.searchForm.fileType")));
-                    } catch (err)
-                    {
-                        // nothing
-                    }
-                };
-                page.hideSignMore = function ()
-                {
-                    var searchType = dijit.byId("searchForm.searchType").getValue();
-                    if (searchType != null && searchType == "-3")
-                    {
-                        document.getElementById("trSignMore").style.display = "";
-                    } else
-                    {
-                        document.getElementById("trSignMore").style.display = "none";
-                    }
-                };
-                //page.hideSignMore();
-                page.getSearch();
-                page.search();
+                        page.setSearch = function () {
+                            try
+                            {
+                                localStorage.setItem("approvePage.searchForm.fileCode",
+                                        encodeBase64(dijit.byId("searchForm.fileCode").getValue().toString().trim()));
+                                localStorage.setItem("approvePage.searchForm.announcementNo",
+                                        encodeBase64(dijit.byId("searchForm.announcementNo").getValue().toString().trim()));
+                                localStorage.setItem("approvePage.searchForm.businessName",
+                                        encodeBase64(dijit.byId("searchForm.businessName").getValue().toString().trim()));
+                                localStorage.setItem("approvePage.searchForm.businessLicence",
+                                        encodeBase64(dijit.byId("searchForm.businessLicence").getValue().toString().trim()));
+                                localStorage.setItem("approvePage.searchForm.businessAddress",
+                                        encodeBase64(dijit.byId("searchForm.businessAddress").getValue().toString().trim()));
+                                localStorage.setItem("approvePage.searchForm.productName",
+                                        encodeBase64(dijit.byId("searchForm.productName").getValue().toString().trim()));
+                                localStorage.setItem("approvePage.searchForm.nationName",
+                                        encodeBase64(dijit.byId("searchForm.nationName").getValue().toString().trim()));
+                                localStorage.setItem("approvePage.searchForm.manufactureName",
+                                        encodeBase64(dijit.byId("searchForm.manufactureName").getValue().toString().trim()));
+                                localStorage.setItem("approvePage.searchForm.manufactureAddress",
+                                        encodeBase64(dijit.byId("searchForm.manufactureAddress").getValue().toString().trim()));
+                                localStorage.setItem("approvePage.searchForm.matchingTarget",
+                                        encodeBase64(dijit.byId("searchForm.matchingTarget").getValue().toString().trim()));
+                                localStorage.setItem("approvePage.searchForm.Staff",
+                                        encodeBase64(dijit.byId("searchForm.Staff").getValue().toString().trim()));
+                                localStorage.setItem("approvePage.searchForm.fileType",
+                                        encodeBase64(dijit.byId("searchForm.fileType").getValue()));
+                            } catch (err)
+                            {
+                                // nothing
+                            }
+                        };
+                        page.getSearch = function () {
+                            try
+                            {
+                                dijit.byId("searchForm.fileCode").setValue(
+                                        decodeBase64(localStorage.getItem("approvePage.searchForm.fileCode")));
+                                dijit.byId("searchForm.announcementNo").setValue(
+                                        decodeBase64(localStorage.getItem("approvePage.searchForm.announcementNo")));
+                                dijit.byId("searchForm.businessName").setValue(
+                                        decodeBase64(localStorage.getItem("approvePage.searchForm.businessName")));
+                                dijit.byId("searchForm.businessLicence").setValue(
+                                        decodeBase64(localStorage.getItem("approvePage.searchForm.businessLicence")));
+                                dijit.byId("searchForm.businessAddress").setValue(
+                                        decodeBase64(localStorage.getItem("approvePage.searchForm.businessAddress")));
+                                dijit.byId("searchForm.productName").setValue(
+                                        decodeBase64(localStorage.getItem("approvePage.searchForm.productName")));
+                                dijit.byId("searchForm.nationName").setValue(
+                                        decodeBase64(localStorage.getItem("approvePage.searchForm.nationName")));
+                                dijit.byId("searchForm.manufactureName").setValue(
+                                        decodeBase64(localStorage.getItem("approvePage.searchForm.manufactureName")));
+                                dijit.byId("searchForm.manufactureAddress").setValue(
+                                        decodeBase64(localStorage.getItem("approvePage.searchForm.manufactureAddress")));
+                                dijit.byId("searchForm.matchingTarget").setValue(
+                                        decodeBase64(localStorage.getItem("approvePage.searchForm.matchingTarget")));
+                                dijit.byId("searchForm.Staff").setValue(
+                                        decodeBase64(localStorage.getItem("approvePage.searchForm.Staff")));
+                                dijit.byId("searchForm.fileType").setValue(
+                                        decodeBase64(localStorage.getItem("approvePage.searchForm.fileType")));
+                            } catch (err)
+                            {
+                                // nothing
+                            }
+                        };
+                        page.hideSignMore = function ()
+                        {
+                            var searchType = dijit.byId("searchForm.searchType").getValue();
+                            if (searchType != null && searchType == "-3")
+                            {
+                                document.getElementById("trSignMore").style.display = "";
+                            } else
+                            {
+                                document.getElementById("trSignMore").style.display = "none";
+                            }
+                        };
+
+
 //a150108 binhnt53
-                page.hideContentAF = function () {
-                    document.getElementById("approveForm.statusAccept").checked = false;
-                    document.getElementById("approveForm.statusDeny").checked = false;
-                    document.getElementById("approveForm.statusCT").checked = false;
-                    dijit.byId("btnStatusAcceptAF").domNode.style.display = "none";
-                    dijit.byId("btnStatusDenyAF").domNode.style.display = "none";
-                    dijit.byId("btnExportAFCV").domNode.style.display = "none";
-                    dijit.byId("btnStatusCTAF").domNode.style.display = "none";
-                };
+                        page.hideContentAF = function () {
+                            document.getElementById("approveForm.statusAccept").checked = false;
+                            document.getElementById("approveForm.statusDeny").checked = false;
+                            document.getElementById("approveForm.statusCT").checked = false;
+                            dijit.byId("btnStatusAcceptAF").domNode.style.display = "none";
+                            dijit.byId("btnStatusDenyAF").domNode.style.display = "none";
+                            dijit.byId("btnExportAFCV").domNode.style.display = "none";
+                            dijit.byId("btnStatusCTAF").domNode.style.display = "none";
+                        };
 //!a150108 binhnt53
+//page.hideSignMore();
+                        page.getSearch();
+                        page.search();
 </script>

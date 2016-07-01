@@ -133,7 +133,7 @@
                                  container="userGridDiv" 
                                  serverPaging="false"
                                  rowSelector="0px" 
-                                 rowsPerPage="10">
+                                 rowsPerPage="20">
                         <sd:ColumnDataGrid headerStyles="text-align:center;font-weight: bold;font-size:10px;font-family:Tahoma,helvetica,arial " cellStyles="text-align:center;" editable="false" key="index" get="page.getIndex" width="5%" />
                         <sd:ColumnDataGrid headerStyles="text-align:center;"  cellStyles="text-align:center;"  key="column.checkbox" headerCheckbox="true"  type="checkbox" width="5%"/>
                         <sd:ColumnDataGrid editable="false" headerStyles="text-align:center;font-weight: bold;" key="usersForm.userName" field="userName" width="30%"/>

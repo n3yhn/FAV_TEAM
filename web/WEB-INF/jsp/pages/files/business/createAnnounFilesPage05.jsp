@@ -67,7 +67,8 @@
         <sd:TextBox key="" id="createForm.status" name="createForm.status" cssStyle="display:none" />
         <sd:TextBox key="" id="createForm.isTypeChange" name="createForm.isTypeChange" cssStyle="display:none" />
         <sd:TextBox key="" id="createForm.countUA" name="createForm.countUA" cssStyle="display:none" />
-        
+        <sd:TextBox key="" id="createForm.staffProcess" name="createForm.staffProcess" cssStyle="display:none" />
+        <sd:TextBox key="" id="createForm.nameStaffProcess" name="createForm.nameStaffProcess" cssStyle="display:none" />
         <sd:Tab id="files_tab" height="750px" width="100%">
             <sd:ContentPane key="Sửa đổi hồ sơ sau công bố" id="tab.editafterannounced">
                 <div id="tabEditAfterAnnounced" style="overflow: auto;">

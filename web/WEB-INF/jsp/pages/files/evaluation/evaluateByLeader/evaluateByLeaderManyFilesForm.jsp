@@ -9,10 +9,11 @@
                 <sd:Label key="Chọn lãnh đạo xem xét"/>
             </td>
             <td>
-                <sd:SelectBox  cssStyle="width:98%"
+                <sd:SelectBox  
                                id="evaluateByLeaderManyFilesForm.leaderReviewId"
+                               name="createForm.leaderReviewId"
                                key="" data="lstLeaderOfStaff" valueField="userId" labelField="fullName"
-                               name="createForm.leaderReviewId" >
+                               cssStyle="width:98%">
                 </sd:SelectBox>
                 <sd:TextBox
                     id="evaluateByLeaderManyFilesForm.leaderReviewName"
@@ -60,20 +61,17 @@
         var result = obj.items;
         alert(result[1]);
         if (result[0] == "1") {
-            onCloseReviewManyFilesForm();
-            page.search();
-        }
-    };
-    afterReviewFormSave = function (data) {
-        var obj = dojo.fromJson(data);
-        var result = obj.items;
-        alert(result[1]);
-        if (result[0] == "1") {
             onCloseEvaluateByLeaderForm();
-            backPage();
             page.search();
         }
     };
+//    afterReviewFormSave = function (data) {
+//        var obj = dojo.fromJson(data);
+//        var result = obj.items;
+//        alert(result[1]);
+//        onCloseEvaluateByLeaderForm();
+//        page.search();
+//    };
     validateEvaluateByLeaderManyFiles = function () {
         var leaderId = dijit.byId("evaluateByLeaderManyFilesForm.leaderReviewId").getValue();
         if (leaderId == -1 || leaderId == "" || leaderId == null) {
@@ -87,7 +85,7 @@
         }
         return true;
     };
-    onCloseReviewManyFilesForm = function () {
+    onCloseEvaluateByLeaderForm = function () {//160630 BINHNT U
         dijit.byId("evaluateByLeaderManyFilesDlg").hide();
     };
 </script>

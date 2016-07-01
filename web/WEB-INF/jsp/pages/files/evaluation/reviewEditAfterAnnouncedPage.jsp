@@ -594,7 +594,7 @@
     page.showReviewForm = function (fileId, status) {//show form kết luận xem xét hồ sơ
         dijit.byId("reviewForm.fileId").setValue(fileId);
         dijit.byId("item.status").setValue(status);
-        sd.connector.post("filesAction!getCommentEvaluateFormByLeader.do?objectId=" + fileId, null, null, null, afterShowReviewForm);
+        sd.connector.post("filesAction!getCommentEvaluateFormByLeaderForAA.do?objectId=" + fileId, null, null, null, afterShowReviewForm);
     };
     afterShowReviewForm = function (data) {
         var obj = dojo.fromJson(data);
@@ -618,6 +618,17 @@
         } else {
             document.getElementById("reviewForm.leaderStaffRequest").innerHTML = "";
         }
+        if (obj.customInfo[4] != "") {
+            document.getElementById("reviewForm.titleEditATTP").innerHTML = obj.customInfo[4];
+        } else {
+            document.getElementById("reviewForm.titleEditATTP").innerHTML = "";
+        }
+        if (obj.customInfo[5] != "") {
+            document.getElementById("reviewForm.contentsEditATTP").innerHTML = obj.customInfo[5];
+        } else {
+            document.getElementById("reviewForm.contentsEditATTP").innerHTML = "";
+        }
+        
         var status = dijit.byId("item.status").getValue();
         var statusName = page.getStatusName(parseInt(status));
 

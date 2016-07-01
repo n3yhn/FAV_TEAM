@@ -26,39 +26,45 @@
                         <form id="approveForm" name="createForm">
                             <table width="100%" class="viewTable">
                                 <tr>
-                                    <td width="30%" style="text-align: right"><sd:Label key="Tên tổ chức, cá nhân"/></td>
+                                    <td width="30%" style="text-align: right">
+                                        <sd:Label key="Tên tổ chức, cá nhân"/></td>
                                     <td width="70%">
                                         <div id="approveForm.businessName" style="font-weight: bold"></div>
                                     </td>            
                                 </tr>
                                 <tr>
-                                    <td width="30%" style="text-align: right"><sd:Label key="Tên sản phẩm"/></td>
+                                    <td width="30%" style="text-align: right">
+                                        <sd:Label key="Tên sản phẩm"/></td>
                                     <td width="70%">
                                         <div id="approveForm.productName" style="font-weight: bold"></div>
                                     </td>            
                                 </tr>
                                 <tr>
-                                    <td width="30%" style="text-align: right"><sd:Label key="Kết quả xem xét"/></td>
+                                    <td width="30%" style="text-align: right">
+                                        <sd:Label key="Kết quả xem xét"/></td>
                                     <td width="70%">
                                         <div id="approveForm.status"></div>
                                     </td>            
                                 </tr>
                                 <tr>
-                                    <td width="30%" style="text-align: right"><sd:Label key="Nội dung thẩm định"/></td>
+                                    <td width="30%" style="text-align: right">
+                                        <sd:Label key="Nội dung thẩm định"/></td>
                                     <td width="70%">
                                         <div id="approveForm.staffRequest"></div>
                                     </td>
 
                                 </tr>
                                 <tr>
-                                    <td width="30%" style="text-align: right"><sd:Label key="Nội dung xem xét"/></td>
+                                    <td width="30%" style="text-align: right">
+                                        <sd:Label key="Nội dung xem xét"/></td>
                                     <td width="70%">
                                         <div id="approveForm.leaderStaffRequest"></div>
                                     </td>
 
                                 </tr>
                                 <tr>
-                                    <td width="30%" style="text-align: right"><sd:Label key="Kết quả phê duyệt"/></td>
+                                    <td width="30%" style="text-align: right">
+                                        <sd:Label key="Kết quả phê duyệt"/></td>
                                     <td width="70%">
                                         <sd:TextBox key="" 
                                                     id="approveForm.fileId" 
@@ -87,11 +93,34 @@
                                         <sd:Label key="Trả lại để xem xét lại"/>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td style="text-align: right"><sd:Label key="Nội dung  phê duyệt hoặc yêu cầu SĐBS"/></td>
+                                <tr id="trLeaderRequest">
+                                    <td style="text-align: right">
+                                        <sd:Label key="Nội dung  phê duyệt hoặc yêu cầu SĐBS"/></td>
                                     <td>
-                                        <sd:Textarea key="" id="approveForm.leaderRequest"
-                                                     name="createForm.leaderRequest" rows="3" cssStyle="width:99%" maxlength="1800" trim="true"/>
+                                        <sd:Textarea 
+                                            key="" id="approveForm.leaderRequest"
+                                            name="createForm.leaderRequest"
+                                            rows="3" cssStyle="width:99%" maxlength="1800" trim="true"/>
+                                    </td>
+                                </tr>
+                                <tr id="trTitleEditATTP" style="display:none">
+                                    <td style="text-align: right">
+                                        <sd:Label key="Tiêu đề hồ sơ SĐBS"/></td>
+                                    <td>
+                                        <sd:Textarea 
+                                            id="approveForm.titleEditATTP" 
+                                            name="createForm.titleEditATTP" 
+                                            rows="1" cssStyle="width:99%" maxlength="255" trim="true" key=""/>
+                                    </td>
+                                </tr>
+                                <tr id="trContentsEditATTP" style="display:none">
+                                    <td style="text-align: right">
+                                        <sd:Label key="Tiêu đề hồ sơ SĐBS"/></td>
+                                    <td>
+                                        <sd:Textarea 
+                                            id="approveForm.contentsEditATTP"
+                                            name="createForm.contentsEditATTP"
+                                            key="" rows="10" cssStyle="width:99%" maxlength="2000" trim="true"/>
                                     </td>
                                 </tr>
                                 <tr id="trWait" style="display: none">
@@ -205,7 +234,15 @@
         };
 
         changeStatusApprove = function () {
+            var trTitleEditATTP = document.getElementById('trTitleEditATTP');
+            var trContentsEditATTP = document.getElementById('trContentsEditATTP');
+            var trStaffRequest = document.getElementById('trStaffRequest');
+
             if (document.getElementById("approveForm.statusAccept").checked) {
+                trLeaderRequest.style.display = 'none';
+                trTitleEditATTP.style.display = '';
+                trContentsEditATTP.style.display = '';
+
                 dijit.byId("btnStatusAcceptAF").domNode.style.display = "";
                 dijit.byId("btnStatusDenyAF").domNode.style.display = "none";
                 dijit.byId("btnExportAFCV").domNode.style.display = "none";
@@ -218,6 +255,10 @@
                     dijit.byId("btnExportAFCV").domNode.style.display = "";
                     dijit.byId("btnStatusCTAF").domNode.style.display = "none";
                     dijit.byId("btnStatusReReview").domNode.style.display = "none";
+
+                    trLeaderRequest.style.display = '';
+                    trTitleEditATTP.style.display = 'none';
+                    trContentsEditATTP.style.display = 'none';
                 } else {
                     if (document.getElementById("approveForm.statusCT").checked) {
                         dijit.byId("btnStatusAcceptAF").domNode.style.display = "none";
@@ -226,6 +267,10 @@
                         dijit.byId("btnExportAFCV").domNode.style.display = "none";
                         dijit.byId("btnStatusCTAF").domNode.style.display = "";
                         dijit.byId("btnStatusReReview").domNode.style.display = "none";
+
+                        trLeaderRequest.style.display = '';
+                        trTitleEditATTP.style.display = 'none';
+                        trContentsEditATTP.style.display = 'none';
                     } else {
                         if (document.getElementById("approveForm.statusReReview").checked)//tra lai de xem xet
                         {
@@ -235,12 +280,20 @@
                             dijit.byId("btnExportAFCV").domNode.style.display = "none";
                             dijit.byId("btnStatusCTAF").domNode.style.display = "none";
                             dijit.byId("btnStatusReReview").domNode.style.display = "";
+
+                            trLeaderRequest.style.display = '';
+                            trTitleEditATTP.style.display = 'none';
+                            trContentsEditATTP.style.display = 'none';
                         } else {
                             dijit.byId("btnStatusAcceptAF").domNode.style.display = "none";
                             dijit.byId("btnStatusDenyAF").domNode.style.display = "none";
                             dijit.byId("btnExportAFCV").domNode.style.display = "none";
                             dijit.byId("btnStatusCTAF").domNode.style.display = "none";
                             dijit.byId("btnStatusReReview").domNode.style.display = "none";
+
+                            trLeaderRequest.style.display = 'none';
+                            trTitleEditATTP.style.display = 'none';
+                            trContentsEditATTP.style.display = 'none';
                         }
                     }
                 }
@@ -386,14 +439,16 @@
             if (signType == "PDHS")
             {
                 var leaderRequest = dijit.byId("approveForm.leaderRequest").getValue();
-                if (document.getElementById("approveForm.statusAccept").checked == false && document.getElementById("approveForm.statusDeny").checked == false && document.getElementById("approveForm.statusCT").checked == false)
+                if (document.getElementById("approveForm.statusAccept").checked == false
+                        && document.getElementById("approveForm.statusDeny").checked == false && document.getElementById("approveForm.statusCT").checked == false)
                 {
                     msg.alert("Bạn chưa chọn 'Duyệt: Hồ sơ đạt' hay 'Yêu cầu bổ sung' hay 'Trình lên cục trưởng'", "Cảnh báo");
                 }
                 if (document.getElementById("approveForm.statusAccept").checked) {
                     sd.connector.post("filesAction!onApprove.do?" + token.getTokenParamString(), null, "approveForm", null, afterApprove);
                 } else {
-                    if (document.getElementById("approveForm.statusDeny").checked == true || document.getElementById("approveForm.statusCT").checked == true)
+                    if (document.getElementById("approveForm.statusDeny").checked == true
+                            || document.getElementById("approveForm.statusCT").checked == true)
                     {
                         if (leaderRequest.trim().length == 0)
                         {

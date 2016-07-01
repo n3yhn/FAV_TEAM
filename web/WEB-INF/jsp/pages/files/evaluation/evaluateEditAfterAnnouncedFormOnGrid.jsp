@@ -37,19 +37,25 @@
                                         <input type="radio" id="evaluateForm.statusDeny" name="createForm.status" value="7" onchange="onchangeStatusEFOG();"/>
                                         <sd:Label key="Duyệt: Yêu cầu bổ sung HS"/>
                                     </td>
+                                </tr>                                
+                                <tr id="trTitleEditATTP" style="display:none">
+                                    <td style="text-align: right"><sd:Label key="Tiêu đề hồ sơ SĐBS"/></td>
+                                    <td>
+                                        <sd:Textarea key="" id="evaluateForm.titleEditATTP" name="createForm.titleEditATTP" rows="1" cssStyle="width:99%" maxlength="255" trim="true"/>
+                                    </td>
                                 </tr>
-                                <tr>
+                                <tr id="trContentsEditATTP" style="display:none">
+                                    <td style="text-align: right"><sd:Label key="Tiêu đề hồ sơ SĐBS"/></td>
+                                    <td>
+                                        <sd:Textarea key="" id="evaluateForm.contentsEditATTP" name="createForm.contentsEditATTP" rows="10" cssStyle="width:99%" maxlength="2000" trim="true"/>
+                                    </td>
+                                </tr>
+                                <tr id="trStaffRequest" style="display:none">
                                     <td style="text-align: right"><sd:Label key="Nội dung trình quản lý xem xét, hoặc nội dung yêu cầu bổ sung"/></td>
                                     <td>
                                         <sd:Textarea key="" id="evaluateForm.staffRequest" name="createForm.staffRequest" rows="15" cssStyle="width:99%" maxlength="2000" trim="true"/>
                                     </td>
                                 </tr>
-                                <!--                                <tr>
-                                                                    <td style="text-align: right"><sd:Label key="Tiêu đề hồ sơ SĐBS"/></td>
-                                                                    <td>
-                                <sd:Textarea key="" id="evaluateForm.titleEditATTP" name="createForm.titleEditATTP" rows="3" cssStyle="width:99%" maxlength="255" trim="true"/>
-                            </td>
-                        </tr>-->
                                 <div id="effectiveDateDiv" style="display:none">
                                     <tr style="display: none">
                                         <td style="text-align: right"><sd:Label key="Thời hạn hiệu lực của giấy tiếp nhận"/></td>
@@ -98,7 +104,8 @@
                                 <tr style="display: none">
                                     <td style="text-align: right"><sd:Label key="Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng"/></td>
                                     <td>
-                                        <sd:SelectBox id="evaluationRecordsForm.effectUtility" name="createForm.evaluationRecordsForm.effectUtility" key="" >
+                                        <sd:SelectBox id="evaluationRecordsForm.effectUtility"
+                                                      name="createForm.evaluationRecordsForm.effectUtility" key="" >
                                             <sd:Option value='1'>Đồng ý</sd:Option>
                                             <sd:Option value='0'>Không đồng ý</sd:Option>
                                             <sd:Option value='-1'>Bổ sung</sd:Option>
@@ -108,7 +115,9 @@
                                 <tr style="display: none">
                                     <td style="text-align: right"><sd:Label key="Lý do không cấp hoặc yêu cầu bổ sung"/></td>
                                     <td>
-                                        <sd:Textarea key="" id="evaluationRecordsForm.effectUtilityContent" name="createForm.evaluationRecordsForm.effectUtilityContent" rows="5" cssStyle="width:99%" maxlength="2000" trim="true"/>
+                                        <sd:Textarea key="" id="evaluationRecordsForm.effectUtilityContent"
+                                                     name="createForm.evaluationRecordsForm.effectUtilityContent"
+                                                     rows="5" cssStyle="width:99%" maxlength="2000" trim="true"/>
                                     </td>
                                 </tr>
                                 <tr id="trLeaderReviewApproveId">                    
@@ -121,13 +130,17 @@
                                                       key="" data="lstLeaderOfStaff" valueField="userId" labelField="fullName"
                                                       name="createForm.leaderReviewId" >
                                         </sd:SelectBox>
-                                        <sd:TextBox id="evaluationRecordsForm.leaderReviewName" name="createForm.leaderReviewName" cssStyle="display:none" key=""/>
+                                        <sd:TextBox id="evaluationRecordsForm.leaderReviewName"
+                                                    name="createForm.leaderReviewName" cssStyle="display:none" key=""/>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td style="text-align: right"><sd:Label key="Gửi lãnh đạo để thẩm định(Đối với thực phẩm chức năng)"/></td>
+                                <tr style="display: none">
+                                    <td style="text-align: right">
+                                        <sd:Label key="Gửi lãnh đạo để thẩm định(Đối với thực phẩm chức năng)"/></td>
                                     <td>
-                                        <sd:TextBox key="" id="evaluateForm.ProductType" name="createForm.ProductType" cssStyle="display:none"/>
+                                        <sd:TextBox key="" id="evaluateForm.ProductType"
+                                                    name="createForm.ProductType"
+                                                    cssStyle="display:none"/>
                                         <sd:CheckBox key="" id="ckbAssignLeader" name="ckbAssignLeader" value=""/>
                                     </td>
                                 </tr>
@@ -170,7 +183,7 @@
 
 <script type="text/javascript">
     onCloseApprove = function () {
-        doGoToMenu("filesAction!toEvaluatePage.do");
+        doGoToMenu("filesAction!toEvaluatePage.do?IsChange=1");
     };
 
     onEvaluate = function () {
@@ -198,7 +211,7 @@
     };
 
     validateEFOG = function () {
-        if (document.getElementById("evaluateForm.statusAccept").checked == false 
+        if (document.getElementById("evaluateForm.statusAccept").checked == false
                 && document.getElementById("evaluateForm.statusDeny").checked == false) {
             alert("Bạn chưa chọn [Kết quả thẩm định]");
             return false;
@@ -220,22 +233,22 @@
                     dijit.byId("evaluateForm.staffRequest").focus();
                     return false;
                 }
-                if ((dijit.byId("evaluationRecordsForm.legal").getValue() == 0 
-                        || dijit.byId("evaluationRecordsForm.legal").getValue() == -1) 
+                if ((dijit.byId("evaluationRecordsForm.legal").getValue() == 0
+                        || dijit.byId("evaluationRecordsForm.legal").getValue() == -1)
                         && legalContent.trim().length == 0) {
                     alert("[Về pháp chế(Hồ sơ theo Nghị định số 38/2012/NĐ-CP & thông tư hướng dẫn)] chưa nhập lý do");
                     dijit.byId("evaluationRecordsForm.legalContent").focus();
                     return false;
                 }
-                if ((dijit.byId("evaluationRecordsForm.foodSafetyQuality").getValue() == 0 
-                        || dijit.byId("evaluationRecordsForm.foodSafetyQuality").getValue() == -1) 
+                if ((dijit.byId("evaluationRecordsForm.foodSafetyQuality").getValue() == 0
+                        || dijit.byId("evaluationRecordsForm.foodSafetyQuality").getValue() == -1)
                         && foodSafetyQualityContent.trim().length == 0) {
                     alert("[Về chỉ tiêu chất lượng an toàn thực phẩm] chưa nhập lý do");
                     dijit.byId("evaluationRecordsForm.foodSafetyQualityContent").focus();
                     return false;
                 }
-                if ((dijit.byId("evaluationRecordsForm.effectUtility").getValue() == 0 
-                        || dijit.byId("evaluationRecordsForm.effectUtility").getValue() == -1) 
+                if ((dijit.byId("evaluationRecordsForm.effectUtility").getValue() == 0
+                        || dijit.byId("evaluationRecordsForm.effectUtility").getValue() == -1)
                         && effectUtilityContent.trim().length == 0) {
                     alert("[Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng] chưa nhập lý do");
                     dijit.byId("evaluationRecordsForm.effectUtilityContent").focus();
@@ -275,10 +288,19 @@
         dijit.byId("evaluationRecordsForm.effectUtilityContent").setValue("");
     };
     onchangeStatusEFOG = function () {
+        var trTitleEditATTP = document.getElementById('trTitleEditATTP');
+        var trContentsEditATTP = document.getElementById('trContentsEditATTP');
+        var trStaffRequest = document.getElementById('trStaffRequest');
         if (document.getElementById("evaluateForm.statusDeny").checked) {
+            trTitleEditATTP.style.display = 'none';
+            trContentsEditATTP.style.display = 'none';
+            trStaffRequest.style.display = '';
             dijit.byId("evaluateForm.staffRequest").setValue("Yêu cầu bổ sung hồ sơ");
         } else {
             dijit.byId("evaluateForm.staffRequest").setValue("");
+            trTitleEditATTP.style.display = '';//
+            trContentsEditATTP.style.display = '';//
+            trStaffRequest.style.display = 'none';//
         }
     };
     page.clearEvaluateForm = function () {
@@ -294,8 +316,7 @@
             localStorage.setItem("evaluateForm.evaluationRecordsForm.foodSafetyQualityContent", "");
             localStorage.setItem("evaluateForm.evaluationRecordsForm.effectUtilityContent", "");
             alert("Xóa nội dung thẩm định gần đây thành công!");
-        }
-        catch (err)
+        } catch (err)
         {
             alert("Không thể Xóa nội dung thẩm định gần đây!");
         }
@@ -319,10 +340,10 @@
                     encodeBase64(dijit.byId("evaluationRecordsForm.legalContent").getValue().toString().trim()));
             localStorage.setItem("evaluateForm.evaluationRecordsForm.foodSafetyQualityContent",
                     encodeBase64(dijit.byId("evaluationRecordsForm.foodSafetyQualityContent").getValue().toString().trim()));
-            localStorage.setItem("evaluateForm.evaluationRecordsForm.effectUtilityContent", encodeBase64(dijit.byId("evaluationRecordsForm.effectUtilityContent").getValue().toString().trim()));
+            localStorage.setItem("evaluateForm.evaluationRecordsForm.effectUtilityContent",
+                    encodeBase64(dijit.byId("evaluationRecordsForm.effectUtilityContent").getValue().toString().trim()));
             alert("Lưu nháp nội dung thẩm định thành công!");
-        }
-        catch (err)
+        } catch (err)
         {
             alert("Không thể Lưu nháp nội dung thẩm định!");
         }
@@ -330,18 +351,26 @@
     page.getEvaluateForm = function () {
         try
         {
-            dijit.byId("evaluateForm.staffRequest").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluateForm.staffRequest")));
-            dijit.byId("evaluateForm.effectiveDate").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluateForm.effectiveDate")));
-            dijit.byId("evaluationRecordsForm.legal").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.legal")));
-            dijit.byId("evaluationRecordsForm.foodSafetyQuality").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.foodSafetyQuality")));
-            dijit.byId("evaluationRecordsForm.effectUtility").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.effectUtility")));
-            dijit.byId("evaluationRecordsForm.leaderReviewId").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.leaderReviewId")));
-            dijit.byId("evaluationRecordsForm.legalContent").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.legalContent")));
-            dijit.byId("evaluationRecordsForm.foodSafetyQualityContent").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.foodSafetyQualityContent")));
-            dijit.byId("evaluationRecordsForm.effectUtilityContent").setValue(decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.effectUtilityContent")));
+            dijit.byId("evaluateForm.staffRequest").setValue(
+                    decodeBase64(localStorage.getItem("evaluateForm.evaluateForm.staffRequest")));
+            dijit.byId("evaluateForm.effectiveDate").setValue(
+                    decodeBase64(localStorage.getItem("evaluateForm.evaluateForm.effectiveDate")));
+            dijit.byId("evaluationRecordsForm.legal").setValue(
+                    decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.legal")));
+            dijit.byId("evaluationRecordsForm.foodSafetyQuality").setValue(
+                    decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.foodSafetyQuality")));
+            dijit.byId("evaluationRecordsForm.effectUtility").setValue(
+                    decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.effectUtility")));
+            dijit.byId("evaluationRecordsForm.leaderReviewId").setValue(
+                    decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.leaderReviewId")));
+            dijit.byId("evaluationRecordsForm.legalContent").setValue(
+                    decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.legalContent")));
+            dijit.byId("evaluationRecordsForm.foodSafetyQualityContent").setValue(
+                    decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.foodSafetyQualityContent")));
+            dijit.byId("evaluationRecordsForm.effectUtilityContent").setValue(
+                    decodeBase64(localStorage.getItem("evaluateForm.evaluationRecordsForm.effectUtilityContent")));
             alert("Tải nội thẩm định gần đây thành công!");
-        }
-        catch (err)
+        } catch (err)
         {
             alert("Không thể Tải nội thẩm định gần đây!");
         }

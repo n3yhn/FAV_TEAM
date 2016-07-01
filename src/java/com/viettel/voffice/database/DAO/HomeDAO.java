@@ -363,7 +363,7 @@ public class HomeDAO extends BaseDAO {
                         filesNeedToReview, 1l, "darkgray", 2);
                 lstItem.add(item);
                 //Hồ sơ đã trình lãnh đạo cục duyệt
-                filesStatistics = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 5L, null));
+                filesStatistics = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, -5L, null));
                 getRequest().setAttribute("filesstatistics", filesStatistics);
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByLeaderOfStaff.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 5 + "',"),
@@ -700,17 +700,20 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/14_xanh_hsdaguiphanhoi.png",
                         "Hồ sơ đã phê duyệt chưa nộp phí cấp số", filesNeedToReceive, 15l, "cadetblue", 2);
                 lstItem.add(item);
+                
                 //Hồ sơ cần gửi thông báo SĐBS cho doanh nghiệp
                 filesNeedToReceive = (Long) (long) fdhe.getCountFileOnHomePage(userId, deptId, -27L, Constants.FILE_STATUS.APPROVE_TO_ADD);
                 countFilesNeedToReceive = "doGoToMenu('filesAction!lookupFilesByClerical.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReceive.replace("',", "?searchForm.searchType=" + -27L + "',"), "share/images/document/14_xanh_hsdaguiphanhoi.png", "Hồ sơ cần gửi thông báo SĐBS", filesNeedToReceive, 15l, "cadetblue", 3);
                 lstItem.add(item);
+                
                 //hỒ SƠ CẦN KÍ XÁC NHÂN VĂN THƯ
                 filesNeedToReceive = (Long) (long) fdhe.getCountFileOnHomePage(userId, deptId, -6L, Constants.FILE_STATUS.NEW);
                 countFilesNeedToReceive = "doGoToMenu('filesAction!lookupFilesByClerical.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReceive.replace("',", "?searchForm.searchType=" + -6L + "',"), "share/images/document/14_xanh_hsdaguiphanhoi.png", "Hồ sơ đã nộp lệ phí cấp số, chờ Văn thư ký xác nhận - trả bản mềm", filesNeedToReceive, 15l, "cadetblue",
                         2);
                 lstItem.add(item);
+                
                 /*
                  //6- Hồ sơ đã nộp phí cấp số, chờ trả hồ sơ = Đã phê duyệt, đã nộp lệ phí (files.status = 6, fee_payment_info.status = 1, fee.fee_type=1, files.isSignPdf=2)
                  filesNeedToReceive = (Long) (long) fdhe.getCountFileOnHomePage(userId, deptId, -3L, Constants.FILE_STATUS.NEW);
@@ -719,6 +722,7 @@ public class HomeDAO extends BaseDAO {
                  2);
                  lstItem.add(item);
                  */
+                
 //3- Hồ sơ đã tiếp nhận SĐBS (17)
                 filesNeedToReceive = (Long) (long) fdhe.getCountFileOnHomePage(userId, deptId, 0L, Constants.FILE_STATUS.RECEIVED_TO_ADD);
 //                getRequest().setAttribute("filesNeedToReceive", filesNeedToReceive);
@@ -776,6 +780,7 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/7_xanh_hschothamdinh.png",
                         "Hồ sơ mới, chờ CV thẩm định", filesNeedToEvaluate, 1l, "#F0F0F0", 2);
                 lstItem.add(item);
+                
                 //2- Hồ sơ chờ thẩm định SĐBS CV = Đã tiếp nhận SĐBS (17)
                 filesNeedComment = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 33L, null));
                 countFilesNeedToEvaluate = "doGoToMenu('filesAction!lookupFilesByStaff.do', '0.1');";
@@ -783,6 +788,7 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/images10.png",
                         "Hồ sơ SĐBS, chờ CV thẩm định", filesNeedComment, 1l, "#F0F0F0", 2);
                 lstItem.add(item);
+                
                 // ho so bi tra tham dinh lai
                 filesNeedToReEvaluate = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 26L, null));
                 countFilesNeedToEvaluate = "doGoToMenu('filesAction!lookupFilesByStaff.do', '0.1');";
@@ -798,6 +804,7 @@ public class HomeDAO extends BaseDAO {
 //                        "share/images/document/13_xanh_hslanhdaocucycbosung.png",
 //                        "Hồ sơ chờ CV soạn dự thảo công văn SĐBS", filesNeedToAdd, 1l, "#F0F0F0", 2);
 //                lstItem.add(item);
+
                 //4- Hồ sơ chuyên viên đã thẩm định
                 filesReReview = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 47L, null));
                 getRequest().setAttribute("filesReReview", filesReReview);
@@ -806,6 +813,7 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/9_xanh_hssaphethanbosung.png",
                         "Hồ sơ CV đã thẩm định yêu cầu SĐBS, chờ LĐP xem xét", filesReReview, 1l, "darkgray", 3);
                 lstItem.add(item);
+                
                 //ho so cho xem xet
                 filesNeedToReview = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 42l, Constants.FILE_STATUS.EVALUATED));
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByStaff.do', '0.1' );";
@@ -814,6 +822,7 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/7_xanh_hschothamdinh.png",
                         "Hồ sơ CV đã thẩm định Đạt, chờ LĐP xem xét", filesNeedToReview, 1l, "darkgray", 1);
                 lstItem.add(item);
+                
                 //5- hồ sơ đã xem xét
                 filesReviewed = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 45l, null));
                 getRequest().setAttribute("filesNeedToReview", filesReviewed);
@@ -822,6 +831,7 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/12_xanh_hslanhdaophongdaxemxet.png",
                         "Hồ sơ LĐP đã duyệt, chờ LĐC phê duyệt", filesReviewed, 1l, "#F0F0F0", 1);
                 lstItem.add(item);
+                
                 //Hồ sơ lãnh đạo cục đã phê duyệt
                 filesApproved = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 417L, null));
                 getRequest().setAttribute("filesNeedToReview", filesApproved);
@@ -830,6 +840,7 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/11_xanh_hslanhdaocucdapheduyet.png",
                         "Hồ sơ LĐC đã phê duyệt, chờ nộp lệ phí trả hồ sơ", filesApproved, 1l, "#F0F0F0", 6);
                 lstItem.add(item);
+                
                 //Hồ sơ lãnh đạo cục đã phê duyệt
                 filesApproved = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 423L, null));
                 getRequest().setAttribute("filesNeedToReview", filesApproved);
@@ -838,6 +849,7 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/11_xanh_hslanhdaocucdapheduyet.png",
                         "Hồ sơ VT đã trả giấy công bố bản mềm", filesApproved, 1l, "#F0F0F0", 6);
                 lstItem.add(item);
+                
                 //Hồ sơ lãnh đạo cục đã phê duyệt
                 filesApproved = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 422L, null));
                 getRequest().setAttribute("filesNeedToReview", filesApproved);
@@ -888,6 +900,7 @@ public class HomeDAO extends BaseDAO {
                         "Hồ sơ LĐP đã xem xét công văn SĐBS chờ LĐC phê duyệt",
                         filesNeedToReview, 1l, "#F0F0F0", 3);
                 lstItem.add(item);
+                
                 //HỒ sơ chuyên viên cần thông báo SĐBS
                 filesNeedToAdd = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, -20L, null));
                 getRequest().setAttribute("filesNeedToReview", filesNeedToAdd);
@@ -949,6 +962,7 @@ public class HomeDAO extends BaseDAO {
                  lstItem.add(item);
                  */
             }
+            
             // ho so sai lech
             if (loadCountFilesNeedToComparisonFail) {
                 filesNeedToComparisonFail = (Long) (long) fdhe.getCountFileToProcess(userId, deptId, 16L, null);
@@ -960,6 +974,7 @@ public class HomeDAO extends BaseDAO {
                 //HomeLiveTileForm item = new HomeLiveTileForm("doGoToMenu( 'filesAction!onsearchLookupFilesByClerical.do?searchForm.status=16', '0.0' );", "share/images/document/new_document.png", "Hồ sơ sai lệch", filesNeedToComparisonFail, 16l, "burlywood");
                 lstItem.add(item);
             }
+            
             //Ho so cho de xuat
             if (loadCountFilesNeedToPropose) {
                 filesNeedToPropose = (Long) (long) fdhe.getCountFileToPropose(userId, agencyId);
@@ -981,6 +996,7 @@ public class HomeDAO extends BaseDAO {
                         "Tổng số hồ sơ trong ngày",
                         filesStatistics, 1l, "darkgray", 1);
                 lstItem.add(item);
+                
                 //--hồ sơ đã phân công--
 //            filesNeedToAssign = (Long) (long) fdhe.getCountFileToAssign(userId, deptId);
                 filesNeedToAssign = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, -3l, null));
@@ -990,6 +1006,7 @@ public class HomeDAO extends BaseDAO {
                         "Hồ sơ Trưởng phòng đã phân công",
                         filesNeedToAssign, 1l, "cadetblue", 1);
                 lstItem.add(item);
+                
                 //            filesNeedToAssign = (Long) (long) fdhe.getCountFileToAssign(userId, deptId);
                 filesNeedToAssign = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 211l, null));
                 getRequest().setAttribute("filesNeedToAssign", filesNeedToAssign);
@@ -1017,6 +1034,7 @@ public class HomeDAO extends BaseDAO {
                         "Hồ sơ Chuyên viên đã thẩm định Đạt, chờ Trưởng phòng xem xét",
                         filesNeedToReview, 1l, "darkgray", 2);
                 lstItem.add(item);
+                
                 //Hồ sơ đã trình lãnh đạo cục duyệt
                 filesStatistics = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 5L, null));
                 getRequest().setAttribute("filesstatistics", filesStatistics);

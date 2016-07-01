@@ -397,10 +397,12 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
         Files filesBo = fdhe.findById(fileId);
         String sql = "";
         if (filesBo != null
+                
                 && (filesBo.getStatus().equals(Constants.FILE_STATUS.APPROVED)
                 || filesBo.getStatus().equals(Constants.FILE_STATUS.COMPARED)
                 || filesBo.getStatus().equals(Constants.FILE_STATUS.COMPARED_FAIL)
                 || filesBo.getStatus().equals(Constants.FILE_STATUS.ALERT_COMPARISON))
+                
                 && filesBo.getIsSignPdf() != null
                 && (filesBo.getIsSignPdf() != 0)) {
             sql = "from fee f inner join fee_payment_info fpi "

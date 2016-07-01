@@ -828,9 +828,9 @@ public class FilesWS extends BaseWS {
     public Boolean upload(String fileName, byte[] imageBytes) {
         try {
             // Upload file
-            ResourceBundle rb1 = ResourceBundle.getBundle("config");
-            String PATH1 = rb1.getString("sign_upload");
-            String uploadPath = rb1.getString("upload_path");
+            ResourceBundle rb = ResourceBundle.getBundle("config");
+            String PATH1 = rb.getString("sign_upload");
+            String uploadPath = rb.getString("upload_path");
 
             // Save info to DB
             String[] parts = fileName.split("_");
