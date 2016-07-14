@@ -8,7 +8,7 @@
         <action name="filesAction" class="com.viettel.hqmc.DAO.FilesDAO" >
             <interceptor-ref name="requestTokenRdwfInterceptorStack">
                 <param name="tokenSession.includeMethods">
-                    onFeedbackReview, onFeedbackReviewSendVt, onFeedbackEvaluate, onInsert, onDelete, onEvaluate, onReview, onApprove, onPropose, onSaveProcess, onSelectFlow, onSigning, onReceived, insertComment, onDeleteComment, onComparison, onUploadFileSign, onAssignApprove, onAssignApproveByCT, onReceivedFile, onReturnFiles, loginUsbCA, onSetCourierAlertComparison, onSaveEditFileStatus, onReturnFilesOldFlow,onReviewManyFiles,onEvaluateByLeaderManyFiles,onEvaluateByLeaderManyFilesToAdd
+                    onFeedbackReview, onFeedbackReviewSendVt, onFeedbackEvaluate, onInsert, onDelete, onEvaluate, onReview, onApprove, onPropose, onSaveProcess, onSelectFlow, onSigning, onReceived, insertComment, onDeleteComment, onComparison, onUploadFileSign, onAssignApprove, onAssignApproveByCT, onReceivedFile, onReturnFiles, loginUsbCA, onSetCourierAlertComparison, onSaveEditFileStatus, onReturnFilesOldFlow,onReviewManyFiles,onEvaluateByLeaderManyFiles,onEvaluateByLeaderManyFilesToAdd,onUpdateIsSignFile
                 </param>
             </interceptor-ref>
             <result type="tiles" name="lookupHomePage.Page">lookupHomePage.Page</result>

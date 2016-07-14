@@ -51,7 +51,7 @@
                     }
                     break;
                 case 5:
-                    url += " | <img src='share/images/signature.png' width='20px' height='20px' title='Phê duyệt hồ sơ test' onClick='page.showApproveFormPlugin(" + row + ");' />";
+                    url += " | <img src='share/images/signature.png' width='20px' height='20px' title='Phê duyệt hồ sơ' onClick='page.showApproveFormPlugin(" + row + ");' />";
                     break;
                 case 26:
                     url += " | <img src='share/images/signature.png' width='20px' height='20px' title='Phê duyệt hồ sơ' onClick='page.showApproveForm(" + row + ");' />";

@@ -1,10 +1,15 @@
+<%-- 
+    Document   : pluginJS
+    Created on : Oct 12, 2015, 5:57:46 PM
+    Author     : hieptq
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <script>
     var VtPlugin = {
         initPlugin: function()
         {
-
             return document.getElementById('plugin0').getVersion == null ? false : true;
         },
         getVersion: function()
@@ -89,7 +94,7 @@
         if (!(VtPlugin.initPlugin()) || VtPlugin.getVersion() !== '1.1.0.0') {
             alert('Ban can cai dat plugin ViettelCASigner');
             var pathname = window.location.pathname;
-            pathname = pathname.replace("index.do", "");
+            pathname = pathname.replace("index.zul", "");
             var url = pathname + "Share/js/ca/ViettelCASigner.msi"
             window.open(url);
             return false;
@@ -99,8 +104,8 @@
 
     function signAndSubmit() {
         try {
-            var base64Hash = dijit.byId("txtBase64HashC").getValue();
-            var certSerial = dijit.byId("txtCertSerialC").getValue();
+            var base64Hash = dijit.byId("txtBase64HashAFP").getValue();
+            var certSerial = dijit.byId("txtCertSerialAFP").getValue();
             if (base64Hash !== '' && certSerial !== '') {
                 var base64Signature = new String(VtPlugin.signHash(base64Hash, certSerial));
                 console.log('base64: ' + base64Hash);
@@ -115,13 +120,12 @@
             alert("Ký số không thành công !");
             return false;
         }
-
     }
-    
+
     function signAndSubmitOriginalFile() {
         try {
-            var base64Hash = dijit.byId("txtBase64HashC0").getValue();
-            var certSerial = dijit.byId("txtCertSerialC").getValue();
+            var base64Hash = dijit.byId("txtBase64HashAFP0").getValue();
+            var certSerial = dijit.byId("txtCertSerialAFP").getValue();
             if (base64Hash !== '' && certSerial !== '') {
                 var base64Signature = new String(VtPlugin.signHash(base64Hash, certSerial));
                 console.log('base64: ' + base64Hash);
@@ -137,10 +141,12 @@
             return false;
         }
     }
-    function signAndSubmitOriginalFileForAA() {
+        function signAndSubmitOriginalFileAA() {
         try {
-            var base64Hash = dijit.byId("txtBase64HashC0").getValue();
-            var certSerial = dijit.byId("txtCertSerialC").getValue();
+            var base64Hash = dijit.byId("txtBase64HashAFP").getValue();
+            var certSerial = dijit.byId("txtCertSerialAFP").getValue();
+            alert(base64Hash);
+            alert(certSerial);
             if (base64Hash !== '' && certSerial !== '') {
                 var base64Signature = new String(VtPlugin.signHash(base64Hash, certSerial));
                 console.log('base64: ' + base64Hash);

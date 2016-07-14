@@ -25,12 +25,12 @@
         <img src="share/images/icons/chat.png" height="14" width="14" alt="Ý kiến thẩm định"/>
         <span style="font-size:12px">Ý kiến thẩm định</span>
     </sd:Button>
-        <%--
-    <sd:Button id="btnEvaluationDetails" key="" onclick="page.showEvaluateDetailsForm();" cssStyle="display:none" cssClass="buttonGroup">
-        <img src="share/images/icons/export.jpg" height="14" width="14" alt="Kết luận thẩm định"/>
-        <span style="font-size:12px">Kết luận thẩm định</span>
-    </sd:Button>
-        --%>
+    <%--
+<sd:Button id="btnEvaluationDetails" key="" onclick="page.showEvaluateDetailsForm();" cssStyle="display:none" cssClass="buttonGroup">
+    <img src="share/images/icons/export.jpg" height="14" width="14" alt="Kết luận thẩm định"/>
+    <span style="font-size:12px">Kết luận thẩm định</span>
+</sd:Button>
+    --%>
     <sd:Button id="btnAnnouncementReceiptPaper" key="" onclick="page.showAnnouncementReceiptPaperDlg();" cssStyle="display:none" cssClass="buttonGroup">
         <img src="share/images/icons/document_management.png" height="14" width="14" alt="Chi tiết giấy tiếp nhận hồ sơ"/>
         <span style="font-size:12px">Giấy tiếp nhận hồ sơ</span>
@@ -72,7 +72,7 @@
     </table>
 
     <div>
-           <sd:TitlePane key="Bảng kê sản phẩm nhập khẩu" id="tab.annoucement">
+        <sd:TitlePane key="Bảng kê sản phẩm nhập khẩu" id="tab.annoucement">
             <div id="tabReIssueFormDiv" style="overflow: auto;">
                 <jsp:include page="../fileViewTab/tabProductInFile.jsp"/>
             </div>
@@ -174,14 +174,14 @@ key="Kết luận thẩm định" showFullscreenButton="false"
 </sd:Dialog>
 
 <script>
-      page.viewFlow = function() {//xem luong
-              var lookupProcessDlg = dijit.byId("lookupProcessDlg");
-              var fileId = dijit.byId("createForm.fileId").getValue();
-              lookupProcessDlg.show();
-              page.getProcess(fileId);
-            };
-    
-    page.showReceivedButton = function() {//hien thi nut tiep nhan ho so - voi van thu
+    page.viewFlow = function () {//xem luong
+        var lookupProcessDlg = dijit.byId("lookupProcessDlg");
+        var fileId = dijit.byId("createForm.fileId").getValue();
+        lookupProcessDlg.show();
+        page.getProcess(fileId);
+    };
+
+    page.showReceivedButton = function () {//hien thi nut tiep nhan ho so - voi van thu
         var status = dijit.byId("createForm.status").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
         if ((status == 1 || status == 18) && viewType == 1) {
@@ -190,7 +190,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         }
     };
 
-    page.showCommentEvalutionButton = function() {//hiển thị kết quả thẩm định
+    page.showCommentEvalutionButton = function () {//hiển thị kết quả thẩm định
 //        var status = dijit.byId("createForm.status").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
 //         if ((status == 3 || status == 4 || status == 5 || status == 6 || status == 8 || status == 9 || status == 14 || status == 15 || status == 19 || status == 17 || status == 20 || status == 21) && (viewType == 4 || viewType == 2 || viewType == 3)) {
@@ -199,7 +199,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         }
     };
 
-    page.showResultEvaluationButton = function() {//hiển thị kết quả thẩm định
+    page.showResultEvaluationButton = function () {//hiển thị kết quả thẩm định
         var status = dijit.byId("createForm.status").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
         if ((status == 7 || status == 4 || status == 5 || status == 6 || status == 8 || status == 9 || status == 14 || status == 15 || status == 19 || status == 17) && (viewType == 4 || viewType == 2 || viewType == 3)) {
@@ -207,14 +207,14 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         }
     };
 
-    page.showAnnouncementReceiptPaperButton = function() {//kiem tra ton tai giay cong bo
+    page.showAnnouncementReceiptPaperButton = function () {//kiem tra ton tai giay cong bo
         var status = dijit.byId("createForm.status").getValue();
         if (status == 6 || status == 14 || status == 15) {
             var fileId = dijit.byId("createForm.fileId").getValue();
             sd.connector.post("filesAction!oncheckAnnouncementReceiptPaper.do?createForm.fileId=" + fileId, null, null, null, page.aftershowAnnouncementReceiptPaperButton);
         }
     };
-    page.aftershowAnnouncementReceiptPaperButton = function(data) {//sau khi kiem tra ton tai cong bo
+    page.aftershowAnnouncementReceiptPaperButton = function (data) {//sau khi kiem tra ton tai cong bo
         var obj = dojo.fromJson(data);
         var result = obj.items;
         var result0 = result[0];
@@ -225,30 +225,33 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         }
     };
 
-    page.showComparisonButton = function() {
+    page.showComparisonButton = function () {
         var status = dijit.byId("createForm.status").getValue();
         if (status == 15 || status == 16) {
             dijit.byId("btnComparison").domNode.style.display = "";
         }
     };
-    page.showBtnCheckCA = function() {
-        var elementContentSigned = document.getElementById("createForm.contentSigned");
-        if (elementContentSigned != null) {
-            var contentSigned = dijit.byId("createForm.contentSigned").getValue();
-            var userSigned = dijit.byId("createForm.userSigned").getValue();
-            if (userSigned != null && userSigned.trim().length > 0) {
-                if (userSigned != "fileUploaded") {
-                    dijit.byId("btnCheckCA").domNode.style.display = "";
-                }
-            }
-        }
-    };
+    //--khong su dung
+//    page.showBtnCheckCA = function () {
+//        alert("show button");
+//        var elementContentSigned = document.getElementById("createForm.contentSigned");
+//        if (elementContentSigned != null) {
+////            var contentSigned = dijit.byId("createForm.contentSigned").getValue();
+//            var userSigned = dijit.byId("createForm.userSigned").getValue();
+//            alert(userSigned);
+//            if (userSigned != null && userSigned.trim().length > 0) {
+//                if (userSigned != "fileUploaded") {
+//                    dijit.byId("btnCheckCA").domNode.style.display = "";
+//                }
+//            }
+//        }
+//    };
     //--
-    page.downloadFileDetails = function() {
+    page.downloadFileDetails = function () {
         var fileId = dijit.byId("createForm.fileId").getValue();
         document.location = "exportWord!onExportFileDetails.do?fileId=" + fileId;
     };
-    page.showBtnViewFLow = function() {//hien thi btn xem luong ho so
+    page.showBtnViewFLow = function () {//hien thi btn xem luong ho so
         var status = dijit.byId("createForm.status").getValue();
         if (status >= 0) {
             dijit.byId("btnViewFLow").domNode.style.display = "";
@@ -268,14 +271,14 @@ key="Kết luận thẩm định" showFullscreenButton="false"
 //    page.showCheckCa();
     //250214 binhnt53 comparison    
 
-    page.showComparisonDlg = function() {
+    page.showComparisonDlg = function () {
         var fileId = dijit.byId("createForm.fileId").getValue();
         dijit.byId("createForm.fileId").setValue(fileId);
         dijit.byId("comparisonDlg").show();
     };
     //!250214 binhnt53 comparison
 
-    page.showAnnouncementReceiptPaperDlg = function() {//show form giấy tiếp nhận công bố hợp quy
+    page.showAnnouncementReceiptPaperDlg = function () {//show form giấy tiếp nhận công bố hợp quy
         var fileId = dijit.byId("createForm.fileId").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
         if (viewType == 4) {
@@ -284,23 +287,23 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         sd.connector.post("filesAction!loadSignPage.do?signForm.fileId=" + fileId, "signForm", null, null, afterLoadPaperReceipt);
     };
 
-    afterLoadPaperReceipt = function(data) {//sau khi load giay tiep nhan cong bo        
+    afterLoadPaperReceipt = function (data) {//sau khi load giay tiep nhan cong bo        
         dijit.byId("announcementReceiptPaperSignDlg").show();
 
     };
 
-    page.viewFlow = function() {//xem luong
+    page.viewFlow = function () {//xem luong
         var lookupProcessDlg = dijit.byId("lookupProcessDlg");
         var fileId = dijit.byId("createForm.fileId").getValue();
         lookupProcessDlg.show();
         page.getProcess(fileId);
     };
-    page.showEvaluateDetailsForm = function() {//hien thi y kien tham dinh ho so
+    page.showEvaluateDetailsForm = function () {//hien thi y kien tham dinh ho so
         var fileId = dijit.byId("createForm.fileId").getValue();
         sd.connector.post("filesAction!getEvaluationRecordsDetails.do?createForm.fileId=" + fileId, null, null, null, afterLoadEvaluateDetailsForm);
     };
 
-    afterLoadEvaluateDetailsForm = function(data) {
+    afterLoadEvaluateDetailsForm = function (data) {
         var obj = dojo.fromJson(data);
         //var result = obj.items;
         var customInfo = obj.customInfo;
@@ -314,7 +317,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         page.replaceTblReviewFormViewDetailsEvaluate();
         dijit.byId("ctkqthamdinhDlg").show();
     };
-    returnStatus = function(status) {
+    returnStatus = function (status) {
         var strStatus = "";
         switch (status) {
             case -1:
@@ -331,11 +334,11 @@ key="Kết luận thẩm định" showFullscreenButton="false"
     };
 
     //
-    page.showViewComparisonForm = function() {//hien thi ket qua doi chieu ho so
+    page.showViewComparisonForm = function () {//hien thi ket qua doi chieu ho so
         var fileId = dijit.byId("createForm.fileId").getValue();
         sd.connector.post("filesAction!getComparisonRecordsDetails.do?createForm.fileId=" + fileId, null, null, null, afterLoadViewComparisonForm);
     };
-    afterLoadViewComparisonForm = function(data) {
+    afterLoadViewComparisonForm = function (data) {
         var obj = dojo.fromJson(data);
         var item = obj.items;
         document.getElementById("filesForm.isComparison").innerHTML = escapeHtml_(returnStatusComparison(item[0]));
@@ -343,7 +346,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         page.replaceTbleComparisonFormViewDetails();
         dijit.byId("comparisonViewDetailsDlg").show();
     };
-    returnStatusComparison = function(status) {
+    returnStatusComparison = function (status) {
         var strStatus = "";
         switch (status) {
             case 1:
@@ -357,7 +360,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
     };
 
     //Check xac minh ky CA
-    page.checkCAValid = function(data) {
+    page.checkCAValid = function (data) {
         if (data == "NG") {
             document.getElementById("approveCAInValid").style.display = "";
             return false;
@@ -368,10 +371,10 @@ key="Kết luận thẩm định" showFullscreenButton="false"
     };
 
     var validCAStatus = dijit.byId("validCAStatus").value;
-    page.checkCAValidNew = function() {
+    page.checkCAValidNew = function () {
         page.checkCAValid(validCAStatus);
     };
-    page.checkTimeProcessFile = function() {
+    page.checkTimeProcessFile = function () {
         var viewType = dijit.byId("createForm.viewType").getValue();
         if (viewType == 0) {
             var status = parseInt(dijit.byId("createForm.status").getValue());
@@ -434,14 +437,15 @@ key="Kết luận thẩm định" showFullscreenButton="false"
             }
         }
     };
-    page.showReturnFilesButton = function() {
+    page.showReturnFilesButton = function () {
         var status = dijit.byId("createForm.status").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
         if (status == 15 && viewType == 1) {
             dijit.byId("btnReturnFiles").domNode.style.display = "";
         }
     };
-    page.showBtnOldVersion = function() {
+    /* khong su dung
+    page.showBtnOldVersion = function () {
         //binhnt 141125
         var viewType = dijit.byId("createForm.viewType").getValue();
         if (viewType != 0) {
@@ -456,11 +460,12 @@ key="Kết luận thẩm định" showFullscreenButton="false"
 //            }
 //        }
     };
-    page.downloadFileSignNew = function() {
+            */
+    page.downloadFileSignNew = function () {
         var fileId = dijit.byId("createForm.fileId").getValue();
         document.location = "uploadiframe!openFileUserUpload.do?fileId=" + fileId;
     };
-    page.checkButtonFileSign = function() {
+    page.checkButtonFileSign = function () {
         var userSigned = dijit.byId("createForm.userSigned").getValue();
         if (userSigned != null && userSigned.trim().length > 0) {
             if (userSigned == "fileUploaded") {
@@ -469,7 +474,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         }
     };
     //140916
-    page.showBtnEvaluateFiles = function() {
+    page.showBtnEvaluateFiles = function () {
         var status = dijit.byId("createForm.status").getValue();
         var staffProcess = dijit.byId("createForm.staffProcess").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
@@ -478,7 +483,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         }
     };
 
-    page.showBtnReviewFiles = function() {
+    page.showBtnReviewFiles = function () {
         var status = dijit.byId("createForm.status").getValue();
         var leaderReviewId = dijit.byId("createForm.leaderReviewId").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
@@ -486,7 +491,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
             dijit.byId("btnReviewFiles").domNode.style.display = "";
         }
     };
-    page.showEvaluateLeaderFiles = function() {
+    page.showEvaluateLeaderFiles = function () {
         var status = dijit.byId("createForm.status").getValue();
         var leaderEvaluateId = dijit.byId("createForm.leaderEvaluateId").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
@@ -494,7 +499,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
             dijit.byId("btnEvaluateLeaderFiles").domNode.style.display = "";
         }
     };
-    page.getCommentEvaluateLeaderForm = function() {
+    page.getCommentEvaluateLeaderForm = function () {
         var fileId = dijit.byId("createForm.fileId").getValue();
         var fileType = dijit.byId("createForm.fileType").getValue();
         dijit.byId("evaluateFormByLeader.fileId").setValue(fileId);
@@ -504,7 +509,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         }
         sd.connector.post("filesAction!getCommentEvaluateFormByLeader.do?objectId=" + fileId, null, null, null, afterCommentEvaluateLeaderForm);
     };
-    afterCommentEvaluateLeaderForm = function(data) {
+    afterCommentEvaluateLeaderForm = function (data) {
 
         var obj = dojo.fromJson(data);
         if (obj.customInfo[0] != "") {
@@ -566,7 +571,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
 
         dijit.byId("evaluateLeaderDlg").show();
     };
-    page.getCommentEvaluateForm = function() {
+    page.getCommentEvaluateForm = function () {
         var fileId = dijit.byId("createForm.fileId").getValue();
         var fileType = dijit.byId("createForm.fileType").getValue();
         var productType = dijit.byId("createForm.detailProduct.productType").getValue();
@@ -577,7 +582,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         }
         sd.connector.post("filesAction!getCommentEvaluateForm.do?objectId=" + fileId + "&objectType=30&productType=" + productType, null, null, null, afterCommentEvaluateForm);
     };
-    afterCommentEvaluateForm = function(data) {
+    afterCommentEvaluateForm = function (data) {
         var obj = dojo.fromJson(data);
         if (obj.customInfo[0] != "") {
             document.getElementById("evaluationRecordsForm.legalContent").value = obj.customInfo[0];
@@ -615,12 +620,12 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         dijit.byId("evaluateDlg").show();
     };
     //!140916
-    page.showReviewForm = function() {//show form kết luận xem xét hồ sơ
+    page.showReviewForm = function () {//show form kết luận xem xét hồ sơ
         var fileId = dijit.byId("createForm.fileId").getValue();
         dijit.byId("reviewForm.fileId").setValue(fileId);
         sd.connector.post("filesAction!getCommentEvaluateFormByLeader.do?objectId=" + fileId, null, null, null, afterShowReviewForm);
     };
-    afterShowReviewForm = function(data) {
+    afterShowReviewForm = function (data) {
         var obj = dojo.fromJson(data);
         if (obj.customInfo[0] != "") {
             document.getElementById("reviewForm.legalContentL").value = obj.customInfo[0];
@@ -655,7 +660,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         dijit.byId("reviewDlg").show();
         page.replaceBrTblReviewForm();//on reviewForm.jsp
     };
-    page.getStatusName = function(status) {
+    page.getStatusName = function (status) {
         switch (status) {
             case 1:
                 url = "Mới nộp";
@@ -690,7 +695,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         return url;
     };
     //------14 10 08 -------
-    page.showBtnFeedbackEvaluateForm = function() {
+    page.showBtnFeedbackEvaluateForm = function () {
         var status = dijit.byId("createForm.status").getValue();
         var staffProcess = dijit.byId("createForm.staffProcess").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
@@ -698,12 +703,12 @@ key="Kết luận thẩm định" showFullscreenButton="false"
             dijit.byId("btnFeedbackEvaluateForm").domNode.style.display = "";
         }
     };
-    page.showFeedbackEvaluateForm = function() {
+    page.showFeedbackEvaluateForm = function () {
         var fileId = dijit.byId("createForm.fileId").getValue();
         dijit.byId("feedbackEvaluateForm.fileId").setValue(fileId);
         sd.connector.post("filesAction!getCommentEvaluateFeedbackEvaluate.do?objectId=" + fileId, null, null, null, afterShowFeedbackEvaluateForm);
     };
-    afterShowFeedbackEvaluateForm = function(data) {
+    afterShowFeedbackEvaluateForm = function (data) {
         var obj = dojo.fromJson(data);
         if (obj.customInfo[0] != "") {
             document.getElementById("feedbackEvaluateForm.staffContent").innerHTML = obj.customInfo[0];
@@ -721,7 +726,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         dijit.byId("feedbackEvaluateFormDlg").show();
     };
     //--
-    page.showBtnFeedbackReviewForm = function() {
+    page.showBtnFeedbackReviewForm = function () {
         var status = dijit.byId("createForm.status").getValue();
         var leaderReviewId = dijit.byId("createForm.leaderReviewId").getValue();
         var viewType = dijit.byId("createForm.viewType").getValue();
@@ -729,7 +734,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
             dijit.byId("btnFeedbackReviewForm").domNode.style.display = "";
         }
     };
-    page.showFeedbackReviewForm = function() {
+    page.showFeedbackReviewForm = function () {
         var fileId = dijit.byId("createForm.fileId").getValue();
         var isTypeChange = dijit.byId("createForm.isTypeChange").getValue();
         if (isTypeChange == '1') {
@@ -740,7 +745,7 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         dijit.byId("feedbackReviewForm.fileId").setValue(fileId);
         sd.connector.post("filesAction!getCommentFeedbackReview.do?objectId=" + fileId, null, null, null, afterShowFeedbackReviewForm);
     };
-    afterShowFeedbackReviewForm = function(data) {
+    afterShowFeedbackReviewForm = function (data) {
         var obj = dojo.fromJson(data);
         if (obj.customInfo[0] != "") {
             dijit.byId("feedbackReviewForm.leaderStaffRequest").setValue(obj.customInfo[0]);
@@ -751,100 +756,102 @@ key="Kết luận thẩm định" showFullscreenButton="false"
         dijit.byId("feedbackReviewFormDlg").show();
     };
 
-    page.checkIs30 = function()
+    page.checkIs30 = function ()
     {
         msg.confirm('Xác nhận hồ sơ theo thông tư 30 ?', '<sd:Property>confirm.title1</sd:Property>', page.checkIs30New);
-            };
+    };
 
-            page.checkIs30New = function()
-            {
-                var fileId = dijit.byId("createForm.fileId").getValue();
-                sd.connector.post("filesAction!check30.do?fileId=" + fileId, null, null, null, page.back1);
-            };
-            page.back1 = function()
+    page.checkIs30New = function ()
+    {
+        var fileId = dijit.byId("createForm.fileId").getValue();
+        sd.connector.post("filesAction!check30.do?fileId=" + fileId, null, null, null, page.back1);
+    };
+    page.back1 = function ()
+    {
+        document.getElementById("30").style.display = "";
+        dijit.byId("is30").domNode.style.display = "none";
+        dijit.byId("unCheck30").domNode.style.display = "";
+    };
+    page.checkIs30New1 = function ()
+    {
+        var is30 = dijit.byId("createForm.is30").getValue();
+        var status = dijit.byId("createForm.status").getValue();
+        var leaderReviewId = dijit.byId("createForm.leaderReviewId").getValue();
+        var viewType = dijit.byId("createForm.viewType").getValue();
+//                if ((status == 4 || status == 7 || status == 9) && (viewType == 3) && leaderReviewId == '${userId}') {
+        if ((viewType == 3) && leaderReviewId == '${userId}') {
+            if (is30 == 1)
             {
                 document.getElementById("30").style.display = "";
                 dijit.byId("is30").domNode.style.display = "none";
                 dijit.byId("unCheck30").domNode.style.display = "";
-            };
-            page.checkIs30New1 = function()
+            } else
             {
-                var is30 = dijit.byId("createForm.is30").getValue();
-                var status = dijit.byId("createForm.status").getValue();
-                var leaderReviewId = dijit.byId("createForm.leaderReviewId").getValue();
-                var viewType = dijit.byId("createForm.viewType").getValue();
-//                if ((status == 4 || status == 7 || status == 9) && (viewType == 3) && leaderReviewId == '${userId}') {
-                if ((viewType == 3) && leaderReviewId == '${userId}') {
-                    if (is30 == 1)
-                    {
-                        document.getElementById("30").style.display = "";
-                        dijit.byId("is30").domNode.style.display = "none";
-                        dijit.byId("unCheck30").domNode.style.display = "";
-                    } else
-                    {
-                        document.getElementById("30").style.display = "none";
-                        dijit.byId("is30").domNode.style.display = "";
-                        dijit.byId("unCheck30").domNode.style.display = "none";
-                    }
-                }
-            };
-            page.checkIs30New2 = function()
+                document.getElementById("30").style.display = "none";
+                dijit.byId("is30").domNode.style.display = "";
+                dijit.byId("unCheck30").domNode.style.display = "none";
+            }
+        }
+    };
+    page.checkIs30New2 = function ()
+    {
+        var is30 = dijit.byId("createForm.is30").getValue();
+        var status = dijit.byId("createForm.status").getValue();
+        var staffProcess = dijit.byId("createForm.staffProcess").getValue();
+        var viewType = dijit.byId("createForm.viewType").getValue();
+    //                if ((status == 3 || status == 8 || status == 17) && (viewType == 4) && staffProcess == '${userId}') {
+        if ((viewType == 4) && staffProcess == '${userId}') {
+            if (is30 == 1)
             {
-                var is30 = dijit.byId("createForm.is30").getValue();
-                var status = dijit.byId("createForm.status").getValue();
-                var staffProcess = dijit.byId("createForm.staffProcess").getValue();
-                var viewType = dijit.byId("createForm.viewType").getValue();
-//                if ((status == 3 || status == 8 || status == 17) && (viewType == 4) && staffProcess == '${userId}') {
-                if ((viewType == 4) && staffProcess == '${userId}') {
-                    if (is30 == 1)
-                    {
-                        document.getElementById("30").style.display = "";
-                        dijit.byId("is30").domNode.style.display = "none";
-                        dijit.byId("unCheck30").domNode.style.display = "";
-                    } else
-                    {
-                        document.getElementById("30").style.display = "none";
-                        dijit.byId("is30").domNode.style.display = "";
-                        dijit.byId("unCheck30").domNode.style.display = "none";
-                    }
-                }
-            };
-            
-            page.UnCheckIs30 = function() {
+                document.getElementById("30").style.display = "";
+                dijit.byId("is30").domNode.style.display = "none";
+                dijit.byId("unCheck30").domNode.style.display = "";
+            } else
+            {
+                document.getElementById("30").style.display = "none";
+                dijit.byId("is30").domNode.style.display = "";
+                dijit.byId("unCheck30").domNode.style.display = "none";
+            }
+        }
+    };
 
-                msg.confirm('Xác nhận hồ sơ không theo thông tư 30 ?', '<sd:Property>confirm.title1</sd:Property>', page.UnCheckIs30New);
-                    };
-                    page.UnCheckIs30New = function()
-                    {
-                        var fileId = dijit.byId("createForm.fileId").getValue();
-                        sd.connector.post("filesAction!UnCheck30.do?fileId=" + fileId, null, null, null, page.back2);
-                    };
-                    page.back2 = function()
-                    {
-                        document.getElementById("30").style.display = "none";
-                        dijit.byId("is30").domNode.style.display = "";
-                        dijit.byId("unCheck30").domNode.style.display = "none";
-                    };
+    page.UnCheckIs30 = function () {
 
-                    //hieptq update 160115
-                    page.checkIs30New1();
-                    page.checkIs30New2();
+        msg.confirm('Xác nhận hồ sơ không theo thông tư 30 ?', '<sd:Property>confirm.title1</sd:Property>', page.UnCheckIs30New);
+    };
+    
+    page.UnCheckIs30New = function ()
+    {
+        var fileId = dijit.byId("createForm.fileId").getValue();
+        sd.connector.post("filesAction!UnCheck30.do?fileId=" + fileId, null, null, null, page.back2);
+    };
+    
+    page.back2 = function ()
+    {
+        document.getElementById("30").style.display = "none";
+        dijit.byId("is30").domNode.style.display = "";
+        dijit.byId("unCheck30").domNode.style.display = "none";
+    };
 
-                    //!------14 10 08 -------
-                    page.checkButtonFileSign();
-                    page.showAnnouncementReceiptPaperButton();
-                    page.showResultEvaluationButton();
-                    page.showCommentEvalutionButton();
-                    page.showBtnViewFLow();
-                    //page.showReceivedButton();
-                    page.showComparisonButton();
-                    page.showBtnCheckCA();
-                    page.checkTimeProcessFile();
-                    page.showReturnFilesButton();
-                    page.showBtnOldVersion();
-                    //page.showBtnEvaluateFiles();
-                    page.showEvaluateLeaderFiles();
-                    //page.showBtnReviewFiles();
-                    page.showBtnFeedbackEvaluateForm();
-                    page.showBtnFeedbackReviewForm();
+    //hieptq update 160115
+    page.checkIs30New1();
+    page.checkIs30New2();
+
+    //!------14 10 08 -------
+    page.checkButtonFileSign();
+    page.showAnnouncementReceiptPaperButton();
+    page.showResultEvaluationButton();
+    page.showCommentEvalutionButton();
+    page.showBtnViewFLow();
+    //page.showReceivedButton();
+    page.showComparisonButton();
+    //                    page.showBtnCheckCA();
+    page.checkTimeProcessFile();
+    page.showReturnFilesButton();
+    //                    page.showBtnOldVersion();
+    //page.showBtnEvaluateFiles();
+    page.showEvaluateLeaderFiles();
+    //page.showBtnReviewFiles();
+    page.showBtnFeedbackEvaluateForm();
+    page.showBtnFeedbackReviewForm();
 </script>

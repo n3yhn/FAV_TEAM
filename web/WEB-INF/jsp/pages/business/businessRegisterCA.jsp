@@ -6,25 +6,27 @@
 <jsp:include page="../util/util_js.jsp"/>
 <jsp:include page="../common/commonJavascript.jsp"/>
 <jsp:include page="register_CA_js.jsp" />
+<object id="plugin0" type="application/x-viettelcasigner" width="3" height="10">
+</object>
 <%
     request.setAttribute("contextPath", request.getContextPath());
 %>
 <script>
-    page.getNo = function(index) {
+    page.getNo = function (index) {
         return dijit.byId("caUserGrid").currentRow + index + 1;
     };
-    page.getIndex = function(index) {
+    page.getIndex = function (index) {
         return index + 1;
     };
-    page.formatEdit = function(inData) {
+    page.formatEdit = function (inData) {
         var row = inData - 1;
         var item = dijit.byId("caUserGrid").getItem(row);
         var url = "";
-        if (item != null) {
-            var url = "<div style='text-align:center;cursor:pointer;'><img src='share/images/icons/deleteStand.png' width='17px' height='17px' title='Tạo bản sao hồ sơ' onClick='page.deleteCA(" + item.caUserId + ");' /></div>";
-        }
+//        if (item != null) {
+//            var url = "<div style='text-align:center;cursor:pointer;'><img src='share/images/icons/deleteStand.png' width='17px' height='17px' title='Tạo bản sao hồ sơ' onClick='page.deleteItem(" + item.caUserId + ");' /></div>";
+//        }
         return url;
-        
+
     };
 
 </script>
@@ -89,8 +91,9 @@
                                  serverPaging="true"
                                  clientSort="false">
                         <sd:ColumnDataGrid key="category.No" get="page.getNo" width="5%"  styles="text-align:center;" />
-                        <sd:ColumnDataGrid editable="true" key="Xóa" headerStyles="text-align:center;" width="30%" cellStyles="text-align:center;"
-                                           formatter="page.formatEdit" get="page.getIndex"/>   
+                        <sd:ColumnDataGrid editable="true" key="column.checkbox" 
+                                           headerCheckbox="true" headerStyles="text-align:center;" 
+                                           type="checkbox" width="5%" cellStyles="text-align:center;" />
                         <sd:ColumnDataGrid  key="Số serial" field="caSerial"
                                             width="80%"  headerStyles="text-align:center;" />
                         <sd:ColumnDataGrid  key="User" field="userName"
@@ -101,58 +104,111 @@
         </tr>
         <tr>
             <td>
-                <sd:Button key="" onclick="page.insert();">
+                <!--<sd:Button key="" onclick="page.insert();">
                     <img src="share/images/icons/save.png" height="14" width="18" alt="Ghi lại">
                     <span style="font-size:12px">Đăng ký CA</span>
+                </sd:Button>-->
+                <sd:Button key="" onclick="page.insertFP();">
+                    <img src="share/images/icons/save.png" height="14" width="18" alt="Ghi lại">
+                    <span style="font-size:12px">Đăng ký CA bằng Plugin</span>
                 </sd:Button>
-<!--                <sd:Button key="" onclick="page.onDeleteCa();" >
-                    <img src="share/images/icons/deleteStand.png" height="14" width="18" alt="Hủy">
-                    <span style="font-size:12px">Hủy CA Token</span>
-                </sd:Button>       -->
+                <sx:ButtonDelete onclick="page.deleteItem()" />
                 <sx:ButtonSearch id="btnShowSearchPanel" onclick="page.showSearchPanel();" />
             </td>
         </tr>
     </table>
 </sd:TitlePane>
-<sd:Dialog  id="dlgReturn" height="auto" width="500px"
+<!--<sd:Dialog  id="dlgReturn" height="auto" width="500px"
             key="" showFullscreenButton="true"
             >
     <jsp:include page="dlgRegisterCA.jsp"></jsp:include>
-</sd:Dialog>
-<script type="text/javascript">
-    var check;
-    var workingCaUserId;
-    page.search = function() {
-        dijit.byId("caUserGrid").vtReload('caUserAction!onSearch.do?', "searchForm");
-    };
+</sd:Dialog>-->
+<jsp:include page="../../pages/files/lookup/pluginJSRegister.jsp" flush="false"></jsp:include>
+    <script type="text/javascript">
+        var check;
+        var workingCaUserId;
+        page.search = function () {
+            dijit.byId("caUserGrid").vtReload('caUserAction!onSearch.do?', "searchForm");
+        };
 
-    page.insert = function() {
-        check = true;
-        dijit.byId("btnOK").domNode.style.display = "";
-        dijit.byId("dlgReturn").vtSetTitle("Ký duyệt CA");
-        dijit.byId("dlgReturn").show();
-    };
-    page.returnMessageDelete = function(data) {
-        var obj = dojo.fromJson(data);
-        var result = obj.items;
-        resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
+//        page.insert = function () {
+//            check = true;
+//            dijit.byId("btnOK").domNode.style.display = "";
+//            dijit.byId("dlgReturn").vtSetTitle("Ký duyệt CA");
+//            dijit.byId("dlgReturn").show();
+//        };
+//        page.returnMessageDelete = function (data) {
+//            var obj = dojo.fromJson(data);
+//            var result = obj.items;
+//            resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
+//            page.search();
+//        };
+        page.showSearchPanel = function () {
+            var panel = document.getElementById("searchDiv");
+            panel.setAttribute("style", "display:;");
+            dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
+        };
+        page.reset = function () {
+            dijit.byId("searchForm.caSerial").setValue("");
+        };
+//        page.deleteCA = function (caUserId) {
+//            check = false;
+//            workingCaUserId = caUserId;
+//            dijit.byId("btnOK").domNode.style.display = "";
+//            dijit.byId("dlgReturn").vtSetTitle("Xóa CA Token");
+//            dijit.byId("dlgReturn").show();
+//        };
+
         page.search();
-    };
-    page.showSearchPanel = function() {
-        var panel = document.getElementById("searchDiv");
-        panel.setAttribute("style", "display:;");
-        dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
-    };
-    page.reset = function() {
-        dijit.byId("searchForm.caSerial").setValue("");
-    };
-    page.deleteCA = function(caUserId) {
-        check = false;
-        workingCaUserId = caUserId;
-        dijit.byId("btnOK").domNode.style.display = "";
-        dijit.byId("dlgReturn").vtSetTitle("Xóa CA Token");
-        dijit.byId("dlgReturn").show();
-    };
 
-    page.search();
+        page.insertFP = function () {
+            var item = updateCertOfFile();
+            cert = encodeBase64(item.certChain);
+            sd.connector.post("filesAction!actionSignCARegisterCA.do?cert=" + cert, null, null, null, page.afterCheckCARegister);
+        };
+
+        page.afterCheckCARegister = function (data) {
+            var obj = dojo.fromJson(data);
+            var result = obj.items;
+            if (result[0] == "1") {
+                alert(result[1]);
+            } else {
+                alert("Ký số không thành công ! " + result[1]);
+            }
+            page.search();
+        };
+        page.afterSignPluginC = function ()
+        {
+            sd.connector.post("filesAction!onReturnFiles.do?signFileId=" + signFileId + "&" + token.getTokenParamString(), null, "feedbackGiveBackForm", null, page.afterAproveVT);
+        };
+        page.afterAproveVT = function (data) {
+            var obj = dojo.fromJson(data);
+            alert(result[1]);
+            if (result[0] == "1") {
+                document.getElementById("divSignProcess").style.display = "none";
+                onCloseFeedbackGiveBackForm();
+                page.search();
+            }
+
+        };
+
+        page.deleteItem = function () {
+            if (!dijit.byId("caUserGrid").vtIsChecked()) {
+                msg.alert('<sd:Property>alert.select</sd:Property>', '<sd:Property>confirm.title</sd:Property>');
+                        } else {
+                            msg.confirm('<sd:Property>confirm.delete</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', page.deleteItemExecute);
+                                    }
+                                }
+
+                                page.deleteItemExecute = function () {
+                                    var content = dijit.byId("caUserGrid").vtGetCheckedDataForPost("lstItemOnGrid");
+                                    sd.connector.post("caUserAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
+                                }
+
+                                page.returnMessageDelete = function (data) {
+                                    var obj = dojo.fromJson(data);
+                                    var result = obj.items;
+                                    resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
+                                    page.search();
+                                }
 </script>

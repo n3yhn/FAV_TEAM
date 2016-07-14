@@ -8,9 +8,10 @@
 %>
 <div class="buttonDiv">
     <sx:ButtonBack onclick="backPage();"/>
-    <%-- <sx:ButtonSave onclick="page.saveFiles();"/> --%>
     <sx:ButtonSave onclick="page.insertFiles();"/>
     <sx:ButtonSaveDraff onclick="page.insertFileDraff();"/>
+    <%-- <sx:ButtonSave onclick="page.saveFiles();"/> 
+    
     <sd:Button id="btnTypeChange" key="" onclick="page.onTypeChange();" cssClass="buttonGroup" cssStyle="display:none">
         <img src="${contextPath}/share/images/icons/Answer.png" height="14" width="18">
         <span style="font-size:12px">Chuyển loại hồ sơ</span>
@@ -21,6 +22,7 @@
         name="createForm.Type" 
         cssStyle="display:none;width:70%;">
     </sd:SelectBox>
+    --%>
 </div>
 <sd:TitlePane key="${fn:escapeXml(fileNameFull)}"
               id="fileNameFull" >
@@ -98,7 +100,7 @@
     page.insertFiles = function() {
         msg.confirm('Bạn có chắc chắn thực hiện lưu hồ sơ này ?', '<sd:Property>Cảnh báo</sd:Property>', page.saveFiles);
     };
-
+/*
     page.onTypeChange = function() {
         var fileType = dijit.byId("createForm.Type").getValue();
         var fileIdCopy = '${fileIdCopy}';
@@ -120,7 +122,7 @@
         }
     };
     page.showBtnTypeChange();
-    
+    */
     page.insertFileDraff = function() {
         page.updateListDataBeforeSubmit();
         page.setAttachLabel();

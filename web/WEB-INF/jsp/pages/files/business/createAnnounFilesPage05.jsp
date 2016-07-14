@@ -45,9 +45,11 @@
 
 <div class="buttonDiv">
     <sx:ButtonBack onclick="backPage();"/>
-    <%-- <sx:ButtonSave onclick="page.saveFiles();"/> --%>
     <sx:ButtonSave onclick="page.insertFiles();"/>
     <sx:ButtonSaveDraff onclick="page.insertFileDraff();"/>
+    
+    <%-- <sx:ButtonSave onclick="page.saveFiles();"/> 
+    
 
     <sd:SelectBox
         id="createForm.Type"
@@ -55,6 +57,7 @@
         name="createForm.Type" 
         cssStyle="display:none;width:70%;">
     </sd:SelectBox>
+    --%>
 </div>
 <sd:TitlePane key="Sửa đổi hồ sơ sau công bố"
               id="fileNameFull" >
@@ -132,6 +135,7 @@
 //    page.checkExcel1();
 
 //hietq update 17.11.14
+/*
     page.onTypeChange = function() {
         var fileType = dijit.byId("createForm.Type").getValue();
         var fileIdCopy = '${fileIdCopy}';
@@ -153,7 +157,7 @@
         }
     };
     page.showBtnTypeChange();
-
+*/
     page.insertFileDraff = function() {
 //        page.updateListDataBeforeSubmit();
         page.setAttachLabel();

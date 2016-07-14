@@ -191,7 +191,8 @@
                     break;
                 case 3:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn thẩm định&#13;";
                             flag = 1;
@@ -201,7 +202,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn thẩm định&#13;";
                                 flag = 1;
@@ -224,7 +228,8 @@
                     break;
                 case 4:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn xem xét&#13;";
                             flag = 1;
@@ -234,7 +239,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 13) {
                                 strWarning += "- Quá hạn xem xét&#13;";
                                 flag = 1;
@@ -244,7 +252,8 @@
                                 }
                             }
                         } else {
-                            if (fileType == 66746 || fileType == 66748) {
+                            if (fileType == 66746
+                                    || fileType == 66748) {
                                 if (diffDays > 4) {
                                     strWarning += "- Quá hạn xem xét&#13;";
                                     flag = 1;
@@ -259,7 +268,8 @@
                     break;
                 case 7:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn xem xét&#13;";
                             flag = 1;
@@ -269,7 +279,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 13) {
                                 strWarning += "- Quá hạn xem xét&#13;";
                                 flag = 1;
@@ -304,7 +317,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn phê duyệt&#13;";
                                 flag = 1;
@@ -314,7 +330,8 @@
                                 }
                             }
                         } else {
-                            if (fileType == 66746 || fileType == 66748) {
+                            if (fileType == 66746
+                                    || fileType == 66748) {
                                 if (diffDays > 4) {
                                     strWarning += "- Quá hạn phê duyệt&#13;";
                                     flag = 1;
@@ -344,7 +361,8 @@
                     break;
                 case 17:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn thẩm định&#13;";
                             flag = 1;
@@ -354,7 +372,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn thẩm định&#13;";
                                 flag = 1;

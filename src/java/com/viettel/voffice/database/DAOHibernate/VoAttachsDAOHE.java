@@ -723,4 +723,61 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
         }
         return null;
     }
+    public GridResult getAttachsByIdTypeChanged(Long objectId, Long objectType, int start, int count, String sortField) {
+        List voAttachsList = new ArrayList();
+        GridResult gridResult = new GridResult();
+        try {
+            StringBuilder strBuf = new StringBuilder("from VoAttachs a where a.isActive = ? ");
+            strBuf.append(" and a.objectId = ?");
+//            strBuf.append(" and a.objectType = ?");
+            Query query = getSession().createQuery("SELECT count(a) " + strBuf.toString());
+            query.setParameter(0, Constants.Status.CHANGED);            
+            if (objectId != null) {
+                query.setParameter(1, objectId);
+            } else {
+                query.setParameter(1, -1L);
+            }
+//            if (objectType != null) {
+//                query.setParameter(2, objectType);
+//            } else {
+//                query.setParameter(2, -1L);
+//            }
+            int total = query.list().size();
+            String sortType = null;
+            if (sortField != null) {
+                if (sortField.indexOf('-') != -1) {
+                    sortType = " asc";
+                    sortField = sortField.substring(1); // not use in this case
+                } else {
+                    sortType = " desc";
+                }
+            }
+            if (sortField != null) {
+                strBuf.append(" order by (CASE WHEN a.createDate IS NULL THEN 1 ELSE 0 END), a.createDate ").append(sortType).append(", ").append(validateColumnName(sortField)).append(" ").append(sortType);
+            } else {
+                strBuf.append(" order by (CASE WHEN a.createDate IS NULL THEN 1 ELSE 0 END), a.createDate desc, a.attachId desc ");
+            }
+            query = getSession().createQuery("SELECT a " + strBuf.toString());
+            query.setParameter(0, Constants.Status.CHANGED);
+            if (objectId != null) {
+                query.setParameter(1, objectId);
+            } else {
+                query.setParameter(1, -1L);
+            }
+//            if (objectType != null) {
+//                query.setParameter(2, objectType);
+//            } else {
+//                query.setParameter(2, -1L);
+//            }
+            query.setFirstResult(start);
+            query.setMaxResults(count);
+            voAttachsList = query.list();
+            gridResult.setLstResult(voAttachsList);
+            gridResult.setnCount(Long.valueOf(total));
+            return gridResult;
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            return null;
+        }
+    }
 }

@@ -105,7 +105,7 @@
         <img id="imgAlertWarning" src='share/images/icons/warning.png' width='17px' height='17px' title='' style="display:none;" />
         <img id="imgAlertError" src='share/images/icons/error.png' width='17px' height='17px' title='' style="display:none;" />
     </div>
-    <div id="approveCAValid" style="display:none;">
+<div id="approveCAValid" style="display:none;">
         <table width="100%" cellspacing="5" cellpadding="0" border="0" class="viewTable">
             <tr>
                 <td style="padding-right: 2em;text-align: left;"> 

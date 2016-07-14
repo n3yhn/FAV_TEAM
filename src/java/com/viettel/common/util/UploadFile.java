@@ -95,7 +95,7 @@ public class UploadFile {
                 + separatorFile + String.valueOf(cal.getTime().getMonth() + 1)
                 + separatorFile + String.valueOf(cal.getTime().getDate())
                 + separatorFile;
-        File folderExisting = new File(dir);
+        File folderExisting = new File(getSafeFileName(dir));
         if (!folderExisting.isDirectory()) {
             folderExisting.mkdir();
         }
@@ -140,7 +140,7 @@ public class UploadFile {
                 + separatorFile + String.valueOf(cal.getTime().getMonth() + 1)
                 + separatorFile + String.valueOf(cal.getTime().getDate())
                 + separatorFile;
-        File folderExisting = new File(dir);
+        File folderExisting = new File(getSafeFileName(dir));
         if (!folderExisting.isDirectory()) {
             folderExisting.mkdir();
         }

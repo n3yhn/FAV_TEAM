@@ -140,7 +140,8 @@
                     break;
                 case 3:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn thẩm định&#13;";
                             flag = 1;
@@ -150,7 +151,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn thẩm định&#13;";
                                 flag = 1;
@@ -173,7 +177,8 @@
                     break;
                 case 4:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn xem xét&#13;";
                             flag = 1;
@@ -183,7 +188,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 13) {
                                 strWarning += "- Quá hạn xem xét&#13;";
                                 flag = 1;
@@ -193,7 +201,8 @@
                                 }
                             }
                         } else {
-                            if (fileType == 66746 || fileType == 66748) {
+                            if (fileType == 66746
+                                    || fileType == 66748) {
                                 if (diffDays > 4) {
                                     strWarning += "- Quá hạn xem xét&#13;";
                                     flag = 1;
@@ -208,7 +217,8 @@
                     break;
                 case 7:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn xem xét&#13;";
                             flag = 1;
@@ -218,7 +228,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 13) {
                                 strWarning += "- Quá hạn xem xét&#13;";
                                 flag = 1;
@@ -228,7 +241,8 @@
                                 }
                             }
                         } else {
-                            if (fileType == 66746 || fileType == 66748) {
+                            if (fileType == 66746
+                                    || fileType == 66748) {
                                 if (diffDays > 4) {
                                     strWarning += "- Quá hạn xem xét&#13;";
                                     flag = 1;
@@ -243,7 +257,8 @@
                     break;
                 case 5:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn phê duyệt&#13;";
                             flag = 1;
@@ -253,7 +268,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn phê duyệt&#13;";
                                 flag = 1;
@@ -263,7 +281,8 @@
                                 }
                             }
                         } else {
-                            if (fileType == 66746 || fileType == 66748) {
+                            if (fileType == 66746
+                                    || fileType == 66748) {
                                 if (diffDays > 4) {
                                     strWarning += "- Quá hạn phê duyệt&#13;";
                                     flag = 1;
@@ -293,7 +312,8 @@
                     break;
                 case 17:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn thẩm định&#13;";
                             flag = 1;
@@ -303,7 +323,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn thẩm định&#13;";
                                 flag = 1;
@@ -476,6 +499,7 @@
 </sd:Dialog>
 
 <script type="text/javascript">
+                                                            
     backPage = function() {
         //document.getElementById("selectFileDiv").style.display="";
         //document.getElementById("createFileDiv").style.display="none";
@@ -484,46 +508,57 @@
         //document.getElementById("createDiv").style.display="none";
         doGoToMenu(g_latestClickedMenu);
     };
+    
     afterLoadForm = function(data) {
         document.getElementById("searchDiv").style.display = "none";
         document.getElementById("createDiv").style.display = "";
     };
+    
     page.showViewFile = function(fileId) {
         doGoToMenu("filesAction!toFileDlgView.do?fileId=" + fileId + "&viewType=1" + "&backPage=3");
     };
+    
     page.showNextNode = function(fileId) {
         page.loadFlow(fileId);
     };
+    
     page.showAssignPopup = function(fileId) {
         dijit.byId("assignDlg").show();
         page.showAssignDlg(fileId);
     };
+    
     page.search = function() {
-        if (page.validateSearch()) {
+        
+//        if (page.validateSearch()) {
             dijit.byId("filesGrid").vtReload('filesAction!onSearchFilesToReceived.do?', "searchForm");
-        }
+//        }
     };
+    
     page.reset = function() {
         dijit.byId('searchForm.fileCode').attr('value', '');
         dijit.byId('searchForm.fileType').attr('value', '-1');
         dijit.byId('searchForm.sendDateFrom').attr('value', null);
         dijit.byId('searchForm.sendDateTo').attr('value', null);
     };
+    
     page.insert = function() {
         page.clearInsertForm();
         dijit.byId("createDlg").show();
     };
+    
     page.showEditPopup = function(row) {
         var item = dijit.byId("filesGrid").getItem(row);
         page.setItem(item);
         dijit.byId("createDlg").show();
     };
+    
     page.returnMessageDelete = function(data) {
         var obj = dojo.fromJson(data);
         var result = obj.items;
         resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
         page.search();
     };
+    
     page.showSearchPanel = function() {
         var panel = document.getElementById("searchDiv");
         panel.setAttribute("style", "display:;");
@@ -544,6 +579,7 @@
 //        }
         return true;
     };
+    
     page.reloadViewOldVersion = function(oldVersion, thisVersion) {//u140728
         document.getElementById('createDiv').Value = '';
         var gridRegister = dijit.byId('processCommentGridId_VTGrid');
@@ -552,6 +588,7 @@
         }
         sd.connector.post("filesAction!loadFilesByOldVersion.do?thisVersion=" + thisVersion + "&oldVersion=" + oldVersion, "createDiv", null, null, afterReloadViewOldVersion);
     };
+    
     afterReloadViewOldVersion = function(data) {
     }; //!u140728
 
@@ -562,10 +599,10 @@
         }
         else {
             msg.confirm('Bạn có chắc chắn muốn tiếp nhận những hồ sơ đã chọn ?', '<sd:Property>confirm.title1</sd:Property>', page.showReceiveMorePopup);
-                    }
-                };
+        }
+    };
 
-                page.showReceiveMorePopup = function() {
+    page.showReceiveMorePopup = function() {
 //                    var gridProcess = dijit.byId("processGridId");
 //                    // check xem da ton tai tren grid chua
 //                    var i = 0;
@@ -575,20 +612,20 @@
 //                    }
 //                    gridProcess.scrollToRow(gridProcess._by_idx.length);
 
-                    var items = dijit.byId("filesGrid").vtGetCheckedItems();
-                    var lstObjectId = "";
-                    if (items != null && items.length >= 0) {
-                        for (var i = 0; i < items.length; i++)
-                        {
-                            if (i != items.length - 1)
-                                lstObjectId += items[i].fileId + ",";
-                            else
-                                lstObjectId += items[i].fileId;
-                        }
+        var items = dijit.byId("filesGrid").vtGetCheckedItems();
+        var lstObjectId = "";
+        if (items != null && items.length >= 0) {
+            for (var i = 0; i < items.length; i++)
+            {
+                if (i != items.length - 1)
+                    lstObjectId += items[i].fileId + ",";
+                else
+                    lstObjectId += items[i].fileId;
+            }
 //                        dijit.byId("assignDlg").show();
 //                        page.showAssignDlgPrepare(null, lstObjectId, 2);
-                        page.receivedMoreExecute(lstObjectId);
-                    }
-                };
-                page.search();
+            page.receivedMoreExecute(lstObjectId);
+        }
+    };
+    page.search();
 </script>

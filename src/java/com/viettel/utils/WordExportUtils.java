@@ -1105,7 +1105,7 @@ public class WordExportUtils {
                 try {
                     service = new Converter_Service();
                     con = service.getConverterPort();
-                    output = con.convert(input);
+                     output = con.convert(input);
                     break;
                 } catch (Exception ex) {
                     Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
@@ -1136,7 +1136,7 @@ public class WordExportUtils {
             }
             byte[] contentInBytes = readAttachLabel(fileId, output.getContent(), fileCode, barCode, flagReadLabels, flagPageNumber);
             fop.write(contentInBytes);
-           //fop.write(output.getContent());
+            //fop.write(output.getContent());
             fop.flush();
             fop.close();
             return file.getPath() + ";" + file.getName();
@@ -1271,6 +1271,81 @@ public class WordExportUtils {
             } catch (BadElementException | IOException ex) {
                 Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+
+    public String writePDFToStreamSignFileUsingPlugin(WordprocessingMLPackage template, HttpServletResponse res, Long fileId, String fileCode, byte[] barCode, String signType, Boolean flagReadLabels, Integer signNumberFile, Boolean flagPageNumber) {
+        try {
+            ResourceBundle rb = ResourceBundle.getBundle("config");
+            String PATH = rb.getString("ConvertService");
+            Date newDate = new Date();
+            String fileName = newDate.getTime() + ".docx";
+            File f = new File(PATH + File.separatorChar + fileName);
+            template.save(f);
+
+            PdfDocxFile input = new PdfDocxFile();
+            input.setContent(HandleFile.getByteFromFile(f));
+            input.setFilename(f.getName());
+            input.setConvertType("docx2pdf");
+
+            FileOutputStream fop = null;
+            File file;
+            ResourceBundle rb1 = ResourceBundle.getBundle("config");
+            String PATH1 = rb1.getString("file_sign_link");
+            // Get user Info
+            BaseDAO baseDao = new BaseDAO();
+            // Create file name
+            String fileOut = "";
+            fileOut = PATH1 + signType + "_" + baseDao.getUserId().toString() + "_" + fileId.toString() + ".pdf";
+
+            // Try conect 5 times
+            Converter_Service service = null;
+            com.viettel.convert.service.Converter con = null;
+            PdfDocxFile output = null;
+
+            Integer count = 1;
+            while (count <= 5) {
+                try {
+                    service = new Converter_Service();
+                    con = service.getConverterPort();
+                    output = con.convert(input);
+                    break;
+                } catch (Exception ex) {
+                    Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+                    // Wait 1s
+                    Thread.sleep(1000);
+                    count++;
+                    if (count > 5) {
+                        return "false";
+                    }
+                }
+            }
+
+            res.setContentType("application/bak");
+            res.setHeader("Content-Disposition", "attachment; filename=" + fileOut);
+            res.setHeader("Content-Type", "application/bak");
+
+            file = new File(fileOut);
+            fop = new FileOutputStream(file);
+
+            // if file doesnt exists, then create it
+            file.createNewFile();
+
+            // get the content in bytes
+            if (output == null || output.getContent() == null || output.getContent().length == 0) {
+                fop.flush();
+                fop.close();
+                return "false";
+            }
+            byte[] contentInBytes = readAttachLabel(fileId, output.getContent(), fileCode, barCode, flagReadLabels, flagPageNumber);
+            fop.write(contentInBytes);
+            //fop.write(output.getContent());
+            fop.flush();
+            fop.close();
+            return file.getPath() + ";" + file.getName();
+        } catch (Docx4JException | InterruptedException | IOException ex) {
+            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+            return "false";
         }
     }
 }

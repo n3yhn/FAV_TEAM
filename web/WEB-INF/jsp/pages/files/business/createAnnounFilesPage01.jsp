@@ -49,6 +49,7 @@
     <sx:ButtonSave onclick="page.insertFiles();"/>
     <sx:ButtonSaveDraff onclick="page.insertFileDraff();"/>
     <!-- hieptq update lai 17.11.14 -->
+<%--
     <sd:Button id="btnTypeChange" key="" onclick="page.onTypeChange();" cssClass="buttonGroup" cssStyle="display:none">
         <img src="${contextPath}/share/images/icons/Answer.png" height="14" width="18">
         <span style="font-size:12px">Chuyển loại hồ sơ</span>
@@ -59,6 +60,7 @@
         name="createForm.Type" 
         cssStyle="display:none;width:70%;">
     </sd:SelectBox>
+--%>
 </div>
 <sd:TitlePane key="${fn:escapeXml(fileNameFull)}"
               id="fileNameFull" >
@@ -156,6 +158,8 @@
 //    page.checkExcel1();
 
 //hietq update 17.11.14
+    /*
+    
     page.onTypeChange = function() {
         var fileType = dijit.byId("createForm.Type").getValue();
         var fileIdCopy = '${fileIdCopy}';
@@ -167,6 +171,7 @@
 
         page.setCreateDiv(fileIdCopy, fileType);
     };
+
     page.showBtnTypeChange = function() {
         //var isChange = dijit.byId("createForm.isTypeChange").getValue();
         var checkCopy = '${isCopy}';
@@ -177,6 +182,7 @@
         }
     };
     page.showBtnTypeChange();
+    */
 
     page.insertFileDraff = function() {
         page.updateListDataBeforeSubmit();

@@ -71,17 +71,17 @@ public class ExportFileDAO extends BaseDAO {
     private final String DN_CongbophuhopCNTL = "/WEB-INF/template/DN_congbophuhopCNTL.docx";//xuat giay cong bo phu hop doanh nghiep
     private final String DN_CongbophuhopCNsubTL = "/WEB-INF/template/DN_congbophuhopCNsubTL.docx";//xuat giay cong bo cho doanh nghiep
     private final String DN_AnnounementReceiptPaper4Star = "/WEB-INF/template/DN_AnnounementReceiptPaper4Star.docx";
+    private final String DN_Congbohopqui01THsub = "/WEB-INF/template/congbohopquiTHsub.docx";//xuat giay doanh nghiep: bản công bố phù hợp qui định attp 01 thuc pham thuong
+    private final String DN_Congbohopqui01BBsub = "/WEB-INF/template/congbohopquiBBsub.docx";//xuat giay doanh nghiep: bản công bố phù hợp qui định attp 01 bao bi
+    private final String DN_CongbophuhopCNsub = "/WEB-INF/template/congbophuhopCNsub.docx";//xuat giay cong bo cho doanh nghiep
+    private final String DN_CongbophuhopTHsub = "/WEB-INF/template/congbophuhopTHsub.docx";//
+    private final String DN_CongbophuhopBBsub = "/WEB-INF/template/congbophuhopBBsub.docx";//
 
     private final String tempCongbohopquiCL = "/WEB-INF/template/recongbohopqui.docx";//
     private final String tempCongbophuhopCL = "/WEB-INF/template/recongbophuhop.docx";//    
     private final String tempSignsuadoisaucongbo = "/WEB-INF/template/tempSignSuaDoiSauCongBo.docx";
     private final String tempSuadoisaucongbo = "/WEB-INF/template/tempSuaDoiSauCongBo.docx";
 
-    private final String tempCongbohopqui01THsub = "/WEB-INF/template/congbohopquiTHsub.docx";//xuat giay doanh nghiep: bản công bố phù hợp qui định attp 01 thuc pham thuong
-    private final String tempCongbohopqui01BBsub = "/WEB-INF/template/congbohopquiBBsub.docx";//xuat giay doanh nghiep: bản công bố phù hợp qui định attp 01 bao bi
-    private final String tempCongbophuhopCNsub = "/WEB-INF/template/congbophuhopCNsub.docx";//xuat giay cong bo cho doanh nghiep
-    private final String tempCongbophuhopTHsub = "/WEB-INF/template/congbophuhopTHsub.docx";//
-    private final String tempCongbophuhopBBsub = "/WEB-INF/template/congbophuhopBBsub.docx";//
     //print giay cong bo
     private final String ReceiptPaperConfirmFucnImpTemp = "/WEB-INF/template/ConfirmFucnImpReceiptPaper.docx";//XÁC NHẬN CÔNG BỐ PHÙ HỢP QUY ĐỊNH AN TOÀN THỰC PHẨM
     private final String ReceiptPaperAnnounementTemp = "/WEB-INF/template/AnnounementReceiptPaper.docx";//GIẤY TIẾP NHẬN BẢN CÔNG BỐ HỢP QUY
@@ -1936,7 +1936,7 @@ public class ExportFileDAO extends BaseDAO {
                             wU.replaceTable(wmp, 6, lstChemicalTarget);
                             //wU.replaceTable(wmp, 7, lstQualityControlPlan);   
                         } else {
-                            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbohopqui01THsub))));
+                            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01THsub))));
                             if (filesForm.getDetailProduct() != null
                                     && filesForm.getAnnouncement() != null) {
                                 BusinessDAOHE busdaohe = new BusinessDAOHE();
@@ -1988,7 +1988,7 @@ public class ExportFileDAO extends BaseDAO {
                         lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
                         wU.replaceTable(wmp, 3, lstMainlyTarget);
                     } else {
-                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbohopqui01BBsub))));
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01BBsub))));
                         if (filesForm.getDetailProduct() != null
                                 && filesForm.getAnnouncement() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
@@ -2101,7 +2101,7 @@ public class ExportFileDAO extends BaseDAO {
                         lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
                         wU.replaceTable(wmp, 3, lstMainlyTarget);
                     } else {
-                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbohopqui01BBsub))));
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01BBsub))));
                         if (filesForm.getDetailProduct() != null
                                 && filesForm.getAnnouncement() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
@@ -2172,7 +2172,7 @@ public class ExportFileDAO extends BaseDAO {
                             wU.replaceTable(wmp, 3, lstMainlyTarget);
                         }
                     } else if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
-                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbohopqui01THsub))));
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01THsub))));
                         if (filesForm.getAnnouncement() != null && filesForm.getDetailProduct() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
                             Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2197,7 +2197,7 @@ public class ExportFileDAO extends BaseDAO {
                         wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
                         wU.replaceTable(wmp, 6, lstChemicalTarget);
                     } else {
-                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbohopqui01BBsub))));
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01BBsub))));
                         if (filesForm.getAnnouncement() != null && filesForm.getDetailProduct() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
                             Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2265,7 +2265,7 @@ public class ExportFileDAO extends BaseDAO {
                             wU.replaceTable(wmp, 3, lstMainlyTarget);
                         }
                     } else if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
-                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbohopqui01THsub))));
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01THsub))));
                         if (filesForm.getAnnouncement() != null && filesForm.getDetailProduct() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
                             Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2290,7 +2290,7 @@ public class ExportFileDAO extends BaseDAO {
                         wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
                         wU.replaceTable(wmp, 6, lstChemicalTarget);
                     } else {
-                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbohopqui01BBsub))));
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01BBsub))));
                         if (filesForm.getAnnouncement() != null
                                 && filesForm.getDetailProduct() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
@@ -2340,7 +2340,7 @@ public class ExportFileDAO extends BaseDAO {
                         wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
                         wU.replaceTable(wmp, 6, lstChemicalTarget);
                     } else {
-                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbophuhopCNsub))));
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopCNsub))));
                         if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
                             Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2452,7 +2452,7 @@ public class ExportFileDAO extends BaseDAO {
                         wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
                         wU.replaceTable(wmp, 6, lstChemicalTarget);
                     } else {
-                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbophuhopCNsub))));
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopCNsub))));
                         if (filesForm.getDetailProduct() != null
                                 && filesForm.getAnnouncement() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
@@ -2531,7 +2531,7 @@ public class ExportFileDAO extends BaseDAO {
                             wU.replaceTable(wmp, 3, lstMainlyTarget);
                         }
                     } else if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
-                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbophuhopTHsub))));
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopTHsub))));
                         if (filesForm.getDetailProduct() != null
                                 && filesForm.getAnnouncement() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
@@ -2557,7 +2557,7 @@ public class ExportFileDAO extends BaseDAO {
                         wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
                         wU.replaceTable(wmp, 6, lstChemicalTarget);
                     } else {
-                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbophuhopBBsub))));
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopBBsub))));
                         if (filesForm.getDetailProduct() != null
                                 && filesForm.getAnnouncement() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
@@ -2627,7 +2627,7 @@ public class ExportFileDAO extends BaseDAO {
                             wU.replaceTable(wmp, 3, lstMainlyTarget);
                         }
                     } else if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
-                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbophuhopTHsub))));
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopTHsub))));
                         if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
                             Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -2652,7 +2652,7 @@ public class ExportFileDAO extends BaseDAO {
                         wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
                         wU.replaceTable(wmp, 6, lstChemicalTarget);
                     } else {
-                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbophuhopBBsub))));
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopBBsub))));
                         if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
                             Business busbo = busdaohe.findById(filesForm.getDeptId());
@@ -3964,6 +3964,1092 @@ public class ExportFileDAO extends BaseDAO {
                     jsonDataGrid.setItems(resultMessage);
                     return GRID_DATA;
                 }
+            }
+        } catch (Exception ex) {
+            resultMessage.add("3");
+            resultMessage.add("Lỗi trong quá trình xử lý File PDF");
+            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình xử lý File PDF: " + ex.getMessage());
+        }
+        jsonDataGrid.setItems(resultMessage);
+        return GRID_DATA;
+    }
+
+    public String onExportPaperSignFilePlugin() {
+        List resultMessage = new ArrayList();
+        try {
+            WordExportUtils wU = new WordExportUtils();
+            // insert ban cong bo
+            if (fileId == null) {
+                resultMessage.add("3");
+                resultMessage.add("Lỗi trong quá trình Convert và lưu file PDF: Không có hồ sơ");
+                jsonDataGrid.setItems(resultMessage);
+                return GRID_DATA;
+            }
+            Date dateNow = getSysdate();
+            FilesDAOHE fdhe = new FilesDAOHE();
+            FilesForm filesForm = fdhe.getFilesDetail(fileId);
+
+            ProcedureDAOHE procedurehe = new ProcedureDAOHE();
+            Procedure procedure = procedurehe.findById(filesForm.getFileType());
+            if (filesForm == null) {
+                resultMessage.add("3");
+                resultMessage.add("Lỗi trong quá trình Convert và lưu file PDF: Không có hồ sơ");
+                jsonDataGrid.setItems(resultMessage);
+                return GRID_DATA;
+            }
+
+            WordprocessingMLPackage wmp = null;
+            String fileCode = filesForm.getFileCode();
+            Long productType = 0L;
+
+            if (filesForm.getDetailProduct() != null
+                    && filesForm.getDetailProduct().getProductType() != null) {
+                productType = filesForm.getDetailProduct().getProductType();
+            }
+            CategoryDAOHE catedaohe = new CategoryDAOHE();
+            Category catebo = catedaohe.findById(productType);
+            List lstMainlyTarget;
+            List lstBiologisTarget;
+            List lstHeavyMetalTarget;
+            List lstChemicalTarget;
+            switch (procedure.getDescription()) {
+                case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01:
+                    if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
+                        if (filesForm.getIsHaveSubLabel() != null
+                                && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
+                            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01TH))));
+                            if (filesForm.getDetailProduct() != null
+                                    && filesForm.getAnnouncement() != null) {
+                                BusinessDAOHE busdaohe = new BusinessDAOHE();
+                                Business busbo = busdaohe.findById(filesForm.getDeptId());
+                                if (filesForm.getDetailProduct().getSignDate() != null) {
+                                    if (busbo != null) {
+                                        filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    } else {
+                                        filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    }
+                                } else if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                                }
+                                filesForm.getAnnouncement().setMatchingTarget(filesForm.getAnnouncement().getMatchingTarget().replace(";", "\n\r"));
+                            }
+                            lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                            lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                            lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                            lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                            //List lstQualityControlPlan = fdhe.getQualityControlOfFile(fileId);
+                            wU.replaceTable(wmp, 3, lstMainlyTarget);
+                            wU.replaceTable(wmp, 4, lstBiologisTarget);
+                            wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                            wU.replaceTable(wmp, 6, lstChemicalTarget);
+                            //wU.replaceTable(wmp, 7, lstQualityControlPlan);   
+                        } else {
+                            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01THsub))));
+                            if (filesForm.getDetailProduct() != null
+                                    && filesForm.getAnnouncement() != null) {
+                                BusinessDAOHE busdaohe = new BusinessDAOHE();
+                                Business busbo = busdaohe.findById(filesForm.getDeptId());
+                                if (filesForm.getDetailProduct().getSignDate() != null) {
+                                    if (busbo != null) {
+                                        filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    } else {
+                                        filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    }
+                                } else if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                                }
+                                filesForm.getAnnouncement().setMatchingTarget(filesForm.getAnnouncement().getMatchingTarget().replace(";", "\n\r"));
+                            }
+                            lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                            lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                            lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                            lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                            //List lstQualityControlPlan = fdhe.getQualityControlOfFile(fileId);
+                            wU.replaceTable(wmp, 3, lstMainlyTarget);
+                            wU.replaceTable(wmp, 4, lstBiologisTarget);
+                            wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                            wU.replaceTable(wmp, 6, lstChemicalTarget);
+                            //wU.replaceTable(wmp, 7, lstQualityControlPlan);
+                        }
+                    } else if (filesForm.getIsHaveSubLabel() != null
+                            && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01BB))));
+                        if (filesForm.getDetailProduct() != null
+                                && filesForm.getAnnouncement() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                            filesForm.getAnnouncement().setMatchingTarget(filesForm.getAnnouncement().getMatchingTarget().replace(";", "\n\r"));
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                    } else {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01BBsub))));
+                        if (filesForm.getDetailProduct() != null
+                                && filesForm.getAnnouncement() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                            filesForm.getAnnouncement().setMatchingTarget(filesForm.getAnnouncement().getMatchingTarget().replace(";", "\n\r"));
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                    }
+                    break;
+                case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01_TL:
+                    if (catebo != null
+                            && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
+                        if (filesForm.getIsHaveSubLabel() != null
+                                && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
+                            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01THTL))));
+                            if (filesForm.getDetailProduct() != null
+                                    && filesForm.getAnnouncement() != null) {
+                                BusinessDAOHE busdaohe = new BusinessDAOHE();
+                                Business busbo = busdaohe.findById(filesForm.getDeptId());
+                                if (filesForm.getDetailProduct().getSignDate() != null) {
+                                    if (busbo != null) {
+                                        filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    } else {
+                                        filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    }
+                                } else if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                                }
+                                filesForm.getAnnouncement().setMatchingTarget(filesForm.getAnnouncement().getMatchingTarget().replace(";", "\n\r"));
+                            }
+                            lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                            lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                            lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                            lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                            //List lstQualityControlPlan = fdhe.getQualityControlOfFile(fileId);
+                            wU.replaceTable(wmp, 3, lstMainlyTarget);
+                            wU.replaceTable(wmp, 4, lstBiologisTarget);
+                            wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                            wU.replaceTable(wmp, 6, lstChemicalTarget);
+                            //wU.replaceTable(wmp, 7, lstQualityControlPlan);   
+                        } else {
+                            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01THTL))));
+                            if (filesForm.getDetailProduct() != null
+                                    && filesForm.getAnnouncement() != null) {
+                                BusinessDAOHE busdaohe = new BusinessDAOHE();
+                                Business busbo = busdaohe.findById(filesForm.getDeptId());
+                                if (filesForm.getDetailProduct().getSignDate() != null) {
+                                    if (busbo != null) {
+                                        filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    } else {
+                                        filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    }
+                                } else if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                                }
+                                filesForm.getAnnouncement().setMatchingTarget(filesForm.getAnnouncement().getMatchingTarget().replace(";", "\n\r"));
+                            }
+                            lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                            lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                            lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                            lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                            wU.replaceTable(wmp, 3, lstMainlyTarget);
+                            wU.replaceTable(wmp, 4, lstBiologisTarget);
+                            wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                            wU.replaceTable(wmp, 6, lstChemicalTarget);
+                        }
+                    } else if (filesForm.getIsHaveSubLabel() != null
+                            && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01BBTL))));
+                        if (filesForm.getDetailProduct() != null
+                                && filesForm.getAnnouncement() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince()
+                                            + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                            + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                            + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                            + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM")
+                                            + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                            filesForm.getAnnouncement().setMatchingTarget(filesForm.getAnnouncement().getMatchingTarget().replace(";", "\n\r"));
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                    } else {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01BBsub))));
+                        if (filesForm.getDetailProduct() != null
+                                && filesForm.getAnnouncement() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                            filesForm.getAnnouncement().setMatchingTarget(filesForm.getAnnouncement().getMatchingTarget().replace(";", "\n\r"));
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                    }
+                    break;
+                case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03:
+                    if (filesForm.getIsHaveSubLabel() != null && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
+                        if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
+                            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01TH))));
+                            if (filesForm.getAnnouncement() != null && filesForm.getDetailProduct() != null) {
+                                BusinessDAOHE busdaohe = new BusinessDAOHE();
+                                Business busbo = busdaohe.findById(filesForm.getDeptId());
+                                if (filesForm.getDetailProduct().getSignDate() != null) {
+                                    if (busbo != null) {
+                                        filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    } else {
+                                        filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    }
+                                } else if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                                }
+                            }
+                            lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                            lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                            lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                            lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                            wU.replaceTable(wmp, 3, lstMainlyTarget);
+                            wU.replaceTable(wmp, 4, lstBiologisTarget);
+                            wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                            wU.replaceTable(wmp, 6, lstChemicalTarget);
+                        } else {
+                            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01BB))));
+                            if (filesForm.getAnnouncement() != null
+                                    && filesForm.getDetailProduct() != null) {
+                                BusinessDAOHE busdaohe = new BusinessDAOHE();
+                                Business busbo = busdaohe.findById(filesForm.getDeptId());
+                                if (filesForm.getDetailProduct().getSignDate() != null) {
+                                    if (busbo != null) {
+                                        filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    } else {
+                                        filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    }
+                                } else if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                                }
+                            }
+                            lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                            wU.replaceTable(wmp, 3, lstMainlyTarget);
+                        }
+                    } else if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01THsub))));
+                        if (filesForm.getAnnouncement() != null && filesForm.getDetailProduct() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                        lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                        lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                        wU.replaceTable(wmp, 4, lstBiologisTarget);
+                        wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                        wU.replaceTable(wmp, 6, lstChemicalTarget);
+                    } else {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01BBsub))));
+                        if (filesForm.getAnnouncement() != null && filesForm.getDetailProduct() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                    }
+                    break;
+                case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03_TL:
+                    if (filesForm.getIsHaveSubLabel() != null && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
+                        if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
+                            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01THTL))));
+                            if (filesForm.getAnnouncement() != null && filesForm.getDetailProduct() != null) {
+                                BusinessDAOHE busdaohe = new BusinessDAOHE();
+                                Business busbo = busdaohe.findById(filesForm.getDeptId());
+                                if (filesForm.getDetailProduct().getSignDate() != null) {
+                                    if (busbo != null) {
+                                        filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    } else {
+                                        filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    }
+                                } else if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                                }
+                            }
+                            lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                            lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                            lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                            lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                            wU.replaceTable(wmp, 3, lstMainlyTarget);
+                            wU.replaceTable(wmp, 4, lstBiologisTarget);
+                            wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                            wU.replaceTable(wmp, 6, lstChemicalTarget);
+                        } else {
+                            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01BBTL))));
+                            if (filesForm.getAnnouncement() != null && filesForm.getDetailProduct() != null) {
+                                BusinessDAOHE busdaohe = new BusinessDAOHE();
+                                Business busbo = busdaohe.findById(filesForm.getDeptId());
+                                if (filesForm.getDetailProduct().getSignDate() != null) {
+                                    if (busbo != null) {
+                                        filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    } else {
+                                        filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    }
+                                } else if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                                }
+                            }
+                            lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                            wU.replaceTable(wmp, 3, lstMainlyTarget);
+                        }
+                    } else if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01THsub))));
+                        if (filesForm.getAnnouncement() != null && filesForm.getDetailProduct() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                        lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                        lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                        wU.replaceTable(wmp, 4, lstBiologisTarget);
+                        wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                        wU.replaceTable(wmp, 6, lstChemicalTarget);
+                    } else {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_Congbohopqui01BBsub))));
+                        if (filesForm.getAnnouncement() != null
+                                && filesForm.getDetailProduct() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                    }
+                    break;
+                case Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP:
+                    if (filesForm.getIsHaveSubLabel() != null
+                            && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopCN))));
+                        if (filesForm.getDetailProduct() != null
+                                && filesForm.getAnnouncement() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                        lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                        lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                        wU.replaceTable(wmp, 4, lstBiologisTarget);
+                        wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                        wU.replaceTable(wmp, 6, lstChemicalTarget);
+                    } else {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopCNsub))));
+                        if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                        lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                        lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                        wU.replaceTable(wmp, 4, lstBiologisTarget);
+                        wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                        wU.replaceTable(wmp, 6, lstChemicalTarget);
+                    }
+                    break;
+                case Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP_TL:
+                    if (filesForm.getIsHaveSubLabel() != null
+                            && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopCNTL))));
+                        if (filesForm.getDetailProduct() != null
+                                && filesForm.getAnnouncement() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày "
+                                            + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd")
+                                            + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm "
+                                            + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                        lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                        lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                        wU.replaceTable(wmp, 4, lstBiologisTarget);
+                        wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                        wU.replaceTable(wmp, 6, lstChemicalTarget);
+                    } else {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopCNsubTL))));
+                        if (filesForm.getDetailProduct() != null
+                                && filesForm.getAnnouncement() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                        lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                        lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                        wU.replaceTable(wmp, 4, lstBiologisTarget);
+                        wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                        wU.replaceTable(wmp, 6, lstChemicalTarget);
+                    }
+                    break;
+                case Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN:
+                    if (filesForm.getIsHaveSubLabel() != null && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopCN))));
+                        if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                        lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                        lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                        wU.replaceTable(wmp, 4, lstBiologisTarget);
+                        wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                        wU.replaceTable(wmp, 6, lstChemicalTarget);
+                    } else {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopCNsub))));
+                        if (filesForm.getDetailProduct() != null
+                                && filesForm.getAnnouncement() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                        lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                        lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                        wU.replaceTable(wmp, 4, lstBiologisTarget);
+                        wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                        wU.replaceTable(wmp, 6, lstChemicalTarget);
+                    }
+                    break;
+                case Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN:
+                    if (filesForm.getIsHaveSubLabel() != null
+                            && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
+                        if (catebo != null
+                                && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
+                            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopTH))));
+                            if (filesForm.getDetailProduct() != null
+                                    && filesForm.getAnnouncement() != null) {
+                                BusinessDAOHE busdaohe = new BusinessDAOHE();
+                                Business busbo = busdaohe.findById(filesForm.getDeptId());
+                                if (filesForm.getDetailProduct().getSignDate() != null) {
+                                    if (busbo != null) {
+                                        filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    } else {
+                                        filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    }
+                                } else if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                                }
+                            }
+                            lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                            lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                            lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                            lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                            wU.replaceTable(wmp, 3, lstMainlyTarget);
+                            wU.replaceTable(wmp, 4, lstBiologisTarget);
+                            wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                            wU.replaceTable(wmp, 6, lstChemicalTarget);
+                        } else {
+                            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopBB))));
+                            if (filesForm.getDetailProduct() != null
+                                    && filesForm.getAnnouncement() != null) {
+                                BusinessDAOHE busdaohe = new BusinessDAOHE();
+                                Business busbo = busdaohe.findById(filesForm.getDeptId());
+                                if (filesForm.getDetailProduct().getSignDate() != null) {
+                                    if (busbo != null) {
+                                        filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    } else {
+                                        filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    }
+                                } else if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                                }
+                            }
+                            lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                            wU.replaceTable(wmp, 3, lstMainlyTarget);
+                        }
+                    } else if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopTHsub))));
+                        if (filesForm.getDetailProduct() != null
+                                && filesForm.getAnnouncement() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                        lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                        lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                        wU.replaceTable(wmp, 4, lstBiologisTarget);
+                        wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                        wU.replaceTable(wmp, 6, lstChemicalTarget);
+                    } else {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopBBsub))));
+                        if (filesForm.getDetailProduct() != null
+                                && filesForm.getAnnouncement() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                    }
+                    break;
+                case Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP:
+                    if (filesForm.getIsHaveSubLabel() != null && filesForm.getIsHaveSubLabel().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
+                        if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
+                            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopTH))));
+                            if (filesForm.getDetailProduct() != null
+                                    && filesForm.getAnnouncement() != null) {
+                                BusinessDAOHE busdaohe = new BusinessDAOHE();
+                                Business busbo = busdaohe.findById(filesForm.getDeptId());
+                                if (filesForm.getDetailProduct().getSignDate() != null) {
+                                    if (busbo != null) {
+                                        filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    } else {
+                                        filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    }
+                                } else if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                                }
+                            }
+                            lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                            lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                            lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                            lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                            wU.replaceTable(wmp, 3, lstMainlyTarget);
+                            wU.replaceTable(wmp, 4, lstBiologisTarget);
+                            wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                            wU.replaceTable(wmp, 6, lstChemicalTarget);
+                        } else {
+                            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopBB))));
+                            if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
+                                BusinessDAOHE busdaohe = new BusinessDAOHE();
+                                Business busbo = busdaohe.findById(filesForm.getDeptId());
+                                if (filesForm.getDetailProduct().getSignDate() != null) {
+                                    if (busbo != null) {
+                                        filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    } else {
+                                        filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                    }
+                                } else if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                                }
+                            }
+                            lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                            wU.replaceTable(wmp, 3, lstMainlyTarget);
+                        }
+                    } else if (catebo != null && catebo.getCode().equals(Constants.CATEGORY_TYPE.BBP) == false) {//u150122 binhnt53
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopTHsub))));
+                        if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        lstBiologisTarget = fdhe.getProductTargetOfFile(fileId, 1l);
+                        lstHeavyMetalTarget = fdhe.getProductTargetOfFile(fileId, 2l);
+                        lstChemicalTarget = fdhe.getProductTargetOfFile(fileId, 3l);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                        wU.replaceTable(wmp, 4, lstBiologisTarget);
+                        wU.replaceTable(wmp, 5, lstHeavyMetalTarget);
+                        wU.replaceTable(wmp, 6, lstChemicalTarget);
+                    } else {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_CongbophuhopBBsub))));
+                        if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
+                            BusinessDAOHE busdaohe = new BusinessDAOHE();
+                            Business busbo = busdaohe.findById(filesForm.getDeptId());
+                            if (filesForm.getDetailProduct().getSignDate() != null) {
+                                if (busbo != null) {
+                                    filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                } else {
+                                    filesForm.getAnnouncement().setSignDateStr("..., ngày " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getSignDate(), "yyyy"));
+                                }
+                            } else if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                            }
+                        }
+                        lstMainlyTarget = fdhe.getMainlyTargetOfFile(fileId);
+                        wU.replaceTable(wmp, 3, lstMainlyTarget);
+                    }
+                    break;
+                case Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT:
+                    wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbohopquiCL))));
+                    if (filesForm.getReIssueForm() != null) {
+                        if (filesForm.getReIssueForm().getDocumentDate() != null) {
+                            filesForm.getReIssueForm().setDocumentDateStr("Ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "yyyy"));
+                        } else {
+                            filesForm.getReIssueForm().setDocumentDateStr("Ngày... tháng... năm 20..");
+                        }
+                    }
+                    if (filesForm.getReIssueForm() != null) {
+                        if (filesForm.getReIssueForm().getReIssueDate() != null) {
+                            filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
+                        } else {
+                            filesForm.getReIssueForm().setReIssueDateStr("ngày... tháng... năm 20..");
+                        }
+                    }
+
+                    break;
+                case Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_IMP:
+                    wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbophuhopCL))));
+                    if (filesForm.getReIssueForm() != null) {
+                        if (filesForm.getReIssueForm().getDocumentDate() != null) {
+                            filesForm.getReIssueForm().setDocumentDateStr("Ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "yyyy"));
+                        } else {
+                            filesForm.getReIssueForm().setDocumentDateStr("Ngày... tháng... năm 20..");
+                        }
+                    }
+                    if (filesForm.getReIssueForm() != null) {
+                        if (filesForm.getReIssueForm().getReIssueDate() != null) {
+                            filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
+                        } else {
+                            filesForm.getReIssueForm().setReIssueDateStr("ngày... tháng... năm 20..");
+                        }
+                    }
+                    break;
+                case Constants.FILE_DESCRIPTION.RE_CONFIRM_NORMAL_VN:
+                    wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbophuhopCL))));
+                    if (filesForm.getReIssueForm() != null) {
+                        if (filesForm.getReIssueForm().getDocumentDate() != null) {
+                            filesForm.getReIssueForm().setDocumentDateStr("Ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "yyyy"));
+                        } else {
+                            filesForm.getReIssueForm().setDocumentDateStr("Ngày... tháng... năm 20..");
+                        }
+                    }
+                    if (filesForm.getReIssueForm() != null) {
+                        if (filesForm.getReIssueForm().getReIssueDate() != null) {
+                            filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
+                        } else {
+                            filesForm.getReIssueForm().setReIssueDateStr("ngày... tháng... năm 20..");
+                        }
+                    }
+                    break;
+                case Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_VN:
+                    wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbophuhopCL))));
+                    if (filesForm.getReIssueForm() != null) {
+                        if (filesForm.getReIssueForm().getDocumentDate() != null) {
+                            filesForm.getReIssueForm().setDocumentDateStr("Ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "yyyy"));
+                        } else {
+                            filesForm.getReIssueForm().setDocumentDateStr("Ngày... tháng... năm 20..");
+                        }
+                    }
+                    if (filesForm.getReIssueForm() != null) {
+                        if (filesForm.getReIssueForm().getReIssueDate() != null) {
+                            filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
+                        } else {
+                            filesForm.getReIssueForm().setReIssueDateStr("ngày... tháng... năm 20..");
+                        }
+                    }
+                    break;
+                case Constants.FILE_DESCRIPTION.REC_CONFIRM_NORMAL_IMP:
+                    wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempCongbophuhopCL))));
+                    if (filesForm.getReIssueForm() != null) {
+                        if (filesForm.getReIssueForm().getDocumentDate() != null) {
+                            filesForm.getReIssueForm().setDocumentDateStr("Ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getDocumentDate(), "yyyy"));
+                        } else {
+                            filesForm.getReIssueForm().setDocumentDateStr("Ngày... tháng... năm 20..");
+                        }
+                    }
+                    if (filesForm.getReIssueForm() != null) {
+                        if (filesForm.getReIssueForm().getReIssueDate() != null) {
+                            filesForm.getReIssueForm().setReIssueDateStr("ngày " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getReIssueForm().getReIssueDate(), "yyyy"));
+                        } else {
+                            filesForm.getReIssueForm().setReIssueDateStr("ngày... tháng... năm 20..");
+                        }
+                    }
+                    break;
+                case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05:
+//                    Hiepvv_Home Xem truoc cong van SDBS sau cong bo
+                    Long preLong = getRequest().getParameter("isPre") == null ? 0L : Long.parseLong(getRequest().getParameter("isPre"));
+                    if (preLong > 0L) {
+                        String contentEdit = "";
+                        String publishDate = "";
+                        String announmentNo = "";
+                        String proName = "";
+                        String busiName = "";
+                        String busiAdd = "";
+                        String receiptNoOld = "";
+                        String receiptNo = "0000";
+                        String titleEdit = "";
+                        if (filesForm.getContentsEditATTP() != null && !filesForm.getContentsEditATTP().isEmpty()) {
+                            contentEdit = filesForm.getContentsEditATTP();
+                        } else {
+                            contentEdit = filesForm.getContentsEdit();
+                        }
+                        if (filesForm.getAnnouncement().getPublishDate() != null) {
+                            publishDate = DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "dd")
+                                    + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "MM")
+                                    + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "yyyy");
+                        }
+                        if (filesForm.getAnnouncement().getAnnouncementNo() != null) {
+                            announmentNo = filesForm.getAnnouncement().getAnnouncementNo();
+                        }
+                        if (filesForm.getAnnouncement().getProductName() != null) {
+                            proName = filesForm.getAnnouncement().getProductName();
+                        }
+                        if (filesForm.getAnnouncement().getBusinessAddress() != null) {
+                            busiAdd = filesForm.getAnnouncement().getBusinessAddress();
+                        }
+                        if (filesForm.getAnnouncement().getBusinessName() != null) {
+                            busiName = filesForm.getAnnouncement().getBusinessName();
+                        }
+                        String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd")
+                                + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM")
+                                + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
+                        String receiptDeptName = "";
+                        if (filesForm.getAnnouncementReceiptPaperForm() != null) {
+                            receiptDeptName = filesForm.getAnnouncementReceiptPaperForm().getReceiptDeptName();
+                        } else if (filesForm.getConfirmImportSatistPaperForm() != null) {
+                            receiptDeptName = filesForm.getConfirmImportSatistPaperForm().getTestAgencyName();
+                        }
+                        if (filesForm.getFilesSourceID() != null
+                                && filesForm.getFilesSourceID() > 0L) {
+                            Files fboOld = fdhe.findById(filesForm.getFilesSourceID());
+                            if (fboOld != null
+                                    && fboOld.getAnnouncementReceiptPaperId() != null) {
+                                AnnouncementReceiptPaperDAOHE arpDaohe = new AnnouncementReceiptPaperDAOHE();
+                                AnnouncementReceiptPaper arpbo = arpDaohe.findById(fboOld.getAnnouncementReceiptPaperId());
+                                if (arpbo != null
+                                        && arpbo.getReceiptDate() != null
+                                        && arpbo.getSignDate() != null
+                                        && arpbo.getReceiptNo() != null) {
+                                    receiptNoOld = arpbo.getReceiptNo();
+                                    publishDate = " ngày " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "dd")
+                                            + " tháng " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "MM") + " năm "
+                                            + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "yyyy");
+                                }
+                            }
+                        }
+                        if (filesForm.getTitleEdit() != null) {
+                            titleEdit = filesForm.getTitleEdit();
+                        } else if (filesForm.getTitleEditATTP() != null) {
+                            titleEdit = filesForm.getTitleEditATTP();
+                        } else {
+                            titleEdit = "sửa đổi bổ sung hồ sơ đã công bố";
+                        }
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignsuadoisaucongbo))));
+                        //Các biến truyền vào Công văn
+                        if (receiptDeptName == null || receiptDeptName.equals("Cục ATTP")) {
+                            wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
+                            wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
+                            wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
+                        } else {
+                            wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${deptParent}");
+                            wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptName}");
+                            wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptNames}");
+                        }
+                        wU.replacePlaceholder(wmp, contentEdit, "${contentEdit}");
+                        wU.replacePlaceholder(wmp, publishDate, "${publishDate}");
+                        wU.replacePlaceholder(wmp, announmentNo, "${announmentNo}");
+                        wU.replacePlaceholder(wmp, proName, "${proName}");
+                        wU.replacePlaceholder(wmp, busiAdd, "${busiAdd}");
+                        wU.replacePlaceholder(wmp, busiName, "${busiName}");
+                        wU.replacePlaceholder(wmp, signedDate, "${signDate}");
+                        wU.replacePlaceholder(wmp, receiptNoOld, "${receiptNoOld}");
+                        wU.replacePlaceholder(wmp, receiptNo, "${receiptNo}");
+                        wU.replacePlaceholder(wmp, titleEdit, "${titleEdit}");
+                        ProcessDAOHE pDaohe = new ProcessDAOHE();
+                        Process pBo = pDaohe.getProcessByAction(filesForm.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, filesForm.getStatus(), Constants.FILE_STATUS.NEW_CREATE);
+                        DepartmentDAOHE deptDaohe = new DepartmentDAOHE();
+                        Department deptBo = deptDaohe.findBOById(pBo.getSendGroupId());
+                        if (deptBo != null && deptBo.getDeptCode() != null) {
+                            wU.replacePlaceholder(wmp, deptBo.getDeptCode(), "${deptCode}");
+                        } else {
+                            wU.replacePlaceholder(wmp, "SP", "${deptCode}");
+                        }
+                    } else {
+                        wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSuadoisaucongbo))));
+                    }
+//                    End Hiepvv_Home
+                    break;
+                case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR:
+                    if (filesForm.getAnnouncement() != null) {
+                        BusinessDAOHE busdaohe = new BusinessDAOHE();
+                        Business busbo = busdaohe.findById(filesForm.getDeptId());
+                        if (filesForm.getAnnouncement().getPublishDate() != null) {
+                            if (busbo != null) {
+                                filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince()
+                                        + ", ngày " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "yyyy"));
+                            } else {
+                                filesForm.getAnnouncement().setSignDateStr("..., ngày "
+                                        + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "MM")
+                                        + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "yyyy"));
+                            }
+                        } else if (busbo != null) {
+                            filesForm.getAnnouncement().setSignDateStr(busbo.getBusinessProvince() + ", ngày... tháng... năm 20..");
+                        } else {
+                            filesForm.getAnnouncement().setSignDateStr("..., ngày... tháng... năm 20..");
+                        }
+                    }
+
+                    wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(DN_AnnounementReceiptPaper4Star))));
+                    List lstProductOfFile = fdhe.getProductOfFile(fileId);
+                    wU.replaceTable(wmp, 0, lstProductOfFile);
+                    wU.replacePlaceholder(wmp, filesForm.getAnnouncement().getSignDateStr(), "${signDateStr}");
+                    break;
+                default:;
+            }
+            //binhnt update 260216
+            if (filesForm.getDetailProduct() != null) {
+                if (filesForm.getDetailProduct().getUseage() == null
+                        || filesForm.getDetailProduct().getUseage().trim().length() == 0) {
+                    filesForm.getDetailProduct().setUseage("Không có.");
+                }
+                if (filesForm.getDetailProduct().getObjectUse() == null
+                        || filesForm.getDetailProduct().getObjectUse().trim().length() == 0) {
+                    filesForm.getDetailProduct().setObjectUse("Không có.");
+                }
+                if (filesForm.getDetailProduct().getGuideline() == null
+                        || filesForm.getDetailProduct().getGuideline().trim().length() == 0) {
+                    filesForm.getDetailProduct().setGuideline("Không có.");
+                }
+                if (filesForm.getDetailProduct().getDateOfManufacture() != null) {
+                    filesForm.getDetailProduct().setDateOfManufactureStr(DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getDateOfManufacture(), "dd/MM/yyyy"));
+                }
+            }
+            HashMap map = new HashMap();
+            map.put("createForm", filesForm);
+            wU.replacePlaceholder(wmp, map);
+            String fullFile = wU.writePDFToStreamSignFileUsingPlugin(wmp, getResponse(), fileId, fileCode, filesForm.getQrCode(), Constants.TYPE_SIGN.CBDN, true, 1, true);
+            //Hiepvv SDBS sau cong bo
+            if (procedure != null
+                    && procedure.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)) {
+                if (!fullFile.equals("false")) {
+//                    Copy file Công văn và các file đính kèm của hs SĐBS sau công bố vào hồ sơ gốc
+
+                    resultMessage.add("1");
+                    resultMessage.add("Xuất hồ sơ thành công");
+                    resultMessage.add(fullFile);
+                    jsonDataGrid.setItems(resultMessage);
+                    return GRID_DATA;
+                } else {
+                    resultMessage.add("3");
+                    resultMessage.add("Lỗi trong quá trình Convert và lưu file PDF");
+                    jsonDataGrid.setItems(resultMessage);
+                    return GRID_DATA;
+                }
+            } else if (!fullFile.equals("false")) {
+                resultMessage.add("1");
+                resultMessage.add("Xuất hồ sơ thành công");
+                resultMessage.add(fullFile + ";");
+                jsonDataGrid.setItems(resultMessage);
+                return GRID_DATA;
+            } else {
+                resultMessage.add("3");
+                resultMessage.add("Lỗi trong quá trình Convert và lưu file PDF");
+                jsonDataGrid.setItems(resultMessage);
+                return GRID_DATA;
             }
         } catch (Exception ex) {
             resultMessage.add("3");

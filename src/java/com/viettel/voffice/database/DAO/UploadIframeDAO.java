@@ -874,6 +874,7 @@ public class UploadIframeDAO extends BaseDAO {
             return "errorNoFile";
         }
     }
+
     public String openFileLDCSignApproveForAA() {
         String linkFile = "";
         boolean noError = false;
@@ -1409,6 +1410,10 @@ public class UploadIframeDAO extends BaseDAO {
             resultMessage.add("error");
         }
         jsonFile.setItems(resultMessage);
+        return "jsonFile";
+    }
+
+    public String openTempFileRegisterCA() {
         return "jsonFile";
     }
 }

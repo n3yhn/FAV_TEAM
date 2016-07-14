@@ -93,6 +93,7 @@ public final class Constants {
 
         public static final long ACTIVE = 1l;
         public static final long INACTIVE = 0l;
+        public static final long CHANGED = -1l;
     }
 
     public interface FEE_STATUS {
@@ -488,5 +489,29 @@ public final class Constants {
 
         public static final Long FIVE = 5L;
         public static final Long THREE = 3L;
+    }
+    
+    public interface TYPE_SIGN {//loại hồ sơ ký số
+
+        public static final String PDHS = "PDHS";//là phê duyệt hồ sơ đat
+        public static final String SDBS = "SDBS";//hồ sơ sđbs
+        public static final String CBDN = "CBDN";//bản công bố của dn upload lên
+        
+        public static final Long LD = 1L;//lãnh đạo cục ký
+        public static final Long VT = 2L;//văn thư ký
+        public static final Long DN = 3L;//doanh nghiệp ký số
+        
+        
+    }
+    
+    public interface ATTACH_OBJECT_TYPE {//loại file đính kèm.
+        
+        public static final Long LABEL = 17L;//là nhãn sp
+        public static final Long FILES = 30L;//là tệp đính kèm bình thường
+        public static final Long CBDN = 60L;//là bản công bố của doanh nghiệp
+        public static final Long CB_FULL = 40L;//là bản công bố full
+        public static final Long CB_PUBLIC = 41L;//là bản công bố đơn
+        
+        
     }
 }

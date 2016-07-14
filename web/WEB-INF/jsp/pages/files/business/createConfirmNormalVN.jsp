@@ -8,7 +8,7 @@
 %>
 <div class="buttonDiv">
     <sx:ButtonBack onclick="backPage();"/>
-    <%-- <sx:ButtonSave onclick="page.saveFiles();"/> --%>
+    <%-- <sx:ButtonSave onclick="page.saveFiles();"/> 
     <sx:ButtonSave onclick="page.insertFiles();"/>
     <sx:ButtonSaveDraff onclick="page.insertFileDraff();"/>
     <sd:Button id="btnTypeChange" key="" onclick="page.onTypeChange();" cssClass="buttonGroup" cssStyle="display:none">
@@ -21,7 +21,7 @@
         name="createForm.Type" 
         cssStyle="display:none;width:70%;">
     </sd:SelectBox>
-
+--%>
 </div>
 <sd:TitlePane key="${fn:escapeXml(fileNameFull)}"
               id="fileNameFull" >
@@ -99,7 +99,7 @@
     page.insertFiles = function() {
         msg.confirm('Bạn có chắc chắn thực hiện lưu hồ sơ này ?', '<sd:Property>Cảnh báo</sd:Property>', page.saveFiles);
     };
-
+/*
     page.onTypeChange = function() {
         var fileType = dijit.byId("createForm.Type").getValue();
         var fileIdCopy = '${fileIdCopy}';
@@ -121,12 +121,12 @@
         }
     };
     page.showBtnTypeChange();
-
+*/
     page.insertFileDraff = function() {
         page.updateListDataBeforeSubmit();
         page.setAttachLabel();
         sd.connector.post("filesAction!onInsert.do?" + token.getTokenParamString(), null, "createForm", null, page.afterCommit);
-    }
+    };
 
 
 </script>

@@ -25,6 +25,16 @@
         }
         return url;
     };
+    page.formatFilesAttachOV = function(inData) {
+        var item = dijit.byId("versionAttachsGridIdOV").getItem(inData - 1);
+        var url = "";
+        if (item != null) {
+            var attachId = parseInt(item.attachId);
+            var name = item.attachName;
+            url = "<a href='uploadiframe!openFileUserAttachPdfCVBSold.do?attachId=" + attachId + "' >" + name + "</a>";//141215u binhnt53
+        }
+        return url;
+    };
 </script>
 <sx:ResultMessage id="resultMessage" />
 <form id="oldVersionFiles" name="oldVersionFiles">
@@ -52,6 +62,27 @@
                                            headerStyles="text-align:center;font-weight: bold;font-size:10px;font-family:Tahoma,helvetica,arial" styles="text-align:center;" />
                         <sd:ColumnDataGrid  key="Link download công văn SĐBS" get="page.getNo" formatter="page.formatLinkSDBSdownloadOV" cellStyles="text-align:left;"
                                             width="15%" headerStyles="text-align:center;" />
+                    </sd:DataGrid>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="versionAttachsGridDivOV" style="width:100%;">
+                    <sd:DataGrid clientSort="true" 
+                                 id="versionAttachsGridIdOV"
+                                 style="width:auto;height:auto"
+                                 getDataUrl="" 
+                                 container="versionAttachsGridDivOV" 
+                                 serverPaging="false"
+                                 rowSelector="0px" 
+                                 rowsPerPage="10">
+                        <sd:ColumnDataGrid key="voPublishDocument.No" get="page.getNo" width="5%" 
+                                           headerStyles="text-align:center;font-weight: bold;font-size:10px;font-family:Tahoma,helvetica,arial" styles="text-align:center;" />
+                        <sd:ColumnDataGrid  key="Tên tệp" field="attachName"  cellStyles="text-align:left;"
+                                                width="50%"  headerStyles="text-align:center;" />
+                        <sd:ColumnDataGrid  key="Link download" get="page.getNo" formatter="page.formatFilesAttachOV" cellStyles="text-align:left;"
+                                            width="50%" headerStyles="text-align:center;" />
                     </sd:DataGrid>
                 </div>
             </td>
@@ -156,6 +187,7 @@
         }
         sd.connector.post("filesAction!loadFilesByOldVersion.do?thisVersion=" + thisVersion + "&oldVersion=" + oldVersion, replaceDiv, null, null, afterReloadViewOldVersion);
     };
+    
     afterReloadViewOldVersion = function(data) {
     };//!u140728
 
@@ -163,6 +195,7 @@
         var fileId = dijit.byId("createForm.fileId").getValue();
         sd.connector.post("filesAction!getCommentFeedbackApprove.do?objectId=" + fileId, null, null, null, afterShowGridCommentOV);
     };
+    
     afterShowGridCommentOV = function(data) {
         var obj = dojo.fromJson(data);
         if (obj.customInfo[0] != "") {
@@ -177,5 +210,7 @@
         document.getElementById("commentForm.objectId").value = escapeHtml_(fileId);
         document.getElementById("commentForm.objectType").value = escapeHtml_(objectType);
         dijit.byId("versionGridIdOV").vtReload("filesAction!getVersionSDBS.do?objectId=" + fileId + "&objectType=" + objectType);
+        dijit.byId("versionAttachsGridIdOV").vtReload("filesAction!getAttachsSDBS.do?objectId=" + fileId + "&objectType=" + 30);
     };
+    
 </script>

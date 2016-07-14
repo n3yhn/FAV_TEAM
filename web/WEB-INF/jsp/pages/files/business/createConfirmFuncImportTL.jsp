@@ -8,9 +8,10 @@
 %>
 <div class="buttonDiv">
     <sx:ButtonBack onclick="backPage();"/>
-    <%-- <sx:ButtonSave onclick="page.saveFiles();"/> --%>
     <sx:ButtonSave onclick="page.insertFiles();"/>
     <sx:ButtonSaveDraff onclick="page.insertFileDraff();"/>
+    <%-- <sx:ButtonSave onclick="page.saveFiles();"/> 
+    
     <!-- hieptq update lai 17.11.14 -->
     <sd:Button id="btnTypeChange" key="" onclick="page.onTypeChange();" cssClass="buttonGroup" cssStyle="display:none">
         <img src="${contextPath}/share/images/icons/Answer.png" height="14" width="18">
@@ -22,6 +23,7 @@
         name="createForm.Type" 
         cssStyle="display:none;width:70%;">
     </sd:SelectBox>
+    --%>
 </div>
 <sd:TitlePane key="${fn:escapeXml(fileNameFull)}"
               id="fileNameFull" >
@@ -109,6 +111,7 @@
     };
 
 //hietq update 17.11.14
+/*
     page.onTypeChange = function() {
         var fileType = dijit.byId("createForm.Type").getValue();
         var fileIdCopy = '${fileIdCopy}';
@@ -130,11 +133,11 @@
         }
     };
     page.showBtnTypeChange();
-
+*/
     page.insertFileDraff = function() {
         page.updateListDataBeforeSubmit();
         page.setAttachLabel();
         sd.connector.post("filesAction!onInsert.do?" + token.getTokenParamString(), null, "createForm", null, page.afterCommit);
-    }
+    };
 
 </script>

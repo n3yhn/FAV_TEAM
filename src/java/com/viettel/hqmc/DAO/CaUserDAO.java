@@ -38,7 +38,8 @@ public class CaUserDAO extends BaseDAO {
      * toShowPage
      * show data perpare after show page
      */
-     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CaUserDAO.class);
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CaUserDAO.class);
+
     public String prepare() {
         try {
             //todo code here
@@ -114,7 +115,7 @@ public class CaUserDAO extends BaseDAO {
                     } catch (CertificateExpiredException expiredEx) {
                         log.error(expiredEx);
                     } catch (CertificateNotYetValidException notYetValidEx) {
-                         log.error(notYetValidEx);
+                        log.error(notYetValidEx);
                     }
                 } else {
                     resultMessage.add("0");
@@ -232,5 +233,30 @@ public class CaUserDAO extends BaseDAO {
 
     public void setCategoryTypeDao(CaUserDAOHE caUserDao) {
         this.caUserDao = caUserDao;
+    }
+
+    public String onDelete() throws Exception {
+        List resultMessage = new ArrayList();
+        try {
+            CaUserDAOHE cthe = new CaUserDAOHE();
+            for (int i = 0; i < lstItemOnGrid.size(); i++) {
+                CaUserForm form = lstItemOnGrid.get(i);
+                if (form != null && form.getCaUserId() != null && form.getCaUserId() != 0D) {
+                    CaUser bo = cthe.getById("caUserId", form.getCaUserId());
+                    if (bo != null) {
+                        getSession().delete(bo);
+                    }
+                }
+            }
+            resultMessage.add("1");
+            resultMessage.add("Xóa danh mục thành công");
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            resultMessage.add("3");
+            resultMessage.add("Xóa danh mục không thành công");
+        }
+
+        jsonDataGrid.setItems(resultMessage);
+        return GRID_DATA;
     }
 }
