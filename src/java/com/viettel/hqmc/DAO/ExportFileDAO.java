@@ -80,6 +80,7 @@ public class ExportFileDAO extends BaseDAO {
     private final String tempCongbohopquiCL = "/WEB-INF/template/recongbohopqui.docx";//
     private final String tempCongbophuhopCL = "/WEB-INF/template/recongbophuhop.docx";//    
     private final String tempSignsuadoisaucongbo = "/WEB-INF/template/tempSignSuaDoiSauCongBo.docx";
+    private final String tempSignsuadoisaucongboPreview = "/WEB-INF/template/tempSignSuaDoiSauCongBoPreview.docx";
     private final String tempSuadoisaucongbo = "/WEB-INF/template/tempSuaDoiSauCongBo.docx";
 
     //print giay cong bo
@@ -365,35 +366,27 @@ public class ExportFileDAO extends BaseDAO {
             if (effectiveDate != null || effectiveDate.length() > 0) {
                 wU.replacePlaceholder(wmp, effectiveDate, "${effectiveDate}");
             }
-            ResourceBundle rb = ResourceBundle.getBundle("config");
-            UsersDAOHE udhe = new UsersDAOHE();
-            String cuctruong = rb.getString("cuctruong");
-            String tencuctruong = udhe.getFullNameByUserName(cuctruong);
-            String phocuctruong = rb.getString("phocuctruong");
-            String tenphocuctruong = udhe.getFullNameByUserName(phocuctruong);
 
             String signer = "";
             String rolesigner = "";
-            if (cuctruong.equals(getUserLogin())) {
+
+            PositionDAOHE posdaohe = new PositionDAOHE();
+            Position posbo = posdaohe.findPositionCode(getUserId());
+            if (posbo != null && posbo.equals(Constants.POSITION.LEADER_CT)) {
                 rolesigner = "CỤC TRƯỞNG";
-            } else if (arp.getSignerName() != null && tencuctruong != null) {
-                if (arp.getSignerName().trim().equals(tencuctruong.trim())) {
-                    rolesigner = "CỤC TRƯỞNG";
-                } else {
-                    signer = "KT. CỤC TRƯỞNG";
-                    rolesigner = "PHÓ CỤC TRƯỞNG";
-                }
-            } else {
+            } else if (posbo != null && posbo.equals(Constants.POSITION.LEADER_PCT)) {
                 signer = "KT. CỤC TRƯỞNG";
                 rolesigner = "PHÓ CỤC TRƯỞNG";
+            } else if (posbo != null && posbo.equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
+                signer = "TL. CỤC TRƯỞNG";
+                rolesigner = "TRƯỞNG PHÒNG";
             }
+
             wU.replacePlaceholder(wmp, signer, "${signer}");
             wU.replacePlaceholder(wmp, rolesigner, "${roleSigner}");
             String leaderSinged = "";
             if (arp.getSignerName() != null) {
                 leaderSinged = arp.getSignerName();
-            } else {
-                leaderSinged = tenphocuctruong;
             }
             fileCode = filesForm.getFileCode();
             wU.replacePlaceholder(wmp, leaderSinged, "${LeaderSigned}");
@@ -586,35 +579,27 @@ public class ExportFileDAO extends BaseDAO {
             if (effectiveDate != null || effectiveDate.length() > 0) {
                 wU.replacePlaceholder(wmpOnlyPaper, effectiveDate, "${effectiveDate}");
             }
-            ResourceBundle rb = ResourceBundle.getBundle("config");
-            UsersDAOHE udhe = new UsersDAOHE();
-            String cuctruong = rb.getString("cuctruong");
-            String tencuctruong = udhe.getFullNameByUserName(cuctruong);
-            String phocuctruong = rb.getString("phocuctruong");
-            String tenphocuctruong = udhe.getFullNameByUserName(phocuctruong);
 
             String signer = "";
             String rolesigner = "";
-            if (cuctruong.equals(getUserLogin())) {
+
+            PositionDAOHE posdaohe = new PositionDAOHE();
+            Position posbo = posdaohe.findPositionCode(getUserId());
+            if (posbo != null && posbo.equals(Constants.POSITION.LEADER_CT)) {
                 rolesigner = "CỤC TRƯỞNG";
-            } else if (arp.getSignerName() != null && tencuctruong != null) {
-                if (arp.getSignerName().trim().equals(tencuctruong.trim())) {
-                    rolesigner = "CỤC TRƯỞNG";
-                } else {
-                    signer = "KT. CỤC TRƯỞNG";
-                    rolesigner = "PHÓ CỤC TRƯỞNG";
-                }
-            } else {
+            } else if (posbo != null && posbo.equals(Constants.POSITION.LEADER_PCT)) {
                 signer = "KT. CỤC TRƯỞNG";
                 rolesigner = "PHÓ CỤC TRƯỞNG";
+            } else if (posbo != null && posbo.equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
+                signer = "TL. CỤC TRƯỞNG";
+                rolesigner = "TRƯỞNG PHÒNG";
             }
+
             wU.replacePlaceholder(wmpOnlyPaper, signer, "${signer}");
             wU.replacePlaceholder(wmpOnlyPaper, rolesigner, "${roleSigner}");
             String leaderSinged = "";
             if (arp.getSignerName() != null) {
                 leaderSinged = arp.getSignerName();
-            } else {
-                leaderSinged = tenphocuctruong;
             }
             wU.replacePlaceholder(wmpOnlyPaper, leaderSinged, "${LeaderSigned}");
             //map.put("createForm", filesForm);
@@ -672,8 +657,6 @@ public class ExportFileDAO extends BaseDAO {
 
             WordprocessingMLPackage wmp = null;
 
-            ResourceBundle rb = ResourceBundle.getBundle("config");
-            String strLD = rb.getString("cuctruong");
             String fileCode = filesForm.getFileCode();
             Long productType = 0L;
 
@@ -858,7 +841,9 @@ public class ExportFileDAO extends BaseDAO {
             if (effectiveDate != null || effectiveDate.length() > 0) {
                 wU.replacePlaceholder(wmp, effectiveDate, "${effectiveDate}");
             }
-
+            /*
+            ResourceBundle rb = ResourceBundle.getBundle("config");
+            String strLD = rb.getString("cuctruong");
             String signer = "";
             String rolesigner = "";
             if (strLD.equals(getUserLogin())) {
@@ -867,6 +852,27 @@ public class ExportFileDAO extends BaseDAO {
                 signer = "KT. CỤC TRƯỞNG";
                 rolesigner = "PHÓ CỤC TRƯỞNG";
             }
+             */
+            String signer = "";
+            String rolesigner = "";
+
+            PositionDAOHE posdaohe = new PositionDAOHE();
+            Position posbo = posdaohe.findPositionCode(getUserId());
+            if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_CT)) {
+                rolesigner = "CỤC TRƯỞNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_PCT)) {
+                signer = "KT. CỤC TRƯỞNG";
+                rolesigner = "PHÓ CỤC TRƯỞNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
+                signer = "TL. CỤC TRƯỞNG";
+                rolesigner = "TRƯỞNG PHÒNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.GDTT)) {
+                signer = "TL. CỤC TRƯỞNG";
+                rolesigner = "GIÁM ĐỐC TRUNG TÂM";
+            } else {
+//                return false;
+            }
+
             wU.replacePlaceholder(wmp, signer, "${signer}");
             wU.replacePlaceholder(wmp, rolesigner, "${roleSigner}");
             String leaderSinged = getUserName();
@@ -1186,8 +1192,6 @@ public class ExportFileDAO extends BaseDAO {
             String effectiveDate = "";
             String receiptNo = "";
             WordprocessingMLPackage wmp = null;
-            ResourceBundle rb = ResourceBundle.getBundle("config");
-            String strLD = rb.getString("cuctruong");
             String fileCode = filesForm.getFileCode();
             Long productType = 0L;
             if (filesForm.getDetailProduct() != null && filesForm.getDetailProduct().getProductType() != null) {
@@ -1449,12 +1453,19 @@ public class ExportFileDAO extends BaseDAO {
 
             String signer = "";
             String rolesigner = "";
-            if (strLD.equals(getUserLogin())) {
+
+            PositionDAOHE posdaohe = new PositionDAOHE();
+            Position posbo = posdaohe.findPositionCode(getUserId());
+            if (posbo != null && posbo.equals(Constants.POSITION.LEADER_CT)) {
                 rolesigner = "CỤC TRƯỞNG";
-            } else {
+            } else if (posbo != null && posbo.equals(Constants.POSITION.LEADER_PCT)) {
                 signer = "KT. CỤC TRƯỞNG";
                 rolesigner = "PHÓ CỤC TRƯỞNG";
+            } else if (posbo != null && posbo.equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
+                signer = "TL. CỤC TRƯỞNG";
+                rolesigner = "TRƯỞNG PHÒNG";
             }
+
             wU.replacePlaceholder(wmp, signer, "${signer}");
             wU.replacePlaceholder(wmp, rolesigner, "${roleSigner}");
             String leaderSinged = getUserName();
@@ -2984,10 +2995,9 @@ public class ExportFileDAO extends BaseDAO {
                     + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
             wU.replacePlaceholder(wmp, signedDate, "${signDateStr}");
             wU.replacePlaceholder(wmp, businessName, "${businessName}");
-
+            /*
             ResourceBundle rb = ResourceBundle.getBundle("config");
             String cuctruong = rb.getString("cuctruong");
-
             String signer = "";
             String rolesigner = "";
             Users a = getUser();
@@ -3016,6 +3026,27 @@ public class ExportFileDAO extends BaseDAO {
             } else {
                 return false;
             }
+             */
+            String signer = "";
+            String rolesigner = "";
+
+            PositionDAOHE posdaohe = new PositionDAOHE();
+            Position posbo = posdaohe.findPositionCode(getUserId());
+            if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_CT)) {
+                rolesigner = "CỤC TRƯỞNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_PCT)) {
+                signer = "KT. CỤC TRƯỞNG";
+                rolesigner = "PHÓ CỤC TRƯỞNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
+                signer = "TL. CỤC TRƯỞNG";
+                rolesigner = "TRƯỞNG PHÒNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.GDTT)) {
+                signer = "TL. CỤC TRƯỞNG";
+                rolesigner = "GIÁM ĐỐC TRUNG TÂM";
+            } else {
+//                return false;
+            }
+
             wU.replacePlaceholder(wmp, signer, "${signer}");
             wU.replacePlaceholder(wmp, rolesigner, "${roleSigner}");
             if (deptBo != null && deptBo.getDeptCode() != null) {
@@ -3104,7 +3135,7 @@ public class ExportFileDAO extends BaseDAO {
             String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd") + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM") + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
             wU.replacePlaceholder(wmp, signedDate, "${signDateStr}");
             wU.replacePlaceholder(wmp, businessName, "${businessName}");
-
+            /*
             ResourceBundle rb = ResourceBundle.getBundle("config");
             String cuctruong = rb.getString("cuctruong");
 
@@ -3136,6 +3167,28 @@ public class ExportFileDAO extends BaseDAO {
             } else {
                 return "false";
             }
+             */
+
+            String signer = "";
+            String rolesigner = "";
+
+            PositionDAOHE posdaohe = new PositionDAOHE();
+            Position posbo = posdaohe.findPositionCode(getUserId());
+            if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_CT)) {
+                rolesigner = "CỤC TRƯỞNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_PCT)) {
+                signer = "KT. CỤC TRƯỞNG";
+                rolesigner = "PHÓ CỤC TRƯỞNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
+                signer = "TL. CỤC TRƯỞNG";
+                rolesigner = "TRƯỞNG PHÒNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.GDTT)) {
+                signer = "TL. CỤC TRƯỞNG";
+                rolesigner = "GIÁM ĐỐC TRUNG TÂM";
+            } else {
+//                return false;
+            }
+
             wU.replacePlaceholder(wmp, signer, "${signer}");
             wU.replacePlaceholder(wmp, rolesigner, "${roleSigner}");
             if (deptBo != null && deptBo.getDeptCode() != null) {
@@ -3225,8 +3278,6 @@ public class ExportFileDAO extends BaseDAO {
 
             WordprocessingMLPackage wmp = null;
 
-            ResourceBundle rb = ResourceBundle.getBundle("config");
-            String strLD = rb.getString("cuctruong");
             String fileCode = filesForm.getFileCode();
             Long productType = 0L;
 
@@ -3513,7 +3564,9 @@ public class ExportFileDAO extends BaseDAO {
             if (effectiveDate != null || effectiveDate.length() > 0) {
                 wU.replacePlaceholder(wmp, effectiveDate, "${effectiveDate}");
             }
-
+            /*
+            ResourceBundle rb = ResourceBundle.getBundle("config");
+            String strLD = rb.getString("cuctruong");
             String signer = "";
             String rolesigner = "";
             if (strLD.equals(getUserLogin())) {
@@ -3521,6 +3574,26 @@ public class ExportFileDAO extends BaseDAO {
             } else {
                 signer = "KT. CỤC TRƯỞNG";
                 rolesigner = "PHÓ CỤC TRƯỞNG";
+            }
+             */
+            String signer = "";
+            String rolesigner = "";
+
+            PositionDAOHE posdaohe = new PositionDAOHE();
+            Position posbo = posdaohe.findPositionCode(getUserId());
+            if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_CT)) {
+                rolesigner = "CỤC TRƯỞNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_PCT)) {
+                signer = "KT. CỤC TRƯỞNG";
+                rolesigner = "PHÓ CỤC TRƯỞNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
+                signer = "TL. CỤC TRƯỞNG";
+                rolesigner = "TRƯỞNG PHÒNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.GDTT)) {
+                signer = "TL. CỤC TRƯỞNG";
+                rolesigner = "GIÁM ĐỐC TRUNG TÂM";
+            } else {
+//                return false;
             }
             wU.replacePlaceholder(wmp, signer, "${signer}");
             wU.replacePlaceholder(wmp, rolesigner, "${roleSigner}");
@@ -5067,4 +5140,157 @@ public class ExportFileDAO extends BaseDAO {
     public void setFileId(Long fileId) {
         this.fileId = fileId;
     }
-}
+
+    /**
+     * Xem truoc cong van tra bo sung sau cong bo 16 08 01
+     *
+     * @param typeExport
+     * @return
+     */
+    public String onExportEEAA() {
+        boolean result = exportDataEEAA("EX_TEMP");
+        return null;
+    }
+
+    public Boolean exportDataEEAA(String typeExport) {
+        try {
+            Date dateNow = getSysdate();
+            Base64 decoder = new Base64();
+            String strFileId = getRequest().getParameter("fileId");
+            
+            String receiptDeptName = "";
+            String sendNo = "0";                                    
+            String strTitle = new String(decoder.decode(getRequest().getParameter("title").replace("_", "+").getBytes()), "UTF-8");
+            String strContent = new String(decoder.decode(getRequest().getParameter("contents").replace("_", "+").getBytes()), "UTF-8");
+
+            try {
+                fileId = Long.parseLong(strFileId);
+            } catch (NumberFormatException en) {
+                log.error(en.getMessage());
+            }
+
+            WordExportUtils wU = new WordExportUtils();
+            String businessName = "";
+            if (fileId == null) {
+                throw new Exception("Không có hồ sơ");
+            }
+            FilesDAOHE fdhe = new FilesDAOHE();
+            FilesForm form = fdhe.getFilesDetail(fileId);
+            String fileCode = "";
+            if (form != null) {
+                businessName = form.getBusinessName();
+                form.setStaffRequest(strContent);
+                receiptDeptName = form.getAgencyName();
+                sendNo = fdhe.getNewSendNo(form.getAgencyId());
+                fileCode = form.getFileCode();
+            }
+
+            WordprocessingMLPackage wmp = null;
+//                String contentEdit = "";
+                String publishDate = "";
+                String announmentNo = "";
+                String proName = "";
+                String busiName = "";
+                String busiAdd = "";
+                String receiptNoOld = "";
+                String receiptNo = "0000";
+//                String titleEdit = "";                
+                if (form.getAnnouncement().getPublishDate() != null) {
+                    publishDate = DateTimeUtils.convertDateToString(form.getAnnouncement().getPublishDate(), "dd")
+                            + " tháng " + DateTimeUtils.convertDateToString(form.getAnnouncement().getPublishDate(), "MM")
+                            + " năm " + DateTimeUtils.convertDateToString(form.getAnnouncement().getPublishDate(), "yyyy");
+                }
+                if (form.getAnnouncement().getAnnouncementNo() != null) {
+                    announmentNo = form.getAnnouncement().getAnnouncementNo();
+                }
+                if (form.getAnnouncement().getProductName() != null) {
+                    proName = form.getAnnouncement().getProductName();
+                }
+                if (form.getAnnouncement().getBusinessAddress() != null) {
+                    busiAdd = form.getAnnouncement().getBusinessAddress();
+                }
+                if (form.getAnnouncement().getBusinessName() != null) {
+                    busiName = form.getAnnouncement().getBusinessName();
+                }
+                String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd")
+                        + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM")
+                        + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");                
+                if (form.getAnnouncementReceiptPaperForm() != null) {
+                    receiptDeptName = form.getAnnouncementReceiptPaperForm().getReceiptDeptName();
+                } else if (form.getConfirmImportSatistPaperForm() != null) {
+                    receiptDeptName = form.getConfirmImportSatistPaperForm().getTestAgencyName();
+                }
+                if (form.getFilesSourceID() != null
+                        && form.getFilesSourceID() > 0L) {
+                    Files fboOld = fdhe.findById(form.getFilesSourceID());
+                    if (fboOld != null
+                            && fboOld.getAnnouncementReceiptPaperId() != null) {
+                        AnnouncementReceiptPaperDAOHE arpDaohe = new AnnouncementReceiptPaperDAOHE();
+                        AnnouncementReceiptPaper arpbo = arpDaohe.findById(fboOld.getAnnouncementReceiptPaperId());
+                        if (arpbo != null
+                                && arpbo.getReceiptDate() != null
+                                && arpbo.getSignDate() != null
+                                && arpbo.getReceiptNo() != null) {
+                            receiptNoOld = arpbo.getReceiptNo();
+                            publishDate = " ngày " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "dd")
+                                    + " tháng " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "MM") + " năm "
+                                    + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "yyyy");
+                        }
+                    }
+                }
+//                if (form.getTitleEdit() != null) {
+//                    titleEdit = form.getTitleEdit();
+//                } else if (form.getTitleEditATTP() != null) {
+//                    titleEdit = form.getTitleEditATTP();
+//                } else {
+//                    titleEdit = "sửa đổi bổ sung hồ sơ đã công bố";
+//                }
+                wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignsuadoisaucongbo))));
+                //Các biến truyền vào Công văn
+                if (receiptDeptName == null || receiptDeptName.equals("Cục ATTP")) {
+                    wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
+                    wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
+                    wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
+                } else {
+                    wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${deptParent}");
+                    wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptName}");
+                    wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptNames}");
+                }
+                
+                wU.replacePlaceholder(wmp, strContent, "${contentEdit}");
+                wU.replacePlaceholder(wmp, publishDate, "${publishDate}");
+                wU.replacePlaceholder(wmp, announmentNo, "${announmentNo}");
+                wU.replacePlaceholder(wmp, proName, "${proName}");
+                wU.replacePlaceholder(wmp, busiAdd, "${busiAdd}");
+                wU.replacePlaceholder(wmp, busiName, "${busiName}");
+                wU.replacePlaceholder(wmp, signedDate, "${signDate}");
+                wU.replacePlaceholder(wmp, receiptNoOld, "${receiptNoOld}");
+                wU.replacePlaceholder(wmp, receiptNo, "${receiptNo}");
+                wU.replacePlaceholder(wmp, strTitle, "${titleEdit}");
+                
+                ProcessDAOHE pDaohe = new ProcessDAOHE();
+                Process pBo = pDaohe.getProcessByAction(form.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, form.getStatus(), Constants.FILE_STATUS.NEW_CREATE);
+                DepartmentDAOHE deptDaohe = new DepartmentDAOHE();
+                Department deptBo = deptDaohe.findBOById(pBo.getSendGroupId());
+                if (deptBo != null && deptBo.getDeptCode() != null) {
+                    wU.replacePlaceholder(wmp, deptBo.getDeptCode(), "${deptCode}");
+                } else {
+                    wU.replacePlaceholder(wmp, "SP", "${deptCode}");
+                }
+
+                HashMap map = new HashMap();
+                map.put("createForm", form);
+                wU.replacePlaceholder(wmp, map);
+                if (typeExport.equals("EX_TEMP")) {
+                    wU.createFooterPart(wmp, "MA HO SO: " + fileCode);
+                    wU.writeDocxToStream(wmp, getResponse());
+                    return true;
+                } else if (typeExport.equals("EX_SIGN")) {
+                    return wU.writePDFToStreamSign(wmp, getResponse(), fileId, fileCode, null, "CVBS", false, 0, true);
+                }
+            }catch (Exception en) {
+            log.error(en.getMessage());
+        }
+            return false;
+        }
+    }

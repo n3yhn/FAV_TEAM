@@ -6,6 +6,7 @@
 package com.viettel.hqmc.BO;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -47,6 +50,22 @@ public class CaUser implements Serializable {
     private int status;
     @Column(name = "BUSINESS_ID")
     private Long businessId;
+    @Column(name = "CREATED_AT")
+    @Temporal(TemporalType.DATE)
+    private Date createdAt;
+    @Column(name = "UPDATED_AT")
+    @Temporal(TemporalType.DATE)
+    private Date updatedAt;
+    @Column(name = "NAME")
+    private String name;
+    @Column(name = "POSITION")
+    private String position;
+    @Column(name = "COMMAND")
+    private String command;
+    @Column(name = "STAMPER")
+    private String stamper;
+    @Column(name = "SIGNATURE")
+    private String signature;
 
     public int getStatus() {
         return status;
@@ -93,6 +112,62 @@ public class CaUser implements Serializable {
 
     public void setBusinessId(Long businessId) {
         this.businessId = businessId;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
+    }
+
+    public String getStamper() {
+        return stamper;
+    }
+
+    public void setStamper(String stamper) {
+        this.stamper = stamper;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
     
     

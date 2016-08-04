@@ -40,26 +40,9 @@
              */
             switch (status) {
                 case 6:
-                    /*
-                     if (isSignPdf == 2 && item.isDownload == 1) {
-                     url += " | <img src='share/images/document_open.png' width='17px' height='17px' title='Xuất giấy công bố' onClick='page.formatLinkDownloadPdf(" + item.fileId + ");' />";
-                     }
-                     if (isSignPdf == 1) {
-                     if (isFee == 1) {
-                     url += " | <img src='share/images/signature.png' width='20px' height='20px' title='Ký số phê duyệt hồ sơ' onClick='page.onApproveSign(" + item.fileId + ");' />";
-                     if (item.isDownload == 1) {
-                     url += " | <img src='share/images/document_open.png' width='17px' height='17px' title='Xuất giấy công bố lãnh đạo cục đã kí duyệt' onClick='page.formatLinkDownloadFileLDCSignApprove(" + item.fileId + ");' />";
-                     }
-                     url += " | <img src='share/images/icons/UpArrow.png' width='17px' height='17px' title='Upload' onClick='page.UploadFileSignVT(" + row + ");' />";
-                     }
-                     }
-                     if (isSignPdf == 2)
-                     {
-                     if (isFee == 1) {
-                     url += " | <img src='share/images/alertXacnhan.png' width='17px' height='17px' title='Thông báo đối chiếu hồ sơ' onClick='page.alertComparison(" + row + ");' />";
-                     }
-                     }
-                     */
+                    if (isSignPdf == 2 && item.isDownload == 1) {
+                        url += " | <img src='share/images/document_open.png' width='17px' height='17px' title='Xuất giấy công bố' onClick='page.formatLinkDownloadPdf(" + item.fileId + ");' />";
+                    }
                     break;
                 case 22:
                     /*
@@ -217,7 +200,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn thẩm định&#13;";
                                 flag = 1;
@@ -250,7 +236,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 13) {
                                 strWarning += "- Quá hạn xem xét&#13;";
                                 flag = 1;
@@ -260,7 +249,8 @@
                                 }
                             }
                         } else {
-                            if (fileType == 66746 || fileType == 66748) {
+                            if (fileType == 66746
+                                    || fileType == 66748) {
                                 if (diffDays > 4) {
                                     strWarning += "- Quá hạn xem xét&#13;";
                                     flag = 1;
@@ -275,7 +265,8 @@
                     break;
                 case 7:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn xem xét&#13;";
                             flag = 1;
@@ -285,7 +276,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 13) {
                                 strWarning += "- Quá hạn xem xét&#13;";
                                 flag = 1;
@@ -320,7 +314,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn phê duyệt&#13;";
                                 flag = 1;
@@ -370,7 +367,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn thẩm định&#13;";
                                 flag = 1;

@@ -56,7 +56,9 @@
         var url = "";
         if (item != null) {
             var signed = true;
-            if (item.userSigned == null || item.userSigned == "" || item.userSigned == "reset") {
+            if (item.userSigned == null
+                    || item.userSigned == ""
+                    || item.userSigned == "reset") {
                 signed = false;
             }
             var deadlineAddition = item.deadlineAddition;
@@ -406,29 +408,35 @@
             upload.destroyRecursive(true);
         }
     };
+    
     page.reset = function() {
         dijit.byId("searchForm.fileCode").setValue("");
         dijit.byId("searchForm.fileType").setValue("-1");
         dijit.byId("searchForm.sendDateFrom").setValue("");
         dijit.byId("searchForm.sendDateTo").setValue("");
     };
+    
     page.search = function() {
         dijit.byId("filesGrid").vtReload('filesAction!onSearchBusinessFiles.do?', "searchForm");
     };
+    
     afterLoadForm = function(data) {
         document.getElementById("searchDiv").style.display = "none";
         document.getElementById("createDiv").style.display = "";
     };
+    
     page.showViewFile = function(fileId) {
         document.getElementById("searchDiv").style.display = "none";
         document.getElementById("createDiv").style.display = "";
         sd.connector.post("filesAction!loadFileView.do?createForm.fileId=" + fileId + "&createForm.viewType=0", "createDiv", null, null, afterLoadForm);
     };
+    
     page.showEditFile = function(fileId, announID) {
         document.getElementById("searchDiv").style.display = "none";
         document.getElementById("createDiv").style.display = "";
-        sd.connector.post("filesAction!toCreateFilePage.do?createForm.fileId=" + fileId +"&createForm.announcement.announcementId="+ announID +"&isEdit=1", "createDiv", null, null, afterLoadForm);
+            sd.connector.post("filesAction!toCreateFilePage.do?createForm.fileId=" + fileId +"&createForm.announcement.announcementId="+ announID +"&isEdit=1", "createDiv", null, null, afterLoadForm);
     };
+    
    
     page.onDeleteFiles = function() {
         if (!dijit.byId("filesGrid").vtIsChecked()) {
@@ -442,12 +450,14 @@
         var content = dijit.byId("filesGrid").vtGetCheckedDataForPost("lstItemOnGrid");
         sd.connector.post("filesAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
     };
+    
     page.returnMessageDelete = function(data) {
         var obj = dojo.fromJson(data);
         var result = obj.items;
         resultMessage_show("resultCreateMessage", result[0], result[1], 5000);
         page.search();
     };
+    
     page.showDept = function(row) {
         var item = dijit.byId("filesGrid").getItem(row);
         workingFileId = item.fileId;

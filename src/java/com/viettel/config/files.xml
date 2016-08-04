@@ -182,5 +182,16 @@
                 <param name="root">jsonDataGrid</param>
             </result>
         </action>
+        <action name="filesExplandAction" class="com.viettel.hqmc.DAO.FilesExpandDAO">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onCreatePaperForAA,onApproveByLDP4AA
+                </param>
+            </interceptor-ref>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+            <result type="tiles" name="announcementFile05Paper">announcementFile05Paper</result>
+        </action>
     </package>
 </struts>

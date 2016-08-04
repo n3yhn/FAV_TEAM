@@ -56,9 +56,9 @@
                         onClick='page.showTrasferPayment(" + row + ");' /></div>";
                     break;
                 case 2:
-                    url = "<div style='text-align:center;cursor:pointer;'><img src='${contextPath}/share/images/icons/bill.png' width='17px' height='17px' \n\
-                         title='<sd:Property>Cập nhật tiền mặt</sd:Property>' \n\
-                        onClick='page.editPayment(" + row + ");' /> ";
+//                    url = "<div style='text-align:center;cursor:pointer;'><img src='${contextPath}/share/images/icons/bill.png' width='17px' height='17px' \n\
+//                         title='<sd:Property>Cập nhật tiền mặt</sd:Property>' \n\
+//                        onClick='page.editPayment(" + row + ");' /> ";
 //                    url += " | <img src='share/images/icons/attach.png' width='17px' height='17px' title='Cập nhật chuyển khoản' onClick='page.editPaymentNew(" + row + ");' />";
                     url += " | <img src='share/images/icons/view.png' width='17px' height='17px' title='Xem lý do từ chối' onClick='page.ShowCommentReject(" + row + ");' /></div>";
                     break;
@@ -82,7 +82,7 @@
                         title='<sd:Property>Keypay</sd:Property>' \n\
                         onClick='page.pay(" + row + ");' /> ";
 //                    url += " | <img src='share/images/icons/attach.png' width='17px' height='17px' title='Chuyển khoản' onClick='page.payFeeTransfer(" + row + ");' />";
-                    url += " | <img src='share/images/icons/bill.png' width='17px' height='17px' title='Tiền mặt' onClick='page.payFeeCash(" + row + ");' /></div>";
+//                    url += " | <img src='share/images/icons/bill.png' width='17px' height='17px' title='Tiền mặt' onClick='page.payFeeCash(" + row + ");' /></div>";
             }
         }
         return url;

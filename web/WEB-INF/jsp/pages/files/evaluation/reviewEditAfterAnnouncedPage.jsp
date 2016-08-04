@@ -3,10 +3,6 @@
 <%@taglib prefix="sd" uri="struts-dojo-tags" %>
 <%@taglib prefix="sx" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%--
-<jsp:include page="../util/util_js.jsp"/>
-<jsp:include page="../common/commonJavascript.jsp"/>
---%>
 <%
     request.setAttribute("contextPath", request.getContextPath());
 %>
@@ -161,7 +157,8 @@
                     break;
                 case 3:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn thẩm định&#13;";
                             flag = 1;
@@ -171,7 +168,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn thẩm định&#13;";
                                 flag = 1;
@@ -194,7 +194,8 @@
                     break;
                 case 4:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn xem xét&#13;";
                             flag = 1;
@@ -204,7 +205,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 13) {
                                 strWarning += "- Quá hạn xem xét&#13;";
                                 flag = 1;
@@ -214,7 +218,8 @@
                                 }
                             }
                         } else {
-                            if (fileType == 66746 || fileType == 66748) {
+                            if (fileType == 66746
+                                    || fileType == 66748) {
                                 if (diffDays > 4) {
                                     strWarning += "- Quá hạn xem xét&#13;";
                                     flag = 1;
@@ -229,7 +234,8 @@
                     break;
                 case 7:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn xem xét&#13;";
                             flag = 1;
@@ -239,7 +245,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 13) {
                                 strWarning += "- Quá hạn xem xét&#13;";
                                 flag = 1;
@@ -249,7 +258,8 @@
                                 }
                             }
                         } else {
-                            if (fileType == 66746 || fileType == 66748) {
+                            if (fileType == 66746
+                                    || fileType == 66748) {
                                 if (diffDays > 4) {
                                     strWarning += "- Quá hạn xem xét&#13;";
                                     flag = 1;
@@ -264,7 +274,8 @@
                     break;
                 case 5:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn phê duyệt&#13;";
                             flag = 1;
@@ -274,7 +285,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn phê duyệt&#13;";
                                 flag = 1;
@@ -284,7 +298,8 @@
                                 }
                             }
                         } else {
-                            if (fileType == 66746 || fileType == 66748) {
+                            if (fileType == 66746
+                                    || fileType == 66748) {
                                 if (diffDays > 4) {
                                     strWarning += "- Quá hạn phê duyệt&#13;";
                                     flag = 1;
@@ -314,7 +329,8 @@
                     break;
                 case 17:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn thẩm định&#13;";
                             flag = 1;
@@ -324,7 +340,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn thẩm định&#13;";
                                 flag = 1;
@@ -562,8 +581,12 @@
             <tr>
                 <td>
                     <sd:Button key="" onclick="page.onReviewManyFiles();" >
-                        <img src="share/images/signature.png" height="14" width="18" alt="Hủy">
+                        <img src="share/images/signature.png" height="14" width="18" alt="Xem xét đạt nhiều hồ sơ">
                         <span style="font-size:12px">Xem xét đạt nhiều hồ sơ</span>
+                    </sd:Button>
+                    <sd:Button id="btnLDPSignMoreAA" key="" onclick="showLDPSignMoreAA();">
+                        <img src="share/images/signature.png" height="14" width="18" alt="Phê duyệt đạt nhiều công văn bổ sung sau công bố">
+                        <span style="font-size:12px">Phê duyệt đạt nhiều công văn bổ sung sau công bố</span>
                     </sd:Button>
                 </td>
 
@@ -583,19 +606,32 @@
             >
     <jsp:include page="evaluateFormView.jsp" flush="false"></jsp:include>
 </sd:Dialog>
+
 <sd:Dialog  id="reviewManyFilesForm" height="auto" width="600px"
             key="Xem xét nhiều hồ sơ" showFullscreenButton="false"
             >
     <jsp:include page="review/reviewManyFilesForm.jsp" flush="false"></jsp:include>
 </sd:Dialog>
+
+<sd:Dialog  id="reviewSignforAAFormDlg" height="auto" width="600px"
+            key="Phê duyệt hồ sơ bổ sung sau công bố" showFullscreenButton="false"
+            >
+    <jsp:include page="afterAnnounced/reviewSignforAAForm.jsp" flush="false"></jsp:include>
+</sd:Dialog>
+
 <div id="viewDiv"></div>
 
 <script type="text/javascript">
+    var itemsToSign = null;
+    var signIndex = 0;
+    var check = true;
+    var flagSignMore = false;
     page.showReviewForm = function (fileId, status) {//show form kết luận xem xét hồ sơ
         dijit.byId("reviewForm.fileId").setValue(fileId);
         dijit.byId("item.status").setValue(status);
         sd.connector.post("filesAction!getCommentEvaluateFormByLeaderForAA.do?objectId=" + fileId, null, null, null, afterShowReviewForm);
     };
+
     afterShowReviewForm = function (data) {
         var obj = dojo.fromJson(data);
         if (obj.customInfo[0] != "") {
@@ -618,17 +654,17 @@
         } else {
             document.getElementById("reviewForm.leaderStaffRequest").innerHTML = "";
         }
-        if (obj.customInfo[4] != "") {
-            document.getElementById("reviewForm.titleEditATTP").innerHTML = obj.customInfo[4];
+        if (obj.customInfo[8] != "") {
+            document.getElementById("reviewForm.titleEditATTP").innerHTML = obj.customInfo[8];
         } else {
             document.getElementById("reviewForm.titleEditATTP").innerHTML = "";
         }
-        if (obj.customInfo[5] != "") {
-            document.getElementById("reviewForm.contentsEditATTP").innerHTML = obj.customInfo[5];
+        if (obj.customInfo[9] != "") {
+            document.getElementById("reviewForm.contentsEditATTP").innerHTML = obj.customInfo[9];
         } else {
             document.getElementById("reviewForm.contentsEditATTP").innerHTML = "";
         }
-        
+
         var status = dijit.byId("item.status").getValue();
         var statusName = page.getStatusName(parseInt(status));
 
@@ -644,7 +680,7 @@
         dijit.byId("reviewForm.foodSafetyQualityL").setValue(1);
         dijit.byId("reviewForm.effectUtilityL").setValue(1);
         dijit.byId("reviewDlg").show();
-        
+
         page.replaceBrTblReviewForm();//on reviewForm.jsp
         // Load view form
         var fileId = dijit.byId("reviewForm.fileId").getValue();
@@ -656,7 +692,6 @@
     };
 
     backPage = function () {
-        //doGoToMenu(g_latestClickedMenu);
         document.getElementById("searchDiv").style.display = "";
         document.getElementById("viewDiv").style.display = "none";
 
@@ -700,30 +735,16 @@
         dijit.byId("evaluateViewDlg").show();
     };
 
-//    page.showReviewForm = function(row) {//show form kết luận xem xét hồ sơ
-//        var file = dijit.byId("filesGrid").getItem(row);
-//        var statusName = page.getStatusName(parseInt(file.status));
-//        dijit.byId("reviewForm.fileId").setValue(file.fileId);
-//        document.getElementById("reviewForm.status").innerHTML = statusName;
-//        document.getElementById("reviewForm.staffRequest").innerHTML = escapeHtml_(file.staffRequest);
-//        dijit.byId("reviewForm.leaderStaffRequest").setValue("");
-//        document.getElementById("reviewForm.statusAccept").checked = true;
-//
-//        dijit.byId("reviewForm.legalL").setValue(1);
-//        dijit.byId("reviewForm.foodSafetyQualityL").setValue(1);
-//        dijit.byId("reviewForm.effectUtilityL").setValue(1);
-//        dijit.byId("reviewDlg").show();
-//        page.replaceBrTblReviewForm();//on reviewForm.jsp
-//    };
-
     page.showSearchPanel = function () {
         var panel = document.getElementById("searchDiv");
         panel.setAttribute("style", "display:;");
         dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
     };
+
     page.downloadWord = function (fileId) {
         document.location = "exportWord!onExportEvaluation.do?fileId=" + fileId;
     };
+
     page.reloadViewOldVersion = function (oldVersion, thisVersion) {//u140728
         document.getElementById('viewDiv').Value = '';
         var gridRegister = dijit.byId('processCommentGridId_VTGrid');
@@ -732,9 +753,10 @@
         }
         sd.connector.post("filesAction!loadFilesByOldVersion.do?thisVersion=" + thisVersion + "&oldVersion=" + oldVersion, "viewDiv", null, null, afterReloadViewOldVersion);
     };
+
     afterReloadViewOldVersion = function (data) {
     };//!u140728
-    page.search();
+
     page.onReviewManyFiles = function () {
         if (!dijit.byId("filesGrid").vtIsChecked()) {
             msg.alert('Bạn chưa chọn hồ sơ để thực hiện xem xét nhiều hồ sơ', 'Cảnh báo');
@@ -742,4 +764,22 @@
             dijit.byId("reviewManyFilesForm").show();
         }
     };
+
+    showLDPSignMoreAA = function () {//b1
+        if (!dijit.byId("filesGrid").vtIsChecked()) {
+            msg.alert('Bạn chưa chọn hồ sơ để thực hiện ký duyệt', 'Cảnh báo');
+        } else {
+            signIndex = 0;
+            itemsToSign = dijit.byId("filesGrid").vtGetCheckedItems();
+            msg.confirm('Bạn có chắc chắn muốn ký duyệt nhiều hồ sơ?', '<sd:Property>confirm.title1</sd:Property>', page.ldpSignMoreAA);
+        }
+    };
+
+    page.ldpSignMoreAA = function () {//b2 sign with item
+        flagSignMore = true;
+        dijit.byId("reviewSignforAAFormDlg").show();
+        showLdpSignMoreAAForm(itemsToSign[signIndex].fileId);
+    };    
+
+    page.search();
 </script>

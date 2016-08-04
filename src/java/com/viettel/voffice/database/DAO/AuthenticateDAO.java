@@ -7,6 +7,7 @@ import com.viettel.hqmc.DAOHE.FilesNoClobDAOHE;
 import com.viettel.hqmc.DAOHE.NotificationDAOHE;
 import com.viettel.voffice.database.BO.Category;
 import com.viettel.voffice.database.DAOHibernate.CategoryDAOHE;
+import com.viettel.voffice.database.DAOHibernate.EventLogDAOHE;
 import com.viettel.vsaadmin.client.form.DepartmentForm;
 import com.viettel.vsaadmin.database.BO.Position;
 import com.viettel.vsaadmin.database.BO.RoleUserDept;
@@ -164,12 +165,14 @@ public class AuthenticateDAO extends BaseDAO {
                 + "merchant_code:" + merchant_code + ";" + "response_code:" + responseCode + ";" + "trans_id:" + trans_id + ";" + "good_code:" + good_code
                 + ";" + "net_cost:" + net_cost + ";" + "ship_fee:" + ship_fee + ";" + "tax:" + tax + ";" + "service_code:" + service_code + ";"
                 + "currency_code:" + currency_code + ";" + "bank_code:" + bank_code + ";" + "desc_1:" + desc_1 + ";" + "desc_2:" + desc_2 + ";" + "desc_3:" + desc_3 + ";" + "desc_4:" + desc_4 + ";" + "desc_5:" + desc_5 + ";" + "secure_hash:" + secure_hash + ";";
-        System.out.println(paymentInfo);
+//        System.out.println(paymentInfo);
+        EventLogDAOHE edhe = new EventLogDAOHE();//A 16 07 29
+        edhe.insertEventLog("KEYPAY", "paymentInfo=" + paymentInfo, getRequest());
         String hash = command + ";" + merchant_trans_id + ";"
                 + merchant_code + ";" + responseCode + ";" + trans_id + ";" + good_code
                 + ";" + net_cost + ";" + ship_fee + ";" + tax + ";" + service_code + ";"
                 + currency_code + ";" + bank_code + ";" + desc_1 + ";" + desc_2 + ";" + desc_3 + ";" + desc_4 + ";" + desc_5 + ";" + secure_hash + ";";
-        System.out.println(hash);
+//        System.out.println(hash);
         FeeDao feedao = new FeeDao();
         try {
             Thread.sleep(4000);
@@ -192,7 +195,8 @@ public class AuthenticateDAO extends BaseDAO {
                 }
                 System.out.println("Err_06");
             }
-        } catch (Exception ex) {
+        } catch (Exception ex) {            
+            edhe.insertEventLog("KEYPAY", "Err=" + "Loi cap nhat KeyPay qua IPN, ma thanh toan: " + files_code + ex, getRequest());//A 16 07 29
             System.out.println("Err_07");
             System.out.println("Loi cap nhat KeyPay qua IPN, ma thanh toan: " + files_code + ex);
         }

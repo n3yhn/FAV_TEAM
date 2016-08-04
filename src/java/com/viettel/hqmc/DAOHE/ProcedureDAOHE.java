@@ -483,7 +483,7 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
         }
         return null;
     }
-
+        
     public List getAllProcedureAfterAnnounced() {
         List<Category> lstCategory = null;
         try {

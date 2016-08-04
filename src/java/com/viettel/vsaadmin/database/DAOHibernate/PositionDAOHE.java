@@ -210,7 +210,9 @@ public class PositionDAOHE extends GenericDAOHibernate<Position, Long> {
     public Position findPositionCode(Long userID) {
         try {
         String sql = "SELECT p FROM Position p"
-                + " WHERE p.status =1 AND p.posType =1 AND p.posId IN (SELECT u.posId FROM Users u"
+                + " WHERE p.status =1"
+                + " AND p.posType =1"
+                + " AND p.posId IN (SELECT u.posId FROM Users u"
                 + " WHERE u.userId = ? AND u.status = 1)";
         Query query=session.createQuery(sql);
         query.setParameter(0, userID);

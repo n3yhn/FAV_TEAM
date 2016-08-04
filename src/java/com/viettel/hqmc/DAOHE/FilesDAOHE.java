@@ -54,7 +54,6 @@ import com.viettel.vsaadmin.database.BO.Users;
 import com.viettel.vsaadmin.database.DAOHibernate.DepartmentDAOHE;
 import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import com.viettel.ws.FORM.ANNOUCE_HANDLING;
-import com.viettel.ws.validateData.Helper;
 import com.viettel.ws.validateData.Validator;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -80,11 +79,213 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
     //private static final Logger log = Logger.getLogger(FilesDAOHE.class);
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FilesDAOHE.class);
 
-    /**
-     *
-     */
     public FilesDAOHE() {
         super(Files.class);
+    }
+
+    /**
+     * Lưu hồ sơ
+     *
+     * @param createForm
+     * @return
+     */
+    public Files saveFiles(FilesForm createForm) {
+        Files bo = null;
+        Files boRollBack = null;
+        Long filesId = createForm.getFileId();
+        Boolean isCreateNew = true;
+        Long status = 0L;
+        Long announcementId = null;
+        Long detailProductId = null;
+        Long reIssueFormId = null;
+        Long testRegistrationId = null;
+        Long productTypeIdOld = null;
+
+        if (createForm.getStatus() != null) {
+            status = createForm.getStatus();
+        }
+        if (filesId != null) {
+            String hql = "select dt.productType from DetailProduct dt "
+                    + "where "
+                    + "dt.detailProductId = (select f.detailProductId from Files f where f.fileId =?)";
+            Query query = getSession().createQuery(hql);
+            query.setParameter(0, filesId);
+            List<Long> lstProductType = query.list();
+            if (lstProductType.size() > 0) {
+                productTypeIdOld = lstProductType.get(0);
+            }
+        }
+
+        //
+        // luu thong tin ho so
+        //
+        if (filesId == null) {//la them moi            
+            bo = createForm.convertToEntity();
+        } else {//la sua
+            isCreateNew = false;
+            boRollBack = findById(filesId);
+            bo = findById(filesId);
+
+            if (status.equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)
+                    && bo.getHaveTemp() != null
+                    && bo.getHaveTemp().equals(1l)) {
+                //
+                // Tao ban ghi backup
+                //
+                FilesForm cloneForm = getNewCloneFiles(filesId);
+                cloneForm.setVersion(getCountVersion(bo.getFileId()));
+                bo.setVersion(cloneForm.getVersion());//update version moi nhat cua ho so
+                bo.setHaveTemp(null);
+                saveFiles(cloneForm);
+                //update toan bo process_comment cua lan tham dinh truoc thanh
+                ProcessCommentDAOHE pcdhe = new ProcessCommentDAOHE();
+                int r = pcdhe.updateVersion(filesId, cloneForm.getVersion());
+            }
+            bo = createForm.updateToEntity(bo);
+        }
+
+        //*Luu thong tin cac form chinh cua ho so
+        if (createForm.getAnnouncement() != null) {
+            Announcement ann = createForm.getAnnouncement().convertToEntity();
+            ann.setIsTemp(0L);
+            if (ann.getAnnouncementId() != null) {
+                session.merge(ann);
+            } else {
+                session.save(ann);
+            }
+            announcementId = ann.getAnnouncementId();
+        }
+
+        if (createForm.getDetailProduct() != null) {
+            DetailProduct detail = createForm.getDetailProduct().convertToEntity();
+            detail.setIsTemp(0L);
+            if (detail.getDetailProductId() != null) {
+                session.merge(detail);
+            } else {
+                session.save(detail);
+            }
+            detailProductId = detail.getDetailProductId();
+        }
+
+        if (createForm.getReIssueForm() != null) {
+            ReIssueForm reissue = createForm.getReIssueForm().convertToEntity();
+            if (reissue.getReIssueFormId() != null) {
+                session.merge(reissue);
+            } else {
+                session.save(reissue);
+            }
+            reIssueFormId = reissue.getReIssueFormId();
+        }
+
+        if (createForm.getTestRegistration() != null) {
+            TestRegistration testReg = createForm.getTestRegistration().convertToEntity();
+            if (testReg.getTestRegistrationId() != null) {
+                getSession().merge(testReg);
+            } else {
+                getSession().save(testReg);
+            }
+            testRegistrationId = testReg.getTestRegistrationId();
+        }
+        bo.setAnnouncementId(announcementId);
+        bo.setDetailProductId(detailProductId);
+        bo.setReIssueFormId(reIssueFormId);
+        bo.setTestRegistrationId(testRegistrationId);
+        bo.setDisplayStatus(getFileStatusName(bo.getStatus()));
+        if (bo.getFileId() != null) {
+            //khi sua xoa toan bo chu ki CA
+            bo.setStaffRequest("");
+            bo.setLeaderRequest("");
+            bo.setLeaderStaffRequest("");
+            bo.setContentSigned("");
+            bo.setUserSigned("");
+            getSession().update(bo);
+        } else {
+            //update 15092015 binhnt cap nhat lay ma ho so
+            if (createForm.getIsTemp() != null
+                    && createForm.getIsTemp().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
+                //
+                // voi ho so clone thi ko can tao moi file code
+                //
+            } else {
+                bo.setFileCode(getNewFileCode(createForm.getFileType()));
+            }
+            getSession().save(bo);
+        }
+
+        filesId = bo.getFileId();
+
+        // Luu thong tin cac danh sach chi tieu chinh
+        saveMainlytarget(createForm.getLstMainlyTarget(), filesId);
+        // Luu thong tin danh sach chi tieu san pham
+        saveProductTarget(createForm.getLstBioTarget(), filesId, Constants.PRODUCT_TARGET_TYPE.BIO);
+        saveProductTarget(createForm.getLstHeavyMetal(), filesId, Constants.PRODUCT_TARGET_TYPE.HEAVY_METAL);
+        saveProductTarget(createForm.getLstChemical(), filesId, Constants.PRODUCT_TARGET_TYPE.CHEMICAL);
+        // Luu thong tin danh sach tai lieu
+        saveAttachs(createForm.getLstAttachs(), filesId, createForm.getLstAttachLabel());
+
+//        if ("".equals(createForm.getLstAttachLabel())) {
+//            return null;
+//        }
+        // Luu thong tin danh sach ke hoach quan ly chat luong san pham
+        saveQualityPlan(createForm.getLstQualityControl(), filesId);
+
+        // Luu thong tin danh sach san pham nhap khau cho khach san 4 sao        
+        saveProductInFile(createForm.getLstProductInFile(), filesId);
+        try {//lưu phí thẩm định hồ sơ
+            ProcedureDAOHE pdheCheck = new ProcedureDAOHE();
+            Procedure pro = pdheCheck.getProcedureTypeFee(createForm.getFileType());
+            if (pro != null
+                    && (pro.getTypeFee() == 2 || pro.getTypeFee() == 3)
+                    && !pro.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)
+                    && !pro.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)) {
+                if (!saveFee(filesId, createForm.getFileType(), null, pro, productTypeIdOld)) {
+                    return null;
+                }
+            } //Sua doi sua cong bo. Tao mot ban ghi trong FeePaymentInfo de VanThu nhin thay hoso cua loai nay
+            else if (pro != null
+                    && pro.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)) {
+                if (!saveFeeChangesAfterAnnounced(filesId, createForm.getFileType())) {
+                    return null;
+                }
+            } else if (pro != null
+                    && pro.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)) {
+                if (!saveFee4Star(filesId, createForm.getFileType())) {
+                    return null;
+                }
+            } else if (pro != null
+                    && (pro.getTypeFee() == 7)) {
+                if (!saveFeeTL(filesId, createForm.getFileType(),
+                        createForm.getDetailProduct().getProductType(), pro, productTypeIdOld)) {
+                    return null;
+                }
+            } else if (createForm.getDetailProduct() != null
+                    && createForm.getDetailProduct().getProductType() != null) {
+                if (!saveFee(filesId, createForm.getFileType(),
+                        createForm.getDetailProduct().getProductType(), pro, productTypeIdOld)) {
+                    return null;
+                }
+            }
+
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            if (isCreateNew) {
+                bo.setIsActive(Constants.Status.INACTIVE);
+                getSession().update(bo);
+            } else {
+                getSession().update(boRollBack);
+
+            }
+            return null;
+        }
+
+        if (createForm.getIsTemp() == null
+                || (createForm.getIsTemp() != null
+                && !createForm.getIsTemp().equals(1l))) {
+            saveFileForSearch(filesId);
+        }
+
+        session.flush();
+        return bo;
     }
 
     /**
@@ -606,8 +807,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             if (file == null) {
                 bReturn = false;
             } else// Cap nhat trang thai ho so
-            {
-                if ((file.getStatus() != null
+             if ((file.getStatus() != null
                         && form.getStatus() != null)//141225 binhnt update phan quyen ho so tham dinh
                         && (file.getStatus().equals(Constants.FILE_STATUS.ASSIGNED)//da phan cong
                         || file.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE)//tra lai tham dinh lai
@@ -1021,7 +1221,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     log.error("Lỗi hệ thống: Phân quyền xử lý hồ sơ: " + file.getFileCode());
                     return false;
                 }
-            }
         } catch (Exception en) {
             log.error(en.getMessage());
             bReturn = false;
@@ -2726,15 +2925,13 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     Fee findfee1 = fdhe.findFeeByCode("TPDB");
                     feeIdOld = findfee1.getFeeId();
                 } else // thuc pham chuc nang
-                {
-                    if (productTypeIdOld.equals(cate.getCategoryId())) {
+                 if (productTypeIdOld.equals(cate.getCategoryId())) {
                         Fee findfee2 = fdhe.findFeeByCode("TPCN");
                         feeIdOld = findfee2.getFeeId();
                     } else {
                         Fee findfee3 = fdhe.findFeeByCode("TPK");
                         feeIdOld = findfee3.getFeeId();
                     }
-                }
 
                 fpifOld = fdhe.findFeePaymentInfoFileIdFeeIdIsActive(fileId, feeIdOld, 1l);
 
@@ -2751,8 +2948,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     feeIdNew = findfee1.getFeeId();
                     costNew = findfee1.getPrice();
                 } else // thuc pham chuc nang
-                {
-                    if (productType.equals(cate.getCategoryId())) {
+                 if (productType.equals(cate.getCategoryId())) {
                         Fee findfee2 = fdhe.findFeeByCode("TPCN");
                         feeIdNew = findfee2.getFeeId();
                         costNew = findfee2.getPrice();
@@ -2761,7 +2957,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         feeIdNew = findfee3.getFeeId();
                         costNew = findfee3.getPrice();
                     }
-                }
                 //fpifNew = fdhe.findFeePaymentInfoFileIdFeeIdIsActive(fileId, feeIdNew, 1l);
                 FilesDAOHE filesdhe = new FilesDAOHE();
                 Files filesnew = filesdhe.findById(fileId);
@@ -2805,6 +3000,61 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     getSession().update(fpifOld);
                 }
             }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    /*
+     *Hiepvv 08/01
+     *Luu phi cua ho so sua doi bo sung sau cong bo
+     */
+    private Boolean saveFeeChangesAfterAnnounced(Long fileId, Long fileType) {
+        if (fileId != null) {
+            Date dateNow = getSysdate();
+            String hql = "select fpif from FeePaymentInfo fpif"
+                    + " where fpif.fileId =:fileId"
+                    + " and fpif.isActive = 1";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("fileId", fileId);
+            List<FeePaymentInfo> FeePaymentInfo = query.list();
+            // truong hop sao chep va luu tam productType co the = null, vi the phai set = -1
+            if (FeePaymentInfo.isEmpty()) {
+                FeeDAOHE fdhe = new FeeDAOHE();
+                List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);
+                // check le phi cap so theo loai ho so
+                if (feenew != null && feenew.size() > 0) {
+                    FeePaymentInfo fpif = new FeePaymentInfo();
+                    for (int i = 0; i < feenew.size(); i++) {
+                        fpif = new FeePaymentInfo();
+                        //Thong tin co ban, status=1 = da dong phi
+                        fpif.setCreateDate(dateNow);
+                        fpif.setStatus(1l);
+                        fpif.setFileId(fileId);
+                        fpif.setIsActive(1l);
+                        fpif.setFeeId(feenew.get(i).getFeeId());
+                        Fee feeTemp = (Fee) findById(Fee.class, "feeId", feenew.get(i).getFeeId());
+                        fpif.setCost(feeTemp.getPrice());
+
+                        //Thong tin fix cung cho du du lieu
+                        fpif.setPaymentPerson("ATTP");
+                        fpif.setPaymentDate(dateNow);
+                        fpif.setFeePaymentTypeId(3L);
+                        fpif.setBillPath("");
+                        fpif.setPaymentConfirm("ATTP");
+                        fpif.setDateConfirm(dateNow);
+                        fpif.setCostCheck(0L);
+
+                        getSession().save(fpif);
+                    }
+                }
+            }
+            //Hiepvv 0803 Khong tinh phi SDBS sau cong bo
+            FilesDAOHE filesdhe = new FilesDAOHE();
+            Files filesnew = filesdhe.findById(fileId);
+            filesnew.setIsFee(Constants.Status.ACTIVE);
+            getSession().update(filesnew);
         } else {
             return false;
         }
@@ -2855,210 +3105,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             saveFileForSearch(id);
         }
         return true;
-    }
-
-    /**
-     * Lưu hồ sơ
-     *
-     * @param createForm
-     * @return
-     */
-    public Files saveFiles(FilesForm createForm) {
-        Files bo = null;
-        Files boRollBack = null;
-        Long filesId = createForm.getFileId();
-        Boolean isCreateNew = true;
-        Long status = 0L;
-        Long announcementId = null;
-        Long detailProductId = null;
-        Long reIssueFormId = null;
-        Long testRegistrationId = null;
-        Long productTypeIdOld = null;
-        if (createForm.getStatus() != null) {
-            status = createForm.getStatus();
-        }
-        if (filesId != null) {
-            String hql = "select dt.productType from DetailProduct dt "
-                    + "where "
-                    + "dt.detailProductId = (select f.detailProductId from Files f where f.fileId =?)";
-            Query query = getSession().createQuery(hql);
-            query.setParameter(0, filesId);
-            List<Long> lstProductType = query.list();
-            if (lstProductType.size() > 0) {
-                productTypeIdOld = lstProductType.get(0);
-            }
-        }
-
-        //
-        // luu thong tin ho so
-        //
-        if (filesId == null) {//la them moi            
-            bo = createForm.convertToEntity();
-        } else {//la sua
-            isCreateNew = false;
-            boRollBack = findById(filesId);
-            bo = findById(filesId);
-
-            if (status.equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)
-                    && bo.getHaveTemp() != null
-                    && bo.getHaveTemp().equals(1l)) {
-                //
-                // Tao ban ghi backup
-                //
-                FilesForm cloneForm = getNewCloneFiles(filesId);
-                cloneForm.setVersion(getCountVersion(bo.getFileId()));
-                bo.setVersion(cloneForm.getVersion());//update version moi nhat cua ho so
-                bo.setHaveTemp(null);
-                saveFiles(cloneForm);
-                //update toan bo process_comment cua lan tham dinh truoc thanh
-                ProcessCommentDAOHE pcdhe = new ProcessCommentDAOHE();
-                int r = pcdhe.updateVersion(filesId, cloneForm.getVersion());
-            }
-            bo = createForm.updateToEntity(bo);
-        }
-
-        //*Luu thong tin cac form chinh cua ho so
-        if (createForm.getAnnouncement() != null) {
-            Announcement ann = createForm.getAnnouncement().convertToEntity();
-            ann.setIsTemp(0L);
-            if (ann.getAnnouncementId() != null) {
-                session.merge(ann);
-            } else {
-                session.save(ann);
-            }
-            announcementId = ann.getAnnouncementId();
-        }
-
-        if (createForm.getDetailProduct() != null) {
-            DetailProduct detail = createForm.getDetailProduct().convertToEntity();
-            detail.setIsTemp(0L);
-            if (detail.getDetailProductId() != null) {
-                session.merge(detail);
-            } else {
-                session.save(detail);
-            }
-            detailProductId = detail.getDetailProductId();
-        }
-
-        if (createForm.getReIssueForm() != null) {
-            ReIssueForm reissue = createForm.getReIssueForm().convertToEntity();
-            if (reissue.getReIssueFormId() != null) {
-                session.merge(reissue);
-            } else {
-                session.save(reissue);
-            }
-            reIssueFormId = reissue.getReIssueFormId();
-        }
-
-        if (createForm.getTestRegistration() != null) {
-            TestRegistration testReg = createForm.getTestRegistration().convertToEntity();
-            if (testReg.getTestRegistrationId() != null) {
-                getSession().merge(testReg);
-            } else {
-                getSession().save(testReg);
-            }
-            testRegistrationId = testReg.getTestRegistrationId();
-        }
-        bo.setAnnouncementId(announcementId);
-        bo.setDetailProductId(detailProductId);
-        bo.setReIssueFormId(reIssueFormId);
-        bo.setTestRegistrationId(testRegistrationId);
-        bo.setDisplayStatus(getFileStatusName(bo.getStatus()));
-        if (bo.getFileId() != null) {
-            //khi sua xoa toan bo chu ki CA
-            bo.setStaffRequest("");
-            bo.setLeaderRequest("");
-            bo.setLeaderStaffRequest("");
-            bo.setContentSigned("");
-            bo.setUserSigned("");
-            getSession().update(bo);
-        } else {
-            //update 15092015 binhnt cap nhat lay ma ho so
-            if (createForm.getIsTemp() != null
-                    && createForm.getIsTemp().equals(Constants.ACTIVE_STATUS.ACTIVE)) {
-                //
-                // voi ho so clone thi ko can tao moi file code
-                //
-            } else {
-                bo.setFileCode(getNewFileCode(createForm.getFileType()));
-            }
-            getSession().save(bo);
-        }
-
-        filesId = bo.getFileId();
-
-        // Luu thong tin cac danh sach chi tieu chinh
-        saveMainlytarget(createForm.getLstMainlyTarget(), filesId);
-        // Luu thong tin danh sach chi tieu san pham
-        saveProductTarget(createForm.getLstBioTarget(), filesId, Constants.PRODUCT_TARGET_TYPE.BIO);
-        saveProductTarget(createForm.getLstHeavyMetal(), filesId, Constants.PRODUCT_TARGET_TYPE.HEAVY_METAL);
-        saveProductTarget(createForm.getLstChemical(), filesId, Constants.PRODUCT_TARGET_TYPE.CHEMICAL);
-        // Luu thong tin danh sach tai lieu
-        saveAttachs(createForm.getLstAttachs(), filesId, createForm.getLstAttachLabel());
-
-//        if ("".equals(createForm.getLstAttachLabel())) {
-//            return null;
-//        }
-        // Luu thong tin danh sach ke hoach quan ly chat luong san pham
-        saveQualityPlan(createForm.getLstQualityControl(), filesId);
-
-        // Luu thong tin danh sach san pham nhap khau cho khach san 4 sao        
-        saveProductInFile(createForm.getLstProductInFile(), filesId);
-        try {//lưu phí thẩm định hồ sơ
-            ProcedureDAOHE pdheCheck = new ProcedureDAOHE();
-            Procedure pro = pdheCheck.getProcedureTypeFee(createForm.getFileType());
-            if (pro != null
-                    && (pro.getTypeFee() == 2 || pro.getTypeFee() == 3)
-                    && !pro.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)
-                    && !pro.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)) {
-                if (!saveFee(filesId, createForm.getFileType(), null, pro, productTypeIdOld)) {
-                    return null;
-                }
-            } //Sua doi sua cong bo. Tao mot ban ghi trong FeePaymentInfo de VanThu nhin thay hoso cua loai nay
-            else if (pro != null
-                    && pro.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)) {
-                if (!saveFeeChangesAfterAnnounced(filesId, createForm.getFileType())) {
-                    return null;
-                }
-            } else if (pro != null
-                    && pro.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)) {
-                if (!saveFee4Star(filesId, createForm.getFileType())) {
-                    return null;
-                }
-            } else if (pro != null
-                    && (pro.getTypeFee() == 7)) {
-                if (!saveFeeTL(filesId, createForm.getFileType(),
-                        createForm.getDetailProduct().getProductType(), pro, productTypeIdOld)) {
-                    return null;
-                }
-            } else if (createForm.getDetailProduct() != null
-                    && createForm.getDetailProduct().getProductType() != null) {
-                if (!saveFee(filesId, createForm.getFileType(),
-                        createForm.getDetailProduct().getProductType(), pro, productTypeIdOld)) {
-                    return null;
-                }
-            }
-
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
-            if (isCreateNew) {
-                bo.setIsActive(Constants.Status.INACTIVE);
-                getSession().update(bo);
-            } else {
-                getSession().update(boRollBack);
-
-            }
-            return null;
-        }
-
-        if (createForm.getIsTemp() == null
-                || (createForm.getIsTemp() != null
-                && !createForm.getIsTemp().equals(1l))) {
-            saveFileForSearch(filesId);
-        }
-
-        session.flush();
-        return bo;
     }
 
     /**
@@ -3373,12 +3419,10 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             error = "Chưa chọn nhãn cho sản phẩm";
             return error;
         } else//150709 binhnt53 add check max nhan duoc chon
-        {
-            if (count > 3) {
+         if (count > 3) {
                 error = "Vượt quá số lượng tệp được chọn đính kèm cùng bản công bố(Tối đa 3 tệp)";
                 return error;
             }//!150709        //        // validate ke hoach kiem soat chat luong        //
-        }
         if (createForm.getLstQualityControl() != null && !createForm.getLstQualityControl().isEmpty()) {
             for (QualityControlPlan item : createForm.getLstQualityControl()) {
                 if (item.getProductProcessDetail() == null || item.getProductProcessDetail().trim().isEmpty()) {
@@ -4840,8 +4884,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         //fdhe.moveDocumentToPreviousNode(deptId, deptName, userId, userName, file.getFileId(), file.getPreviousNodeId());
                     }
                 } else // Neu khong co luong thi tu xu thoi :-)
-                {
-                    if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED)) {
+                 if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED)) {
                         // Tham dinh oke, gui tiep cho cho lanh dao don vi review
                         Process newP = new Process();
                         newP.setObjectId(form.getFileId());
@@ -4863,7 +4906,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     } else {
                         // Tra lai cho doanh nghiep khong xu ly gi them
                     }
-                }
                 //insert noi dung tham dinh
                 if (form.getEvaluationRecordsForm() != null) {
                     EvaluationRecordsForm evaluationRecordsForm = new EvaluationRecordsForm();
@@ -6732,353 +6774,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         }
     }
 
-    /**
-     * Tra cứu hồ sơ bởi người dùng
-     *
-     * @param form
-     * @param deptId
-     * @param userId
-     * @param userType
-     * @param start
-     * @param count
-     * @param sortField
-     * @return
-     *
-     * public GridResult searchLookupFiles(FilesForm form, Long deptId, Long
-     * userId, String userType, int start, int count, String sortField) { String
-     * hql = ""; List lstParam = new ArrayList(); if
-     * (userType.equals(Constants.ROLES.LEAD_OFFICE_ROLE)) { hql = " from Files
-     * f, Process p where f.isActive = 1 and f.fileId = p.objectId and (f.isTemp
-     * = null or f.isTemp = 0 ) "; } if
-     * (userType.equals(Constants.ROLES.STAFF_ROLE)) { hql = " from Files f,
-     * Process p where f.isActive = 1 and f.fileId = p.objectId and (f.isTemp =
-     * null or f.isTemp = 0 ) "; } if
-     * (userType.equals(Constants.ROLES.LEAD_UNIT)) { hql = " from Files f,
-     * Process p where f.isActive = 1 and f.fileId = p.objectId and (f.isTemp =
-     * null or f.isTemp = 0 ) "; } if
-     * (userType.equals(Constants.ROLES.CLERICAL_ROLE)) { hql = " from Files f,
-     * Process p where f.isActive = 1 and f.fileId = p.objectId and (f.isTemp =
-     * null or f.isTemp = 0 ) "; //140714 binhnt53 if (userId != null) { hql +=
-     * " and p.sendUserId = ? "; lstParam.add(userId); }//!140714 binhnt53 }
-     *
-     * if (form != null) { if (form.getFileCode() != null &&
-     * !"".equals(form.getFileCode().trim())) { hql += "AND lower(f.fileCode)
-     * like ? ESCAPE '/' ";
-     * lstParam.add(StringUtils.toLikeString(form.getFileCode().toLowerCase().trim()));
-     * } if (form.getFileType() != null && form.getFileType().longValue() != -1)
-     * { hql += " AND f.fileType = ? "; lstParam.add(form.getFileType()); }
-     *
-     * if (form.getSignDate() != null) { hql += "AND f.signDate = ? ";
-     * lstParam.add(form.getSignDate()); } if (form.getStatus() != null &&
-     * form.getStatus() >= 0l) { hql += "AND f.status = ? ";
-     * lstParam.add(form.getStatus()); } if (form.getStatus() != null &&
-     * form.getStatus() == 30l) { lstParam.clear(); hql = "from Files f, Process
-     * p where f.isActive = 1 and f.fileId = p.objectId AND f.status = ? and
-     * (f.isTemp = null or f.isTemp = 0 ) "; lstParam.add(20l); } // thong ke ho
-     * so trong ngay if (form.getStatus() != null && form.getStatus() == 40l) {
-     * lstParam.clear(); hql = "from Files f, Process p where f.isActive = 1 and
-     * f.fileId = p.objectId AND (f.status = ? or f.status = ?) and
-     * to_date(f.sendDate,'yyyy/mm/dd') = to_date(sysdate,'yyyy/mm/dd') and
-     * p.receiveUserId=? and p.processType=1 and (f.isTemp = null or f.isTemp =
-     * 0 ) "; lstParam.add(3l); lstParam.add(5l); lstParam.add(userId); }
-     * //searchtype 5 if (form.getSearchType() != null && form.getSearchType()
-     * == 5l) { lstParam.clear(); hql = "from Files f, Process p where
-     * f.isActive = 1 and f.fileId = p.objectId AND f.status = ? and (f.isTemp =
-     * null or f.isTemp = 0 ) "; lstParam.add(5l); }
-     *
-     * // ho so can doi chieu if (form.getSearchType() != null &&
-     * form.getSearchType() == 23l) { lstParam.clear(); hql = "from Files f,
-     * Process p where f.isActive = 1 and f.fileId = p.objectId AND f.status = ?
-     * and (f.isTemp = null or f.isTemp = 0 ) and p.receiveGroupId = ? ";
-     * lstParam.add(23l); lstParam.add(deptId);
-     *
-     * }
-     * // ho so cho tham dinh sdbs if (form.getSearchType() != null &&
-     * form.getSearchType() == 44l) { lstParam.clear(); // hql = "from Files f,
-     * Process p where f.isActive = 1 and f.fileId = p.objectId AND f.status = ?
-     * and (f.isTemp = null or f.isTemp = 0 ) "; // lstParam.add(17l); hql =
-     * "from Files f, Process p where f.isActive=1 and f.fileId = p.objectId and
-     * f.status = ? and p.receiveUserId=? and p.processType=1 and (f.isTemp =
-     * null or f.isTemp = 0 ) ";
-     * lstParam.add(Constants.FILE_STATUS.RECEIVED_TO_ADD);
-     * lstParam.add(userId); }
-     *
-     * if (form.getStatus() != null && form.getStatus() == 41l) {
-     * lstParam.clear(); hql = "from Files f, Process p where f.isActive = 1 and
-     * f.fileId = p.objectId AND (f.status = ? or f.status = ?) and
-     * to_date(f.sendDate,'yyyy/mm/dd') = to_date(sysdate,'yyyy/mm/dd') and
-     * (f.isTemp = null or f.isTemp = 0 ) "; lstParam.add(4l); lstParam.add(5l);
-     * } if (form.getStatus() != null && form.getStatus() == 42l) {
-     * lstParam.clear(); hql = "from Files f, Process p where f.isActive = 1 and
-     * f.fileId = p.objectId AND (f.status = ? or f.status = ?) and
-     * to_date(f.sendDate,'yyyy/mm/dd') = to_date(sysdate,'yyyy/mm/dd') and
-     * (f.isTemp = null or f.isTemp = 0 ) "; lstParam.add(6l); lstParam.add(5l);
-     * } // ho so bi tra tham dinh lai if (form.getStatus() != null &&
-     * form.getStatus() == 43l) { lstParam.clear(); hql = "from Files f, Process
-     * p where f.isActive=1 and f.fileId = p.objectId and f.status = ? and
-     * p.receiveUserId=? and p.processType=1 and (f.isTemp = null or f.isTemp =
-     * 0 ) "; lstParam.add(8l); lstParam.add(userId); } // ho so cho phoi hop
-     * tham dinh chua cho y kien if (form.getStatus() != null &&
-     * form.getStatus() == 44l) { lstParam.clear(); hql = "from Files f, Process
-     * p where f.isActive=1 and f.fileId = p.objectId and (f.status = ?) and
-     * (p.processType=0 or p.processType=4) and (p.processId in (select
-     * p.processId from Process p where p.processId not in (select distinct
-     * pc.processId from ProcessComment pc))) and p.processStatus = ?";
-     * lstParam.add(3l); lstParam.add(3l); // lstParam.add(userId); } //ho so
-     * cho xem xet
-     *
-     * if (form.getStatus() != null && form.getStatus() == 45l) {
-     * lstParam.clear(); hql = "from Files f, Process p where f.isActive=1 and
-     * f.fileId = p.objectId and f.status = ? and p.receiveUserId=? and
-     * (p.processType=1 or p.processType=0) and (f.isTemp = null or f.isTemp = 0
-     * ) "; lstParam.add(4l); lstParam.add(userId); } // ho so lanh dao phong da
-     * xem xet if (form.getStatus() != null && form.getStatus() == 46l) {
-     * lstParam.clear(); hql = "from Files f, Process p where f.isActive=1 and
-     * f.fileId = p.objectId and f.status = ? and p.receiveUserId=? and
-     * p.processType=1 and (f.isTemp = null or f.isTemp = 0 ) ";
-     * lstParam.add(5l); lstParam.add(userId); } //ho so da phe duyet if
-     * (form.getStatus() != null && form.getStatus() == 47l) { lstParam.clear();
-     * hql = "from Files f, Process p where f.isActive=1 and f.fileId =
-     * p.objectId and f.status = ? and p.receiveUserId=? and p.processType=1 and
-     * (f.isTemp = null or f.isTemp = 0 ) ";
-     * lstParam.add(Constants.FILE_STATUS.APPROVED); lstParam.add(userId); } //
-     * ho so tra lai yeu cau bo sung (status 9) if (form.getStatus() != null &&
-     * form.getStatus() == 48l) { lstParam.clear(); hql = "from Files f, Process
-     * p where f.isActive=1 and f.fileId = p.objectId and f.status = ? and
-     * p.receiveUserId=? and p.processType=1 and (f.isTemp = null or f.isTemp =
-     * 0 ) "; lstParam.add(9l); lstParam.add(userId); } // ho so tham dịnh da
-     * gui ý kiễn phản hồi if (form.getStatus() != null && form.getStatus() ==
-     * 49l) { lstParam.clear(); hql = "from Files f, Process p,ProcessComment pc
-     * where f.isActive=1 and f.fileId = p.objectId and p.objectType = 30 and
-     * (f.status = ?) and p.receiveGroupId = (select distinct p.receiveGroupId
-     * from Process p where p.receiveUserId = ?) and (p.processType=0 or
-     * p.processType=1) and pc.processId = p.processId and (f.isTemp = null or
-     * f.isTemp = 0 ) "; lstParam.add(3l); lstParam.add(userId); } if
-     * (form.getStatus() != null && form.getStatus() ==
-     * Constants.FILE_STATUS.REVIEW_COMPARISON_FAIL) { lstParam.clear(); hql =
-     * "from Files f, Process p where f.isActive = 1 and f.fileId = p.objectId
-     * AND f.status = ? and (f.isTemp = null or f.isTemp = 0 ) ";
-     * lstParam.add(25l);
-     *
-     * }
-     * // ho so cho phe duyet if (form.getStatus() != null && form.getStatus()
-     * == 50l) { lstParam.clear(); hql = "from Files f, Process p where
-     * f.isActive=1 and f.fileId = p.objectId and (f.isTemp = null or f.isTemp =
-     * 0 ) "; hql += " and (f.status = ? or f.status = ? or f.status = ?)";
-     * lstParam.add(Constants.FILE_STATUS.ASSIGNED);
-     * lstParam.add(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE);
-     * lstParam.add(Constants.FILE_STATUS.RECEIVED_TO_ADD); hql += " and
-     * p.receiveGroupId = ? and p.receiveUserId = ? and (p.processStatus=? or
-     * p.processStatus =? or p.processStatus =? )and p.status=? and
-     * p.processType = ?"; lstParam.add(deptId); lstParam.add(userId);
-     * lstParam.add(Constants.FILE_STATUS.ASSIGNED);
-     * lstParam.add(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE);
-     * lstParam.add(Constants.FILE_STATUS.RECEIVED_TO_ADD); lstParam.add(0l);
-     * lstParam.add(Constants.PROCESS_TYPE.MAIN); }
-     *
-     * // Haitv21 thêm chỉ tiêu thông tin tìm kiếm // Do hieptq reset lại
-     * params nên đoạn code này phải dưới các case if_ else bên trên if
-     * (form.getSendDateFrom() != null) { hql += " AND f.sendDate >= ? ";
-     * lstParam.add(form.getSendDateFrom()); } if (form.getSendDateTo() != null)
-     * { hql += " AND f.sendDate <= ? ";
-     * lstParam.add(addOneDay(form.getSendDateTo())); } // ngày thêm kho lưu trữ
-     * if (form.getRepDateFrom() != null) { hql += " AND f.repDate >= ? ";
-     * lstParam.add(form.getRepDateFrom()); } if (form.getRepDateTo() != null) {
-     * hql += " AND f.repDate <= ? ";
-     * lstParam.add(addOneDay(form.getRepDateTo())); }
-     *
-     * // Ngày phê duyệt từ ngày x tới ngày x if (form.getApproveDateFrom() !=
-     * null) { hql += "AND f.approveDate >= ? ";
-     * lstParam.add(form.getApproveDateFrom()); } if (form.getApproveDateTo() !=
-     * null) { hql += " AND f.approveDate <= ? ";
-     * lstParam.add(addOneDay(form.getApproveDateTo())); }
-     *
-     * // Người phê duyệt if (form.getLeaderStaffSignName() != null &&
-     * form.getLeaderStaffSignName().length() > 0) { hql += "AND
-     * lower(f.leaderStaffSignName) like ? ESCAPE '/' ";
-     * lstParam.add(StringUtils.toLikeString(form.getLeaderStaffSignName().toLowerCase().trim()));
-     * }
-     *
-     * // Tên doanh nghiệp if (form.getBusinessName() != null &&
-     * form.getBusinessName().length() > 0) { hql += "AND lower(f.businessName)
-     * like ? ESCAPE '/' ";
-     * lstParam.add(StringUtils.toLikeString(form.getBusinessName().toLowerCase().trim()));
-     * } // Xuất xứ if (form.getNationName() != null &&
-     * form.getNationName().length() > 0) { hql += "AND lower(f.nationName) like
-     * ? ESCAPE '/' ";
-     * lstParam.add(StringUtils.toLikeString(form.getNationName().toLowerCase().trim()));
-     * }
-     *
-     * // Nhà sản xuất if (form.getManufactureName() != null &&
-     * form.getManufactureName().length() > 0) { hql += "AND (f.announcementId
-     * in (select ann.announcementId from Announcement ann where
-     * lower(ann.manufactureName) like ? ESCAPE '/'))";
-     * lstParam.add(StringUtils.toLikeString(form.getManufactureName().toLowerCase().trim()));
-     * } // Người thẩm định if (form.getReceiveUser() != null &&
-     * form.getReceiveUser().length() > 0) { hql += "AND (f.fileId in (select
-     * p.objectId from Process p where lower(p.receiveUser) like ? ESCAPE
-     * '/'))";
-     * lstParam.add(StringUtils.toLikeString(form.getReceiveUser().toLowerCase().trim()));
-     * }
-     *
-     * // Số chứng nhận công bố if (form.getAnnouncementNo() != null &&
-     * form.getAnnouncementNo().length() > 0) { hql += "AND
-     * (f.announcementReceiptPaperId in (select a.announcementReceiptPaperId
-     * from AnnouncementReceiptPaper a where lower(a.receiptNo) like ? ESCAPE
-     * '/')) ";
-     * lstParam.add(StringUtils.toLikeString(form.getAnnouncementNo().toLowerCase().trim()));
-     * }
-     *
-     * // Số đăng ký kinh doanh if (form.getBusinessLicence() != null &&
-     * form.getBusinessLicence().length() > 0) { hql += "AND (f.deptId in
-     * (select b.businessId from Business b where lower(b.businessLicense) like
-     * ? ESCAPE '/')) ";
-     * lstParam.add(StringUtils.toLikeString(form.getBusinessLicence().toLowerCase().trim()));
-     * }
-     *
-     * // Địa chỉ doanh nghiệp if (form.getBusinessAddress() != null &&
-     * form.getBusinessAddress().length() > 0) { hql += "AND
-     * lower(f.businessAddress) like ? ESCAPE '/' ";
-     * lstParam.add(StringUtils.toLikeString(form.getBusinessAddress().toLowerCase().trim()));
-     * }
-     *
-     * // Tên sản phẩm if (form.getProductName() != null &&
-     * form.getProductName().length() > 0) { hql += "AND lower(f.productName)
-     * like ? ESCAPE '/' ";
-     * lstParam.add(StringUtils.toLikeString(form.getProductName().toLowerCase().trim()));
-     * }
-     *
-     * // Nhóm sản phẩm if (form.getProductType() != null &&
-     * form.getProductType() != -1l) { hql += "AND (f.detailProductId in (
-     * select d.detailProductId from DetailProduct d where d.productType = ?))
-     * "; lstParam.add(form.getProductType()); }
-     *
-     * // Lãnh đạo phòng if (form.getLeaderStaff() != null &&
-     * form.getLeaderStaff().length() > 0) { hql += "AND (f.fileId in (select
-     * p.objectId from Process p where lower(p.receiveUser) like ? ESCAPE '/'))
-     * ";
-     * lstParam.add(StringUtils.toLikeString(form.getLeaderStaff().toLowerCase().trim()));
-     * }
-     *
-     * // Người thẩm xét if (form.getStaff() != null &&
-     * form.getStaff().length() > 0) { hql += "AND (f.fileId in (select
-     * p.objectId from Process p where lower(p.receiveUser) like ? ESCAPE '/'))
-     * ";
-     * lstParam.add(StringUtils.toLikeString(form.getStaff().toLowerCase().trim()));
-     * }
-     *
-     * // Tỉnh - Thành Phố if (form.getProductType() != null &&
-     * form.getBusinessProvinceId() != -1l) { hql += "AND (f.deptId in (select
-     * b.businessId from Business b where b.businessProvinceId= ? )) ";
-     * lstParam.add(form.getBusinessProvinceId()); }
-     *
-     * // Nơi lưu trữ if (form.getRepositoriesId() != null &&
-     * form.getRepositoriesId() != -1l) { hql += "AND (f.repositoriesId = ? ) ";
-     * lstParam.add(form.getRepositoriesId()); }
-     *
-     * // Lọc theo người tạo ( lưu trữ hồ sơ giấy ) if (form.getRepCreator() !=
-     * null && (form.getSearchType() == 0 || form.getSearchType() == 2)) { hql
-     * += "AND (f.fileId in (select p.objectId from Process p where
-     * p.processStatus = 3 and p.receiveUserId = ?)) ";
-     * lstParam.add(form.getRepCreator()); }
-     *
-     * // Kho lưu trữ if (form.getRepName() != null && form.getRepName() !=
-     * -1l) { hql += "AND (f.repositoriesId = ? )";
-     * lstParam.add(form.getRepName()); }
-     *
-     * // Trạng thái lưu trữ // Đã lưu trữ if (form.getRepStatus() != null &&
-     * form.getRepStatus() == 1) { hql += "AND (f.repositoriesId <> null )"; }
-     * // Chưa lưu trữ if (form.getRepStatus() != null && form.getRepStatus() ==
-     * 2) { hql += "AND (f.repositoriesId = null )"; }
-     *
-     * if (userType.equals(Constants.ROLES.LEAD_OFFICE_ROLE)) { if (deptId !=
-     * null) { hql += "AND f.agencyId = ? "; lstParam.add(deptId); } } if
-     * (userType.equals(Constants.ROLES.STAFF_ROLE)) { if (deptId != null) { hql
-     * += "and p.receiveGroupId = ? "; lstParam.add(deptId); } if (userId !=
-     * null) { hql += "and p.receiveUserId = ? "; lstParam.add(userId); } } if
-     * (userType.equals(Constants.ROLES.LEAD_UNIT)) { if (deptId != null) { hql
-     * += " and p.receiveGroupId = ? and ( p.receiveUserId = null or
-     * p.receiveUserId = ?) "; lstParam.add(deptId); lstParam.add(userId); } }
-     * if (userType.equals(Constants.ROLES.CLERICAL_ROLE)) { if (deptId != null)
-     * { // hql += "AND f.agencyId = ?)"; // lstParam.add(deptId); hql += "and
-     * p.receiveGroupId = ? "; lstParam.add(deptId); } }
-     *
-     * }
-     * if (userType.equals(Constants.ROLES.CLERICAL_ROLE) &&
-     * form.getSearchType() != null) { switch
-     * (Integer.parseInt(form.getSearchType().toString())) { case -4://5- Hồ sơ
-     * đã yêu cầu nộp phí cấp số = Đã phê duyệt, chưa nộp lệ phí (files.status =
-     * 6, fee_payment_info.status = 0,fee.fee_type = 1 , files.isSignPdf=1) hql
-     * = " from Files f, FeePaymentInfo fpi where f.fileId = fpi.fileId and
-     * (f.isTemp=null or f.isTemp=0) and f.isActive=1" + " and fpi.feeId in
-     * (select fe.feeId from Fee fe where fe.feeType=1 and fe.isActive=1)" + "
-     * and fpi.isActive=1" + " and fpi.status=0" + " and f.userSigned is not
-     * null" + " and (f.status=?) and f.agencyId = ?"; lstParam.clear();
-     * lstParam.add(Constants.FILE_STATUS.APPROVED); lstParam.add(deptId);
-     * break; case -3://Hồ sơ đã nộp phí cấp số, chờ trả hồ sơ = Đã phê duyệt,
-     * đã nộp lệ phí (files.status = 6, fee_payment_info.status = 1,
-     * fee.fee_type=1, files.isSignPdf=2) hql = " from Files f, FeePaymentInfo
-     * fpi where f.fileId = fpi.fileId and (f.isTemp=null or f.isTemp=0) and
-     * f.isActive=1" + " and fpi.feeId in (select fe.feeId from Fee fe where
-     * fe.feeType=1 and fe.isActive=1)" + " and fpi.isActive=1" + " and
-     * fpi.status=1" + " and f.userSigned is not null" + " and f.isSignPdf = 2"
-     * + " and (f.status=?)" + " and f.agencyId = ?";
-     *
-     * lstParam.clear(); lstParam.add(Constants.FILE_STATUS.APPROVED);
-     * lstParam.add(deptId); break; case -2://Hồ sơ đã yêu cầu nộp phí cấp số =
-     * Đã phê duyệt, chưa nộp lệ phí (files.status = 6, fee_payment_info.status
-     * = 0,fee.fee_type = 1 , files.isSignPdf=1) hql = " from Files f,
-     * FeePaymentInfo fpi where f.fileId = fpi.fileId and (f.isTemp=null or
-     * f.isTemp=0) and f.isActive=1" + " and fpi.feeId in (select fe.feeId from
-     * Fee fe where fe.feeType=1 and fe.isActive=1)" + " and fpi.isActive=1" + "
-     * and fpi.status=0" + " and f.userSigned is not null" + " and f.isSignPdf =
-     * 1" + " and (f.status=?)" + " and f.agencyId = ?"; lstParam.clear();
-     * lstParam.add(Constants.FILE_STATUS.APPROVED); lstParam.add(deptId);
-     * break; case -1://Hồ sơ chờ tiếp nhận = Mới nộp và đã xác nhận phí
-     * (files.status = 1, fee_payment_info.status = 1, fee.fee_type=2), Mới nộp
-     * SĐBS (18) hql = " from Files f, FeePaymentInfo fpi where f.fileId =
-     * fpi.fileId and (f.isTemp=null or f.isTemp=0) and f.isActive=1" + " and
-     * fpi.feeId in (select fe.feeId from Fee fe where fe.feeType=2 and
-     * fe.isActive=1)" + " and fpi.isActive=1" + " and fpi.status=1" + " and
-     * f.userSigned is not null" + " and (f.status=? or f.status=?) and
-     * f.agencyId = ?"; lstParam.clear();
-     * lstParam.add(Constants.FILE_STATUS.NEW);
-     * lstParam.add(Constants.FILE_STATUS.NEW_TO_ADD); lstParam.add(deptId);
-     * break; case 0: hql = " from Files f, Process p where f.isActive = 1 and
-     * f.fileId = p.objectId and (f.isTemp = null or f.isTemp = 0 ) ";
-     * lstParam.clear(); hql += " and (f.status = ?)";
-     * lstParam.add(form.getStatus()); hql += " and p.receiveGroupId = ? ";
-     * lstParam.add(deptId); break; // case 14: // hql = " from Files f, Process
-     * p where f.isActive = 1 and f.fileId = p.objectId and (f.isTemp = null or
-     * f.isTemp = 0 ) "; // hql += " and (f.status = ?)"; // lstParam.clear();
-     * // lstParam.add(status); // break; default:; } } // Query countQuery =
-     * getSession().createQuery("select count(distinct f) " + hql); // Query
-     * query = getSession().createQuery("select distinct f " + hql + " order by
-     * f.fileId desc"); Query countQuery = getSession().createQuery("select
-     * count(f) from Files f where f.fileId in (select distinct f.fileId " + hql
-     * + ")"); Query query = getSession().createQuery("select f from Files f
-     * where f.fileId in ( select distinct f.fileId " + hql + ") order by
-     * f.sendDate ASC"); for (int i = 0; i < lstParam.size(); i++) {
-     * query.setParameter(i, lstParam.get(i)); countQuery.setParameter(i,
-     * lstParam.get(i)); }
-     *
-     * query.setFirstResult(start); query.setMaxResults(count); int total =
-     * Integer.parseInt(countQuery.uniqueResult().toString()); List<Files>
-     * lstResult = query.list(); // for (Files f : lstResult) { // hql = "select
-     * p from Process p where p.objectType=? and p.objectId = ? and
-     * p.processStatus=? and p.receiveUserId=?"; // query =
-     * getSession().createQuery(hql); // query.setParameter(0,
-     * Constants.OBJECT_TYPE.FILES); // query.setParameter(1, f.getFileId()); //
-     * query.setParameter(2, Constants.FILE_STATUS.ASSIGNED); //
-     * query.setParameter(3, userId); // List<Process> lstPro = query.list(); //
-     * if (lstPro.size() > 0) { // for (int i = 0; i < lstPro.size(); i++) { //
-     * if (lstPro.get(i).getProcessType().equals(1L)) { //
-     * f.setProcessType(lstPro.get(i).getProcessType()); // break; // } else {
-     * // f.setProcessType(lstPro.get(i).getProcessType()); // } // } // } // }
-     * GridResult gr = new GridResult(total, lstResult); return gr; }
-     *
-     *
-     */
     public boolean onReviewManyFiles(FilesForm form, Long deptId, String deptName, Long userId, String userName) {
         boolean bReturn = true;
         try {
@@ -7275,56 +6970,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         }
     }
 
-    /*
-     *Hiepvv 08/01
-     *Luu phi cua ho so sua doi bo sung sau cong bo
-     */
-    private Boolean saveFeeChangesAfterAnnounced(Long fileId, Long fileType) {
-        if (fileId != null) {
-            Date dateNow = getSysdate();
-            String hql = "select fpif from FeePaymentInfo fpif"
-                    + " where fpif.fileId =:fileId"
-                    + " and fpif.isActive = 1";
-            Query query = getSession().createQuery(hql);
-            query.setParameter("fileId", fileId);
-            List<FeePaymentInfo> FeePaymentInfo = query.list();
-            // truong hop sao chep va luu tam productType co the = null, vi the phai set = -1
-            if (FeePaymentInfo.isEmpty()) {
-                FeeDAOHE fdhe = new FeeDAOHE();
-                List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);
-                // check le phi cap so theo loai ho so
-                if (feenew != null && feenew.size() > 0) {
-                    FeePaymentInfo fpif = new FeePaymentInfo();
-                    for (int i = 0; i < feenew.size(); i++) {
-                        fpif = new FeePaymentInfo();
-                        //Thong tin co ban, status=1 = da dong phi
-                        fpif.setCreateDate(dateNow);
-                        fpif.setStatus(1l);
-                        fpif.setFileId(fileId);
-                        fpif.setIsActive(1l);
-                        fpif.setFeeId(feenew.get(i).getFeeId());
-                        Fee feeTemp = (Fee) findById(Fee.class, "feeId", feenew.get(i).getFeeId());
-                        fpif.setCost(feeTemp.getPrice());
-
-                        //Thong tin fix cung cho du du lieu
-                        fpif.setPaymentPerson("ATTP");
-                        fpif.setPaymentDate(dateNow);
-                        fpif.setFeePaymentTypeId(3L);
-                        fpif.setBillPath("");
-                        fpif.setPaymentConfirm("ATTP");
-                        fpif.setDateConfirm(dateNow);
-                        fpif.setCostCheck(0L);
-
-                        getSession().save(fpif);
-                    }
-                }
-            }
-        } else {
-            return false;
-        }
-        return true;
-    }
-
     private Boolean saveFee4Star(Long fileId, Long fileType) {
         if (fileId != null) {
             Date dateNow = getSysdate();
@@ -7382,9 +7027,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             UsersDAOHE udaohe = new UsersDAOHE();
             if (file == null) {
                 bReturn = false;
-            } else{// Cap nhat trang thai ho so
-            
-                if ((file.getStatus() != null
+            } else// Cap nhat trang thai ho so
+             if ((file.getStatus() != null
                         && form.getStatus() != null)//141225 binhnt update phan quyen ho so tham dinh
                         && (file.getStatus().equals(Constants.FILE_STATUS.ASSIGNED)//da phan cong
                         || file.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE)//tra lai tham dinh lai
@@ -7474,7 +7118,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     if (form.getStaffRequest()
                             != null && form.getStaffRequest().trim().length() > 0) {
                         String strStaffRequest = prefix + form.getStaffRequest();
-                        if (strStaffRequest.trim().length() < 2000) {
+                        if (strStaffRequest.trim().length() < 1800) {//u 16 07 29
                             file.setStaffRequest(strStaffRequest.trim());
                         }
                     }
@@ -7486,7 +7130,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     }
                     file.setIsTypeChange(form.getIsTypeChange());
                     file.setLastType(form.getLastType());
-                    
+
                     //Cap nhat process cu
                     ProcessDAOHE pdhe = new ProcessDAOHE();
                     Process p = pdhe.getProcessByAction(
@@ -7836,7 +7480,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     log.error("Lỗi hệ thống: Phân quyền xử lý hồ sơ: " + file.getFileCode());
                     return false;
                 }
-            }
         } catch (Exception en) {
             log.error(en.getMessage());
             bReturn = false;
@@ -8355,15 +7998,13 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     Fee findfee1 = fdhe.findFeeByCode("TPDB");
                     feeIdOld = findfee1.getFeeId();
                 } else // thuc pham chuc nang
-                {
-                    if (productTypeIdOld.equals(cate.getCategoryId())) {
+                 if (productTypeIdOld.equals(cate.getCategoryId())) {
                         Fee findfee2 = fdhe.findFeeByCode("TPCN");
                         feeIdOld = findfee2.getFeeId();
                     } else {
                         Fee findfee3 = fdhe.findFeeByCode("TPK");
                         feeIdOld = findfee3.getFeeId();
                     }
-                }
 
                 fpifOld = fdhe.findFeePaymentInfoFileIdFeeIdIsActive(fileId, feeIdOld, 1l);
 
@@ -8380,8 +8021,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     feeIdNew = findfee1.getFeeId();
                     costNew = findfee1.getPrice();
                 } else // thuc pham chuc nang
-                {
-                    if (productType.equals(cate.getCategoryId())) {
+                 if (productType.equals(cate.getCategoryId())) {
                         Fee findfee2 = fdhe.findFeeByCode("TPCN");
                         feeIdNew = findfee2.getFeeId();
                         costNew = findfee2.getPrice();
@@ -8390,7 +8030,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         feeIdNew = findfee3.getFeeId();
                         costNew = findfee3.getPrice();
                     }
-                }
                 FilesDAOHE filesdhe = new FilesDAOHE();
                 Files filesnew = filesdhe.findById(fileId);
                 // check gia cu va gia moi

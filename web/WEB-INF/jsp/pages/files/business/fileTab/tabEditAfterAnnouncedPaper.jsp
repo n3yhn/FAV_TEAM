@@ -13,9 +13,7 @@
         <tr>
             <td width="25%"><sd:Label required="true">Tên tổ chức, cá nhân</sd:Label></td>
                 <td width="25%">
-                <sd:TextBox key="" 
-                            id="createForm.announcement.businessName" 
-                            name="createForm.announcement.businessName" readonly="true"  maxlength="255" cssStyle="width:99%" trim="true"/>
+                <sd:TextBox key="" id="createForm.announcement.businessName" name="createForm.announcement.businessName" readonly="true"  maxlength="255" cssStyle="width:99%" trim="true"/>
             </td>
             <td width="25%"><sd:Label required="true">Địa chỉ</sd:Label></td>
                 <td width="25%">
@@ -47,17 +45,11 @@
         <tr>
             <td width="25%"><sd:Label required="true">Mã hồ sơ gốc</sd:Label></td>
                 <td width="25%">
-                <sd:TextBox key="" 
-                            id="createForm.fileSourceCode" 
-                            name="createForm.fileSourceCode" 
-                            maxlength="255" cssStyle="width:99%" trim="true"/>
+                <sd:TextBox key="" id="createForm.fileSourceCode" name="createForm.fileSourceCode" readonly="true" maxlength="255" cssStyle="width:99%" trim="true"/>
             </td>
             <td width="25%"><sd:Label required="true">Tên sản phẩm</sd:Label></td>
                 <td width="25%">
-                <sd:TextBox key="" 
-                            id="createForm.announcement.productName" 
-                            name="createForm.announcement.productName" 
-                            maxlength="500" cssStyle="width:99%" trim="true"/>
+                <sd:TextBox key="" id="createForm.announcement.productName" name="createForm.announcement.productName" readonly="true" maxlength="500" cssStyle="width:99%" trim="true"/>
             </td>
         </tr>
         <tr>

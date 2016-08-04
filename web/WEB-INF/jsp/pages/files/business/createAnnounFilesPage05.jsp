@@ -65,7 +65,7 @@
     <form id="createForm" name="createForm">
         <sd:TextBox key="" id="createForm.fileId" name="createForm.fileId" cssStyle="display:none" />
         <sd:TextBox key="" id="createForm.fileType" name="createForm.fileType" cssStyle="display:none" />
-        <sd:TextBox key="" id="createForm.filesSourceID" name="createForm.filesSourceID" cssStyle="display:none" />
+        <sd:TextBox key="" id="createForm.filesSourceID" name="createForm.filesSourceID" cssStyle="display:none"/>
         <%--<sd:TextBox key="" id="createForm.fileSourceCode" name="createForm.fileSourceCode" cssStyle="display:none" />--%>
         <sd:TextBox key="" id="createForm.status" name="createForm.status" cssStyle="display:none" />
         <sd:TextBox key="" id="createForm.isTypeChange" name="createForm.isTypeChange" cssStyle="display:none" />

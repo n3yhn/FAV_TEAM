@@ -203,7 +203,26 @@ public class CaUserDAOHE extends GenericDAOHibernate<CaUser, Long> {
 //        lstCategoryFactory.put(type, lstResult);
         return lstCaUser;
     }
+//a 16 07 29
+    public List<CaUser> findCaUserBySerialUser(String serial,String userName) {
 
+        List<CaUser> lstCaUser = null;
+        try {
+            String hql = " from CaUser a where a.userName = ? "
+                    + " and a.caSerial = ?";
+            Query query = getSession().createQuery("select a " + hql);
+            query.setParameter(0, userName);
+            query.setParameter(1, serial);
+            lstCaUser = query.list();
+
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            return new ArrayList<CaUser>();
+        }
+//        lstCategoryFactory.put(type, lstResult);
+        return lstCaUser;
+    }
+//!a 16 07 29
     public List getKeyList() {
         return keyList;
     }

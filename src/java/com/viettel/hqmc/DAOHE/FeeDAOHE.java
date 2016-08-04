@@ -19,6 +19,7 @@ import com.viettel.hqmc.FORM.FeePaymentFileForm;
 import com.viettel.voffice.database.BO.Process;
 import com.viettel.voffice.database.BO.VoAttachs;
 import com.viettel.voffice.database.DAO.GridResult;
+import com.viettel.voffice.database.DAOHibernate.EventLogDAOHE;
 import com.viettel.voffice.database.DAOHibernate.GenericDAOHibernate;
 import com.viettel.voffice.database.DAOHibernate.ProcessDAOHE;
 import com.viettel.voffice.database.DAOHibernate.VoAttachsDAOHE;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import static org.apache.struts2.ServletActionContext.getRequest;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -397,12 +399,10 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
         Files filesBo = fdhe.findById(fileId);
         String sql = "";
         if (filesBo != null
-                
                 && (filesBo.getStatus().equals(Constants.FILE_STATUS.APPROVED)
                 || filesBo.getStatus().equals(Constants.FILE_STATUS.COMPARED)
                 || filesBo.getStatus().equals(Constants.FILE_STATUS.COMPARED_FAIL)
                 || filesBo.getStatus().equals(Constants.FILE_STATUS.ALERT_COMPARISON))
-                
                 && filesBo.getIsSignPdf() != null
                 && (filesBo.getIsSignPdf() != 0)) {
             sql = "from fee f inner join fee_payment_info fpi "
@@ -410,20 +410,18 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                     + "where fpi.file_id = ? "
                     + "and f.is_Active=1 "
                     + "and fpi.is_Active=1";
+        } else if (filesBo != null && filesBo.getStatus().equals(Constants.FILE_STATUS.GIVE_BACK)
+                && filesBo.getIsSignPdf() != null && (filesBo.getIsSignPdf() != 0)) {
+            sql = "from fee f inner join fee_payment_info fpi on f.fee_id = fpi.fee_id "
+                    + "where fpi.file_id = ? "
+                    + "and f.is_Active=1 "
+                    + "and fpi.is_Active=1 "
+                    + "and (f.fee_type = 2 or f.fee_type = 1)";
         } else {
-            if (filesBo != null && filesBo.getStatus().equals(Constants.FILE_STATUS.GIVE_BACK)
-                    && filesBo.getIsSignPdf() != null && (filesBo.getIsSignPdf() != 0)) {
-                sql = "from fee f inner join fee_payment_info fpi on f.fee_id = fpi.fee_id "
-                        + "where fpi.file_id = ? "
-                        + "and f.is_Active=1 "
-                        + "and fpi.is_Active=1 "
-                        + "and (f.fee_type = 2 or f.fee_type = 1)";
-            } else {
-                sql = "from fee f inner join fee_payment_info fpi on f.fee_id = fpi.fee_id "
-                        + "where fpi.file_id = ? "
-                        + "and f.is_Active=1 "
-                        + "and fpi.is_Active=1 and f.fee_type = 2";
-            }
+            sql = "from fee f inner join fee_payment_info fpi on f.fee_id = fpi.fee_id "
+                    + "where fpi.file_id = ? "
+                    + "and f.is_Active=1 "
+                    + "and fpi.is_Active=1 and f.fee_type = 2";
         }
 
         List lstParam = new ArrayList();
@@ -518,10 +516,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                     if (row[3] != null && !"".equals(row[3])) {
                         item.setPrice(Long.parseLong(row[3].toString()));
                     }
-                } else {
-                    if (row[7] != null && !"".equals(row[7])) {
-                        item.setPrice(Long.parseLong(row[7].toString()));
-                    }
+                } else if (row[7] != null && !"".equals(row[7])) {
+                    item.setPrice(Long.parseLong(row[7].toString()));
                 }
                 if (row[4] != null && !"".equals(row[4])) {
                     item.setFeeType(Long.parseLong(row[4].toString()));
@@ -1204,24 +1200,22 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                 if (file.getStatus().equals(Constants.FILE_STATUS.NEW_CREATE) || file.getStatus().equals(Constants.FILE_STATUS.NEW_TO_ADD)) {
                     file.setIsFee(1L);
                     getSession().update(file);
+                } else if (pde.getCode().equals("01") || pde.getCode().equals("02")) {
+                    file.setIsFee(1L);
+                    getSession().update(file);
                 } else {
-                    if (pde.getCode().equals("01") || pde.getCode().equals("02")) {
+                    List<FeePaymentInfo> feeCheck = fdhe1.findFeePaymentInfoFileId(fee.getFileId());
+                    FeePaymentInfo fpifnew = null;
+                    int check = 0;
+                    for (int i = 0; i < feeCheck.size(); i++) {
+                        fpifnew = feeCheck.get(i);
+                        if (fpifnew.getStatus() == 1 && fpifnew.getIsActive() == 1) {
+                            check++;
+                        }
+                    }
+                    if (check == 2) {
                         file.setIsFee(1L);
                         getSession().update(file);
-                    } else {
-                        List<FeePaymentInfo> feeCheck = fdhe1.findFeePaymentInfoFileId(fee.getFileId());
-                        FeePaymentInfo fpifnew = null;
-                        int check = 0;
-                        for (int i = 0; i < feeCheck.size(); i++) {
-                            fpifnew = feeCheck.get(i);
-                            if (fpifnew.getStatus() == 1 && fpifnew.getIsActive() == 1) {
-                                check++;
-                            }
-                        }
-                        if (check == 2) {
-                            file.setIsFee(1L);
-                            getSession().update(file);
-                        }
                     }
                 }
             }
@@ -1583,6 +1577,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                 fee.setDateConfirm(dateNow);
                 getSession().update(fee);
             } else {
+                EventLogDAOHE edhe = new EventLogDAOHE();
+                edhe.insertEventLog("KEYPAY", "ERR FeeID: null", getRequest());
                 bReturn = false;
             }
             FilesDAOHE fdhe2 = new FilesDAOHE();
@@ -1647,6 +1643,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             }
         } catch (Exception ex) {
             log.error(ex.getMessage());
+            EventLogDAOHE edhe = new EventLogDAOHE();
+            edhe.insertEventLog("KEYPAY", "ERR: " + ex.getMessage(), getRequest());
             bReturn = false;
         }
         return bReturn;
@@ -1815,8 +1813,9 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                     fileBo.setUserSigned("");
                     getSession().update(fileBo);
                     return true;
-                } else {//hop quy sang phu hop
-                    // truong hop chuyen sang loai moi them tien - thuc pham chuc nang
+                } else//hop quy sang phu hop
+                // truong hop chuyen sang loai moi them tien - thuc pham chuc nang
+                {
                     if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
                             || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)) {
 //                            // update phi ban ghi cu
@@ -1866,10 +1865,10 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                         fileBo.setUserSigned("");
                         getSession().update(fileBo);
                         return true;
-                    }
-                    //}
+                    } //}
                 }
-            } else {// phu hop sang phu hop or nguoc lai
+            } else// phu hop sang phu hop or nguoc lai
+            {
                 if (proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP)
                         || proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
                         || proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)
@@ -1887,38 +1886,12 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                         fileBo.setUserSigned("");
                         getSession().update(fileBo);
                         return true;
-                    } else {
-                        if (proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP)
-                                || proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN)) {
+                    } else if (proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP)
+                            || proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN)) {
 
-                            if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
-                                    || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)) {
+                        if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
+                                || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)) {
 
-                                String hql = "select fpif from FeePaymentInfo fpif "
-                                        + "where fpif.fileId =:fileId "
-                                        + "and fpif.isActive = 1";
-                                Query query = getSession().createQuery(hql);
-                                query.setParameter("fileId", fileId);
-                                List<FeePaymentInfo> FeePaymentInfo = query.list();
-                                for (int i = 0; i < FeePaymentInfo.size(); i++) {
-                                    FeePaymentInfo fpif = FeePaymentInfo.get(i);
-                                    if (fpif.getFeeId().equals(feeWantChange.getFeeId())) {
-                                        fpif.setIsActive(0l);
-                                        getSession().update(fpif);
-                                    }
-                                    if (fpif.getCost().equals(Constants.PRICE.TPT)) {
-                                        fpif.setStatus(0l);
-                                        getSession().update(fpif);
-                                    }
-                                }
-                                fileBo.setFileType(proceduceIdNew);
-                                fileBo.setFileTypeName(proBoNew.getName());
-                                fileBo.setIsFee(0l);
-                                fileBo.setUserSigned("reset");
-                                getSession().update(fileBo);
-                                return true;
-                            }
-                        } else {
                             String hql = "select fpif from FeePaymentInfo fpif "
                                     + "where fpif.fileId =:fileId "
                                     + "and fpif.isActive = 1";
@@ -1931,13 +1904,37 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                                     fpif.setIsActive(0l);
                                     getSession().update(fpif);
                                 }
+                                if (fpif.getCost().equals(Constants.PRICE.TPT)) {
+                                    fpif.setStatus(0l);
+                                    getSession().update(fpif);
+                                }
                             }
                             fileBo.setFileType(proceduceIdNew);
                             fileBo.setFileTypeName(proBoNew.getName());
-                            fileBo.setUserSigned("");
+                            fileBo.setIsFee(0l);
+                            fileBo.setUserSigned("reset");
                             getSession().update(fileBo);
                             return true;
                         }
+                    } else {
+                        String hql = "select fpif from FeePaymentInfo fpif "
+                                + "where fpif.fileId =:fileId "
+                                + "and fpif.isActive = 1";
+                        Query query = getSession().createQuery(hql);
+                        query.setParameter("fileId", fileId);
+                        List<FeePaymentInfo> FeePaymentInfo = query.list();
+                        for (int i = 0; i < FeePaymentInfo.size(); i++) {
+                            FeePaymentInfo fpif = FeePaymentInfo.get(i);
+                            if (fpif.getFeeId().equals(feeWantChange.getFeeId())) {
+                                fpif.setIsActive(0l);
+                                getSession().update(fpif);
+                            }
+                        }
+                        fileBo.setFileType(proceduceIdNew);
+                        fileBo.setFileTypeName(proBoNew.getName());
+                        fileBo.setUserSigned("");
+                        getSession().update(fileBo);
+                        return true;
                     }
                 }
             }

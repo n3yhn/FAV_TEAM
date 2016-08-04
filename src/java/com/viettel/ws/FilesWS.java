@@ -22,8 +22,12 @@ import com.viettel.voffice.database.DAOHibernate.VoAttachsDAOHE;
 import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import com.viettel.ws.ANNOUCERECEIVE.ANNOUNCESENDDtoType;
 import com.viettel.ws.BO.ANNOUNCERESULTDto;
+import com.viettel.ws.BO.Attachment;
+import com.viettel.ws.BO.DNREQUEST_CHANGE_310;
 import com.viettel.ws.BO.ERRORDto;
 import com.viettel.ws.BO.ERRORLIST;
+import com.viettel.ws.BO.Envelope;
+import com.viettel.ws.BO.ErrorWs;
 import com.viettel.ws.BO.FILERESULTSDto;
 import com.viettel.ws.BO.RESULTPAGER;
 import com.viettel.ws.BO.SENDRESPONSEDto;
@@ -1012,4 +1016,131 @@ public class FilesWS extends BaseWS {
             return data;
         }
     }
+    
+//    public List<ErrorWs> reiceiveMs_310(Envelope envelope) throws Exception {
+//        List<ErrorWs> errList = new ArrayList<>();
+//        ErrorWs err = new ErrorWs();
+//        try {
+//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
+//        } catch (Exception ex) {
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+//            err.setErrorCode("U000-0000-0001");
+//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
+//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
+//            errList.add(err);
+//        }
+//        return errList;
+//    }
+//    public List<ErrorWs> reiceiveMs_320(Envelope envelope) throws Exception {
+//        List<ErrorWs> errList = new ArrayList<>();
+//        ErrorWs err = new ErrorWs();
+//        try {
+//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
+//        } catch (Exception ex) {
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+//            err.setErrorCode("U000-0000-0001");
+//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
+//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
+//            errList.add(err);
+//        }
+//        return errList;
+//    }
+//    public List<ErrorWs> reiceiveMs_330(Envelope envelope) throws Exception {
+//        List<ErrorWs> errList = new ArrayList<>();
+//        ErrorWs err = new ErrorWs();
+//        try {
+//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
+//        } catch (Exception ex) {
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+//            err.setErrorCode("U000-0000-0001");
+//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
+//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
+//            errList.add(err);
+//        }
+//        return errList;
+//    }
+//    public List<ErrorWs> reiceiveMs_340(Envelope envelope) throws Exception {
+//        List<ErrorWs> errList = new ArrayList<>();
+//        ErrorWs err = new ErrorWs();
+//        try {
+//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
+//        } catch (Exception ex) {
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+//            err.setErrorCode("U000-0000-0001");
+//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
+//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
+//            errList.add(err);
+//        }
+//        return errList;
+//    }
+//    public List<ErrorWs> reiceiveMs_350(Envelope envelope) throws Exception {
+//        List<ErrorWs> errList = new ArrayList<>();
+//        ErrorWs err = new ErrorWs();
+//        try {
+//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
+//        } catch (Exception ex) {
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+//            err.setErrorCode("U000-0000-0001");
+//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
+//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
+//            errList.add(err);
+//        }
+//        return errList;
+//    }
+//    public List<ErrorWs> reiceiveMs_360(Envelope envelope) throws Exception {
+//        List<ErrorWs> errList = new ArrayList<>();
+//        ErrorWs err = new ErrorWs();
+//        try {
+//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
+//        } catch (Exception ex) {
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+//            err.setErrorCode("U000-0000-0001");
+//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
+//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
+//            errList.add(err);
+//        }
+//        return errList;
+//    }
+//    public List<ErrorWs> reiceiveMs_370(Envelope envelope) throws Exception {
+//        List<ErrorWs> errList = new ArrayList<>();
+//        ErrorWs err = new ErrorWs();
+//        try {
+//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
+//        } catch (Exception ex) {
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+//            err.setErrorCode("U000-0000-0001");
+//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
+//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
+//            errList.add(err);
+//        }
+//        return errList;
+//    }
+//    public List<ErrorWs> reiceiveMs_380(Envelope envelope) throws Exception {
+//        List<ErrorWs> errList = new ArrayList<>();
+//        ErrorWs err = new ErrorWs();
+//        try {
+//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
+//        } catch (Exception ex) {
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+//            err.setErrorCode("U000-0000-0001");
+//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
+//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
+//            errList.add(err);
+//        }
+//        return errList;
+//    }
+//    public List<ErrorWs> reiceiveMs_390(Envelope envelope) throws Exception {
+//        List<ErrorWs> errList = new ArrayList<>();
+//        ErrorWs err = new ErrorWs();
+//        try {
+//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
+//        } catch (Exception ex) {
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+//            err.setErrorCode("U000-0000-0001");
+//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
+//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
+//            errList.add(err);
+//        }
+//        return errList;
+//    }
 }

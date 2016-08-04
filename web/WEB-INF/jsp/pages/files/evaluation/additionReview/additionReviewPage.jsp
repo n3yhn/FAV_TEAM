@@ -722,7 +722,7 @@
             signIndex = 0;
             msg.confirm('Bạn có chắc chắn muốn phê duyệt SĐBS nhiều hồ sơ?', '<sd:Property>confirm.title1</sd:Property>', page.signMoreFiles);
                     }
-                }
+                };
 
                 page.signMoreFiles = function () {
                     page.showFeedbackReviewFormNewMore(itemsToSign[signIndex].fileId);

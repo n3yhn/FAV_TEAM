@@ -592,6 +592,9 @@
     <definition name="announcementFile05" extends="content.definition" ><!--Hiepvv-->
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createAnnounFilesPage05.jsp"/>
     </definition>
+    <definition name="announcementFile05Paper" extends="content.definition" ><!--Hiepvv-->
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/business/createAnnounFilesPage05Paper.jsp"/>
+    </definition>
     <definition name="announcementFile05DialogView" extends="content.definition" ><!--Hiepvv-->
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createAnnounFilesPage05Dialog.jsp"/>
     </definition>

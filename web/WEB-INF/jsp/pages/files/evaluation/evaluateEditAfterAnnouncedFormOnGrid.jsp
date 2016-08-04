@@ -147,6 +147,10 @@
                                 <tr>
                                     <td colspan="2" style="text-align: center">
                                         <sx:ButtonSave onclick="onEvaluate();"/>
+                                        <sd:Button id="btnExportEEAA" key="" onclick="page.exportExportEEAA();" cssStyle="display:" cssClass="buttonGroup">
+                                            <img src="share/images/icons/process_icon.png" height="14" width="14" alt="Xem truoc"/>
+                                            <span style="font-size:12px">Xem trước công văn SĐBS</span>
+                                        </sd:Button>
                                         <br>
                                         <sd:Button id="btnLoadCookieEF" key="" onclick="page.getEvaluateForm();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
@@ -291,9 +295,11 @@
         var trTitleEditATTP = document.getElementById('trTitleEditATTP');
         var trContentsEditATTP = document.getElementById('trContentsEditATTP');
         var trStaffRequest = document.getElementById('trStaffRequest');
+        var btnExportEEAA = document.getElementById('btnExportEEAA');
         if (document.getElementById("evaluateForm.statusDeny").checked) {
             trTitleEditATTP.style.display = 'none';
             trContentsEditATTP.style.display = 'none';
+            btnExportEEAA.style.display = 'none';
             trStaffRequest.style.display = '';
             dijit.byId("evaluateForm.staffRequest").setValue("Yêu cầu bổ sung hồ sơ");
         } else {
@@ -301,6 +307,7 @@
             trTitleEditATTP.style.display = '';//
             trContentsEditATTP.style.display = '';//
             trStaffRequest.style.display = 'none';//
+            btnExportEEAA.style.display = '';
         }
     };
     page.clearEvaluateForm = function () {
@@ -374,5 +381,24 @@
         {
             alert("Không thể Tải nội thẩm định gần đây!");
         }
+    };
+
+    page.exportExportEEAA = function () {//xuat file ket qua tham dinh
+        var fileId = dijit.byId("evaluateForm.fileId").getValue();
+        var titleEditATTP = page.utf8_to_b64FBRF(dijit.byId("evaluateForm.titleEditATTP").getValue());
+        var contentsEditATTP = page.utf8_to_b64FBRF(dijit.byId("evaluateForm.contentsEditATTP").getValue());
+        contentsEditATTP = contentsEditATTP.replaceAllExportEEAA('+', '_');
+        document.location = "exportWord!onExportEEAA.do?fileId=" + fileId + "&title=" + titleEditATTP + "&contents=" + contentsEditATTP;
+    };
+    
+    String.prototype.replaceAllExportEEAA = function(strTarget, strSubString) {
+            var strText = this;
+            var intIndexOfMatch = strText.indexOf(strTarget);
+            while (intIndexOfMatch != -1) {
+                strText = strText.replace(strTarget, strSubString)
+
+                intIndexOfMatch = strText.indexOf(strTarget);
+            }
+            return(strText);
     };
 </script>

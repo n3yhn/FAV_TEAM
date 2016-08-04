@@ -11,11 +11,10 @@ import com.viettel.hqmc.DAOHE.BusinessDAOHE;
 import com.viettel.hqmc.DAOHE.CaUserDAOHE;
 import com.viettel.hqmc.FORM.CaUserForm;
 import com.viettel.voffice.common.util.CommonUtils;
+import com.viettel.voffice.database.BO.VoAttachs;
 import com.viettel.voffice.database.DAO.BaseDAO;
 import com.viettel.voffice.database.DAO.GridResult;
-//import com.viettel.voffice.database.DAOHibernate.EventLogDAOHE;
-//import com.viettel.vsaadmin.database.BO.Users;
-//import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
+import com.viettel.voffice.database.DAOHibernate.VoAttachsDAOHE;
 import java.security.cert.CertificateExpiredException;
 import java.security.cert.CertificateNotYetValidException;
 import java.util.ArrayList;
@@ -182,6 +181,40 @@ public class CaUserDAO extends BaseDAO {
                 getSession().update(bus);
                 resultMessage.add("1");
                 resultMessage.add("Đăng kí thành công");
+            } catch (Exception ex) {
+                resultMessage.add("3");
+                resultMessage.add("Lỗi");
+                log.error(ex.getMessage());
+            }
+        } else {
+            resultMessage.add("3");
+            resultMessage.add("Lỗi");
+        }
+        jsonDataGrid.setItems(resultMessage);
+        return GRID_DATA;
+    }
+
+    public String updateCAUser() {
+        List resultMessage = new ArrayList();
+        if (createForm != null) {
+            try {
+                CaUserDAOHE cudaohe = new CaUserDAOHE();
+                CaUser caUserBo = cudaohe.findById(createForm.getCaUserId());
+                caUserBo.setCommand(createForm.getCommand());
+                caUserBo.setPosition(createForm.getPosition());
+                caUserBo.setName(createForm.getName());
+                caUserBo.setUpdatedAt(getSysdate());
+                //a 16 07 29
+                VoAttachsDAOHE vadaohe = new VoAttachsDAOHE();
+                VoAttachs vobo = vadaohe.findById(createForm.getUploadId());
+                if (vobo != null) {
+                    caUserBo.setStamper(vobo.getAttachPath());
+                    caUserBo.setSignature(vobo.getAttachPath());
+                }
+                //!a 16 07 29
+                getSession().saveOrUpdate(caUserBo);
+                resultMessage.add("1");
+                resultMessage.add("Cập nhật chữ ký sô thành công");
             } catch (Exception ex) {
                 resultMessage.add("3");
                 resultMessage.add("Lỗi");

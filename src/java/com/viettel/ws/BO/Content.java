@@ -28,7 +28,9 @@ public class Content {
 //DnRequestChange 310
     @XmlElement(name = "DnRequestChange")
     private DnRequestChange dnRequestChange;
-
+//DNREQUEST_CHANGE_310
+    @XmlElement(name = "DnRequestChange310")
+    private DNREQUEST_CHANGE_310 dnRequestChange310;
     //DnRequestDelete 320
     @XmlElement(name = "DnRequestDelete")
     private DnRequestDelete dnRequestDelete;
@@ -87,6 +89,14 @@ public class Content {
 
     public void setDnRequestDelete(DnRequestDelete dnRequestDelete) {
         this.dnRequestDelete = dnRequestDelete;
+    }
+
+    public DNREQUEST_CHANGE_310 getDnRequestChange310() {
+        return dnRequestChange310;
+    }
+
+    public void setDnRequestChange310(DNREQUEST_CHANGE_310 dnRequestChange310) {
+        this.dnRequestChange310 = dnRequestChange310;
     }
 
 }

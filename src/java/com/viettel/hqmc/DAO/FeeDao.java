@@ -567,80 +567,88 @@ public class FeeDao extends BaseDAO {
 
     //hieptq update 170915 IPN-KEYPAY
     public String onInsertFeePaymentInfoIpn(String paymentInfo, String filescode, String hash, String feeInfoIdStr) {
-        FeeDAOHE rdhe = new FeeDAOHE();
-        // hieptq update 030615 hash lai noi dung so voi sercure hash keypay gui lai
-        String[] parts = hash.split(";");
-        Map<String, String> fields = new HashMap<String, String>();
-        fields.put("command", parts[0]);
-        fields.put("merchant_trans_id", parts[1]);
-        fields.put("merchant_code", parts[2]);
-        fields.put("response_code", parts[3]);
-        fields.put("trans_id", parts[4]);
-        fields.put("good_code", parts[5]);
-        fields.put("net_cost", parts[6]);
-        fields.put("ship_fee", parts[7]);
-        fields.put("tax", parts[8]);
-        fields.put("service_code", parts[9]);
-        fields.put("currency_code", parts[10]);
-        if (parts[11] != null && parts[11].trim().length() > 0) {
-            fields.put("bank_code", parts[11]);
-        }
-        String secure_hash = "";
+        try {
+            FeeDAOHE rdhe = new FeeDAOHE();
+            // hieptq update 030615 hash lai noi dung so voi sercure hash keypay gui lai
+            String[] parts = hash.split(";");
+            Map<String, String> fields = new HashMap<String, String>();
+            fields.put("command", parts[0]);
+            fields.put("merchant_trans_id", parts[1]);
+            fields.put("merchant_code", parts[2]);
+            fields.put("response_code", parts[3]);
+            fields.put("trans_id", parts[4]);
+            fields.put("good_code", parts[5]);
+            fields.put("net_cost", parts[6]);
+            fields.put("ship_fee", parts[7]);
+            fields.put("tax", parts[8]);
+            fields.put("service_code", parts[9]);
+            fields.put("currency_code", parts[10]);
+            if (parts[11] != null && parts[11].trim().length() > 0) {
+                fields.put("bank_code", parts[11]);
+            }
+            String secure_hash = "";
 
-        HashFunction hf = new HashFunction();
-        ResourceBundle rb = ResourceBundle.getBundle("config");
-        String url_redirect = rb.getString("online_keypay");
-        String transKey = rb.getString("transkey");
-        secure_hash = hf.hashAllFields(fields, transKey);
-        boolean check = true;
-        if (secure_hash.equals(parts[17])) {
-
-            Long userId = getUserId();
-
-            String[] lstfeeInfoId = feeInfoIdStr.split(",");
-            int countObj = lstfeeInfoId.length;
-            Long feeInfoId;
-            for (int i = 0; i < countObj; i++) {
-                feeInfoId = Long.parseLong(lstfeeInfoId[i]);
-                boolean bReturn = rdhe.insertFeePaymentInfo(feeInfoId, userId, paymentInfo, filescode);
-                // gui den cuc attp -> doi trang thai
-                FeePaymentInfoDAOHE fdhe1 = new FeePaymentInfoDAOHE();
-                FilesDAOHE fdhe = new FilesDAOHE();
-                FeePaymentInfo finew = fdhe1.findById(feeInfoId);
-                Fee f = (Fee) rdhe.findById(Fee.class, "feeId", finew.getFeeId());
-                FeePaymentInfo fi = (FeePaymentInfo) fdhe1.findById(FeePaymentInfo.class, "fileId", finew.getFileId());
-                Files file = fdhe.findById(fi.getFileId());
-                if (file.getStatus().equals(Constants.FILE_STATUS.NEW_CREATE)
-                        || file.getStatus().equals(Constants.FILE_STATUS.NEW)) {//binhnt53 update 150215
-                    if (f.getFeeType().equals(Constants.FEE_TYPE.PHI_THAM_DINH)) {//binhnt53 update 150215
-                        DepartmentDAOHE dphe = new DepartmentDAOHE();
-                        Department dep = dphe.findByDeptCode("ATTP");
-                        BusinessDAOHE bus = new BusinessDAOHE();
-                        Business bus1 = bus.findById(file.getDeptId());//4
-                        bReturn = fdhe.assignFileToDept(fi.getFileId(), dep.getDeptId(), file.getUserCreateId(), file.getUserCreateName(), bus1.getBusinessId(), bus1.getBusinessName());
+            HashFunction hf = new HashFunction();
+            ResourceBundle rb = ResourceBundle.getBundle("config");
+            String url_redirect = rb.getString("online_keypay");
+            String transKey = rb.getString("transkey");
+            secure_hash = hf.hashAllFields(fields, transKey);
+            boolean check = true;
+            if (secure_hash.equals(parts[17])) {
+                Long userId = getUserId();
+                String[] lstfeeInfoId = feeInfoIdStr.split(",");
+                int countObj = lstfeeInfoId.length;
+                Long feeInfoId;
+                for (int i = 0; i < countObj; i++) {
+                    feeInfoId = Long.parseLong(lstfeeInfoId[i]);
+                    boolean bReturn = rdhe.insertFeePaymentInfo(feeInfoId, userId, paymentInfo, filescode);
+                    // gui den cuc attp -> doi trang thai
+                    FeePaymentInfoDAOHE fdhe1 = new FeePaymentInfoDAOHE();
+                    FilesDAOHE fdhe = new FilesDAOHE();
+                    FeePaymentInfo finew = fdhe1.findById(feeInfoId);
+                    Fee f = (Fee) rdhe.findById(Fee.class, "feeId", finew.getFeeId());
+                    FeePaymentInfo fi = (FeePaymentInfo) fdhe1.findById(FeePaymentInfo.class, "fileId", finew.getFileId());
+                    Files file = fdhe.findById(fi.getFileId());
+                    if (file.getStatus().equals(Constants.FILE_STATUS.NEW_CREATE)
+                            || file.getStatus().equals(Constants.FILE_STATUS.NEW)) {//binhnt53 update 150215
+                        if (f.getFeeType().equals(Constants.FEE_TYPE.PHI_THAM_DINH)) {//binhnt53 update 150215
+                            DepartmentDAOHE dphe = new DepartmentDAOHE();
+                            Department dep = dphe.findByDeptCode("ATTP");
+                            BusinessDAOHE bus = new BusinessDAOHE();
+                            Business bus1 = bus.findById(file.getDeptId());//4
+                            bReturn = fdhe.assignFileToDept(fi.getFileId(), dep.getDeptId(), file.getUserCreateId(), file.getUserCreateName(), bus1.getBusinessId(), bus1.getBusinessName());
+                        }
+                    }
+                    check = bReturn;
+                    if (check == false) {
+                        break;
                     }
                 }
-                check = bReturn;
-                if (check == false) {
-                    break;
-                }
+            } else {
+                EventLogDAOHE edhe = new EventLogDAOHE();
+                edhe.insertEventLog("KEYPAY", "ERR null data", getRequest());
+                check = false;
             }
-        } else {
-            check = false;
-        }
 
-        if (check) {
+            if (check) {
+                EventLogDAOHE edhe = new EventLogDAOHE();
+                edhe.insertEventLog("Cập nhật thanh toán thành công qua IPN ", "phí có id=" + feeInfoIdStr, getRequest());
+            } else {
+                EventLogDAOHE edhe = new EventLogDAOHE();
+                edhe.insertEventLog("Cập nhật thanh toán không thành công qua IPN ", "phí có id=" + feeInfoIdStr, getRequest());
+            }
+        } catch (Exception ex) {
             EventLogDAOHE edhe = new EventLogDAOHE();
-            edhe.insertEventLog("Cập nhật thanh toán thành công qua IPN ", "phí có id=" + feeInfoIdStr, getRequest());
-        } else {
-            EventLogDAOHE edhe = new EventLogDAOHE();
-            edhe.insertEventLog("Cập nhật thanh toán không thành công qua IPN ", "phí có id=" + feeInfoIdStr, getRequest());
+            edhe.insertEventLog("KEYPAY ERROR: ", "ERROR:" + ex.getMessage(), getRequest());
+            log.error(ex.getMessage());
         }
         return GRID_DATA;
     }
 
     // hieptq update check KeyPay 170915
     public String onSavePaymentOnlineIPN(String feePaymentInfoId) {
+        try{      
+        
         FeeDAOHE rdhe = new FeeDAOHE();
         Long paymentInfoId = Long.parseLong(feePaymentInfoId);
         FilesDAOHE fdhe = new FilesDAOHE();
@@ -655,6 +663,10 @@ public class FeeDao extends BaseDAO {
         } else {
             EventLogDAOHE edhe = new EventLogDAOHE();
             edhe.insertEventLog("Xác nhận thanh toán tự động thành công qua IPN ", "phí có id=" + paymentInfoId, getRequest());
+        }
+        }catch(Exception ex){
+             EventLogDAOHE edhe = new EventLogDAOHE();
+            edhe.insertEventLog("KEYPAY ERROR 1: ", "ERROR:" + ex.getMessage(), getRequest());
         }
         return GRID_DATA;
     }

@@ -106,10 +106,10 @@
                         if (item.userSigned == "fileUploaded" || item.userSigned == "CBDN"){
                             url += " | <img src='share/images/icons/kdevelop_down.png' width='17px' height='17px' title='Hồ sơ đã upload' onClick='page.downloadFileSign(" + item.fileId + ");' />";
                         }
-                        if (item.fileType != 3052 && item.fileType != 3051 && item.fileType != 3050) {
+                        if (item.fileType != 3052 && item.fileType != 3051 && item.fileType != 3050 && item.fileType != 81) {
                             url += " | <img src='share/images/icons/payment.png' width='17px' height='17px' title='Thanh toán' onClick='page.payFile(" + row + ");' />";
                         }
-                        if (item.fileType == 3052 || item.fileType == 3051 || item.fileType == 3050) {
+                        if (item.fileType == 3052 || item.fileType == 3051 || item.fileType == 3050 || item.fileType == 81) {
                             url += " | <img src='share/images/icons/send_document.png' width='17px' height='17px' title='Gửi hồ sơ' onClick='page.sendFile(" + row + ");' />";
                         } else {
                             //Hiepvv SuaDoiBoSung sau cong bo Fix ID Procedure sua doi sau cong bo

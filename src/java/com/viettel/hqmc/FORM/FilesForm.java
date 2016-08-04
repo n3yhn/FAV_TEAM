@@ -432,7 +432,7 @@ public class FilesForm implements Serializable {
         entity.setVersion(version);
         entity.setIsHaveSubLabel(isHaveSubLabel);
         //hiepvv edit after announced
-        if(filesSourceID!=null){
+//        if(filesSourceID!=null){
             entity.setFilesSourceID(filesSourceID);
             entity.setFileSourceCode(fileSourceCode);
             entity.setContentsEdit(contentsEdit);
@@ -443,7 +443,7 @@ public class FilesForm implements Serializable {
 //            entity.setUserSigned("fileUploaded");
             entity.setIsFee(1L);
 //            entity.setIsSignPdf(1L);
-        }
+//        }
         
         return entity;
     }
@@ -476,8 +476,8 @@ public class FilesForm implements Serializable {
         if (this.getIsHaveSubLabel() != null) {
             entity.setIsHaveSubLabel(this.getIsHaveSubLabel());
         }
-        //Hiepvv Sua doi bo sung sau cong bo
-        if(filesSourceID!=null){
+        //Hiepvv Sua doi bo sung sau cong bo U 16 07 29
+//        if(filesSourceID!=null){
             entity.setFilesSourceID(filesSourceID);
             entity.setFileSourceCode(fileSourceCode);
             entity.setContentsEdit(contentsEdit);
@@ -485,10 +485,10 @@ public class FilesForm implements Serializable {
             entity.setNoteEdit(noteEdit);
             entity.setTitleEdit(titleEdit);
             entity.setTitleEditATTP(titleEditATTP);
-//            entity.setUserSigned("fileUploaded");
             entity.setIsFee(1L);
+//            entity.setUserSigned("fileUploaded");
 //            entity.setIsSignPdf(1L);
-        }
+//        }
         return entity;
     }
 

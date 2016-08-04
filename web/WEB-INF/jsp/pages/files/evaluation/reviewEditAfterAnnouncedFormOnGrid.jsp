@@ -185,6 +185,10 @@
                                 <tr>
                                     <td colspan="2" style="text-align: center">
                                         <sx:ButtonSave onclick="onReviewFormSave();"/>
+                                        <sd:Button id="btnExportREAA" key="" onclick="page.exportExportREAA();" cssStyle="display:" cssClass="buttonGroup">
+                                            <img src="share/images/icons/process_icon.png" height="14" width="14" alt="Xem truoc"/>
+                                            <span style="font-size:12px">Xem trước công văn SĐBS</span>
+                                        </sd:Button>
                                         <br>
                                         <sd:Button 
                                             key=""  cssStyle="display:" cssClass="buttonGroup"
@@ -406,14 +410,35 @@
         var trTitleEditATTP = document.getElementById('trTitleEditATTP');
         var trContentsEditATTP = document.getElementById('trContentsEditATTP');
         var trLeaderStaffRequest = document.getElementById('trLeaderStaffRequest');
+        var btnExportREAA = document.getElementById('btnExportREAA');
         if (document.getElementById("reviewForm.statusAccept").checked) {
             trTitleEditATTP.style.display = '';//
             trContentsEditATTP.style.display = '';//
             trLeaderStaffRequest.style.display = 'none';//
+            btnExportREAA.style.display = '';
         } else {
             trTitleEditATTP.style.display = 'none';
             trContentsEditATTP.style.display = 'none';
             trLeaderStaffRequest.style.display = '';
+            btnExportREAA.style.display = 'none';
         }
+    };
+    page.exportExportREAA = function () {//xuat file ket qua tham dinh
+        var fileId = dijit.byId("reviewForm.fileId").getValue();
+        var titleEditATTP = page.utf8_to_b64FBRF(dijit.byId("reviewForm.titleEditATTP").getValue());
+        var contentsEditATTP = page.utf8_to_b64FBRF(dijit.byId("reviewForm.contentsEditATTP").getValue());
+        contentsEditATTP = contentsEditATTP.replaceAllExportREAA('+', '_');
+        document.location = "exportWord!onExportEEAA.do?fileId=" + fileId + "&title=" + titleEditATTP + "&contents=" + contentsEditATTP;
+    };
+    
+    String.prototype.replaceAllExportREAA = function(strTarget, strSubString) {
+            var strText = this;
+            var intIndexOfMatch = strText.indexOf(strTarget);
+            while (intIndexOfMatch != -1) {
+                strText = strText.replace(strTarget, strSubString)
+
+                intIndexOfMatch = strText.indexOf(strTarget);
+            }
+            return(strText);
     };
 </script>

@@ -2140,6 +2140,10 @@ public class FilesDAO extends BaseDAO {
         return strReturn;
     }
 
+    public String toCreateFilePage4AA() {
+        return "announcementFile05";
+    }
+
     /**
      * Xem chi tiet ho so
      *
@@ -3983,6 +3987,7 @@ public class FilesDAO extends BaseDAO {
         jsonDataGrid.setTotalRows(result.getnCount().intValue());
         return GRID_DATA;
     }
+
     public String getAttachsSDBS() {
         getGridInfo();
         String strObjectId = getRequest().getParameter("objectId");
@@ -9959,13 +9964,22 @@ public class FilesDAO extends BaseDAO {
                 errorCode = "SI_007";
                 result = false;
             }
-            if (checkCaUser) {
+            if (checkCaUser) {//u 16 07 29
                 String folderPath = ResourceBundleUtil.getString("sign_image");
+                String folderStampDN = ResourceBundleUtil.getString("directory");
                 String linkImageSign = folderPath + getUserId() + ".png";
                 String linkImageStamp = folderPath + "attp.png";
+                CaUser cabo = null;
+                CaUserDAOHE cadaohe = new CaUserDAOHE();
+                List<CaUser> lstCabo = cadaohe.findCaUserBySerialUser("SerialNumber:[" + certSerial + "]", getUserLogin());
+                if (!lstCabo.isEmpty() && lstCabo != null) {
+                    cabo = lstCabo.get(0);
+                    folderStampDN += cabo.getSignature();
+                }
                 linkImageSign = linkImageStamp;
                 if ((linkImageSign == null && linkImageSign.equals(""))
-                        || (linkImageStamp == null && linkImageStamp.equals(""))) {
+                        || (linkImageStamp == null && linkImageStamp.equals(""))
+                        || (folderStampDN == null && folderStampDN.equals(""))) {
                     errorCode = "SI_008";
                     result = false;
                 }
@@ -9975,9 +9989,22 @@ public class FilesDAO extends BaseDAO {
                             errorCode = "SI_009";
                             result = false;
                         }
-                        int pageNumber = 0, lx = 0, ly = 0;
+                        sToFind = "<SI>";
+                        SearchTextLocations ptl = new SearchTextLocations();
+                        List local = ptl.searchLocation(sToFind, fileToSign,
+                                SearchTextLocations.SEARCH_TOPDOWN, SearchTextLocations.FIND_ONE);
+                        String location = "0;0;0";
+                        int pageNumber, lx, ly;
+                        if (local != null && local.size() > 0) {
+                            location = local.get(0).toString();
+                        }
+                        String[] parts = location.split(";");
+                        pageNumber = Integer.parseInt(parts[0]);
+                        lx = (int) Float.parseFloat(parts[1]);
+                        ly = (int) Float.parseFloat(parts[2]);
+                        ly = convertLocation(ly);
                         base64Hash = pdfSig.createHash(fileToSign, outPutFileFinal,
-                                new Certificate[]{x509Cert}, pageNumber, linkImageSign, lx + 70, ly + 130, 120, 70, "LD");
+                                new Certificate[]{x509Cert}, pageNumber, folderStampDN, lx + 70, ly + 130, 120, 70, "DN");
                     }
                 } catch (Exception ex) {
                     System.out.println("ERROR SI_012|" + ex.getMessage());

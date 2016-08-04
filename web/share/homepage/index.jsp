@@ -106,7 +106,7 @@
                                         Yahoo: <label style="color:Blue">hotrodichvucong_attp</label> | <a href="ymsgr:sendIM?hotrodichvucong_attp"><img border=0 src="http://opi.yahoo.com/online?u=hotrodichvucong_attp&m=g&t=1" /> </a>
                                     </li>
                                     <li style="color: #013a57">
-                                        Email: <label style="color:Blue">vfa@vfa.gov.vn / hotrokhachhang@vfa.gov.vn</label>
+                                        Email: <label style="color:Blue"> hotrokhachhang@vfa.gov.vn</label>
                                     </li>
                                     <li style="color: #013a57;margin-top: 5px;font-size:15px;">
                                         <table style="width: 100%">                                           
@@ -115,7 +115,7 @@
                                                     Hỗ trợ chung
                                                 </td>
                                                 <td>
-                                                    <label style="color:Blue">Đỗ Trường Giang (Mr) / 091.6011.001 </label>
+                                                    <label style="color:Blue"> Mr. Giang: 0916011001; Mr. Việt: 0946665888; Mr.Toán: 0904028182 </label>; 
                                                 </td>
                                             </tr>                                                                                       
 
@@ -124,7 +124,7 @@
                                                     Hỗ trợ nộp phí
                                                 </td>
                                                 <td>
-                                                    <label style="color:Blue">Phạm Thị Hằng Phương (Miss) / 043.7366.440-3020</label>
+                                                    <label style="color:Blue">Miss. Phương / 043.7366.440-3020</label>; Email:phongtaichinhketoan@vfa.gov.vn;      Hỗ trợ thanh toán keypay:0466728822</label>; Email:info@keypay.gov.vn
                                                 </td>
                                             </tr>
                                             <%--
@@ -199,8 +199,7 @@
                             <span style="font-family:'MyriadPro-BoldCond'">Vui lòng liên hệ:</span>
                         </div>
                         <ul>
-                            <li>Skype: hotrodichvucong_attp</li>
-                            <li>Yahoo: hotrodichvucong_attp</li>
+                            <li>Skype: hotrokhachhang.attp</li>
                         </ul>
                     </div>
                     -->
@@ -217,7 +216,10 @@
                                         <li><a href="/GuideLinePage.do">Tài liệu & Video hướng dẫn sử dụng</a></li>
                                         <li>Biểu mẫu Excel khai báo Hồ sơ dành cho Doanh nghiệp,  tải về: <a href="http://vfa.gov.vn/BM_KhaiBao_2007.rar">Excel 2007</a> / <a href="http://vfa.gov.vn/BM_KhaiBao_2010.rar">Excel 2010</a></li>
                                         <li>Chú ý bắt buộc sử dụng trình duyệt Firefox (Phiên bản 7.0 trở lên), tải về: <a href="http://vfa.gov.vn/Firefox Setup 32.0_En.rar">Tiếng Anh</a> / <a href="http://vfa.gov.vn/Firefox Setup 32.0_Vi.rar">Tiếng Việt</a></li>
-                                        <li>Tải Java hỗ trợ Doanh nghiệp ký số: <a href="http://vfa.gov.vn/jdk-7u71-windows-i586.rar">Tải về</a></li>
+                                        <!--<li>Tải Java hỗ trợ Doanh nghiệp ký số: <a href="http://vfa.gov.vn/jdk-7u71-windows-i586.rar">Tải về</a></li>-->
+                                        <li>Plugin Firefox hỗ trợ chữ ký số: <a href="http://congbomypham.cqldvn.gov.vn/Share/huongdan/ViettelCASigner.rar">Tải về</a></li>
+                                        <li>Tài liệu Hướng dẫn chữ kí số: <a href="http://congbomypham.cqldvn.gov.vn/Share/huongdan/HDCD_QT03_13039_Viettel_CA_Cai_dat_plugin_v1.0.doc">Tải về</a></li>
+                                        
                                     </ul>
                                 </td>
                             </tr>
@@ -235,8 +237,8 @@
                 </div>
                 <ul>
                         <li>Địa chỉ: 138 A Giảng Võ - Ba Đình - Hà Nội</li>
-                        <li>Email: vfa@vfa.gov.vn</li>
-                        <li>Điện thoại: 04.38464489/5060 - 04.38463702</li>
+                        <li>Email: hotrokhachhang@vfa.gov.vn</li>
+                        <li>Điện thoại: 04.38464489/1010 - 04.38463702</li>
                         <li>ĐTDĐ: 0904028182 - Fax: 04.38463739</li>
                         <li>Chủ tài khoản: Cục An toàn thực phẩm - Số tài khoản: 1200208026339 - Chi nhánh: Sở Giao dịch Agribank - Địa chỉ: Số 2 Láng Hạ, Phường Thành Công, Quận Ba Đình, TP. Hà Nội</li>
                 </ul>
@@ -312,8 +314,8 @@
             }
 
             loadNotice();
-                    getSkypeStatus('hotrodichvucong_attp', 'smallicon', 'chat', 'show_status_1', '1');
-                    getSkypeStatus('congbosanpham.hotro', 'smallicon', 'chat', 'show_status_2', '2');
+                    getSkypeStatus('hotrokhachhang.attp', 'smallicon', 'chat', 'show_status_1', '1');
+                    getSkypeStatus('toan182', 'smallicon', 'chat', 'show_status_2', '2');
 
         </script>
     </body>

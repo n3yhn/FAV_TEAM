@@ -22,16 +22,17 @@
         var row = inData - 1;
         var item = dijit.byId("caUserGrid").getItem(row);
         var url = "";
-//        if (item != null) {
-//            var url = "<div style='text-align:center;cursor:pointer;'><img src='share/images/icons/deleteStand.png' width='17px' height='17px' title='Tạo bản sao hồ sơ' onClick='page.deleteItem(" + item.caUserId + ");' /></div>";
-//        }
+        if (item != null) {
+            var url = "<div style='text-align:center;cursor:pointer;'><img src='${contextPath}/share/images/edit.png' width='17px' height='17px' \n\
+                        title='<sd:Property>category.edit</sd:Property>' \n\
+                        onClick='page.showEditPopup(" + row + ");' /></div>";
+        }
         return url;
-
     };
 
-</script>
+    </script>
 
-<div id="token">
+    <div id="token">
     <s:token id="tokenId"/>
 </div>
 
@@ -66,7 +67,7 @@
                         <sx:ButtonSearch onclick="page.search();" />
                         <sd:Button key="" onclick="page.reset();" > 
                             <img src="share/images/icons/reset.png" height="14" width="18"/>
-                            <span style="font-size:12px">Hủy<%--<sd:Property>btnCancel</sd:Property> --%></span>
+                            <span style="font-size:12px">Hủy</span>
                         </sd:Button>
                     </td>
                 </tr>
@@ -94,6 +95,8 @@
                         <sd:ColumnDataGrid editable="true" key="column.checkbox" 
                                            headerCheckbox="true" headerStyles="text-align:center;" 
                                            type="checkbox" width="5%" cellStyles="text-align:center;" />
+                        <sd:ColumnDataGrid key="btnUpdate" formatter="page.formatEdit" get="page.getIndex"
+                                           width="5%"  headerStyles="text-align:center;"  />
                         <sd:ColumnDataGrid  key="Số serial" field="caSerial"
                                             width="80%"  headerStyles="text-align:center;" />
                         <sd:ColumnDataGrid  key="User" field="userName"
@@ -104,10 +107,6 @@
         </tr>
         <tr>
             <td>
-                <!--<sd:Button key="" onclick="page.insert();">
-                    <img src="share/images/icons/save.png" height="14" width="18" alt="Ghi lại">
-                    <span style="font-size:12px">Đăng ký CA</span>
-                </sd:Button>-->
                 <sd:Button key="" onclick="page.insertFP();">
                     <img src="share/images/icons/save.png" height="14" width="18" alt="Ghi lại">
                     <span style="font-size:12px">Đăng ký CA bằng Plugin</span>
@@ -118,31 +117,38 @@
         </tr>
     </table>
 </sd:TitlePane>
-<!--<sd:Dialog  id="dlgReturn" height="auto" width="500px"
+<sd:Dialog  id="businessAddEditCaUserDlg" height="auto" width="500px"
             key="" showFullscreenButton="true"
             >
-    <jsp:include page="dlgRegisterCA.jsp"></jsp:include>
-</sd:Dialog>-->
+    <jsp:include page="businessAddEditCaUserDlg.jsp"></jsp:include>
+</sd:Dialog>
 <jsp:include page="../../pages/files/lookup/pluginJSRegister.jsp" flush="false"></jsp:include>
     <script type="text/javascript">
+        var grid = dijit.byId("caUserGrid");
+        var dlg = dijit.byId("businessAddEditCaUserDlg");
+
+        page.showEditPopup = function (row) {
+            var item = grid.getItem(row);
+            page.setItem(item);
+            dlg.show();
+        };
+        page.setItem = function(item) {
+            dijit.byId("createForm.caUserId").setValue(item.caUserId);
+        dijit.byId("createForm.caSerial").setValue(item.caSerial);
+        dijit.byId("createForm.userName").setValue(item.userName);
+        dijit.byId("createForm.name").setValue(item.name);
+        dijit.byId("createForm.position").setValue(item.position);        
+//        dijit.byId("createForm.command").setValue(item.command);        
+        clearAttFile("createForm.upload");
+        getAttacthFile(item.technicalStandardId, 23, "createForm.upload");
+    };
+
         var check;
         var workingCaUserId;
         page.search = function () {
             dijit.byId("caUserGrid").vtReload('caUserAction!onSearch.do?', "searchForm");
         };
 
-//        page.insert = function () {
-//            check = true;
-//            dijit.byId("btnOK").domNode.style.display = "";
-//            dijit.byId("dlgReturn").vtSetTitle("Ký duyệt CA");
-//            dijit.byId("dlgReturn").show();
-//        };
-//        page.returnMessageDelete = function (data) {
-//            var obj = dojo.fromJson(data);
-//            var result = obj.items;
-//            resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
-//            page.search();
-//        };
         page.showSearchPanel = function () {
             var panel = document.getElementById("searchDiv");
             panel.setAttribute("style", "display:;");
@@ -151,13 +157,6 @@
         page.reset = function () {
             dijit.byId("searchForm.caSerial").setValue("");
         };
-//        page.deleteCA = function (caUserId) {
-//            check = false;
-//            workingCaUserId = caUserId;
-//            dijit.byId("btnOK").domNode.style.display = "";
-//            dijit.byId("dlgReturn").vtSetTitle("Xóa CA Token");
-//            dijit.byId("dlgReturn").show();
-//        };
 
         page.search();
 
@@ -192,23 +191,23 @@
 
         };
 
-        page.deleteItem = function () {
-            if (!dijit.byId("caUserGrid").vtIsChecked()) {
-                msg.alert('<sd:Property>alert.select</sd:Property>', '<sd:Property>confirm.title</sd:Property>');
-                        } else {
-                            msg.confirm('<sd:Property>confirm.delete</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', page.deleteItemExecute);
-                                    }
+    page.deleteItem = function () {
+        if (!dijit.byId("caUserGrid").vtIsChecked()) {
+            msg.alert('<sd:Property>alert.select</sd:Property>', '<sd:Property>confirm.title</sd:Property>');
+                    } else {
+                        msg.confirm('<sd:Property>confirm.delete</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', page.deleteItemExecute);
                                 }
+                            };
 
-                                page.deleteItemExecute = function () {
-                                    var content = dijit.byId("caUserGrid").vtGetCheckedDataForPost("lstItemOnGrid");
-                                    sd.connector.post("caUserAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
-                                }
+    page.deleteItemExecute = function () {
+        var content = dijit.byId("caUserGrid").vtGetCheckedDataForPost("lstItemOnGrid");
+        sd.connector.post("caUserAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
+    };
 
-                                page.returnMessageDelete = function (data) {
-                                    var obj = dojo.fromJson(data);
-                                    var result = obj.items;
-                                    resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
-                                    page.search();
-                                }
+    page.returnMessageDelete = function (data) {
+        var obj = dojo.fromJson(data);
+        var result = obj.items;
+        resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
+        page.search();
+    };
 </script>

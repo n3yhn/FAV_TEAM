@@ -6,56 +6,83 @@
 <%
     request.setAttribute("contextPath", request.getContextPath());
 %>
+
+<%-- Ckeditor --%>
+<script src="share/ckeditor/ckeditor.js" type="text/javascript"></script>
+<%--****************************** CKEditor ************************************/--%>
+<a href="../../../../../../src/java/com/viettel/hqmc/BO/DetailProduct.java"></a>
+<style>
+
+    .cke_focused,
+    .cke_editable.cke_focused
+    {
+        outline: 3px dotted blue !important;
+        *border: 3px dotted blue !important;	/* For IE7 */
+    }
+
+</style>
+<script>
+
+    CKEDITOR.on('instanceReady', function(evt) {
+        var editor = evt.editor;
+        editor.setData('This editor has it\'s tabIndex set to <strong>' + editor.tabIndex + '</strong>');
+
+        // Apply focus class name.
+        editor.on('focus', function() {
+            editor.container.addClass('cke_focused');
+        });
+        editor.on('blur', function() {
+            editor.container.removeClass('cke_focused');
+        });
+
+        // Put startup focus on the first editor in tab order.
+        if (editor.tabIndex == 1)
+            editor.focus();
+    });
+
+</script>
+<%--/****************************** Hiepvv ************************************/--%>
+
 <div class="buttonDiv">
-    <sx:ButtonBack onclick="backPage();"/>      
+    <sx:ButtonBack onclick="backPage();"/>
     <sx:ButtonSave onclick="page.insertFiles();"/>
     <sx:ButtonSaveDraff onclick="page.insertFileDraff();"/>
-    <%--
-    <sx:ButtonSave onclick="page.saveFiles();"/>
-    <sd:Button id="btnTypeChange" key="" onclick="page.onTypeChange();" cssClass="buttonGroup" cssStyle="display:none">
-        <img src="${contextPath}/share/images/icons/Answer.png" height="14" width="18">
-        <span style="font-size:12px">Chuyển loại hồ sơ</span>
-    </sd:Button>
+    
+    <%-- <sx:ButtonSave onclick="page.saveFiles();"/> 
+    
+
     <sd:SelectBox
         id="createForm.Type"
         key="" data="lstFileType" valueField="procedureId" labelField="name"
         name="createForm.Type" 
         cssStyle="display:none;width:70%;">
     </sd:SelectBox>
---%>
+    --%>
 </div>
-<sd:TitlePane key="${fn:escapeXml(fileNameFull)}"
+<sd:TitlePane key="Sửa đổi hồ sơ sau công bố"
               id="fileNameFull" >
     <sx:ResultMessage id="resultMessage"/>
     <form id="createForm" name="createForm">
         <sd:TextBox key="" id="createForm.fileId" name="createForm.fileId" cssStyle="display:none" />
         <sd:TextBox key="" id="createForm.fileType" name="createForm.fileType" cssStyle="display:none" />
+        <sd:TextBox key="" id="createForm.filesSourceID" name="createForm.filesSourceID" cssStyle="display:none"/>
+        <%--<sd:TextBox key="" id="createForm.fileSourceCode" name="createForm.fileSourceCode" cssStyle="display:none" />--%>
         <sd:TextBox key="" id="createForm.status" name="createForm.status" cssStyle="display:none" />
         <sd:TextBox key="" id="createForm.isTypeChange" name="createForm.isTypeChange" cssStyle="display:none" />
         <sd:TextBox key="" id="createForm.countUA" name="createForm.countUA" cssStyle="display:none" />
+        <sd:TextBox key="" id="createForm.staffProcess" name="createForm.staffProcess" cssStyle="display:none" />
+        <sd:TextBox key="" id="createForm.nameStaffProcess" name="createForm.nameStaffProcess" cssStyle="display:none" />
         <sd:Tab id="files_tab" height="750px" width="100%">
-            <sd:ContentPane key="Bản công bố" id="tab.annoucement">
-                <div id="tabAnnouncementDiv" style="overflow: auto;">
-                    <jsp:include page="./fileTab/tabAnnouncementForConfirm.jsp"/>
+            <sd:ContentPane key="Sửa đổi hồ sơ sau công bố" id="tab.editafterannounced">
+                <div id="tabEditAfterAnnounced" style="overflow: auto;">
+                    <jsp:include page="./fileTab/tabEditAfterAnnouncedPaper.jsp"/>
                 </div>
-            </sd:ContentPane>    
-            <sd:ContentPane key="Thông tin chi tiết sản phẩm" id="tab.productDetail">
-                <div id="tabProductDetailDiv" style="overflow: auto;">
-                    <jsp:include page="./fileTab/tabProductDetailTH.jsp"/>
-                </div>
-            </sd:ContentPane>    
+            </sd:ContentPane>
             <sd:ContentPane key="Tài liệu đính kèm" id="tab.attachs">
                 <div id="tabAttachDiv" style="overflow: auto;">
                     <jsp:include page="./fileTab/tabAttachs.jsp"/>
                 </div>
-            </sd:ContentPane>
-
-            <sd:ContentPane key="Nhập thông tin từ file Excel" id="tab.excel">
-                <div id="tabExcel" style="overflow: auto;">
-                    <jsp:include page="./fileTab/importFilesExcel03.jsp"/>
-                </div>
-            </sd:ContentPane>
-
+            </sd:ContentPane>  
         </sd:Tab>
     </form>     
 </sd:TitlePane>
@@ -69,24 +96,21 @@
         if (result0 == "3") {
         } else {
             backPage();
+            //page.search();
         }
         ckInsert = false;
     };
 
     page.validateFilesData = function() {
-        if (!page.validateAnnouncement()) {
-            return false;
-        }
-        if (!page.validateDetailProduct()) {
-            return false;
-        }
-        if (!page.validateAttach()) {
+        if (!page.validateAttachData2NotRequireRNI()) {
             return false;
         }
         page.renameElementOfAttachs();
-
         return true;
+
     };
+
+
 
     page.saveFiles = function() {
         if (!ckInsert) {
@@ -100,6 +124,17 @@
     page.insertFiles = function() {
         msg.confirm('Bạn có chắc chắn thực hiện lưu hồ sơ này ?', '<sd:Property>Cảnh báo</sd:Property>', page.saveFiles);
     };
+
+//    page.checkExcel1 = function() {
+//        var check = '${checkEdit}';
+//        if (check == 1)
+//        {
+//            document.getElementById("checkExcel1").style.display = "none";
+//        }
+//    };
+//    page.checkExcel1();
+
+//hietq update 17.11.14
 /*
     page.onTypeChange = function() {
         var fileType = dijit.byId("createForm.Type").getValue();
@@ -124,10 +159,9 @@
     page.showBtnTypeChange();
 */
     page.insertFileDraff = function() {
-        page.updateListDataBeforeSubmit();
+//        page.updateListDataBeforeSubmit();
         page.setAttachLabel();
         sd.connector.post("filesAction!onInsert.do?" + token.getTokenParamString(), null, "createForm", null, page.afterCommit);
     };
-
 
 </script>

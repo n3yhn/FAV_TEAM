@@ -32,7 +32,7 @@
         <action name="caUserAction" class="com.viettel.hqmc.DAO.CaUserDAO" method="prepare">
             <interceptor-ref name="requestTokenRdwfInterceptorStack">
                 <param name="tokenSession.includeMethods">
-                    registerCA,onDelete
+                    registerCA,onDelete,updateCAUser
                 </param>
             </interceptor-ref>
             <result type="tiles" name="caUserPage">caUser.page</result>
