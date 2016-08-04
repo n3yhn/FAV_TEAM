@@ -26,7 +26,8 @@
                                         <sd:Label key="Kết quả thẩm định"/>
                                     </td>
                                     <td width="70%">
-                                        <div id="reviewForm.status"></div>
+                                        <div id="reviewForm.statusName"></div>
+                                        <sd:TextBox key="" id="reviewForm.status" name="reviewForm.status" cssStyle="display:none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -371,6 +372,7 @@
             alert("Không thể Xóa nội dung thẩm định gần đây!");
         }
     };
+    
     page.setRreviewForm = function () {
         try
         {
@@ -388,6 +390,7 @@
             alert("Không thể Lưu nháp nội dung thẩm định!");
         }
     };
+    
     page.getReviewForm = function () {
         try
         {
@@ -423,6 +426,7 @@
             btnExportREAA.style.display = 'none';
         }
     };
+    
     page.exportExportREAA = function () {//xuat file ket qua tham dinh
         var fileId = dijit.byId("reviewForm.fileId").getValue();
         var titleEditATTP = page.utf8_to_b64FBRF(dijit.byId("reviewForm.titleEditATTP").getValue());

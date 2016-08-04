@@ -1,9 +1,3 @@
-<%-- 
-    Document   : evaluateForm
-    Created on : Jun 26, 2013, 4:09:25 PM
-    Author     : vtit_havm2
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="sd" uri="struts-dojo-tags" %>
 <%@taglib prefix="sx" tagdir="/WEB-INF/tags" %>
@@ -186,6 +180,7 @@
 </div>
 
 <script type="text/javascript">
+    
     onCloseApprove = function () {
         doGoToMenu("filesAction!toEvaluatePage.do?IsChange=1");
     };
@@ -276,6 +271,7 @@
         }
         return true;
     };
+    
     onCloseEvaluate = function () {
         dijit.byId("evaluateDlg").hide();
         dijit.byId("evaluateForm.staffRequest").setValue("");
@@ -291,6 +287,7 @@
         dijit.byId("evaluationRecordsForm.foodSafetyQualityContent").setValue("");
         dijit.byId("evaluationRecordsForm.effectUtilityContent").setValue("");
     };
+    
     onchangeStatusEFOG = function () {
         var trTitleEditATTP = document.getElementById('trTitleEditATTP');
         var trContentsEditATTP = document.getElementById('trContentsEditATTP');
@@ -310,6 +307,7 @@
             btnExportEEAA.style.display = '';
         }
     };
+    
     page.clearEvaluateForm = function () {
         try
         {
@@ -328,6 +326,7 @@
             alert("Không thể Xóa nội dung thẩm định gần đây!");
         }
     };
+    
     page.setEvaluateForm = function () {
         try
         {
@@ -355,6 +354,7 @@
             alert("Không thể Lưu nháp nội dung thẩm định!");
         }
     };
+    
     page.getEvaluateForm = function () {
         try
         {
@@ -401,4 +401,5 @@
             }
             return(strText);
     };
+    
 </script>

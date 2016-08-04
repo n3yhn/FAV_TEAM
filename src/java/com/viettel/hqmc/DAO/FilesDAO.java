@@ -4058,12 +4058,14 @@ public class FilesDAO extends BaseDAO {
         if ((totalFeeFile.equals(feeFile) && feeFile > 0l) || (totalFeeFile > feeFile)) {
             customInfo.add(1);
         } else // nop thieu
-         if (totalFeeFile < feeFile && totalFeeFile > 0) {
+        {
+            if (totalFeeFile < feeFile && totalFeeFile > 0) {
                 customInfo.add(0);
             } // chua nop
             else {
                 customInfo.add(-1);
             }
+        }
 
         jsonDataGrid.setItems(result.getLstResult());
         jsonDataGrid.setTotalRows(result.getnCount().intValue());
@@ -5881,10 +5883,10 @@ public class FilesDAO extends BaseDAO {
                 standard += t.getUserName() + ": " + t.getCommentText() + "\n";
             }
         }
-        customInfo.add(legal);
-        customInfo.add(foodSafetyQuality);
-        customInfo.add(effectUtility);
-        customInfo.add(standard);
+        customInfo.add(legal);//0
+        customInfo.add(foodSafetyQuality);//1
+        customInfo.add(effectUtility);//2
+        customInfo.add(standard);//3
         //160628 bo sung noi dung sua sau cong bo
         FilesDAOHE filesDaohe = new FilesDAOHE();
         Files filebo = filesDaohe.findById(objectId);
@@ -5904,8 +5906,8 @@ public class FilesDAO extends BaseDAO {
                 contentsEditATTP = filebo.getContentsEdit();
             }
         }
-        customInfo.add(titleEditATTP);
-        customInfo.add(contentsEditATTP);
+        customInfo.add(titleEditATTP);//4
+        customInfo.add(contentsEditATTP);//5
         //!160628
         /*
          CategoryDAOHE catedaohe = new CategoryDAOHE();
@@ -5948,7 +5950,7 @@ public class FilesDAO extends BaseDAO {
         Long lfoodSafetyQuality = null;
         Long leffectUtility = null;
         Long lstandard = null;
-        if (erbo != null && fbo != null) {
+        if (erbo != null && fbo != null) { 
             legal = erbo.getLegalContent();
             foodSafetyQuality = erbo.getFoodSafetyQualityContent();
             effectUtility = erbo.getEffectUtilityContent();
@@ -5958,15 +5960,38 @@ public class FilesDAO extends BaseDAO {
             lfoodSafetyQuality = erbo.getFoodSafetyQuality();
             leffectUtility = erbo.getEffectUtility();
         }
-        customInfo.add(legal);
-        customInfo.add(foodSafetyQuality);
-        customInfo.add(effectUtility);
-        customInfo.add(standard);
-        customInfo.add(lstandard);
-        customInfo.add(llegal);
-        customInfo.add(lfoodSafetyQuality);
-        customInfo.add(leffectUtility);
-
+        customInfo.add(legal);//0
+        customInfo.add(foodSafetyQuality);//1
+        customInfo.add(effectUtility);//2
+        customInfo.add(standard);//3
+        customInfo.add(lstandard);//4
+        customInfo.add(llegal);//5
+        customInfo.add(lfoodSafetyQuality);//6
+        customInfo.add(leffectUtility);//7
+        
+//160628 bo sung noi dung sua sau cong bo
+        FilesDAOHE filesDaohe = new FilesDAOHE();
+        Files filebo = filesDaohe.findById(objectId);
+        String titleEditATTP = "";
+        String contentsEditATTP = "";
+        if (filebo != null) {
+            if (filebo.getTitleEditATTP() != null
+                    && !filebo.getTitleEditATTP().trim().equals("")) {
+                titleEditATTP = filebo.getTitleEditATTP();
+            } else {
+                titleEditATTP = filebo.getTitleEdit();
+            }
+            if (filebo.getContentsEditATTP() != null
+                    && !filebo.getContentsEditATTP().trim().equals("")) {
+                contentsEditATTP = filebo.getContentsEditATTP();
+            } else {
+                contentsEditATTP = filebo.getContentsEdit();
+            }
+        }
+        customInfo.add(titleEditATTP);//8
+        customInfo.add(contentsEditATTP);//9
+//!160628
+        
         jsonDataGrid.setCustomInfo(customInfo);
         return GRID_DATA;
     }//!140704
@@ -6059,8 +6084,8 @@ public class FilesDAO extends BaseDAO {
 //            }
 
         }
-        customInfo.add(staffContent);
-        customInfo.add(leaderContent);
+        customInfo.add(staffContent);//0
+        customInfo.add(leaderContent);//1
 
         jsonDataGrid.setCustomInfo(customInfo);
         return GRID_DATA;
@@ -9729,14 +9754,14 @@ public class FilesDAO extends BaseDAO {
             lfoodSafetyQuality = erbo.getFoodSafetyQuality();
             leffectUtility = erbo.getEffectUtility();
         }
-        customInfo.add(legal);
-        customInfo.add(foodSafetyQuality);
-        customInfo.add(effectUtility);
-        customInfo.add(standard);
-        customInfo.add(lstandard);
-        customInfo.add(llegal);
-        customInfo.add(lfoodSafetyQuality);
-        customInfo.add(leffectUtility);
+        customInfo.add(legal);//0
+        customInfo.add(foodSafetyQuality);//1
+        customInfo.add(effectUtility);//2
+        customInfo.add(standard);//3
+        customInfo.add(lstandard);//4
+        customInfo.add(llegal);//5
+        customInfo.add(lfoodSafetyQuality);//6
+        customInfo.add(leffectUtility);//7
 
         //160628 bo sung noi dung sua sau cong bo
         String titleEditATTP = "";
@@ -9755,8 +9780,8 @@ public class FilesDAO extends BaseDAO {
                 contentsEditATTP = fbo.getContentsEdit();
             }
         }
-        customInfo.add(titleEditATTP);
-        customInfo.add(contentsEditATTP);
+        customInfo.add(titleEditATTP);//8
+        customInfo.add(contentsEditATTP);//9
         //!160628
 
         jsonDataGrid.setCustomInfo(customInfo);

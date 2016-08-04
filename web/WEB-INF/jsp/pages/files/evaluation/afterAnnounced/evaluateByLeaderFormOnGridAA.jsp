@@ -32,7 +32,6 @@
                                         <sd:TextBox key="" 
                                                     id="evaluationRecord.fileId" 
                                                     name="createForm.fileId" cssStyle="display:none"/>
-                                        <%--<sd:TextBox key="" id="evaluationRecord.ProductType" name="createForm.ProductType" cssStyle="display:none"/>--%>
 
                                         <sd:TextBox key="" 
                                                     id="evaluationRecord.status" 
@@ -40,22 +39,49 @@
 
                                         <input type="radio" 
                                                id="evaluationRecord.statusAccept" 
-                                               name="createForm.status" value="4"/>
+                                               name="createForm.status" value="4"
+                                               onchange="onchangeStatusEBLFOG();"/>
                                         <sd:Label key="Duyệt: Hồ sơ đạt"/>
                                         </br>
-                                        <input type="radio" 
+                                        <input type ="radio" 
                                                id="evaluationRecord.statusDeny" 
-                                               name="createForm.status" value="7"/>
+                                               name="createForm.status" value="7"
+                                               onchange="onchangeStatusEBLFOG();"/>
                                         <sd:Label key="Duyệt: Yêu cầu bổ sung HS"/>
                                         </br>
                                         <input type="radio" 
                                                id="evaluationRecord.statusDenyCV" 
-                                               name="createForm.status" value="8"/>
+                                               name="createForm.status" value="8"
+                                               onchange="onchangeStatusEBLFOG();"/>
                                         <sd:Label key="Yêu cầu: Chuyển hồ sơ cho chuyên viên thẩm định lại"/>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td style="text-align: right"><sd:Label key="Nội dung trình quản lý xem xét, hoặc nội dung yêu cầu bổ sung"/></td>
+
+                                <tr id="trTitleEditATTP" style="display:">
+                                    <td style="text-align: right"><sd:Label key="Tiêu đề hồ sơ SĐBS"/></td>
+                                    <td>
+                                        <sd:Textarea key=""
+                                                     id="evaluationRecord.titleEditATTP"
+                                                     name="createForm.titleEditATTP"
+                                                     rows="1" cssStyle="width:99%"
+                                                     maxlength="255" trim="true"/>
+                                    </td>
+                                </tr>
+                                <tr id="trContentsEditATTP" style="display:">
+                                    <td style="text-align: right"><sd:Label key="Tiêu đề hồ sơ SĐBS"/></td>
+                                    <td>
+                                        <sd:Textarea key=""
+                                                     id="evaluationRecord.contentsEditATTP"
+                                                     name="createForm.contentsEditATTP"
+                                                     rows="10" cssStyle="width:99%"
+                                                     maxlength="2000" trim="true"/>
+                                    </td>
+                                </tr>
+
+                                <tr id="trStaffRequest" style="display:none">
+                                    <td style="text-align: right">
+                                        <sd:Label key="Nội dung trình quản lý xem xét, hoặc nội dung yêu cầu bổ sung"/>
+                                    </td>
                                     <td>
                                         <sd:Textarea key="" 
                                                      id="evaluationRecord.staffRequest" 
@@ -64,7 +90,7 @@
                                     </td>
                                 </tr>
                                 <div id="effectiveDateDiv" style="display:none">
-                                    <tr>
+                                    <tr id="trEffectiveDate" style="display:none">
                                         <td style="text-align: right"><sd:Label key="Thời hạn hiệu lực của giấy tiếp nhận"/></td>
                                         <td>
                                             <sd:SelectBox  cssStyle="width:98%" 
@@ -78,7 +104,7 @@
                                         </td>
                                     </tr>
                                 </div>
-                                <tr>
+                                <tr id="trLegal" style="display:none">
                                     <td style="text-align: right"><sd:Label key="Về pháp chế(Hồ sơ theo Nghị định số 38/2012/NĐ-CP & thông tư hướng dẫn)"/></td>
                                     <td>
                                         <sd:SelectBox  cssStyle="width:98%" 
@@ -90,7 +116,7 @@
                                         </sd:SelectBox>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr id="trLegalContent" style="display:none">
                                     <td style="text-align: right"><sd:Label key="Lý do không cấp hoặc yêu cầu bổ sung"/></td>
                                     <td>
                                         <sd:Textarea key="" 
@@ -99,7 +125,7 @@
                                                      rows="5" cssStyle="width:98%" maxlength="2000" trim="true"/>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr id="trFoodSafetyQuality" style="display:none">
                                     <td style="text-align: right"><sd:Label key="Về chỉ tiêu chất lượng an toàn thực phẩm"/></td>
                                     <td>
                                         <sd:SelectBox  cssStyle="width:98%" 
@@ -111,7 +137,7 @@
                                         </sd:SelectBox>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr id="trFoodSafetyQualityContent" style="display:none">
                                     <td style="text-align: right"><sd:Label key="Lý do không cấp hoặc yêu cầu bổ sung"/></td>
                                     <td>
                                         <sd:Textarea key="" 
@@ -120,7 +146,7 @@
                                                      rows="5" cssStyle="width:98%" maxlength="2000" trim="true"/>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr id="trEffectUtility" style="display:none">
                                     <td style="text-align: right"><sd:Label key="Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng"/></td>
                                     <td>
                                         <sd:SelectBox 
@@ -133,7 +159,7 @@
                                         </sd:SelectBox>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr id="trEffectUtilityContent" style="display:none">
                                     <td style="text-align: right"><sd:Label key="Lý do không cấp hoặc yêu cầu bổ sung"/></td>
                                     <td>
                                         <sd:Textarea key="" 
@@ -161,6 +187,10 @@
                                 <tr>
                                     <td colspan="2" style="text-align: center">
                                         <sx:ButtonSave onclick="onEvaluateByLeaderFormOnGrid();"/>
+                                        <sd:Button id="btnExportEBLFOGAA" key="" onclick="page.exportExportEBLFOGAA();" cssStyle="display:" cssClass="buttonGroup">
+                                            <img src="share/images/icons/process_icon.png" height="14" width="14" alt="Xem truoc"/>
+                                            <span style="font-size:12px">Xem trước công văn SĐBS</span>
+                                        </sd:Button>
                                         <sx:ButtonClose onclick="onCloseEvaluateLeader();"/>
                                         <br>
                                         <sd:Button id="btnLoadCookieEFBLOG" key="" onclick="page.getCKEFBLOG();" cssStyle="display:" cssClass="buttonGroup">
@@ -207,7 +237,6 @@
             sd.connector.post("filesAction!onEvaluate.do?" + token.getTokenParamString(), null, "evaluationRecord", null, afterEvaluateByLeaderOnGrid);
         }
     };
-
     afterEvaluateByLeaderOnGrid = function (data) {
         var obj = dojo.fromJson(data);
         var result = obj.items;
@@ -216,7 +245,6 @@
             onCloseEvaluateByLeader();
         }
     };
-
     validateEBLFG = function () {
         if (document.getElementById("evaluationRecord.statusAccept").checked == false
                 && document.getElementById("evaluationRecord.statusDeny").checked == false
@@ -225,13 +253,27 @@
             return false;
         }
         var effectiveDate = dijit.byId("evaluationRecord.effectiveDate").getValue();
-        if ((effectiveDate == null
-                || effectiveDate.trim().length == -1
-                || effectiveDate == "-1")
-                && document.getElementById("evaluationRecord.statusAccept").checked == true) {
-            alert("Bạn chưa chọn thời hạn hiệu lực");
-            dijit.byId("evaluationRecord.effectiveDate").focus();
-            return false;
+//        if ((effectiveDate == null
+//                || effectiveDate.trim().length == -1
+//                || effectiveDate == "-1")
+//                && document.getElementById("evaluationRecord.statusAccept").checked == true) {
+//            alert("Bạn chưa chọn thời hạn hiệu lực");
+//            dijit.byId("evaluationRecord.effectiveDate").focus();
+//            return false;
+//        }
+        if (document.getElementById("evaluationRecord.statusAccept").checked) {
+            var titleEditATTP = dijit.byId("evaluationRecord.titleEditATTP").getValue();
+            if (titleEditATTP.trim().length == 0) {
+                alert("Nội dung tiêu đề công văn không được để trống");
+                dijit.byId("evaluationRecord.titleEditATTP").focus();
+                return false;
+            }
+            var contentsEditATTP = dijit.byId("evaluationRecord.contentsEditATTP").getValue();
+            if (contentsEditATTP.trim().length == 0) {
+                alert("Nội dung công văn không được để trống");
+                dijit.byId("evaluationRecord.contentsEditATTP").focus();
+                return false;
+            }
         }
         var leaderReviewId = dijit.byId("evaluationRecord.leaderReviewId").getValue();
         if (leaderReviewId == -1 && document.getElementById("evaluationRecord.statusDenyCV").checked == false) {
@@ -280,8 +322,7 @@
                     dijit.byId("evaluationRecord.effectUtilityContent").focus();
                     return false;
                 }
-            }
-            else {
+            } else {
                 if (document.getElementById("evaluationRecord.statusDenyCV").checked) {
                     if (staffRequest.trim().length == 0) {
                         alert("Nội dung trình quản lý xem xét, hoặc nội dung yêu cầu bổ sung");
@@ -293,7 +334,6 @@
         }
         return true;
     };
-
     page.clearCKEFBLOG = function () {
         try
         {
@@ -306,13 +346,11 @@
             localStorage.setItem("evaluationRecord.foodSafetyQualityContent", "");
             localStorage.setItem("evaluationRecord.effectUtilityContent", "");
             alert("Xóa nội dung thẩm định gần đây thành công!");
-        }
-        catch (err)
+        } catch (err)
         {
             alert("Không thể Xóa nội dung thẩm định gần đây!");
         }
     };
-
     page.setCKEFBLOG = function () {
         try
         {
@@ -325,13 +363,11 @@
             localStorage.setItem("evaluationRecord.foodSafetyQualityContent", encodeBase64(dijit.byId("evaluationRecord.foodSafetyQualityContent").getValue().toString().trim()));
             localStorage.setItem("evaluationRecord.effectUtilityContent", encodeBase64(dijit.byId("evaluationRecord.effectUtilityContent").getValue().toString().trim()));
             alert("Lưu nháp nội dung thẩm định thành công!");
-        }
-        catch (err)
+        } catch (err)
         {
             alert("Không thể Lưu nháp nội dung thẩm định!");
         }
     };
-
     page.getCKEFBLOG = function () {
         try
         {
@@ -344,10 +380,70 @@
             dijit.byId("evaluationRecord.foodSafetyQualityContent").setValue(decodeBase64(localStorage.getItem("evaluationRecord.foodSafetyQualityContent")));
             dijit.byId("evaluationRecord.effectUtilityContent").setValue(decodeBase64(localStorage.getItem("evaluationRecord.effectUtilityContent")));
             alert("Tải nội thẩm định gần đây thành công!");
-        }
-        catch (err)
+        } catch (err)
         {
             alert("Không thể Tải nội thẩm định gần đây!");
         }
+    };
+    onchangeStatusEBLFOG = function () {
+        var trTitleEditATTP = document.getElementById('trTitleEditATTP');
+        var trContentsEditATTP = document.getElementById('trContentsEditATTP');
+        var trStaffRequest = document.getElementById('trStaffRequest');
+        var trEffectiveDate = document.getElementById('trEffectiveDate');
+        var trLegal = document.getElementById('trLegal');
+        var trLegalContent = document.getElementById('trLegalContent');
+        var trFoodSafetyQuality = document.getElementById('trFoodSafetyQuality');
+        var trFoodSafetyQualityContent = document.getElementById('trFoodSafetyQualityContent');
+        var trEffectUtility = document.getElementById('trEffectUtility');
+        var trEffectUtilityContent = document.getElementById('trEffectUtilityContent');
+//        var btnExportEBLFOGAA = document.getElementById('btnExportEBLFOGAA');
+        if (!document.getElementById("evaluationRecord.statusAccept").checked) {
+            trTitleEditATTP.style.display = 'none';
+            trContentsEditATTP.style.display = 'none';
+            trStaffRequest.style.display = '';
+            trEffectiveDate.style.display = '';
+            trLegal.style.display = '';
+            trLegalContent.style.display = '';
+            trFoodSafetyQuality.style.display = '';
+            trFoodSafetyQualityContent.style.display = '';
+            trEffectUtility.style.display = '';
+            trEffectUtilityContent.style.display = '';
+            dijit.byId("evaluationRecord.staffRequest").setValue("Yêu cầu bổ sung hồ sơ");
+        } else {
+            dijit.byId("evaluationRecord.staffRequest").setValue("");
+            trTitleEditATTP.style.display = '';
+            trContentsEditATTP.style.display = '';
+            trStaffRequest.style.display = 'none';
+            trEffectiveDate.style.display = 'none';
+            trLegal.style.display = 'none';
+            trLegalContent.style.display = 'none';
+            trFoodSafetyQuality.style.display = 'none';
+            trFoodSafetyQualityContent.style.display = 'none';
+            trEffectUtility.style.display = '';
+            trEffectUtilityContent.style.display = 'none';
+        }
+    };
+    
+    page.exportExportEBLFOGAA = function () {//xuat file ket qua tham dinh
+        var fileId = dijit.byId("evaluationRecord.fileId").getValue();
+        var titleEditATTP = page.utf8_to_b64EBLFOGAA(dijit.byId("evaluationRecord.titleEditATTP").getValue());
+        var contentsEditATTP = page.utf8_to_b64EBLFOGAA(dijit.byId("evaluationRecord.contentsEditATTP").getValue());
+        contentsEditATTP = contentsEditATTP.replaceAllExportEBLFOGAA('+', '_');
+        document.location = "exportWord!onExportEEAA.do?fileId=" + fileId + "&title=" + titleEditATTP + "&contents=" + contentsEditATTP;
+    };
+    
+    String.prototype.replaceAllExportEBLFOGAA = function(strTarget, strSubString) {
+            var strText = this;
+            var intIndexOfMatch = strText.indexOf(strTarget);
+            while (intIndexOfMatch != -1) {
+                strText = strText.replace(strTarget, strSubString)
+
+                intIndexOfMatch = strText.indexOf(strTarget);
+            }
+            return(strText);
+    };
+    
+    page.utf8_to_b64EBLFOGAA = function(str) {
+        return window.btoa(unescape(encodeURIComponent(str)));
     };
 </script>

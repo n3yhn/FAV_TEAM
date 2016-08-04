@@ -193,5 +193,16 @@
             </result>
             <result type="tiles" name="announcementFile05Paper">announcementFile05Paper</result>
         </action>
+        <action name="vReportPcAction" class="com.viettel.hqmc.DAO.VReportPcDAO">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    
+                </param>
+            </interceptor-ref>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+            <result type="tiles" name="vReportPc.Page">vReportPc.Page</result>
+        </action>
     </package>
 </struts>

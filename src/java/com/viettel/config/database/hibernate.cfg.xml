@@ -119,6 +119,7 @@
         <mapping class="com.viettel.hqmc.BO.VReportLProcessing"/><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->
         <mapping class="com.viettel.hqmc.BO.VReportLProcess"/><!--141215u binhnt53 thong ke lanh dao phong xu ly ho so-->        
         <mapping class="com.viettel.hqmc.BO.XmlWs"/>
+        <mapping class="com.viettel.hqmc.BO.VReportPc"/>
         <!-- End ATTP -->
     </session-factory>
 </hibernate-configuration>

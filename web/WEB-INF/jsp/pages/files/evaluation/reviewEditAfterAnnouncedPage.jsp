@@ -42,13 +42,13 @@
             var url = "<div style='text-align:center;cursor:pointer;display:inline'><img src='share/images/icons/view.png' width='17px' height='17px' title='Xem hồ sơ' onClick='page.showViewFile(" + fileId + ");' />";
             switch (status) {
                 case 4:
-                    url += " | <img src='share/images/edit.png' width='17px' height='17px' title='Xem xét hồ sơ' onClick='page.showReviewForm(" + fileId + "," + status + ");' />";
+                    url += " | <img src='share/images/edit.png' width='17px' height='17px' title='Xem xét hồ sơ' onClick='page.showReviewAAForm(" + fileId + "," + status + ");' />";
                     break;
                 case 7:
-                    url += " | <img src='share/images/edit.png' width='17px' height='17px' title='Xem xét hồ sơ' onClick='page.showReviewForm(" + fileId + "," + status + ");' />";
+                    url += " | <img src='share/images/edit.png' width='17px' height='17px' title='Xem xét hồ sơ' onClick='page.showReviewAAForm(" + fileId + "," + status + ");' />";
                     break;
                 case 9:
-                    url += " | <img src='share/images/edit.png' width='17px' height='17px' title='Xem xét hồ sơ' onClick='page.showReviewForm(" + fileId + "," + status + ");' />";
+                    url += " | <img src='share/images/edit.png' width='17px' height='17px' title='Xem xét hồ sơ' onClick='page.showReviewAAForm(" + fileId + "," + status + ");' />";
                     break;
                 default:
                     ;
@@ -531,7 +531,7 @@
                             <img src="share/images/icons/reset.png" height="14" width="18"/>
                             <span style="font-size:12px">Hủy</span>
                         </sd:Button>
-                        <sd:TextBox key="" id="item.status" name="item.status" cssStyle="display:none" />
+                        <%--<sd:TextBox key="" id="item.status" name="item.status" cssStyle="display:none" />--%>
                     </td>
                 </tr>
 
@@ -626,13 +626,13 @@
     var signIndex = 0;
     var check = true;
     var flagSignMore = false;
-    page.showReviewForm = function (fileId, status) {//show form kết luận xem xét hồ sơ
+    page.showReviewAAForm = function (fileId, status) {//show form kết luận xem xét hồ sơ
         dijit.byId("reviewForm.fileId").setValue(fileId);
-        dijit.byId("item.status").setValue(status);
-        sd.connector.post("filesAction!getCommentEvaluateFormByLeaderForAA.do?objectId=" + fileId, null, null, null, afterShowReviewForm);
+        dijit.byId("reviewForm.status").setValue(status);
+        sd.connector.post("filesAction!getCommentEvaluateFormByLeaderForAA.do?objectId=" + fileId, null, null, null, afterShowReviewAAForm);
     };
 
-    afterShowReviewForm = function (data) {
+    afterShowReviewAAForm = function (data) {
         var obj = dojo.fromJson(data);
         if (obj.customInfo[0] != "") {
             document.getElementById("reviewForm.legalContentL").innerHTML = obj.customInfo[0];
@@ -655,20 +655,24 @@
             document.getElementById("reviewForm.leaderStaffRequest").innerHTML = "";
         }
         if (obj.customInfo[8] != "") {
-            document.getElementById("reviewForm.titleEditATTP").innerHTML = obj.customInfo[8];
+//            document.getElementById("reviewForm.titleEditATTP").innerHTML = obj.customInfo[8];
+            dijit.byId("reviewForm.titleEditATTP").setValue(obj.customInfo[8]);
         } else {
-            document.getElementById("reviewForm.titleEditATTP").innerHTML = "";
+//            document.getElementById("reviewForm.titleEditATTP").innerHTML = "";
+            dijit.byId("reviewForm.titleEditATTP").setValue("");
         }
         if (obj.customInfo[9] != "") {
-            document.getElementById("reviewForm.contentsEditATTP").innerHTML = obj.customInfo[9];
+//            document.getElementById("reviewForm.contentsEditATTP").innerHTML = obj.customInfo[9];
+            dijit.byId("reviewForm.contentsEditATTP").setValue(obj.customInfo[9]);
         } else {
-            document.getElementById("reviewForm.contentsEditATTP").innerHTML = "";
+//            document.getElementById("reviewForm.contentsEditATTP").innerHTML = "";
+            dijit.byId("reviewForm.contentsEditATTP").setValue("");
         }
 
-        var status = dijit.byId("item.status").getValue();
+        var status = dijit.byId("reviewForm.status").getValue();
         var statusName = page.getStatusName(parseInt(status));
 
-        document.getElementById("reviewForm.status").innerHTML = statusName;
+        document.getElementById("reviewForm.statusName").innerHTML = statusName;
         document.getElementById("reviewForm.staffRequest").innerHTML = escapeHtml_(obj.customInfo[3]);
 
         if (status == 4) {

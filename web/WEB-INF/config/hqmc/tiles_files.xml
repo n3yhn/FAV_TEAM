@@ -608,4 +608,7 @@
         <put-attribute name="title" value="Lãnh đạo thẩm định hồ sơ"/>
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/evaluation/afterAnnounced/evaluateByLeaderPageAA.jsp"/>
     </definition>
+    <definition name="vReportPc.Page" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/report/vReportPcPage.jsp"/>
+    </definition>
 </tiles-definitions>
