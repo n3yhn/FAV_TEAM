@@ -308,114 +308,114 @@
                     }
                 };
 
-                page.showAssignMorePopup = function () {
-                    var gridProcess = dijit.byId("processGridId");
-                    // check xem da ton tai tren grid chua
-                    var i = 0;
-                    for (i = 0; i < gridProcess._by_idx.length; i++) {
-                        var processItem = gridProcess.getItem(i);
-                        gridProcess.store.deleteItem(processItem);
+    page.showAssignMorePopup = function () {
+        var gridProcess = dijit.byId("processGridId");
+        // check xem da ton tai tren grid chua
+        var i = 0;
+        for (i = 0; i < gridProcess._by_idx.length; i++) {
+            var processItem = gridProcess.getItem(i);
+            gridProcess.store.deleteItem(processItem);
+        }
+        gridProcess.scrollToRow(gridProcess._by_idx.length);
+
+        var items = dijit.byId("filesGrid").vtGetCheckedItems();
+        var lstObjectId = "";
+        if (items != null && items.length >= 0) {
+            for (var i = 0; i < items.length; i++)
+            {
+                if (i != items.length - 1)
+                    lstObjectId += items[i].fileId + ",";
+                else
+                    lstObjectId += items[i].fileId;
+            }
+            dijit.byId("assignDlg").show();
+            page.showAssignDlgPrepare(null, lstObjectId, 2);
+        }
+    };
+
+    page.search = function () {
+        if (page.validateSearch()) {
+            dijit.byId("filesGrid").vtReload('filesAction!onAssignEvaluation.do?', "searchForm", null, page.afterSearch);
+        }
+    };
+    page.afterSearch = function () {
+        dijit.byId("searchForm.flagSavePaging").setValue("0");
+    };
+
+    page.reset = function () {
+        dijit.byId('searchForm.fileCode').attr('value', '');
+        dijit.byId('searchForm.fileType').attr('value', '-1');
+        dijit.byId('searchForm.sendDateFrom').attr('value', null);
+        dijit.byId('searchForm.sendDateTo').attr('value', null);
+
+        page.search();
+    };
+    page.propose = function () {
+        if (!dijit.byId("filesGrid").vtIsChecked()) {
+            msg.alert('<sd:Property>alert.select</sd:Property>', '<sd:Property>confirm.title</sd:Property>');
                     }
-                    gridProcess.scrollToRow(gridProcess._by_idx.length);
-
-                    var items = dijit.byId("filesGrid").vtGetCheckedItems();
-                    var lstObjectId = "";
-                    if (items != null && items.length >= 0) {
-                        for (var i = 0; i < items.length; i++)
-                        {
-                            if (i != items.length - 1)
-                                lstObjectId += items[i].fileId + ",";
-                            else
-                                lstObjectId += items[i].fileId;
-                        }
-                        dijit.byId("assignDlg").show();
-                        page.showAssignDlgPrepare(null, lstObjectId, 2);
-                    }
-                };
-
-                page.search = function () {
-                    if (page.validateSearch()) {
-                        dijit.byId("filesGrid").vtReload('filesAction!onAssignEvaluation.do?', "searchForm", null, page.afterSearch);
-                    }
-                };
-                page.afterSearch = function () {
-                    dijit.byId("searchForm.flagSavePaging").setValue("0");
-                }
-
-                page.reset = function () {
-                    dijit.byId('searchForm.fileCode').attr('value', '');
-                    dijit.byId('searchForm.fileType').attr('value', '-1');
-                    dijit.byId('searchForm.sendDateFrom').attr('value', null);
-                    dijit.byId('searchForm.sendDateTo').attr('value', null);
-
-                    page.search();
-                };
-                page.propose = function () {
-                    if (!dijit.byId("filesGrid").vtIsChecked()) {
-                        msg.alert('<sd:Property>alert.select</sd:Property>', '<sd:Property>confirm.title</sd:Property>');
+                    else {
+                        msg.confirm('<sd:Property>confirm.propose</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', page.proposeItem);
                                 }
-                                else {
-                                    msg.confirm('<sd:Property>confirm.propose</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', page.proposeItem);
-                                            }
-                                        };
-                                        page.insert = function () {
-                                            page.clearInsertForm();
-                                            dijit.byId("createDlg").show();
-                                        };
-                                        page.showEditPopup = function (row) {
-                                            var item = dijit.byId("filesGrid").getItem(row);
-                                            page.setItem(item);
-                                            dijit.byId("createDlg").show();
-                                        };
-                                        page.deleteItem = function () {
-                                            if (!dijit.byId("filesGrid").vtIsChecked()) {
-                                                msg.alert('<sd:Property>alert.select</sd:Property>', '<sd:Property>confirm.title</sd:Property>');
-                                                        }
-                                                        else {
-                                                            msg.confirm('<sd:Property>confirm.delete</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', page.deleteItemExecute);
-                                                                    }
-                                                                };
-                                                                page.deleteItemExecute = function () {
-                                                                    var content = dijit.byId("filesGrid").vtGetCheckedDataForPost("lstItemOnGrid");
-                                                                    sd.connector.post("businessAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
-                                                                };
-                                                                page.proposeItem = function () {
-                                                                    var content = dijit.byId("filesGrid").vtGetCheckedDataForPost("lstItemOnGrid");
-                                                                    sd.connector.post("filesAction!onPropose.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
-                                                                };
-                                                                page.returnMessageDelete = function (data) {
-                                                                    var obj = dojo.fromJson(data);
-                                                                    var result = obj.items;
-                                                                    resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
-                                                                    page.search();
-                                                                };
+                            };
+    page.insert = function () {
+        page.clearInsertForm();
+        dijit.byId("createDlg").show();
+    };
+    page.showEditPopup = function (row) {
+        var item = dijit.byId("filesGrid").getItem(row);
+        page.setItem(item);
+        dijit.byId("createDlg").show();
+    };
+    page.deleteItem = function () {
+        if (!dijit.byId("filesGrid").vtIsChecked()) {
+            msg.alert('<sd:Property>alert.select</sd:Property>', '<sd:Property>confirm.title</sd:Property>');
+                    }
+                    else {
+                        msg.confirm('<sd:Property>confirm.delete</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', page.deleteItemExecute);
+                                }
+                            };
+    page.deleteItemExecute = function () {
+        var content = dijit.byId("filesGrid").vtGetCheckedDataForPost("lstItemOnGrid");
+        sd.connector.post("businessAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
+    };
+    page.proposeItem = function () {
+        var content = dijit.byId("filesGrid").vtGetCheckedDataForPost("lstItemOnGrid");
+        sd.connector.post("filesAction!onPropose.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
+    };
+    page.returnMessageDelete = function (data) {
+        var obj = dojo.fromJson(data);
+        var result = obj.items;
+        resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
+        page.search();
+    };
 
-                                                                page.showSearchPanel = function () {
-                                                                    var panel = document.getElementById("searchDiv");
-                                                                    panel.setAttribute("style", "display:;");
-                                                                    dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
-                                                                };
-                                                                page.validateSearch = function () {
-                                                                    var datefrom = dijit.byId("searchForm.sendDateFrom").getValue();
-                                                                    var dateto = dijit.byId("searchForm.sendDateTo").getValue();
-                                                                    if (datefrom != null && dateto != null) {
-                                                                        if (datefrom > dateto) {
-                                                                            alert("Điều kiện tìm kiếm Từ ngày đến ngày không đúng");
-                                                                            dijit.byId("searchForm.sendDateFrom").focus();
-                                                                            return false;
-                                                                        }
-                                                                    }
-                                                                    return true;
-                                                                };
-                                                                page.reloadViewOldVersion = function (oldVersion, thisVersion) {//u140728
-                                                                    document.getElementById('createDiv').Value = '';
-                                                                    var gridRegister = dijit.byId('processCommentGridId_VTGrid');
-                                                                    if (gridRegister) {
-                                                                        gridRegister.destroyRecursive(true);
-                                                                    }
-                                                                    sd.connector.post("filesAction!loadFilesByOldVersion.do?thisVersion=" + thisVersion + "&oldVersion=" + oldVersion, "createDiv", null, null, afterReloadViewOldVersion);
-                                                                };
-                                                                afterReloadViewOldVersion = function (data) {
-                                                                };//!u140728
-                                                                page.search();
+    page.showSearchPanel = function () {
+        var panel = document.getElementById("searchDiv");
+        panel.setAttribute("style", "display:;");
+        dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
+    };
+    page.validateSearch = function () {
+        var datefrom = dijit.byId("searchForm.sendDateFrom").getValue();
+        var dateto = dijit.byId("searchForm.sendDateTo").getValue();
+        if (datefrom != null && dateto != null) {
+            if (datefrom > dateto) {
+                alert("Điều kiện tìm kiếm Từ ngày đến ngày không đúng");
+                dijit.byId("searchForm.sendDateFrom").focus();
+                return false;
+            }
+        }
+        return true;
+    };
+    page.reloadViewOldVersion = function (oldVersion, thisVersion) {//u140728
+        document.getElementById('createDiv').Value = '';
+        var gridRegister = dijit.byId('processCommentGridId_VTGrid');
+        if (gridRegister) {
+            gridRegister.destroyRecursive(true);
+        }
+        sd.connector.post("filesAction!loadFilesByOldVersion.do?thisVersion=" + thisVersion + "&oldVersion=" + oldVersion, "createDiv", null, null, afterReloadViewOldVersion);
+    };
+    afterReloadViewOldVersion = function (data) {
+    };//!u140728
+    page.search();
 </script>

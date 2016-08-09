@@ -5,8 +5,6 @@
  */
 package com.viettel.hqmc.DAOHE;
 
-import static com.viettel.framework.interceptor.BaseHibernateDAOMDB.getSession;
-import com.viettel.hqmc.BO.VReportPc;
 import com.viettel.hqmc.BO.VReportPc;
 import com.viettel.hqmc.FORM.FilesForm;
 import com.viettel.voffice.database.DAO.GridResult;

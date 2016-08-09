@@ -40,7 +40,18 @@
                 <td width="25%">
                 <sd:TextBox key="" id="createForm.announcement.productName" name="createForm.announcement.productName" maxlength="500" cssStyle="width:99%" trim="true"/>
             </td>
-        </tr> 
+        </tr>
+        <tr>
+            <td width="25%"><sd:Label required="true">Nhóm sản phẩm</sd:Label><font style="color:red">*</font></td>
+                <td width="25%">
+                <sd:SelectBox key="" id="createForm.detailProduct.productType" name="createForm.detailProduct.productType" cssStyle="width:98%"
+                          data="lstProductType" valueField="categoryId" labelField="name" value="${fn:escapeXml(createForm.detailProduct.productType)}"/>
+            <sd:TextBox key="" id="createForm.detailProduct.productTypeName" name="createForm.detailProduct.productTypeName" cssStyle="display:none" trim="true" maxlength="255"/>
+            </td>
+            <td width="25%"></td>
+                <td width="25%">
+            </td>            
+        </tr>
     </table>
 </sd:FieldSet>
 
@@ -246,4 +257,50 @@
         dijit.byId("createForm.announcement.manufactureEmail").setValue(dijit.byId("createForm.announcement.businessEmail").getValue());
     };
 
+    page.showFee = function()
+        {
+            var productTypeName = dijit.byId("createForm.detailProduct.productType").attr("displayedValue");
+            dijit.byId("createForm.detailProduct.productTypeName").setValue(productTypeName);
+
+            var check = dijit.byId("createForm.detailProduct.productType").getValue();
+            var dbtId = "${fn:escapeXml(dbtId)}";
+            var checkDBT = dbtId.split(";");
+            var tpcnId = "${fn:escapeXml(tpcnId)}";
+            var priceDBT = "${fn:escapeXml(priceTPDB)}";
+            var priceTPCN = "${fn:escapeXml(priceTPCN)}";
+            var priceETC = "${fn:escapeXml(priceETC)}";
+            var tlId = "${tlId}";
+            var dem = 0;
+            for (var i = 0; i < checkDBT.length; i++)
+            {
+                if (check == checkDBT[i])
+                {
+                    dem = 1;
+                    break;
+                }
+            }
+            if (dem == 1)
+            {
+                alert("Phí thẩm định nhóm sản phẩm này có giá: " + priceDBT + " VNĐ, Chú ý chọn đúng nhóm SP vì có liên quan tới phí");
+            } else {
+                if (check == tpcnId)
+                {
+                    alert("Phí thẩm định nhóm sản phẩm này có giá: " + priceTPCN + " VNĐ, Chú ý chọn đúng nhóm SP vì có liên quan tới phí");
+                } else {
+                    if (check == -1)
+                    {
+
+                    } else {
+                        if (check == tlId)
+                        {
+                            alert("Phí thẩm định nhóm sản phẩm này có giá: " + 0 + " VNĐ, Chú ý: Nhóm thuốc lá không phải đóng phí");
+                        } else {
+                            if (check != dbtId && check != tpcnId && check != -1) {
+                                alert("Phí thẩm định nhóm sản phẩm này có giá: " + priceETC + " VNĐ, Chú ý chọn đúng nhóm SP vì có liên quan tới phí");
+                            }
+                        }
+                    }
+                }
+            }
+        };
 </script>
