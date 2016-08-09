@@ -4,6 +4,8 @@
  */
 package com.viettel.voffice.ca.servlet;
 
+import static com.viettel.common.util.Constants.TEMP.FEATURE_GENERAL_ENTITIES;
+import static com.viettel.common.util.Constants.TEMP.FEATURE_PARAMETER_ENTITIES;
 import com.viettel.voffice.ca.applet.CommDataBean;
 import com.viettel.voffice.ca.applet.MessageCode;
 import com.viettel.voffice.ca.uds.VTKeyStore;
@@ -138,6 +140,10 @@ public class SigningServlet extends HttpServlet {
     public KeyInfo validateContentSigned(String content) throws Exception {
         DocumentBuilderFactory dbf
                 = DocumentBuilderFactory.newInstance();
+        dbf.setFeature(FEATURE_GENERAL_ENTITIES, false);
+        dbf.setFeature(FEATURE_PARAMETER_ENTITIES, false);
+        dbf.setXIncludeAware(false);
+        dbf.setExpandEntityReferences(false);
         KeyInfo keyInfo = null;
         dbf.setNamespaceAware(true);
         Document doc = dbf
@@ -213,6 +219,10 @@ public class SigningServlet extends HttpServlet {
         try {
             DocumentBuilderFactory dbf
                     = DocumentBuilderFactory.newInstance();
+            dbf.setFeature(FEATURE_GENERAL_ENTITIES, false);
+            dbf.setFeature(FEATURE_PARAMETER_ENTITIES, false);
+            dbf.setXIncludeAware(false);
+            dbf.setExpandEntityReferences(false);
             Document doc = dbf.newDocumentBuilder().parse(new ByteArrayInputStream(content.getBytes("UTF-8")));
             Element docEle = doc.getDocumentElement();
             NodeList nl = docEle.getElementsByTagName(nameElement);

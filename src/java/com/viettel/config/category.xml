@@ -36,6 +36,7 @@
                 </param>
             </interceptor-ref>
             <result type="tiles" name="caUserPage">caUser.page</result>
+            <result type="tiles" name="businessRegisterCA.Page">businessRegisterCA.Page</result>
             <result type="json" name="gridData">
                 <param name="root">jsonDataGrid</param>
             </result>

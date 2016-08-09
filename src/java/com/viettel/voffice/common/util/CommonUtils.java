@@ -5,6 +5,8 @@
 package com.viettel.voffice.common.util;
 
 import com.sun.xml.ws.security.opt.crypto.dsig.keyinfo.X509IssuerSerial;
+import static com.viettel.common.util.Constants.TEMP.FEATURE_GENERAL_ENTITIES;
+import static com.viettel.common.util.Constants.TEMP.FEATURE_PARAMETER_ENTITIES;
 import com.viettel.hqmc.BO.Files;
 import com.viettel.hqmc.BO.MainlyTarget;
 import com.viettel.hqmc.BO.ProductTarget;
@@ -52,6 +54,7 @@ import sun.security.x509.X509CertImpl;
  * @author gpdn_huannn update binhnt53
  */
 public class CommonUtils {
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CommonUtils.class);
     public static String[] attrPublishDocToSignedArr = {"fileId", "fileType", "fileTypeName", "fileCode", "announcementId", "detailProductId", "testRegistrationId", "reIssueFormId", "businessName", "userCreateId", "userCreateName", "deptId", "deptName", "announcementNo", "businessLicence", "businessAddress", "productName", "manufactureName", "manufactureAddress", "matchingTarget", "nationName"};
     public static String[] attrLstDetailsArr = {"announcementId", "detailProductId", "testRegistrationId", "reIssueFormId"};
@@ -73,6 +76,10 @@ public class CommonUtils {
         Document doc = null;
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            docFactory.setFeature(FEATURE_GENERAL_ENTITIES, false);
+            docFactory.setFeature(FEATURE_PARAMETER_ENTITIES, false);
+            docFactory.setXIncludeAware(false);
+            docFactory.setExpandEntityReferences(false);
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             doc = docBuilder.newDocument();
             Element rootElement = doc.createElement(root);
@@ -448,6 +455,10 @@ public class CommonUtils {
     public static KeyInfo validateContentSigned(String content) throws Exception {
         DocumentBuilderFactory dbf
                 = DocumentBuilderFactory.newInstance();
+        dbf.setFeature(FEATURE_GENERAL_ENTITIES, false);
+        dbf.setFeature(FEATURE_PARAMETER_ENTITIES, false);
+        dbf.setXIncludeAware(false);
+        dbf.setExpandEntityReferences(false);
         DOMValidateContext valContext = null;
         KeyInfo keyInfo = null;
         dbf.setNamespaceAware(true);

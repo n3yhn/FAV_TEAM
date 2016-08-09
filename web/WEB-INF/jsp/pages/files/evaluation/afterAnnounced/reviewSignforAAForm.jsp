@@ -34,12 +34,12 @@
             signType = "PDHS";
             document.getElementById('trWait').innerHTML = "Hệ thống đang thực hiện phê duyệt:" + (signIndex + 1) + "/" + itemsToSign.length + " hồ sơ  ";
             document.getElementById("divSignProcess").style.display = "";
-            alert("qua trinh tao giay cong bo");
+//            alert("qua trinh tao giay cong bo");
             sd.connector.post("filesExplandAction!onCreatePaperForAA.do?" + token.getTokenParamString(), null, "reviewSignForAAForm", null, afterOnCreatePaperForAA);
         };
 
         afterOnCreatePaperForAA = function (data) {//b4
-            alert("hoan thanh qua trinh tao giay cong bo");
+//            alert("hoan thanh qua trinh tao giay cong bo");
             var obj = dojo.fromJson(data);
 //            dijit.byId("reviewSignforAAFormDlg").show();
             onSendReviewSignForAA();
@@ -128,13 +128,13 @@
         var cert;
 
         onSendReviewSignForAA = function () {//b5
-            alert("start onSendReviewSignForAA");
+//            alert("start onSendReviewSignForAA");
             var fileId = dijit.byId("reviewSignForAAForm.fileId").getValue();
             sd.connector.post("exportWord!onExportPaperSignPlugin.do?fileId=" + fileId, null, null, null, afterOnExportPaperSignPlugin);
         };
 
         afterOnExportPaperSignPlugin = function (data) {//b6
-            alert("start afterOnExportPaperSignPlugin");
+//            alert("start afterOnExportPaperSignPlugin");
             var obj = dojo.fromJson(data);
             var result = obj.items;
             if (result[0] == "1") {
@@ -146,19 +146,19 @@
                     cert = encodeBase64(item.certChain);
                 }
                 var path = result[2];
-                alert(path);
+//                alert(path);
                 sd.connector.post("filesExplandAction!actionSignCA.do?fileId=" + fileId + "&cert=" + cert + "&signType=" + signType + "&path=" + path, null, null, null, page.signPluginFRFNP);
                 count++;
             } else {
                 msg.alert("Có lỗi trong quá trình xuất công văn SĐBS", "Cảnh báo");
                 document.getElementById("trWait").style.display = "none";
             }
-            alert("end afterOnExportPaperSignPlugin");
+//            alert("end afterOnExportPaperSignPlugin");
         };
 
         page.signPluginFRFNP = function (data)//b7
         {
-            alert("start signPluginFRFNP");
+//            alert("start signPluginFRFNP");
             var obj = dojo.fromJson(data);
             var result = obj.items;
             if (result[0] == "1") {
@@ -179,7 +179,7 @@
 
         page.afterSignPluginFRFNP = function (data)//b8
         {
-            alert("start b8 afterSignPluginFRFNP");
+//            alert("start b8 afterSignPluginFRFNP");
             var obj = dojo.fromJson(data);
             var result = obj.items;
             if (result[0] == "1") {
@@ -191,14 +191,14 @@
         };
 
         onApproveLdp = function () {
-            alert("start onApproveLdp");
+//            alert("start onApproveLdp");
 //            sd.connector.post("filesAction!onFeedbackReviewSendVt.do?" + token.getTokenParamString(), null, "reviewSignForAAForm", null, afterFeedbackReviewActionNew);
             sd.connector.post("filesExplandAction!onApproveByLDP4AA.do?" + token.getTokenParamString(), null, "reviewSignForAAForm", null, afterApprove);
         };
 
         afterApprove = function (data) {
-            alert("start afterApprove ");
-            alert(flagSignMore);
+//            alert("start afterApprove ");
+//            alert(flagSignMore);
             var obj = dojo.fromJson(data);
             var result = obj.items;
             if (!flagSignMore) {
@@ -231,7 +231,7 @@
         };
 
         onCloseApproveDlg = function () {
-            alert("start onCloseApproveDlg");
+//            alert("start onCloseApproveDlg");
             flagSignMore = false;
             count = 0;
             var txtBase64HashFRFNPCheck = dijit.byId('txtBase64HashFRFNP');

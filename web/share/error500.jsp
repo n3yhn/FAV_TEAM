@@ -18,6 +18,6 @@
         <title>Error JSP Page</title>
     </head>
     <body>
-        <h2>Server hệ thống đang gặp lỗi. Vui lòng truy cập lại sau!</h2>
+        <h2>Hệ thống không phản hồi. Vui lòng truy cập lại sau!</h2>
     </body>
 </html>

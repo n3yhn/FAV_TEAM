@@ -68,11 +68,14 @@
     backPage = function() {
         doGoToMenu(backPageStr);
     };
+    
     showViewFile = function() {
         sd.connector.post("filesAction!loadFileView.do?createForm.fileId=" + fileId + "&createForm.viewType=" + viewType, "viewDiv", null, null, null);
     };
+    
     page.b64_to_utf8 = function(str) {
         return unescape(decodeURIComponent(window.atob(str)));
-    }
+    };
+    
     showViewFile();
 </script>

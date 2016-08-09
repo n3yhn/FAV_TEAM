@@ -6,6 +6,8 @@ package com.viettel.ws.client;
 
 import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
+import static com.viettel.common.util.Constants.TEMP.FEATURE_GENERAL_ENTITIES;
+import static com.viettel.common.util.Constants.TEMP.FEATURE_PARAMETER_ENTITIES;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -132,6 +134,10 @@ public class JDBCUtil {
     public static Document toDocument(ResultSet rs)
             throws ParserConfigurationException, SQLException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setFeature(FEATURE_GENERAL_ENTITIES, false);
+        factory.setFeature(FEATURE_PARAMETER_ENTITIES, false);
+        factory.setXIncludeAware(false);
+        factory.setExpandEntityReferences(false);
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.newDocument();
 
@@ -165,6 +171,10 @@ public class JDBCUtil {
     public static Document createDocument()
             throws ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setFeature(FEATURE_GENERAL_ENTITIES, false);
+        factory.setFeature(FEATURE_PARAMETER_ENTITIES, false);
+        factory.setXIncludeAware(false);
+        factory.setExpandEntityReferences(false);
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.newDocument();
 
@@ -312,6 +322,10 @@ public class JDBCUtil {
             SAXException,
             IOException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setFeature(FEATURE_GENERAL_ENTITIES, false);
+        factory.setFeature(FEATURE_PARAMETER_ENTITIES, false);
+        factory.setXIncludeAware(false);
+        factory.setExpandEntityReferences(false);
         DocumentBuilder builder = factory.newDocumentBuilder();
         String xml = toXML(rs);
         StringReader reader = new StringReader(xml);

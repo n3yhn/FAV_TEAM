@@ -287,6 +287,7 @@ public final class Constants {
     }
 
     public interface POSITION {
+
         //BTP
         public static String LEAD_CODE = "BTP_LD_P"; // Lanh dao
         public static String LEAD_OFFICE_CODE = "BTP_LD_VP"; // Lanh dao van phong
@@ -304,7 +305,7 @@ public final class Constants {
         public static String PGDTT = "PGDTT";//pho giam doc trung tam - 081015 binhnt53
         public static String VT = "VT";//van thu
         public static String NV = "NV";//nhan vien
-        
+
         public static String LST_CV = "NV;VFA_CV;VT";
         public static String LST_LDP_P = "LDPP;PGDTT";
         public static String LST_LDP_T = "GDTT;LDTP";
@@ -399,13 +400,11 @@ public final class Constants {
         //hiepvv SDBS sau cong bo
         public static final String ANNOUNCEMENT_FILE05 = "announcementFile05";
         public static final String ANNOUNCEMENT_4STAR = "announcement4star";
-        
+
         public static final String ANNOUNCEMENT_TL01 = "annoucementTL01";
         public static final String ANNOUNCEMENT_TL03 = "annoucementTL03";
         public static final String CONFIRMTL = "confirmTL";
-        
-        
-        
+
     }
 
     public interface RECEIVED_STATUS {
@@ -485,33 +484,37 @@ public final class Constants {
 
         public static final String KEYPAY = "KEYPAY";
     }
+
     public interface EFFECTIVEDATE {
 
         public static final Long FIVE = 5L;
         public static final Long THREE = 3L;
     }
-    
+
     public interface TYPE_SIGN {//loại hồ sơ ký số
 
         public static final String PDHS = "PDHS";//là phê duyệt hồ sơ đat
         public static final String SDBS = "SDBS";//hồ sơ sđbs
         public static final String CBDN = "CBDN";//bản công bố của dn upload lên
-        
+
         public static final Long LD = 1L;//lãnh đạo cục ký
         public static final Long VT = 2L;//văn thư ký
         public static final Long DN = 3L;//doanh nghiệp ký số
-        
-        
+
     }
-    
+
     public interface ATTACH_OBJECT_TYPE {//loại file đính kèm.
-        
+
         public static final Long LABEL = 17L;//là nhãn sp
         public static final Long FILES = 30L;//là tệp đính kèm bình thường
         public static final Long CBDN = 60L;//là bản công bố của doanh nghiệp
         public static final Long CB_FULL = 40L;//là bản công bố full
         public static final Long CB_PUBLIC = 41L;//là bản công bố đơn
-        
-        
+
+    }
+
+   public interface TEMP {
+        public static final String FEATURE_GENERAL_ENTITIES = "http://xml.org/sax/features/external-general-entities";
+        public static final String FEATURE_PARAMETER_ENTITIES = "http://xml.org/sax/features/external-parameter-entities";
     }
 }

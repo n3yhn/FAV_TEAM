@@ -5,6 +5,8 @@
  */
 package com.viettel.ws.validateData;
 
+import static com.viettel.common.util.Constants.TEMP.FEATURE_GENERAL_ENTITIES;
+import static com.viettel.common.util.Constants.TEMP.FEATURE_PARAMETER_ENTITIES;
 import com.viettel.common.util.ResourceBundleUtil;
 import com.viettel.hqmc.BO.AnnouncementReceiptPaper;
 import com.viettel.hqmc.BO.Files;
@@ -177,6 +179,10 @@ public class Helper {
             List<ErrorType> errTypes = new ArrayList<>();
             List<ERRORDto> rs = new ArrayList<>();
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            dbFactory.setFeature(FEATURE_GENERAL_ENTITIES, false);
+            dbFactory.setFeature(FEATURE_PARAMETER_ENTITIES, false);
+            dbFactory.setXIncludeAware(false);
+            dbFactory.setExpandEntityReferences(false);
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = (Document) dBuilder.parse(xmlErrorType);
             doc.getDocumentElement().normalize();
@@ -620,6 +626,10 @@ public class Helper {
         String rs = "";
         String hql = "Select VIETNAMESE_NAME from TECHNICAL_STANDARD where STANDARD_CODE = ?";
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        dbFactory.setFeature(FEATURE_GENERAL_ENTITIES, false);
+        dbFactory.setFeature(FEATURE_PARAMETER_ENTITIES, false);
+        dbFactory.setXIncludeAware(false);
+        dbFactory.setExpandEntityReferences(false);
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = (Document) dBuilder.parse(xmlErrType());
         Element econn = (Element) doc.getElementsByTagName("CONNECTION").item(0);

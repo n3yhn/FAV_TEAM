@@ -75,7 +75,7 @@
             </table>
         </form>
     </sd:TitlePane>
-</div>        
+</div>  
 
 <sd:TitlePane key="Danh mục CA token"
               id="caUserList" >
@@ -123,25 +123,50 @@
     <jsp:include page="businessAddEditCaUserDlg.jsp"></jsp:include>
 </sd:Dialog>
 <jsp:include page="../../pages/files/lookup/pluginJSRegister.jsp" flush="false"></jsp:include>
+
     <script type="text/javascript">
         var grid = dijit.byId("caUserGrid");
         var dlg = dijit.byId("businessAddEditCaUserDlg");
+
+
+        backPage = function () {
+            var caUserGrid_VTGrid = dijit.byId('caUserGrid_VTGrid');            
+            if (caUserGrid_VTGrid) {
+                caUserGrid_VTGrid.destroyRecursive(true);
+            }
+            var categoryTitle = dijit.byId('categoryTitle');         
+            if (categoryTitle) {
+                categoryTitle.destroyRecursive(true);
+            }
+            var caUserList = dijit.byId('caUserList');
+            if (caUserList) {
+                caUserList.destroyRecursive(true);
+            }
+            var businessAddEditCaUserDlg = dijit.byId('businessAddEditCaUserDlg');
+            if (businessAddEditCaUserDlg) {
+                businessAddEditCaUserDlg.destroyRecursive(true);
+            }
+//          sd.connector.post("caUserAction!caUserAction.do?", "createDiv", null, null, null);  
+//           doGoToMenu("caUserAction!toBusinessRegisterCA.do?");
+//sd.connector.post("caUserAction!toBusinessRegisterCA.do?", "createDiv", null, null, null);
+        };
 
         page.showEditPopup = function (row) {
             var item = grid.getItem(row);
             page.setItem(item);
             dlg.show();
         };
-        page.setItem = function(item) {
+
+        page.setItem = function (item) {
             dijit.byId("createForm.caUserId").setValue(item.caUserId);
-        dijit.byId("createForm.caSerial").setValue(item.caSerial);
-        dijit.byId("createForm.userName").setValue(item.userName);
-        dijit.byId("createForm.name").setValue(item.name);
-        dijit.byId("createForm.position").setValue(item.position);        
-//        dijit.byId("createForm.command").setValue(item.command);        
-        clearAttFile("createForm.upload");
-        getAttacthFile(item.technicalStandardId, 23, "createForm.upload");
-    };
+            dijit.byId("createForm.caSerial").setValue(item.caSerial);
+            dijit.byId("createForm.userName").setValue(item.userName);
+            dijit.byId("createForm.name").setValue(item.name);
+            dijit.byId("createForm.position").setValue(item.position);
+            //        dijit.byId("createForm.command").setValue(item.command);        
+            clearAttFile("createForm.upload");
+            getAttacthFile(item.technicalStandardId, 23, "createForm.upload");
+        };
 
         var check;
         var workingCaUserId;
@@ -191,23 +216,25 @@
 
         };
 
-    page.deleteItem = function () {
-        if (!dijit.byId("caUserGrid").vtIsChecked()) {
-            msg.alert('<sd:Property>alert.select</sd:Property>', '<sd:Property>confirm.title</sd:Property>');
-                    } else {
-                        msg.confirm('<sd:Property>confirm.delete</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', page.deleteItemExecute);
-                                }
-                            };
+        page.deleteItem = function () {
+            if (!dijit.byId("caUserGrid").vtIsChecked()) {
+                msg.alert('<sd:Property>alert.select</sd:Property>', '<sd:Property>confirm.title</sd:Property>');
+                        } else {
+                            msg.confirm('<sd:Property>confirm.delete</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', page.deleteItemExecute);
+                                    }
+                                };
 
-    page.deleteItemExecute = function () {
-        var content = dijit.byId("caUserGrid").vtGetCheckedDataForPost("lstItemOnGrid");
-        sd.connector.post("caUserAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
-    };
+                                page.deleteItemExecute = function () {
+                                    var content = dijit.byId("caUserGrid").vtGetCheckedDataForPost("lstItemOnGrid");
+                                    sd.connector.post("caUserAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
+                                };
 
-    page.returnMessageDelete = function (data) {
-        var obj = dojo.fromJson(data);
-        var result = obj.items;
-        resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
-        page.search();
-    };
+                                page.returnMessageDelete = function (data) {
+                                    var obj = dojo.fromJson(data);
+                                    var result = obj.items;
+                                    resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
+                                    page.search();
+                                };
+
+                                backPage();
 </script>

@@ -28,7 +28,8 @@ import org.hibernate.Query;
  */
 public class CaUserDAO extends BaseDAO {
 
-    private String forwardPage = "caUserPage";
+//    private String forwardPage = "caUserPage";
+    private final String businessRegisterCAPage = "businessRegisterCA.Page";
     private CaUserForm searchForm;
     private CaUserForm createForm;
     CaUserDAOHE caUserDao = new CaUserDAOHE();
@@ -39,15 +40,15 @@ public class CaUserDAO extends BaseDAO {
      */
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CaUserDAO.class);
 
-    public String prepare() {
-        try {
-            //todo code here
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
-        }
-        return this.forwardPage;
-    }
-
+//    public String prepare() {
+//        try {
+//            //todo code here
+//        } catch (Exception ex) {
+//            log.error(ex.getMessage());
+//        }
+//        return this.forwardPage;
+//    }
+    
     /**
      *
      * @return
@@ -252,14 +253,13 @@ public class CaUserDAO extends BaseDAO {
         this.lstItemOnGrid = lstItemOnGrid;
     }
 
-    public String getForwardPage() {
-        return forwardPage;
-    }
-
-    public void setForwardPage(String forwardPage) {
-        this.forwardPage = forwardPage;
-    }
-
+//    public String getForwardPage() {
+//        return forwardPage;
+//    }
+//
+//    public void setForwardPage(String forwardPage) {
+//        this.forwardPage = forwardPage;
+//    }
     public CaUserDAOHE getCategoryTypeDao() {
         return caUserDao;
     }
@@ -291,5 +291,15 @@ public class CaUserDAO extends BaseDAO {
 
         jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;
+    }
+
+    //"F:\SVN\ATTP CBSP\web\WEB-INF\jsp\pages\business\businessRegisterCA.jsp"
+    public String toBusinessRegisterCA() {
+        try {
+            //todo code here
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
+        return businessRegisterCAPage;
     }
 }

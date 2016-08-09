@@ -4058,14 +4058,12 @@ public class FilesDAO extends BaseDAO {
         if ((totalFeeFile.equals(feeFile) && feeFile > 0l) || (totalFeeFile > feeFile)) {
             customInfo.add(1);
         } else // nop thieu
-        {
-            if (totalFeeFile < feeFile && totalFeeFile > 0) {
+         if (totalFeeFile < feeFile && totalFeeFile > 0) {
                 customInfo.add(0);
             } // chua nop
             else {
                 customInfo.add(-1);
             }
-        }
 
         jsonDataGrid.setItems(result.getLstResult());
         jsonDataGrid.setTotalRows(result.getnCount().intValue());
@@ -5950,7 +5948,7 @@ public class FilesDAO extends BaseDAO {
         Long lfoodSafetyQuality = null;
         Long leffectUtility = null;
         Long lstandard = null;
-        if (erbo != null && fbo != null) { 
+        if (erbo != null && fbo != null) {
             legal = erbo.getLegalContent();
             foodSafetyQuality = erbo.getFoodSafetyQualityContent();
             effectUtility = erbo.getEffectUtilityContent();
@@ -5968,7 +5966,7 @@ public class FilesDAO extends BaseDAO {
         customInfo.add(llegal);//5
         customInfo.add(lfoodSafetyQuality);//6
         customInfo.add(leffectUtility);//7
-        
+
 //160628 bo sung noi dung sua sau cong bo
         FilesDAOHE filesDaohe = new FilesDAOHE();
         Files filebo = filesDaohe.findById(objectId);
@@ -5991,7 +5989,7 @@ public class FilesDAO extends BaseDAO {
         customInfo.add(titleEditATTP);//8
         customInfo.add(contentsEditATTP);//9
 //!160628
-        
+
         jsonDataGrid.setCustomInfo(customInfo);
         return GRID_DATA;
     }//!140704
@@ -9634,7 +9632,6 @@ public class FilesDAO extends BaseDAO {
         edhe.insertEventLog("Thẩm định nhiều hồ sơ", "Thẩm định nhiều hồ sơ id=" + sid, getRequest());
         jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;
-
     }
 
     public String onEvaluateByLeaderManyFilesToAdd() {

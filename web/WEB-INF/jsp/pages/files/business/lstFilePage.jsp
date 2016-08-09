@@ -103,7 +103,7 @@
                         url += " | <img src='share/images/icons/UpArrow.png' width='17px' height='17px' title='Upload' onClick='page.Upload(" + row + ");' />";
                     } else {
                         url += " | <img src='share/images/edit.png' width='17px' height='17px' title='Bổ sung hồ sơ' onClick='page.showEditFile(" + item.fileId + ");' />";
-                        if (item.userSigned == "fileUploaded" || item.userSigned == "CBDN"){
+                        if (item.userSigned == "fileUploaded" || item.userSigned == "CBDN") {
                             url += " | <img src='share/images/icons/kdevelop_down.png' width='17px' height='17px' title='Hồ sơ đã upload' onClick='page.downloadFileSign(" + item.fileId + ");' />";
                         }
                         if (item.fileType != 3052 && item.fileType != 3051 && item.fileType != 3050 && item.fileType != 81) {
@@ -259,7 +259,7 @@
                     }
                     break;
                 case 25:
-                    if (item.isDownload == 1){
+                    if (item.isDownload == 1) {
                         url += " | <img src='share/images/document_open.png' width='17px' height='17px' title='Xuất giấy công bố' onClick='page.formatLinkDownloadPdf(" + item.fileId + ");' />";
                     }
                     break;
@@ -411,7 +411,8 @@
         }
     };
 
-    dojo.connect(dojo.byId("searchForm"), "onkeypress", page.searchDefault);</script>
+    dojo.connect(dojo.byId("searchForm"), "onkeypress", page.searchDefault);
+</script>
 
 <div id="token">
     <s:token id="tokenId"/>
@@ -592,13 +593,13 @@
             >
     <jsp:include page="../received/receivedFormViewDetails.jsp" flush="false"></jsp:include>
 </sd:Dialog>
-<!--
+<%--
 <sd:Dialog  id="comparisonByBusinessDlg" height="auto" width="600px"
             key="Nội dung thông báo đối chiếu hồ sơ" showFullscreenButton="false"
             >
     <jsp:include page="../../files/comparison/businessComparisonDlg.jsp" flush="false"></jsp:include>
 </sd:Dialog>
--->
+--%>
 <sd:Dialog  id="upload" height="auto" width="400px"
             key="Upload hồ sơ đã ký số" showFullscreenButton="false"
             >
@@ -611,8 +612,8 @@
 </sd:Dialog>
 <div id="createDiv"></div>
 
-<div id="myapplet" style="visibility:hidden; height: 0px;"> 
-</div>
+<div id="myapplet" style="visibility:hidden; height: 0px;"> </div>
+
 <script type="text/javascript">
     var workingFileId;
     var fileId = 0;
@@ -661,7 +662,7 @@
         if (upload) {
             upload.destroyRecursive(true);
         }
-        
+
         var businessSignFormPluginDlg_underlay = dijit.byId('businessSignFormPluginDlg_underlay');
         if (businessSignFormPluginDlg_underlay) {
             businessSignFormPluginDlg_underlay.destroyRecursive(true);
@@ -691,26 +692,31 @@
         if (txtCertSerialAFPCheck) {
             txtCertSerialAFPCheck.destroyRecursive(true);
         }
-        sd.connector.post("filesAction!toBusinessListPage.do?", "createDiv", null, null, null);
+        sd.connector.post("filesAction!toBusinessRegisterCA.do?", "createDiv", null, null, null);
     };
+
     page.reset = function () {
         dijit.byId("searchForm.fileCode").setValue("");
         dijit.byId("searchForm.fileType").setValue("-1");
         dijit.byId("searchForm.sendDateFrom").setValue("");
         dijit.byId("searchForm.sendDateTo").setValue("");
     };
+
     page.search = function () {
         dijit.byId("filesGrid").vtReload('filesAction!onSearchBusinessFiles.do?', "searchForm");
     };
+
     afterLoadForm = function (data) {
         document.getElementById("searchDiv").style.display = "none";
         document.getElementById("createDiv").style.display = "";
     };
+
     page.showViewFile = function (fileId) {
         document.getElementById("searchDiv").style.display = "none";
         document.getElementById("createDiv").style.display = "";
         sd.connector.post("filesAction!loadFileView.do?createForm.fileId=" + fileId + "&createForm.viewType=0", "createDiv", null, null, afterLoadForm);
     };
+
     page.showEditFile = function (fileId) {
         document.getElementById("searchDiv").style.display = "none";
         document.getElementById("createDiv").style.display = "";
@@ -724,200 +730,223 @@
                         msg.confirm("Bạn có chắc muốn hủy hồ sơ không ?", "Xóa hồ sơ", page.deleteFiles);
                     }
                 };
-                page.deleteFiles = function () {
-                    var content = dijit.byId("filesGrid").vtGetCheckedDataForPost("lstItemOnGrid");
-                    sd.connector.post("filesAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
-                };
-                page.returnMessageDelete = function (data) {
-                    var obj = dojo.fromJson(data);
-                    var result = obj.items;
-                    resultMessage_show("resultCreateMessage", result[0], result[1], 5000);
-                    page.search();
-                };
-                page.showDept = function (row) {
-                    var item = dijit.byId("filesGrid").getItem(row);
-                    workingFileId = item.fileId;
-                    //dijit.byId("deptGrid").vtReload("procedureAction!getDeptProcedure.do?procedureId=" + item.fileType);
-                    document.getElementById("Sign").checked = false;
-                    document.getElementById("Unsign").checked = false;
-                    //dijit.byId("selectDeptDlg").show();
-                    var AgencyName = '${fn:escapeXml(AgencyName)}';
-                    var AgencyId = '${fn:escapeXml(AgencyId)}';
-                    msg.confirm('<sd:Property>Bạn có chắc chắn muốn gửi hồ sơ đến đơn vị "</sd:Property>' + AgencyName + '<sd:Property>" không?</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', function () {
-                                sd.connector.post("filesAction!onSelectFlow.do?" + token.getTokenParamString() + "&createForm.deptId=" + AgencyId + "&createForm.fileId=" + workingFileId, null, null, null, page.afterSend);
-                            });
-                        };
-                        page.payFile = function (row)
-                        {
+                
+    page.deleteFiles = function () {
+        var content = dijit.byId("filesGrid").vtGetCheckedDataForPost("lstItemOnGrid");
+        sd.connector.post("filesAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
+    };
 
-                            var item = dijit.byId("filesGrid").getItem(row);
-                            sd.connector.post("filesAction!preparePayment.do?createFeeForm.fileId=" + item.fileId, 'createDiv', null, null, afterLoadPayForm);
-                        };
-                        afterLoadPayForm = function (data) {
-                            document.getElementById("searchDiv").style.display = "none";
-                            document.getElementById("createDiv").style.display = "";
-                        };
-                        page.formatLinkDownloadPdf = function (fileId) {
-                            document.location = "uploadiframe!openFileUserAttachPdf.do?fileId=" + fileId;
-                        };
-                        page.sendFile = function (row) {
-                            var item = dijit.byId("filesGrid").getItem(row);
-                            if (item.isFee == 0) {
-                                msg.alert("Do bạn đã đổi sang một nhóm sản phẩm có phí cao hơn nhóm sản phẩm ban đầu nên bạn phải thanh toán thêm tiền còn thiếu để gửi hồ sơ đi, sau khi thanh toán thành công phải đợi kế toán xác nhận lại tiền (chú ý up cả hóa đơn cũ và mới lên)");
-                            } else {
-                                page.showDept(row);
-                            }
-                        };
+    page.returnMessageDelete = function (data) {
+        var obj = dojo.fromJson(data);
+        var result = obj.items;
+        resultMessage_show("resultCreateMessage", result[0], result[1], 5000);
+        page.search();
+    };
 
-                        page.signCa = function (row) {
-                            var item = dijit.byId("filesGrid").getItem(row);
-                            sd.connector.post("filesAction!onValidate.do?searchForm.fileId=" + item.fileId, null, null, null, function (data) {
-                                var obj = dojo.fromJson(data);
-                                var result = obj.items;
-                                if (result[0] == "1") {
-                                    var item = dijit.byId("filesGrid").getItem(row);
-                                    workingFileId = item.fileId;
-                                    page.onSelectDeptNew(row);
-                                } else {
-                                    msg.alert(result[1] + ", Hãy cập nhật lại thông tin hồ sơ", "Thông báo");
-                                }
-                            });
-                        };
-                        page.loadView = function () {
-                            page.clearInsertForm();
-                            dijit.byId("createDlg").show();
-                        };
-                        page.showSearchPanel = function () {
-                            var panel = document.getElementById("searchDiv");
-                            panel.setAttribute("style", "display:;");
-                            dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
-                        };
-                        dijit.byId("searchForm.status").setValue(${fn:escapeXml(searchForm.status)});
-                        page.search();
-                        page.copyFile = function (fileId) {
-                            document.getElementById("searchDiv").style.display = "none";
-                            document.getElementById("createDiv").style.display = "";
-                            sd.connector.post("filesAction!toCopyFilePage.do?createForm.fileId=" + fileId + "&checkEdit=1", "createDiv", null, null, function () {
-                                document.getElementById("searchDiv").style.display = "none";
-                                document.getElementById("createDiv").style.display = "";
-                                dijit.byId("createForm.fileId").setValue(null);
-                            });
-                        };
-                        page.showEvaludateResult = function (row) {//show kết quả thẩm định
-                            var file = dijit.byId("filesGrid").getItem(row);
-                            var statusName = page.getStatusName(parseInt(file.status));
-                            fileId = file.fileId;
-                            document.getElementById("evaluateFormView.status").innerHTML = statusName;
-                            document.getElementById("evaluateFormView.staffRequest").innerHTML = escapeHtml_(file.staffRequest);
-                            var isTypeChange = file.isTypeChange;
-                            if (isTypeChange == 1) {
-                                document.getElementById("evaluateFormView.isTypeChange").style.display = "";
-                            } else {
-                                document.getElementById("evaluateFormView.isTypeChange").style.display = "none";
-                            }
-                            page.replaceNewLineByBr();
-                            sd.connector.post("filesAction!showStaffContact.do?objectId=" + fileId, null, null, null, page.afterShowStaffContact);
-                        };
-                        page.afterShowStaffContact = function (data) {
-                            page.showComment();
-                            page.showVersionSDBS();
-                            dijit.byId("feedbackEvaluateViewDetailsDlg").show();
-                            data = dojo.fromJson(data);
-                            document.getElementById("evaluateFormView.staffNameContact").innerHTML = data.customInfo[0];
-                            document.getElementById("evaluateFormView.staffEmailContact").innerHTML = data.customInfo[1];
-                            document.getElementById("evaluateFormView.staffTelContact").innerHTML = data.customInfo[2];
-                        };
-                        page.getStatusName = function (status) {
-                            switch (status) {
-                                case 1:
-                                    url = "Mới nộp";
-                                    break;
-                                case 2:
-                                    url = "Đã được đề xuất xử lý";
-                                    break;
-                                case 3:
-                                    url = "Đã phân công xử lý";
-                                    break;
-                                case 4:
-                                    url = "Đã thẩm định";
-                                    break;
-                                case 5:
-                                    url = "Đã xem xét kết quả";
-                                    break;
-                                case 6:
-                                    url = "Đã phê duyệt kết quả";
-                                    break;
-                                case 7:
-                                    url = "Chuyên viên kết luận Đạt";
-                                    break;
-                                case 8:
-                                    url = "Đã trả lại để thẩm định lại";
-                                    break;
-                                case 9:
-                                    url = "Đã trả lại để xem xét lại";
-                                    break;
-                                default:
-                                    url = "Mới tạo";
-                            }
-                            return url;
-                        };
-                        page.showReceiveResult = function (row) {//show ket qua tiep nhan ho so - van thu - 140410 binhnt53
-                            var file = dijit.byId("filesGrid").getItem(row);
-                            var statusName = page.getStatusName(parseInt(file.status));
-                            document.getElementById("receivedFormViewDetails.status").innerHTML = statusName;
-                            document.getElementById("receivedFormViewDetails.clericalRequest").innerHTML = escapeHtml_(file.clericalRequest);
-                            page.replaceTblReceivedFormViewDetails();
-                            dijit.byId("receivedFormViewDetailsDlg").show();
-                        };
-                        page.reloadViewOldVersion = function (oldVersion, thisVersion) {//u140728
-                            document.getElementById('createDiv').Value = '';
-                            //u140730-dund1
-                            var gridRegister = dijit.byId('processCommentGridId_VTGrid');
-                            if (gridRegister) {
-                                gridRegister.destroyRecursive(true);
-                            }//!u140730
-                            sd.connector.post("filesAction!loadFilesByOldVersion.do?thisVersion=" + thisVersion + "&oldVersion=" + oldVersion, "createDiv", null, null, afterReloadViewOldVersion);
-                        };
-                        afterReloadViewOldVersion = function (data) {
-                        }; //!u140728
-                        page.showAlertComparisonDlg = function (row) {
-                            var item = dijit.byId("filesGrid").getItem(row);
-                            dijit.byId("comparisonForm.fileId").setValue(item.fileId);
-                            document.getElementById("comparisonForm.lastContent").innerHTML = item.comparisonContent;
-                            page.rplBrTblBusinessComparisonDlg();
-                            dijit.byId("comparisonByBusinessDlg").show();
-                        }
-                        page.Upload = function (row)
-                        {
-                            var item = dijit.byId("filesGrid").getItem(row);
-                            sd.connector.post("filesAction!onValidate.do?searchForm.fileId=" + item.fileId, null, null, null, function (data) {
-                                var obj = dojo.fromJson(data);
-                                var result = obj.items;
-                                if (result[0] == "1") {
-                                    workingFileId = item.fileId;
-                                    clearAttFile("sendForm.attachFileNew");
-                                    dijit.byId("upload").show();
-                                } else {
-                                    msg.alert(result[1] + ", Hãy cập nhật lại thông tin hồ sơ", "Thông báo");
-                                }
-                            });
-                        };
-                        page.downloadFileSign = function (fileId) {
-                            document.location = "uploadiframe!openFileUserUpload.do?fileId=" + fileId;
-                        };
-                        page.setCreateDiv = function (fileId, fileType) {
-                            var fileTypeTemp = fileType;
-                            var fileIdTemp = fileId;
-                            sd.connector.post("filesAction!toCopyFilePage.do?createForm.fileId=" + fileIdTemp + "&fileType=" + fileTypeTemp + "&checkEdit=1", "createDiv", null, null, function () {
-                                document.getElementById("searchDiv").style.display = "none";
-                                document.getElementById("createDiv").style.display = "";
-                                dijit.byId("createForm.fileId").setValue(null);
-                            });
-                            document.getElementById('createDiv').Value = '';
-                            //sd.connector.post("filesAction!toCreateFilePage.do?fileType=" + fileTypeTemp, "createDiv", null, null, afterLoadFormChange);
-                        };
-                        afterLoadFormChange = function (data) {
-                        };
+    page.showDept = function (row) {
+        var item = dijit.byId("filesGrid").getItem(row);
+        workingFileId = item.fileId;
+        //dijit.byId("deptGrid").vtReload("procedureAction!getDeptProcedure.do?procedureId=" + item.fileType);
+        document.getElementById("Sign").checked = false;
+        document.getElementById("Unsign").checked = false;
+        //dijit.byId("selectDeptDlg").show();
+        var AgencyName = '${fn:escapeXml(AgencyName)}';
+        var AgencyId = '${fn:escapeXml(AgencyId)}';
+        msg.confirm('<sd:Property>Bạn có chắc chắn muốn gửi hồ sơ đến đơn vị "</sd:Property>' + AgencyName + '<sd:Property>" không?</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', function () {
+                    sd.connector.post("filesAction!onSelectFlow.do?" + token.getTokenParamString() + "&createForm.deptId=" + AgencyId + "&createForm.fileId=" + workingFileId, null, null, null, page.afterSend);
+                });
+            };
+
+    page.payFile = function (row)
+    {
+
+        var item = dijit.byId("filesGrid").getItem(row);
+        sd.connector.post("filesAction!preparePayment.do?createFeeForm.fileId=" + item.fileId, 'createDiv', null, null, afterLoadPayForm);
+    };
+
+    afterLoadPayForm = function (data) {
+        document.getElementById("searchDiv").style.display = "none";
+        document.getElementById("createDiv").style.display = "";
+    };
+
+    page.formatLinkDownloadPdf = function (fileId) {
+        document.location = "uploadiframe!openFileUserAttachPdf.do?fileId=" + fileId;
+    };
+
+    page.sendFile = function (row) {
+        var item = dijit.byId("filesGrid").getItem(row);
+        if (item.isFee == 0) {
+            msg.alert("Do bạn đã đổi sang một nhóm sản phẩm có phí cao hơn nhóm sản phẩm ban đầu nên bạn phải thanh toán thêm tiền còn thiếu để gửi hồ sơ đi, sau khi thanh toán thành công phải đợi kế toán xác nhận lại tiền (chú ý up cả hóa đơn cũ và mới lên)");
+        } else {
+            page.showDept(row);
+        }
+    };
+
+    page.signCa = function (row) {
+        var item = dijit.byId("filesGrid").getItem(row);
+        sd.connector.post("filesAction!onValidate.do?searchForm.fileId=" + item.fileId, null, null, null, function (data) {
+            var obj = dojo.fromJson(data);
+            var result = obj.items;
+            if (result[0] == "1") {
+                var item = dijit.byId("filesGrid").getItem(row);
+                workingFileId = item.fileId;
+                page.onSelectDeptNew(row);
+            } else {
+                msg.alert(result[1] + ", Hãy cập nhật lại thông tin hồ sơ", "Thông báo");
+            }
+        });
+    };
+
+    page.loadView = function () {
+        page.clearInsertForm();
+        dijit.byId("createDlg").show();
+    };
+
+    page.showSearchPanel = function () {
+        var panel = document.getElementById("searchDiv");
+        panel.setAttribute("style", "display:;");
+        dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
+    };
+
+    dijit.byId("searchForm.status").setValue(${fn:escapeXml(searchForm.status)});
+
+    page.search();
+
+    page.copyFile = function (fileId) {
+        document.getElementById("searchDiv").style.display = "none";
+        document.getElementById("createDiv").style.display = "";
+        sd.connector.post("filesAction!toCopyFilePage.do?createForm.fileId=" + fileId + "&checkEdit=1", "createDiv", null, null, function () {
+            document.getElementById("searchDiv").style.display = "none";
+            document.getElementById("createDiv").style.display = "";
+            dijit.byId("createForm.fileId").setValue(null);
+        });
+    };
+
+    page.showEvaludateResult = function (row) {//show kết quả thẩm định
+        var file = dijit.byId("filesGrid").getItem(row);
+        var statusName = page.getStatusName(parseInt(file.status));
+        fileId = file.fileId;
+        document.getElementById("evaluateFormView.status").innerHTML = statusName;
+        document.getElementById("evaluateFormView.staffRequest").innerHTML = escapeHtml_(file.staffRequest);
+        var isTypeChange = file.isTypeChange;
+        if (isTypeChange == 1) {
+            document.getElementById("evaluateFormView.isTypeChange").style.display = "";
+        } else {
+            document.getElementById("evaluateFormView.isTypeChange").style.display = "none";
+        }
+        page.replaceNewLineByBr();
+        sd.connector.post("filesAction!showStaffContact.do?objectId=" + fileId, null, null, null, page.afterShowStaffContact);
+    };
+
+    page.afterShowStaffContact = function (data) {
+        page.showComment();
+        page.showVersionSDBS();
+        dijit.byId("feedbackEvaluateViewDetailsDlg").show();
+        data = dojo.fromJson(data);
+        document.getElementById("evaluateFormView.staffNameContact").innerHTML = data.customInfo[0];
+        document.getElementById("evaluateFormView.staffEmailContact").innerHTML = data.customInfo[1];
+        document.getElementById("evaluateFormView.staffTelContact").innerHTML = data.customInfo[2];
+    };
+
+    page.getStatusName = function (status) {
+        switch (status) {
+            case 1:
+                url = "Mới nộp";
+                break;
+            case 2:
+                url = "Đã được đề xuất xử lý";
+                break;
+            case 3:
+                url = "Đã phân công xử lý";
+                break;
+            case 4:
+                url = "Đã thẩm định";
+                break;
+            case 5:
+                url = "Đã xem xét kết quả";
+                break;
+            case 6:
+                url = "Đã phê duyệt kết quả";
+                break;
+            case 7:
+                url = "Chuyên viên kết luận Đạt";
+                break;
+            case 8:
+                url = "Đã trả lại để thẩm định lại";
+                break;
+            case 9:
+                url = "Đã trả lại để xem xét lại";
+                break;
+            default:
+                url = "Mới tạo";
+        }
+        return url;
+    };
+                        
+    page.showReceiveResult = function (row) {//show ket qua tiep nhan ho so - van thu - 140410 binhnt53
+        var file = dijit.byId("filesGrid").getItem(row);
+        var statusName = page.getStatusName(parseInt(file.status));
+        document.getElementById("receivedFormViewDetails.status").innerHTML = statusName;
+        document.getElementById("receivedFormViewDetails.clericalRequest").innerHTML = escapeHtml_(file.clericalRequest);
+        page.replaceTblReceivedFormViewDetails();
+        dijit.byId("receivedFormViewDetailsDlg").show();
+    };
+                        
+    page.reloadViewOldVersion = function (oldVersion, thisVersion) {//u140728
+        document.getElementById('createDiv').Value = '';
+        //u140730-dund1
+        var gridRegister = dijit.byId('processCommentGridId_VTGrid');
+        if (gridRegister) {
+            gridRegister.destroyRecursive(true);
+        }//!u140730
+        sd.connector.post("filesAction!loadFilesByOldVersion.do?thisVersion=" + thisVersion + "&oldVersion=" + oldVersion, "createDiv", null, null, afterReloadViewOldVersion);
+    };
+                        
+    afterReloadViewOldVersion = function (data) {
+    }; //!u140728
+                        
+    page.showAlertComparisonDlg = function (row) {
+        var item = dijit.byId("filesGrid").getItem(row);
+        dijit.byId("comparisonForm.fileId").setValue(item.fileId);
+        document.getElementById("comparisonForm.lastContent").innerHTML = item.comparisonContent;
+        page.rplBrTblBusinessComparisonDlg();
+        dijit.byId("comparisonByBusinessDlg").show();
+    };
+                        
+    page.Upload = function (row)
+    {
+        var item = dijit.byId("filesGrid").getItem(row);
+        sd.connector.post("filesAction!onValidate.do?searchForm.fileId=" + item.fileId, null, null, null, function (data) {
+            var obj = dojo.fromJson(data);
+            var result = obj.items;
+            if (result[0] == "1") {
+                workingFileId = item.fileId;
+                clearAttFile("sendForm.attachFileNew");
+                dijit.byId("upload").show();
+            } else {
+                msg.alert(result[1] + ", Hãy cập nhật lại thông tin hồ sơ", "Thông báo");
+            }
+        });
+    };
+                        
+    page.downloadFileSign = function (fileId) {
+        document.location = "uploadiframe!openFileUserUpload.do?fileId=" + fileId;
+    };
+                        
+    page.setCreateDiv = function (fileId, fileType) {
+        var fileTypeTemp = fileType;
+        var fileIdTemp = fileId;
+        sd.connector.post("filesAction!toCopyFilePage.do?createForm.fileId=" + fileIdTemp + "&fileType=" + fileTypeTemp + "&checkEdit=1", "createDiv", null, null, function () {
+            document.getElementById("searchDiv").style.display = "none";
+            document.getElementById("createDiv").style.display = "";
+            dijit.byId("createForm.fileId").setValue(null);
+        });
+        document.getElementById('createDiv').Value = '';
+        //sd.connector.post("filesAction!toCreateFilePage.do?fileType=" + fileTypeTemp, "createDiv", null, null, afterLoadFormChange);
+    };
+
+    afterLoadFormChange = function (data) {
+    };
                         //hieptq update 130115
     page.payFileMore = function ()
     {
@@ -925,9 +954,10 @@
             msg.alert('Bạn chưa chọn hồ sơ để thanh toán phí thẩm định', 'Cảnh báo');
         } else {
             msg.confirm('Bạn có chắc chắn muốn thanh toán những hồ sơ đã chọn ?', '<sd:Property>confirm.title1</sd:Property>', page.payFileMoreKeyPay);
-        }
+                    }
 
-    };
+                };
+                                    
     page.payFileMoreKeyPay = function () {
         var items = dijit.byId("filesGrid").vtGetCheckedItems();
         var lstObjectId = "";
@@ -962,7 +992,7 @@
             }
         }
     };
-                                    
+
     page.payFileMoreKeyPayNew = function (lstObjectId)
     {
         sd.connector.post("filesAction!preparePaymentMore.do?lstObjectId=" + lstObjectId, 'createDiv', null, null, afterLoadPayForm);
@@ -976,16 +1006,16 @@
             itemsToSign = dijit.byId("filesGrid").vtGetCheckedItems();
             signIndex = 0;
             msg.confirm('Bạn có chắc chắn muốn ký số hồ sơ?', '<sd:Property>confirm.title1</sd:Property>', page.signFileUsingPlugin);
-        }
-    };
+                    }
+                };
 
     page.signFileUsingPlugin = function () {//160705 - 2
-    dijit.byId("businessSignFormPluginDlg").show();
+        dijit.byId("businessSignFormPluginDlg").show();
         document.getElementById('divProcess').innerHTML = "Hệ thống đang thực hiện ký số:" + (signIndex + 1) + "/" + itemsToSign.length + " hồ sơ  ";
         document.getElementById("divSignProcess").style.display = "";
         document.getElementById("trWaitViewFile").style.display = 'none';
         page.onSign(itemsToSign[signIndex], true);
-        
+
     };
 
     page.onSign = function (file, isSignMore) {//160705
@@ -1003,8 +1033,8 @@
     };
 
     onCloseBusinessSignFormDlg = function () {
-            dijit.byId("businessSignFormPluginDlg").hide();            
+        dijit.byId("businessSignFormPluginDlg").hide();
 //            backPage();
 //            sd.connector.post("filesAction!index.do?", null, null, null, null);
-        };
+                                                };
 </script>

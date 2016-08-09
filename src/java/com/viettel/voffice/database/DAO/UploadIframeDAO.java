@@ -134,8 +134,8 @@ public class UploadIframeDAO extends BaseDAO {
                 if (dot == '.') {
                     return "";
                 }
-                //if (checkFileExtension(fileName)) {
-                if (true) {
+                if (checkFileExtension(fileName)) {
+//                if (true) {
                     String filePath = UploadFile.uploadFile("temp", fileName, file, getRequest());
                     VoAttachsDAOHE daoHe = new VoAttachsDAOHE();
                     VoAttachs bo = new VoAttachs();
@@ -185,8 +185,8 @@ public class UploadIframeDAO extends BaseDAO {
                 if (dot == '.') {
                     return "";
                 }
-                //if (checkFileExtension(fileName)) {
-                if (true) {
+                if (checkFileExtension(fileName)) {
+//                if (true) {
                     String filePath = UploadFile.uploadFilePdf("temp", fileName, file, getRequest());
                     VoAttachs bo = new VoAttachs();
                     bo.setAttachName(fileName);
@@ -236,8 +236,8 @@ public class UploadIframeDAO extends BaseDAO {
                 if (dot == '.') {
                     return "";
                 }
-                //if (checkFileExtension(fileName)) {
-                if (true) {
+                if (checkFileExtension(fileName)) {
+//                if (true) {
                     String filePath = UploadFile.uploadFilePdfVT("temp", fileName, file, getRequest());
                     VoAttachsDAOHE daoHe = new VoAttachsDAOHE();
                     VoAttachs bo = new VoAttachs();
@@ -284,8 +284,8 @@ public class UploadIframeDAO extends BaseDAO {
                 fileName = multi.getFileNames(fieldName)[0];
                 fileName = getSafeFileName(fileName);
                 fileName = toNoneUnicode(fileName);
-                //if (checkFileExtension(fileName)) {
-                if (true) {
+                if (checkFileExtension(fileName)) {
+//                if (true) {
                     VoAttachsDAOHE daoHe = new VoAttachsDAOHE();
                     String filePath = UploadFile.uploadFileExcel("temp", fileName, file, getRequest());
                     VoAttachs bo = new VoAttachs();
@@ -331,8 +331,8 @@ public class UploadIframeDAO extends BaseDAO {
                 fileName = multi.getFileNames(fieldName)[0];
                 fileName = getSafeFileName(fileName);
                 fileName = toNoneUnicode(fileName);
-//                if(checkFileExtension(fileName)) {
-                if (true) {
+                if(checkFileExtension(fileName)) {
+//                if (true) {
                     String filePath = UploadFile.uploadFile("temp", fileName, file, getRequest());
                     VoAttachs bo = new VoAttachs();
                     bo.setAttachName(fileName);

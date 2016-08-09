@@ -971,14 +971,16 @@
                     page.rplBrTblComparisonDlg();
                     dijit.byId("comparisonDlg").show();
                 };
-                page.UploadFileSignVT = function (row)
+                
+page.UploadFileSignVT = function (row)
                 {
                     var item = dijit.byId("filesGrid").getItem(row);
                     workingFileId = item.fileId;
                     clearAttFile("sendForm.attachFileNew");
                     dijit.byId("upload").show();
                 };
-                page.hideSignMore = function ()
+
+page.hideSignMore = function ()
                 {
                     var searchType = dijit.byId("searchForm.searchType").getValue();
                     checkSignType = searchType;
@@ -992,8 +994,7 @@
                         document.getElementById("trSignMore").style.display = "none";
                     }
                 };
-                page.hideSignMore();
-                page.search();
+                page.hideSignMore();                
                 function deleteAllCookies() {
                     var cookies = document.cookie.split(";");
                     for (var i = 0; i < cookies.length; i++) {
@@ -1004,6 +1005,7 @@
                     }
                 }
                 deleteAllCookies();
+                page.search();
     </script>
     <input type="hidden" id="base64Hash0" value="" />
 <sd:TextBox id="txtBase64HashC0" key="" name="txtBase64Hash0" type="hidden"/>

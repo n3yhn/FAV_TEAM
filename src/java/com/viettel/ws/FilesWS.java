@@ -4,6 +4,8 @@
  */
 package com.viettel.ws;
 
+import static com.viettel.common.util.Constants.TEMP.FEATURE_GENERAL_ENTITIES;
+import static com.viettel.common.util.Constants.TEMP.FEATURE_PARAMETER_ENTITIES;
 import com.viettel.common.util.DateTimeUtils;
 import com.viettel.hqmc.BO.AnnouncementReceiptPaper;
 import com.viettel.hqmc.BO.Business;
@@ -22,12 +24,8 @@ import com.viettel.voffice.database.DAOHibernate.VoAttachsDAOHE;
 import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import com.viettel.ws.ANNOUCERECEIVE.ANNOUNCESENDDtoType;
 import com.viettel.ws.BO.ANNOUNCERESULTDto;
-import com.viettel.ws.BO.Attachment;
-import com.viettel.ws.BO.DNREQUEST_CHANGE_310;
 import com.viettel.ws.BO.ERRORDto;
 import com.viettel.ws.BO.ERRORLIST;
-import com.viettel.ws.BO.Envelope;
-import com.viettel.ws.BO.ErrorWs;
 import com.viettel.ws.BO.FILERESULTSDto;
 import com.viettel.ws.BO.RESULTPAGER;
 import com.viettel.ws.BO.SENDRESPONSEDto;
@@ -39,19 +37,15 @@ import com.viettel.ws.FORM.ERROR;
 import com.viettel.ws.FORM.RESULT;
 import com.viettel.ws.FORM.RE_ANNOUNCE;
 import com.viettel.ws.PdfSign.PdfSign;
-import com.viettel.ws.validateData.Helper;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -68,13 +62,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import org.apache.xml.security.exceptions.Base64DecodingException;
-import org.apache.xml.security.utils.Base64;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -195,147 +188,158 @@ public class FilesWS extends BaseWS {
     }
 
     private String toXML(GridResult gr) {
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder;
         try {
-            docBuilder = docFactory.newDocumentBuilder();
-            Document doc = docBuilder.newDocument();
-            Element root = doc.createElement("lstFiles");
-            doc.appendChild(root);
-            root.setAttribute("count", gr.getnCount().toString());
+            String FEATURE_GENERAL_ENTITIES = "http://xml.org/sax/features/external-general-entities";
+            String FEATURE_PARAMETER_ENTITIES = "http://xml.org/sax/features/external-parameter-entities";
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            docFactory.setFeature(FEATURE_GENERAL_ENTITIES, false);
+            docFactory.setFeature(FEATURE_PARAMETER_ENTITIES, false);
+            docFactory.setXIncludeAware(false);
+            docFactory.setExpandEntityReferences(false);
+            DocumentBuilder docBuilder;
+            try {
+                docBuilder = docFactory.newDocumentBuilder();
+                Document doc = docBuilder.newDocument();
+                Element root = doc.createElement("lstFiles");
+                doc.appendChild(root);
+                root.setAttribute("count", gr.getnCount().toString());
 
-            if (gr.getLstResult() != null && gr.getLstResult().size() > 0) {
-                for (int i = 0; i < gr.getLstResult().size(); i++) {
-                    Files form = (Files) gr.getLstResult().get(i);
-                    Element file = doc.createElement("file");
-                    root.appendChild(file);
+                if (gr.getLstResult() != null && gr.getLstResult().size() > 0) {
+                    for (int i = 0; i < gr.getLstResult().size(); i++) {
+                        Files form = (Files) gr.getLstResult().get(i);
+                        Element file = doc.createElement("file");
+                        root.appendChild(file);
 
-                    file.setAttribute("fileId", form.getFileId().toString());
-                    file.setAttribute("fileType", form.getFileType().toString());
-                    file.setAttribute("fileTypeName", form.getFileTypeName());
-                    file.setAttribute("fileCode", form.getFileCode());
-                    if (form.getCreateDate() != null) {
-                        file.setAttribute("createDate", form.getCreateDate().toString());
-                    } else {
-                        file.setAttribute("createDate", "");
-                    }
-                    if (form.getModifyDate() != null) {
-                        file.setAttribute("modifyDate", form.getModifyDate().toString());
-                    } else {
-                        file.setAttribute("modifyDate", "");
-                    }
-                    if (form.getSendDate() != null) {
-                        file.setAttribute("sendDate", form.getSendDate().toString());
-                    } else {
-                        file.setAttribute("sendDate", "");
-                    }
-                    if (form.getDeadline() != null) {
-                        file.setAttribute("deadline", form.getDeadline().toString());
-                    } else {
-                        file.setAttribute("deadline", "");
-                    }
-                    if (form.getStatus() != null) {
-                        file.setAttribute("status", form.getStatus().toString());
-                    } else {
-                        file.setAttribute("status", "");
-                    }
-                    file.setAttribute("staffRequest", form.getStaffRequest());
-                    file.setAttribute("leaderStaffRequest", form.getLeaderStaffRequest());
-                    file.setAttribute("leaderRequest", form.getLeaderRequest());
-                    file.setAttribute("displayRequest", form.getDisplayRequest());
-                    if (form.getReIssueFormId() != null) {
-                        file.setAttribute("reIssueFormId", form.getReIssueFormId().toString());
-                    } else {
-                        file.setAttribute("reIssueFormId", "");
-                    }
+                        file.setAttribute("fileId", form.getFileId().toString());
+                        file.setAttribute("fileType", form.getFileType().toString());
+                        file.setAttribute("fileTypeName", form.getFileTypeName());
+                        file.setAttribute("fileCode", form.getFileCode());
+                        if (form.getCreateDate() != null) {
+                            file.setAttribute("createDate", form.getCreateDate().toString());
+                        } else {
+                            file.setAttribute("createDate", "");
+                        }
+                        if (form.getModifyDate() != null) {
+                            file.setAttribute("modifyDate", form.getModifyDate().toString());
+                        } else {
+                            file.setAttribute("modifyDate", "");
+                        }
+                        if (form.getSendDate() != null) {
+                            file.setAttribute("sendDate", form.getSendDate().toString());
+                        } else {
+                            file.setAttribute("sendDate", "");
+                        }
+                        if (form.getDeadline() != null) {
+                            file.setAttribute("deadline", form.getDeadline().toString());
+                        } else {
+                            file.setAttribute("deadline", "");
+                        }
+                        if (form.getStatus() != null) {
+                            file.setAttribute("status", form.getStatus().toString());
+                        } else {
+                            file.setAttribute("status", "");
+                        }
+                        file.setAttribute("staffRequest", form.getStaffRequest());
+                        file.setAttribute("leaderStaffRequest", form.getLeaderStaffRequest());
+                        file.setAttribute("leaderRequest", form.getLeaderRequest());
+                        file.setAttribute("displayRequest", form.getDisplayRequest());
+                        if (form.getReIssueFormId() != null) {
+                            file.setAttribute("reIssueFormId", form.getReIssueFormId().toString());
+                        } else {
+                            file.setAttribute("reIssueFormId", "");
+                        }
 
-                    if (form.getAnnouncementId() != null) {
-                        file.setAttribute("announcementId", form.getAnnouncementId().toString());
-                    } else {
-                        file.setAttribute("announcementId", "");
-                    }
+                        if (form.getAnnouncementId() != null) {
+                            file.setAttribute("announcementId", form.getAnnouncementId().toString());
+                        } else {
+                            file.setAttribute("announcementId", "");
+                        }
 
-                    if (form.getDetailProductId() != null) {
-                        file.setAttribute("detailProductId", form.getDetailProductId().toString());
-                    } else {
-                        file.setAttribute("detailProductId", "");
-                    }
+                        if (form.getDetailProductId() != null) {
+                            file.setAttribute("detailProductId", form.getDetailProductId().toString());
+                        } else {
+                            file.setAttribute("detailProductId", "");
+                        }
 
-                    if (form.getTestRegistrationId() != null) {
-                        file.setAttribute("testRegistrationId", form.getTestRegistrationId().toString());
-                    } else {
-                        file.setAttribute("testRegistrationId", "");
-                    }
-                    file.setAttribute("businessName", form.getBusinessName());
+                        if (form.getTestRegistrationId() != null) {
+                            file.setAttribute("testRegistrationId", form.getTestRegistrationId().toString());
+                        } else {
+                            file.setAttribute("testRegistrationId", "");
+                        }
+                        file.setAttribute("businessName", form.getBusinessName());
 
-                    if (form.getUserCreateId() != null) {
-                        file.setAttribute("userCreateId", form.getUserCreateId().toString());
-                    } else {
-                        file.setAttribute("userCreateId", "");
-                    }
-                    file.setAttribute("userCreateName", form.getUserCreateName());
+                        if (form.getUserCreateId() != null) {
+                            file.setAttribute("userCreateId", form.getUserCreateId().toString());
+                        } else {
+                            file.setAttribute("userCreateId", "");
+                        }
+                        file.setAttribute("userCreateName", form.getUserCreateName());
 
-                    if (form.getNodeId() != null) {
-                        file.setAttribute("nodeId", form.getNodeId().toString());
-                    } else {
-                        file.setAttribute("nodeId", "");
-                    }
+                        if (form.getNodeId() != null) {
+                            file.setAttribute("nodeId", form.getNodeId().toString());
+                        } else {
+                            file.setAttribute("nodeId", "");
+                        }
 
-                    if (form.getFlowId() != null) {
-                        file.setAttribute("flowId", form.getFlowId().toString());
-                    } else {
-                        file.setAttribute("flowId", "");
-                    }
+                        if (form.getFlowId() != null) {
+                            file.setAttribute("flowId", form.getFlowId().toString());
+                        } else {
+                            file.setAttribute("flowId", "");
+                        }
 
-                    if (form.getPreviousVersion() != null) {
-                        file.setAttribute("previousVersion", form.getPreviousVersion().toString());
-                    } else {
-                        file.setAttribute("previousVersion", "");
-                    }
+                        if (form.getPreviousVersion() != null) {
+                            file.setAttribute("previousVersion", form.getPreviousVersion().toString());
+                        } else {
+                            file.setAttribute("previousVersion", "");
+                        }
 
-                    if (form.getDeptId() != null) {
-                        file.setAttribute("deptId", form.getDeptId().toString());
-                    } else {
-                        file.setAttribute("deptId", "");
+                        if (form.getDeptId() != null) {
+                            file.setAttribute("deptId", form.getDeptId().toString());
+                        } else {
+                            file.setAttribute("deptId", "");
+                        }
+                        file.setAttribute("deptName", form.getDeptName());
+                        file.setAttribute("announcementNo", form.getAnnouncementNo());
+                        file.setAttribute("businessLicence", form.getBusinessLicence());
+                        file.setAttribute("businessAddress", form.getBusinessAddress());
+                        file.setAttribute("productName", form.getProductName());
+                        file.setAttribute("manufactureName", form.getManufactureName());
+                        file.setAttribute("manufactureAddress", form.getManufactureAddress());
+                        file.setAttribute("matchingTarget", form.getMatchingTarget());
+                        file.setAttribute("nationName", form.getNationName());
+                        file.setAttribute("announcementReceiptPaperId", form.getAnnouncementReceiptPaperId() + "");
+                        file.setAttribute("confirmAnnouncementPaperId", form.getConfirmAnnouncementPaperId() + "");
+                        file.setAttribute("confirmImportSatistPaperId", form.getConfirmImportSatistPaperId() + "");
+                        if (form.getAgencyId() != null) {
+                            file.setAttribute("agencyId", form.getAgencyId().toString());
+                        } else {
+                            file.setAttribute("agencyId", "");
+                        }
+                        file.setAttribute("agencyName", form.getAgencyName());
+
                     }
-                    file.setAttribute("deptName", form.getDeptName());
-                    file.setAttribute("announcementNo", form.getAnnouncementNo());
-                    file.setAttribute("businessLicence", form.getBusinessLicence());
-                    file.setAttribute("businessAddress", form.getBusinessAddress());
-                    file.setAttribute("productName", form.getProductName());
-                    file.setAttribute("manufactureName", form.getManufactureName());
-                    file.setAttribute("manufactureAddress", form.getManufactureAddress());
-                    file.setAttribute("matchingTarget", form.getMatchingTarget());
-                    file.setAttribute("nationName", form.getNationName());
-                    file.setAttribute("announcementReceiptPaperId", form.getAnnouncementReceiptPaperId() + "");
-                    file.setAttribute("confirmAnnouncementPaperId", form.getConfirmAnnouncementPaperId() + "");
-                    file.setAttribute("confirmImportSatistPaperId", form.getConfirmImportSatistPaperId() + "");
-                    if (form.getAgencyId() != null) {
-                        file.setAttribute("agencyId", form.getAgencyId().toString());
-                    } else {
-                        file.setAttribute("agencyId", "");
-                    }
-                    file.setAttribute("agencyName", form.getAgencyName());
 
                 }
 
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                Transformer transformer = transformerFactory.newTransformer();
+                DOMSource source = new DOMSource(doc);
+                StringWriter writer = new StringWriter();
+                StreamResult result = new StreamResult(writer);
+
+                transformer.transform(source, result);
+                writer.flush();
+                return writer.toString();
+
+            } catch (Exception en) {
+                log.error(en.getMessage());
+                return "";
             }
 
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StringWriter writer = new StringWriter();
-            StreamResult result = new StreamResult(writer);
-
-            transformer.transform(source, result);
-            writer.flush();
-            return writer.toString();
-
-        } catch (Exception en) {
-            log.error(en.getMessage());
-            return "";
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        return "";
     }
 
     public static ANNOUNCESENDDtoType XmlToObjectFile(String xml) {
@@ -1016,7 +1020,7 @@ public class FilesWS extends BaseWS {
             return data;
         }
     }
-    
+
 //    public List<ErrorWs> reiceiveMs_310(Envelope envelope) throws Exception {
 //        List<ErrorWs> errList = new ArrayList<>();
 //        ErrorWs err = new ErrorWs();

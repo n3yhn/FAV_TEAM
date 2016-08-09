@@ -83,6 +83,10 @@
         <put-attribute name="title" value="Quản lý thông báo"/>
         <put-attribute name="body" value="/WEB-INF/jsp/pages/category/notification/notificationSearch.jsp"/>
     </definition>
-  
+ 
     <!-- End Tien ich -->
+    <definition name="businessRegisterCA.Page" extends="body.definition" >
+        <put-attribute name="title" value="Danh mục CA token"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/business/businessRegisterCA.jsp"/>
+    </definition>
 </tiles-definitions>

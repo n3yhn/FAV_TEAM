@@ -731,7 +731,7 @@ public class FilesExpandDAO extends BaseDAO {
     public void setCreateForm(FilesForm createForm) {
         this.createForm = createForm;
     }
-/*
+    
     public String onApproveByLDP4AA() {
         FilesDAO fdao = new FilesDAO();
         FilesDAOHE fdhe = new FilesDAOHE();
@@ -786,7 +786,7 @@ public class FilesExpandDAO extends BaseDAO {
         jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;
     }
-
+/*
     public String toCreateFile4AAPage() {
         Long fileId = getRequest().getParameter("fileId") == null ? 0L : Long.parseLong(getRequest().getParameter("fileId"));
         Long fileType = getRequest().getParameter("fileType") == null ? 0L : Long.parseLong(getRequest().getParameter("fileType"));

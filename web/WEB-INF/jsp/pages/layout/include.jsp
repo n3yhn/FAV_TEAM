@@ -981,13 +981,6 @@
         else if (url.toString().indexOf("technicalStandardAction.do?createForm.standardType=1") >= 0) {
             urlImg = "share/images/menu/Quy chuan ky thuat.png";
         }
-
-
-
-
-
-
-
         else if (url.toString().indexOf("UserAction!prepareUserOfDept.do") >= 0) {
             urlImg = "share/images/menu/Nguoi dung cua don vi.png";
         }
