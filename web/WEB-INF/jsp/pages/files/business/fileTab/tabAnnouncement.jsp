@@ -40,6 +40,7 @@
                 <td width="25%">
                 <sd:TextBox key="" id="createForm.announcement.productName" name="createForm.announcement.productName" maxlength="500" cssStyle="width:99%" trim="true"/>
             </td>
+        </tr>         
     </table>
 </sd:FieldSet>
 
