@@ -40,6 +40,18 @@
                 <td width="25%">
                 <sd:TextBox key="" id="createForm.announcement.productName" name="createForm.announcement.productName" maxlength="500" cssStyle="width:99%" trim="true"/>
             </td>
+        </tr>
+        <tr>
+            <td width="25%"><sd:Label required="true">Nhóm sản phẩm</sd:Label><font style="color:red">*</font></td>
+                <td width="25%">
+                <sd:SelectBox key="" id="createForm.detailProduct.productType" name="createForm.detailProduct.productType" cssStyle="width:98%"
+                          data="lstProductType" valueField="categoryId" labelField="name" value="${fn:escapeXml(createForm.detailProduct.productType)}"/>
+            <sd:TextBox key="" id="createForm.detailProduct.productTypeName" name="createForm.detailProduct.productTypeName" cssStyle="display:none" trim="true" maxlength="255"/>
+            </td>
+            <td width="25%"></td>
+                <td width="25%">
+            </td>            
+        </tr>
     </table>
 </sd:FieldSet>
 

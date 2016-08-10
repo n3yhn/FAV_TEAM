@@ -189,6 +189,10 @@
                                         <sx:ButtonSave onclick="onEvaluateByLeaderFormOnGrid();"/>
                                         <sd:Button id="btnExportEBLFOGAA" key="" onclick="page.exportExportEBLFOGAA();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/process_icon.png" height="14" width="14" alt="Xem truoc"/>
+                                            <span style="font-size:12px">Xem trước CVBS sau công bố</span>
+                                        </sd:Button>
+                                        <sd:Button id="btnExportFBRF1" key="" onclick="page.downloadFBRFAA();" cssStyle="display:" cssClass="buttonGroup">
+                                            <img src="share/images/icons/process_icon.png" height="14" width="14" alt="Xem truoc"/>
                                             <span style="font-size:12px">Xem trước công văn SĐBS</span>
                                         </sd:Button>
                                         <sx:ButtonClose onclick="onCloseEvaluateLeader();"/>
@@ -423,7 +427,7 @@
             trEffectUtilityContent.style.display = 'none';
         }
     };
-    
+
     page.exportExportEBLFOGAA = function () {//xuat file ket qua tham dinh
         var fileId = dijit.byId("evaluationRecord.fileId").getValue();
         var titleEditATTP = page.utf8_to_b64EBLFOGAA(dijit.byId("evaluationRecord.titleEditATTP").getValue());
@@ -431,19 +435,29 @@
         contentsEditATTP = contentsEditATTP.replaceAllExportEBLFOGAA('+', '_');
         document.location = "exportWord!onExportEEAA.do?fileId=" + fileId + "&title=" + titleEditATTP + "&contents=" + contentsEditATTP;
     };
-    
-    String.prototype.replaceAllExportEBLFOGAA = function(strTarget, strSubString) {
-            var strText = this;
-            var intIndexOfMatch = strText.indexOf(strTarget);
-            while (intIndexOfMatch != -1) {
-                strText = strText.replace(strTarget, strSubString)
 
-                intIndexOfMatch = strText.indexOf(strTarget);
-            }
-            return(strText);
+    String.prototype.replaceAllExportEBLFOGAA = function (strTarget, strSubString) {
+        var strText = this;
+        var intIndexOfMatch = strText.indexOf(strTarget);
+        while (intIndexOfMatch != -1) {
+            strText = strText.replace(strTarget, strSubString)
+
+            intIndexOfMatch = strText.indexOf(strTarget);
+        }
+        return(strText);
     };
-    
-    page.utf8_to_b64EBLFOGAA = function(str) {
+
+    page.utf8_to_b64EBLFOGAA = function (str) {
+        return window.btoa(unescape(encodeURIComponent(str)));
+    };
+
+    page.downloadFBRFAA = function () {//xuat file ket qua tham dinh
+        var fileId = dijit.byId("evaluationRecord.fileId").getValue();
+        var content = page.utf8_to_b64FBRFAA(dijit.byId("evaluationRecord.staffRequest").getValue());
+        content = content.replaceAllFBRF('+', '_');
+        document.location = "exportWord!onXuatTBSDBS.do?fileId=" + fileId + "&content=" + content;
+    };
+    page.utf8_to_b64FBRFAA = function (str) {
         return window.btoa(unescape(encodeURIComponent(str)));
     };
 </script>

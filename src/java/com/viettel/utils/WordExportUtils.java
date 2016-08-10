@@ -617,7 +617,7 @@ public class WordExportUtils {
             Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+        
     public Boolean writePDFToStreamSign(WordprocessingMLPackage template, HttpServletResponse res, Long fileId, String fileCode, byte[] barCode, String signType, Boolean flagReadLabels, Integer signNumberFile, Boolean flagPageNumber) {
         try {
             ResourceBundle rb = ResourceBundle.getBundle("config");

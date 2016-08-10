@@ -692,7 +692,7 @@
         if (txtCertSerialAFPCheck) {
             txtCertSerialAFPCheck.destroyRecursive(true);
         }
-        sd.connector.post("filesAction!toBusinessRegisterCA.do?", "createDiv", null, null, null);
+        sd.connector.post("filesAction!toBusinessListPage.do?", "createDiv", null, null, null);
     };
 
     page.reset = function () {

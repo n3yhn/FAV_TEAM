@@ -27,7 +27,7 @@
             </sd:ContentPane>
             <sd:ContentPane key="Bản công bố đã công bố" id="tab.annoucement">
                 <div id="tabAnnouncementDiv" style="overflow: auto;">
-                    <jsp:include page="./fileTab/tabAnnouncement.jsp"/>
+                    <jsp:include page="./fileTab/tabReAnnouncementProductDetail.jsp"/>
                 </div>
             </sd:ContentPane>
             <sd:ContentPane key="Tài liệu đính kèm" id="tab.attachs">
