@@ -1912,12 +1912,11 @@ public class FilesDAO extends BaseDAO {
         Long fileType = getRequest().getParameter("fileType") == null ? 0L : Long.parseLong(getRequest().getParameter("fileType"));
         Long checkEdit = getRequest().getParameter("checkEdit") == null ? 0L : Long.parseLong(getRequest().getParameter("checkEdit"));
         Long typeFee = getRequest().getParameter("typeFee") == null ? 0L : Long.parseLong(getRequest().getParameter("typeFee"));
-//        //hiepvv check edit after announced
+//      hiepvv check edit after announced
         Long isEdits = getRequest().getParameter("isEdit") == null ? 0L : Long.parseLong(getRequest().getParameter("isEdit"));
         if (fileType > 0L) {
             createForm = new FilesForm();
             createForm.setFileType(fileType);
-            //createForm.setFileId(fileId);
         }
         Users user = new Users();
         UsersDAOHE udhe = new UsersDAOHE();
@@ -1955,7 +1954,7 @@ public class FilesDAO extends BaseDAO {
                 manuTel = createForm.getAnnouncement().getManufactureTel();
                 manuFax = createForm.getAnnouncement().getManufactureFax();
                 matchingTaget = createForm.getAnnouncement().getMatchingTarget();
-                publishDate = createForm.getAnnouncement().getPublishDate();
+                publishDate = createForm.getAnnouncementReceiptPaperForm().getReceiptDate();
                 //end
                 ProcedureDAOHE pdaohe = new ProcedureDAOHE();
                 Procedure p = new Procedure();
@@ -2032,6 +2031,9 @@ public class FilesDAO extends BaseDAO {
                 // check edit hide excel tab
                 getRequest().setAttribute("checkEdit", checkEdit);
                 strReturn = tthc.getDescription();
+                if (strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05) && isEdits == 1) {
+                    strReturn = Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05_PAPER;
+                }
                 if (createForm.getAnnouncement() != null) {
                     if (createForm.getAnnouncement().getAnnouncementNo() != null
                             && createForm.getAnnouncement().getAnnouncementNo().length() > 0l
@@ -2077,6 +2079,7 @@ public class FilesDAO extends BaseDAO {
                         || strReturn.equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_NORMAL_VN)
                         //hiepvv SDBS sau cong bo
                         || strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)
+                        || strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05_PAPER)
                         //hiepvv KS 4S
                         || strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)) {
                     String announcementNoStr = fdhe.getReceiptNoNew(getUserId(), getUserLogin(), createForm.getFileType());
@@ -2098,7 +2101,8 @@ public class FilesDAO extends BaseDAO {
                     createForm.getReIssueForm().setTelephone(bus.getBusinessTelephone());
                     createForm.getReIssueForm().setFax(bus.getBusinessFax());
 //                    //San pham ho so goc
-                    if (strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)) {
+                    if (strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)
+                            || strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05_PAPER)) {
                         createForm.getAnnouncement().setProductName(proName);
                         createForm.getAnnouncement().setManufactureAddress(manuAdd);
                         createForm.getAnnouncement().setManufactureName(manuName);
@@ -4058,12 +4062,12 @@ public class FilesDAO extends BaseDAO {
         if ((totalFeeFile.equals(feeFile) && feeFile > 0l) || (totalFeeFile > feeFile)) {
             customInfo.add(1);
         } else // nop thieu
-         if (totalFeeFile < feeFile && totalFeeFile > 0) {
-                customInfo.add(0);
-            } // chua nop
-            else {
-                customInfo.add(-1);
-            }
+        if (totalFeeFile < feeFile && totalFeeFile > 0) {
+            customInfo.add(0);
+        } // chua nop
+        else {
+            customInfo.add(-1);
+        }
 
         jsonDataGrid.setItems(result.getLstResult());
         jsonDataGrid.setTotalRows(result.getnCount().intValue());

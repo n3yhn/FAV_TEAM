@@ -175,6 +175,7 @@
             <result type="tiles" name="confirmFuncVNViewReceived">confirmFuncVNViewReceived</result>
             <result type="tiles" name="reConfirmFuncVNViewReceived">reConfirmFuncVNViewReceived</result>
             <result type="tiles" name="confirmSatisfactoryViewReceived">confirmSatisfactoryViewReceived</result>
+            <result type="tiles" name="announcementFile05Paper">announcementFile05Paper</result>
             <!-- End xem trang van ban -->
         </action>
         <action name="exportWord" class="com.viettel.hqmc.DAO.ExportFileDAO">

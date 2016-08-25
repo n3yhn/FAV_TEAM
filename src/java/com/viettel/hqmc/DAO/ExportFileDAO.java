@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.codec.binary.Base64;
@@ -32,10 +31,8 @@ import com.viettel.voffice.database.BO.Category;
 import com.viettel.voffice.database.DAOHibernate.EventLogDAOHE;
 import com.viettel.vsaadmin.database.BO.Department;
 import com.viettel.vsaadmin.database.BO.Position;
-import com.viettel.vsaadmin.database.BO.Users;
 import com.viettel.vsaadmin.database.DAOHibernate.DepartmentDAOHE;
 import com.viettel.vsaadmin.database.DAOHibernate.PositionDAOHE;
-import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import com.viettel.voffice.database.BO.Process;
 
 /**
@@ -231,15 +228,20 @@ public class ExportFileDAO extends BaseDAO {
 
                     wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignsuadoisaucongbo))));
                     //Các biến truyền vào Công văn
-                    if (receiptDeptName == null || receiptDeptName.equals("Cục ATTP")) {
-                        wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
-                        wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
-                        wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
-                    } else {
-                        wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${deptParent}");
-                        wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptName}");
-                        wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptNames}");
-                    }
+//                    if (receiptDeptName == null || receiptDeptName.equals("Cục ATTP")) {
+//                        wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
+//                        wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
+//                        wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
+//                    } else {
+//                        wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${deptParent}");
+//                        wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptName}");
+//                        wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptNames}");
+//                    }
+
+                    wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
+                    wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
+                    wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
+
                     wU.replacePlaceholder(wmp, contentEdit, "${contentEdit}");
                     wU.replacePlaceholder(wmp, publishDate, "${publishDate}");
                     wU.replacePlaceholder(wmp, announmentNo, "${announmentNo}");
@@ -372,14 +374,19 @@ public class ExportFileDAO extends BaseDAO {
 
             PositionDAOHE posdaohe = new PositionDAOHE();
             Position posbo = posdaohe.findPositionCode(getUserId());
-            if (posbo != null && posbo.equals(Constants.POSITION.LEADER_CT)) {
+            if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_CT)) {
                 rolesigner = "CỤC TRƯỞNG";
-            } else if (posbo != null && posbo.equals(Constants.POSITION.LEADER_PCT)) {
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_PCT)) {
                 signer = "KT. CỤC TRƯỞNG";
                 rolesigner = "PHÓ CỤC TRƯỞNG";
-            } else if (posbo != null && posbo.equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
                 signer = "TL. CỤC TRƯỞNG";
                 rolesigner = "TRƯỞNG PHÒNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.GDTT)) {
+                signer = "TL. CỤC TRƯỞNG";
+                rolesigner = "GIÁM ĐỐC TRUNG TÂM";
+            } else {
+                rolesigner = "UNKNOW";
             }
 
             wU.replacePlaceholder(wmp, signer, "${signer}");
@@ -585,16 +592,21 @@ public class ExportFileDAO extends BaseDAO {
 
             PositionDAOHE posdaohe = new PositionDAOHE();
             Position posbo = posdaohe.findPositionCode(getUserId());
-            if (posbo != null && posbo.equals(Constants.POSITION.LEADER_CT)) {
+            if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_CT)) {
                 rolesigner = "CỤC TRƯỞNG";
-            } else if (posbo != null && posbo.equals(Constants.POSITION.LEADER_PCT)) {
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_PCT)) {
                 signer = "KT. CỤC TRƯỞNG";
                 rolesigner = "PHÓ CỤC TRƯỞNG";
-            } else if (posbo != null && posbo.equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
                 signer = "TL. CỤC TRƯỞNG";
                 rolesigner = "TRƯỞNG PHÒNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.GDTT)) {
+                signer = "TL. CỤC TRƯỞNG";
+                rolesigner = "GIÁM ĐỐC TRUNG TÂM";
+            } else {
+                rolesigner = "UNKNOW";
             }
-
+            
             wU.replacePlaceholder(wmpOnlyPaper, signer, "${signer}");
             wU.replacePlaceholder(wmpOnlyPaper, rolesigner, "${roleSigner}");
             String leaderSinged = "";
@@ -841,18 +853,6 @@ public class ExportFileDAO extends BaseDAO {
             if (effectiveDate != null || effectiveDate.length() > 0) {
                 wU.replacePlaceholder(wmp, effectiveDate, "${effectiveDate}");
             }
-            /*
-            ResourceBundle rb = ResourceBundle.getBundle("config");
-            String strLD = rb.getString("cuctruong");
-            String signer = "";
-            String rolesigner = "";
-            if (strLD.equals(getUserLogin())) {
-                rolesigner = "CỤC TRƯỞNG";
-            } else {
-                signer = "KT. CỤC TRƯỞNG";
-                rolesigner = "PHÓ CỤC TRƯỞNG";
-            }
-             */
             String signer = "";
             String rolesigner = "";
 
@@ -870,7 +870,7 @@ public class ExportFileDAO extends BaseDAO {
                 signer = "TL. CỤC TRƯỞNG";
                 rolesigner = "GIÁM ĐỐC TRUNG TÂM";
             } else {
-//                return false;
+                rolesigner = "UNKNOW";
             }
 
             wU.replacePlaceholder(wmp, signer, "${signer}");
@@ -1326,15 +1326,20 @@ public class ExportFileDAO extends BaseDAO {
                     }
                     wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignsuadoisaucongbo))));
                     //Các biến truyền vào Công văn
-                    if (receiptDeptName == null || receiptDeptName.equals("Cục ATTP")) {
-                        wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
-                        wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
-                        wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
-                    } else {
-                        wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${deptParent}");
-                        wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptName}");
-                        wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptNames}");
-                    }
+
+                    wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
+                    wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
+                    wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
+
+//                    if (receiptDeptName == null || receiptDeptName.equals("Cục ATTP")) {
+//                        wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
+//                        wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
+//                        wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
+//                    } else {
+//                        wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${deptParent}");
+//                        wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptName}");
+//                        wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptNames}");
+//                    }
                     wU.replacePlaceholder(wmp, contentEdit, "${contentEdit}");
                     wU.replacePlaceholder(wmp, publishDate, "${publishDate}");
                     wU.replacePlaceholder(wmp, announmentNo, "${announmentNo}");
@@ -1456,14 +1461,19 @@ public class ExportFileDAO extends BaseDAO {
 
             PositionDAOHE posdaohe = new PositionDAOHE();
             Position posbo = posdaohe.findPositionCode(getUserId());
-            if (posbo != null && posbo.equals(Constants.POSITION.LEADER_CT)) {
+            if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_CT)) {
                 rolesigner = "CỤC TRƯỞNG";
-            } else if (posbo != null && posbo.equals(Constants.POSITION.LEADER_PCT)) {
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_PCT)) {
                 signer = "KT. CỤC TRƯỞNG";
                 rolesigner = "PHÓ CỤC TRƯỞNG";
-            } else if (posbo != null && posbo.equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
                 signer = "TL. CỤC TRƯỞNG";
                 rolesigner = "TRƯỞNG PHÒNG";
+            } else if (posbo != null && posbo.getPosCode().equals(Constants.POSITION.GDTT)) {
+                signer = "TL. CỤC TRƯỞNG";
+                rolesigner = "GIÁM ĐỐC TRUNG TÂM";
+            } else {
+                rolesigner = "UNKNOW";
             }
 
             wU.replacePlaceholder(wmp, signer, "${signer}");
@@ -2841,15 +2851,18 @@ public class ExportFileDAO extends BaseDAO {
                         }
                         wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignsuadoisaucongbo))));
                         //Các biến truyền vào Công văn
-                        if (receiptDeptName == null || receiptDeptName.equals("Cục ATTP")) {
-                            wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
-                            wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
-                            wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
-                        } else {
-                            wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${deptParent}");
-                            wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptName}");
-                            wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptNames}");
-                        }
+                        wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
+                        wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
+                        wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
+//                        if (receiptDeptName == null || receiptDeptName.equals("Cục ATTP")) {
+//                            wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
+//                            wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
+//                            wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
+//                        } else {
+//                            wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${deptParent}");
+//                            wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptName}");
+//                            wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptNames}");
+//                        }
                         wU.replacePlaceholder(wmp, contentEdit, "${contentEdit}");
                         wU.replacePlaceholder(wmp, publishDate, "${publishDate}");
                         wU.replacePlaceholder(wmp, announmentNo, "${announmentNo}");
@@ -2995,38 +3008,6 @@ public class ExportFileDAO extends BaseDAO {
                     + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
             wU.replacePlaceholder(wmp, signedDate, "${signDateStr}");
             wU.replacePlaceholder(wmp, businessName, "${businessName}");
-            /*
-            ResourceBundle rb = ResourceBundle.getBundle("config");
-            String cuctruong = rb.getString("cuctruong");
-            String signer = "";
-            String rolesigner = "";
-            Users a = getUser();
-            PositionDAOHE pdaohe = new PositionDAOHE();
-            Position p = pdaohe.findById(a.getPosId());
-            if (p != null && p.getPosName() != null) {
-                rolesigner = p.getPosName();
-            }
-            if (rolesigner != null && !rolesigner.equals("")) {
-                if (cuctruong.equals(getUserLogin())) {
-                    rolesigner = "CỤC TRƯỞNG";
-                } else if (p != null && p.getPosCode() != null) {
-                    if (p.getPosCode().equals(Constants.POSITION.LEADER_PCT)) {
-                        signer = "KT. CỤC TRƯỞNG";
-                        rolesigner = "PHÓ CỤC TRƯỞNG";
-                    } else if (p.getPosCode().equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
-                        signer = "TL. CỤC TRƯỞNG";
-                        rolesigner = "TRƯỞNG PHÒNG";
-                    } else if (p.getPosCode().equals(Constants.POSITION.GDTT)) {
-                        signer = "TL. CỤC TRƯỞNG";
-                        rolesigner = "GIÁM ĐỐC TRUNG TÂM";
-                    } else {
-                        return false;
-                    }
-                }
-            } else {
-                return false;
-            }
-             */
             String signer = "";
             String rolesigner = "";
 
@@ -3044,7 +3025,7 @@ public class ExportFileDAO extends BaseDAO {
                 signer = "TL. CỤC TRƯỞNG";
                 rolesigner = "GIÁM ĐỐC TRUNG TÂM";
             } else {
-//                return false;
+                rolesigner = "UNKNOW";
             }
 
             wU.replacePlaceholder(wmp, signer, "${signer}");
@@ -3060,7 +3041,7 @@ public class ExportFileDAO extends BaseDAO {
             wU.replacePlaceholder(wmp, map);
             if (typeExport.equals("EX_TEMP")) {
                 wU.createFooterPart(wmp, "MA HO SO: " + fileCode);
-                wU.writeDocxToStream(wmp, getResponse());
+                wU.writePDF4Preview(wmp, getResponse(), fileCode);
                 return true;
             } else if (typeExport.equals("EX_SIGN")) {
                 return wU.writePDFToStreamSign(wmp, getResponse(), fileId, fileCode, null, "CVBS", false, 0, true);
@@ -3135,40 +3116,7 @@ public class ExportFileDAO extends BaseDAO {
             String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd") + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM") + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
             wU.replacePlaceholder(wmp, signedDate, "${signDateStr}");
             wU.replacePlaceholder(wmp, businessName, "${businessName}");
-            /*
-            ResourceBundle rb = ResourceBundle.getBundle("config");
-            String cuctruong = rb.getString("cuctruong");
-
-            String signer = "";
-            String rolesigner = "";
-            Users a = getUser();
-            PositionDAOHE pdaohe = new PositionDAOHE();
-            Position p = pdaohe.findById(a.getPosId());
-            if (p != null && p.getPosName() != null) {
-                rolesigner = p.getPosName();
-            }
-            if (rolesigner != null && !rolesigner.equals("")) {
-                if (cuctruong.equals(getUserLogin())) {
-                    rolesigner = "CỤC TRƯỞNG";
-                } else if (p != null && p.getPosCode() != null) {
-                    if (p.getPosCode().equals(Constants.POSITION.LEADER_PCT)) {
-                        signer = "KT. CỤC TRƯỞNG";
-                        rolesigner = "PHÓ CỤC TRƯỞNG";
-                    } else if (p.getPosCode().equals(Constants.POSITION.LEADER_OF_STAFF_T)) {
-                        signer = "TL. CỤC TRƯỞNG";
-                        rolesigner = "TRƯỞNG PHÒNG";
-                    } else if (p.getPosCode().equals(Constants.POSITION.GDTT)) {
-                        signer = "TL. CỤC TRƯỞNG";
-                        rolesigner = "GIÁM ĐỐC TRUNG TÂM";
-                    } else {
-                        return "false";
-                    }
-                }
-            } else {
-                return "false";
-            }
-             */
-
+            
             String signer = "";
             String rolesigner = "";
 
@@ -3186,7 +3134,7 @@ public class ExportFileDAO extends BaseDAO {
                 signer = "TL. CỤC TRƯỞNG";
                 rolesigner = "GIÁM ĐỐC TRUNG TÂM";
             } else {
-//                return false;
+                rolesigner = "UNKNOW";
             }
 
             wU.replacePlaceholder(wmp, signer, "${signer}");
@@ -3539,15 +3487,20 @@ public class ExportFileDAO extends BaseDAO {
                     filesForm.getDetailProduct().setDateOfManufactureStr(DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getDateOfManufacture(), "dd/MM/yyyy"));
                 }
             }
-            if (receiptDeptName.equals("Cục ATTP")) {
-                wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
-                wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
-                wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
-            } else {
-                wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${deptParent}");
-                wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptName}");
-                wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptNames}");
-            }
+
+            wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
+            wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
+            wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
+
+//            if (receiptDeptName.equals("Cục ATTP")) {
+//                wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
+//                wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
+//                wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
+//            } else {
+//                wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${deptParent}");
+//                wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptName}");
+//                wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptNames}");
+//            }
             wU.replacePlaceholder(wmp, receiptNo, "${receiptNo}");
             wU.replacePlaceholder(wmp, businessName, "${businessName}");
             wU.replacePlaceholder(wmp, businessAdd, "${businessAdd}");
@@ -3564,18 +3517,6 @@ public class ExportFileDAO extends BaseDAO {
             if (effectiveDate != null || effectiveDate.length() > 0) {
                 wU.replacePlaceholder(wmp, effectiveDate, "${effectiveDate}");
             }
-            /*
-            ResourceBundle rb = ResourceBundle.getBundle("config");
-            String strLD = rb.getString("cuctruong");
-            String signer = "";
-            String rolesigner = "";
-            if (strLD.equals(getUserLogin())) {
-                rolesigner = "CỤC TRƯỞNG";
-            } else {
-                signer = "KT. CỤC TRƯỞNG";
-                rolesigner = "PHÓ CỤC TRƯỞNG";
-            }
-             */
             String signer = "";
             String rolesigner = "";
 
@@ -3593,7 +3534,7 @@ public class ExportFileDAO extends BaseDAO {
                 signer = "TL. CỤC TRƯỞNG";
                 rolesigner = "GIÁM ĐỐC TRUNG TÂM";
             } else {
-//                return false;
+                rolesigner = "UNKNOW";
             }
             wU.replacePlaceholder(wmp, signer, "${signer}");
             wU.replacePlaceholder(wmp, rolesigner, "${roleSigner}");
@@ -5010,15 +4951,20 @@ public class ExportFileDAO extends BaseDAO {
                         }
                         wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignsuadoisaucongbo))));
                         //Các biến truyền vào Công văn
-                        if (receiptDeptName == null || receiptDeptName.equals("Cục ATTP")) {
-                            wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
-                            wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
-                            wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
-                        } else {
-                            wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${deptParent}");
-                            wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptName}");
-                            wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptNames}");
-                        }
+
+                        wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
+                        wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
+                        wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
+
+//                        if (receiptDeptName == null || receiptDeptName.equals("Cục ATTP")) {
+//                            wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
+//                            wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
+//                            wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
+//                        } else {
+//                            wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${deptParent}");
+//                            wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptName}");
+//                            wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptNames}");
+//                        }
                         wU.replacePlaceholder(wmp, contentEdit, "${contentEdit}");
                         wU.replacePlaceholder(wmp, publishDate, "${publishDate}");
                         wU.replacePlaceholder(wmp, announmentNo, "${announmentNo}");
@@ -5157,9 +5103,9 @@ public class ExportFileDAO extends BaseDAO {
             Date dateNow = getSysdate();
             Base64 decoder = new Base64();
             String strFileId = getRequest().getParameter("fileId");
-            
+
             String receiptDeptName = "";
-            String sendNo = "0";                                    
+            String sendNo = "0";
             String strTitle = new String(decoder.decode(getRequest().getParameter("title").replace("_", "+").getBytes()), "UTF-8");
             String strContent = new String(decoder.decode(getRequest().getParameter("contents").replace("_", "+").getBytes()), "UTF-8");
 
@@ -5187,57 +5133,57 @@ public class ExportFileDAO extends BaseDAO {
 
             WordprocessingMLPackage wmp = null;
 //                String contentEdit = "";
-                String publishDate = "";
-                String announmentNo = "";
-                String proName = "";
-                String busiName = "";
-                String busiAdd = "";
-                String receiptNoOld = "";
-                String receiptNo = "0000";
+            String publishDate = "";
+            String announmentNo = "";
+            String proName = "";
+            String busiName = "";
+            String busiAdd = "";
+            String receiptNoOld = "";
+            String receiptNo = "0000";
 //                String titleEdit = "";                
-                if (form.getAnnouncement().getPublishDate() != null) {
-                    publishDate = DateTimeUtils.convertDateToString(form.getAnnouncement().getPublishDate(), "dd")
-                            + " tháng " + DateTimeUtils.convertDateToString(form.getAnnouncement().getPublishDate(), "MM")
-                            + " năm " + DateTimeUtils.convertDateToString(form.getAnnouncement().getPublishDate(), "yyyy");
-                }
-                if (form.getAnnouncement().getAnnouncementNo() != null) {
-                    announmentNo = form.getAnnouncement().getAnnouncementNo();
-                }
-                if (form.getAnnouncement().getProductName() != null) {
-                    proName = form.getAnnouncement().getProductName();
-                }
-                if (form.getAnnouncement().getBusinessAddress() != null) {
-                    busiAdd = form.getAnnouncement().getBusinessAddress();
-                }
-                if (form.getAnnouncement().getBusinessName() != null) {
-                    busiName = form.getAnnouncement().getBusinessName();
-                }
-                String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd")
-                        + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM")
-                        + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");                
-                if (form.getAnnouncementReceiptPaperForm() != null) {
-                    receiptDeptName = form.getAnnouncementReceiptPaperForm().getReceiptDeptName();
-                } else if (form.getConfirmImportSatistPaperForm() != null) {
-                    receiptDeptName = form.getConfirmImportSatistPaperForm().getTestAgencyName();
-                }
-                if (form.getFilesSourceID() != null
-                        && form.getFilesSourceID() > 0L) {
-                    Files fboOld = fdhe.findById(form.getFilesSourceID());
-                    if (fboOld != null
-                            && fboOld.getAnnouncementReceiptPaperId() != null) {
-                        AnnouncementReceiptPaperDAOHE arpDaohe = new AnnouncementReceiptPaperDAOHE();
-                        AnnouncementReceiptPaper arpbo = arpDaohe.findById(fboOld.getAnnouncementReceiptPaperId());
-                        if (arpbo != null
-                                && arpbo.getReceiptDate() != null
-                                && arpbo.getSignDate() != null
-                                && arpbo.getReceiptNo() != null) {
-                            receiptNoOld = arpbo.getReceiptNo();
-                            publishDate = " ngày " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "dd")
-                                    + " tháng " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "MM") + " năm "
-                                    + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "yyyy");
-                        }
+            if (form.getAnnouncement().getPublishDate() != null) {
+                publishDate = DateTimeUtils.convertDateToString(form.getAnnouncement().getPublishDate(), "dd")
+                        + " tháng " + DateTimeUtils.convertDateToString(form.getAnnouncement().getPublishDate(), "MM")
+                        + " năm " + DateTimeUtils.convertDateToString(form.getAnnouncement().getPublishDate(), "yyyy");
+            }
+            if (form.getAnnouncement().getAnnouncementNo() != null) {
+                announmentNo = form.getAnnouncement().getAnnouncementNo();
+            }
+            if (form.getAnnouncement().getProductName() != null) {
+                proName = form.getAnnouncement().getProductName();
+            }
+            if (form.getAnnouncement().getBusinessAddress() != null) {
+                busiAdd = form.getAnnouncement().getBusinessAddress();
+            }
+            if (form.getAnnouncement().getBusinessName() != null) {
+                busiName = form.getAnnouncement().getBusinessName();
+            }
+            String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd")
+                    + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM")
+                    + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
+            if (form.getAnnouncementReceiptPaperForm() != null) {
+                receiptDeptName = form.getAnnouncementReceiptPaperForm().getReceiptDeptName();
+            } else if (form.getConfirmImportSatistPaperForm() != null) {
+                receiptDeptName = form.getConfirmImportSatistPaperForm().getTestAgencyName();
+            }
+            if (form.getFilesSourceID() != null
+                    && form.getFilesSourceID() > 0L) {
+                Files fboOld = fdhe.findById(form.getFilesSourceID());
+                if (fboOld != null
+                        && fboOld.getAnnouncementReceiptPaperId() != null) {
+                    AnnouncementReceiptPaperDAOHE arpDaohe = new AnnouncementReceiptPaperDAOHE();
+                    AnnouncementReceiptPaper arpbo = arpDaohe.findById(fboOld.getAnnouncementReceiptPaperId());
+                    if (arpbo != null
+                            && arpbo.getReceiptDate() != null
+                            && arpbo.getSignDate() != null
+                            && arpbo.getReceiptNo() != null) {
+                        receiptNoOld = arpbo.getReceiptNo();
+                        publishDate = " ngày " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "dd")
+                                + " tháng " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "MM") + " năm "
+                                + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "yyyy");
                     }
                 }
+            }
 //                if (form.getTitleEdit() != null) {
 //                    titleEdit = form.getTitleEdit();
 //                } else if (form.getTitleEditATTP() != null) {
@@ -5245,52 +5191,55 @@ public class ExportFileDAO extends BaseDAO {
 //                } else {
 //                    titleEdit = "sửa đổi bổ sung hồ sơ đã công bố";
 //                }
-                wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignsuadoisaucongbo))));
-                //Các biến truyền vào Công văn
-                if (receiptDeptName == null || receiptDeptName.equals("Cục ATTP")) {
-                    wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
-                    wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
-                    wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
-                } else {
-                    wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${deptParent}");
-                    wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptName}");
-                    wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptNames}");
-                }
-                
-                wU.replacePlaceholder(wmp, strContent, "${contentEdit}");
-                wU.replacePlaceholder(wmp, publishDate, "${publishDate}");
-                wU.replacePlaceholder(wmp, announmentNo, "${announmentNo}");
-                wU.replacePlaceholder(wmp, proName, "${proName}");
-                wU.replacePlaceholder(wmp, busiAdd, "${busiAdd}");
-                wU.replacePlaceholder(wmp, busiName, "${busiName}");
-                wU.replacePlaceholder(wmp, signedDate, "${signDate}");
-                wU.replacePlaceholder(wmp, receiptNoOld, "${receiptNoOld}");
-                wU.replacePlaceholder(wmp, receiptNo, "${receiptNo}");
-                wU.replacePlaceholder(wmp, strTitle, "${titleEdit}");
-                
-                ProcessDAOHE pDaohe = new ProcessDAOHE();
-                Process pBo = pDaohe.getProcessByAction(form.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, form.getStatus(), Constants.FILE_STATUS.NEW_CREATE);
-                DepartmentDAOHE deptDaohe = new DepartmentDAOHE();
-                Department deptBo = deptDaohe.findBOById(pBo.getSendGroupId());
-                if (deptBo != null && deptBo.getDeptCode() != null) {
-                    wU.replacePlaceholder(wmp, deptBo.getDeptCode(), "${deptCode}");
-                } else {
-                    wU.replacePlaceholder(wmp, "SP", "${deptCode}");
-                }
+            wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignsuadoisaucongbo))));
+            //Các biến truyền vào Công văn
+            wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
+            wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
+            wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
 
-                HashMap map = new HashMap();
-                map.put("createForm", form);
-                wU.replacePlaceholder(wmp, map);
-                if (typeExport.equals("EX_TEMP")) {
-                    wU.createFooterPart(wmp, "MA HO SO: " + fileCode);
-                    wU.writeDocxToStream(wmp, getResponse());
-                    return true;
-                } else if (typeExport.equals("EX_SIGN")) {
-                    return wU.writePDFToStreamSign(wmp, getResponse(), fileId, fileCode, null, "CVBS", false, 0, true);
-                }
-            }catch (Exception en) {
+//            if (receiptDeptName == null || receiptDeptName.equals("Cục ATTP")) {
+//                wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
+//                wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
+//                wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
+//            } else {
+//                wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${deptParent}");
+//                wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptName}");
+//                wU.replacePlaceholder(wmp, receiptDeptName, "${receiptDeptNames}");
+//            }
+            wU.replacePlaceholder(wmp, strContent, "${contentEdit}");
+            wU.replacePlaceholder(wmp, publishDate, "${publishDate}");
+            wU.replacePlaceholder(wmp, announmentNo, "${announmentNo}");
+            wU.replacePlaceholder(wmp, proName, "${proName}");
+            wU.replacePlaceholder(wmp, busiAdd, "${busiAdd}");
+            wU.replacePlaceholder(wmp, busiName, "${busiName}");
+            wU.replacePlaceholder(wmp, signedDate, "${signDate}");
+            wU.replacePlaceholder(wmp, receiptNoOld, "${receiptNoOld}");
+            wU.replacePlaceholder(wmp, receiptNo, "${receiptNo}");
+            wU.replacePlaceholder(wmp, strTitle, "${titleEdit}");
+
+            ProcessDAOHE pDaohe = new ProcessDAOHE();
+            Process pBo = pDaohe.getProcessByAction(form.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, form.getStatus(), Constants.FILE_STATUS.NEW_CREATE);
+            DepartmentDAOHE deptDaohe = new DepartmentDAOHE();
+            Department deptBo = deptDaohe.findBOById(pBo.getSendGroupId());
+            if (deptBo != null && deptBo.getDeptCode() != null) {
+                wU.replacePlaceholder(wmp, deptBo.getDeptCode(), "${deptCode}");
+            } else {
+                wU.replacePlaceholder(wmp, "SP", "${deptCode}");
+            }
+
+            HashMap map = new HashMap();
+            map.put("createForm", form);
+            wU.replacePlaceholder(wmp, map);
+            if (typeExport.equals("EX_TEMP")) {
+//                wU.createFooterPart(wmp, "MA HO SO: " + fileCode);
+                wU.writePDF4Preview(wmp, getResponse(), fileCode);
+                return true;
+            } else if (typeExport.equals("EX_SIGN")) {
+                return wU.writePDFToStreamSign(wmp, getResponse(), fileId, fileCode, null, "CVBS", false, 0, true);
+            }
+        } catch (Exception en) {
             log.error(en.getMessage());
         }
-            return false;
-        }
+        return false;
     }
+}

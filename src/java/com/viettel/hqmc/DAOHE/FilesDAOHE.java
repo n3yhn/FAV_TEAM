@@ -3266,7 +3266,12 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         Procedure tthc = pdhe.findById(file.getFileType());
         //Hiepvv Khong validate voi ho so sua doi sau cong bo va KS4s
         if (tthc.getDescription().equalsIgnoreCase("announcement4star")
-                || tthc.getDescription().equalsIgnoreCase("announcementFile05")) {
+                || tthc.getDescription().equalsIgnoreCase("announcementFile05")
+                || tthc.getDescription().equals(Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT)
+                || tthc.getDescription().equals(Constants.FILE_DESCRIPTION.REC_CONFIRM_NORMAL_IMP)
+                || tthc.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_IMP)
+                || tthc.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_VN)
+                || tthc.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_NORMAL_VN)) {
 //do nothing
         } else if (createForm.getDetailProduct() != null) {
             //

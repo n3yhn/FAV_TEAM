@@ -617,7 +617,7 @@ public class WordExportUtils {
             Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-        
+
     public Boolean writePDFToStreamSign(WordprocessingMLPackage template, HttpServletResponse res, Long fileId, String fileCode, byte[] barCode, String signType, Boolean flagReadLabels, Integer signNumberFile, Boolean flagPageNumber) {
         try {
             ResourceBundle rb = ResourceBundle.getBundle("config");
@@ -1105,7 +1105,7 @@ public class WordExportUtils {
                 try {
                     service = new Converter_Service();
                     con = service.getConverterPort();
-                     output = con.convert(input);
+                    output = con.convert(input);
                     break;
                 } catch (Exception ex) {
                     Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
@@ -1347,5 +1347,78 @@ public class WordExportUtils {
             Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
             return "false";
         }
+    }
+
+    public void writePDF4Preview(WordprocessingMLPackage template, HttpServletResponse res, String fileCode) throws IOException, Docx4JException {
+        try {
+            ResourceBundle rb = ResourceBundle.getBundle("config");
+            String PATH = rb.getString("ConvertService");
+            Date newDate = new Date();
+            String fileName = newDate.getTime() + ".docx";
+            File f = new File(PATH + File.separatorChar + fileName);
+            template.save(f);
+
+            PdfDocxFile input = new PdfDocxFile();
+            input.setContent(HandleFile.getByteFromFile(f));
+            input.setFilename(f.getName());
+            input.setConvertType("docx2pdf");
+
+            Converter_Service service = new Converter_Service();
+            com.viettel.convert.service.Converter con = service.getConverterPort();
+            PdfDocxFile output = con.convert(input);
+            res.setContentType("application/pdf");
+            res.setHeader("Content-Disposition", "attachment; filename=report_" + output.getFilename());
+            res.setHeader("Content-Type", "application/pdf");
+
+            OutputStream of = res.getOutputStream();
+            of.write(readContent4Preview(output.getContent(), fileCode));
+            of.flush();
+            of.close();
+        } catch (IOException ex) {
+            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public byte[] readContent4Preview(byte[] inputData, String fileCode) {
+        try {
+            ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+            // Add label page
+            // step 1
+            Document document = new Document(PageSize.A4);
+            PdfWriter writer = PdfWriter.getInstance(document, outStream);
+
+            HeaderFooter event = new HeaderFooter("MA HO SO: " + fileCode, null);
+            writer.setBoxSize("art", new Rectangle(36, 54, 559, 788));
+            writer.setPageEvent(event);
+
+            // step 3
+            document.open();
+            PdfContentByte cb = writer.getDirectContent();
+            PdfImportedPage page = null;
+
+            PdfReader reader = null;
+            if (inputData != null && inputData.length > 0) {
+                // Add current pages
+                reader = new PdfReader(inputData);
+                int pageNumberFound = reader.getNumberOfPages();
+                for (int i = 1; i <= pageNumberFound; i++) {
+                    page = writer.getImportedPage(reader, i);
+                    document.newPage();
+                    cb.addTemplate(page, 0, 0);
+                }
+            }
+            document.close();
+            byte[] a = outStream.toByteArray();
+            outStream.close();
+            if (reader != null) {
+                reader.close();
+            }
+            writer.close();
+            return a;
+
+        } catch (IOException | DocumentException ex) {
+            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+        }
+        return null;
     }
 }

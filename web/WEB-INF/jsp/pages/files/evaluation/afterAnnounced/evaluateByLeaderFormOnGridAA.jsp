@@ -193,7 +193,7 @@
                                         </sd:Button>
                                         <sd:Button id="btnExportFBRF1" key="" onclick="page.downloadFBRFAA();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/process_icon.png" height="14" width="14" alt="Xem truoc"/>
-                                            <span style="font-size:12px">Xem trước công văn SĐBS</span>
+                                            <span style="font-size:12px">Xem trước công văn y/c SĐBS</span>
                                         </sd:Button>
                                         <sx:ButtonClose onclick="onCloseEvaluateLeader();"/>
                                         <br>

@@ -73,7 +73,7 @@
                                         <sd:Textarea 
                                             id="reviewForm.titleEditATTP" 
                                             name="createForm.titleEditATTP"
-                                            key="" rows="1" cssStyle="width:99%" maxlength="255" trim="true"
+                                            key="" rows="5" cssStyle="width:99%" maxlength="255" trim="true"
 
                                             />
                                     </td>
@@ -188,7 +188,7 @@
                                         <sx:ButtonSave onclick="onReviewFormSave();"/>
                                         <sd:Button id="btnExportREAA" key="" onclick="page.exportExportREAA();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/process_icon.png" height="14" width="14" alt="Xem truoc"/>
-                                            <span style="font-size:12px">Xem trước công văn SĐBS</span>
+                                            <span style="font-size:12px">Xem trước CVBS sau công bố</span>
                                         </sd:Button>
                                         <br>
                                         <sd:Button 

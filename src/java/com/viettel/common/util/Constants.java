@@ -399,6 +399,7 @@ public final class Constants {
         public static final String CONFIRM_FUNC_IMP_TL = "confirmTL";
         //hiepvv SDBS sau cong bo
         public static final String ANNOUNCEMENT_FILE05 = "announcementFile05";
+        public static final String ANNOUNCEMENT_FILE05_PAPER = "announcementFile05Paper";
         public static final String ANNOUNCEMENT_4STAR = "announcement4star";
 
         public static final String ANNOUNCEMENT_TL01 = "annoucementTL01";

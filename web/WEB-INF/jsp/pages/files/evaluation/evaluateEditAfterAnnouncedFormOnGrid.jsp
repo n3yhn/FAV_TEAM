@@ -143,7 +143,7 @@
                                         <sx:ButtonSave onclick="onEvaluate();"/>
                                         <sd:Button id="btnExportEEAA" key="" onclick="page.exportExportEEAA();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/process_icon.png" height="14" width="14" alt="Xem truoc"/>
-                                            <span style="font-size:12px">Xem trước công văn SĐBS</span>
+                                            <span style="font-size:12px">Xem trước CVBS sau công bố</span>
                                         </sd:Button>
                                         <br>
                                         <sd:Button id="btnLoadCookieEF" key="" onclick="page.getEvaluateForm();" cssStyle="display:" cssClass="buttonGroup">

@@ -236,5 +236,5 @@
                                     page.search();
                                 };
 
-                                backPage();
+//                                backPage();
 </script>

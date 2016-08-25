@@ -41,23 +41,11 @@
     });
 
 </script>
-<%--/****************************** Hiepvv ************************************/--%>
 
 <div class="buttonDiv">
     <sx:ButtonBack onclick="backPage();"/>
     <sx:ButtonSave onclick="page.insertFiles();"/>
     <sx:ButtonSaveDraff onclick="page.insertFileDraff();"/>
-    
-    <%-- <sx:ButtonSave onclick="page.saveFiles();"/> 
-    
-
-    <sd:SelectBox
-        id="createForm.Type"
-        key="" data="lstFileType" valueField="procedureId" labelField="name"
-        name="createForm.Type" 
-        cssStyle="display:none;width:70%;">
-    </sd:SelectBox>
-    --%>
 </div>
 <sd:TitlePane key="Sửa đổi hồ sơ sau công bố"
               id="fileNameFull" >

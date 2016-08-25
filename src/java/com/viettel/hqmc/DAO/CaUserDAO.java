@@ -40,14 +40,14 @@ public class CaUserDAO extends BaseDAO {
      */
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CaUserDAO.class);
 
-//    public String prepare() {
-//        try {
-//            //todo code here
-//        } catch (Exception ex) {
-//            log.error(ex.getMessage());
-//        }
-//        return this.forwardPage;
-//    }
+    public String prepare() {
+        try {
+            //todo code here
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
+        return businessRegisterCAPage;
+    }
     
     /**
      *

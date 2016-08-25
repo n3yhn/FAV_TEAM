@@ -50,20 +50,14 @@
     };
     
     page.formatAction = function(inData) {
-        var row = inData - 1;
         var item = dijit.byId("filesGrid").getItem(inData - 1);
-        var checkCa = '${fn:escapeXml(isCa)}';
         var url = "";
         if (item != null) {
             var signed = true;
             if (item.userSigned == null
                     || item.userSigned == ""
                     || item.userSigned == "reset") {
-                signed = false;
             }
-            var deadlineAddition = item.deadlineAddition;
-            var today = '${sysDate}';
-//            url = "<div style='text-align:left;cursor:pointer;'><img src='share/images/icons/copy_icon.png' width='17px' height='17px' title='Tạo bản sao hồ sơ' onClick='page.copyFile(" + item.fileId + ");' />";
             var status = parseInt(item.status);
             switch (status) {               
                 case 22:
@@ -138,7 +132,8 @@
                     break;
                 case 5:
                     var diffDays = Math.ceil(Math.abs(today - modifyDate) / (1000 * 60 * 60 * 24)) + dateAdd;
-                    if (fileType == 66701 || fileType == 66702) {
+                    if (fileType == 66701
+                            || fileType == 66702) {
                         if (diffDays > 2) {
                             strWarning += "- Quá hạn phê duyệt&#13;";
                             flag = 1;
@@ -148,7 +143,10 @@
                             }
                         }
                     } else {
-                        if (productTypeId == 3398258 || productTypeId == 3398259 || productTypeId == 3385104 || productTypeId == 66846) {
+                        if (productTypeId == 3398258
+                                || productTypeId == 3398259
+                                || productTypeId == 3385104
+                                || productTypeId == 66846) {
                             if (diffDays > 7) {
                                 strWarning += "- Quá hạn phê duyệt&#13;";
                                 flag = 1;
