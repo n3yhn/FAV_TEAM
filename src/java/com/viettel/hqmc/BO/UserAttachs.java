@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -107,7 +108,7 @@ public class UserAttachs implements Serializable {
     }
 
     public void setAttachName(String attachName) {
-        this.attachName = attachName;
+        this.attachName = StringUtils.removeEventHandlerJS(attachName);
     }
 
     public String getDescription() {
@@ -115,7 +116,7 @@ public class UserAttachs implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = StringUtils.removeEventHandlerJS(description);
     }
 
     public Date getEffectiveDate() {
@@ -187,7 +188,7 @@ public class UserAttachs implements Serializable {
     }
 
     public void setAttachPath(String attachPath) {
-        this.attachPath = attachPath;
+        this.attachPath = StringUtils.removeEventHandlerJS(attachPath);
     }
 
     public String getObjectType() {
@@ -195,7 +196,7 @@ public class UserAttachs implements Serializable {
     }
 
     public void setObjectType(String objectType) {
-        this.objectType = objectType;
+        this.objectType = StringUtils.removeEventHandlerJS(objectType);
     }
 
     @Override
@@ -236,7 +237,7 @@ public class UserAttachs implements Serializable {
     }
 
     public void setFileName(String fileName) {
-        this.fileName = fileName;
+        this.fileName = StringUtils.removeEventHandlerJS(fileName);
     }
 
 }

@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -123,7 +124,7 @@ public class FeePaymentInfo implements Serializable {
     }
 
     public void setPaymentPerson(String paymentPerson) {
-        this.paymentPerson = paymentPerson;
+        this.paymentPerson = StringUtils.removeEventHandlerJS(paymentPerson);
     }
 
     public Date getPaymentDate() {
@@ -155,7 +156,7 @@ public class FeePaymentInfo implements Serializable {
     }
 
     public void setPaymentInfo(String paymentInfo) {
-        this.paymentInfo = paymentInfo;
+        this.paymentInfo = StringUtils.removeEventHandlerJS(paymentInfo);
     }
 
     public Long getCost() {
@@ -171,7 +172,7 @@ public class FeePaymentInfo implements Serializable {
     }
 
     public void setBillPath(String billPath) {
-        this.billPath = billPath;
+        this.billPath = StringUtils.removeEventHandlerJS(billPath);
     }
 
     public Date getCreateDate() {
@@ -211,7 +212,7 @@ public class FeePaymentInfo implements Serializable {
     }
 
     public void setPaymentCode(String paymentCode) {
-        this.paymentCode = paymentCode;
+        this.paymentCode = StringUtils.removeEventHandlerJS(paymentCode);
     }
 
     public String getPaymentConfirm() {
@@ -219,7 +220,7 @@ public class FeePaymentInfo implements Serializable {
     }
 
     public void setPaymentConfirm(String paymentConfirm) {
-        this.paymentConfirm = paymentConfirm;
+        this.paymentConfirm = StringUtils.removeEventHandlerJS(paymentConfirm);
     }
 
     public String getBillCode() {
@@ -227,7 +228,7 @@ public class FeePaymentInfo implements Serializable {
     }
 
     public void setBillCode(String billCode) {
-        this.billCode = billCode;
+        this.billCode = StringUtils.removeEventHandlerJS(billCode);
     }
 
     public Date getDateConfirm() {
@@ -243,7 +244,7 @@ public class FeePaymentInfo implements Serializable {
     }
 
     public void setCommentReject(String commentReject) {
-        this.commentReject = commentReject;
+        this.commentReject = StringUtils.removeEventHandlerJS(commentReject);
     }
 
     public String getFilesCode() {
@@ -251,7 +252,7 @@ public class FeePaymentInfo implements Serializable {
     }
 
     public void setFilesCode(String filesCode) {
-        this.filesCode = filesCode;
+        this.filesCode = StringUtils.removeEventHandlerJS(filesCode);
     }
 
     public Long getCostCheck() {

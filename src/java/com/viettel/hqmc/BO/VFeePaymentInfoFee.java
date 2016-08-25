@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -91,7 +92,7 @@ public class VFeePaymentInfoFee implements Serializable {
     }
 
     public void setFeeName(String feeName) {
-        this.feeName = feeName;
+        this.feeName = StringUtils.removeEventHandlerJS(feeName);
     }
 
     public String getDescription() {
@@ -99,7 +100,7 @@ public class VFeePaymentInfoFee implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = StringUtils.removeEventHandlerJS(description);
     }
 
     public Long getCost() {
@@ -147,7 +148,7 @@ public class VFeePaymentInfoFee implements Serializable {
     }
 
     public void setPaymentPerson(String paymentPerson) {
-        this.paymentPerson = paymentPerson;
+        this.paymentPerson = StringUtils.removeEventHandlerJS(paymentPerson);
     }
 
     public Date getPaymentDate() {
@@ -163,7 +164,7 @@ public class VFeePaymentInfoFee implements Serializable {
     }
 
     public void setPaymentInfo(String paymentInfo) {
-        this.paymentInfo = paymentInfo;
+        this.paymentInfo = StringUtils.removeEventHandlerJS(paymentInfo);
     }
 
     public String getBillPath() {
@@ -171,7 +172,7 @@ public class VFeePaymentInfoFee implements Serializable {
     }
 
     public void setBillPath(String billPath) {
-        this.billPath = billPath;
+        this.billPath = StringUtils.removeEventHandlerJS(billPath);
     }
 
     public long getPaymentInfoId() {

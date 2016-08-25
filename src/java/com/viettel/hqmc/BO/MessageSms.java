@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -47,6 +47,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MessageSms.findByDeptName", query = "SELECT m FROM MessageSms m WHERE m.deptName = :deptName"),
     @NamedQuery(name = "MessageSms.findBySendCount", query = "SELECT m FROM MessageSms m WHERE m.sendCount = :sendCount")})
 public class MessageSms implements Serializable {
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @SequenceGenerator(name = "MESSAGE_SEQ", sequenceName = "MESSAGE_SEQ")
@@ -128,7 +129,7 @@ public class MessageSms implements Serializable {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = StringUtils.removeEventHandlerJS(content);
     }
 
     public Date getSentTime() {
@@ -152,7 +153,7 @@ public class MessageSms implements Serializable {
     }
 
     public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+        this.errorMsg = StringUtils.removeEventHandlerJS(errorMsg);
     }
 
     public Date getSentTimeReq() {
@@ -184,7 +185,7 @@ public class MessageSms implements Serializable {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.phoneNumber = StringUtils.removeEventHandlerJS(phoneNumber);
     }
 
     public Long getBroadcastId() {
@@ -200,7 +201,7 @@ public class MessageSms implements Serializable {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.userName = StringUtils.removeEventHandlerJS(userName);
     }
 
     public String getDeptName() {
@@ -208,7 +209,7 @@ public class MessageSms implements Serializable {
     }
 
     public void setDeptName(String deptName) {
-        this.deptName = deptName;
+        this.deptName = StringUtils.removeEventHandlerJS(deptName);
     }
 
     public Long getSendCount() {
@@ -243,5 +244,5 @@ public class MessageSms implements Serializable {
     public String toString() {
         return "com.viettel.hqmc.BO.MessageSms[ messageId=" + messageId + " ]";
     }
-    
+
 }

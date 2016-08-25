@@ -234,6 +234,18 @@
             </result>
         </action>
         
+        <action name="businessAlertAction" class="com.viettel.hqmc.DAO.BusinessAlertDAO" method="prepare">
+            <interceptor-ref name="requestTokenRdwfInterceptorStack">
+                <param name="tokenSession.includeMethods">
+                    onInsert, onDelete, onUpdate 
+                </param>
+            </interceptor-ref>
+            <result type="tiles" name="businessAlertPage">businessAlert.Page</result>
+            <result type="json" name="gridData">
+                <param name="root">jsonDataGrid</param>
+            </result>
+        </action>
+        
         
         <!-- End Tien ich -->
     </package>

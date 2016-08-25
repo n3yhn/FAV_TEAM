@@ -5,9 +5,8 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -106,7 +105,7 @@ public class FilesEdit implements Serializable {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = StringUtils.removeEventHandlerJS(content);
     }
 
     public String getNote() {
@@ -114,7 +113,7 @@ public class FilesEdit implements Serializable {
     }
 
     public void setNote(String note) {
-        this.note = note;
+        this.note = StringUtils.removeEventHandlerJS(note);
     }
 
     public Date getCreateDate() {

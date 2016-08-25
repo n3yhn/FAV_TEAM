@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -82,7 +83,7 @@ public class AnnouncementReceipt implements Serializable {
     }
 
     public void setReceiptNo(String receiptNo) {
-        this.receiptNo = receiptNo;
+        this.receiptNo =StringUtils.removeEventHandlerJS( receiptNo);
     }
 
     public Date getReceiptDate() {
@@ -98,7 +99,7 @@ public class AnnouncementReceipt implements Serializable {
     }
 
     public void setReceiptDeptName(String receiptDeptName) {
-        this.receiptDeptName = receiptDeptName;
+        this.receiptDeptName = StringUtils.removeEventHandlerJS(receiptDeptName);
     }
 
     public String getSignerName() {
@@ -106,7 +107,7 @@ public class AnnouncementReceipt implements Serializable {
     }
 
     public void setSignerName(String signerName) {
-        this.signerName = signerName;
+        this.signerName = StringUtils.removeEventHandlerJS(signerName);
     }
 
     public Date getSignDate() {

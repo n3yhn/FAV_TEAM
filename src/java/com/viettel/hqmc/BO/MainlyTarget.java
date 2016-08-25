@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -91,11 +92,10 @@ public class MainlyTarget implements Serializable {
 
         return entity;
     }
-    
-      public MainlyTarget cloneEntity() {
+
+    public MainlyTarget cloneEntity() {
         return cloneEntity(this);
     }
-  
 
     public boolean compareEntity(MainlyTarget original) {
         if (!this.getTargetName().equals(original.getTargetName())) {
@@ -194,7 +194,7 @@ public class MainlyTarget implements Serializable {
     }
 
     public void setTargetName(String targetName) {
-        this.targetName = targetName;
+        this.targetName = StringUtils.removeEventHandlerJS(targetName);
     }
 
     public String getUnitName() {
@@ -202,7 +202,7 @@ public class MainlyTarget implements Serializable {
     }
 
     public void setUnitName(String unitName) {
-        this.unitName = unitName;
+        this.unitName = StringUtils.removeEventHandlerJS(unitName);
     }
 
     public String getUnitId() {
@@ -210,7 +210,7 @@ public class MainlyTarget implements Serializable {
     }
 
     public void setUnitId(String unitId) {
-        this.unitId = unitId;
+        this.unitId = StringUtils.removeEventHandlerJS(unitId);
     }
 
     public String getPublishLevel() {
@@ -218,7 +218,7 @@ public class MainlyTarget implements Serializable {
     }
 
     public void setPublishLevel(String publishLevel) {
-        this.publishLevel = publishLevel;
+        this.publishLevel = StringUtils.removeEventHandlerJS(publishLevel);
     }
 
     public String getMeetLevel() {
@@ -226,7 +226,7 @@ public class MainlyTarget implements Serializable {
     }
 
     public void setMeetLevel(String meetLevel) {
-        this.meetLevel = meetLevel;
+        this.meetLevel = StringUtils.removeEventHandlerJS(meetLevel);
     }
 
 }

@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.lang.Long;
 import javax.persistence.Basic;
@@ -71,7 +72,7 @@ public class Complaints implements Serializable {
     }
 
     public void setFileCode(String fileCode) {
-        this.fileCode = fileCode;
+        this.fileCode = StringUtils.removeEventHandlerJS(fileCode);
     }
 
     public String getBussinessCode() {
@@ -79,7 +80,7 @@ public class Complaints implements Serializable {
     }
 
     public void setBussinessCode(String bussinessCode) {
-        this.bussinessCode = bussinessCode;
+        this.bussinessCode = StringUtils.removeEventHandlerJS(bussinessCode);
     }
 
     public String getOldDeptCode() {
@@ -87,7 +88,7 @@ public class Complaints implements Serializable {
     }
 
     public void setOldDeptCode(String oldDeptCode) {
-        this.oldDeptCode = oldDeptCode;
+        this.oldDeptCode = StringUtils.removeEventHandlerJS(oldDeptCode);
     }
 
     public Long getCurrentState() {
@@ -103,7 +104,7 @@ public class Complaints implements Serializable {
     }
 
     public void setNextDeptCode(String nextDeptCode) {
-        this.nextDeptCode = nextDeptCode;
+        this.nextDeptCode = StringUtils.removeEventHandlerJS(nextDeptCode);
     }
 
     public String getDescription() {
@@ -111,7 +112,7 @@ public class Complaints implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = StringUtils.removeEventHandlerJS(description);
     }
 
     public Long getComplaintsId() {

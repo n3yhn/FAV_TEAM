@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -102,7 +103,7 @@ public class TechnicalStandard implements Serializable {
     }
 
     public void setStandardCode(String standardCode) {
-        this.standardCode = standardCode;
+        this.standardCode = StringUtils.removeEventHandlerJS(standardCode);
     }
 
     public String getEnglishName() {
@@ -110,7 +111,7 @@ public class TechnicalStandard implements Serializable {
     }
 
     public void setEnglishName(String englishName) {
-        this.englishName = englishName;
+        this.englishName = StringUtils.removeEventHandlerJS(englishName);
     }
 
     public String getVietnameseName() {
@@ -118,7 +119,7 @@ public class TechnicalStandard implements Serializable {
     }
 
     public void setVietnameseName(String vietnameseName) {
-        this.vietnameseName = vietnameseName;
+        this.vietnameseName = StringUtils.removeEventHandlerJS(vietnameseName);
     }
 
     public String getSummary() {
@@ -134,7 +135,7 @@ public class TechnicalStandard implements Serializable {
     }
 
     public void setApplicationObject(String applicationObject) {
-        this.applicationObject = applicationObject;
+        this.applicationObject = StringUtils.removeEventHandlerJS(applicationObject);
     }
 
     public Date getPublishDate() {
@@ -166,7 +167,7 @@ public class TechnicalStandard implements Serializable {
     }
 
     public void setScope(String scope) {
-        this.scope = scope;
+        this.scope = StringUtils.removeEventHandlerJS(scope);
     }
 
     public Long getStandardType() {
@@ -190,7 +191,7 @@ public class TechnicalStandard implements Serializable {
     }
 
     public void setPublishAgencyName(String publishAgencyName) {
-        this.publishAgencyName = publishAgencyName;
+        this.publishAgencyName = StringUtils.removeEventHandlerJS(publishAgencyName);
     }
 
     public Long getStatus() {

@@ -6,6 +6,7 @@
 
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -89,7 +90,7 @@ public class MessageEmailSent implements Serializable {
     }
 
     public void setReceiveEmail(String receiveEmail) {
-        this.receiveEmail = receiveEmail;
+        this.receiveEmail = StringUtils.removeEventHandlerJS(receiveEmail);
     }
 
     public Long getSenderId() {
@@ -105,7 +106,7 @@ public class MessageEmailSent implements Serializable {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = StringUtils.removeEventHandlerJS(content);
     }
 
     @Override

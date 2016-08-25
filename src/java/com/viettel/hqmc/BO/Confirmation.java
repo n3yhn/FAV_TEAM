@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
@@ -93,7 +94,7 @@ public class Confirmation implements Serializable {
     }
 
     public void setConfirmationNo(String confirmationNo) {
-        this.confirmationNo = confirmationNo;
+        this.confirmationNo = StringUtils.removeEventHandlerJS(confirmationNo);
     }
 
     public Date getDateOfIssue() {
@@ -109,7 +110,7 @@ public class Confirmation implements Serializable {
     }
 
     public void setIssueAgencyName(String issueAgencyName) {
-        this.issueAgencyName = issueAgencyName;
+        this.issueAgencyName = StringUtils.removeEventHandlerJS(issueAgencyName);
     }
 
     public Long getIssueAgencyId() {

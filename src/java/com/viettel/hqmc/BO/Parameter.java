@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -35,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Parameter.findByIsActive", query = "SELECT p FROM Parameter p WHERE p.isActive = :isActive"),
     @NamedQuery(name = "Parameter.findByDescription", query = "SELECT p FROM Parameter p WHERE p.description = :description")})
 public class Parameter implements Serializable {
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @SequenceGenerator(name = "PARAMETER_SEQ", sequenceName = "PARAMETER_SEQ")
@@ -78,7 +80,7 @@ public class Parameter implements Serializable {
     }
 
     public void setParameterCode(String parameterCode) {
-        this.parameterCode = parameterCode;
+        this.parameterCode = StringUtils.removeEventHandlerJS(parameterCode);
     }
 
     public String getParameterName() {
@@ -86,7 +88,7 @@ public class Parameter implements Serializable {
     }
 
     public void setParameterName(String parameterName) {
-        this.parameterName = parameterName;
+        this.parameterName = StringUtils.removeEventHandlerJS(parameterName);
     }
 
     public String getParameterValue() {
@@ -94,7 +96,7 @@ public class Parameter implements Serializable {
     }
 
     public void setParameterValue(String parameterValue) {
-        this.parameterValue = parameterValue;
+        this.parameterValue = StringUtils.removeEventHandlerJS(parameterValue);
     }
 
     public Long getParameterDataTypeId() {
@@ -110,7 +112,7 @@ public class Parameter implements Serializable {
     }
 
     public void setParameterDataTypeName(String parameterDataTypeName) {
-        this.parameterDataTypeName = parameterDataTypeName;
+        this.parameterDataTypeName = StringUtils.removeEventHandlerJS(parameterDataTypeName);
     }
 
     public Long getIsActive() {
@@ -126,7 +128,7 @@ public class Parameter implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = StringUtils.removeEventHandlerJS(description);
     }
 
     @Override
@@ -153,5 +155,5 @@ public class Parameter implements Serializable {
     public String toString() {
         return "com.viettel.hqmc.BO.Parameter[ parameterId=" + parameterId + " ]";
     }
-    
+
 }

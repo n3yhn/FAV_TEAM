@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import oracle.net.aso.e;
 
 /**
  *
@@ -128,7 +130,7 @@ public class Business implements Serializable {
     }
 
     public void setBusinessTaxCode(String businessTaxCode) {
-        this.businessTaxCode = businessTaxCode;
+        this.businessTaxCode = StringUtils.removeEventHandlerJS(businessTaxCode);
     }
 
     public String getBusinessName() {
@@ -136,7 +138,7 @@ public class Business implements Serializable {
     }
 
     public void setBusinessName(String businessName) {
-        this.businessName = businessName;
+        this.businessName = StringUtils.removeEventHandlerJS(businessName);
     }
 
     public String getBusinessLicense() {
@@ -144,7 +146,7 @@ public class Business implements Serializable {
     }
 
     public void setBusinessLicense(String businessLicense) {
-        this.businessLicense = businessLicense;
+        this.businessLicense = StringUtils.removeEventHandlerJS(businessLicense);
     }
 
     public String getBusinessAddress() {
@@ -152,7 +154,7 @@ public class Business implements Serializable {
     }
 
     public void setBusinessAddress(String businessAddress) {
-        this.businessAddress = businessAddress;
+        this.businessAddress = StringUtils.removeEventHandlerJS(businessAddress);
     }
 
     public String getBusinessProvince() {
@@ -160,7 +162,7 @@ public class Business implements Serializable {
     }
 
     public void setBusinessProvince(String businessProvince) {
-        this.businessProvince = businessProvince;
+        this.businessProvince = StringUtils.removeEventHandlerJS(businessProvince);
     }
 
     public Long getIsActive() {
@@ -176,7 +178,7 @@ public class Business implements Serializable {
     }
 
     public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+        this.userEmail = StringUtils.removeEventHandlerJS(userEmail);
     }
 
     public String getUserName() {
@@ -184,7 +186,7 @@ public class Business implements Serializable {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.userName = StringUtils.removeEventHandlerJS(userName);
     }
 
     public String getUserFullname() {
@@ -192,7 +194,7 @@ public class Business implements Serializable {
     }
 
     public void setUserFullname(String userFullname) {
-        this.userFullname = userFullname;
+        this.userFullname = StringUtils.removeEventHandlerJS(userFullname);
     }
 
     public String getUserTelephone() {
@@ -200,7 +202,7 @@ public class Business implements Serializable {
     }
 
     public void setUserTelephone(String userTelephone) {
-        this.userTelephone = userTelephone;
+        this.userTelephone = StringUtils.removeEventHandlerJS(userTelephone);
     }
 
     public String getUserMobile() {
@@ -208,7 +210,7 @@ public class Business implements Serializable {
     }
 
     public void setUserMobile(String userMobile) {
-        this.userMobile = userMobile;
+        this.userMobile = StringUtils.removeEventHandlerJS(userMobile);
     }
 
     public Long getBusinessTypeId() {
@@ -224,7 +226,7 @@ public class Business implements Serializable {
     }
 
     public void setBusinessTypeName(String businessTypeName) {
-        this.businessTypeName = businessTypeName;
+        this.businessTypeName = StringUtils.removeEventHandlerJS(businessTypeName);
     }
 
     public String getBusinessNameEng() {
@@ -232,7 +234,7 @@ public class Business implements Serializable {
     }
 
     public void setBusinessNameEng(String businessNameEng) {
-        this.businessNameEng = businessNameEng;
+        this.businessNameEng = StringUtils.removeEventHandlerJS(businessNameEng);
     }
 
     public String getBusinessNameAlias() {
@@ -240,7 +242,7 @@ public class Business implements Serializable {
     }
 
     public void setBusinessNameAlias(String businessNameAlias) {
-        this.businessNameAlias = businessNameAlias;
+        this.businessNameAlias = StringUtils.removeEventHandlerJS(businessNameAlias);
     }
 
     public String getBusinessTelephone() {
@@ -248,7 +250,7 @@ public class Business implements Serializable {
     }
 
     public void setBusinessTelephone(String businessTelephone) {
-        this.businessTelephone = businessTelephone;
+        this.businessTelephone = StringUtils.removeEventHandlerJS(businessTelephone);
     }
 
     public String getBusinessFax() {
@@ -256,7 +258,7 @@ public class Business implements Serializable {
     }
 
     public void setBusinessFax(String businessFax) {
-        this.businessFax = businessFax;
+        this.businessFax = StringUtils.removeEventHandlerJS(businessFax);
     }
 
     public String getBusinessWebsite() {
@@ -264,7 +266,7 @@ public class Business implements Serializable {
     }
 
     public void setBusinessWebsite(String businessWebsite) {
-        this.businessWebsite = businessWebsite;
+        this.businessWebsite = StringUtils.removeEventHandlerJS(businessWebsite);
     }
 
     public String getBusinessLawRep() {
@@ -272,7 +274,7 @@ public class Business implements Serializable {
     }
 
     public void setBusinessLawRep(String businessLawRep) {
-        this.businessLawRep = businessLawRep;
+        this.businessLawRep = StringUtils.removeEventHandlerJS(businessLawRep);
     }
 
     public String getDescription() {
@@ -280,7 +282,7 @@ public class Business implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = StringUtils.removeEventHandlerJS(description);
     }
 
     public String getBusinessEstablishYear() {
@@ -288,7 +290,7 @@ public class Business implements Serializable {
     }
 
     public void setBusinessEstablishYear(String businessEstablishYear) {
-        this.businessEstablishYear = businessEstablishYear;
+        this.businessEstablishYear = StringUtils.removeEventHandlerJS(businessEstablishYear);
     }
 
     public Long getBusinessProvinceId() {
@@ -312,7 +314,7 @@ public class Business implements Serializable {
     }
 
     public void setGoverningBody(String governingBody) {
-        this.governingBody = governingBody;
+        this.governingBody = StringUtils.removeEventHandlerJS(governingBody);
     }        
 
     @Override

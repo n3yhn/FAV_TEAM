@@ -6,6 +6,7 @@
 
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.math.BigInteger;
 import javax.persistence.Basic;
@@ -67,7 +68,7 @@ public class VReportLProcessed implements Serializable {
     }
 
     public void setLeaderName(String leaderName) {
-        this.leaderName = leaderName;
+        this.leaderName = StringUtils.removeEventHandlerJS(leaderName);
     }
 
     public BigInteger getTotalProcessed() {

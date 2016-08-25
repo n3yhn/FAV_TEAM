@@ -5,7 +5,9 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -36,6 +40,19 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "XmlWs.findByTypeName", query = "SELECT x FROM XmlWs x WHERE x.typeName = :typeName")})
 public class XmlWs implements Serializable {
 
+    @Column(name = "USER_CREATE_ID")
+    private Long userCreateId;
+    @Column(name = "TYPE")
+    private Long type;
+    @Column(name = "NSW_FILE_CODE")
+    private String nswFileCode;
+    @Lob
+    @Column(name = "REASON")
+    private String reason;
+    @Column(name = "CREATE_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date createDate;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @SequenceGenerator(name = "XML_WS_SEQ", sequenceName = "XML_WS_SEQ")
@@ -47,12 +64,8 @@ public class XmlWs implements Serializable {
     @Lob
     @Column(name = "CONTENT")
     private String content;
-    @Column(name = "USER_CREATE_ID")
-    private Long userCreateId;
     @Column(name = "USER_CREATE_NAME")
     private String userCreateName;
-    @Column(name = "TYPE")
-    private Long type;
     @Column(name = "TYPE_CODE")
     private String typeCode;
     @Column(name = "TYPE_NAME")
@@ -78,7 +91,7 @@ public class XmlWs implements Serializable {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = StringUtils.removeEventHandlerJS(content);
     }
 
     public Long getUserCreateId() {
@@ -94,23 +107,16 @@ public class XmlWs implements Serializable {
     }
 
     public void setUserCreateName(String userCreateName) {
-        this.userCreateName = userCreateName;
+        this.userCreateName = StringUtils.removeEventHandlerJS(userCreateName);
     }
 
-    public Long getType() {
-        return type;
-    }
-
-    public void setType(Long type) {
-        this.type = type;
-    }
 
     public String getTypeCode() {
         return typeCode;
     }
 
     public void setTypeCode(String typeCode) {
-        this.typeCode = typeCode;
+        this.typeCode = StringUtils.removeEventHandlerJS(typeCode);
     }
 
     public String getTypeName() {
@@ -118,7 +124,7 @@ public class XmlWs implements Serializable {
     }
 
     public void setTypeName(String typeName) {
-        this.typeName = typeName;
+        this.typeName = StringUtils.removeEventHandlerJS(typeName);
     }
 
     @Override
@@ -144,6 +150,38 @@ public class XmlWs implements Serializable {
     @Override
     public String toString() {
         return "com.viettel.hqmc.BO.XmlWs[ xmlWsId=" + xmlWsId + " ]";
+    }
+
+    public Long getType() {
+        return type;
+    }
+
+    public void setType(Long type) {
+        this.type = type;
+    }
+
+    public String getNswFileCode() {
+        return nswFileCode;
+    }
+
+    public void setNswFileCode(String nswFileCode) {
+        this.nswFileCode = nswFileCode;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
     
 }

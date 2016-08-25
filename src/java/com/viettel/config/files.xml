@@ -186,7 +186,7 @@
         <action name="filesExplandAction" class="com.viettel.hqmc.DAO.FilesExpandDAO">
             <interceptor-ref name="requestTokenRdwfInterceptorStack">
                 <param name="tokenSession.includeMethods">
-                    onCreatePaperForAA,onApproveByLDP4AA
+                    onCreatePaperForAA,onApproveByLDP4AA,onCreatePaperByLeaderForAA
                 </param>
             </interceptor-ref>
             <result type="json" name="gridData">

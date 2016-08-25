@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -72,7 +73,7 @@ public class MessageGroup implements Serializable {
     }
 
     public void setMesssageGroupName(String messsageGroupName) {
-        this.messsageGroupName = messsageGroupName;
+        this.messsageGroupName = StringUtils.removeEventHandlerJS(messsageGroupName);
     }
 
     public Long getIsActive() {
@@ -88,7 +89,7 @@ public class MessageGroup implements Serializable {
     }
 
     public void setMesssageGroupCode(String messsageGroupCode) {
-        this.messsageGroupCode = messsageGroupCode;
+        this.messsageGroupCode = StringUtils.removeEventHandlerJS(messsageGroupCode);
     }
 
     public String getDescription() {
@@ -96,7 +97,7 @@ public class MessageGroup implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = StringUtils.removeEventHandlerJS(description);
     }
 
     public Long getDeptId() {

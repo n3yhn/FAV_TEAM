@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -116,7 +117,7 @@ public class MessageEmail implements Serializable {
     }
 
     public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+        this.errorMsg = StringUtils.removeEventHandlerJS(errorMsg);
     }
 
     public Date getSentTimeReq() {
@@ -140,7 +141,7 @@ public class MessageEmail implements Serializable {
     }
 
     public void setReceiveEmail(String receiveEmail) {
-        this.receiveEmail = receiveEmail;
+        this.receiveEmail = StringUtils.removeEventHandlerJS(receiveEmail);
     }
 
     public long getSenderId() {
@@ -156,7 +157,7 @@ public class MessageEmail implements Serializable {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = StringUtils.removeEventHandlerJS(content);
     }
 
     @XmlTransient

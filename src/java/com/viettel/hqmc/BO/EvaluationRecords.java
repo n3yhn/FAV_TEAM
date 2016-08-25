@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -158,7 +159,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setBusinessName(String businessName) {
-        this.businessName = businessName;
+        this.businessName = StringUtils.removeEventHandlerJS(businessName);
     }
 
     public String getBusinessAddress() {
@@ -166,7 +167,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setBusinessAddress(String businessAddress) {
-        this.businessAddress = businessAddress;
+        this.businessAddress = StringUtils.removeEventHandlerJS(businessAddress);
     }
 
     public String getProductName() {
@@ -174,7 +175,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setProductName(String productName) {
-        this.productName = productName;
+        this.productName = StringUtils.removeEventHandlerJS(productName);
     }
 
     public Long getLegal() {
@@ -190,7 +191,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setLegalContent(String legalContent) {
-        this.legalContent = legalContent;
+        this.legalContent = StringUtils.removeEventHandlerJS(legalContent);
     }
 
     public Long getFoodSafetyQuality() {
@@ -206,7 +207,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setFoodSafetyQualityContent(String foodSafetyQualityContent) {
-        this.foodSafetyQualityContent = foodSafetyQualityContent;
+        this.foodSafetyQualityContent = StringUtils.removeEventHandlerJS(foodSafetyQualityContent);
     }
 
     public Long getEffectUtility() {
@@ -222,7 +223,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setEffectUtilityContent(String effectUtilityContent) {
-        this.effectUtilityContent = effectUtilityContent;
+        this.effectUtilityContent = StringUtils.removeEventHandlerJS(effectUtilityContent);
     }
 
     public Long getFirstStaffId() {
@@ -238,7 +239,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setFirstStaffName(String firstStaffName) {
-        this.firstStaffName = firstStaffName;
+        this.firstStaffName = StringUtils.removeEventHandlerJS(firstStaffName);
     }
 
     public Long getSecondStaffId() {
@@ -254,7 +255,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setSecondStaffName(String secondStaffName) {
-        this.secondStaffName = secondStaffName;
+        this.secondStaffName = StringUtils.removeEventHandlerJS(secondStaffName);
     }
 
     public Long getThirdStaffId() {
@@ -270,7 +271,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setThirdStaffName(String thirdStaffName) {
-        this.thirdStaffName = thirdStaffName;
+        this.thirdStaffName = StringUtils.removeEventHandlerJS(thirdStaffName);
     }
 
     public Long getLeederStaffId() {
@@ -286,7 +287,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setLeederStaffName(String leederStaffName) {
-        this.leederStaffName = leederStaffName;
+        this.leederStaffName = StringUtils.removeEventHandlerJS(leederStaffName);
     }
 
     public Long getFileId() {
@@ -310,7 +311,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setLegalContentL(String legalContentL) {
-        this.legalContentL = legalContentL;
+        this.legalContentL = StringUtils.removeEventHandlerJS(legalContentL);
     }
 
     public Long getFoodSafetyQualityL() {
@@ -326,7 +327,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setFoodSafetyQualityContentL(String foodSafetyQualityContentL) {
-        this.foodSafetyQualityContentL = foodSafetyQualityContentL;
+        this.foodSafetyQualityContentL = StringUtils.removeEventHandlerJS(foodSafetyQualityContentL);
     }
 
     public Long getEffectUtilityL() {
@@ -342,7 +343,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setEffectUtilityContentL(String effectUtilityContentL) {
-        this.effectUtilityContentL = effectUtilityContentL;
+        this.effectUtilityContentL = StringUtils.removeEventHandlerJS(effectUtilityContentL);
     }
 
     public Long getFilesStatus() {
@@ -358,7 +359,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setMainContent(String mainContent) {
-        this.mainContent = mainContent;
+        this.mainContent = StringUtils.removeEventHandlerJS(mainContent);
     }
 
     public Long getFilesStatusL() {
@@ -374,7 +375,7 @@ public class EvaluationRecords implements Serializable {
     }
 
     public void setMainContentL(String mainContentL) {
-        this.mainContentL = mainContentL;
+        this.mainContentL = StringUtils.removeEventHandlerJS(mainContentL);
     }
 
     @Override

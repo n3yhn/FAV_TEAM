@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -109,7 +110,7 @@ public class PaymentHistory implements Serializable {
     }
 
     public void setPaymentNo(String paymentNo) {
-        this.paymentNo = paymentNo;
+        this.paymentNo = StringUtils.removeEventHandlerJS(paymentNo);
     }
 
     public Long getFileId() {
@@ -125,7 +126,7 @@ public class PaymentHistory implements Serializable {
     }
 
     public void setTaxCode(String taxCode) {
-        this.taxCode = taxCode;
+        this.taxCode = StringUtils.removeEventHandlerJS(taxCode);
     }
 
     public Date getCreateDate() {
@@ -157,7 +158,7 @@ public class PaymentHistory implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = StringUtils.removeEventHandlerJS(description);
     }
 
     public String getFileCode() {
@@ -165,7 +166,7 @@ public class PaymentHistory implements Serializable {
     }
 
     public void setFileCode(String fileCode) {
-        this.fileCode = fileCode;
+        this.fileCode = StringUtils.removeEventHandlerJS(fileCode);
     }
 
     @Override

@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -73,7 +74,7 @@ public class MessageGroupPerson implements Serializable {
     }
 
     public void setPersonName(String personName) {
-        this.personName = personName;
+        this.personName = StringUtils.removeEventHandlerJS(personName);
     }
 
     public String getPersonEmail() {
@@ -81,7 +82,7 @@ public class MessageGroupPerson implements Serializable {
     }
 
     public void setPersonEmail(String personEmail) {
-        this.personEmail = personEmail;
+        this.personEmail = StringUtils.removeEventHandlerJS(personEmail);
     }
 
     public Long getIsActive() {
@@ -105,7 +106,7 @@ public class MessageGroupPerson implements Serializable {
     }
 
     public void setPersonPhoneNumber(String personPhoneNumber) {
-        this.personPhoneNumber = personPhoneNumber;
+        this.personPhoneNumber = StringUtils.removeEventHandlerJS(personPhoneNumber);
     }
 
     @Override

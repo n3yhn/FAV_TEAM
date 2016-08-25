@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -95,7 +96,7 @@ public class Fee implements Serializable {
     }
 
     public void setFeeName(String feeName) {
-        this.feeName = feeName;
+        this.feeName = StringUtils.removeEventHandlerJS(feeName);
     }
 
     public Long getPrice() {
@@ -119,7 +120,7 @@ public class Fee implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = StringUtils.removeEventHandlerJS(description);
     }
 
     public Date getCreateDate() {
@@ -159,7 +160,7 @@ public class Fee implements Serializable {
     }
 
     public void setProcedureId(String procedureId) {
-        this.procedureId = procedureId;
+        this.procedureId = StringUtils.removeEventHandlerJS(procedureId);
     }
 
     public String getProcedureName() {
@@ -167,7 +168,7 @@ public class Fee implements Serializable {
     }
 
     public void setProcedureName(String procedureName) {
-        this.procedureName = procedureName;
+        this.procedureName = StringUtils.removeEventHandlerJS(procedureName);
     }
 
     public Long getFeeType() {
@@ -183,7 +184,7 @@ public class Fee implements Serializable {
     }
 
     public void setFeeCode(String feeCode) {
-        this.feeCode = feeCode;
+        this.feeCode = StringUtils.removeEventHandlerJS(feeCode);
     }
 
     @Override

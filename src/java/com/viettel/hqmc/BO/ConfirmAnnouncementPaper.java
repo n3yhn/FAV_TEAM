@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -75,7 +76,7 @@ public class ConfirmAnnouncementPaper implements Serializable {
     }
 
     public void setConfirmationNo(String confirmationNo) {
-        this.confirmationNo = confirmationNo;
+        this.confirmationNo = StringUtils.removeEventHandlerJS(confirmationNo);
     }
 
     public Date getDateOfIssue() {
@@ -91,7 +92,7 @@ public class ConfirmAnnouncementPaper implements Serializable {
     }
 
     public void setIssueAgencyName(String issueAgencyName) {
-        this.issueAgencyName = issueAgencyName;
+        this.issueAgencyName = StringUtils.removeEventHandlerJS(issueAgencyName);
     }
 
     public Long getIssueAgencyId() {

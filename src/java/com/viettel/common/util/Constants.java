@@ -172,6 +172,8 @@ public final class Constants {
         public static final String CLT = "CLT";//cap lai thuc pham thuong
         public static final String CLCN = "CLCN";//cap lai thuc pham thuong
         public static final String BBP = "BBP";//Bao bi
+        public static final String CBSP_SERVICE = "CBSP_SERVICE";
+        public static final String CBSP_OBJECT = "HS_CBSP_KIT";
     }
 
     public interface DOCUMENT_STATUS {
@@ -518,4 +520,18 @@ public final class Constants {
         public static final String FEATURE_GENERAL_ENTITIES = "http://xml.org/sax/features/external-general-entities";
         public static final String FEATURE_PARAMETER_ENTITIES = "http://xml.org/sax/features/external-parameter-entities";
     }
+   
+   public static String NSW_FUNCTION(Long k) {
+		if (k < 10L) {
+			return "0" + k.toString();
+		}
+		return k.toString();
+	}
+
+	public static String NSW_TYPE(Long k) {
+		if (k < 10L) {
+			return "0" + k.toString();
+		}
+		return k.toString();
+	}
 }

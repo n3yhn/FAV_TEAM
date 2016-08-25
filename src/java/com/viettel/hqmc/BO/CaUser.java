@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -95,7 +96,7 @@ public class CaUser implements Serializable {
     }
 
     public void setCaSerial(String caSerial) {
-        this.caSerial = caSerial;
+        this.caSerial = StringUtils.removeEventHandlerJS(caSerial);
     }
 
     public String getUserName() {
@@ -103,7 +104,7 @@ public class CaUser implements Serializable {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.userName = StringUtils.removeEventHandlerJS(userName);
     }
 
     public Long getBusinessId() {
@@ -135,7 +136,7 @@ public class CaUser implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = StringUtils.removeEventHandlerJS(name);
     }
 
     public String getPosition() {
@@ -143,7 +144,7 @@ public class CaUser implements Serializable {
     }
 
     public void setPosition(String position) {
-        this.position = position;
+        this.position = StringUtils.removeEventHandlerJS(position);
     }
 
     public String getCommand() {
@@ -151,7 +152,7 @@ public class CaUser implements Serializable {
     }
 
     public void setCommand(String command) {
-        this.command = command;
+        this.command = StringUtils.removeEventHandlerJS(command);
     }
 
     public String getStamper() {
@@ -159,7 +160,7 @@ public class CaUser implements Serializable {
     }
 
     public void setStamper(String stamper) {
-        this.stamper = stamper;
+        this.stamper = StringUtils.removeEventHandlerJS(stamper);
     }
 
     public String getSignature() {
@@ -167,7 +168,7 @@ public class CaUser implements Serializable {
     }
 
     public void setSignature(String signature) {
-        this.signature = signature;
+        this.signature = StringUtils.removeEventHandlerJS(signature);
     }
     
     

@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.DAOHE.AnnouncementDAOHE;
 import java.io.Serializable;
 import java.util.Date;
@@ -181,7 +182,7 @@ public class Announcement implements Serializable {
     }
 
     public void setNationCompanyAddress(String nationCompanyAddress) {
-        this.nationCompanyAddress = nationCompanyAddress;
+        this.nationCompanyAddress = StringUtils.removeEventHandlerJS(nationCompanyAddress);
     }
 
     public String getNationCompanyName() {
@@ -189,7 +190,7 @@ public class Announcement implements Serializable {
     }
 
     public void setNationCompanyName(String nationCompanyName) {
-        this.nationCompanyName = nationCompanyName;
+        this.nationCompanyName = StringUtils.removeEventHandlerJS(nationCompanyName);
     }
 
     public Long getVersion() {
@@ -221,7 +222,7 @@ public class Announcement implements Serializable {
     }
 
     public void setAnnouncementNo(String announcementNo) {
-        this.announcementNo = announcementNo;
+        this.announcementNo = StringUtils.removeEventHandlerJS(announcementNo);
     }
 
     public String getBusinessName() {
@@ -229,7 +230,7 @@ public class Announcement implements Serializable {
     }
 
     public void setBusinessName(String businessName) {
-        this.businessName = businessName;
+        this.businessName = StringUtils.removeEventHandlerJS(businessName);
     }
 
     public String getBusinessLicence() {
@@ -237,7 +238,7 @@ public class Announcement implements Serializable {
     }
 
     public void setBusinessLicence(String businessLicence) {
-        this.businessLicence = businessLicence;
+        this.businessLicence = StringUtils.removeEventHandlerJS(businessLicence);
     }
 
     public String getBusinessAddress() {
@@ -245,7 +246,7 @@ public class Announcement implements Serializable {
     }
 
     public void setBusinessAddress(String businessAddress) {
-        this.businessAddress = businessAddress;
+        this.businessAddress = StringUtils.removeEventHandlerJS(businessAddress);
     }
 
     public String getBusinessTelephone() {
@@ -253,7 +254,7 @@ public class Announcement implements Serializable {
     }
 
     public void setBusinessTelephone(String businessTelephone) {
-        this.businessTelephone = businessTelephone;
+        this.businessTelephone = StringUtils.removeEventHandlerJS(businessTelephone);
     }
 
     public String getBusinessFax() {
@@ -261,7 +262,7 @@ public class Announcement implements Serializable {
     }
 
     public void setBusinessFax(String businessFax) {
-        this.businessFax = businessFax;
+        this.businessFax = StringUtils.removeEventHandlerJS(businessFax);
     }
 
     public String getBusinessEmail() {
@@ -269,7 +270,7 @@ public class Announcement implements Serializable {
     }
 
     public void setBusinessEmail(String businessEmail) {
-        this.businessEmail = businessEmail;
+        this.businessEmail = StringUtils.removeEventHandlerJS(businessEmail);
     }
 
     public String getProductName() {
@@ -277,7 +278,7 @@ public class Announcement implements Serializable {
     }
 
     public void setProductName(String productName) {
-        this.productName = productName;
+        this.productName = StringUtils.removeEventHandlerJS(productName);
     }
 
     public String getManufactureName() {
@@ -285,7 +286,7 @@ public class Announcement implements Serializable {
     }
 
     public void setManufactureName(String manufactureName) {
-        this.manufactureName = manufactureName;
+        this.manufactureName = StringUtils.removeEventHandlerJS(manufactureName);
     }
 
     public String getManufactureAddress() {
@@ -293,7 +294,7 @@ public class Announcement implements Serializable {
     }
 
     public void setManufactureAddress(String manufactureAddress) {
-        this.manufactureAddress = manufactureAddress;
+        this.manufactureAddress = StringUtils.removeEventHandlerJS(manufactureAddress);
     }
 
     public String getManufactureTel() {
@@ -301,7 +302,7 @@ public class Announcement implements Serializable {
     }
 
     public void setManufactureTel(String manufactureTel) {
-        this.manufactureTel = manufactureTel;
+        this.manufactureTel = StringUtils.removeEventHandlerJS(manufactureTel);
     }
 
     public String getManufactureFax() {
@@ -309,7 +310,7 @@ public class Announcement implements Serializable {
     }
 
     public void setManufactureFax(String manufactureFax) {
-        this.manufactureFax = manufactureFax;
+        this.manufactureFax = StringUtils.removeEventHandlerJS(manufactureFax);
     }
 
     public String getManufactureEmail() {
@@ -317,7 +318,7 @@ public class Announcement implements Serializable {
     }
 
     public void setManufactureEmail(String manufactureEmail) {
-        this.manufactureEmail = manufactureEmail;
+        this.manufactureEmail = StringUtils.removeEventHandlerJS(manufactureEmail);
     }
 
     public String getNationName() {
@@ -333,7 +334,7 @@ public class Announcement implements Serializable {
     }
 
     public void setMatchingTarget(String matchingTarget) {
-        this.matchingTarget = matchingTarget;
+        this.matchingTarget = StringUtils.removeEventHandlerJS(matchingTarget);
     }
 
     public String getAssessmentMethod() {
@@ -341,7 +342,7 @@ public class Announcement implements Serializable {
     }
 
     public void setAssessmentMethod(String assessmentMethod) {
-        this.assessmentMethod = assessmentMethod;
+        this.assessmentMethod = StringUtils.removeEventHandlerJS(assessmentMethod);
     }
 
     public Date getPublishDate() {
@@ -357,7 +358,7 @@ public class Announcement implements Serializable {
     }
 
     public void setSigner(String signer) {
-        this.signer = signer;
+        this.signer = StringUtils.removeEventHandlerJS(signer);
     }
 
     public Long getIsActive() {

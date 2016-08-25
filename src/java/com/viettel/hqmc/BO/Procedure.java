@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -127,7 +128,7 @@ public class Procedure implements Serializable {
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type = StringUtils.removeEventHandlerJS(type);
     }
 
     public String getName() {
@@ -135,7 +136,7 @@ public class Procedure implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = StringUtils.removeEventHandlerJS(name);
     }
 
     public String getCode() {
@@ -143,7 +144,7 @@ public class Procedure implements Serializable {
     }
 
     public void setCode(String code) {
-        this.code = code;
+        this.code = StringUtils.removeEventHandlerJS(code);
     }
 
     public String getIsActive() {
@@ -151,7 +152,7 @@ public class Procedure implements Serializable {
     }
 
     public void setIsActive(String isActive) {
-        this.isActive = isActive;
+        this.isActive = StringUtils.removeEventHandlerJS(isActive);
     }
 
     public Long getCreatedBy() {
@@ -191,7 +192,7 @@ public class Procedure implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = StringUtils.removeEventHandlerJS(description);
     }
 
     public String getFileList() {
@@ -199,7 +200,7 @@ public class Procedure implements Serializable {
     }
 
     public void setFileList(String fileList) {
-        this.fileList = fileList;
+        this.fileList = StringUtils.removeEventHandlerJS(fileList);
     }
 
     public Long getDeadline() {
@@ -217,10 +218,8 @@ public class Procedure implements Serializable {
     public void setTypeFee(Long typeFee) {
         this.typeFee = typeFee;
     }
-    
-    
-    // phi cap giay cong bo
 
+    // phi cap giay cong bo
     @Override
     public int hashCode() {
         int hash = 0;

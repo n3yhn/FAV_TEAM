@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -65,7 +66,7 @@ public class StandardProduct implements Serializable {
     }
 
     public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+        this.categoryName = StringUtils.removeEventHandlerJS(categoryName);
     }
 
     public VietnameseStandard getVietnameseStandard() {

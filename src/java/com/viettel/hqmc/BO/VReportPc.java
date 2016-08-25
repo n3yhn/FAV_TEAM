@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -62,7 +63,7 @@ public class VReportPc implements Serializable {
     }
 
     public void setReceiveUser(String receiveUser) {
-        this.receiveUser = receiveUser;
+        this.receiveUser = StringUtils.removeEventHandlerJS(receiveUser);
     }
 
     public Long getReceiveGroupId() {
@@ -78,7 +79,7 @@ public class VReportPc implements Serializable {
     }
 
     public void setReceiveGroup(String receiveGroup) {
-        this.receiveGroup = receiveGroup;
+        this.receiveGroup =StringUtils.removeEventHandlerJS( receiveGroup);
     }
 
     public Long getThuong() {

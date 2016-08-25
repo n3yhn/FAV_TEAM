@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -114,7 +115,7 @@ public class AnnouncementReceiptPaper implements Serializable {
     }
 
     public void setReceiptNo(String receiptNo) {
-        this.receiptNo = receiptNo;
+        this.receiptNo = StringUtils.removeEventHandlerJS(receiptNo);
     }
 
     public Date getReceiptDate() {
@@ -130,7 +131,7 @@ public class AnnouncementReceiptPaper implements Serializable {
     }
 
     public void setReceiptDeptName(String receiptDeptName) {
-        this.receiptDeptName = receiptDeptName;
+        this.receiptDeptName = StringUtils.removeEventHandlerJS(receiptDeptName);
     }
 
     public String getSignerName() {
@@ -138,7 +139,7 @@ public class AnnouncementReceiptPaper implements Serializable {
     }
 
     public void setSignerName(String signerName) {
-        this.signerName = signerName;
+        this.signerName = StringUtils.removeEventHandlerJS(signerName);
     }
 
     public Date getSignDate() {
@@ -154,7 +155,7 @@ public class AnnouncementReceiptPaper implements Serializable {
     }
 
     public void setBusinessName(String businessName) {
-        this.businessName = businessName;
+        this.businessName =StringUtils.removeEventHandlerJS( businessName);
     }
 
     public Long getBusinessId() {
@@ -170,7 +171,7 @@ public class AnnouncementReceiptPaper implements Serializable {
     }
 
     public void setTelephone(String telephone) {
-        this.telephone = telephone;
+        this.telephone = StringUtils.removeEventHandlerJS(telephone);
     }
 
     public String getFax() {
@@ -178,7 +179,7 @@ public class AnnouncementReceiptPaper implements Serializable {
     }
 
     public void setFax(String fax) {
-        this.fax = fax;
+        this.fax = StringUtils.removeEventHandlerJS(fax);
     }
 
     public String getEmail() {
@@ -186,7 +187,7 @@ public class AnnouncementReceiptPaper implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = StringUtils.removeEventHandlerJS(email);
     }
 
     public String getProductName() {
@@ -194,7 +195,7 @@ public class AnnouncementReceiptPaper implements Serializable {
     }
 
     public void setProductName(String productName) {
-        this.productName = productName;
+        this.productName = StringUtils.removeEventHandlerJS(productName);
     }
 
     public String getManufactureName() {
@@ -202,7 +203,7 @@ public class AnnouncementReceiptPaper implements Serializable {
     }
 
     public void setManufactureName(String manufactureName) {
-        this.manufactureName = manufactureName;
+        this.manufactureName = StringUtils.removeEventHandlerJS(manufactureName);
     }
 
     public String getManufactureAdd() {
@@ -210,7 +211,7 @@ public class AnnouncementReceiptPaper implements Serializable {
     }
 
     public void setManufactureAdd(String manufactureAdd) {
-        this.manufactureAdd = manufactureAdd;
+        this.manufactureAdd = StringUtils.removeEventHandlerJS(manufactureAdd);
     }
 
     public String getNationName() {
@@ -218,7 +219,7 @@ public class AnnouncementReceiptPaper implements Serializable {
     }
 
     public void setNationName(String nationName) {
-        this.nationName = nationName;
+        this.nationName = StringUtils.removeEventHandlerJS(nationName);
     }
 
     public String getMatchingTarget() {
@@ -226,7 +227,7 @@ public class AnnouncementReceiptPaper implements Serializable {
     }
 
     public void setMatchingTarget(String matchingTarget) {
-        this.matchingTarget = matchingTarget;
+        this.matchingTarget = StringUtils.removeEventHandlerJS(matchingTarget);
     }
 
     public Date getEffectiveDate() {

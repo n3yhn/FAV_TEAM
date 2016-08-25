@@ -6,9 +6,8 @@
 
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -79,7 +78,7 @@ public class Repositories implements Serializable {
     }
 
     public void setRepName(String repName) {
-        this.repName = repName;
+        this.repName = StringUtils.removeEventHandlerJS(repName);
     }
 
     public Long getRepCreator() {
@@ -95,7 +94,7 @@ public class Repositories implements Serializable {
     }
 
     public void setRepAddress(String repAddress) {
-        this.repAddress = repAddress;
+        this.repAddress = StringUtils.removeEventHandlerJS(repAddress);
     }
 
     public Long getIsActive() {

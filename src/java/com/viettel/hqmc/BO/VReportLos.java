@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.math.BigInteger;
 import javax.persistence.Column;
@@ -71,7 +72,7 @@ public class VReportLos implements Serializable {
     }
 
     public void setStaffName(String staffName) {
-        this.staffName = staffName;
+        this.staffName = StringUtils.removeEventHandlerJS(staffName);
     }
 
     public BigInteger getTotalProcess() {

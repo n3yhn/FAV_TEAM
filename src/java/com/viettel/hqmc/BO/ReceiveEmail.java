@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -39,6 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ReceiveEmail.findByErrorMsg", query = "SELECT r FROM ReceiveEmail r WHERE r.errorMsg = :errorMsg"),
     @NamedQuery(name = "ReceiveEmail.findByIsProcess", query = "SELECT r FROM ReceiveEmail r WHERE r.isProcess = :isProcess")})
 public class ReceiveEmail implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @SequenceGenerator(name = "RECEIVE_EMAIL_SEQ", sequenceName = "RECEIVE_EMAIL_SEQ")
     @Id
@@ -84,7 +86,7 @@ public class ReceiveEmail implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = StringUtils.removeEventHandlerJS(email);
     }
 
     public Date getReceiveTime() {
@@ -108,7 +110,7 @@ public class ReceiveEmail implements Serializable {
     }
 
     public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+        this.errorMsg = StringUtils.removeEventHandlerJS(errorMsg);
     }
 
     public Integer getIsProcess() {
@@ -124,7 +126,7 @@ public class ReceiveEmail implements Serializable {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = StringUtils.removeEventHandlerJS(content);
     }
 
     public MessageEmail getReplyMessageId() {
@@ -159,5 +161,5 @@ public class ReceiveEmail implements Serializable {
     public String toString() {
         return "com.viettel.hqmc.BO.ReceiveEmail[ messageId=" + messageId + " ]";
     }
-    
+
 }

@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -132,7 +133,7 @@ public class RequestComment implements Serializable {
     }
 
     public void setRequestType(String requestType) {
-        this.requestType = requestType;
+        this.requestType = StringUtils.removeEventHandlerJS(requestType);
     }
 
     public Long getRequestTypeId() {
@@ -148,7 +149,7 @@ public class RequestComment implements Serializable {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = StringUtils.removeEventHandlerJS(content);
     }
 
     public Long getIsActive() {
@@ -188,7 +189,7 @@ public class RequestComment implements Serializable {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.userName = StringUtils.removeEventHandlerJS(userName);
     }
 
     public Long getGroupId() {
@@ -204,7 +205,7 @@ public class RequestComment implements Serializable {
     }
 
     public void setGroupName(String groupName) {
-        this.groupName = groupName;
+        this.groupName = StringUtils.removeEventHandlerJS(groupName);
     }
 
     public Long getStatus() {
@@ -228,7 +229,7 @@ public class RequestComment implements Serializable {
     }
 
     public void setObjectType(String objectType) {
-        this.objectType = objectType;
+        this.objectType = StringUtils.removeEventHandlerJS(objectType);
     }
 
     @Override

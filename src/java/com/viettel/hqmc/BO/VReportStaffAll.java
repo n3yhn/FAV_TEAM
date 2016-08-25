@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
@@ -90,7 +91,7 @@ public class VReportStaffAll implements Serializable {
     }
 
     public void setFullName(String fullName) {
-        this.fullName = fullName;
+        this.fullName = StringUtils.removeEventHandlerJS(fullName);
     }
 
     public Short getStatus() {
@@ -114,7 +115,7 @@ public class VReportStaffAll implements Serializable {
     }
 
     public void setSendUser(String sendUser) {
-        this.sendUser = sendUser;
+        this.sendUser = StringUtils.removeEventHandlerJS(sendUser);
     }
 
     public BigInteger getSendUserId() {
@@ -138,7 +139,7 @@ public class VReportStaffAll implements Serializable {
     }
 
     public void setReceiveUser(String receiveUser) {
-        this.receiveUser = receiveUser;
+        this.receiveUser = StringUtils.removeEventHandlerJS(receiveUser);
     }
 
     public Date getReceiveDate() {

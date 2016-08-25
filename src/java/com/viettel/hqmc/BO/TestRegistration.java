@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.DAOHE.TestRegistrationDAOHE;
 import java.io.Serializable;
 import java.util.Date;
@@ -276,7 +277,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setExportBusinessName(String exportBusinessName) {
-        this.exportBusinessName = exportBusinessName;
+        this.exportBusinessName = StringUtils.removeEventHandlerJS(exportBusinessName);
     }
 
     public String getExportBusinessAdd() {
@@ -284,7 +285,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setExportBusinessAdd(String exportBusinessAdd) {
-        this.exportBusinessAdd = exportBusinessAdd;
+        this.exportBusinessAdd = StringUtils.removeEventHandlerJS(exportBusinessAdd);
     }
 
     public String getExportBusinessMail() {
@@ -292,7 +293,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setExportBusinessMail(String exportBusinessMail) {
-        this.exportBusinessMail = exportBusinessMail;
+        this.exportBusinessMail = StringUtils.removeEventHandlerJS(exportBusinessMail);
     }
 
     public String getExportBusinessTel() {
@@ -300,7 +301,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setExportBusinessTel(String exportBusinessTel) {
-        this.exportBusinessTel = exportBusinessTel;
+        this.exportBusinessTel = StringUtils.removeEventHandlerJS(exportBusinessTel);
     }
 
     public String getExportBusinessFax() {
@@ -308,7 +309,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setExportBusinessFax(String exportBusinessFax) {
-        this.exportBusinessFax = exportBusinessFax;
+        this.exportBusinessFax = StringUtils.removeEventHandlerJS(exportBusinessFax);
     }
 
     public String getExportContractCode() {
@@ -316,7 +317,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setExportContractCode(String exportContractCode) {
-        this.exportContractCode = exportContractCode;
+        this.exportContractCode = StringUtils.removeEventHandlerJS(exportContractCode);
     }
 
     public Date getExportContractDate() {
@@ -332,7 +333,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setExportLadingCode(String exportLadingCode) {
-        this.exportLadingCode = exportLadingCode;
+        this.exportLadingCode = StringUtils.removeEventHandlerJS(exportLadingCode);
     }
 
     public Date getExportLadingDate() {
@@ -348,7 +349,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setExportPort(String exportPort) {
-        this.exportPort = exportPort;
+        this.exportPort = StringUtils.removeEventHandlerJS(exportPort);
     }
 
     public String getImportBusinessName() {
@@ -356,7 +357,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setImportBusinessName(String importBusinessName) {
-        this.importBusinessName = importBusinessName;
+        this.importBusinessName = StringUtils.removeEventHandlerJS(importBusinessName);
     }
 
     public String getImportBusinessAddress() {
@@ -364,7 +365,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setImportBusinessAddress(String importBusinessAddress) {
-        this.importBusinessAddress = importBusinessAddress;
+        this.importBusinessAddress = StringUtils.removeEventHandlerJS(importBusinessAddress);
     }
 
     public String getImportBusinessEmail() {
@@ -372,7 +373,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setImportBusinessEmail(String importBusinessEmail) {
-        this.importBusinessEmail = importBusinessEmail;
+        this.importBusinessEmail = StringUtils.removeEventHandlerJS(importBusinessEmail);
     }
 
     public String getImportBusinessTel() {
@@ -380,7 +381,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setImportBusinessTel(String importBusinessTel) {
-        this.importBusinessTel = importBusinessTel;
+        this.importBusinessTel = StringUtils.removeEventHandlerJS(importBusinessTel);
     }
 
     public String getImportBusinessFax() {
@@ -388,7 +389,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setImportBusinessFax(String importBusinessFax) {
-        this.importBusinessFax = importBusinessFax;
+        this.importBusinessFax = StringUtils.removeEventHandlerJS(importBusinessFax);
     }
 
     public String getImportPort() {
@@ -396,7 +397,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setImportPort(String importPort) {
-        this.importPort = importPort;
+        this.importPort = StringUtils.removeEventHandlerJS(importPort);
     }
 
     public Date getImportDate() {
@@ -412,7 +413,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setProductName(String productName) {
-        this.productName = productName;
+        this.productName = StringUtils.removeEventHandlerJS(productName);
     }
 
     public String getProductDescription() {
@@ -420,7 +421,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
+        this.productDescription = StringUtils.removeEventHandlerJS(productDescription);
     }
 
     public String getProductCode() {
@@ -428,7 +429,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setProductCode(String productCode) {
-        this.productCode = productCode;
+        this.productCode = StringUtils.removeEventHandlerJS(productCode);
     }
 
     public String getProductOrigin() {
@@ -436,7 +437,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setProductOrigin(String productOrigin) {
-        this.productOrigin = productOrigin;
+        this.productOrigin = StringUtils.removeEventHandlerJS(productOrigin);
     }
 
     public String getProductAmount() {
@@ -444,7 +445,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setProductAmount(String productAmount) {
-        this.productAmount = productAmount;
+        this.productAmount = StringUtils.removeEventHandlerJS(productAmount);
     }
 
     public String getProductWeight() {
@@ -452,7 +453,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setProductWeight(String productWeight) {
-        this.productWeight = productWeight;
+        this.productWeight = StringUtils.removeEventHandlerJS(productWeight);
     }
 
     public String getProductValue() {
@@ -460,7 +461,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setProductValue(String productValue) {
-        this.productValue = productValue;
+        this.productValue = StringUtils.removeEventHandlerJS(productValue);
     }
 
     public String getGatheringAdd() {
@@ -468,7 +469,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setGatheringAdd(String gatheringAdd) {
-        this.gatheringAdd = gatheringAdd;
+        this.gatheringAdd = StringUtils.removeEventHandlerJS(gatheringAdd);
     }
 
     public Date getTestDate() {
@@ -484,7 +485,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setTestAdd(String testAdd) {
-        this.testAdd = testAdd;
+        this.testAdd = StringUtils.removeEventHandlerJS(testAdd);
     }
 
     public String getBusinessRepresent() {
@@ -492,7 +493,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setBusinessRepresent(String businessRepresent) {
-        this.businessRepresent = businessRepresent;
+        this.businessRepresent = StringUtils.removeEventHandlerJS(businessRepresent);
     }
 
     public Date getBusinessSigndate() {
@@ -508,7 +509,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setBusinessSignAdd(String businessSignAdd) {
-        this.businessSignAdd = businessSignAdd;
+        this.businessSignAdd = StringUtils.removeEventHandlerJS(businessSignAdd);
     }
 
     public String getAgencyRepresent() {
@@ -516,7 +517,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setAgencyRepresent(String agencyRepresent) {
-        this.agencyRepresent = agencyRepresent;
+        this.agencyRepresent = StringUtils.removeEventHandlerJS(agencyRepresent);
     }
 
     public String getAgencySignAdd() {
@@ -524,7 +525,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setAgencySignAdd(String agencySignAdd) {
-        this.agencySignAdd = agencySignAdd;
+        this.agencySignAdd = StringUtils.removeEventHandlerJS(agencySignAdd);
     }
 
     public Date getAgencySigndate() {
@@ -540,7 +541,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setStandardTargetNo(String standardTargetNo) {
-        this.standardTargetNo = standardTargetNo;
+        this.standardTargetNo = StringUtils.removeEventHandlerJS(standardTargetNo);
     }
 
     public Date getStandardTargetDate() {
@@ -556,7 +557,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setReleaseDocumentNo(String releaseDocumentNo) {
-        this.releaseDocumentNo = releaseDocumentNo;
+        this.releaseDocumentNo = StringUtils.removeEventHandlerJS(releaseDocumentNo);
     }
 
     public Date getReleaseDocumentDate() {
@@ -572,7 +573,7 @@ public class TestRegistration implements Serializable {
     }
 
     public void setTestAgency(String testAgency) {
-        this.testAgency = testAgency;
+        this.testAgency = StringUtils.removeEventHandlerJS(testAgency);
     }
 
     public Long getIsActive() {

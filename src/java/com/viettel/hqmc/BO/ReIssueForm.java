@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.DAOHE.ReIssueFormDAOHE;
 import java.io.Serializable;
 import java.util.Date;
@@ -157,7 +158,7 @@ public class ReIssueForm implements Serializable {
     }
 
     public void setIdentificationNumber(String identificationNumber) {
-        this.identificationNumber = identificationNumber;
+        this.identificationNumber = StringUtils.removeEventHandlerJS(identificationNumber);
     }
 
     public String getAddress() {
@@ -165,7 +166,7 @@ public class ReIssueForm implements Serializable {
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.address = StringUtils.removeEventHandlerJS(address);
     }
 
     public String getTelephone() {
@@ -173,7 +174,7 @@ public class ReIssueForm implements Serializable {
     }
 
     public void setTelephone(String telephone) {
-        this.telephone = telephone;
+        this.telephone = StringUtils.removeEventHandlerJS(telephone);
     }
 
     public String getFax() {
@@ -181,7 +182,7 @@ public class ReIssueForm implements Serializable {
     }
 
     public void setFax(String fax) {
-        this.fax = fax;
+        this.fax = StringUtils.removeEventHandlerJS(fax);
     }
 
     public String getEmail() {
@@ -189,7 +190,7 @@ public class ReIssueForm implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = StringUtils.removeEventHandlerJS(email);
     }
 
     public String getFormNumber() {
@@ -197,7 +198,7 @@ public class ReIssueForm implements Serializable {
     }
 
     public void setFormNumber(String formNumber) {
-        this.formNumber = formNumber;
+        this.formNumber = StringUtils.removeEventHandlerJS(formNumber);
     }
 
     public Date getIssueDate() {
@@ -213,7 +214,7 @@ public class ReIssueForm implements Serializable {
     }
 
     public void setIssueAgency(String issueAgency) {
-        this.issueAgency = issueAgency;
+        this.issueAgency = StringUtils.removeEventHandlerJS(issueAgency);
     }
 
     public Date getSignDate() {
@@ -229,7 +230,7 @@ public class ReIssueForm implements Serializable {
     }
 
     public void setDocumentNo(String documentNo) {
-        this.documentNo = documentNo;
+        this.documentNo = StringUtils.removeEventHandlerJS(documentNo);
     }
 
     public Date getDocumentDate() {
@@ -245,7 +246,7 @@ public class ReIssueForm implements Serializable {
     }
 
     public void setBusinessName(String businessName) {
-        this.businessName = businessName;
+        this.businessName = StringUtils.removeEventHandlerJS(businessName);
     }
 
     public String getNearestFileNo() {
@@ -253,7 +254,7 @@ public class ReIssueForm implements Serializable {
     }
 
     public void setNearestFileNo(String nearestFileNo) {
-        this.nearestFileNo = nearestFileNo;
+        this.nearestFileNo = StringUtils.removeEventHandlerJS(nearestFileNo);
     }
 
     public Long getReIssueAgencyId() {
@@ -269,7 +270,7 @@ public class ReIssueForm implements Serializable {
     }
 
     public void setReIssueAgency(String reIssueAgency) {
-        this.reIssueAgency = reIssueAgency;
+        this.reIssueAgency = StringUtils.removeEventHandlerJS(reIssueAgency);
     }
 
     public Date getReIssueDate() {

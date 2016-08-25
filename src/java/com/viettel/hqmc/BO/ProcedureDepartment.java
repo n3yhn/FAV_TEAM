@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -86,7 +87,7 @@ public class ProcedureDepartment implements Serializable {
     }
 
     public void setDeptName(String deptName) {
-        this.deptName = deptName;
+        this.deptName = StringUtils.removeEventHandlerJS(deptName);
     }
 
     public Long getProcessDeptId() {
@@ -102,7 +103,7 @@ public class ProcedureDepartment implements Serializable {
     }
 
     public void setProcessDeptName(String processDeptName) {
-        this.processDeptName = processDeptName;
+        this.processDeptName = StringUtils.removeEventHandlerJS(processDeptName);
     }
 
     public Long getProcedureDepartmentId() {

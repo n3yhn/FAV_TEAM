@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -148,7 +149,7 @@ public class ProductTarget implements Serializable {
     }
 
     public void setTargetName(String targetName) {
-        this.targetName = targetName;
+        this.targetName = StringUtils.removeEventHandlerJS(targetName);
     }
 
     public Long getTargetType() {
@@ -164,7 +165,7 @@ public class ProductTarget implements Serializable {
     }
 
     public void setUnitName(String unitName) {
-        this.unitName = unitName;
+        this.unitName = StringUtils.removeEventHandlerJS(unitName);
     }
 
     public String getMaxLevel() {
@@ -172,7 +173,7 @@ public class ProductTarget implements Serializable {
     }
 
     public void setMaxLevel(String maxLevel) {
-        this.maxLevel = maxLevel;
+        this.maxLevel = StringUtils.removeEventHandlerJS(maxLevel);
     }
 
     public Long getFileId() {
@@ -188,7 +189,7 @@ public class ProductTarget implements Serializable {
     }
 
     public void setUnitId(String unitId) {
-        this.unitId = unitId;
+        this.unitId = StringUtils.removeEventHandlerJS(unitId);
     }
 
     public Long getVersion() {

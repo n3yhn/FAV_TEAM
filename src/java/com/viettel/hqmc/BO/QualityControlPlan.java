@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -175,7 +176,7 @@ public class QualityControlPlan implements Serializable {
     }
 
     public void setProductProcessDetail(String productProcessDetail) {
-        this.productProcessDetail = productProcessDetail;
+        this.productProcessDetail = StringUtils.removeEventHandlerJS(productProcessDetail);
     }
 
     public String getControlTarget() {
@@ -183,7 +184,7 @@ public class QualityControlPlan implements Serializable {
     }
 
     public void setControlTarget(String controlTarget) {
-        this.controlTarget = controlTarget;
+        this.controlTarget = StringUtils.removeEventHandlerJS(controlTarget);
     }
 
     public String getTechnicalRegulation() {
@@ -191,7 +192,7 @@ public class QualityControlPlan implements Serializable {
     }
 
     public void setTechnicalRegulation(String technicalRegulation) {
-        this.technicalRegulation = technicalRegulation;
+        this.technicalRegulation = StringUtils.removeEventHandlerJS(technicalRegulation);
     }
 
     public String getPatternFrequence() {
@@ -199,7 +200,7 @@ public class QualityControlPlan implements Serializable {
     }
 
     public void setPatternFrequence(String patternFrequence) {
-        this.patternFrequence = patternFrequence;
+        this.patternFrequence = StringUtils.removeEventHandlerJS(patternFrequence);
     }
 
     public String getTestDevice() {
@@ -207,7 +208,7 @@ public class QualityControlPlan implements Serializable {
     }
 
     public void setTestDevice(String testDevice) {
-        this.testDevice = testDevice;
+        this.testDevice = StringUtils.removeEventHandlerJS(testDevice);
     }
 
     public String getTestMethod() {
@@ -215,7 +216,7 @@ public class QualityControlPlan implements Serializable {
     }
 
     public void setTestMethod(String testMethod) {
-        this.testMethod = testMethod;
+        this.testMethod = StringUtils.removeEventHandlerJS(testMethod);
     }
 
     public String getNoteForm() {
@@ -223,7 +224,7 @@ public class QualityControlPlan implements Serializable {
     }
 
     public void setNoteForm(String noteForm) {
-        this.noteForm = noteForm;
+        this.noteForm = StringUtils.removeEventHandlerJS(noteForm);
     }
 
     public String getNote() {
@@ -231,7 +232,7 @@ public class QualityControlPlan implements Serializable {
     }
 
     public void setNote(String note) {
-        this.note = note;
+        this.note = StringUtils.removeEventHandlerJS(note);
     }
 
     public Long getIsActive() {

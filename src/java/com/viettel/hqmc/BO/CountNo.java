@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -104,7 +105,7 @@ public class CountNo implements Serializable {
     }
 
     public void setDeptCode(String deptCode) {
-        this.deptCode = deptCode;
+        this.deptCode = StringUtils.removeEventHandlerJS(deptCode);
     }
 
     public String getName() {
@@ -112,7 +113,7 @@ public class CountNo implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = StringUtils.removeEventHandlerJS(name);
     }
 
     public Long getIsActive() {

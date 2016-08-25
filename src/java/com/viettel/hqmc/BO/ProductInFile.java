@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -35,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ProductInFile.findByPackageRecipe", query = "SELECT p FROM ProductInFile p WHERE p.packageRecipe = :packageRecipe"),
     @NamedQuery(name = "ProductInFile.findByForProduct", query = "SELECT p FROM ProductInFile p WHERE p.forProduct = :forProduct")})
 public class ProductInFile implements Serializable {
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @SequenceGenerator(name = "PRODUCT_IN_FILE_SEQ", sequenceName = "PRODUCT_IN_FILE_SEQ")
@@ -44,7 +46,7 @@ public class ProductInFile implements Serializable {
     @Column(name = "PRODUCT_IN_FILE_ID")
     private Long productInFileId;
     @Column(name = "FILE_ID")
-    private Long fileId;    
+    private Long fileId;
     @Column(name = "PRODUCT_NAME")
     private String productName;
     @Column(name = "COMPONENT")
@@ -98,7 +100,7 @@ public class ProductInFile implements Serializable {
     }
 
     public void setProductName(String productName) {
-        this.productName = productName;
+        this.productName = StringUtils.removeEventHandlerJS(productName);
     }
 
     public String getComponent() {
@@ -106,7 +108,7 @@ public class ProductInFile implements Serializable {
     }
 
     public void setComponent(String component) {
-        this.component = component;
+        this.component = StringUtils.removeEventHandlerJS(component);
     }
 
     public String getMainlyTarget() {
@@ -114,7 +116,7 @@ public class ProductInFile implements Serializable {
     }
 
     public void setMainlyTarget(String mainlyTarget) {
-        this.mainlyTarget = mainlyTarget;
+        this.mainlyTarget = StringUtils.removeEventHandlerJS(mainlyTarget);
     }
 
     public String getManufacture() {
@@ -122,7 +124,7 @@ public class ProductInFile implements Serializable {
     }
 
     public void setManufacture(String manufacture) {
-        this.manufacture = manufacture;
+        this.manufacture = StringUtils.removeEventHandlerJS(manufacture);
     }
 
     public String getDeadline() {
@@ -130,7 +132,7 @@ public class ProductInFile implements Serializable {
     }
 
     public void setDeadline(String deadline) {
-        this.deadline = deadline;
+        this.deadline = StringUtils.removeEventHandlerJS(deadline);
     }
 
     public String getPackageRecipe() {
@@ -138,7 +140,7 @@ public class ProductInFile implements Serializable {
     }
 
     public void setPackageRecipe(String packageRecipe) {
-        this.packageRecipe = packageRecipe;
+        this.packageRecipe = StringUtils.removeEventHandlerJS(packageRecipe);
     }
 
     public String getForProduct() {
@@ -146,7 +148,7 @@ public class ProductInFile implements Serializable {
     }
 
     public void setForProduct(String forProduct) {
-        this.forProduct = forProduct;
+        this.forProduct = StringUtils.removeEventHandlerJS(forProduct);
     }
 
     @Override
@@ -173,5 +175,5 @@ public class ProductInFile implements Serializable {
     public String toString() {
         return "com.viettel.hqmc.BO.ProductInFile[ productInFileId=" + productInFileId + " ]";
     }
-    
+
 }

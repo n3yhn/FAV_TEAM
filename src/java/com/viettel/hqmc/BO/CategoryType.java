@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -80,7 +81,7 @@ public class CategoryType implements Serializable {
     }
 
     public void setCategoryType(String categoryType) {
-        this.categoryType = categoryType;
+        this.categoryType = StringUtils.removeEventHandlerJS(categoryType);
     }
 
     public String getCategoryName() {
@@ -88,7 +89,7 @@ public class CategoryType implements Serializable {
     }
 
     public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+        this.categoryName = StringUtils.removeEventHandlerJS(categoryName);
     }
 
     public String getDesciption() {
@@ -96,7 +97,7 @@ public class CategoryType implements Serializable {
     }
 
     public void setDesciption(String desciption) {
-        this.desciption = desciption;
+        this.desciption = StringUtils.removeEventHandlerJS(desciption);
     }
 
     public Long getIsActive() {

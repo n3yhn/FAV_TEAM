@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.DAOHE.DetailProductDAOHE;
 import java.io.Serializable;
 import java.util.Date;
@@ -215,7 +216,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setProductTypeName(String productTypeName) {
-        this.productTypeName = productTypeName;
+        this.productTypeName = StringUtils.removeEventHandlerJS(productTypeName);
     }
 
     public String getProductSmell() {
@@ -223,7 +224,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setProductSmell(String productSmell) {
-        this.productSmell = productSmell;
+        this.productSmell = StringUtils.removeEventHandlerJS(productSmell);
     }
 
     public String getProductStatus() {
@@ -231,7 +232,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setProductStatus(String productStatus) {
-        this.productStatus = productStatus;
+        this.productStatus = StringUtils.removeEventHandlerJS(productStatus);
     }
 
     public String getProductColor() {
@@ -239,7 +240,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setProductColor(String productColor) {
-        this.productColor = productColor;
+        this.productColor = StringUtils.removeEventHandlerJS(productColor);
     }
 
     public String getProductOtherStatus() {
@@ -247,7 +248,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setProductOtherStatus(String productOtherStatus) {
-        this.productOtherStatus = productOtherStatus;
+        this.productOtherStatus = StringUtils.removeEventHandlerJS(productOtherStatus);
     }
 
     public String getComponents() {
@@ -255,7 +256,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setComponents(String components) {
-        this.components = components;
+        this.components = StringUtils.removeEventHandlerJS(components);
     }
 
     public String getUseage() {
@@ -271,7 +272,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setTimeInUse(String timeInUse) {
-        this.timeInUse = timeInUse;
+        this.timeInUse = StringUtils.removeEventHandlerJS(timeInUse);
     }
 
     public String getObjectUse() {
@@ -279,7 +280,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setObjectUse(String objectUse) {
-        this.objectUse = objectUse;
+        this.objectUse = StringUtils.removeEventHandlerJS(objectUse);
     }
 
     public String getGuideline() {
@@ -287,7 +288,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setGuideline(String guideline) {
-        this.guideline = guideline;
+        this.guideline = StringUtils.removeEventHandlerJS(guideline);
     }
 
     public String getPreservation() {
@@ -295,7 +296,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setPreservation(String preservation) {
-        this.preservation = preservation;
+        this.preservation = StringUtils.removeEventHandlerJS(preservation);
     }
 
     public String getPackateMaterial() {
@@ -303,7 +304,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setPackateMaterial(String packateMaterial) {
-        this.packateMaterial = packateMaterial;
+        this.packateMaterial = StringUtils.removeEventHandlerJS(packateMaterial);
     }
 
     public String getPackageRecipe() {
@@ -311,7 +312,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setPackageRecipe(String packageRecipe) {
-        this.packageRecipe = packageRecipe;
+        this.packageRecipe = StringUtils.removeEventHandlerJS(packageRecipe);
     }
 
     public String getProductionProcess() {
@@ -319,7 +320,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setProductionProcess(String productionProcess) {
-        this.productionProcess = productionProcess;
+        this.productionProcess = StringUtils.removeEventHandlerJS(productionProcess);
     }
 
     public String getCounterfeitDistinctive() {
@@ -327,7 +328,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setCounterfeitDistinctive(String counterfeitDistinctive) {
-        this.counterfeitDistinctive = counterfeitDistinctive;
+        this.counterfeitDistinctive = StringUtils.removeEventHandlerJS(counterfeitDistinctive);
     }
 
     public Date getSignDate() {
@@ -359,7 +360,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setProductNo(String productNo) {
-        this.productNo = productNo;
+        this.productNo = StringUtils.removeEventHandlerJS(productNo);
     }
 
     public String getOtherTarget() {
@@ -367,7 +368,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setOtherTarget(String otherTarget) {
-        this.otherTarget = otherTarget;
+        this.otherTarget = StringUtils.removeEventHandlerJS(otherTarget);
     }
 
     public Long getIsTemp() {
@@ -392,7 +393,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setChemicalTargetUnwanted(String chemicalTargetUnwanted) {
-        this.chemicalTargetUnwanted = chemicalTargetUnwanted;
+        this.chemicalTargetUnwanted = StringUtils.removeEventHandlerJS(chemicalTargetUnwanted);
     }
 
     public Long getVersion() {
@@ -425,7 +426,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setNetWeight(String netWeight) {
-        this.netWeight = netWeight;
+        this.netWeight = StringUtils.removeEventHandlerJS(netWeight);
     }
 
     public String getRecommendAndWarning() {
@@ -433,7 +434,7 @@ public class DetailProduct implements Serializable {
     }
 
     public void setRecommendAndWarning(String recommendAndWarning) {
-        this.recommendAndWarning = recommendAndWarning;
+        this.recommendAndWarning = StringUtils.removeEventHandlerJS(recommendAndWarning);
     }
 //!U150123
 }

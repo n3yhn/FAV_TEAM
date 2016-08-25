@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import com.viettel.voffice.database.BO.Message;
 import java.io.Serializable;
 import java.util.Date;
@@ -84,7 +85,7 @@ public class ReceiveSms implements Serializable {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = StringUtils.removeEventHandlerJS(content);
     }
 
     public String getPhoneNumber() {
@@ -92,7 +93,7 @@ public class ReceiveSms implements Serializable {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.phoneNumber = StringUtils.removeEventHandlerJS(phoneNumber);
     }
 
     public Date getReceiveTime() {
@@ -116,7 +117,7 @@ public class ReceiveSms implements Serializable {
     }
 
     public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+        this.errorMsg = StringUtils.removeEventHandlerJS(errorMsg);
     }
 
     public Integer getIsProcess() {

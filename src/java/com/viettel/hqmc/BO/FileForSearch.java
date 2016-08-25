@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -26,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "FileForSearch.findAll", query = "SELECT f FROM FileForSearch f"),
     @NamedQuery(name = "FileForSearch.findByFileId", query = "SELECT f FROM FileForSearch f WHERE f.fileId = :fileId")})
 public class FileForSearch implements Serializable {
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -56,7 +58,7 @@ public class FileForSearch implements Serializable {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = StringUtils.removeEventHandlerJS(content);
     }
 
     @Override
@@ -83,5 +85,5 @@ public class FileForSearch implements Serializable {
     public String toString() {
         return "com.viettel.hqmc.BO.FileForSearch[ fileId=" + fileId + " ]";
     }
-    
+
 }

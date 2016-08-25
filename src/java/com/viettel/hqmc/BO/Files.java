@@ -1,5 +1,6 @@
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.DAOHE.FilesDAOHE;
 import java.io.Serializable;
 import java.util.Date;
@@ -533,7 +534,7 @@ public class Files implements Serializable {
     }
 
     public void setContentsEdit(String contentsEdit) {
-        this.contentsEdit = contentsEdit;
+        this.contentsEdit = StringUtils.removeEventHandlerJS(contentsEdit);
     }
 
     public String getNoteEdit() {
@@ -541,7 +542,7 @@ public class Files implements Serializable {
     }
 
     public void setNoteEdit(String noteEdit) {
-        this.noteEdit = noteEdit;
+        this.noteEdit = StringUtils.removeEventHandlerJS(noteEdit);
     }
     
 
@@ -574,7 +575,7 @@ public class Files implements Serializable {
     }
 
     public void setContentSigned(String contentSigned) {
-        this.contentSigned = contentSigned;
+        this.contentSigned = StringUtils.removeEventHandlerJS(contentSigned);
     }
 
     public String getUserSigned() {
@@ -582,7 +583,7 @@ public class Files implements Serializable {
     }
 
     public void setUserSigned(String userSigned) {
-        this.userSigned = userSigned;
+        this.userSigned = StringUtils.removeEventHandlerJS(userSigned);
     }
 
     public String getSignCa() {
@@ -590,7 +591,7 @@ public class Files implements Serializable {
     }
 
     public void setSignCa(String signCa) {
-        this.signCa = signCa;
+        this.signCa = StringUtils.removeEventHandlerJS(signCa);
     }
 
     public Long getFeeFile() {
@@ -630,7 +631,7 @@ public class Files implements Serializable {
     }
 
     public void setProposeUserName(String proposeUserName) {
-        this.proposeUserName = proposeUserName;
+        this.proposeUserName = StringUtils.removeEventHandlerJS(proposeUserName);
     }
 
     public Date getSendDate() {
@@ -662,7 +663,7 @@ public class Files implements Serializable {
     }
 
     public void setFileTypeName(String fileTypeName) {
-        this.fileTypeName = fileTypeName;
+        this.fileTypeName = StringUtils.removeEventHandlerJS(fileTypeName);
     }
 
     public String getFileCode() {
@@ -670,7 +671,7 @@ public class Files implements Serializable {
     }
 
     public void setFileCode(String fileCode) {
-        this.fileCode = fileCode;
+        this.fileCode = StringUtils.removeEventHandlerJS(fileCode);
     }
 
     public Date getCreateDate() {
@@ -710,7 +711,7 @@ public class Files implements Serializable {
     }
 
     public void setStaffRequest(String staffRequest) {
-        this.staffRequest = staffRequest;
+        this.staffRequest = StringUtils.removeEventHandlerJS(staffRequest);
     }
 
     public String getLeaderStaffRequest() {
@@ -718,7 +719,7 @@ public class Files implements Serializable {
     }
 
     public void setLeaderStaffRequest(String leaderStaffRequest) {
-        this.leaderStaffRequest = leaderStaffRequest;
+        this.leaderStaffRequest = StringUtils.removeEventHandlerJS(leaderStaffRequest);
     }
 
     public String getLeaderRequest() {
@@ -726,7 +727,7 @@ public class Files implements Serializable {
     }
 
     public void setLeaderRequest(String leaderRequest) {
-        this.leaderRequest = leaderRequest;
+        this.leaderRequest = StringUtils.removeEventHandlerJS(leaderRequest);
     }
 
     public String getDisplayRequest() {
@@ -734,7 +735,7 @@ public class Files implements Serializable {
     }
 
     public void setDisplayRequest(String displayRequest) {
-        this.displayRequest = displayRequest;
+        this.displayRequest = StringUtils.removeEventHandlerJS(displayRequest);
     }
 
     public Long getReIssueFormId() {
@@ -774,7 +775,7 @@ public class Files implements Serializable {
     }
 
     public void setBusinessName(String businessName) {
-        this.businessName = businessName;
+        this.businessName = StringUtils.removeEventHandlerJS(businessName);
     }
 
     public Long getUserCreateId() {
@@ -790,7 +791,7 @@ public class Files implements Serializable {
     }
 
     public void setUserCreateName(String userCreateName) {
-        this.userCreateName = userCreateName;
+        this.userCreateName = StringUtils.removeEventHandlerJS(userCreateName);
     }
 
     public Long getNodeId() {
@@ -838,7 +839,7 @@ public class Files implements Serializable {
     }
 
     public void setDeptName(String deptName) {
-        this.deptName = deptName;
+        this.deptName = StringUtils.removeEventHandlerJS(deptName);
     }
 
     public String getAnnouncementNo() {
@@ -846,7 +847,7 @@ public class Files implements Serializable {
     }
 
     public void setAnnouncementNo(String announcementNo) {
-        this.announcementNo = announcementNo;
+        this.announcementNo = StringUtils.removeEventHandlerJS(announcementNo);
     }
 
     public String getBusinessLicence() {
@@ -854,7 +855,7 @@ public class Files implements Serializable {
     }
 
     public void setBusinessLicence(String businessLicence) {
-        this.businessLicence = businessLicence;
+        this.businessLicence = StringUtils.removeEventHandlerJS(businessLicence);
     }
 
     public String getBusinessAddress() {
@@ -862,7 +863,7 @@ public class Files implements Serializable {
     }
 
     public void setBusinessAddress(String businessAddress) {
-        this.businessAddress = businessAddress;
+        this.businessAddress = StringUtils.removeEventHandlerJS(businessAddress);
     }
 
     public String getProductName() {
@@ -870,7 +871,7 @@ public class Files implements Serializable {
     }
 
     public void setProductName(String productName) {
-        this.productName = productName;
+        this.productName = StringUtils.removeEventHandlerJS(productName);
     }
 
     public String getManufactureName() {
@@ -878,7 +879,7 @@ public class Files implements Serializable {
     }
 
     public void setManufactureName(String manufactureName) {
-        this.manufactureName = manufactureName;
+        this.manufactureName = StringUtils.removeEventHandlerJS(manufactureName);
     }
 
     public String getManufactureAddress() {
@@ -886,7 +887,7 @@ public class Files implements Serializable {
     }
 
     public void setManufactureAddress(String manufactureAddress) {
-        this.manufactureAddress = manufactureAddress;
+        this.manufactureAddress = StringUtils.removeEventHandlerJS(manufactureAddress);
     }
 
     public String getMatchingTarget() {
@@ -894,7 +895,7 @@ public class Files implements Serializable {
     }
 
     public void setMatchingTarget(String matchingTarget) {
-        this.matchingTarget = matchingTarget;
+        this.matchingTarget = StringUtils.removeEventHandlerJS(matchingTarget);
     }
 
     public String getNationName() {
@@ -902,7 +903,7 @@ public class Files implements Serializable {
     }
 
     public void setNationName(String nationName) {
-        this.nationName = nationName;
+        this.nationName = StringUtils.removeEventHandlerJS(nationName);
     }
 
     public Long getAgencyId() {
@@ -918,7 +919,7 @@ public class Files implements Serializable {
     }
 
     public void setAgencyName(String agencyName) {
-        this.agencyName = agencyName;
+        this.agencyName = StringUtils.removeEventHandlerJS(agencyName);
     }
 
     public Date getApproveDate() {
@@ -958,7 +959,7 @@ public class Files implements Serializable {
     }
 
     public void setStaffSigningName(String staffSigningName) {
-        this.staffSigningName = staffSigningName;
+        this.staffSigningName = StringUtils.removeEventHandlerJS(staffSigningName);
     }
 
     public String getSigningContent() {
@@ -966,7 +967,7 @@ public class Files implements Serializable {
     }
 
     public void setSigningContent(String signingContent) {
-        this.signingContent = signingContent;
+        this.signingContent = StringUtils.removeEventHandlerJS(signingContent);
     }
 
     public Date getSignDate() {
@@ -990,7 +991,7 @@ public class Files implements Serializable {
     }
 
     public void setSignContent(String signContent) {
-        this.signContent = signContent;
+        this.signContent = StringUtils.removeEventHandlerJS(signContent);
     }
 
     public String getLeaderStaffSignName() {
@@ -998,7 +999,7 @@ public class Files implements Serializable {
     }
 
     public void setLeaderStaffSignName(String leaderStaffSignName) {
-        this.leaderStaffSignName = leaderStaffSignName;
+        this.leaderStaffSignName = StringUtils.removeEventHandlerJS(leaderStaffSignName);
     }
 
     public String getDisplayStatus() {
@@ -1006,7 +1007,7 @@ public class Files implements Serializable {
     }
 
     public void setDisplayStatus(String displayStatus) {
-        this.displayStatus = displayStatus;
+        this.displayStatus = StringUtils.removeEventHandlerJS(displayStatus);
     }
 
     public String getNodeHistory() {
@@ -1014,7 +1015,7 @@ public class Files implements Serializable {
     }
 
     public void setNodeHistory(String nodeHistory) {
-        this.nodeHistory = nodeHistory;
+        this.nodeHistory = StringUtils.removeEventHandlerJS(nodeHistory);
     }
 
     public Long getEffectiveDate() {
@@ -1046,7 +1047,7 @@ public class Files implements Serializable {
     }
 
     public void setComparisonContent(String comparisonContent) {
-        this.comparisonContent = comparisonContent;
+        this.comparisonContent = StringUtils.removeEventHandlerJS(comparisonContent);
     }
 
     public String getClericalRequest() {
@@ -1054,7 +1055,7 @@ public class Files implements Serializable {
     }
 
     public void setClericalRequest(String clericalRequest) {
-        this.clericalRequest = clericalRequest;
+        this.clericalRequest = StringUtils.removeEventHandlerJS(clericalRequest);
     }
 
     public Long getRepositoriesId() {
@@ -1134,7 +1135,7 @@ public class Files implements Serializable {
     }
 
     public void setReceiveNo(String receiveNo) {
-        this.receiveNo = receiveNo;
+        this.receiveNo = StringUtils.removeEventHandlerJS(receiveNo);
     }
 
     public String getNameStaffProcess() {
@@ -1142,7 +1143,7 @@ public class Files implements Serializable {
     }
 
     public void setNameStaffProcess(String nameStaffProcess) {
-        this.nameStaffProcess = nameStaffProcess;
+        this.nameStaffProcess = StringUtils.removeEventHandlerJS(nameStaffProcess);
     }
 
     public Long getLeaderAssignId() {
@@ -1158,7 +1159,7 @@ public class Files implements Serializable {
     }
 
     public void setLeaderAssignName(String leaderAssignName) {
-        this.leaderAssignName = leaderAssignName;
+        this.leaderAssignName = StringUtils.removeEventHandlerJS(leaderAssignName);
     }
 
     public Long getLeaderReviewId() {
@@ -1174,7 +1175,7 @@ public class Files implements Serializable {
     }
 
     public void setLeaderReviewName(String leaderReviewName) {
-        this.leaderReviewName = leaderReviewName;
+        this.leaderReviewName = StringUtils.removeEventHandlerJS(leaderReviewName);
     }
 
     public Long getLeaderEvaluateId() {
@@ -1190,7 +1191,7 @@ public class Files implements Serializable {
     }
 
     public void setLeaderEvaluateName(String leaderEvaluateName) {
-        this.leaderEvaluateName = leaderEvaluateName;
+        this.leaderEvaluateName = StringUtils.removeEventHandlerJS(leaderEvaluateName);
     }
 
     public Long getLeaderApproveId() {
@@ -1206,7 +1207,7 @@ public class Files implements Serializable {
     }
 
     public void setLeaderApproveName(String leaderApproveName) {
-        this.leaderApproveName = leaderApproveName;
+        this.leaderApproveName = StringUtils.removeEventHandlerJS(leaderApproveName);
     }
 
     public Long getIs30() {
@@ -1240,7 +1241,7 @@ public class Files implements Serializable {
     }
 
     public void setProductTypeName(String productTypeName) {
-        this.productTypeName = productTypeName;
+        this.productTypeName = StringUtils.removeEventHandlerJS(productTypeName);
     }
 
     public String getGoverningBody() {
@@ -1248,7 +1249,7 @@ public class Files implements Serializable {
     }
 
     public void setGoverningBody(String governingBody) {
-        this.governingBody = governingBody;
+        this.governingBody = StringUtils.removeEventHandlerJS(governingBody);
     }
     //141216 binhnt53 tra ho so
 
@@ -1265,7 +1266,7 @@ public class Files implements Serializable {
     }
 
     public void setRecipientAddress(String recipientAddress) {
-        this.recipientAddress = recipientAddress;
+        this.recipientAddress = StringUtils.removeEventHandlerJS(recipientAddress);
     }
 
     public Long getIsHaveSubLabel() {
@@ -1281,7 +1282,7 @@ public class Files implements Serializable {
     }
 
     public void setFileSourceCode(String fileSourceCode) {
-        this.fileSourceCode = fileSourceCode;
+        this.fileSourceCode = StringUtils.removeEventHandlerJS(fileSourceCode);
     }
 
     public String getTitleEdit() {
@@ -1289,7 +1290,7 @@ public class Files implements Serializable {
     }
 
     public void setTitleEdit(String titleEdit) {
-        this.titleEdit = titleEdit;
+        this.titleEdit = StringUtils.removeEventHandlerJS(titleEdit);
     }
 
     public String getContentsEditATTP() {
@@ -1297,7 +1298,7 @@ public class Files implements Serializable {
     }
 
     public void setContentsEditATTP(String contentsEditATTP) {
-        this.contentsEditATTP = contentsEditATTP;
+        this.contentsEditATTP = StringUtils.removeEventHandlerJS(contentsEditATTP);
     }
 
     public String getTitleEditATTP() {
@@ -1305,7 +1306,7 @@ public class Files implements Serializable {
     }
 
     public void setTitleEditATTP(String titleEditATTP) {
-        this.titleEditATTP = titleEditATTP;
+        this.titleEditATTP = StringUtils.removeEventHandlerJS(titleEditATTP);
     }
 
     public Long getIsCopy() {

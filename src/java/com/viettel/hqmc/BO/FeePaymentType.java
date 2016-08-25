@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -67,7 +68,7 @@ public class FeePaymentType implements Serializable {
     }
 
     public void setFeePaymentTypeName(String feePaymentTypeName) {
-        this.feePaymentTypeName = feePaymentTypeName;
+        this.feePaymentTypeName = StringUtils.removeEventHandlerJS(feePaymentTypeName);
     }
 
     public Short getIsActive() {
@@ -83,7 +84,7 @@ public class FeePaymentType implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = StringUtils.removeEventHandlerJS(description);
     }
 
     @Override

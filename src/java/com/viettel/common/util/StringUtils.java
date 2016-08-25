@@ -12,7 +12,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.regex.Pattern;
 /**
  *
  * @author thienkq1@viettel.com.vn
@@ -558,5 +558,36 @@ public final class StringUtils {
             idx += sub.length();
         }
         return count;
+    }
+    
+    private static final String [] EVENT_HANDLER_JS = {"FSCommand", "onAbort", "onActivate", "onAfterPrint", "onAfterUpdate", "onBeforeActivate", 
+        "onBeforeCopy", "onBeforeCut", "onBeforeDeactivate", "onBeforeEditFocus", "onBeforePaste", "onBeforePrint", 
+        "onBeforeUnload", "onBeforeUpdate", "onBegin", "onBlur", "onBounce", "onCellChange", "onChange", 
+        "onClick", "onContextMenu", "onControlSelect", "onCopy", "onCut", "onDataAvailable", "onDataSetChanged", 
+        "onDataSetComplete", "onDblClick", "onDeactivate", "onDrag", "onDragEnd", "onDragLeave", "onDragEnter", 
+        "onDragOver", "onDragDrop", "onDragStart", "onDrop", "onEnd", "onError", "onErrorUpdate", "onFilterChange", 
+        "onFinish", "onFocus", "onFocusIn", "onFocusOut", "onHashChange", "onHelp", "onInput", "onKeyDown", 
+        "onKeyPress", "onKeyUp", "onLayoutComplete", "onLoad", "onLoseCapture", "onMediaComplete", 
+        "onMediaError", "onMessage", "onMouseDown", "onMouseEnter", "onMouseLeave", "onMouseMove", 
+        "onMouseOut", "onMouseOver", "onMouseUp", "onMouseWheel", "onMove", "onMoveEnd", "onMoveStart", 
+        "onOffline", "onOnline", "onOutOfSync", "onPaste", "onPause", "onPopState", "onProgress", 
+        "onPropertyChange", "onReadyStateChange", "onRedo", "onRepeat", "onReset", "onResize", 
+        "onResizeEnd", "onResizeStart", "onResume", "onReverse", "onRowsEnter", "onRowExit", 
+        "onRowDelete", "onRowInserted", "onScroll", "onSeek", "onSelect", "onSelectionChange", 
+        "onSelectStart", "onStart", "onStop", "onStorage", "onSyncRestored", "onSubmit", 
+        "onTimeError", "onTrackChange", "onUndo", "onUnload", "onURLFlip", "seekSegmentTime"};
+    
+    
+    public static String removeEventHandlerJS(String input) {
+        if(input != null) {
+            for (String patter : EVENT_HANDLER_JS) {
+                input = Pattern.compile(patter, Pattern.CASE_INSENSITIVE).matcher(input).replaceAll("");
+            }
+            while (input.contains("script")){
+                String input2 = input.replaceAll("script", "");
+                input = input2;
+            }
+        }
+        return input;
     }
 }

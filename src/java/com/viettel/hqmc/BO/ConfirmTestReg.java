@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -12,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
@@ -104,7 +103,7 @@ public class ConfirmTestReg implements Serializable {
     }
 
     public void setRegisterNo(String registerNo) {
-        this.registerNo = registerNo;
+        this.registerNo = StringUtils.removeEventHandlerJS(registerNo);
     }
 
     public Date getRegisterDate() {
@@ -120,7 +119,7 @@ public class ConfirmTestReg implements Serializable {
     }
 
     public void setRegisterSummary(String registerSummary) {
-        this.registerSummary = registerSummary;
+        this.registerSummary = StringUtils.removeEventHandlerJS(registerSummary);
     }
 
     public String getTestMethodName() {
@@ -128,7 +127,7 @@ public class ConfirmTestReg implements Serializable {
     }
 
     public void setTestMethodName(String testMethodName) {
-        this.testMethodName = testMethodName;
+        this.testMethodName = StringUtils.removeEventHandlerJS(testMethodName);
     }
 
     public Long getTestMethodId() {
@@ -144,7 +143,7 @@ public class ConfirmTestReg implements Serializable {
     }
 
     public void setCustomsFormNo(String customsFormNo) {
-        this.customsFormNo = customsFormNo;
+        this.customsFormNo = StringUtils.removeEventHandlerJS(customsFormNo);
     }
 
     public String getAgencyRepresentName() {
@@ -152,7 +151,7 @@ public class ConfirmTestReg implements Serializable {
     }
 
     public void setAgencyRepresentName(String agencyRepresentName) {
-        this.agencyRepresentName = agencyRepresentName;
+        this.agencyRepresentName = StringUtils.removeEventHandlerJS(agencyRepresentName);
     }
 
     public Long getAgencyRepresentId() {
@@ -168,7 +167,7 @@ public class ConfirmTestReg implements Serializable {
     }
 
     public void setSignerName(String signerName) {
-        this.signerName = signerName;
+        this.signerName = StringUtils.removeEventHandlerJS(signerName);
     }
 
     public Long getSignerId() {
@@ -192,7 +191,7 @@ public class ConfirmTestReg implements Serializable {
     }
 
     public void setSignAdd(String signAdd) {
-        this.signAdd = signAdd;
+        this.signAdd = StringUtils.removeEventHandlerJS(signAdd);
     }
 
     public Long getIsActive() {

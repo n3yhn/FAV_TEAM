@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
@@ -86,7 +87,7 @@ public class VLookupHomepage implements Serializable {
     }
 
     public void setProductName(String productName) {
-        this.productName = productName;
+        this.productName = StringUtils.removeEventHandlerJS(productName);
     }
 
     public String getBusinessName() {
@@ -94,7 +95,7 @@ public class VLookupHomepage implements Serializable {
     }
 
     public void setBusinessName(String businessName) {
-        this.businessName = businessName;
+        this.businessName = StringUtils.removeEventHandlerJS(businessName);
     }
 
     public String getBusinessAddress() {
@@ -102,7 +103,7 @@ public class VLookupHomepage implements Serializable {
     }
 
     public void setBusinessAddress(String businessAddress) {
-        this.businessAddress = businessAddress;
+        this.businessAddress = StringUtils.removeEventHandlerJS(businessAddress);
     }
 
     public String getProductTypeName() {
@@ -110,7 +111,7 @@ public class VLookupHomepage implements Serializable {
     }
 
     public void setProductTypeName(String productTypeName) {
-        this.productTypeName = productTypeName;
+        this.productTypeName = StringUtils.removeEventHandlerJS(productTypeName);
     }
 
     public Long getProductType() {
@@ -142,7 +143,7 @@ public class VLookupHomepage implements Serializable {
     }
 
     public void setCode(String code) {
-        this.code = code;
+        this.code = StringUtils.removeEventHandlerJS(code);
     }
 
     public Short getIsDownload() {

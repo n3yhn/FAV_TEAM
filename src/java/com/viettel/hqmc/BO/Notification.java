@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.viettel.hqmc.BO;
 
+import com.viettel.common.util.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Notification.findByIsActive", query = "SELECT n FROM Notification n WHERE n.isActive = :isActive"),
     @NamedQuery(name = "Notification.findBySort", query = "SELECT n FROM Notification n WHERE n.sort = :sort")})
 public class Notification implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @SequenceGenerator(name = "NOTIFICATION_SEQ", sequenceName = "NOTIFICATION_SEQ")
     @Id
@@ -84,7 +85,7 @@ public class Notification implements Serializable {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = StringUtils.removeEventHandlerJS(content);
     }
 
     public Date getCreateDate() {
@@ -100,7 +101,7 @@ public class Notification implements Serializable {
     }
 
     public void setModifiedBy(String modifiedBy) {
-        this.modifiedBy = modifiedBy;
+        this.modifiedBy = StringUtils.removeEventHandlerJS(modifiedBy);
     }
 
     public Date getModifiedDate() {
@@ -159,5 +160,5 @@ public class Notification implements Serializable {
     public String toString() {
         return "com.viettel.hqmc.BO.Notification[ noticeId=" + noticeId + " ]";
     }
-    
+
 }
