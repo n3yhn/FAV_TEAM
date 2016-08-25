@@ -9,22 +9,27 @@
     request.setAttribute("contextPath", request.getContextPath());
 %>
 <script>
-    page.getNo = function(index) {
+    page.getNo = function (index) {
         return dijit.byId("businessGrid").currentRow + index + 1;
     };
 
-    page.getIndex = function(index) {
+    page.getIndex = function (index) {
         return index + 1;
     };
 
-    page.formatEdit = function(inData) {
+    page.formatEdit = function (inData) {
         var row = inData - 1;
         var item = dijit.byId("businessGrid").getItem(row);
         var url = "";
         if (item != null) {
+            var businessId = item.businessId;
             var url = "<div style='text-align:center;cursor:pointer;'><img src='${contextPath}/share/images/edit.png' width='17px' height='17px' \n\
                         title='<sd:Property>category.edit</sd:Property>' \n\
-                        onClick='page.showEditPopup(" + row + ");' /></div>";
+                        onClick='page.showEditPopup(" + row + ");' />\n\
+                        | <img src='share/images/edit.png'\n\
+                        width='17px' height='17px' \n\
+                        title='Tạo thông báo cho doanh nghiệp' \n\
+                        onClick='page.showAlertDlg(" + businessId + ");' /></div>";
         }
         return url;
     };
@@ -93,7 +98,7 @@
                         <sx:ButtonSearch onclick="page.search();" />
                         <sd:Button key="" onclick="page.reset();" > 
                             <img src="share/images/icons/reset.png" height="14" width="18"/>
-                            <span style="font-size:12px">Hủy<%--<sd:Property>btnCancel</sd:Property> --%></span>
+                            <span style="font-size:12px">Hủy</span>
                         </sd:Button>
                     </td>
                 </tr>
@@ -142,6 +147,11 @@
                 <sx:ButtonAddCategory onclick="page.insert();"/>
                 <sx:ButtonDelete onclick="page.deleteItem()" />
                 <sx:ButtonSearch id="btnShowSearchPanel" onclick="page.showSearchPanel();" />
+                <sd:TextBox id="createForm.businessId" 
+                                name="createForm.businessId" 
+                                cssStyle="display:none" 
+                                key=""
+                                trim="true"/>
             </td>
         </tr>
     </table>
@@ -153,19 +163,25 @@
     <jsp:include page="businessCreateDlg.jsp" flush="false"></jsp:include>
 </sd:Dialog>
 
+<sd:Dialog  id="businessAlertDlg" height="auto" width="800px"
+            key="dialog.titleAddEdit" showFullscreenButton="false"
+            >
+    <jsp:include page="businessAlertDlg.jsp" flush="false"></jsp:include>
+</sd:Dialog>
+
 <script type="text/javascript">
 
-    page.search = function() {
+    page.search = function () {
         dijit.byId("businessGrid").vtReload('businessAction!onSearch.do?', "searchForm");
     };
 
-    page.setItem = function(item) {
+    page.setItem = function (item) {
         dijit.byId("createForm.businessId").setValue(item.businessId);
         dijit.byId("createForm.userFullname").setValue(item.userFullname);
         dijit.byId("createForm.userTelephone").setValue(item.userTelephone);
         dijit.byId("createForm.userMobile").setValue(item.userMobile);
         dijit.byId("createForm.userEmail").setValue(item.userEmail);
-        dijit.byId("createForm.isActive").setValue(item.isActive);        
+        dijit.byId("createForm.isActive").setValue(item.isActive);
         dijit.byId("createForm.businessTypeId").setValue(item.businessTypeId);
         dijit.byId("createForm.businessTypeName").setValue(item.businessTypeName);
         dijit.byId("createForm.businessName").setValue(item.businessName);
@@ -186,7 +202,7 @@
         dijit.byId("createForm.userName").setValue(item.userName);
     };
 
-    page.clearInsertForm = function() {
+    page.clearInsertForm = function () {
         dijit.byId("createForm.businessId").setValue("");
         dijit.byId("createForm.userFullname").setValue("");
         dijit.byId("createForm.userTelephone").setValue("");
@@ -212,45 +228,49 @@
         dijit.byId("createForm.userName").setValue("");
     };
 
-    page.insert = function() {
+    page.insert = function () {
         page.clearInsertForm();
         dijit.byId("createDlg").show();
     };
 
-    page.showEditPopup = function(row) {
+    page.showEditPopup = function (row) {
         var item = dijit.byId("businessGrid").getItem(row);
         page.setItem(item);
         dijit.byId("createDlg").show();
     };
-
-    page.deleteItem = function() {
-        if (!dijit.byId("businessGrid").vtIsChecked()) {
-            msg.alert('<sd:Property>alert.select</sd:Property>', '<sd:Property>confirm.title</sd:Property>');
-        }
-        else {
-            msg.confirm('<sd:Property>confirm.delete</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', page.deleteItemExecute);
-        }
+    
+    page.showAlertDlg = function (businessId) {
+        page.getViewLstBusinessAlert(businessId);
+        dijit.byId("businessAlertDlg").show();
     };
 
-    page.deleteItemExecute = function() {
+    page.deleteItem = function () {
+        if (!dijit.byId("businessGrid").vtIsChecked()) {
+            msg.alert('<sd:Property>alert.select</sd:Property>', '<sd:Property>confirm.title</sd:Property>');
+                    } else {
+                        msg.confirm('<sd:Property>confirm.delete</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', page.deleteItemExecute);
+                                }
+    };
+
+    page.deleteItemExecute = function () {
         var content = dijit.byId("businessGrid").vtGetCheckedDataForPost("lstItemOnGrid");
         sd.connector.post("businessAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
     };
 
-    page.returnMessageDelete = function(data) {
+    page.returnMessageDelete = function (data) {
         var obj = dojo.fromJson(data);
         var result = obj.items;
         resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
         page.search();
     };
 
-    page.showSearchPanel = function() {
+    page.showSearchPanel = function () {
         var panel = document.getElementById("searchDiv");
         panel.setAttribute("style", "display:;");
         dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
     };
-    
-    page.reset = function(){
+
+    page.reset = function () {
         dijit.byId("searchForm.businessName").setValue("");
         dijit.byId("searchForm.userFullname").setValue("");
         dijit.byId("searchForm.businessTaxCode").setValue("");

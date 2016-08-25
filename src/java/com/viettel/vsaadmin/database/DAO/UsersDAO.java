@@ -9,6 +9,8 @@ import com.viettel.common.util.DateTimeUtils;
 import com.viettel.common.util.StringUtils;
 import com.viettel.dojoTag.DojoJSON;
 import com.viettel.hqmc.BO.Business;
+import com.viettel.hqmc.BO.BusinessAlert;
+import com.viettel.hqmc.DAOHE.BusinessAlertDAOHE;
 import com.viettel.hqmc.DAOHE.BusinessDAOHE;
 import com.viettel.hqmc.FORM.BusinessForm;
 import com.viettel.voffice.database.BO.Category;
@@ -1635,10 +1637,8 @@ public class UsersDAO extends BaseDAO {
             for (int i = 0; i < arrName.length - 1; i++) {
                 arrName[i] = arrName[i].trim();
                 if (arrName[i].length() == 0) {
-                } else {
-                    if (arrName[i].charAt(0) != ' ') {
-                        shortName = shortName + arrName[i].charAt(0);
-                    }
+                } else if (arrName[i].charAt(0) != ' ') {
+                    shortName = shortName + arrName[i].charAt(0);
                 }
             }
         }
@@ -2005,12 +2005,10 @@ public class UsersDAO extends BaseDAO {
                                 Business busbo = busdaohe.findById(entity.getBusinessId());
                                 if (busbo != null) {
                                     resultMessage.add(busbo.getBusinessName());
+                                } else if (entity.getBusinessName() != null) {
+                                    resultMessage.add(entity.getBusinessName());
                                 } else {
-                                    if (entity.getBusinessName() != null) {
-                                        resultMessage.add(entity.getBusinessName());
-                                    } else {
-                                        resultMessage.add("");
-                                    }
+                                    resultMessage.add("");
                                 }
                             } else {
                                 resultMessage.add("");
@@ -2021,6 +2019,36 @@ public class UsersDAO extends BaseDAO {
                     }
                 }
             }
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
+        jsonDataGrid.setItems(resultMessage);
+        return GRID_DATA;
+    }
+
+    //add new push businessAlert
+    public String pushBusinessAlert() {
+        List resultMessage = new ArrayList();
+        try {
+            UserToken vsaUserToken = (UserToken) getRequest().getSession().getAttribute("userToken");
+            Long currentUserId = vsaUserToken.getUserID();
+            UsersDAOHE daohe = new UsersDAOHE();
+            Users entity = daohe.findById(currentUserId);
+            if (entity != null) {
+                if (entity.getBusinessId() != null) {
+                    BusinessAlertDAOHE busalert = new BusinessAlertDAOHE();
+                    List<BusinessAlert> lstBusinessAlert = busalert.findByBusinessAlertId(entity.getBusinessId());
+
+                    if (lstBusinessAlert != null && lstBusinessAlert.size() > 0) {
+                        resultMessage.add(1);
+                        resultMessage.add(entity.getBusinessId());
+                    } else {
+                        resultMessage.add(0);
+                        resultMessage.add(null);
+                    }
+                }
+            }
+
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }

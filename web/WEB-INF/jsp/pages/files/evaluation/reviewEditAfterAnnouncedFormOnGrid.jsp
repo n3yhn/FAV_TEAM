@@ -1,7 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="sd" uri="struts-dojo-tags" %>
 <%@taglib prefix="sx" tagdir="/WEB-INF/tags" %>
-
+<object id="plugin_REAAFOG" type="application/x-viettelcasigner" width="3" height="10">
+</object>
 <div>
     <table style="width: 98%">
         <tr id="trWaitViewFile">
@@ -51,6 +52,12 @@
                                                name="createForm.status"
                                                onchange="onchangeStatusREAAFOG();"/>
                                         <sd:Label key="Duyệt: Hồ sơ đạt"/>   
+                                        </br>
+                                        <input type="radio" value="6"
+                                               id="reviewForm.statusApprove"
+                                               name="createForm.status"
+                                               onchange="onchangeStatusREAAFOG();"/>
+                                        <sd:Label key="Phê duyệt CVBS sau công bố"/>   
                                         </br>
                                         <input type="radio" value="26" 
                                                id="reviewForm.statusDeny" 
@@ -183,12 +190,40 @@
                                             cssStyle="display:none" key=""/>
                                     </td>
                                 </tr>
+                                <tr id="trLeader4AAWait" style="display: none">
+                                    <td colspan="2" style="text-align: center;alignment-adjust: middle">
+                                        <label id="labelLeader4AAWait" style="color: red">Vui lòng chờ  </label>
+                                        <img src="/share/images/loading/loading2.gif" width="20px" height="20px">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2" style="text-align: center;alignment-adjust: middle">
+                                        <div id="divSignLeader4AAProcess" style="display: none;text-align: center;alignment-adjust: middle">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div id="divLeader4AAProcess" style="color:red;font-weight: bold;margin-left: 10px;margin-top: 3px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <img src="/share/images/loading/loading2.gif" width="20px" height="20px" >
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td colspan="2" style="text-align: center">
                                         <sx:ButtonSave onclick="onReviewFormSave();"/>
+                                        <br>
+                                        <sd:Button id="btnLeaderSign4AA" key="" onclick="showLeaderSign4AAForm();" cssStyle="display:" cssClass="buttonGroup">
+                                            <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Xem truoc"/>
+                                            <span style="font-size:12px">Phê duyệt CVBS sau công bố</span>
+                                        </sd:Button>
                                         <sd:Button id="btnExportREAA" key="" onclick="page.exportExportREAA();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/process_icon.png" height="14" width="14" alt="Xem truoc"/>
-                                            <span style="font-size:12px">Xem trước CVBS sau công bố</span>
+                                            <span style="font-size:12px">Xem trước CVBS</span>
                                         </sd:Button>
                                         <br>
                                         <sd:Button 
@@ -231,211 +266,192 @@
         </tr>
     </table>
 </div>
+<jsp:include page="pluginJSREAAFOG.jsp" flush="false"></jsp:include>
+    <script type="text/javascript">
+        onCloseReviewForm = function () {
+            doGoToMenu("filesAction!toReviewPage.do?IsChange=1");
+        };
 
-<script type="text/javascript">
-    onCloseReviewForm = function () {
-        //clearReviewFormOnGrid();
-        doGoToMenu("filesAction!toReviewPage.do?IsChange=1");
-    };
+        afterReviewFormSave = function (data) {
+            var obj = dojo.fromJson(data);
+            var result = obj.items;
+            alert(result[1]);
+            if (result[0] == "1") {
+                onCloseReviewForm();
+            }
+        };
 
-    afterReviewFormSave = function (data) {
-        var obj = dojo.fromJson(data);
-        var result = obj.items;
-        alert(result[1]);
-        if (result[0] == "1") {
-            onCloseReviewForm();
-        }
-    };
-    
-    onReviewFormSave = function () {
-//        if (validateReviewForm()) {
-//            sd.connector.post("filesAction!onReview.do?" + token.getTokenParamString(), null, "reviewForm", null, afterReviewFormSave);
-//        }
-        msg.confirm("Bạn có chắc chắn về kết quả xem xét này không ?", "Xem xét hồ sơ", onReviewFormSaveAction);
-    };
+        onReviewFormSave = function () {
+            msg.confirm("Bạn có chắc chắn về kết quả xem xét này không ?", "Xem xét hồ sơ", onReviewFormSaveAction);
+        };
 
-    onReviewFormSaveAction = function () {
-        if (validateReviewForm()) {
-            sd.connector.post("filesAction!onReview.do?" + token.getTokenParamString(), null, "reviewForm", null, afterReviewFormSave);
-        }
-    };
+        onReviewFormSaveAction = function () {
+            if (validateReviewForm()) {
+                sd.connector.post("filesAction!onReview.do?" + token.getTokenParamString(), null, "reviewForm", null, afterReviewFormSave);
+            }
+        };
 
-    validateReviewForm = function () {
-        if (document.getElementById("reviewForm.statusAccept").checked == false
-                && document.getElementById("reviewForm.statusDeny").checked == false
-                && document.getElementById("reviewForm.statusDenyCV").checked == false) {
-            alert("Bạn chưa chọn [Kết quả xem xét]");
-            return false;
-        }
-        var leaderStaffRequest = dijit.byId("reviewForm.leaderStaffRequest").getValue();
-        var legalContentL = dijit.byId("reviewForm.legalContentL").getValue();
-        var foodSafetyQualityContentL = dijit.byId("reviewForm.foodSafetyQualityContentL").getValue();
-        var effectUtilityContentL = dijit.byId("reviewForm.effectUtilityContentL").getValue();
-        if (document.getElementById("reviewForm.statusAccept").checked == true
-                && (dijit.byId("reviewForm.legalL").getValue() != 1
-                        || dijit.byId("reviewForm.foodSafetyQualityL").getValue() != 1
-                        || dijit.byId("reviewForm.effectUtilityL").getValue() != 1)) {
-            alert("Kết luân thẩm định và Nội dung thẩm định không đúng vui lòng kiểm tra lại!");
-            return false;
-        } else {
-            if (document.getElementById("reviewForm.statusDeny").checked) {
-                if (leaderStaffRequest.trim().length == 0) {
-                    alert("Nội dung trình quản lý xem xét, hoặc nội dung yêu cầu bổ sung");
-                    dijit.byId("reviewForm.leaderStaffRequest").focus();
-                    return false;
-                }
-                if ((dijit.byId("reviewForm.legalL").getValue() == 0
-                        || dijit.byId("reviewForm.legalL").getValue() == -1)
-                        && legalContentL.trim().length == 0) {
-                    alert("[Về pháp chế(Hồ sơ theo Nghị định số 38/2012/NĐ-CP & thông tư hướng dẫn)] chưa nhập lý do");
-                    dijit.byId("reviewForm.legalContentL").focus();
-                    return false;
-                }
-                if ((dijit.byId("reviewForm.foodSafetyQualityL").getValue() == 0
-                        || dijit.byId("reviewForm.foodSafetyQualityL").getValue() == -1)
-                        && foodSafetyQualityContentL.trim().length == 0) {
-                    alert("[Về chỉ tiêu chất lượng an toàn thực phẩm] chưa nhập lý do");
-                    dijit.byId("reviewForm.foodSafetyQualityContentL").focus();
-                    return false;
-                }
-                if ((dijit.byId("reviewForm.effectUtilityL").getValue() == 0
-                        || dijit.byId("reviewForm.effectUtilityL").getValue() == -1)
-                        && effectUtilityContentL.trim().length == 0) {
-                    alert("[Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng] chưa nhập lý do");
-                    dijit.byId("reviewForm.effectUtilityContentL").focus();
-                    return false;
-                }
+        validateReviewForm = function () {
+            if (document.getElementById("reviewForm.statusAccept").checked == false
+                    && document.getElementById("reviewForm.statusDeny").checked == false
+                    && document.getElementById("reviewForm.statusDenyCV").checked == false) {
+                alert("Bạn chưa chọn [Kết quả xem xét]");
+                return false;
+            }
+            var leaderStaffRequest = dijit.byId("reviewForm.leaderStaffRequest").getValue();
+            var legalContentL = dijit.byId("reviewForm.legalContentL").getValue();
+            var foodSafetyQualityContentL = dijit.byId("reviewForm.foodSafetyQualityContentL").getValue();
+            var effectUtilityContentL = dijit.byId("reviewForm.effectUtilityContentL").getValue();
+            if (document.getElementById("reviewForm.statusAccept").checked == true
+                    && (dijit.byId("reviewForm.legalL").getValue() != 1
+                            || dijit.byId("reviewForm.foodSafetyQualityL").getValue() != 1
+                            || dijit.byId("reviewForm.effectUtilityL").getValue() != 1)) {
+                alert("Kết luân thẩm định và Nội dung thẩm định không đúng vui lòng kiểm tra lại!");
+                return false;
             } else {
-                if (document.getElementById("reviewForm.statusDenyCV").checked) {
+                if (document.getElementById("reviewForm.statusDeny").checked) {
                     if (leaderStaffRequest.trim().length == 0) {
                         alert("Nội dung trình quản lý xem xét, hoặc nội dung yêu cầu bổ sung");
                         dijit.byId("reviewForm.leaderStaffRequest").focus();
                         return false;
                     }
-                }
-            }
-            if (document.getElementById("reviewForm.statusDeny").checked == true
-                    || document.getElementById("reviewForm.statusAccept").checked == true) {
-                var leaderId = dijit.byId("reviewForm.leaderApproveId").getValue();
-                if (leaderId == null
-                        || leaderId == ""
-                        || leaderId == -1) {
-                    alert("Bạn chưa chọn lãnh đạo phê duyệt");
-                    dijit.byId("reviewForm.leaderApproveId").focus();
-                    return false;
+                    if ((dijit.byId("reviewForm.legalL").getValue() == 0
+                            || dijit.byId("reviewForm.legalL").getValue() == -1)
+                            && legalContentL.trim().length == 0) {
+                        alert("[Về pháp chế(Hồ sơ theo Nghị định số 38/2012/NĐ-CP & thông tư hướng dẫn)] chưa nhập lý do");
+                        dijit.byId("reviewForm.legalContentL").focus();
+                        return false;
+                    }
+                    if ((dijit.byId("reviewForm.foodSafetyQualityL").getValue() == 0
+                            || dijit.byId("reviewForm.foodSafetyQualityL").getValue() == -1)
+                            && foodSafetyQualityContentL.trim().length == 0) {
+                        alert("[Về chỉ tiêu chất lượng an toàn thực phẩm] chưa nhập lý do");
+                        dijit.byId("reviewForm.foodSafetyQualityContentL").focus();
+                        return false;
+                    }
+                    if ((dijit.byId("reviewForm.effectUtilityL").getValue() == 0
+                            || dijit.byId("reviewForm.effectUtilityL").getValue() == -1)
+                            && effectUtilityContentL.trim().length == 0) {
+                        alert("[Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng] chưa nhập lý do");
+                        dijit.byId("reviewForm.effectUtilityContentL").focus();
+                        return false;
+                    }
                 } else {
-                    var leaderApproveName = dijit.byId("reviewForm.leaderApproveId").attr("displayedValue");
-                    dijit.byId("reviewForm.leaderApproveName").setValue(leaderApproveName);
+                    if (document.getElementById("reviewForm.statusDenyCV").checked) {
+                        if (leaderStaffRequest.trim().length == 0) {
+                            alert("Nội dung trình quản lý xem xét, hoặc nội dung yêu cầu bổ sung");
+                            dijit.byId("reviewForm.leaderStaffRequest").focus();
+                            return false;
+                        }
+                    }
+                }
+                if (document.getElementById("reviewForm.statusDeny").checked == true
+                        || document.getElementById("reviewForm.statusAccept").checked == true) {
+                    var leaderId = dijit.byId("reviewForm.leaderApproveId").getValue();
+                    if (leaderId == null
+                            || leaderId == ""
+                            || leaderId == -1) {
+                        alert("Bạn chưa chọn lãnh đạo phê duyệt");
+                        dijit.byId("reviewForm.leaderApproveId").focus();
+                        return false;
+                    } else {
+                        var leaderApproveName = dijit.byId("reviewForm.leaderApproveId").attr("displayedValue");
+                        dijit.byId("reviewForm.leaderApproveName").setValue(leaderApproveName);
+                    }
                 }
             }
-        }
-        return true;
-    };
-    /*
-     clearReviewFormOnGrid = function() {
-     dijit.byId("reviewForm.leaderStaffRequest").setValue("");
-     dijit.byId("reviewForm.legalContentL").setValue("");
-     dijit.byId("reviewForm.foodSafetyQualityContentL").setValue("");
-     dijit.byId("reviewForm.effectUtilityContentL").setValue("");
-     
-     document.getElementById("reviewForm.statusAccept").checked = true;
-     document.getElementById("reviewForm.statusDeny").checked = false;
-     
-     dijit.byId("reviewForm.legalL").setValue(1);
-     dijit.byId("reviewForm.foodSafetyQualityL").setValue(1);
-     dijit.byId("reviewForm.effectUtilityL").setValue(1);
-     dijit.byId("reviewDlg").hide();
-     };
-     */
-    page.replaceBrTblReviewForm = function () {
-        var content = "";
-        content = document.getElementById("reviewForm.staffRequest").innerHTML;
-        content = content.replace(/\n/g, "<br>");
-        document.getElementById("reviewForm.staffRequest").innerHTML = content;
-    };
+            return true;
+        };
 
-    page.clearReviewForm = function () {
-        try
-        {
-            localStorage.setItem("reviewForm.reviewForm.leaderApproveId", "-1");
-            localStorage.setItem("reviewForm.reviewForm.leaderStaffRequest", "");
-            localStorage.setItem("reviewForm.reviewForm.legalL", "1");
-            localStorage.setItem("reviewForm.reviewForm.legalContentL", "");
-            localStorage.setItem("reviewForm.reviewForm.foodSafetyQualityL", "1");
-            localStorage.setItem("reviewForm.reviewForm.foodSafetyQualityContentL", "");
-            localStorage.setItem("reviewForm.reviewForm.effectUtilityL", "1");
-            localStorage.setItem("reviewForm.reviewForm.effectUtilityContentL", "");
+        page.replaceBrTblReviewForm = function () {
+            var content = "";
+            content = document.getElementById("reviewForm.staffRequest").innerHTML;
+            content = content.replace(/\n/g, "<br>");
+            document.getElementById("reviewForm.staffRequest").innerHTML = content;
+        };
 
-            alert("Xóa nội dung thẩm định gần đây thành công!");
-        } catch (err)
-        {
-            alert("Không thể Xóa nội dung thẩm định gần đây!");
-        }
-    };
-    
-    page.setRreviewForm = function () {
-        try
-        {
-            localStorage.setItem("reviewForm.reviewForm.leaderApproveId", encodeBase64(dijit.byId("reviewForm.leaderApproveId").getValue().toString().trim()));
-            localStorage.setItem("reviewForm.reviewForm.leaderStaffRequest", encodeBase64(dijit.byId("reviewForm.leaderStaffRequest").getValue().toString().trim()));
-            localStorage.setItem("reviewForm.reviewForm.legalL", encodeBase64(dijit.byId("reviewForm.legalL").getValue().toString().trim()));
-            localStorage.setItem("reviewForm.reviewForm.legalContentL", encodeBase64(dijit.byId("reviewForm.legalContentL").getValue().toString().trim()));
-            localStorage.setItem("reviewForm.reviewForm.foodSafetyQualityL", encodeBase64(dijit.byId("reviewForm.foodSafetyQualityL").getValue().toString().trim()));
-            localStorage.setItem("reviewForm.reviewForm.foodSafetyQualityContentL", encodeBase64(dijit.byId("reviewForm.foodSafetyQualityContentL").getValue().toString().trim()));
-            localStorage.setItem("reviewForm.reviewForm.effectUtilityL", encodeBase64(dijit.byId("reviewForm.effectUtilityL").getValue().toString().trim()));
-            localStorage.setItem("reviewForm.reviewForm.effectUtilityContentL", encodeBase64(dijit.byId("reviewForm.effectUtilityContentL").getValue().toString().trim()));
-            alert("Lưu nháp nội dung thẩm định thành công!");
-        } catch (err)
-        {
-            alert("Không thể Lưu nháp nội dung thẩm định!");
-        }
-    };
-    
-    page.getReviewForm = function () {
-        try
-        {
-            dijit.byId("reviewForm.leaderApproveId").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.leaderApproveId")));
-            dijit.byId("reviewForm.leaderStaffRequest").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.leaderStaffRequest")));
-            dijit.byId("reviewForm.legalL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.legalL")));
-            dijit.byId("reviewForm.legalContentL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.legalContentL")));
-            dijit.byId("reviewForm.foodSafetyQualityL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.foodSafetyQualityL")));
-            dijit.byId("reviewForm.foodSafetyQualityContentL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.foodSafetyQualityContentL")));
-            dijit.byId("reviewForm.effectUtilityL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.effectUtilityL")));
-            dijit.byId("reviewForm.effectUtilityContentL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.effectUtilityContentL")));
-            alert("Tải nội thẩm định gần đây thành công!");
-        } catch (err)
-        {
-            alert("Không thể Tải nội thẩm định gần đây!");
-        }
-    };
+        page.clearReviewForm = function () {
+            try
+            {
+                localStorage.setItem("reviewForm.reviewForm.leaderApproveId", "-1");
+                localStorage.setItem("reviewForm.reviewForm.leaderStaffRequest", "");
+                localStorage.setItem("reviewForm.reviewForm.legalL", "1");
+                localStorage.setItem("reviewForm.reviewForm.legalContentL", "");
+                localStorage.setItem("reviewForm.reviewForm.foodSafetyQualityL", "1");
+                localStorage.setItem("reviewForm.reviewForm.foodSafetyQualityContentL", "");
+                localStorage.setItem("reviewForm.reviewForm.effectUtilityL", "1");
+                localStorage.setItem("reviewForm.reviewForm.effectUtilityContentL", "");
 
-    onchangeStatusREAAFOG = function () {
-        var trTitleEditATTP = document.getElementById('trTitleEditATTP');
-        var trContentsEditATTP = document.getElementById('trContentsEditATTP');
-        var trLeaderStaffRequest = document.getElementById('trLeaderStaffRequest');
-        var btnExportREAA = document.getElementById('btnExportREAA');
-        if (document.getElementById("reviewForm.statusAccept").checked) {
-            trTitleEditATTP.style.display = '';//
-            trContentsEditATTP.style.display = '';//
-            trLeaderStaffRequest.style.display = 'none';//
-            btnExportREAA.style.display = '';
-        } else {
-            trTitleEditATTP.style.display = 'none';
-            trContentsEditATTP.style.display = 'none';
-            trLeaderStaffRequest.style.display = '';
-            btnExportREAA.style.display = 'none';
-        }
-    };
-    
-    page.exportExportREAA = function () {//xuat file ket qua tham dinh
-        var fileId = dijit.byId("reviewForm.fileId").getValue();
-        var titleEditATTP = page.utf8_to_b64FBRF(dijit.byId("reviewForm.titleEditATTP").getValue());
-        var contentsEditATTP = page.utf8_to_b64FBRF(dijit.byId("reviewForm.contentsEditATTP").getValue());
-        contentsEditATTP = contentsEditATTP.replaceAllExportREAA('+', '_');
-        document.location = "exportWord!onExportEEAA.do?fileId=" + fileId + "&title=" + titleEditATTP + "&contents=" + contentsEditATTP;
-    };
-    
-    String.prototype.replaceAllExportREAA = function(strTarget, strSubString) {
+                alert("Xóa nội dung thẩm định gần đây thành công!");
+            } catch (err)
+            {
+                alert("Không thể Xóa nội dung thẩm định gần đây!");
+            }
+        };
+
+        page.setRreviewForm = function () {
+            try
+            {
+                localStorage.setItem("reviewForm.reviewForm.leaderApproveId", encodeBase64(dijit.byId("reviewForm.leaderApproveId").getValue().toString().trim()));
+                localStorage.setItem("reviewForm.reviewForm.leaderStaffRequest", encodeBase64(dijit.byId("reviewForm.leaderStaffRequest").getValue().toString().trim()));
+                localStorage.setItem("reviewForm.reviewForm.legalL", encodeBase64(dijit.byId("reviewForm.legalL").getValue().toString().trim()));
+                localStorage.setItem("reviewForm.reviewForm.legalContentL", encodeBase64(dijit.byId("reviewForm.legalContentL").getValue().toString().trim()));
+                localStorage.setItem("reviewForm.reviewForm.foodSafetyQualityL", encodeBase64(dijit.byId("reviewForm.foodSafetyQualityL").getValue().toString().trim()));
+                localStorage.setItem("reviewForm.reviewForm.foodSafetyQualityContentL", encodeBase64(dijit.byId("reviewForm.foodSafetyQualityContentL").getValue().toString().trim()));
+                localStorage.setItem("reviewForm.reviewForm.effectUtilityL", encodeBase64(dijit.byId("reviewForm.effectUtilityL").getValue().toString().trim()));
+                localStorage.setItem("reviewForm.reviewForm.effectUtilityContentL", encodeBase64(dijit.byId("reviewForm.effectUtilityContentL").getValue().toString().trim()));
+                alert("Lưu nháp nội dung thẩm định thành công!");
+            } catch (err)
+            {
+                alert("Không thể Lưu nháp nội dung thẩm định!");
+            }
+        };
+
+        page.getReviewForm = function () {
+            try
+            {
+                dijit.byId("reviewForm.leaderApproveId").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.leaderApproveId")));
+                dijit.byId("reviewForm.leaderStaffRequest").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.leaderStaffRequest")));
+                dijit.byId("reviewForm.legalL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.legalL")));
+                dijit.byId("reviewForm.legalContentL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.legalContentL")));
+                dijit.byId("reviewForm.foodSafetyQualityL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.foodSafetyQualityL")));
+                dijit.byId("reviewForm.foodSafetyQualityContentL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.foodSafetyQualityContentL")));
+                dijit.byId("reviewForm.effectUtilityL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.effectUtilityL")));
+                dijit.byId("reviewForm.effectUtilityContentL").setValue(decodeBase64(localStorage.getItem("reviewForm.reviewForm.effectUtilityContentL")));
+                alert("Tải nội thẩm định gần đây thành công!");
+            } catch (err)
+            {
+                alert("Không thể Tải nội thẩm định gần đây!");
+            }
+        };
+
+        onchangeStatusREAAFOG = function () {
+            var trTitleEditATTP = document.getElementById('trTitleEditATTP');
+            var trContentsEditATTP = document.getElementById('trContentsEditATTP');
+            var trLeaderStaffRequest = document.getElementById('trLeaderStaffRequest');
+            var btnExportREAA = document.getElementById('btnExportREAA');
+            if (document.getElementById("reviewForm.statusAccept").checked || document.getElementById("reviewForm.statusApprove").checked) {
+                trTitleEditATTP.style.display = '';//
+                trContentsEditATTP.style.display = '';//
+                trLeaderStaffRequest.style.display = 'none';//
+                btnExportREAA.style.display = '';
+            } else {
+                trTitleEditATTP.style.display = 'none';
+                trContentsEditATTP.style.display = 'none';
+                trLeaderStaffRequest.style.display = '';
+                btnExportREAA.style.display = 'none';
+            }
+        };
+
+        page.exportExportREAA = function () {//xuat file ket qua tham dinh
+            var fileId = dijit.byId("reviewForm.fileId").getValue();
+            var titleEditATTP = page.utf8_to_b64FBRF(dijit.byId("reviewForm.titleEditATTP").getValue());
+            var contentsEditATTP = page.utf8_to_b64FBRF(dijit.byId("reviewForm.contentsEditATTP").getValue());
+            contentsEditATTP = contentsEditATTP.replaceAllExportREAA('+', '_');
+            document.location = "exportWord!onExportEEAA.do?fileId=" + fileId + "&title=" + titleEditATTP + "&contents=" + contentsEditATTP;
+        };
+
+        String.prototype.replaceAllExportREAA = function (strTarget, strSubString) {
             var strText = this;
             var intIndexOfMatch = strText.indexOf(strTarget);
             while (intIndexOfMatch != -1) {
@@ -444,5 +460,160 @@
                 intIndexOfMatch = strText.indexOf(strTarget);
             }
             return(strText);
-    };
-</script>
+        };
+
+        showLeaderSign4AAForm = function () {
+            document.getElementById("reviewForm.statusApprove").checked = true;
+            document.getElementById("trLeader4AAWait").style.display = "";
+            document.getElementById("labelLeader4AAWait").innerHTML = "Hệ thống đang tạo công văn và ký số, vui lòng chờ  ";
+            var title4AA = page.utf8_to_b64REAAFOG(dijit.byId("reviewForm.titleEditATTP").getValue());
+            var content4AA = page.utf8_to_b64REAAFOG(dijit.byId("reviewForm.contentsEditATTP").getValue());
+            content4AA = content4AA.replaceAllREAAFOG('+', '_');
+            title4AA = title4AA.replaceAllREAAFOG('+', '_');
+            sd.connector.post("filesExplandAction!onCreatePaperByLeaderForAA.do?"
+                    + token.getTokenParamString()
+                    + "&content=" + content4AA
+                    + "&title=" + title4AA, null, "reviewForm", null, afterOCPBL4AA_REAAFOG);
+        };
+
+        page.utf8_to_b64REAAFOG = function (str) {
+            return window.btoa(unescape(encodeURIComponent(str)));
+        };
+
+        String.prototype.replaceAllREAAFOG = function (strTarget, strSubString) {
+            var strText = this;
+            var intIndexOfMatch = strText.indexOf(strTarget);
+            while (intIndexOfMatch != -1) {
+                strText = strText.replace(strTarget, strSubString)
+                intIndexOfMatch = strText.indexOf(strTarget);
+            }
+            return(strText);
+        };
+
+        afterOCPBL4AA_REAAFOG = function (data) {//b4
+            var obj = dojo.fromJson(data);
+            onSendReviewSignByLeaderForAA_REAAFOG();
+        };
+
+        onSendReviewSignByLeaderForAA_REAAFOG = function () {//b5
+            var fileId = dijit.byId("reviewForm.fileId").getValue();
+            sd.connector.post("exportWord!onExportPaperSignPlugin.do?fileId=" + fileId, null, null, null, afterOnExportPaperSignPlugin_REAAFOG);
+        };
+
+        afterOnExportPaperSignPlugin_REAAFOG = function (data) {//b6
+            var obj = dojo.fromJson(data);
+            var result = obj.items;
+            if (result[0] == "1") {
+                var signType = "PDHS";
+                var fileId = dijit.byId("reviewForm.fileId").getValue();
+                if (count == 0) {
+                    var item = uploadCertOfFile_REAAFOG(fileId);
+                    cert = encodeBase64(item.certChain);
+                }
+                var path = result[2];
+                sd.connector.post("filesExplandAction!actionSignCA.do?fileId=" + fileId + "&cert=" + cert + "&signType=" + signType + "&path=" + path, null, null, null, page.signPlugin_REAAFOG);
+            } else {
+                msg.alert("Có lỗi trong quá trình xuất công văn SĐBS", "Cảnh báo");
+                document.getElementById("trWait").style.display = "none";
+            }
+        };
+        page.signPlugin_REAAFOG = function (data)//b7
+        {
+            var obj = dojo.fromJson(data);
+            var result = obj.items;
+            if (result[0] == "1") {
+                var txtBase64HashNew = result[2];
+                var certSerialNew = result[3];
+                var fileId = result[4];
+                var outPutPath = result[5];
+                var fileName = result[6];
+                dijit.byId("txtBase64Hash_REAAFOG").setValue(txtBase64HashNew);
+                dijit.byId("txtCertSerial_REAAFOG").setValue(certSerialNew);
+                var sign = signAndSubmit_REAAFOG();
+                var signData = encodeBase64(sign);
+                sd.connector.post("filesExplandAction!onSignPlugin.do?fileId=" + fileId + "&outPutPath=" + outPutPath + "&signData=" + signData + "&signType=" + signType + "&fileName=" + fileName, null, null, null, page.afterOnSignPlugin_REAAFOG);
+            } else {
+                alert("Ký số không thành công ! " + result[1]);
+            }
+        };
+
+        page.afterOnSignPlugin_REAAFOG = function (data)//b8
+        {
+            var obj = dojo.fromJson(data);
+            var result = obj.items;
+            if (result[0] == "1") {
+                onApproveLdp_REAAFOG();
+            } else
+            {
+                alert("Ký số không thành công !");
+            }
+        };
+
+        onApproveLdp_REAAFOG = function () {
+            sd.connector.post("filesExplandAction!onApproveByLDP4AA.do?" + token.getTokenParamString(), null, "reviewForm", null, afterApprove_REAAFOG);
+        };
+
+        afterApprove_REAAFOG = function (data) {
+            var obj = dojo.fromJson(data);
+            var result = obj.items;
+            alert(result[1]);
+            if (result[0] == "1") {
+                onCloseApproveDlg_REAAFOG();
+                page.search();
+            }
+        };
+
+        onCloseApproveDlg_REAAFOG = function () {
+            var txtBase64Hash_REAAFOGCheck = dijit.byId('txtBase64Hash_REAAFOG');
+            if (txtBase64Hash_REAAFOGCheck) {
+                txtBase64Hash_REAAFOGCheck.destroyRecursive(true);
+            }
+            var txtCertSerial_REAAFOGCheck = dijit.byId('txtCertSerial_REAAFOG');
+            if (txtCertSerial_REAAFOGCheck) {
+                txtCertSerial_REAAFOGCheck.destroyRecursive(true);
+            }
+            var reviewSignForAAFormFileId = dijit.byId('reviewForm.fileId');
+            if (reviewSignForAAFormFileId) {
+                reviewSignForAAFormFileId.destroyRecursive(true);
+            }
+            var reviewSignForAAFormTitle = dijit.byId('reviewForm.titleEditATTP');
+            if (reviewSignForAAFormTitle) {
+                reviewSignForAAFormTitle.destroyRecursive(true);
+            }
+            var reviewSignForAAFormContent = dijit.byId('reviewForm.contentsEditATTP');
+            if (reviewSignForAAFormContent) {
+                reviewSignForAAFormContent.destroyRecursive(true);
+            }
+            var btnSendLDCFRF1 = dijit.byId('btnLeaderSign4AA');
+            if (btnSendLDCFRF1) {
+                btnSendLDCFRF1.destroyRecursive(true);
+            }
+
+            var titlePaneViewFile = dijit.byId('titlePaneViewFile');
+            if (titlePaneViewFile) {
+                titlePaneViewFile.destroyRecursive(true);
+            }
+
+            var titlePaneEvaluate = dijit.byId('titlePaneEvaluate');
+            if (titlePaneEvaluate) {
+                titlePaneEvaluate.destroyRecursive(true);
+            }
+            var tblEvaluateFormView = dijit.byId('tblEvaluateFormView');
+            if (tblEvaluateFormView) {
+                tblEvaluateFormView.destroyRecursive(true);
+            }
+            var reviewManyFilesForm = dijit.byId('reviewManyFilesForm');
+            if (reviewManyFilesForm) {
+                reviewManyFilesForm.destroyRecursive(true);
+            }
+            var reviewSignForAAForm = dijit.byId('reviewSignForAAForm');
+            if (reviewSignForAAForm) {
+                reviewSignForAAForm.destroyRecursive(true);
+            }
+            doGoToMenu("filesAction!toReviewPage.do?IsChange=1");
+        };
+    </script>
+<input type="hidden" id="base64Hash" value="" />
+<sd:TextBox id="txtBase64Hash_REAAFOG" key="" name="txtBase64Hash" type="hidden"/>
+<input type="hidden" id="certSerial" value="" />
+<sd:TextBox id="txtCertSerial_REAAFOG" key="" name="txtCertSerial" type="hidden"/>

@@ -168,13 +168,23 @@
                 </sd:Dialog>
 
             <jsp:include page="keyboard.jsp"/>
+            <sd:Dialog  id="vt-businessAlert" height="auto" width="800px"
+                        key="dialog.titleAddEdit" showFullscreenButton="false"
+                        >
+                <jsp:include page="pushBusinessAlertDlg.jsp" flush="false"></jsp:include>
+            </sd:Dialog>
 
             <!--[ LongH says: After-page-rendered script-->
             <script type="text/javascript">
-                page.checkChangePassword = function() {//kiem tra ton tai giay cong bo
+                page.checkChangePassword = function () {//kiem tra ton tai giay cong bo
                     sd.connector.post("UserAction!checkPassIsChanged.do", null, null, null, page.aftercheckChangePassword);
                 };
-                page.aftercheckChangePassword = function(data) {//sau khi kiem tra ton tai cong bo
+
+                page.pushBusinessAlert = function () {//kiem tra ton tai giay cong bo
+                    sd.connector.post("UserAction!pushBusinessAlert.do", null, null, null, page.afterPushBusinessAlert);
+                };
+
+                page.aftercheckChangePassword = function (data) {//sau khi kiem tra ton tai cong bo
                     var obj = dojo.fromJson(data);
                     var result = obj.items;
                     var result0 = result[0];
@@ -188,7 +198,23 @@
                         changePasswordIcon.onclick();
                     }
                 };
+
+                page.afterPushBusinessAlert = function (data) {//sau khi kiem tra ton tai cong bo
+                    var obj = dojo.fromJson(data);
+                    var result = obj.items;
+                    var result0 = result[0];
+                    var result1 = result[1];
+                    if (result0 == 1) {
+                        var dialog = dijit.byId("vt-businessAlert");
+                        dialog.show();
+
+                        //dijit.byId("gridViewBusinessAlertContentId").vtReload("businessAlertAction!loadBusinessAlertView.do?searchForm.businessId=" + result1);
+                    }
+                };
+
+//                page.pushBusinessAlert();
                 page.checkChangePassword();
+
                 var mainProcess = false;
                 var workingTime = 1;
 
@@ -213,13 +239,13 @@
 //                };
 
 
-                vt_help.onclick = function() {//không hiển thị action hdsd
+                vt_help.onclick = function () {//không hiển thị action hdsd
                     var dialog = dijit.byId("vt-guidelineDialog");
                     sd.connector.post("home!gotoGuidelinePage.do", "vt-guidelineDiv", null);
                     dialog.show();
                 };
 
-                vt_keyboard.onclick = function() {
+                vt_keyboard.onclick = function () {
                     if (document.getElementById("keyboardInput").style.display == "none") {
                         document.getElementById("keyboardInput").style.display = "";
                         var left = vt_keyboard.offsetLeft;
@@ -233,7 +259,7 @@
                     }
                 };
 
-                profileIcon.onclick = function() {
+                profileIcon.onclick = function () {
 //                    var dialog = dijit.byId("vt-profileDialog");
 //                    sd.connector.post("UserAction!gotoProfilePage.do", "vt-profileDiv", null,null,null);
 //                    dialog.show();
@@ -252,7 +278,7 @@
                     userName = "<s:property value='#session.userPosition' escapeHtml="true"/>-" + "<s:property value='#session.userToken.fullName' escapeHtml="true"/>";
                 }
 
-                addDay = function(date, day) {
+                addDay = function (date, day) {
                     var time = date.getTime();
                     time = time + day * 24 * 60 * 60 * 1000;
                     var newDate = new Date();
@@ -260,7 +286,7 @@
                     return newDate;
                 }
 
-                dateToString = function(date) {
+                dateToString = function (date) {
                     var day = "";
                     if (date.getDate() < 10)
                         day = "0" + date.getDate().toString();
@@ -275,7 +301,7 @@
                     return str;
                 }
 
-                changeWorkingDay = function(type) {
+                changeWorkingDay = function (type) {
                     try {
                         if (document.getElementById("workingTime" + workingTime) != null)
                             document.getElementById("workingTime" + workingTime).setAttribute("class", "");
@@ -356,7 +382,7 @@
                     //searchText();
                 }
 
-                searchText = function() {
+                searchText = function () {
                     try {
                         var searchFun = window["onSearch"];
                         if (searchFun == null || searchFun.toString() == "undefined") {
@@ -369,7 +395,7 @@
                     return false;
                 }
 
-                searchTextAdvance = function() {
+                searchTextAdvance = function () {
                     try {
                         var searchFun = window["onSearch"];
                         if (searchFun == null || searchFun.toString() == "undefined") {
@@ -505,7 +531,7 @@
                     return false;
                 }
 
-                selectYear = function(year) {
+                selectYear = function (year) {
                     try {
                         document.getElementById("workingTime" + workingTime).setAttribute("class", "");
                         workingTime = "9";
@@ -524,12 +550,12 @@
                     searchText();
                 }
 
-                changeWorkingYear = function(obj) {
+                changeWorkingYear = function (obj) {
                     var year = obj.value;
                     selectYear(year);
                 }
 
-                makeSelectTime = function() {
+                makeSelectTime = function () {
                     var currentDate = new Date();
                     var year = currentDate.getFullYear();
                     var i = 0;
@@ -550,7 +576,7 @@
 
                 //makeSelectTime();
                 //shortcut Add New Item
-                shortcut.add("Alt+N", function() {
+                shortcut.add("Alt+N", function () {
                     try {
                         var addFunction = window["createNewItem"];
                         if (addFunction == null || addFunction.toString() == "undefined") {
@@ -563,7 +589,7 @@
                 });
 
                 // shortcut delete item
-                shortcut.add("Alt+D", function() {
+                shortcut.add("Alt+D", function () {
                     try {
                         var deleteFunction = window["deleteItem"];
                         if (deleteFunction == null || deleteFunction.toString() == "undefined") {
@@ -575,7 +601,7 @@
                     return false;
                 });
                 // shortcut upload
-                shortcut.add("Alt+U", function() {
+                shortcut.add("Alt+U", function () {
                     try {
                         var upload = window["choseUploadFile"];
                         if (upload == null || upload.toString() == "undefined") {
@@ -589,7 +615,7 @@
                 });
 
                 // shortcut copy item
-                shortcut.add("Alt+C", function() {
+                shortcut.add("Alt+C", function () {
                     try {
                         var copyFun = window["copyItem"];
                         if (copyFun == null || copyFun.toString() == "undefined") {
@@ -602,7 +628,7 @@
                 });
 
                 // shortcut save and new item
-                shortcut.add("F6", function() {
+                shortcut.add("F6", function () {
                     try {
                         var sfunction = window["saveAndNewItem"];
                         if (sfunction == null || sfunction.toString() == "undefined") {
@@ -615,7 +641,7 @@
                 });
 
                 // shortcut save and copy item
-                shortcut.add("F9", function() {
+                shortcut.add("F9", function () {
                     try {
                         var sfunction = window["saveAndCopyItem"];
                         if (sfunction == null || sfunction.toString() == "undefined") {
@@ -628,7 +654,7 @@
                 });
 
                 // shortcut save item
-                shortcut.add("F8", function() {
+                shortcut.add("F8", function () {
                     try {
                         var sfunction = window["saveItem"];
                         if (sfunction == null || sfunction.toString() == "undefined") {
@@ -641,7 +667,7 @@
                 });
 
                 // back page
-                shortcut.add("Alt+Backspace", function() {
+                shortcut.add("Alt+Backspace", function () {
                     try {
                         var sfunction = window["backPage"];
                         if (sfunction == null || sfunction.toString() == "undefined") {
@@ -675,20 +701,20 @@
                  } else {
                  alert("not ie");
                  };*/
-                backFistPageIcon.onclick = function() {
+                backFistPageIcon.onclick = function () {
                     document.location.href = "${contextPath}/Index.do?request_locale=${fn:escapeXml(vt_locale)}";
                         }
-                        homeIcon.onclick = function() {
+                        homeIcon.onclick = function () {
                             //sd.operator.getBreadCumb("1.3.1"); // Test breadcump feature by LongH
                             document.location.href = "${contextPath}/HomePage.do";
                         };
 
-                        logoutIcon.onclick = function() {
+                        logoutIcon.onclick = function () {
                 <%-- document.location.href = "${contextPath}/Exit.do"; --%>
                             document.location.href = "${contextPath}/share/logout.jsp";
                         };
 
-                        changePasswordIcon.onclick = function() {
+                        changePasswordIcon.onclick = function () {
                             var dialog = dijit.byId("vt-changePasswowrdDialog");
                             sd.connector.post("UserAction!loadPasswordChange.do", "vt-changePasswordDiv", null);
                             dialog.show();
@@ -721,11 +747,11 @@
                             //}
                         }
 
-                        onItemFocus = function(item) {
+                        onItemFocus = function (item) {
                             localStorage.focusedItem = item.id;
                         }
 
-                        setOnFocus = function() {
+                        setOnFocus = function () {
                             var inputs = document.getElementsByTagName("input");
                             if (inputs != null && inputs.length > 0) {
                                 var i = 0;
@@ -760,7 +786,7 @@
                     String param = "";
                     while (i.hasNext()) {
                         String key = (String) i.next();
-                        String value = ((String[]) params.get(key))[ 0];
+                        String value = ((String[]) params.get(key))[0];
                         param += "<strong>" + key + "</strong>" + ": " + value + "<br>";
 
                     }
@@ -789,17 +815,11 @@
                 <input id="desc_5" type="hidden" name="desc_5" value="<%=request.getParameter("desc_5")%>">
                 <input id="secure_hash" type="hidden" name="secure_hash" value="<%=request.getParameter("secure_hash")%>"> 
                 <input id="files_code" type="hidden" name="files_code" value="<%=request.getParameter("files_code")%>"> 
-
-
-
-
-
-
             </div>
             <script type="text/javascript">
 
 
-                page.checkResponseStatus = function()
+                page.checkResponseStatus = function ()
                 {
 
 //                    var feeId = document.getElementById("feeId").value;
@@ -827,18 +847,17 @@
                     var paymentInfo = "command:" + command + ";" + "merchant_trans_id:" + merchant_trans_id + ";" +
                             "merchant_code:" + merchant_code + ";" + "response_code:" + responseCode + ";" + "trans_id:" + trans_id + ";" + "good_code:" + good_code +
                             ";" + "net_cost:" + net_cost + ";" + "ship_fee:" + ship_fee + ";" + "tax:" + tax + ";" + "service_code:" + service_code + ";" +
-                            "currency_code:" + currency_code + ";" + "bank_code:" + bank_code + ";" + "desc_1:" + desc_1 + ";"+ "desc_2:" + desc_2 + ";" + "desc_3:" + desc_3 + ";" + "desc_4:" + desc_4 + ";" + "desc_5:" + desc_5 + ";" + "secure_hash:" + secure_hash + ";";
-                    var hash = command + ";"  + merchant_trans_id + ";" +
-                            + merchant_code + ";" +  responseCode + ";" + trans_id + ";" + good_code +
+                            "currency_code:" + currency_code + ";" + "bank_code:" + bank_code + ";" + "desc_1:" + desc_1 + ";" + "desc_2:" + desc_2 + ";" + "desc_3:" + desc_3 + ";" + "desc_4:" + desc_4 + ";" + "desc_5:" + desc_5 + ";" + "secure_hash:" + secure_hash + ";";
+                    var hash = command + ";" + merchant_trans_id + ";" +
+                            +merchant_code + ";" + responseCode + ";" + trans_id + ";" + good_code +
                             ";" + net_cost + ";" + ship_fee + ";" + tax + ";" + service_code + ";" +
-                             currency_code + ";" + bank_code + ";"  + desc_1 + ";" + desc_2 + ";" + desc_3 + ";" + desc_4 + ";" + desc_5 + ";" + secure_hash + ";";
-                    
-        if (responseCode == '00')
+                            currency_code + ";" + bank_code + ";" + desc_1 + ";" + desc_2 + ";" + desc_3 + ";" + desc_4 + ";" + desc_5 + ";" + secure_hash + ";";
+
+                    if (responseCode == '00')
                     {
 
                         sd.connector.post("feeAction!onInsertFeePaymentInfo.do?feeInfoId=" + feeInfoId + "&paymentInfo=" + paymentInfo + "&filescode=" + files_code + "&hash=" + hash + "&" + token.getTokenParamString(), "createForm", null, null, page.afterPaySuccessSave);
-                    }
-                    else if (responseCode != 'null' && responseCode != '00')
+                    } else if (responseCode != 'null' && responseCode != '00')
                     {
                         msg.alert("Thanh toán không thành công");
                     }
@@ -846,15 +865,15 @@
                 };
 
 
-                page.afterPaySuccessSave = function(data)
+                page.afterPaySuccessSave = function (data)
                 {
                     var obj = dojo.fromJson(data);
                     var result = obj.items;
-                    if(result[0]==1)
+                    if (result[0] == 1)
                     {
-                        msg.alert("Thanh toán thành công");  
-                    }else{
-                        msg.alert("Thanh toán thất bại");  
+                        msg.alert("Thanh toán thành công");
+                    } else {
+                        msg.alert("Thanh toán thất bại");
                     }
                     //resultMessage_show("resultCreateMessage", result[0], result[1], 5000);
                     //msg.alert("Thanh toán thành công");

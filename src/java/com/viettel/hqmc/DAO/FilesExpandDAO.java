@@ -9,44 +9,32 @@ import com.google.gson.JsonSyntaxException;
 import com.viettel.common.util.Constants;
 import com.viettel.common.util.ResourceBundleUtil;
 import com.viettel.hqmc.BO.AnnouncementReceiptPaper;
-import com.viettel.hqmc.BO.Business;
-import com.viettel.hqmc.BO.Fee;
 import com.viettel.hqmc.BO.Files;
 import com.viettel.hqmc.BO.Procedure;
 import static com.viettel.hqmc.DAO.FilesDAO.checkRevocationStatus;
 import com.viettel.hqmc.DAOHE.AnnouncementReceiptPaperDAOHE;
-import com.viettel.hqmc.DAOHE.BusinessDAOHE;
 import com.viettel.hqmc.DAOHE.CaUserDAOHE;
-import com.viettel.hqmc.DAOHE.FeeDAOHE;
 import com.viettel.hqmc.DAOHE.FilesDAOHE;
 import com.viettel.hqmc.DAOHE.FilesExpandDAOHE;
 import com.viettel.hqmc.DAOHE.ProcedureDAOHE;
-import com.viettel.hqmc.DAOHE.TechnicalStandardDAOHE;
-import com.viettel.hqmc.DAOHE.UserAttachsDAOHE;
-import com.viettel.hqmc.FORM.AnnouncementForm;
 import com.viettel.hqmc.FORM.FilesForm;
-import com.viettel.hqmc.FORM.ReIssueFormForm;
 import com.viettel.signature.pdf.PDFServerClientSignature;
 import com.viettel.signature.pdf.SearchTextLocations;
 import com.viettel.signature.plugin.SignPdfFile;
 import com.viettel.signature.utils.CertUtils;
-import com.viettel.voffice.database.BO.Category;
 import com.viettel.voffice.database.BO.VoAttachs;
 import com.viettel.voffice.database.DAO.BaseDAO;
 import static com.viettel.voffice.database.DAO.UploadIframeDAO.getSafeFileName;
-import com.viettel.voffice.database.DAOHibernate.CategoryDAOHE;
 import com.viettel.voffice.database.DAOHibernate.EventLogDAOHE;
 import com.viettel.voffice.database.DAOHibernate.VoAttachsDAOHE;
-import com.viettel.vsaadmin.database.BO.Users;
-import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import com.viettel.ws.FilesWS;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -724,6 +712,36 @@ public class FilesExpandDAO extends BaseDAO {
         return GRID_DATA;
     }
 
+    public String onCreatePaperByLeaderForAA() {
+        try {
+            Base64 decoder = new Base64();
+            String title = new String(decoder.decode(getRequest().getParameter("title").replace("_", "+").getBytes()), "UTF-8");
+            String content = new String(decoder.decode(getRequest().getParameter("content").replace("_", "+").getBytes()), "UTF-8");
+            FilesExpandDAOHE fdhe = new FilesExpandDAOHE();
+            FilesDAO fdao = new FilesDAO();
+            createForm.setTitleEditATTP(title);
+            createForm.setContentsEditATTP(content);
+            boolean bReturn = fdhe.onCreatePaperForAA(createForm, getDepartmentId(),
+                    getDepartment().getDeptName(), getUserId(), getUserName());
+            List resultMessage = new ArrayList();
+            if (bReturn) {
+                resultMessage.add("1");
+                resultMessage.add("Lưu dữ liệu thành công");
+                if (createForm.getStatus().equals(Constants.FILE_STATUS.APPROVED)) {
+                    fdao.getBarcode(createForm);
+                }
+            } else {
+                resultMessage.add("3");
+                resultMessage.add("Lưu dữ liệu không thành công");
+            }
+            jsonDataGrid.setItems(resultMessage);
+            return GRID_DATA;
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(FilesExpandDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return GRID_DATA;
+    }
+
     public FilesForm getCreateForm() {
         return createForm;
     }
@@ -731,7 +749,7 @@ public class FilesExpandDAO extends BaseDAO {
     public void setCreateForm(FilesForm createForm) {
         this.createForm = createForm;
     }
-    
+
     public String onApproveByLDP4AA() {
         FilesDAO fdao = new FilesDAO();
         FilesDAOHE fdhe = new FilesDAOHE();
@@ -786,7 +804,7 @@ public class FilesExpandDAO extends BaseDAO {
         jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;
     }
-/*
+    /*
     public String toCreateFile4AAPage() {
         Long fileId = getRequest().getParameter("fileId") == null ? 0L : Long.parseLong(getRequest().getParameter("fileId"));
         Long fileType = getRequest().getParameter("fileType") == null ? 0L : Long.parseLong(getRequest().getParameter("fileType"));
@@ -1003,5 +1021,5 @@ public class FilesExpandDAO extends BaseDAO {
         }
         return strReturn + "Paper";
     }
-*/
+     */
 }

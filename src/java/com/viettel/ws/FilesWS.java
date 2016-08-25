@@ -4,17 +4,17 @@
  */
 package com.viettel.ws;
 
-import static com.viettel.common.util.Constants.TEMP.FEATURE_GENERAL_ENTITIES;
-import static com.viettel.common.util.Constants.TEMP.FEATURE_PARAMETER_ENTITIES;
 import com.viettel.common.util.DateTimeUtils;
 import com.viettel.hqmc.BO.AnnouncementReceiptPaper;
 import com.viettel.hqmc.BO.Business;
 import com.viettel.hqmc.BO.Files;
 import com.viettel.hqmc.BO.Procedure;
+import com.viettel.hqmc.BO.XmlWs;
 import com.viettel.hqmc.DAOHE.AnnouncementReceiptPaperDAOHE;
 import com.viettel.hqmc.DAOHE.BusinessDAOHE;
 import com.viettel.hqmc.DAOHE.FilesDAOHE;
 import com.viettel.hqmc.DAOHE.FilesNoClobDAOHE;
+import com.viettel.hqmc.DAOHE.XmlWsDAOHE;
 import com.viettel.hqmc.FORM.FilesForm;
 import com.viettel.hqmc.FORM.ReIssueFormForm;
 import com.viettel.hqmc.FORM.TestRegistrationForm;
@@ -24,9 +24,19 @@ import com.viettel.voffice.database.DAOHibernate.VoAttachsDAOHE;
 import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import com.viettel.ws.ANNOUCERECEIVE.ANNOUNCESENDDtoType;
 import com.viettel.ws.BO.ANNOUNCERESULTDto;
+import com.viettel.ws.BO.Body;
+import com.viettel.ws.BO.CBREQUEST_CHANGE_330;
+import com.viettel.ws.BO.Content;
+import com.viettel.ws.BO.DNREQUEST_CHANGE_310;
+import com.viettel.ws.BO.DNREQUEST_DELETE_320;
 import com.viettel.ws.BO.ERRORDto;
 import com.viettel.ws.BO.ERRORLIST;
+import com.viettel.ws.BO.Envelope;
+import com.viettel.ws.BO.ErrorWs;
+import com.viettel.ws.BO.FEE_NOTICE_340;
 import com.viettel.ws.BO.FILERESULTSDto;
+import com.viettel.ws.BO.Header;
+import com.viettel.ws.BO.PERMIT_370;
 import com.viettel.ws.BO.RESULTPAGER;
 import com.viettel.ws.BO.SENDRESPONSEDto;
 import com.viettel.ws.FORM.ANNOUCE_RECEIVE;
@@ -44,6 +54,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -1020,131 +1031,5 @@ public class FilesWS extends BaseWS {
             return data;
         }
     }
-
-//    public List<ErrorWs> reiceiveMs_310(Envelope envelope) throws Exception {
-//        List<ErrorWs> errList = new ArrayList<>();
-//        ErrorWs err = new ErrorWs();
-//        try {
-//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
-//        } catch (Exception ex) {
-//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
-//            err.setErrorCode("U000-0000-0001");
-//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
-//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
-//            errList.add(err);
-//        }
-//        return errList;
-//    }
-//    public List<ErrorWs> reiceiveMs_320(Envelope envelope) throws Exception {
-//        List<ErrorWs> errList = new ArrayList<>();
-//        ErrorWs err = new ErrorWs();
-//        try {
-//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
-//        } catch (Exception ex) {
-//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
-//            err.setErrorCode("U000-0000-0001");
-//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
-//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
-//            errList.add(err);
-//        }
-//        return errList;
-//    }
-//    public List<ErrorWs> reiceiveMs_330(Envelope envelope) throws Exception {
-//        List<ErrorWs> errList = new ArrayList<>();
-//        ErrorWs err = new ErrorWs();
-//        try {
-//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
-//        } catch (Exception ex) {
-//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
-//            err.setErrorCode("U000-0000-0001");
-//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
-//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
-//            errList.add(err);
-//        }
-//        return errList;
-//    }
-//    public List<ErrorWs> reiceiveMs_340(Envelope envelope) throws Exception {
-//        List<ErrorWs> errList = new ArrayList<>();
-//        ErrorWs err = new ErrorWs();
-//        try {
-//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
-//        } catch (Exception ex) {
-//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
-//            err.setErrorCode("U000-0000-0001");
-//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
-//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
-//            errList.add(err);
-//        }
-//        return errList;
-//    }
-//    public List<ErrorWs> reiceiveMs_350(Envelope envelope) throws Exception {
-//        List<ErrorWs> errList = new ArrayList<>();
-//        ErrorWs err = new ErrorWs();
-//        try {
-//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
-//        } catch (Exception ex) {
-//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
-//            err.setErrorCode("U000-0000-0001");
-//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
-//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
-//            errList.add(err);
-//        }
-//        return errList;
-//    }
-//    public List<ErrorWs> reiceiveMs_360(Envelope envelope) throws Exception {
-//        List<ErrorWs> errList = new ArrayList<>();
-//        ErrorWs err = new ErrorWs();
-//        try {
-//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
-//        } catch (Exception ex) {
-//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
-//            err.setErrorCode("U000-0000-0001");
-//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
-//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
-//            errList.add(err);
-//        }
-//        return errList;
-//    }
-//    public List<ErrorWs> reiceiveMs_370(Envelope envelope) throws Exception {
-//        List<ErrorWs> errList = new ArrayList<>();
-//        ErrorWs err = new ErrorWs();
-//        try {
-//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
-//        } catch (Exception ex) {
-//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
-//            err.setErrorCode("U000-0000-0001");
-//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
-//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
-//            errList.add(err);
-//        }
-//        return errList;
-//    }
-//    public List<ErrorWs> reiceiveMs_380(Envelope envelope) throws Exception {
-//        List<ErrorWs> errList = new ArrayList<>();
-//        ErrorWs err = new ErrorWs();
-//        try {
-//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
-//        } catch (Exception ex) {
-//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
-//            err.setErrorCode("U000-0000-0001");
-//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
-//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
-//            errList.add(err);
-//        }
-//        return errList;
-//    }
-//    public List<ErrorWs> reiceiveMs_390(Envelope envelope) throws Exception {
-//        List<ErrorWs> errList = new ArrayList<>();
-//        ErrorWs err = new ErrorWs();
-//        try {
-//            DNREQUEST_CHANGE_310 dNREQUEST_CHANGE_310 = envelope.getBody().getContent().getDnRequestChange310();
-//        } catch (Exception ex) {
-//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
-//            err.setErrorCode("U000-0000-0001");
-//            err.setErrorName("Lỗi số lượng hàng hóa thông quan");
-//            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
-//            errList.add(err);
-//        }
-//        return errList;
-//    }
+   
 }

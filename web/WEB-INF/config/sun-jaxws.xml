@@ -4,4 +4,6 @@
   <endpoint implementation="com.viettel.ws.FilesWS" name="FilesWS" url-pattern="/FilesWS"/>
   <endpoint implementation="com.viettel.ws.FilesWS" name="FilesWS" url-pattern="/FilesWS"/>
   <endpoint implementation="com.viettel.ws.FilesWS" name="FilesWS" url-pattern="/FilesWS"/>
+  <endpoint implementation="com.viettel.ws.NswWs" name="NswWs" url-pattern="/NswWs"/>
+  <endpoint implementation="com.viettel.ws.NswWs" name="NswWs" url-pattern="/NswWs"/>
 </endpoints>

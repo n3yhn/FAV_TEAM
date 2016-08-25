@@ -580,16 +580,15 @@
             </tr>
             <tr>
                 <td>
-                    <sd:Button key="" onclick="page.onReviewManyFiles();" >
+                    <sd:Button key="" onclick="page.onReviewManyFiles4AA();" >
                         <img src="share/images/signature.png" height="14" width="18" alt="Xem xét đạt nhiều hồ sơ">
                         <span style="font-size:12px">Xem xét đạt nhiều hồ sơ</span>
                     </sd:Button>
-                    <sd:Button id="btnLDPSignMoreAA" key="" onclick="showLDPSignMoreAA();">
+                    <sd:Button id="btnLDPSignMoreAA" key="" onclick="showLDPSignMore4AA();">
                         <img src="share/images/signature.png" height="14" width="18" alt="Phê duyệt đạt nhiều công văn bổ sung sau công bố">
-                        <span style="font-size:12px">Phê duyệt đạt nhiều công văn bổ sung sau công bố</span>
+                        <span style="font-size:12px">Phê duyệt đạt nhiều CVBS sau công bố</span>
                     </sd:Button>
                 </td>
-
             </tr>
         </table>
     </sd:TitlePane>
@@ -761,7 +760,7 @@
     afterReloadViewOldVersion = function (data) {
     };//!u140728
 
-    page.onReviewManyFiles = function () {
+    page.onReviewManyFiles4AA = function () {
         if (!dijit.byId("filesGrid").vtIsChecked()) {
             msg.alert('Bạn chưa chọn hồ sơ để thực hiện xem xét nhiều hồ sơ', 'Cảnh báo');
         } else {
@@ -769,7 +768,7 @@
         }
     };
 
-    showLDPSignMoreAA = function () {//b1
+    showLDPSignMore4AA = function () {//b1
         if (!dijit.byId("filesGrid").vtIsChecked()) {
             msg.alert('Bạn chưa chọn hồ sơ để thực hiện ký duyệt', 'Cảnh báo');
         } else {

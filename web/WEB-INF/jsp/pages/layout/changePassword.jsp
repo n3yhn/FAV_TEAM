@@ -1,9 +1,3 @@
-<%-- 
-    Document   : changePassword
-    Created on : Jul 4, 2012, 9:07:49 AM
-    Author     : HanPT1
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
 <%@taglib prefix="sd" uri="struts-dojo-tags" %>
@@ -546,91 +540,91 @@
                                                                                                             alert(result1);
                                                                                                         }
                                                                                                     };
-                                                                                                    page.validateBus = function() {
-                                                                                                        var businessTypeId = dijit.byId("userPasswordForm.businessTypeId").getValue();
-                                                                                                        if (businessTypeId == 0) {
-                                                                                                            alert("[Loại hình doanh nghiệp chưa chọn] chưa chọn");
-                                                                                                            dijit.byId("userPasswordForm.businessTypeId").focus();
-                                                                                                            return false;
-                                                                                                        } else {
-                                                                                                            var businessTypeName = dijit.byId("userPasswordForm.businessTypeName").attr("displayedValue");
-                                                                                                            dijit.byId("userPasswordForm.businessTypeName").setValue(provinceName);
-                                                                                                        }
-                                                                                                        var businessName = dijit.byId("userPasswordForm.businessName").getValue();
-                                                                                                        if (businessName != null && businessName.trim().length > 0) {
-                                                                                                        } else {
-                                                                                                            alert("[Tên doanh nghiệp] chưa nhập");
-                                                                                                            dijit.byId("userPasswordForm.businessName").focus();
-                                                                                                            return false;
+page.validateBus = function() {
+    var businessTypeId = dijit.byId("userPasswordForm.businessTypeId").getValue();
+    if (businessTypeId == 0) {
+        alert("[Loại hình doanh nghiệp chưa chọn] chưa chọn");
+        dijit.byId("userPasswordForm.businessTypeId").focus();
+        return false;
+    } else {
+        var businessTypeName = dijit.byId("userPasswordForm.businessTypeName").attr("displayedValue");
+        dijit.byId("userPasswordForm.businessTypeName").setValue(provinceName);
+    }
+    var businessName = dijit.byId("userPasswordForm.businessName").getValue();
+    if (businessName != null && businessName.trim().length > 0) {
+    } else {
+        alert("[Tên doanh nghiệp] chưa nhập");
+        dijit.byId("userPasswordForm.businessName").focus();
+        return false;
 
-                                                                                                        }
+    }
 
-                                                                                                        var businessTaxCode = dijit.byId("userPasswordForm.businessTaxCode").getValue();
-                                                                                                        if (businessTaxCode != null && businessTaxCode.trim().length > 0) {
-                                                                                                        } else {
-                                                                                                            alert("[Mã số thuế] chưa nhập");
-                                                                                                            dijit.byId("userPasswordForm.businessTaxCode").focus();
-                                                                                                            return false;
+    var businessTaxCode = dijit.byId("userPasswordForm.businessTaxCode").getValue();
+    if (businessTaxCode != null && businessTaxCode.trim().length > 0) {
+    } else {
+        alert("[Mã số thuế] chưa nhập");
+        dijit.byId("userPasswordForm.businessTaxCode").focus();
+        return false;
 
-                                                                                                        }
-                                                                                                        var businessLicense = dijit.byId("userPasswordForm.businessLicense").getValue();
-                                                                                                        if (businessLicense != null && businessLicense.trim().length > 0) {
-                                                                                                        } else {
-                                                                                                            alert("[Giấy phép đăng ký] chưa nhập");
-                                                                                                            dijit.byId("userPasswordForm.businessLicense").focus();
-                                                                                                            return false;
-                                                                                                        }
-                                                                                                        ;
-                                                                                                        userPasswordForm.businessAddress
-                                                                                                        var businessAddress = dijit.byId("userPasswordForm.businessAddress").getValue();
-                                                                                                        if (businessAddress != null && businessAddress.trim().length > 0) {
-                                                                                                        } else {
-                                                                                                            alert("[Địa chỉ doanh nghiệp] chưa nhập");
-                                                                                                            dijit.byId("userPasswordForm.businessAddress").focus();
-                                                                                                            return false;
+    }
+    var businessLicense = dijit.byId("userPasswordForm.businessLicense").getValue();
+    if (businessLicense != null && businessLicense.trim().length > 0) {
+    } else {
+        alert("[Giấy phép đăng ký] chưa nhập");
+        dijit.byId("userPasswordForm.businessLicense").focus();
+        return false;
+    }
+    ;
+    userPasswordForm.businessAddress
+    var businessAddress = dijit.byId("userPasswordForm.businessAddress").getValue();
+    if (businessAddress != null && businessAddress.trim().length > 0) {
+    } else {
+        alert("[Địa chỉ doanh nghiệp] chưa nhập");
+        dijit.byId("userPasswordForm.businessAddress").focus();
+        return false;
 
-                                                                                                        }
-                                                                                                        var businessProvinceId = dijit.byId("userPasswordForm.businessProvinceId").getValue();
-                                                                                                        if (businessProvinceId == 0) {
-                                                                                                            alert("[Tỉnh thành] chưa chọn");
-                                                                                                            dijit.byId("userPasswordForm.businessProvinceId").focus();
-                                                                                                            return false;
-                                                                                                        } else {
-                                                                                                            var provinceName = dijit.byId("userPasswordForm.businessProvinceId").attr("displayedValue");
-                                                                                                            dijit.byId("userPasswordForm.businessProvince").setValue(provinceName);
-                                                                                                        }
-                                                                                                        var businessTelephone = dijit.byId("userPasswordForm.businessTelephone").getValue();
-                                                                                                        if (businessTelephone != null && businessTelephone.trim().length > 0) {
-                                                                                                            if (!validatePhone(businessTelephone)) {
-                                                                                                                alert("[Số điện thoại doanh nghiệp] không đúng định dạng");
-                                                                                                                dijit.byId("userPasswordForm.businessTelephone").focus();
-                                                                                                                return false;
-                                                                                                            }
-                                                                                                        }
-                                                                                                        var businessFax = dijit.byId("userPasswordForm.businessFax").getValue();
-                                                                                                        if (businessFax != null && businessFax.trim().length > 0) {
-                                                                                                            if (!validatePhone(businessFax)) {
-                                                                                                                alert("[Số fax doanh nghiệp] không đúng định dạng");
-                                                                                                                dijit.byId("userPasswordForm.businessFax").focus();
-                                                                                                                return false;
-                                                                                                            }
-                                                                                                        }
-                                                                                                        var businessEmail = dijit.byId("userPasswordForm.businessEmail").getValue();
-                                                                                                        if (!sd.validator.isEmail(businessEmail)) {
-                                                                                                            page.alert("Thông báo", "Địa chỉ Email doanh nghiệp không đúng định dạng", "warning");
-                                                                                                            dijit.byId("userPasswordForm.businessEmail").focus();
-                                                                                                            return false;
-                                                                                                        }
+    }
+    var businessProvinceId = dijit.byId("userPasswordForm.businessProvinceId").getValue();
+    if (businessProvinceId == 0) {
+        alert("[Tỉnh thành] chưa chọn");
+        dijit.byId("userPasswordForm.businessProvinceId").focus();
+        return false;
+    } else {
+        var provinceName = dijit.byId("userPasswordForm.businessProvinceId").attr("displayedValue");
+        dijit.byId("userPasswordForm.businessProvince").setValue(provinceName);
+    }
+    var businessTelephone = dijit.byId("userPasswordForm.businessTelephone").getValue();
+    if (businessTelephone != null && businessTelephone.trim().length > 0) {
+        if (!validatePhone(businessTelephone)) {
+            alert("[Số điện thoại doanh nghiệp] không đúng định dạng");
+            dijit.byId("userPasswordForm.businessTelephone").focus();
+            return false;
+        }
+    }
+    var businessFax = dijit.byId("userPasswordForm.businessFax").getValue();
+    if (businessFax != null && businessFax.trim().length > 0) {
+        if (!validatePhone(businessFax)) {
+            alert("[Số fax doanh nghiệp] không đúng định dạng");
+            dijit.byId("userPasswordForm.businessFax").focus();
+            return false;
+        }
+    }
+    var businessEmail = dijit.byId("userPasswordForm.businessEmail").getValue();
+    if (!sd.validator.isEmail(businessEmail)) {
+        page.alert("Thông báo", "Địa chỉ Email doanh nghiệp không đúng định dạng", "warning");
+        dijit.byId("userPasswordForm.businessEmail").focus();
+        return false;
+    }
 
-                                                                                                        var businessEstablishYear = dijit.byId("userPasswordForm.businessEstablishYear").getValue();
-                                                                                                        if (businessEstablishYear != null && businessEstablishYear.trim().length > 0) {
-                                                                                                            //var n = parseInt(businessEstablishYear);
-                                                                                                            if (isNaN(businessEstablishYear)) {
-                                                                                                                alert("[Năm thành lập] không đúng định dạng");
-                                                                                                                dijit.byId("userPasswordForm.businessEstablishYear").focus();
-                                                                                                                return false;
-                                                                                                            }
-                                                                                                        }
-                                                                                                        return true;
-                                                                                                    };
+    var businessEstablishYear = dijit.byId("userPasswordForm.businessEstablishYear").getValue();
+    if (businessEstablishYear != null && businessEstablishYear.trim().length > 0) {
+        //var n = parseInt(businessEstablishYear);
+        if (isNaN(businessEstablishYear)) {
+            alert("[Năm thành lập] không đúng định dạng");
+            dijit.byId("userPasswordForm.businessEstablishYear").focus();
+            return false;
+        }
+    }
+    return true;
+};
 </script>

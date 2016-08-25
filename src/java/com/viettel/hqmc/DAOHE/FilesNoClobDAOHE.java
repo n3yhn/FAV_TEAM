@@ -697,7 +697,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                         lstParam.add(Constants.FILE_STATUS.APPROVED);
                         lstParam.add(deptId);
                         break;
-                    case -4://5- Hồ sơ đã yêu cầu nộp phí cấp số = Đã phê duyệt, chưa nộp lệ phí (files.status = 6, fee_payment_info.status = 0,fee.fee_type = 1 , files.isSignPdf=1)
+                    case -4:
+                        //5- Hồ sơ đã yêu cầu nộp phí cấp số = Đã phê duyệt, chưa nộp lệ phí (files.status = 6, fee_payment_info.status = 0,fee.fee_type = 1 , files.isSignPdf=1)
                         /*hql = " from FilesNoClob f, Fee fe, FeePaymentInfo fpi";
                          condition = " and f.fileId = fpi.fileId"
                          + " and (f.isTemp=null or f.isTemp=0)"

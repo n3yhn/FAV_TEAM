@@ -77,7 +77,7 @@ public class ExportFileDAO extends BaseDAO {
     private final String tempCongbohopquiCL = "/WEB-INF/template/recongbohopqui.docx";//
     private final String tempCongbophuhopCL = "/WEB-INF/template/recongbophuhop.docx";//    
     private final String tempSignsuadoisaucongbo = "/WEB-INF/template/tempSignSuaDoiSauCongBo.docx";
-    private final String tempSignsuadoisaucongboPreview = "/WEB-INF/template/tempSignSuaDoiSauCongBoPreview.docx";
+//    private final String tempSignsuadoisaucongboPreview = "/WEB-INF/template/tempSignSuaDoiSauCongBoPreview.docx";
     private final String tempSuadoisaucongbo = "/WEB-INF/template/tempSuaDoiSauCongBo.docx";
 
     //print giay cong bo

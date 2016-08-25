@@ -25,12 +25,7 @@
                                 name="createForm.userFullname" 
                                 key="" 
                                 maxlength="100" 
-                                trim="true"/>
-                    <sd:TextBox id="createForm.businessId" 
-                                name="createForm.businessId" 
-                                cssStyle="display:none" 
-                                key=""
-                                trim="true"/>
+                                trim="true"/>                    
                 </td>
                 <td><sd:Label key="Số điện thoại"/></td>
                 <td>

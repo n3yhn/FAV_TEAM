@@ -515,11 +515,11 @@
             </tr>
             <tr>
                 <td>
-                    <sd:Button key="" onclick="page.onReviewManyFiles();" >
+                    <sd:Button key="" onclick="page.onEvaluateByLeaderManyFiles();" >
                         <img src="share/images/signature.png" height="14" width="18" alt="Hủy">
                         <span style="font-size:12px">Thẩm định đạt nhiều hồ sơ</span>
                     </sd:Button>
-                        <sd:Button key="" onclick="page.onReviewManyFilesToAdd();" >
+                        <sd:Button key="" onclick="page.onEvaluateByLeaderManyFilesToAdd();" >
                         <img src="share/images/signature.png" height="14" width="18" alt="Hủy">
                         <span style="font-size:12px">Thẩm định Yêu cầu Bổ sung nhiều hồ sơ</span>
                     </sd:Button>
@@ -540,7 +540,7 @@
     <jsp:include page="evaluateByLeaderManyFilesForm.jsp" flush="false"></jsp:include>
 </sd:Dialog>
 <sd:Dialog  id="evaluateByLeaderManyFilesToAddForm" height="auto" width="600px"
-            key="Thẩm định nhiều hồ sơ" showFullscreenButton="false"
+            key="Thẩm định yêu cầu sđbs nhiều hồ sơ" showFullscreenButton="false"
             >
     <jsp:include page="evaluateByLeaderManyFilesToAddForm.jsp" flush="false"></jsp:include>
 </sd:Dialog>
@@ -710,14 +710,14 @@
     };
     afterReloadViewOldVersion = function (data) {
     };
-    page.onReviewManyFiles = function () {
+    page.onEvaluateByLeaderManyFiles = function () {
         if (!dijit.byId("filesGrid").vtIsChecked()) {
             msg.alert('Bạn chưa chọn hồ sơ để thực hiện thẩm định đạt nhiều hồ sơ', 'Cảnh báo');
         } else {
             dijit.byId("evaluateByLeaderManyFilesDlg").show();
         }
     };
-    page.onReviewManyFilesToAdd = function () {
+    page.onEvaluateByLeaderManyFilesToAdd = function () {
         if (!dijit.byId("filesGrid").vtIsChecked()) {
             msg.alert('Bạn chưa chọn hồ sơ để thực hiện thẩm định bổ sung nhiều hồ sơ', 'Cảnh báo');
         } else {

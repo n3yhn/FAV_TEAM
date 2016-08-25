@@ -14,6 +14,7 @@ import com.viettel.vsaadmin.database.BO.Department;
 import com.viettel.vsaadmin.database.DAOHibernate.DepartmentDAOHE;
 import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import com.viettel.ws.BO.ANNOUNCERESULTDto;
+import com.viettel.ws.BO.Envelope;
 import com.viettel.ws.BO.FILERESULTSDto;
 import com.viettel.ws.BO.SENDRESPONSEDto;
 import com.viettel.ws.FORM.ANNOUCE_RECEIVE;
@@ -154,7 +155,7 @@ public class BaseWS {
             log.error(e);
         }
         return result;
-    }
+    }        
 
     public String errorToXml(RESULT obj) {
         String result = "";

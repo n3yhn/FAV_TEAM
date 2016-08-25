@@ -170,6 +170,7 @@
 
         var check;
         var workingCaUserId;
+        
         page.search = function () {
             dijit.byId("caUserGrid").vtReload('caUserAction!onSearch.do?', "searchForm");
         };
@@ -179,6 +180,7 @@
             panel.setAttribute("style", "display:;");
             dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
         };
+        
         page.reset = function () {
             dijit.byId("searchForm.caSerial").setValue("");
         };
@@ -201,10 +203,12 @@
             }
             page.search();
         };
+        
         page.afterSignPluginC = function ()
         {
             sd.connector.post("filesAction!onReturnFiles.do?signFileId=" + signFileId + "&" + token.getTokenParamString(), null, "feedbackGiveBackForm", null, page.afterAproveVT);
         };
+        
         page.afterAproveVT = function (data) {
             var obj = dojo.fromJson(data);
             alert(result[1]);
@@ -224,17 +228,17 @@
                                     }
                                 };
 
-                                page.deleteItemExecute = function () {
-                                    var content = dijit.byId("caUserGrid").vtGetCheckedDataForPost("lstItemOnGrid");
-                                    sd.connector.post("caUserAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
-                                };
+        page.deleteItemExecute = function () {
+            var content = dijit.byId("caUserGrid").vtGetCheckedDataForPost("lstItemOnGrid");
+            sd.connector.post("caUserAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
+        };
 
-                                page.returnMessageDelete = function (data) {
-                                    var obj = dojo.fromJson(data);
-                                    var result = obj.items;
-                                    resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
-                                    page.search();
-                                };
+        page.returnMessageDelete = function (data) {
+            var obj = dojo.fromJson(data);
+            var result = obj.items;
+            resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
+            page.search();
+        };
 
 //                                backPage();
 </script>

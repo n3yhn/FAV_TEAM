@@ -63,173 +63,106 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
                     ProcedureDAOHE pcdaohe = new ProcedureDAOHE();
                     Procedure procedure = pcdaohe.findById(file.getFileType());
                     if (procedure != null && procedure.getProcedureId() > 0) {
-                        if (!procedure.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_SATISFACTORY)) {//tao giay tiep nhan cong bo
-                            if (file.getAnnouncementId() != null) {
-                                if (file.getAnnouncementReceiptPaperId() == null) {
-                                    AnnouncementReceiptPaperForm arpForm = new AnnouncementReceiptPaperForm();
+                        if (file.getAnnouncementId() != null) {
+                            if (file.getAnnouncementReceiptPaperId() == null) {
+                                AnnouncementReceiptPaperForm arpForm = new AnnouncementReceiptPaperForm();
+                                AnnouncementDAOHE announcementHE = new AnnouncementDAOHE();
+                                Announcement announcement = announcementHE.findById(file.getAnnouncementId());
+
+                                arpForm.setBusinessName(announcement.getBusinessName());
+                                arpForm.setProductName(announcement.getProductName());
+                                arpForm.setManufactureName(announcement.getManufactureName());
+                                arpForm.setEmail(announcement.getBusinessEmail());
+                                arpForm.setFax(announcement.getBusinessFax());
+                                arpForm.setTelephone(announcement.getBusinessTelephone());
+                                arpForm.setNationName(announcement.getNationName());
+                                String strReceiptNo = fdaohe.getNewReceiptNo(file.getAgencyId(), file.getFileType());
+                                arpForm.setReceiptNo(strReceiptNo);
+                                if (file.getEffectiveDate() != null) {
+                                    if (file.getEffectiveDate() == 3) {//lay ngay ki + 3 nam
+                                        arpForm.setEffectiveDate(DateUtils.addYears(dateNow, 3));
+                                    } else if (file.getEffectiveDate() == 5) {//lay ngay ki + 5 nam
+                                        arpForm.setEffectiveDate(DateUtils.addYears(dateNow, 5));
+                                    } else {
+                                        arpForm.setEffectiveDate(DateUtils.addYears(dateNow, 3));
+                                    }
+                                }
+                                arpForm.setReceiptDate(dateNow);
+                                arpForm.setReceiptDeptName(deptName);//ten co quan tiep nhan cong bo
+                                arpForm.setMatchingTarget(announcement.getMatchingTarget());//so hieu qui chuan ki thuat
+                                arpForm.setSignDate(dateNow);//ngay ki
+                                arpForm.setSignerName(userName);//nguoi ki
+                                //tao giay tiep nhan
+                                try {
+                                    AnnouncementReceiptPaperDAOHE cthe = new AnnouncementReceiptPaperDAOHE();
+                                    if (cthe.isDuplicate(arpForm) == true) {
+                                        return false;
+                                    } else {
+                                        Long ObjId = arpForm.getAnnouncementReceiptPaperId();
+                                        AnnouncementReceiptPaper bo = arpForm.convertToEntity();
+                                        if (ObjId == null) {
+                                            getSession().save(bo);
+                                            file.setAnnouncementReceiptPaperId(bo.getAnnouncementReceiptPaperId());
+                                            getSession().update(file);
+                                        } else {
+                                            getSession().update(bo);
+                                            file.setAnnouncementReceiptPaperId(bo.getAnnouncementReceiptPaperId());
+                                            getSession().update(file);
+                                        }
+                                    }
+                                    getSession().beginTransaction().commit();
+                                    return true;
+                                } catch (Exception ex) {
+                                    log.error(ex.getMessage());
+                                    return false;
+                                }
+                            } else {//co so roi thuc hien update khong tao moi - binhnt53 14.11.12
+                                AnnouncementReceiptPaperDAOHE arpdaohe = new AnnouncementReceiptPaperDAOHE();
+                                AnnouncementReceiptPaper arpbo = arpdaohe.findById(file.getAnnouncementReceiptPaperId());
+                                if (arpbo != null) {
                                     AnnouncementDAOHE announcementHE = new AnnouncementDAOHE();
                                     Announcement announcement = announcementHE.findById(file.getAnnouncementId());
-
-                                    arpForm.setBusinessName(announcement.getBusinessName());
-                                    arpForm.setProductName(announcement.getProductName());
-                                    arpForm.setManufactureName(announcement.getManufactureName());
-                                    arpForm.setEmail(announcement.getBusinessEmail());
-                                    arpForm.setFax(announcement.getBusinessFax());
-                                    arpForm.setTelephone(announcement.getBusinessTelephone());
-                                    arpForm.setNationName(announcement.getNationName());
-                                    String strReceiptNo = fdaohe.getNewReceiptNo(file.getAgencyId(), file.getFileType());
-                                    arpForm.setReceiptNo(strReceiptNo);
-                                    if (file.getEffectiveDate() != null) {
-                                        if (file.getEffectiveDate() == 3) {//lay ngay ki + 3 nam
-                                            arpForm.setEffectiveDate(DateUtils.addYears(dateNow, 3));
-                                        } else if (file.getEffectiveDate() == 5) {//lay ngay ki + 5 nam
-                                            arpForm.setEffectiveDate(DateUtils.addYears(dateNow, 5));
-                                        } else {
-                                            arpForm.setEffectiveDate(DateUtils.addYears(dateNow, 3));
-                                        }
-                                    }
-                                    arpForm.setReceiptDate(dateNow);
-                                    arpForm.setReceiptDeptName(deptName);//ten co quan tiep nhan cong bo
-                                    arpForm.setMatchingTarget(announcement.getMatchingTarget());//so hieu qui chuan ki thuat
-                                    arpForm.setSignDate(dateNow);//ngay ki
-                                    arpForm.setSignerName(userName);//nguoi ki
-                                    //tao giay tiep nhan
-                                    try {
-                                        AnnouncementReceiptPaperDAOHE cthe = new AnnouncementReceiptPaperDAOHE();
-                                        if (cthe.isDuplicate(arpForm) == true) {
-                                            return false;
-                                        } else {
-                                            Long ObjId = arpForm.getAnnouncementReceiptPaperId();
-                                            AnnouncementReceiptPaper bo = arpForm.convertToEntity();
-                                            if (ObjId == null) {
-                                                getSession().save(bo);
-                                                file.setAnnouncementReceiptPaperId(bo.getAnnouncementReceiptPaperId());
-                                                getSession().update(file);
+                                    if (announcement != null) {
+                                        arpbo.setBusinessName(announcement.getBusinessName());
+                                        arpbo.setProductName(announcement.getProductName());
+                                        arpbo.setManufactureName(announcement.getManufactureName());
+                                        arpbo.setEmail(announcement.getBusinessEmail());
+                                        arpbo.setFax(announcement.getBusinessFax());
+                                        arpbo.setTelephone(announcement.getBusinessTelephone());
+                                        arpbo.setNationName(announcement.getNationName());
+                                        if (file.getEffectiveDate() != null) {
+                                            if (file.getEffectiveDate() == 3) {//lay ngay ki + 3 nam
+                                                arpbo.setEffectiveDate(DateUtils.addYears(dateNow, 3));
+                                            } else if (file.getEffectiveDate() == 5) {//lay ngay ki + 5 nam
+                                                arpbo.setEffectiveDate(DateUtils.addYears(dateNow, 5));
                                             } else {
-                                                getSession().update(bo);
-                                                file.setAnnouncementReceiptPaperId(bo.getAnnouncementReceiptPaperId());
-                                                getSession().update(file);
+                                                arpbo.setEffectiveDate(DateUtils.addYears(dateNow, 3));
                                             }
                                         }
+                                        if (arpbo.getReceiptDate() != null) {
+                                            arpbo.setReceiptDate(arpbo.getReceiptDate());
+                                        } else {
+                                            arpbo.setReceiptDate(dateNow);
+                                        }
+                                        arpbo.setReceiptDeptName(deptName);//ten co quan tiep nhan cong bo
+                                        arpbo.setMatchingTarget(announcement.getMatchingTarget());//so hieu qui chuan ki thuat
+                                        arpbo.setSignDate(dateNow);//ngay ki
+                                        arpbo.setSignerName(userName);//nguoi ki
+                                        getSession().update(arpbo);
+                                        getSession().update(file);
                                         getSession().beginTransaction().commit();
                                         return true;
-                                    } catch (Exception ex) {
-                                        log.error(ex.getMessage());
-                                        return false;
-                                    }
-                                } else {//co so roi thuc hien update khong tao moi - binhnt53 14.11.12
-                                    AnnouncementReceiptPaperDAOHE arpdaohe = new AnnouncementReceiptPaperDAOHE();
-                                    AnnouncementReceiptPaper arpbo = arpdaohe.findById(file.getAnnouncementReceiptPaperId());
-                                    if (arpbo != null) {
-                                        AnnouncementDAOHE announcementHE = new AnnouncementDAOHE();
-                                        Announcement announcement = announcementHE.findById(file.getAnnouncementId());
-                                        if (announcement != null) {
-                                            arpbo.setBusinessName(announcement.getBusinessName());
-                                            arpbo.setProductName(announcement.getProductName());
-                                            arpbo.setManufactureName(announcement.getManufactureName());
-                                            arpbo.setEmail(announcement.getBusinessEmail());
-                                            arpbo.setFax(announcement.getBusinessFax());
-                                            arpbo.setTelephone(announcement.getBusinessTelephone());
-                                            arpbo.setNationName(announcement.getNationName());
-                                            if (file.getEffectiveDate() != null) {
-                                                if (file.getEffectiveDate() == 3) {//lay ngay ki + 3 nam
-                                                    arpbo.setEffectiveDate(DateUtils.addYears(dateNow, 3));
-                                                } else if (file.getEffectiveDate() == 5) {//lay ngay ki + 5 nam
-                                                    arpbo.setEffectiveDate(DateUtils.addYears(dateNow, 5));
-                                                } else {
-                                                    arpbo.setEffectiveDate(DateUtils.addYears(dateNow, 3));
-                                                }
-                                            }
-                                            if (arpbo.getReceiptDate() != null) {
-                                                arpbo.setReceiptDate(arpbo.getReceiptDate());
-                                            } else {
-                                                arpbo.setReceiptDate(dateNow);
-                                            }
-                                            arpbo.setReceiptDeptName(deptName);//ten co quan tiep nhan cong bo
-                                            arpbo.setMatchingTarget(announcement.getMatchingTarget());//so hieu qui chuan ki thuat
-                                            arpbo.setSignDate(dateNow);//ngay ki
-                                            arpbo.setSignerName(userName);//nguoi ki
-                                            getSession().update(arpbo);
-                                            getSession().update(file);
-                                            getSession().beginTransaction().commit();
-                                            return true;
-                                        } else {
-                                            return false;
-                                        }
                                     } else {
                                         return false;
                                     }
-                                }
-                            } else {
-                                return false;
-                            }
-                            //!tao giay tiep nhan
-                        } else if (file.getTestRegistrationId() != null) {//Giấy xác nhận đạt yêu cầu nhập khẩu của cơ quan kiểm tra Nhà nước về chất lượng thực phẩm nhập khẩu
-                            ConfirmImportSatistPaperForm cispForm = new ConfirmImportSatistPaperForm();
-                            cispForm.setTestAgencyName(form.getTestRegistration().getTestAgency());
-                            cispForm.setTestAdd(form.getTestRegistration().getTestAdd());
-                            cispForm.setExportBusinessName(form.getTestRegistration().getExportBusinessName());
-                            cispForm.setExportBusinessAdd(form.getTestRegistration().getExportBusinessAdd());
-                            cispForm.setExportBusinessMail(form.getTestRegistration().getExportBusinessMail());
-                            cispForm.setExportBusinessTel(form.getTestRegistration().getExportBusinessTel());
-                            cispForm.setExportBusinessFax(form.getTestRegistration().getExportBusinessFax());
-                            cispForm.setExportContractCode(form.getTestRegistration().getExportContractCode());
-                            cispForm.setExportContractDate(form.getTestRegistration().getExportContractDate());
-                            cispForm.setExportLadingCode(form.getTestRegistration().getExportLadingCode());
-                            cispForm.setExportLadingDate(form.getTestRegistration().getExportLadingDate());
-                            cispForm.setExportPort(form.getTestRegistration().getExportPort());
-                            cispForm.setImportBusinessName(form.getTestRegistration().getImportBusinessName());
-                            cispForm.setImportBusinessAddress(form.getTestRegistration().getImportBusinessAddress());
-                            cispForm.setImportBusinessEmail(form.getTestRegistration().getImportBusinessEmail());
-                            cispForm.setImportBusinessTel(form.getTestRegistration().getImportBusinessTel());
-                            cispForm.setImportBusinessFax(form.getTestRegistration().getImportBusinessFax());
-                            cispForm.setImportPort(form.getTestRegistration().getImportPort());
-                            cispForm.setImportDate(form.getTestRegistration().getImportDate());
-                            cispForm.setProductName(form.getTestRegistration().getProductName());
-                            cispForm.setProductDescription(form.getTestRegistration().getProductDescription());
-                            cispForm.setProductCode(form.getTestRegistration().getProductCode());
-                            cispForm.setProductOrigin(form.getTestRegistration().getProductOrigin());
-                            cispForm.setProductAmount(form.getTestRegistration().getProductAmount());
-                            cispForm.setProductWeight(form.getTestRegistration().getProductWeight());
-                            cispForm.setProductValue(form.getTestRegistration().getProductValue());
-                            cispForm.setGatheringAdd(form.getTestRegistration().getGatheringAdd());
-                            cispForm.setTestDate(form.getTestRegistration().getTestDate());
-                            cispForm.setBusinessRepresent(form.getTestRegistration().getBusinessRepresent());
-                            cispForm.setBusinessSignAdd(form.getTestRegistration().getBusinessSignAdd());
-                            cispForm.setBusinessSigndate(form.getTestRegistration().getBusinessSigndate());
-                            cispForm.setAgencyRepresent(form.getTestRegistration().getAgencyRepresent());
-                            cispForm.setAgencySignAdd(form.getTestRegistration().getAgencySignAdd());
-                            cispForm.setAgencySigndate(form.getTestRegistration().getAgencySigndate());
-                            cispForm.setStandardTargetNo(form.getTestRegistration().getStandardTargetNo());
-                            cispForm.setStandardTargetDate(form.getTestRegistration().getStandardTargetDate());
-                            cispForm.setReleaseDocumentNo(form.getTestRegistration().getReleaseDocumentNo());
-                            cispForm.setReleaseDocumentDate(form.getTestRegistration().getReleaseDocumentDate());
-                            try {
-                                ConfirmImportSatistPaperDAOHE cthe = new ConfirmImportSatistPaperDAOHE();
-                                if (cthe.isDuplicate(cispForm) == true) {
-                                    return false;
                                 } else {
-                                    Long ObjId = cispForm.getConfirmImportSatistPaperId();
-                                    if (ObjId == null) {
-                                        ConfirmImportSatistPaper bo = cispForm.convertToEntity();
-                                        getSession().save(bo);
-                                        file.setConfirmImportSatistPaperId(bo.getConfirmImportSatistPaperId());
-                                        getSession().update(file);
-                                    } else {
-                                        ConfirmImportSatistPaper bo = cispForm.convertToEntity();
-                                        getSession().update(bo);
-                                        file.setConfirmImportSatistPaperId(bo.getConfirmImportSatistPaperId());
-                                        getSession().update(file);
-                                    }
-                                    getSession().getTransaction().commit();
-                                    return true;
-
+                                    return false;
                                 }
-                            } catch (Exception ex) {
-                                log.error(ex.getMessage());
-                                return false;
                             }
+                        } else {
+                            return false;
                         }
+                        //!tao giay tiep nhan
                     }
 
                 }
@@ -535,5 +468,134 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
             bReturn = false;
         }
         return bReturn;
+    }
+
+    public boolean onCreatePaperByLeaderForAA(FilesForm form, Long deptId, String deptName, Long userId, String userName) {
+        try {
+            Date dateNow = getSysdate();
+            Files file = findById(form.getFileId());
+            file.setModifyDate(dateNow);
+            if (file != null) {
+                if (form.getStatus().equals(Constants.FILE_STATUS.APPROVED)) {
+                    file.setApproveDate(dateNow);
+                    if (form.getTitleEditATTP() != null && !form.getTitleEditATTP().isEmpty()) {
+                        file.setTitleEditATTP(form.getTitleEditATTP());
+                    }
+                    if (form.getContentsEditATTP() != null && !form.getContentsEditATTP().isEmpty()) {
+                        file.setContentsEditATTP(form.getContentsEditATTP());
+                    }
+                    ProcedureDAOHE pcdaohe = new ProcedureDAOHE();
+                    Procedure procedure = pcdaohe.findById(file.getFileType());
+                    if (procedure != null && procedure.getProcedureId() > 0) {
+                        if (!procedure.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_SATISFACTORY)) {//tao giay tiep nhan cong bo
+                            if (file.getAnnouncementId() != null) {
+                                if (file.getAnnouncementReceiptPaperId() == null) {
+                                    AnnouncementReceiptPaperForm arpForm = new AnnouncementReceiptPaperForm();
+                                    AnnouncementDAOHE announcementHE = new AnnouncementDAOHE();
+                                    Announcement announcement = announcementHE.findById(file.getAnnouncementId());
+
+                                    arpForm.setBusinessName(announcement.getBusinessName());
+                                    arpForm.setProductName(announcement.getProductName());
+                                    arpForm.setManufactureName(announcement.getManufactureName());
+                                    arpForm.setEmail(announcement.getBusinessEmail());
+                                    arpForm.setFax(announcement.getBusinessFax());
+                                    arpForm.setTelephone(announcement.getBusinessTelephone());
+                                    arpForm.setNationName(announcement.getNationName());
+                                    String strReceiptNo = fdaohe.getNewReceiptNo(file.getAgencyId(), file.getFileType());
+                                    arpForm.setReceiptNo(strReceiptNo);
+                                    if (file.getEffectiveDate() != null) {
+                                        if (file.getEffectiveDate() == 3) {//lay ngay ki + 3 nam
+                                            arpForm.setEffectiveDate(DateUtils.addYears(dateNow, 3));
+                                        } else if (file.getEffectiveDate() == 5) {//lay ngay ki + 5 nam
+                                            arpForm.setEffectiveDate(DateUtils.addYears(dateNow, 5));
+                                        } else {
+                                            arpForm.setEffectiveDate(DateUtils.addYears(dateNow, 3));
+                                        }
+                                    }
+                                    arpForm.setReceiptDate(dateNow);
+                                    arpForm.setReceiptDeptName(deptName);//ten co quan tiep nhan cong bo
+                                    arpForm.setMatchingTarget(announcement.getMatchingTarget());//so hieu qui chuan ki thuat
+                                    arpForm.setSignDate(dateNow);//ngay ki
+                                    arpForm.setSignerName(userName);//nguoi ki
+                                    //tao giay tiep nhan
+                                    try {
+                                        AnnouncementReceiptPaperDAOHE cthe = new AnnouncementReceiptPaperDAOHE();
+                                        if (cthe.isDuplicate(arpForm) == true) {
+                                            return false;
+                                        } else {
+                                            Long ObjId = arpForm.getAnnouncementReceiptPaperId();
+                                            AnnouncementReceiptPaper bo = arpForm.convertToEntity();
+                                            if (ObjId == null) {
+                                                getSession().save(bo);
+                                                file.setAnnouncementReceiptPaperId(bo.getAnnouncementReceiptPaperId());
+                                                getSession().update(file);
+                                            } else {
+                                                getSession().update(bo);
+                                                file.setAnnouncementReceiptPaperId(bo.getAnnouncementReceiptPaperId());
+                                                getSession().update(file);
+                                            }
+                                        }
+                                        getSession().beginTransaction().commit();
+                                        return true;
+                                    } catch (Exception ex) {
+                                        log.error(ex.getMessage());
+                                        return false;
+                                    }
+                                } else {//co so roi thuc hien update khong tao moi - binhnt53 14.11.12
+                                    AnnouncementReceiptPaperDAOHE arpdaohe = new AnnouncementReceiptPaperDAOHE();
+                                    AnnouncementReceiptPaper arpbo = arpdaohe.findById(file.getAnnouncementReceiptPaperId());
+                                    if (arpbo != null) {
+                                        AnnouncementDAOHE announcementHE = new AnnouncementDAOHE();
+                                        Announcement announcement = announcementHE.findById(file.getAnnouncementId());
+                                        if (announcement != null) {
+                                            arpbo.setBusinessName(announcement.getBusinessName());
+                                            arpbo.setProductName(announcement.getProductName());
+                                            arpbo.setManufactureName(announcement.getManufactureName());
+                                            arpbo.setEmail(announcement.getBusinessEmail());
+                                            arpbo.setFax(announcement.getBusinessFax());
+                                            arpbo.setTelephone(announcement.getBusinessTelephone());
+                                            arpbo.setNationName(announcement.getNationName());
+                                            if (file.getEffectiveDate() != null) {
+                                                if (file.getEffectiveDate() == 3) {//lay ngay ki + 3 nam
+                                                    arpbo.setEffectiveDate(DateUtils.addYears(dateNow, 3));
+                                                } else if (file.getEffectiveDate() == 5) {//lay ngay ki + 5 nam
+                                                    arpbo.setEffectiveDate(DateUtils.addYears(dateNow, 5));
+                                                } else {
+                                                    arpbo.setEffectiveDate(DateUtils.addYears(dateNow, 3));
+                                                }
+                                            }
+                                            if (arpbo.getReceiptDate() != null) {
+                                                arpbo.setReceiptDate(arpbo.getReceiptDate());
+                                            } else {
+                                                arpbo.setReceiptDate(dateNow);
+                                            }
+                                            arpbo.setReceiptDeptName(deptName);//ten co quan tiep nhan cong bo
+                                            arpbo.setMatchingTarget(announcement.getMatchingTarget());//so hieu qui chuan ki thuat
+                                            arpbo.setSignDate(dateNow);//ngay ki
+                                            arpbo.setSignerName(userName);//nguoi ki
+                                            getSession().update(arpbo);
+                                            getSession().update(file);
+                                            getSession().beginTransaction().commit();
+                                            return true;
+                                        } else {
+                                            return false;
+                                        }
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+
+                }
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            return false;
+        }
+        return true;
     }
 }

@@ -661,7 +661,7 @@
                          name="createForm.detailProduct.counterfeitDistinctive" 
                          maxlength="500" 
                          cssStyle="width:98%"
-                         trim="true" rows="2"/>
+                         trim="true" rows="3"/>
         </td>
     </tr>
     <tr>
@@ -674,7 +674,7 @@
                          name="createForm.detailProduct.origin" 
                          maxlength="2000" 
                          cssStyle="width:98%"
-                         trim="true" rows="2"/>
+                         trim="true" rows="5"/>
         </td>
     </tr>
     <tr>

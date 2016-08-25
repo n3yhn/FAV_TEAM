@@ -73,8 +73,13 @@
                 <sx:Label key="Ảnh chữ ký đính kèm:" require="true"/>
             </td>
             <td>
-                <sx:upload action="uploadiframe!uploadFile.do?id=createForm.upload" extension="*.png" id="createForm.upload" maxSize="20"/>
-                <sd:TextBox id="createForm.uploadId" name="createForm.uploadId" cssStyle="display:none" key=""/>
+                <sx:upload 
+                    action="uploadiframe!uploadFile.do?id=createForm.upload" 
+                    extension="*.png" id="createForm.upload" maxSize="20"/>
+                <sd:TextBox 
+                    id="createForm.uploadId" 
+                    name="createForm.uploadId" 
+                    cssStyle="display:none" key=""/>
             </td>
             <td>
 
@@ -93,12 +98,12 @@
 <script>
     page.save = function () {//add 29.7
         var attachIds = getListAttachId("createForm.upload");
-        if(attachIds == null || attachIds.trim().length == 0){
+        if (attachIds == null || attachIds.trim().length == 0) {
             alert("Bạn chưa đính kèm file văn bản");
-        }else{
+        } else {
             dijit.byId("createForm.uploadId").setValue(attachIds);
             sd.connector.post("caUserAction!updateCAUser.do?" + token.getTokenParamString(), null, "createForm", null, page.afterSave);
-        }        
+        }
     };
 
     page.afterSave = function (data) {
@@ -107,7 +112,7 @@
         resultMessage_show("resultMessage", result[0], result[1], 5000);
         var result0 = result[0];
         if (result0 == "3") {
-        } else {            
+        } else {
             page.close();
             page.search();
         }
@@ -116,4 +121,6 @@
     page.close = function () {
         dlg.hide();
     };
+
+
 </script>
