@@ -189,11 +189,11 @@
                                         <sx:ButtonSave onclick="onEvaluateByLeaderFormOnGrid();"/>
                                         <sd:Button id="btnExportEBLFOGAA" key="" onclick="page.exportExportEBLFOGAA();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/process_icon.png" height="14" width="14" alt="Xem truoc"/>
-                                            <span style="font-size:12px">Xem trước CVBS sau công bố</span>
+                                            <span style="font-size:12px">Xem trước CV phúc đáp</span>
                                         </sd:Button>
                                         <sd:Button id="btnExportFBRF1" key="" onclick="page.downloadFBRFAA();" cssStyle="display:" cssClass="buttonGroup">
                                             <img src="share/images/icons/process_icon.png" height="14" width="14" alt="Xem truoc"/>
-                                            <span style="font-size:12px">Xem trước công văn y/c SĐBS</span>
+                                            <span style="font-size:12px">Xem trước CV y/c bổ sung</span>
                                         </sd:Button>
                                         <sx:ButtonClose onclick="onCloseEvaluateLeader();"/>
                                         <br>

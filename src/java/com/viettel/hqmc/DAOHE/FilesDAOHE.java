@@ -7647,9 +7647,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     newP.setReceiveGroup(deptName);
                     newP.setReceiveGroupId(deptId);
                 }
-
                 getSession().save(newP);
-
                 update(file);
             }
         } catch (Exception en) {
