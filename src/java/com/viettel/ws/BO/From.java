@@ -49,6 +49,15 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class From {
 
+    public From(String name, String identity, String countryCode, String ministryCode, String organizationCode, String unitCode) {
+        this.name = name;
+        this.identity = identity;
+        this.countryCode = countryCode;
+        this.ministryCode = ministryCode;
+        this.organizationCode = organizationCode;
+        this.unitCode = unitCode;
+    }
+
     public From() {
     }
 

@@ -10,24 +10,25 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-/**
- *
- * @author Administrator
- */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DnRequestChange310")
-
-public class DNREQUEST_CHANGE_310 {
-
-    public DNREQUEST_CHANGE_310() {
-    }
+@XmlType(name = "PERMIT_370")
+public class PERMIT_370 {
 
     @XmlElement(name = "NswFileCode")
     protected String NswFileCode;
-    @XmlElement(name = "Reason")
-    protected String Reason;
-    @XmlElement(name = "CreateDate")
-    protected String CreateDate;
+    @XmlElement(name = "Status")
+    protected Long Status;
+    @XmlElement(name = "StatusName")
+    protected String StatusName;
+
+    public PERMIT_370() {
+    }
+
+    public PERMIT_370(String NswFileCode, Long Status, String StatusName) {
+        this.NswFileCode = NswFileCode;
+        this.Status = Status;
+        this.StatusName = StatusName;
+    }
 
     public String getNswFileCode() {
         return NswFileCode;
@@ -37,20 +38,21 @@ public class DNREQUEST_CHANGE_310 {
         this.NswFileCode = NswFileCode;
     }
 
-    public String getReason() {
-        return Reason;
+    public Long getStatus() {
+        return Status;
     }
 
-    public void setReason(String Reason) {
-        this.Reason = Reason;
+    public void setStatus(Long Status) {
+        this.Status = Status;
     }
 
-    public String getCreateDate() {
-        return CreateDate;
+    public String getStatusName() {
+        return StatusName;
     }
 
-    public void setCreateDate(String CreateDate) {
-        this.CreateDate = CreateDate;
+    public void setStatusName(String StatusName) {
+        this.StatusName = StatusName;
     }
-
+    
+    
 }

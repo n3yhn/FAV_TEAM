@@ -11,12 +11,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ANNOUNCERESULTDto complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for ANNOUNCERESULTDto complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="ANNOUNCERESULTDto">
  *   &lt;complexContent>
@@ -35,10 +37,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
-@XmlRootElement(name="ANNOUNCERESULT")
+@XmlRootElement(name = "ANNOUNCERESULT")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ANNOUNCERESULTDto", propOrder = {
     "authenticate",
@@ -71,11 +73,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Gets the value of the authenticate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AUTHENTICATE }
-     *     
+     *
+     * @return possible object is {@link AUTHENTICATE }
+     *
      */
     public AUTHENTICATE getAUTHENTICATE() {
         return authenticate;
@@ -83,11 +83,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Sets the value of the authenticate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AUTHENTICATE }
-     *     
+     *
+     * @param value allowed object is {@link AUTHENTICATE }
+     *
      */
     public void setAUTHENTICATE(AUTHENTICATE value) {
         this.authenticate = value;
@@ -95,11 +93,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Gets the value of the nswfilecode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getNSWFILECODE() {
         return nswfilecode;
@@ -107,11 +103,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Sets the value of the nswfilecode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setNSWFILECODE(String value) {
         this.nswfilecode = value;
@@ -119,11 +113,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Gets the value of the statuscode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSTATUSCODE() {
         return statuscode;
@@ -131,11 +123,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Sets the value of the statuscode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSTATUSCODE(String value) {
         this.statuscode = value;
@@ -143,11 +133,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Gets the value of the deptcode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getDEPTCODE() {
         return deptcode;
@@ -155,11 +143,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Sets the value of the deptcode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setDEPTCODE(String value) {
         this.deptcode = value;
@@ -167,11 +153,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Gets the value of the signername property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSIGNERNAME() {
         return signername;
@@ -179,11 +163,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Sets the value of the signername property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSIGNERNAME(String value) {
         this.signername = value;
@@ -191,11 +173,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Gets the value of the signdate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSIGNDATE() {
         return signdate;
@@ -203,11 +183,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Sets the value of the signdate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSIGNDATE(String value) {
         this.signdate = value;
@@ -215,11 +193,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Gets the value of the comments property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getCOMMENTS() {
         return comments;
@@ -227,11 +203,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Sets the value of the comments property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setCOMMENTS(String value) {
         this.comments = value;
@@ -239,11 +213,9 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Gets the value of the resultpager property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link RESULTPAGER }
-     *     
+     *
+     * @return possible object is {@link RESULTPAGER }
+     *
      */
     public RESULTPAGER getRESULTPAGER() {
         return resultpager;
@@ -251,14 +223,26 @@ public class ANNOUNCERESULTDto {
 
     /**
      * Sets the value of the resultpager property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link RESULTPAGER }
-     *     
+     *
+     * @param value allowed object is {@link RESULTPAGER }
+     *
      */
     public void setRESULTPAGER(RESULTPAGER value) {
         this.resultpager = value;
+    }
+
+    public ANNOUNCERESULTDto(AUTHENTICATE authenticate, String nswfilecode, String statuscode, String deptcode, String signername, String signdate, String comments, RESULTPAGER resultpager) {
+        this.authenticate = authenticate;
+        this.nswfilecode = nswfilecode;
+        this.statuscode = statuscode;
+        this.deptcode = deptcode;
+        this.signername = signername;
+        this.signdate = signdate;
+        this.comments = comments;
+        this.resultpager = resultpager;
+    }
+
+    public ANNOUNCERESULTDto() {
     }
 
 }

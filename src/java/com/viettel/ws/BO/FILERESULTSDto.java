@@ -272,4 +272,19 @@ public class FILERESULTSDto {
         this.importresult = value;
     }
 
+    public FILERESULTSDto(AUTHENTICATE authenticate, String nswfilecode, String processedname, DateTime processeddate, String statuscode, String deptcode, String receivedplace, String provicecode, IMPORTRESULT importresult) {
+        this.authenticate = authenticate;
+        this.nswfilecode = nswfilecode;
+        this.processedname = processedname;
+        this.processeddate = processeddate;
+        this.statuscode = statuscode;
+        this.deptcode = deptcode;
+        this.receivedplace = receivedplace;
+        this.provicecode = provicecode;
+        this.importresult = importresult;
+    }
+
+    public FILERESULTSDto() {
+    }
+
 }

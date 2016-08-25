@@ -4,8 +4,6 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2014.07.15 at 04:37:11 PM ICT 
 //
-
-
 package com.viettel.ws.BO;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,57 +11,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
-/**
- * <p>Java class for PRODUCTRESULTSDto complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="PRODUCTRESULTSDto">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="PRODUCT_CODE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="PRODUCT_DESCRIPTIONS" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="PRODUCT_TYPE_CODE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="PRODUCT_NAME" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="NATIONAL_CODE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="TOTAL" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="TOTAL_UNIT_CODE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="NETWEIGHT" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="NETWEIGHT_UNIT_CODE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="CONFIRM_ANNOUNCE_NO" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="CONFIRM_ANNOUNCE_DATE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="STORE_PLACE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="CHECK_ADDRESS" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="CHECK_TIME" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="APPRAISAL_INDEPEND" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="CHECK_METHOD" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="BASE_UNIT" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="CURRENCY_CODE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="VOLUME" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="VOLUME_UNIT_CODE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="PACKAGE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="CREATED_DATE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="EXPIRED_DATE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="IMPORT_TYPE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="CONCLUSION" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="REASONS_REJECT" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="METHOD_CHECK" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="RECEIVED_PLACE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="LICENSE_NO" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="PROVINCE_CODE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="DATE_OF_ISSUE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="EXPIRED_DATE_OF_ISSUE" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PRODUCTRESULTSDto", propOrder = {
     "productcode",
@@ -168,11 +115,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the productcode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getPRODUCTCODE() {
         return productcode;
@@ -180,11 +125,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the productcode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setPRODUCTCODE(String value) {
         this.productcode = value;
@@ -192,11 +135,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the productdescriptions property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getPRODUCTDESCRIPTIONS() {
         return productdescriptions;
@@ -204,11 +145,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the productdescriptions property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setPRODUCTDESCRIPTIONS(String value) {
         this.productdescriptions = value;
@@ -216,11 +155,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the producttypecode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getPRODUCTTYPECODE() {
         return producttypecode;
@@ -228,11 +165,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the producttypecode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setPRODUCTTYPECODE(String value) {
         this.producttypecode = value;
@@ -240,11 +175,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the productname property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getPRODUCTNAME() {
         return productname;
@@ -252,11 +185,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the productname property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setPRODUCTNAME(String value) {
         this.productname = value;
@@ -264,11 +195,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the nationalcode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getNATIONALCODE() {
         return nationalcode;
@@ -276,11 +205,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the nationalcode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setNATIONALCODE(String value) {
         this.nationalcode = value;
@@ -288,11 +215,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the total property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getTOTAL() {
         return total;
@@ -300,11 +225,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the total property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setTOTAL(String value) {
         this.total = value;
@@ -312,11 +235,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the totalunitcode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getTOTALUNITCODE() {
         return totalunitcode;
@@ -324,11 +245,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the totalunitcode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setTOTALUNITCODE(String value) {
         this.totalunitcode = value;
@@ -336,11 +255,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the netweight property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getNETWEIGHT() {
         return netweight;
@@ -348,11 +265,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the netweight property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setNETWEIGHT(String value) {
         this.netweight = value;
@@ -360,11 +275,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the netweightunitcode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getNETWEIGHTUNITCODE() {
         return netweightunitcode;
@@ -372,11 +285,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the netweightunitcode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setNETWEIGHTUNITCODE(String value) {
         this.netweightunitcode = value;
@@ -384,11 +295,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the confirmannounceno property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getCONFIRMANNOUNCENO() {
         return confirmannounceno;
@@ -396,11 +305,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the confirmannounceno property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setCONFIRMANNOUNCENO(String value) {
         this.confirmannounceno = value;
@@ -408,11 +315,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the confirmannouncedate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getCONFIRMANNOUNCEDATE() {
         return confirmannouncedate;
@@ -420,11 +325,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the confirmannouncedate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setCONFIRMANNOUNCEDATE(String value) {
         this.confirmannouncedate = value;
@@ -432,11 +335,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the storeplace property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSTOREPLACE() {
         return storeplace;
@@ -444,11 +345,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the storeplace property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSTOREPLACE(String value) {
         this.storeplace = value;
@@ -456,11 +355,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the checkaddress property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getCHECKADDRESS() {
         return checkaddress;
@@ -468,11 +365,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the checkaddress property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setCHECKADDRESS(String value) {
         this.checkaddress = value;
@@ -480,11 +375,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the checktime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getCHECKTIME() {
         return checktime;
@@ -492,11 +385,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the checktime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setCHECKTIME(String value) {
         this.checktime = value;
@@ -504,11 +395,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the appraisalindepend property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getAPPRAISALINDEPEND() {
         return appraisalindepend;
@@ -516,11 +405,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the appraisalindepend property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setAPPRAISALINDEPEND(String value) {
         this.appraisalindepend = value;
@@ -528,11 +415,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the checkmethod property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getCHECKMETHOD() {
         return checkmethod;
@@ -540,11 +425,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the checkmethod property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setCHECKMETHOD(String value) {
         this.checkmethod = value;
@@ -552,11 +435,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the baseunit property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getBASEUNIT() {
         return baseunit;
@@ -564,11 +445,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the baseunit property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setBASEUNIT(String value) {
         this.baseunit = value;
@@ -576,11 +455,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the currencycode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getCURRENCYCODE() {
         return currencycode;
@@ -588,11 +465,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the currencycode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setCURRENCYCODE(String value) {
         this.currencycode = value;
@@ -600,11 +475,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the volume property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getVOLUME() {
         return volume;
@@ -612,11 +485,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the volume property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setVOLUME(String value) {
         this.volume = value;
@@ -624,11 +495,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the volumeunitcode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getVOLUMEUNITCODE() {
         return volumeunitcode;
@@ -636,11 +505,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the volumeunitcode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setVOLUMEUNITCODE(String value) {
         this.volumeunitcode = value;
@@ -648,11 +515,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the package property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getPACKAGE() {
         return _package;
@@ -660,11 +525,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the package property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setPACKAGE(String value) {
         this._package = value;
@@ -672,11 +535,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the createddate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getCREATEDDATE() {
         return createddate;
@@ -684,11 +545,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the createddate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setCREATEDDATE(String value) {
         this.createddate = value;
@@ -696,11 +555,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the expireddate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getEXPIREDDATE() {
         return expireddate;
@@ -708,11 +565,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the expireddate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setEXPIREDDATE(String value) {
         this.expireddate = value;
@@ -720,11 +575,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the importtype property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getIMPORTTYPE() {
         return importtype;
@@ -732,11 +585,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the importtype property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setIMPORTTYPE(String value) {
         this.importtype = value;
@@ -744,11 +595,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the conclusion property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getCONCLUSION() {
         return conclusion;
@@ -756,11 +605,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the conclusion property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setCONCLUSION(String value) {
         this.conclusion = value;
@@ -768,11 +615,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the reasonsreject property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getREASONSREJECT() {
         return reasonsreject;
@@ -780,11 +625,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the reasonsreject property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setREASONSREJECT(String value) {
         this.reasonsreject = value;
@@ -792,11 +635,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the methodcheck property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getMETHODCHECK() {
         return methodcheck;
@@ -804,11 +645,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the methodcheck property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setMETHODCHECK(String value) {
         this.methodcheck = value;
@@ -816,11 +655,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the receivedplace property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getRECEIVEDPLACE() {
         return receivedplace;
@@ -828,11 +665,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the receivedplace property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setRECEIVEDPLACE(String value) {
         this.receivedplace = value;
@@ -840,11 +675,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the licenseno property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getLICENSENO() {
         return licenseno;
@@ -852,11 +685,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the licenseno property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setLICENSENO(String value) {
         this.licenseno = value;
@@ -864,11 +695,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the provincecode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getPROVINCECODE() {
         return provincecode;
@@ -876,11 +705,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the provincecode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setPROVINCECODE(String value) {
         this.provincecode = value;
@@ -888,11 +715,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the dateofissue property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getDATEOFISSUE() {
         return dateofissue;
@@ -900,11 +725,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the dateofissue property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setDATEOFISSUE(String value) {
         this.dateofissue = value;
@@ -912,11 +735,9 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Gets the value of the expireddateofissue property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getEXPIREDDATEOFISSUE() {
         return expireddateofissue;
@@ -924,14 +745,50 @@ public class PRODUCTRESULTSDto {
 
     /**
      * Sets the value of the expireddateofissue property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setEXPIREDDATEOFISSUE(String value) {
         this.expireddateofissue = value;
+    }
+
+    public PRODUCTRESULTSDto(String productcode, String productdescriptions, String producttypecode, String productname, String nationalcode, String total, String totalunitcode, String netweight, String netweightunitcode, String confirmannounceno, String confirmannouncedate, String storeplace, String checkaddress, String checktime, String appraisalindepend, String checkmethod, String baseunit, String currencycode, String volume, String volumeunitcode, String _package, String createddate, String expireddate, String importtype, String conclusion, String reasonsreject, String methodcheck, String receivedplace, String licenseno, String provincecode, String dateofissue, String expireddateofissue) {
+        this.productcode = productcode;
+        this.productdescriptions = productdescriptions;
+        this.producttypecode = producttypecode;
+        this.productname = productname;
+        this.nationalcode = nationalcode;
+        this.total = total;
+        this.totalunitcode = totalunitcode;
+        this.netweight = netweight;
+        this.netweightunitcode = netweightunitcode;
+        this.confirmannounceno = confirmannounceno;
+        this.confirmannouncedate = confirmannouncedate;
+        this.storeplace = storeplace;
+        this.checkaddress = checkaddress;
+        this.checktime = checktime;
+        this.appraisalindepend = appraisalindepend;
+        this.checkmethod = checkmethod;
+        this.baseunit = baseunit;
+        this.currencycode = currencycode;
+        this.volume = volume;
+        this.volumeunitcode = volumeunitcode;
+        this._package = _package;
+        this.createddate = createddate;
+        this.expireddate = expireddate;
+        this.importtype = importtype;
+        this.conclusion = conclusion;
+        this.reasonsreject = reasonsreject;
+        this.methodcheck = methodcheck;
+        this.receivedplace = receivedplace;
+        this.licenseno = licenseno;
+        this.provincecode = provincecode;
+        this.dateofissue = dateofissue;
+        this.expireddateofissue = expireddateofissue;
+    }
+
+    public PRODUCTRESULTSDto() {
     }
 
 }

@@ -130,4 +130,28 @@ public class ERRORDto {
         this.errorname = value;
     }
 
+    public String getErrorid() {
+        return errorid;
+    }
+
+    public void setErrorid(String errorid) {
+        this.errorid = errorid;
+    }
+
+    public String getErrorcode() {
+        return errorcode;
+    }
+
+    public void setErrorcode(String errorcode) {
+        this.errorcode = errorcode;
+    }
+
+    public String getErrorname() {
+        return errorname;
+    }
+
+    public void setErrorname(String errorname) {
+        this.errorname = errorname;
+    }
+
 }

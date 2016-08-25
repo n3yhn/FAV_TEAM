@@ -10,13 +10,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author E5420
- */
 @XmlRootElement(name = "Error")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ErrorWs {
+public class Error {
 
     @XmlElement(name = "ErrorCode")
     private String ErrorCode;
@@ -25,13 +21,7 @@ public class ErrorWs {
     @XmlElement(name = "Solution")
     private String Solution;
 
-    public ErrorWs(String ErrorCode, String ErrorName, String Solution) {
-        this.ErrorCode = ErrorCode;
-        this.ErrorName = ErrorName;
-        this.Solution = Solution;
-    }
-
-    public ErrorWs() {
+    public Error() {
 
     }
 
@@ -56,6 +46,12 @@ public class ErrorWs {
     }
 
     public void setSolution(String Solution) {
+        this.Solution = Solution;
+    }
+
+    public Error(String ErrorCode, String ErrorName, String Solution) {
+        this.ErrorCode = ErrorCode;
+        this.ErrorName = ErrorName;
         this.Solution = Solution;
     }
 

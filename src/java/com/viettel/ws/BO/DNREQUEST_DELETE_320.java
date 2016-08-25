@@ -15,19 +15,25 @@ import javax.xml.bind.annotation.XmlType;
  * @author Administrator
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DnRequestChange310")
+@XmlType(name = "dnRequestDelete320")
 
-public class DNREQUEST_CHANGE_310 {
-
-    public DNREQUEST_CHANGE_310() {
-    }
+public class DNREQUEST_DELETE_320 {
 
     @XmlElement(name = "NswFileCode")
     protected String NswFileCode;
     @XmlElement(name = "Reason")
     protected String Reason;
-    @XmlElement(name = "CreateDate")
-    protected String CreateDate;
+    @XmlElement(name = "createDate")
+    protected String createDate;
+
+    public DNREQUEST_DELETE_320() {
+    }
+
+    public DNREQUEST_DELETE_320(String NswFileCode, String Reason, String createDate) {
+        this.NswFileCode = NswFileCode;
+        this.Reason = Reason;
+        this.createDate = createDate;
+    }
 
     public String getNswFileCode() {
         return NswFileCode;
@@ -46,11 +52,10 @@ public class DNREQUEST_CHANGE_310 {
     }
 
     public String getCreateDate() {
-        return CreateDate;
+        return createDate;
     }
 
-    public void setCreateDate(String CreateDate) {
-        this.CreateDate = CreateDate;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
-
 }

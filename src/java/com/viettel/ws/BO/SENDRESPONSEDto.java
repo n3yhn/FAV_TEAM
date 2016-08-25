@@ -4,8 +4,6 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2014.07.15 at 02:16:21 PM ICT 
 //
-
-
 package com.viettel.ws.BO;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,27 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
-/**
- * <p>Java class for SEND_RESPONSEDto complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="SEND_RESPONSEDto">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="ERROR_LIST" type="{}ERROR_LIST"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
-@XmlRootElement(name="SEND_RESPONSEDto")
+@XmlRootElement(name = "SEND_RESPONSEDto")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SEND_RESPONSEDto", propOrder = {
     "errorlist"
@@ -44,13 +22,18 @@ public class SENDRESPONSEDto {
     @XmlElement(name = "ERROR_LIST", required = true)
     protected ERRORLIST errorlist;
 
+    public SENDRESPONSEDto() {
+    }
+
+    public SENDRESPONSEDto(ERRORLIST errorlist) {
+        this.errorlist = errorlist;
+    }
+
     /**
      * Gets the value of the errorlist property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ERRORLIST }
-     *     
+     *
+     * @return possible object is {@link ERRORLIST }
+     *
      */
     public ERRORLIST getERRORLIST() {
         return errorlist;
@@ -58,11 +41,9 @@ public class SENDRESPONSEDto {
 
     /**
      * Sets the value of the errorlist property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ERRORLIST }
-     *     
+     *
+     * @param value allowed object is {@link ERRORLIST }
+     *
      */
     public void setERRORLIST(ERRORLIST value) {
         this.errorlist = value;

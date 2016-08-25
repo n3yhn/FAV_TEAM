@@ -4,8 +4,6 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2014.07.15 at 04:37:11 PM ICT 
 //
-
-
 package com.viettel.ws.BO;
 
 import java.util.ArrayList;
@@ -15,12 +13,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for PRODUCT complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for PRODUCT complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="PRODUCT">
  *   &lt;complexContent>
@@ -32,8 +32,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PRODUCT", propOrder = {
@@ -46,31 +46,38 @@ public class PRODUCT {
 
     /**
      * Gets the value of the productresultsDto property.
-     * 
+     *
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the productresultsDto property.
-     * 
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the productresultsDto property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getPRODUCTRESULTSDto().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link PRODUCTRESULTSDto }
-     * 
-     * 
+     *
+     *
      */
     public List<PRODUCTRESULTSDto> getPRODUCTRESULTSDto() {
         if (productresultsDto == null) {
             productresultsDto = new ArrayList<PRODUCTRESULTSDto>();
         }
         return this.productresultsDto;
+    }
+
+    public PRODUCT(List<PRODUCTRESULTSDto> productresultsDto) {
+        this.productresultsDto = productresultsDto;
+    }
+
+    public PRODUCT() {
     }
 
 }

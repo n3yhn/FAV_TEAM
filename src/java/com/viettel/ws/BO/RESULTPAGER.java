@@ -4,8 +4,6 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2014.07.14 at 04:48:10 PM ICT 
 //
-
-
 package com.viettel.ws.BO;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,12 +11,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for RESULTPAGER complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for RESULTPAGER complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="RESULTPAGER">
  *   &lt;complexContent>
@@ -47,8 +47,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RESULTPAGER", propOrder = {
@@ -110,13 +110,35 @@ public class RESULTPAGER {
     @XmlElement(name = "EFFECTIVE_DATE", required = true)
     protected String effectivedate;
 
+    public RESULTPAGER() {
+    }
+
+    public RESULTPAGER(String receiptno, String provincecode, String receiptdate, String receiptdeptname, String bussinesscode, String businessname, String businessaddress, String businessphone, String businessfax, String businessemail, String hscode, String producttypecode, String productname, String manufacturename, String manufactureadd, String nationcode, String regionfrom, String effectivedate) {
+        this.receiptno = receiptno;
+        this.provincecode = provincecode;
+        this.receiptdate = receiptdate;
+        this.receiptdeptname = receiptdeptname;
+        this.bussinesscode = bussinesscode;
+        this.businessname = businessname;
+        this.businessaddress = businessaddress;
+        this.businessphone = businessphone;
+        this.businessfax = businessfax;
+        this.businessemail = businessemail;
+        this.hscode = hscode;
+        this.producttypecode = producttypecode;
+        this.productname = productname;
+        this.manufacturename = manufacturename;
+        this.manufactureadd = manufactureadd;
+        this.nationcode = nationcode;
+        this.regionfrom = regionfrom;
+        this.effectivedate = effectivedate;
+    }
+
     /**
      * Gets the value of the receiptno property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getRECEIPTNO() {
         return receiptno;
@@ -124,11 +146,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the receiptno property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setRECEIPTNO(String value) {
         this.receiptno = value;
@@ -136,11 +156,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the provincecode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getPROVINCECODE() {
         return provincecode;
@@ -148,11 +166,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the provincecode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setPROVINCECODE(String value) {
         this.provincecode = value;
@@ -160,11 +176,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the receiptdate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getRECEIPTDATE() {
         return receiptdate;
@@ -172,11 +186,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the receiptdate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setRECEIPTDATE(String value) {
         this.receiptdate = value;
@@ -184,11 +196,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the receiptdeptname property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getRECEIPTDEPTNAME() {
         return receiptdeptname;
@@ -196,11 +206,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the receiptdeptname property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setRECEIPTDEPTNAME(String value) {
         this.receiptdeptname = value;
@@ -208,11 +216,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the bussinesscode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getBUSSINESSCODE() {
         return bussinesscode;
@@ -220,11 +226,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the bussinesscode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setBUSSINESSCODE(String value) {
         this.bussinesscode = value;
@@ -232,11 +236,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the businessname property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getBUSINESSNAME() {
         return businessname;
@@ -244,11 +246,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the businessname property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setBUSINESSNAME(String value) {
         this.businessname = value;
@@ -256,11 +256,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the businessaddress property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getBUSINESSADDRESS() {
         return businessaddress;
@@ -268,11 +266,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the businessaddress property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setBUSINESSADDRESS(String value) {
         this.businessaddress = value;
@@ -280,11 +276,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the businessphone property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getBUSINESSPHONE() {
         return businessphone;
@@ -292,11 +286,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the businessphone property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setBUSINESSPHONE(String value) {
         this.businessphone = value;
@@ -304,11 +296,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the businessfax property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getBUSINESSFAX() {
         return businessfax;
@@ -316,11 +306,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the businessfax property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setBUSINESSFAX(String value) {
         this.businessfax = value;
@@ -328,11 +316,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the businessemail property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getBUSINESSEMAIL() {
         return businessemail;
@@ -340,11 +326,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the businessemail property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setBUSINESSEMAIL(String value) {
         this.businessemail = value;
@@ -352,11 +336,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the hscode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getHSCODE() {
         return hscode;
@@ -364,11 +346,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the hscode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setHSCODE(String value) {
         this.hscode = value;
@@ -376,11 +356,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the producttypecode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getPRODUCTTYPECODE() {
         return producttypecode;
@@ -388,11 +366,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the producttypecode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setPRODUCTTYPECODE(String value) {
         this.producttypecode = value;
@@ -400,11 +376,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the productname property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getPRODUCTNAME() {
         return productname;
@@ -412,11 +386,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the productname property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setPRODUCTNAME(String value) {
         this.productname = value;
@@ -424,11 +396,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the manufacturename property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getMANUFACTURENAME() {
         return manufacturename;
@@ -436,11 +406,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the manufacturename property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setMANUFACTURENAME(String value) {
         this.manufacturename = value;
@@ -448,11 +416,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the manufactureadd property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getMANUFACTUREADD() {
         return manufactureadd;
@@ -460,11 +426,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the manufactureadd property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setMANUFACTUREADD(String value) {
         this.manufactureadd = value;
@@ -472,11 +436,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the nationcode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getNATIONCODE() {
         return nationcode;
@@ -484,11 +446,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the nationcode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setNATIONCODE(String value) {
         this.nationcode = value;
@@ -496,11 +456,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the regionfrom property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getREGIONFROM() {
         return regionfrom;
@@ -508,11 +466,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the regionfrom property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setREGIONFROM(String value) {
         this.regionfrom = value;
@@ -520,11 +476,9 @@ public class RESULTPAGER {
 
     /**
      * Gets the value of the effectivedate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getEFFECTIVEDATE() {
         return effectivedate;
@@ -532,11 +486,9 @@ public class RESULTPAGER {
 
     /**
      * Sets the value of the effectivedate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setEFFECTIVEDATE(String value) {
         this.effectivedate = value;

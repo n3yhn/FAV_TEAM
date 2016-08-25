@@ -528,4 +528,217 @@ public class IMPORTRESULT {
         this.product = value;
     }
 
+    public IMPORTRESULT(String importername, String importeraddress, String importerphone, String importerfax, String importeremail, String exportername, String exporteraddress, String exporterphone, String exporterfax, String exporteremail, String contractno, String transno, String transdate, String importergatecode, String importergatename, String exportergatename, String comments, String licenseno, DateTime dateofissue, DateTime expireddateofissue, String processplace, String exportergatecode, PRODUCT product) {
+        this.importername = importername;
+        this.importeraddress = importeraddress;
+        this.importerphone = importerphone;
+        this.importerfax = importerfax;
+        this.importeremail = importeremail;
+        this.exportername = exportername;
+        this.exporteraddress = exporteraddress;
+        this.exporterphone = exporterphone;
+        this.exporterfax = exporterfax;
+        this.exporteremail = exporteremail;
+        this.contractno = contractno;
+        this.transno = transno;
+        this.transdate = transdate;
+        this.importergatecode = importergatecode;
+        this.importergatename = importergatename;
+        this.exportergatename = exportergatename;
+        this.comments = comments;
+        this.licenseno = licenseno;
+        this.dateofissue = dateofissue;
+        this.expireddateofissue = expireddateofissue;
+        this.processplace = processplace;
+        this.exportergatecode = exportergatecode;
+        this.product = product;
+    }
+
+    public IMPORTRESULT() {
+    }
+
+    public String getImportername() {
+        return importername;
+    }
+
+    public void setImportername(String importername) {
+        this.importername = importername;
+    }
+
+    public String getImporteraddress() {
+        return importeraddress;
+    }
+
+    public void setImporteraddress(String importeraddress) {
+        this.importeraddress = importeraddress;
+    }
+
+    public String getImporterphone() {
+        return importerphone;
+    }
+
+    public void setImporterphone(String importerphone) {
+        this.importerphone = importerphone;
+    }
+
+    public String getImporterfax() {
+        return importerfax;
+    }
+
+    public void setImporterfax(String importerfax) {
+        this.importerfax = importerfax;
+    }
+
+    public String getImporteremail() {
+        return importeremail;
+    }
+
+    public void setImporteremail(String importeremail) {
+        this.importeremail = importeremail;
+    }
+
+    public String getExportername() {
+        return exportername;
+    }
+
+    public void setExportername(String exportername) {
+        this.exportername = exportername;
+    }
+
+    public String getExporteraddress() {
+        return exporteraddress;
+    }
+
+    public void setExporteraddress(String exporteraddress) {
+        this.exporteraddress = exporteraddress;
+    }
+
+    public String getExporterphone() {
+        return exporterphone;
+    }
+
+    public void setExporterphone(String exporterphone) {
+        this.exporterphone = exporterphone;
+    }
+
+    public String getExporterfax() {
+        return exporterfax;
+    }
+
+    public void setExporterfax(String exporterfax) {
+        this.exporterfax = exporterfax;
+    }
+
+    public String getExporteremail() {
+        return exporteremail;
+    }
+
+    public void setExporteremail(String exporteremail) {
+        this.exporteremail = exporteremail;
+    }
+
+    public String getContractno() {
+        return contractno;
+    }
+
+    public void setContractno(String contractno) {
+        this.contractno = contractno;
+    }
+
+    public String getTransno() {
+        return transno;
+    }
+
+    public void setTransno(String transno) {
+        this.transno = transno;
+    }
+
+    public String getTransdate() {
+        return transdate;
+    }
+
+    public void setTransdate(String transdate) {
+        this.transdate = transdate;
+    }
+
+    public String getImportergatecode() {
+        return importergatecode;
+    }
+
+    public void setImportergatecode(String importergatecode) {
+        this.importergatecode = importergatecode;
+    }
+
+    public String getImportergatename() {
+        return importergatename;
+    }
+
+    public void setImportergatename(String importergatename) {
+        this.importergatename = importergatename;
+    }
+
+    public String getExportergatename() {
+        return exportergatename;
+    }
+
+    public void setExportergatename(String exportergatename) {
+        this.exportergatename = exportergatename;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public String getLicenseno() {
+        return licenseno;
+    }
+
+    public void setLicenseno(String licenseno) {
+        this.licenseno = licenseno;
+    }
+
+    public DateTime getDateofissue() {
+        return dateofissue;
+    }
+
+    public void setDateofissue(DateTime dateofissue) {
+        this.dateofissue = dateofissue;
+    }
+
+    public DateTime getExpireddateofissue() {
+        return expireddateofissue;
+    }
+
+    public void setExpireddateofissue(DateTime expireddateofissue) {
+        this.expireddateofissue = expireddateofissue;
+    }
+
+    public String getProcessplace() {
+        return processplace;
+    }
+
+    public void setProcessplace(String processplace) {
+        this.processplace = processplace;
+    }
+
+    public String getExportergatecode() {
+        return exportergatecode;
+    }
+
+    public void setExportergatecode(String exportergatecode) {
+        this.exportergatecode = exportergatecode;
+    }
+
+    public PRODUCT getProduct() {
+        return product;
+    }
+
+    public void setProduct(PRODUCT product) {
+        this.product = product;
+    }
+
 }

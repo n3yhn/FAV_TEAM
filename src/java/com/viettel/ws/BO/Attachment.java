@@ -4,8 +4,6 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2015.11.24 at 11:29:34 AM ICT 
 //
-
-
 package com.viettel.ws.BO;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,12 +11,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for Attachment complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for Attachment complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="Attachment">
  *   &lt;complexContent>
@@ -33,8 +33,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Attachment", propOrder = {
@@ -65,15 +65,11 @@ public class Attachment {
         this.attachmentId = attachmentId;
     }
 
-   
-    
     /**
      * Gets the value of the attacmentCode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getAttachmentCode() {
         return attachmentCode;
@@ -81,11 +77,9 @@ public class Attachment {
 
     /**
      * Sets the value of the attacmentCode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setAttachmentCode(String value) {
         this.attachmentCode = value;
@@ -93,11 +87,9 @@ public class Attachment {
 
     /**
      * Gets the value of the attacmentTypeCode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getAttachmentTypeCode() {
         return attachmentTypeCode;
@@ -105,11 +97,9 @@ public class Attachment {
 
     /**
      * Sets the value of the attacmentTypeCode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setAttachmentTypeCode(String value) {
         this.attachmentTypeCode = value;
@@ -117,11 +107,9 @@ public class Attachment {
 
     /**
      * Gets the value of the attachmentName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getAttachmentName() {
         return attachmentName;
@@ -129,11 +117,9 @@ public class Attachment {
 
     /**
      * Sets the value of the attachmentName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setAttachmentName(String value) {
         this.attachmentName = value;
@@ -141,11 +127,9 @@ public class Attachment {
 
     /**
      * Gets the value of the base64FileContent property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getBase64FileContent() {
         return base64FileContent;
@@ -153,14 +137,15 @@ public class Attachment {
 
     /**
      * Sets the value of the base64FileContent property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setBase64FileContent(String value) {
         this.base64FileContent = value;
+    }
+
+    public Attachment() {
     }
 
 }

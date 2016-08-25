@@ -1462,9 +1462,9 @@ public class ANNOUNCESENDDtoType {
         form.getDetailProduct().setCounterfeitDistinctive(productcompare);
         form.getDetailProduct().setProductTypeName(productname);
         form.getDetailProduct().setOrigin(id);
-        if (impacttargetslist.getIMPACTTARGETDto() != null && impacttargetslist.getIMPACTTARGETDto().size() > 0) {
-            form.getDetailProduct().setOtherTarget(hp.getIMPACTTARGET_NAME(impacttargetslist.getIMPACTTARGETDto()));
-        }
+//        if (impacttargetslist.getIMPACTTARGETDto() != null && impacttargetslist.getIMPACTTARGETDto().size() > 0) {
+//            form.getDetailProduct().setOtherTarget(hp.getIMPACTTARGET_NAME(impacttargetslist.getIMPACTTARGETDto()));
+//        }
         //thieu product name
         //form.setProductName();
         //hien tai he thong dang de la string k phai danh muc
