@@ -606,7 +606,7 @@ public class ExportFileDAO extends BaseDAO {
             } else {
                 rolesigner = "UNKNOW";
             }
-            
+
             wU.replacePlaceholder(wmpOnlyPaper, signer, "${signer}");
             wU.replacePlaceholder(wmpOnlyPaper, rolesigner, "${roleSigner}");
             String leaderSinged = "";
@@ -3116,7 +3116,7 @@ public class ExportFileDAO extends BaseDAO {
             String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd") + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM") + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
             wU.replacePlaceholder(wmp, signedDate, "${signDateStr}");
             wU.replacePlaceholder(wmp, businessName, "${businessName}");
-            
+
             String signer = "";
             String rolesigner = "";
 
@@ -3402,7 +3402,7 @@ public class ExportFileDAO extends BaseDAO {
                     wU.replacePlaceholder(wmp, effDate, "${effDate}");
                     break;
                 case Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT:
-                    //wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempReAnnounFiles))));
+                    wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(reReceiptPaperAnnounementSign))));
                     break;
                 case Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_IMP:
                     //wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempReConfirmFuncImport))));
@@ -3423,7 +3423,11 @@ public class ExportFileDAO extends BaseDAO {
                     + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
             if (filesForm.getAnnouncementReceiptPaperForm() != null) {
                 receiptDeptName = filesForm.getAnnouncementReceiptPaperForm().getReceiptDeptName();
-                receiptNo = filesForm.getAnnouncementReceiptPaperForm().getReceiptNo();
+                if (filesForm.getReIssueForm() != null && filesForm.getReIssueForm().getFormNumber() != null) {
+                    receiptNo = filesForm.getReIssueForm().getFormNumber();
+                } else {
+                    receiptNo = filesForm.getAnnouncementReceiptPaperForm().getReceiptNo();
+                }
                 businessName = filesForm.getAnnouncementReceiptPaperForm().getBusinessName();
                 if (filesForm.getAnnouncement() != null) {
                     businessAdd = filesForm.getAnnouncement().getBusinessAddress();
