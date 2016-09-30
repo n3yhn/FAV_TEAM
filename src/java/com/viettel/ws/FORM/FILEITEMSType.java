@@ -6,6 +6,7 @@
 //
 package com.viettel.ws.FORM;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.MainlyTarget;
 import com.viettel.hqmc.BO.ProductTarget;
 import com.viettel.hqmc.BO.QualityControlPlan;
@@ -15,11 +16,9 @@ import com.viettel.hqmc.FORM.FilesForm;
 import com.viettel.voffice.database.BO.VoAttachs;
 import static java.lang.Float.isNaN;
 import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -1048,8 +1047,9 @@ public class FILEITEMSType {
 
         return form;
     }
-      public boolean validatePhone(String phoneNumber) {
-        boolean bReturn = true;
+
+    public boolean validatePhone(String phoneNumber) {
+        boolean bReturn;
         if (phoneNumber == null) {
             bReturn = false;
         } else {
@@ -1059,7 +1059,8 @@ public class FILEITEMSType {
             } else {
                 try {
                     bReturn = !isNaN(parseInt(phoneNumber));
-                } catch (Exception en) {
+                } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                     bReturn = false;
                 }
             }
@@ -1072,16 +1073,17 @@ public class FILEITEMSType {
         try {
             format.parse(input);
             return true;
-        } catch (ParseException e) {
+        } catch (ParseException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return false;
         }
     }
 
     public List validate() throws ParseException {
-        ERROR err;
+//        ERROR err;
         RESULT lstError = new RESULT();
-        List error = null;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        List error;
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         FilesForm form = new FilesForm();
         lstError.setLstERROR(null);
         if (fileattpcode.length() > 10) {
@@ -1205,7 +1207,6 @@ public class FILEITEMSType {
 //            err.setERROR_CODE("none");
 //            err.setERROR_NAME("none");
 //            lstError.getLstERROR().add(err);
-
         }
         if (validatePhone(manufacturefax) == false || manufacturefax.length() > 15) {
 
@@ -1214,7 +1215,6 @@ public class FILEITEMSType {
 //            err.setERROR_CODE("none");
 //            err.setERROR_NAME("none");
 //            lstError.getLstERROR().add(err);
-
         }
         if (validatePhone(manufacturephone) == false || manufacturephone.length() > 15) {
 //            err = new ERROR();

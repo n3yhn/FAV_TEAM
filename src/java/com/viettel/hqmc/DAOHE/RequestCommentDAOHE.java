@@ -5,8 +5,8 @@
  */
 package com.viettel.hqmc.DAOHE;
 
-//import com.viettel.hqmc.BO.Files;
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.RequestComment;
 import com.viettel.voffice.database.DAO.GridResult;
 import com.viettel.voffice.database.DAOHibernate.GenericDAOHibernate;
@@ -37,7 +37,7 @@ public class RequestCommentDAOHE extends GenericDAOHibernate<RequestComment, Lon
      * @return
      */
     public RequestComment findLastRequestComment(Long objId, Long isLastChange) {//140726
-        RequestComment bo = new RequestComment();
+//        RequestComment bo = new RequestComment();
         try {
             List lstParam = new ArrayList();
             String hql = "select t from RequestComment t where 1=1";
@@ -59,8 +59,8 @@ public class RequestCommentDAOHE extends GenericDAOHibernate<RequestComment, Lon
             if (!lstObj.isEmpty()) {
                 return lstObj.get(0);
             }
-        } catch (HibernateException e) {
-            log.error(e);
+        } catch (HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -88,8 +88,8 @@ public class RequestCommentDAOHE extends GenericDAOHibernate<RequestComment, Lon
             if (!lstObj.isEmpty()) {
                 return lstObj;
             }
-        } catch (HibernateException e) {
-            log.error(e);
+        } catch (HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -118,8 +118,8 @@ public class RequestCommentDAOHE extends GenericDAOHibernate<RequestComment, Lon
             lst = query.list();
             GridResult result = new GridResult(nCount, lst);
             return result;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -136,8 +136,8 @@ public class RequestCommentDAOHE extends GenericDAOHibernate<RequestComment, Lon
     }
 
     //hieptq update 070515
-      public RequestComment findLeaderComment(Long objId, Long isLastChange) {
-        RequestComment bo = new RequestComment();
+    public RequestComment findLeaderComment(Long objId, Long isLastChange) {
+//        RequestComment bo = new RequestComment();
         try {
             List lstParam = new ArrayList();
             String hql = "select t from RequestComment t where 1=1";
@@ -164,8 +164,7 @@ public class RequestCommentDAOHE extends GenericDAOHibernate<RequestComment, Lon
         }
         return null;
     }
-    
-    
+
     public static Logger getLog() {
         return log;
     }

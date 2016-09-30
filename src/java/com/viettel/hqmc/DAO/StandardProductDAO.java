@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.StandardProduct;
 import com.viettel.hqmc.DAOHE.StandardProductDAOHE;
 import com.viettel.hqmc.FORM.StandardProductForm;
@@ -37,7 +38,8 @@ public class StandardProductDAO extends BaseDAO {
         try {
             //code todo here
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return this.forwardPage;
     }
@@ -50,7 +52,8 @@ public class StandardProductDAO extends BaseDAO {
     public String onInit() {
         try {
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return GRID_DATA;
     }
@@ -106,7 +109,8 @@ public class StandardProductDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Đã tồn tại với mã này! Không thể thực hiện thao tác");
         }
@@ -144,6 +148,7 @@ public class StandardProductDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật không thành công");
         }
@@ -191,7 +196,8 @@ public class StandardProductDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Xóa không thành công");
         }

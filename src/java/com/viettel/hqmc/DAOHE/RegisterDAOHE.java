@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
+import com.viettel.common.util.LogUtil;
 
 /**
  *
@@ -44,11 +45,13 @@ public class RegisterDAOHE extends GenericDAOHibernate<Register, Long> {
             lstFactory.remove(type);
         }
     }
+
     /*
      *
      */
- /**
-     * findRegister  
+    /**
+     * findRegister
+     *
      * @param form
      * @param start
      * @param count
@@ -103,11 +106,13 @@ public class RegisterDAOHE extends GenericDAOHibernate<Register, Long> {
         GridResult gr = new GridResult(total, lstResult);
         return gr;
     }
+
     /*
      * 
      */
- /**
-     * findAllRegister  
+    /**
+     * findAllRegister
+     *
      * @return
      */
     public List findAllRegister() {
@@ -129,7 +134,7 @@ public class RegisterDAOHE extends GenericDAOHibernate<Register, Long> {
             lstRegister = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<Register>();
         }
 //        lstCategoryFactory.put(type, lstResult);
@@ -137,19 +142,21 @@ public class RegisterDAOHE extends GenericDAOHibernate<Register, Long> {
 
         return lstRegister;
     }
- /**
-     * kiem tra doi tuong co trung khong   
+
+    /**
+     * kiem tra doi tuong co trung khong
+     *
      * @param form
      * @return
      */
-    
+
     public boolean isDuplicate(RegisterForm form) {
         if (form == null) {
             return false;
         }
         List lstParam = new ArrayList();
         String hql = "select count(r) from Register r where (status = 1 or status = 0) ";
-        
+
         if (form.getBusinessTaxCode() != null && form.getBusinessTaxCode().trim().length() > 0) {
             hql += " and lower(r.businessTaxCode) like ? ";
             lstParam.add(form.getBusinessTaxCode().trim().toLowerCase());
@@ -161,19 +168,20 @@ public class RegisterDAOHE extends GenericDAOHibernate<Register, Long> {
         Long count = Long.parseLong(query.uniqueResult().toString());
         return count >= 1l;
     }
-    
+
     /**
-     * Check Email  
+     * Check Email
+     *
      * @param form
      * @return
-     */    
+     */
     public boolean isDuplicateEmail(RegisterForm form) {
         if (form == null) {
             return false;
         }
         List lstParam = new ArrayList();
         String hql = "select count(r) from Register r where (status = 1 or status = 0) ";
-        
+
         if (form.getManageEmail() != null && form.getManageEmail().trim().length() > 0) {
             hql += " and lower(r.manageEmail) like ? ";
             lstParam.add(form.getManageEmail().trim().toLowerCase());
@@ -183,7 +191,7 @@ public class RegisterDAOHE extends GenericDAOHibernate<Register, Long> {
             query.setParameter(i, lstParam.get(i));
         }
         Long count1 = Long.parseLong(query.uniqueResult().toString());
-        
+
         List lstParamUser = new ArrayList();
         String hqlUser = "select count(u.userId) from Users u where 1 = 1 ";
         if (form.getManageEmail() != null && form.getManageEmail().trim().length() > 0) {
@@ -195,15 +203,16 @@ public class RegisterDAOHE extends GenericDAOHibernate<Register, Long> {
             query.setParameter(i, lstParamUser.get(i));
         }
         Long count2 = Long.parseLong(query.uniqueResult().toString());
-        
+
         return (count1 >= 1l || count2 >= 1l);
     }
-    
+
     /*
      * check duplicate Business
      */
- /**
+    /**
      * isDuplicateBusiness
+     *
      * @param form
      * @return
      */
@@ -232,8 +241,9 @@ public class RegisterDAOHE extends GenericDAOHibernate<Register, Long> {
      * 
      */
 
- /**
+    /**
      * isDuplicateUsers
+     *
      * @param form
      * @return
      */
@@ -257,8 +267,9 @@ public class RegisterDAOHE extends GenericDAOHibernate<Register, Long> {
      * 
      */
 
- /**
+    /**
      * saveToReceiveEmail
+     *
      * @param register
      * @param content
      * @return

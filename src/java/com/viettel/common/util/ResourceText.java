@@ -15,7 +15,7 @@ public class ResourceText {
 
     private static final String RESOURCE = "com/viettel/config/Language";
     private static Locale local = null;
-    private static ResourceBundle languageRb = null;
+    private static ResourceBundle languageRb;
 
 
     public static String getString(String key) {

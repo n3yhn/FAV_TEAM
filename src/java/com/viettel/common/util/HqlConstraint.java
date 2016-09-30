@@ -28,7 +28,7 @@ public class HqlConstraint extends BaseDAOMDBAction {
         boolean ok = false;
         try {
             String sql = "{call " + store + "}";
-            CallableStatement cs = null;
+            CallableStatement cs;
             cs = getSession().connection().prepareCall(sql);
             //cs = getSession().connection().prepareCall("{call is_delete_scale_salary_group(?,?)}");
             cs.registerOutParameter("result", java.sql.Types.INTEGER);
@@ -37,6 +37,7 @@ public class HqlConstraint extends BaseDAOMDBAction {
             cs.execute();
             ok = cs.getInt("result") > 0 ? false : true;
         } catch (SQLException ex) {
+            LogUtil.addLog(ex);//binhnt a 160901
             return ok;
         }
         return ok;

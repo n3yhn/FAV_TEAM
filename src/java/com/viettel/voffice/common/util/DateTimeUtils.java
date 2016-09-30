@@ -13,6 +13,7 @@ import java.util.TimeZone;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import com.viettel.common.util.LogUtil;
 
 /**
  *
@@ -22,27 +23,47 @@ import javax.xml.datatype.XMLGregorianCalendar;
  */
 public class DateTimeUtils {
 
-    /** .*/
+    /**
+     * .
+     */
     public static final int CONST3 = 3;
-    /** .*/
+    /**
+     * .
+     */
     public static final int CONST4 = 4;
-    /** .*/
+    /**
+     * .
+     */
     public static final int CONST5 = 5;
-    /** .*/
+    /**
+     * .
+     */
     public static final int CONST6 = 6;
-    /** .*/
+    /**
+     * .
+     */
     public static final int CONST7 = 7;
-    /** .*/
+    /**
+     * .
+     */
     public static final int CONST8 = 8;
-    /** .*/
+    /**
+     * .
+     */
     public static final int CONST9 = 9;
-    /** .*/
+    /**
+     * .
+     */
     public static final int CONST10 = 10;
-    /** .*/
+    /**
+     * .
+     */
     public static final int CONST11 = 11;
-    /** .*/
+    /**
+     * .
+     */
     public static final int CONST12 = 12;
-    
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DateTimeUtils.class);
 
     /**
@@ -63,7 +84,7 @@ public class DateTimeUtils {
             return dateFormat.parse(date);
 
         } catch (ParseException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -92,8 +113,9 @@ public class DateTimeUtils {
         }
         try {
             return dateFormat.format(date);
-        } catch (Exception e) {
-            throw e;
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            throw ex;
         }
     }
 
@@ -104,7 +126,8 @@ public class DateTimeUtils {
         }
         try {
             return dateFormat.format(date);
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "";
         }
     }
@@ -119,10 +142,11 @@ public class DateTimeUtils {
         return convertDateToString(calendar.getTime());
     }
 
-    public static Date getDate(){
+    public static Date getDate() {
         Calendar calendar = Calendar.getInstance();
         return calendar.getTime();
     }
+
     /**
      *
      * @return String
@@ -133,8 +157,9 @@ public class DateTimeUtils {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         try {
             return dateFormat.format(calendar.getTime());
-        } catch (Exception e) {
-            throw e;
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            throw ex;
         }
     }
 
@@ -149,8 +174,9 @@ public class DateTimeUtils {
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
         try {
             return dateFormat.format(calendar.getTime());
-        } catch (Exception e) {
-            throw e;
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            throw ex;
         }
     }
 
@@ -178,8 +204,9 @@ public class DateTimeUtils {
                 return "";
             }
             return dateFormat.format(date);
-        } catch (Exception e) {
-            throw e;
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            throw ex;
         }
     }
 
@@ -198,7 +225,7 @@ public class DateTimeUtils {
      * @return String
      */
     public static String parseDate(int monthInput) {
-        String dateReturn = "01/01/";
+        String dateReturn;
         Calendar cal = Calendar.getInstance();
         switch (monthInput) {
             case 1:
@@ -237,15 +264,18 @@ public class DateTimeUtils {
             case CONST12:
                 dateReturn = "01/12/";
                 break;
+            default:
+                dateReturn = "01/01/";
         }
         return dateReturn + cal.get(Calendar.YEAR);
     }
 
     /**
      * Lay ve ngay dau tien cua mot thang nao do
-     * @param months 
-     * @param days 
-     * @return 
+     *
+     * @param months
+     * @param days
+     * @return
      */
     public static Date getFirstDayAMonth(Date date, int months) {
 
@@ -264,9 +294,10 @@ public class DateTimeUtils {
 
     /**
      * Lay ve ngay cach ngay hien tai days ngay months thang
-     * @param months 
-     * @param days 
-     * @return 
+     *
+     * @param months
+     * @param days
+     * @return
      */
     public static Date getAddDate(Date date, int months, int days) {
 
@@ -281,15 +312,18 @@ public class DateTimeUtils {
 
     public static XMLGregorianCalendar dateToXML(Date date) {
         try {
-            if(date == null) return null;
+            if (date == null) {
+                return null;
+            }
             //System.out.println(date.toString());
             GregorianCalendar c = new GregorianCalendar();
-            c.setTimeZone(TimeZone.getTimeZone("GMT+07")); 
+            c.setTimeZone(TimeZone.getTimeZone("GMT+07"));
             c.setTime(date);
             XMLGregorianCalendar dateXML = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
             //System.out.println(dateXML.toString());
             return dateXML;
         } catch (DatatypeConfigurationException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }

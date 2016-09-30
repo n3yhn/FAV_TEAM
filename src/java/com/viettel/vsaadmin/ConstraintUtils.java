@@ -1,5 +1,6 @@
 package com.viettel.vsaadmin;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.database.DAO.BaseDAOMDBAction;
 import java.util.List;
 import org.hibernate.Query;
@@ -15,8 +16,8 @@ public class ConstraintUtils extends BaseDAOMDBAction {
             query.setParameter(0, tableName);
             List lst = query.list();
             return lst;
-        } catch (Exception e) {
-            //e.printStackTrace();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -29,8 +30,8 @@ public class ConstraintUtils extends BaseDAOMDBAction {
             query.setParameter(1, rTableName);
             List lst = query.list();
             return lst;
-        } catch (Exception e) {
-            //e.printStackTrace();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -43,8 +44,8 @@ public class ConstraintUtils extends BaseDAOMDBAction {
             Query query = getSession().createSQLQuery(strBuffer.toString());
             query.setParameter(0, value);
             return query.uniqueResult();
-        } catch (Exception e) {
-            //e.printStackTrace();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -56,8 +57,8 @@ public class ConstraintUtils extends BaseDAOMDBAction {
             query.setParameter(0, tableName);
             List lst = query.list();
             return lst;
-        } catch (Exception e) {
-            //e.printStackTrace();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -70,8 +71,8 @@ public class ConstraintUtils extends BaseDAOMDBAction {
             query.setParameter(1, rTableName);
             List lst = query.list();
             return lst;
-        } catch (Exception e) {
-            //e.printStackTrace();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -84,8 +85,8 @@ public class ConstraintUtils extends BaseDAOMDBAction {
             Query query = getSession(sessionName).createSQLQuery(strBuffer.toString());
             query.setParameter(0, value);
             return query.uniqueResult();
-        } catch (Exception e) {
-            //e.printStackTrace();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -207,8 +208,8 @@ public class ConstraintUtils extends BaseDAOMDBAction {
             if (count > 0) {
                 check = true;
             }
-        } catch (Exception e) {
-            //e.printStackTrace();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return check;
     }
@@ -233,7 +234,7 @@ public class ConstraintUtils extends BaseDAOMDBAction {
             query.setParameter(0, value);
             return query.uniqueResult();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }

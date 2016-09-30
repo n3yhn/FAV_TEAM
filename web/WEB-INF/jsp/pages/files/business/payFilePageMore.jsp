@@ -170,7 +170,7 @@
 
 <script>
 
-    page.pay = function()
+    page.pay = function ()
     {
         document.getElementById("amount").value = '${amount}';
         document.getElementById("shipfee").value = '0';
@@ -205,12 +205,10 @@
         //cắt bỏ ký tự - ở đầu và cuối chuỗi 
         return str;
     }
-
-
+    
     function b64_to_utf8(str) {
         return decodeURIComponent(escape(window.atob(str)));
     }
 
     page.pay();
-
 </script>

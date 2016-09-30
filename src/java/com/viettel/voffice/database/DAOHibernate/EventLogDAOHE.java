@@ -4,6 +4,7 @@
  */
 package com.viettel.voffice.database.DAOHibernate;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.common.util.StringUtils;
 import com.viettel.vsaadmin.database.BO.EventLogBO;
 import com.viettel.vsaadmin.database.BO.Objects;
@@ -28,9 +29,8 @@ public class EventLogDAOHE extends GenericDAOHibernate<EventLogBO, Long> {
     private static List lstLogs = new ArrayList();
     private static boolean saveLog = true;
     private static long cacheSize = 100;
-    
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EventLogDAOHE.class);
 
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EventLogDAOHE.class);
 
     private static void loadParam() {
         try {
@@ -40,7 +40,7 @@ public class EventLogDAOHE extends GenericDAOHibernate<EventLogBO, Long> {
             cacheSize = Long.parseLong(cs);
             saveLog = Boolean.parseBoolean(sl);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -48,7 +48,7 @@ public class EventLogDAOHE extends GenericDAOHibernate<EventLogBO, Long> {
         try {
             loadParam();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -81,7 +81,7 @@ public class EventLogDAOHE extends GenericDAOHibernate<EventLogBO, Long> {
             result = true;
         } catch (Exception ex) {
             result = false;
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return result;
     }
@@ -90,7 +90,6 @@ public class EventLogDAOHE extends GenericDAOHibernate<EventLogBO, Long> {
         if (!saveLog) {
             return false;
         }
-        Boolean result = false;
         UserToken userToken = (UserToken) request.getSession().getAttribute("vsaUserToken");
         EventLogBO eventLogBO = new EventLogBO();
         eventLogBO.setAction(action);
@@ -101,8 +100,7 @@ public class EventLogDAOHE extends GenericDAOHibernate<EventLogBO, Long> {
         eventLogBO.setEventDate(new Date());
         eventLogBO.setIp(request.getRemoteAddr());
         eventLogBO.setDescription(description);
-        result = saveEventLog(eventLogBO);
-        return result;
+        return saveEventLog(eventLogBO);
     }
 
     /**
@@ -189,8 +187,8 @@ public class EventLogDAOHE extends GenericDAOHibernate<EventLogBO, Long> {
                 eventLogBO.setDescription(xml);
                 result = saveEventLog(eventLogBO);
             }
-        } catch (Throwable ex) {
-            log.error(ex.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return result;
     }
@@ -203,7 +201,8 @@ public class EventLogDAOHE extends GenericDAOHibernate<EventLogBO, Long> {
             try {
                 keyValue = ((String[]) map.get(key))[0];
 
-            } catch (Exception en) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
             str.append(keyName).append(":").append(keyValue).append(";");
         }
@@ -229,8 +228,8 @@ public class EventLogDAOHE extends GenericDAOHibernate<EventLogBO, Long> {
                     result = true;
                 }
             }
-        } catch (Throwable ex) {
-            log.error(ex.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return result;
     }

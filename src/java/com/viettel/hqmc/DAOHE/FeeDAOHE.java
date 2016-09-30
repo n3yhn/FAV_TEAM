@@ -7,6 +7,7 @@ package com.viettel.hqmc.DAOHE;
 
 import com.viettel.common.util.Constants;
 import com.viettel.common.util.DateTimeUtils;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.BO.CountNo;
 import com.viettel.hqmc.BO.Fee;
@@ -55,7 +56,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             Query query = getSession().createQuery(stringBuilder.toString());
             lstStandard = query.list();
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<>();
         }
         return lstStandard;
@@ -68,7 +70,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             Query query = getSession().createQuery(stringBuilder.toString());
             lstStandard = query.list();
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<>();
         }
         return lstStandard;
@@ -82,7 +85,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             query.setParameter(0, procedureId);
             lstStandard = query.list();
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<>();
         }
         return lstStandard;
@@ -114,7 +118,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             query.setParameter(0, paymentInfoId);
             lstStandard = query.list();
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<>();
         }
         return lstStandard;
@@ -133,7 +138,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             query.setParameter(0, fileId);
             lstStandard = query.list();
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<>();
         }
         return lstStandard;
@@ -158,7 +164,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
 
             lstStandardNew = query.list();
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return lstStandardNew.get(0);
     }
@@ -178,7 +185,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             query.setParameter(0, procedureId);
             lstStandard = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<>();
         }
         return lstStandard;
@@ -222,7 +230,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             GridResult result = new GridResult(nCount, list);
             return result;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new GridResult(0, null);
         }
     }
@@ -370,7 +379,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                 bReturn = true;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             bReturn = false;
         }
         return bReturn;
@@ -1117,7 +1127,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             // save is_fee in files
             bReturn = true;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             bReturn = false;
         }
         return bReturn;
@@ -1221,7 +1232,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             }
             bReturn = true;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             bReturn = false;
         }
         return bReturn;
@@ -1321,7 +1333,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             }
             bReturn = true;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             bReturn = false;
         }
         return bReturn;
@@ -1408,7 +1421,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             bReturn = false;
         }
         return bReturn;
@@ -1504,7 +1518,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             bReturn = false;
         }
         return bReturn;
@@ -1551,7 +1566,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                 bReturn = false;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -1642,7 +1657,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             EventLogDAOHE edhe = new EventLogDAOHE();
             edhe.insertEventLog("KEYPAY", "ERR: " + ex.getMessage(), getRequest());
             bReturn = false;
@@ -1760,7 +1776,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                 getSession().update(fpif);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             bReturn = false;
         }
         return bReturn;
@@ -1939,7 +1956,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                 }
             }
         } catch (NumberFormatException | HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return false;
         }
         return false;

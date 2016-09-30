@@ -7,6 +7,7 @@ package com.viettel.voffice.common.util;
 import com.sun.xml.ws.security.opt.crypto.dsig.keyinfo.X509IssuerSerial;
 import static com.viettel.common.util.Constants.TEMP.FEATURE_GENERAL_ENTITIES;
 import static com.viettel.common.util.Constants.TEMP.FEATURE_PARAMETER_ENTITIES;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.Files;
 import com.viettel.hqmc.BO.MainlyTarget;
 import com.viettel.hqmc.BO.ProductTarget;
@@ -85,7 +86,7 @@ public class CommonUtils {
             Element rootElement = doc.createElement(root);
             doc.appendChild(rootElement);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return doc;
     }
@@ -111,7 +112,7 @@ public class CommonUtils {
             Field[] fieldArr = cls.getDeclaredFields();
 
             String fieldName;
-            String getMethodName = "";
+            String getMethodName;
             Method getMethod;
             String value;
             for (int i = 0; i < fieldArr.length; i++) {
@@ -129,7 +130,8 @@ public class CommonUtils {
                         elmt.appendChild(document.createTextNode(com.viettel.common.util.StringUtils.escapeXML(value)));
                         element.appendChild(elmt);
                     } catch (Exception ex) {
-                        System.out.print("\nno method or invoke: " + cls.getName() + ":" + getMethodName);
+//                        System.out.print("\nno method or invoke: " + cls.getName() + ":" + getMethodName);
+                        LogUtil.addLog(ex);//binhnt sonar a160901
                     }
                 } else {
                     try {
@@ -151,7 +153,7 @@ public class CommonUtils {
                                 Class cls1 = publicBo.getAnnouncement().getClass();
                                 Field[] fieldArr1 = cls1.getDeclaredFields();
                                 String fieldName1;
-                                String getMethodName1 = "";
+                                String getMethodName1;
                                 Method getMethod1;
                                 String value1;
                                 for (int j = 0; j < fieldArr1.length; j++) {
@@ -169,7 +171,8 @@ public class CommonUtils {
                                             elmt1.appendChild(document.createTextNode(com.viettel.common.util.StringUtils.escapeXML(value1)));
                                             element.appendChild(elmt1);
                                         } catch (Exception ex) {
-                                            System.out.print("\nno method or invoke: " + cls.getName() + ":" + getMethodName);
+                                            LogUtil.addLog(ex);//binhnt sonar a160901
+//                                            System.out.print("\nno method or invoke: " + cls.getName() + ":" + getMethodName);
                                         }
                                     } else {
                                         try {
@@ -185,7 +188,8 @@ public class CommonUtils {
                                             elmt1.appendChild(document.createTextNode(com.viettel.common.util.StringUtils.escapeXML(value1)));
                                             element.appendChild(elmt1);
                                         } catch (Exception ex) {
-                                            System.out.print("\nno method or invoke: " + cls1.getName() + ":" + getMethodName1);
+                                            LogUtil.addLog(ex);//binhnt sonar a160901
+//                                            System.out.print("\nno method or invoke: " + cls1.getName() + ":" + getMethodName1);
                                         }
                                     }
                                 }
@@ -195,7 +199,7 @@ public class CommonUtils {
                                 Class cls1 = publicBo.getDetailProduct().getClass();
                                 Field[] fieldArr1 = cls1.getDeclaredFields();
                                 String fieldName1;
-                                String getMethodName1 = "";
+                                String getMethodName1;
                                 Method getMethod1;
                                 String value1;
                                 for (int j = 0; j < fieldArr1.length; j++) {
@@ -213,7 +217,8 @@ public class CommonUtils {
                                             elmt1.appendChild(document.createTextNode(com.viettel.common.util.StringUtils.escapeXML(value1)));
                                             element.appendChild(elmt1);
                                         } catch (Exception ex) {
-                                            System.out.print("\nno method or invoke: " + cls1.getName() + ":" + getMethodName1);
+                                            LogUtil.addLog(ex);//binhnt sonar a160901
+//                                            System.out.print("\nno method or invoke: " + cls1.getName() + ":" + getMethodName1);
                                         }
                                     } else {
                                         try {
@@ -229,7 +234,8 @@ public class CommonUtils {
                                             elmt1.appendChild(document.createTextNode(com.viettel.common.util.StringUtils.escapeXML(value1)));
                                             element.appendChild(elmt1);
                                         } catch (Exception ex) {
-                                            System.out.print("\nno method or invoke: " + cls1.getName() + ":" + getMethodName1);
+                                            LogUtil.addLog(ex);//binhnt sonar a160901
+//                                            System.out.print("\nno method or invoke: " + cls1.getName() + ":" + getMethodName1);
                                         }
                                     }
                                 }
@@ -239,7 +245,7 @@ public class CommonUtils {
                                 Class cls1 = publicBo.getTestRegistration().getClass();
                                 Field[] fieldArr1 = cls1.getDeclaredFields();
                                 String fieldName1;
-                                String getMethodName1 = "";
+                                String getMethodName1;
                                 Method getMethod1;
                                 String value1;
                                 for (int j = 0; j < fieldArr1.length; j++) {
@@ -257,7 +263,8 @@ public class CommonUtils {
                                             elmt1.appendChild(document.createTextNode(com.viettel.common.util.StringUtils.escapeXML(value1)));
                                             element.appendChild(elmt1);
                                         } catch (Exception ex) {
-                                            System.out.print("\nno method or invoke: " + cls.getName() + ":" + getMethodName);
+                                            LogUtil.addLog(ex);//binhnt sonar a160901
+//                                            System.out.print("\nno method or invoke: " + cls.getName() + ":" + getMethodName);
                                         }
                                     } else {
                                         try {
@@ -273,14 +280,16 @@ public class CommonUtils {
                                             elmt1.appendChild(document.createTextNode(com.viettel.common.util.StringUtils.escapeXML(value1)));
                                             element.appendChild(elmt1);
                                         } catch (Exception ex) {
-                                            System.out.print("\nno method or invoke: " + cls1.getName() + ":" + getMethodName1);
+                                            LogUtil.addLog(ex);//binhnt sonar a160901
+//                                            System.out.print("\nno method or invoke: " + cls1.getName() + ":" + getMethodName1);
                                         }
                                     }
                                 }
                             }//
                         }
                     } catch (Exception ex) {
-                        System.out.print("\nno method or invoke: " + cls.getName() + ":" + getMethodName);
+                        LogUtil.addLog(ex);//binhnt sonar a160901
+//                        System.out.print("\nno method or invoke: " + cls.getName() + ":" + getMethodName);
                     }
                 }
             }
@@ -292,7 +301,7 @@ public class CommonUtils {
                     Class clsProducttarget = objTarget.getClass();
                     Field[] fieldArrMainlytarget = clsProducttarget.getDeclaredFields();
                     String fieldNameMainlytarget;
-                    String getMethodNameTarget = "";
+                    String getMethodNameTarget;
                     Method getMethodTarget;
                     String valueTarget;
                     for (int i = 0; i < fieldArrMainlytarget.length; i++) {
@@ -309,7 +318,8 @@ public class CommonUtils {
                                 elmt.appendChild(document.createTextNode(com.viettel.common.util.StringUtils.escapeXML(valueTarget)));
                                 element.appendChild(elmt);
                             } catch (Exception ex) {
-                                System.out.print("\nno method or invoke: " + clsProducttarget.getName() + ":" + getMethodNameTarget);
+                                LogUtil.addLog(ex);//binhnt sonar a160901
+//                                System.out.print("\nno method or invoke: " + clsProducttarget.getName() + ":" + getMethodNameTarget);
                             }
                         } else {
                             try {
@@ -325,7 +335,8 @@ public class CommonUtils {
                                 elmt.appendChild(document.createTextNode(com.viettel.common.util.StringUtils.escapeXML(valueTarget)));
                                 element.appendChild(elmt);
                             } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException | DOMException ex) {
-                                System.out.print("\nno method or invoke: " + clsProducttarget.getName() + ":" + getMethodNameTarget);
+                                LogUtil.addLog(ex);//binhnt sonar a160901
+//                                System.out.print("\nno method or invoke: " + clsProducttarget.getName() + ":" + getMethodNameTarget);
                             }
                         }
                         //System.out.println(fieldNameMainlytarget.toString() + ":" + getMethodNameTarget + ":" + valueTarget);
@@ -339,7 +350,7 @@ public class CommonUtils {
                     Class clsProducttarget = objTarget.getClass();
                     Field[] fieldArrMainlytarget = clsProducttarget.getDeclaredFields();
                     String fieldNameMainlytarget;
-                    String getMethodNameTarget = "";
+                    String getMethodNameTarget;
                     Method getMethodTarget;
                     String valueTarget;
                     for (int i = 0; i < fieldArrMainlytarget.length; i++) {
@@ -356,7 +367,8 @@ public class CommonUtils {
                                 elmt.appendChild(document.createTextNode(com.viettel.common.util.StringUtils.escapeXML(valueTarget)));
                                 element.appendChild(elmt);
                             } catch (Exception ex) {
-                                System.out.print("\nno method or invoke: " + clsProducttarget.getName() + ":" + getMethodNameTarget);
+                                LogUtil.addLog(ex);//binhnt sonar a160901
+//                                System.out.print("\nno method or invoke: " + clsProducttarget.getName() + ":" + getMethodNameTarget);
                             }
                         } else {
                             try {
@@ -372,7 +384,8 @@ public class CommonUtils {
                                 elmt.appendChild(document.createTextNode(com.viettel.common.util.StringUtils.escapeXML(valueTarget)));
                                 element.appendChild(elmt);
                             } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException | DOMException ex) {
-                                System.out.print("\nno method or invoke: " + clsProducttarget.getName() + ":" + getMethodNameTarget);
+                                LogUtil.addLog(ex);//binhnt sonar a160901
+//                                System.out.print("\nno method or invoke: " + clsProducttarget.getName() + ":" + getMethodNameTarget);
                             }
                         }
                     }
@@ -385,7 +398,7 @@ public class CommonUtils {
                     Class clsProducttarget = objTarget.getClass();
                     Field[] fieldArrMainlytarget = clsProducttarget.getDeclaredFields();
                     String fieldNameMainlytarget;
-                    String getMethodNameTarget = "";
+                    String getMethodNameTarget;
                     Method getMethodTarget;
                     String valueTarget;
                     for (int i = 0; i < fieldArrMainlytarget.length; i++) {
@@ -402,7 +415,8 @@ public class CommonUtils {
                                 elmt.appendChild(document.createTextNode(com.viettel.common.util.StringUtils.escapeXML(valueTarget)));
                                 element.appendChild(elmt);
                             } catch (Exception ex) {
-                                System.out.print("\nno method or invoke: " + clsProducttarget.getName() + ":" + getMethodNameTarget);
+                                LogUtil.addLog(ex);//binhnt sonar a160901
+//                                System.out.print("\nno method or invoke: " + clsProducttarget.getName() + ":" + getMethodNameTarget);
                             }
                         } else {
                             try {
@@ -418,7 +432,8 @@ public class CommonUtils {
                                 elmt.appendChild(document.createTextNode(com.viettel.common.util.StringUtils.escapeXML(valueTarget)));
                                 element.appendChild(elmt);
                             } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException | DOMException ex) {
-                                System.out.print("\nno method or invoke: " + clsProducttarget.getName() + ":" + getMethodNameTarget);
+                                LogUtil.addLog(ex);//binhnt sonar a160901
+//                                System.out.print("\nno method or invoke: " + clsProducttarget.getName() + ":" + getMethodNameTarget);
                             }
                         }
                     }
@@ -459,7 +474,7 @@ public class CommonUtils {
         dbf.setFeature(FEATURE_PARAMETER_ENTITIES, false);
         dbf.setXIncludeAware(false);
         dbf.setExpandEntityReferences(false);
-        DOMValidateContext valContext = null;
+        DOMValidateContext valContext;
         KeyInfo keyInfo = null;
         dbf.setNamespaceAware(true);
         Document doc = dbf.newDocumentBuilder().parse(new ByteArrayInputStream(content.getBytes("UTF-8")));
@@ -497,7 +512,8 @@ public class CommonUtils {
     }
 
     public static String getUserSigned(KeyInfo keyInfo) throws Exception {
-        String userSigned = "", serial = "";
+        String userSigned = "";
+//        String serial = "";
         Iterator iter = keyInfo.getContent().iterator();
         X509CertImpl certImpl = null;
         while (iter.hasNext()) {
@@ -555,7 +571,8 @@ public class CommonUtils {
         }
         try {
             return dateFormat.format(date);
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "";
         }
     }
@@ -579,6 +596,7 @@ public class CommonUtils {
 //            System.out.println(xmlString);
             return xmlString;
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             log.error(ex.getMessage());
             return null;
         }
@@ -610,7 +628,7 @@ public class CommonUtils {
     public static String getVoRecordWS_URL(String wsType) {
         ResourceBundle rb = ResourceBundle.getBundle("config");
         //check LTDV hay LTCQ
-        String url = "";
+        String url;
         if ("LTCQ".equals(wsType)) {
             url = rb.getString("XWS_URL_DV");
         } else if ("LTDV".equals(wsType)) {
@@ -635,15 +653,15 @@ public class CommonUtils {
             }
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             isValid = false;
-            log.error(ex.getMessage());
         }
         return isValid;
     }
 
     public static String getSerialNumber(KeyInfo keyInfo) throws Exception {
         String userSigned = "";
-        String serial;
+//        String serial;
         Iterator iter = keyInfo.getContent().iterator();
         X509CertImpl certImpl = null;
         while (iter.hasNext()) {
@@ -651,20 +669,20 @@ public class CommonUtils {
             if (kiType instanceof X509Data) {
                 X509Data xd = (X509Data) kiType;
                 Object[] entries = xd.getContent().toArray();
-                X509CRL crl = null;
+//                X509CRL crl = null;
                 for (int i = 0; i < entries.length; i++) {
-                    if (entries[i] instanceof X509CRL) {
-                        crl = (X509CRL) entries[i];
-                    }
-                    if (entries[i] instanceof X509CertImpl) {
-                        certImpl = (X509CertImpl) entries[i];
-                    }
+//                    if (entries[i] instanceof X509CRL) {
+//                        crl = (X509CRL) entries[i];
+//                    }
+//                    if (entries[i] instanceof X509CertImpl) {
+//                        certImpl = (X509CertImpl) entries[i];
+//                    }
                     if (entries[i] instanceof String) {
                         userSigned += (String) entries[i] + "\n";
                     }
-                    if (entries[i] instanceof X509IssuerSerial) {
-                        serial = entries[i].toString();
-                    }
+//                    if (entries[i] instanceof X509IssuerSerial) {
+//                        serial = entries[i].toString();
+//                    }
                 }
             }
         }

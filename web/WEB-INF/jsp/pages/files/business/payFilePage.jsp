@@ -81,7 +81,7 @@
                     url = "<div style='text-align:center;cursor:pointer;'><img src='${contextPath}/share/images/icons/payment.png' width='17px' height='17px' \n\
                         title='<sd:Property>Keypay</sd:Property>' \n\
                         onClick='page.pay(" + row + ");' /> ";
-//                    url += " | <img src='share/images/icons/attach.png' width='17px' height='17px' title='Chuyển khoản' onClick='page.payFeeTransfer(" + row + ");' />";
+                    url += " | <img src='share/images/icons/attach.png' width='17px' height='17px' title='Chuyển khoản' onClick='page.payFeeTransfer(" + row + ");' />";
 //                    url += " | <img src='share/images/icons/bill.png' width='17px' height='17px' title='Tiền mặt' onClick='page.payFeeCash(" + row + ");' /></div>";
             }
         }
@@ -145,7 +145,7 @@
     }
 
     dojo.connect(dojo.byId("searchFeeForm"), "onkeypress", page.searchDefault);
-</script>
+    </script>
     <br/>
     <div style="text-align: left;color: red">
         <div style="width: 100%;"><b><span>Khuyến cáo:</span></b></div>        

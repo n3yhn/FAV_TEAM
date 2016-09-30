@@ -3,7 +3,7 @@
  * VIETTEL PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 package com.viettel.voffice.common.util;
-
+import com.viettel.common.util.LogUtil;
 /**
  *
  * @author huannn
@@ -26,6 +26,7 @@ public final class NumberUtils {
         try {
             reVal = Integer.parseInt(input);
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             reVal = 0;
         }
         return reVal;
@@ -41,6 +42,7 @@ public final class NumberUtils {
         try {
             reVal = Long.parseLong(input);
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             reVal = 0;
         }
         return reVal;

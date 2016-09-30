@@ -5,6 +5,7 @@
 package com.viettel.voffice.database.DAO;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.dojoTag.DojoJSON;
 import com.viettel.voffice.client.form.PositionForm;
 import com.viettel.vsaadmin.database.BO.Position;
@@ -73,6 +74,7 @@ public class PositionDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật chức danh không thành công");
         }
@@ -108,6 +110,7 @@ public class PositionDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa thành công");
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Xóa không thành công");
         }
@@ -119,7 +122,7 @@ public class PositionDAO extends BaseDAO {
     public int checkPosition(Long posId) {
         int count = 0;
         String posCode = positionAddEditForm.getPosCode();      
-        String posCodeBo = null;
+        String posCodeBo;
         List<Position> positionList = positionDAOHE.getPosition(posId);
         for (int i = 0; i < positionList.size(); i++) {
             posCodeBo = positionList.get(i).getPosCode();

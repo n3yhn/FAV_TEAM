@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import viettel.passport.client.UserToken;
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.crypto.AESCrypto;
 import com.viettel.vsaadmin.database.BO.Department;
 import com.viettel.vsaadmin.database.BO.Roles;
@@ -116,6 +117,7 @@ public class BaseDAO extends BaseDAOMDBAction {
     protected int start = 0;
     protected int count = 10;
     protected String sortField = "";
+
     /*
      * end default properties
      */
@@ -136,7 +138,7 @@ public class BaseDAO extends BaseDAOMDBAction {
                 start = Integer.parseInt(startstr);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         try {
@@ -144,7 +146,7 @@ public class BaseDAO extends BaseDAOMDBAction {
                 count = Integer.parseInt(countstr);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -157,8 +159,8 @@ public class BaseDAO extends BaseDAOMDBAction {
         sortField = getRequest().getParameter("sort");
 
         try {
-            Integer startClient = 0;
-            Integer startCount = 0;
+            Integer startClient;
+            Integer startCount;
             if (!startClientStr.isEmpty() && !startCountStr.isEmpty()) {
                 startClient = Integer.parseInt(startClientStr);
                 startCount = Integer.parseInt(startCountStr);
@@ -170,7 +172,7 @@ public class BaseDAO extends BaseDAOMDBAction {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -237,19 +239,17 @@ public class BaseDAO extends BaseDAOMDBAction {
         if (getRequest().getSession().getAttribute("workingDeptId") != null) {
             Long deptId = (Long) getRequest().getSession().getAttribute("workingDeptId");
             return deptId;
+        } else if (getRequest().getSession().getAttribute("departmentId") != null) {
+            Long deptId = (Long) getRequest().getSession().getAttribute("departmentId");
+            return deptId;
         } else {
-            if (getRequest().getSession().getAttribute("departmentId") != null) {
-                Long deptId = (Long) getRequest().getSession().getAttribute("departmentId");
-                return deptId;
-            } else {
-                Department dept = getDepartment();
-                Long deptId = 0L;
-                if (dept != null) {
-                    deptId = dept.getDeptId();
-                    getRequest().getSession().setAttribute("departmentId", deptId);
-                }
-                return deptId;
+            Department dept = getDepartment();
+            Long deptId = 0L;
+            if (dept != null) {
+                deptId = dept.getDeptId();
+                getRequest().getSession().setAttribute("departmentId", deptId);
             }
+            return deptId;
         }
     }
 
@@ -332,19 +332,17 @@ public class BaseDAO extends BaseDAOMDBAction {
         if (getRequest().getSession().getAttribute("workingDeptId") != null) {
             Long deptId = (Long) getRequest().getSession().getAttribute("workingDeptId");
             return deptId;
+        } else if (getRequest().getSession().getAttribute("deptRepresentId") != null) {
+            Long deptId = (Long) getRequest().getSession().getAttribute("deptRepresentId");
+            return deptId;
         } else {
-            if (getRequest().getSession().getAttribute("deptRepresentId") != null) {
-                Long deptId = (Long) getRequest().getSession().getAttribute("deptRepresentId");
-                return deptId;
-            } else {
-                Department dept = getDeptRepresent();
-                Long deptId = 0L;
-                if (dept != null) {
-                    deptId = dept.getDeptId();
-                    getRequest().getSession().setAttribute("deptRepresentId", deptId);
-                }
-                return deptId;
+            Department dept = getDeptRepresent();
+            Long deptId = 0L;
+            if (dept != null) {
+                deptId = dept.getDeptId();
+                getRequest().getSession().setAttribute("deptRepresentId", deptId);
             }
+            return deptId;
         }
     }
 
@@ -473,7 +471,7 @@ public class BaseDAO extends BaseDAOMDBAction {
             }
             lstReturn = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return lstReturn;
     }
@@ -487,7 +485,7 @@ public class BaseDAO extends BaseDAOMDBAction {
                 lstReturn.add((Roles) user.getRoleById(lstRoleIds.get(i)));
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return lstReturn;
     }
@@ -520,7 +518,7 @@ public class BaseDAO extends BaseDAOMDBAction {
             List<Roles> lstReturn = query.list();
             return lstReturn;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -555,7 +553,7 @@ public class BaseDAO extends BaseDAOMDBAction {
      * @return
      */
     protected DojoJSON createMsgExport(boolean success, String filePath) {
-        int i = 0;
+        int i;
         List<String> lst = new ArrayList<String>();
         if (success) {
             i = 1;
@@ -578,7 +576,7 @@ public class BaseDAO extends BaseDAOMDBAction {
      * @return
      */
     protected DojoJSON createMsgImport(int success_type, int succ, int err, String filePath) {
-        int i = 0;
+        int i;
         if (success_type > 0) {
             i = success_type;
         } else {
@@ -608,7 +606,7 @@ public class BaseDAO extends BaseDAOMDBAction {
             AESCrypto crypto = new AESCrypto(userName);
             des = crypto.encrypt(source);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return des;
 
@@ -621,7 +619,8 @@ public class BaseDAO extends BaseDAOMDBAction {
 
             AESCrypto crypto = new AESCrypto(userName);
             des = crypto.decrypt(source);
-        } catch (Exception en) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return des;
 

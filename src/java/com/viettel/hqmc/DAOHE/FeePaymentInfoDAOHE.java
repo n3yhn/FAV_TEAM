@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.DAOHE;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.BO.Fee;
 import com.viettel.hqmc.BO.FeePaymentInfo;
@@ -63,9 +64,10 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
             for (FeePaymentInfo bo : lst) {
                 result += bo.getCost();
             }
-        } catch (Exception e) {
-            e.getMessage();
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            e.getMessage();
+//            log.error(e);
         }
         return result;
     }
@@ -108,7 +110,8 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
             GridResult result = new GridResult(nCount, lst);
             return result;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -126,7 +129,8 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
             Query query = getSession().createQuery(stringBuilder.toString());
             lstStandard = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<>();
         }
         return lstStandard;
@@ -146,7 +150,8 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
             query.setParameter(0, procedureId);
             lstStandard = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<>();
         }
         return lstStandard;
@@ -168,7 +173,8 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
             query.setParameter(0, procedureId);
             lstStandard = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<>();
         }
         return lstStandard;
@@ -240,7 +246,7 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
         return gr;
     }
 
-        /**
+    /**
      * tao moi phi
      *
      * @param feeForm
@@ -340,13 +346,14 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
                 bReturn = true;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             bReturn = false;
         }
         return bReturn;
     }
 
-     /**
+    /**
      * xoa thu tuc hanh chinh map voi phi
      *
      * @param feeId
@@ -362,9 +369,7 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
         query.executeUpdate();
     }
 
-    
-    
-     /**
+    /**
      * danh sach hoa don doanh nghiep
      *
      * @param fileId
@@ -436,7 +441,8 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
         GridResult gr = new GridResult(total, result);
         return gr;
     }
-     /**
+
+    /**
      * quan ly nop phi
      *
      * @param start
@@ -499,8 +505,8 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
         GridResult gr = new GridResult(total, result);
         return gr;
     }
-  
-  /**
+
+    /**
      * insert hoa don
      *
      * @param fileId
@@ -530,14 +536,15 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
             getSession().saveOrUpdate(fpif);
             bReturn = true;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             bReturn = false;
         }
         return bReturn;
 
     }
 
-      /**
+    /**
      * save hoa don
      *
      * @param paymentInfoId
@@ -559,12 +566,14 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
 
             bReturn = true;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             bReturn = false;
         }
         return bReturn;
 
     }
+
     /**
      * checkFPIByFileID
      *
@@ -595,7 +604,7 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;

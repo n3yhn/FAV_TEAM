@@ -5,6 +5,7 @@
 package com.viettel.voffice.database.DAO;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.dojoTag.DojoJSON;
 import com.viettel.hqmc.BO.CategoryType;
 import com.viettel.hqmc.DAOHE.BusinessDAOHE;
@@ -69,7 +70,7 @@ public class CategoryDAO extends BaseDAO {
             getRequest().setAttribute("type", type);
             getRequest().setAttribute("categoryName", categoryName);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return this.forwardPage;
     }
@@ -86,7 +87,7 @@ public class CategoryDAO extends BaseDAO {
             lstCategoryType.add(0, new CategoryType("0", "--- Chọn ---"));
             getRequest().setAttribute("lstType", lstCategoryType);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "categorysPage";
     }
@@ -94,7 +95,7 @@ public class CategoryDAO extends BaseDAO {
     public String onInit() {
         try {
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "gridData";
     }
@@ -161,7 +162,7 @@ public class CategoryDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Danh mục đã tồn tại với mã này! Không thể thực hiện thao tác");
         }
@@ -243,6 +244,7 @@ public class CategoryDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật danh mục không thành công");
         }
@@ -283,6 +285,7 @@ public class CategoryDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật danh mục không thành công");
         }
@@ -335,7 +338,7 @@ public class CategoryDAO extends BaseDAO {
                 resultMessage.add("Có ràng buộc, không thể xóa hoặc bạn đang thực hiện xóa không phải dữ liệu người dùng tạo.");
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Xóa danh mục không thành công");
         }
@@ -372,7 +375,7 @@ public class CategoryDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật loại danh mục không thành công");
         }
@@ -419,7 +422,7 @@ public class CategoryDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa danh mục thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Xóa danh mục không thành công");
         }

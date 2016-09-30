@@ -5,6 +5,7 @@
 package com.viettel.vsaadmin.database.DAOHibernate;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.voffice.client.form.PositionForm;
 import com.viettel.voffice.database.DAO.GridResult;
@@ -20,14 +21,18 @@ import org.hibernate.criterion.Restrictions;
 
 /**
  * DepartmentDAOHibernate
+ *
  * @author trungnq7@viettel.com.vn
  * @since Apr 6, 2011
  * @version 1.0
  */
 public class PositionDAOHE extends GenericDAOHibernate<Position, Long> {
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionDAOHE.class);
 
-    /** .*/
+    /**
+     * .
+     */
     private Position headerPosition;
 
     public PositionDAOHE() {
@@ -58,6 +63,7 @@ public class PositionDAOHE extends GenericDAOHibernate<Position, Long> {
 
     /**
      * Tao doi tuong
+     *
      * @param form
      * @return
      * @throws Exception
@@ -88,7 +94,8 @@ public class PositionDAOHE extends GenericDAOHibernate<Position, Long> {
 //
 //    }
     /**
-     * find all 
+     * find all
+     *
      * @param firstResult firstResult
      * @param maxResult maxResult
      * @return list<Users>
@@ -100,6 +107,7 @@ public class PositionDAOHE extends GenericDAOHibernate<Position, Long> {
 
     /**
      * find all active
+     *
      * @param firstResult firstResult
      * @param maxResult maxResult
      * @return list<Users>
@@ -109,12 +117,12 @@ public class PositionDAOHE extends GenericDAOHibernate<Position, Long> {
         Query query = getSession().createQuery(hql);
 
 //        Criterion criterion = Restrictions.eq("status", 1L);
-
         return query.list();
     }
 
     /**
      * tim kiem
+     *
      * @param firstResult firstResult
      * @param maxResult maxResult
      * @return list<Users>
@@ -168,13 +176,15 @@ public class PositionDAOHE extends GenericDAOHibernate<Position, Long> {
             }
             result = q.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return result;
     }
 
     /**
      * tim kiem root cua cay
+     *
      * @return
      */
     public List<Position> getParentDateForTree() {
@@ -209,22 +219,23 @@ public class PositionDAOHE extends GenericDAOHibernate<Position, Long> {
     // SyTV 
     public Position findPositionCode(Long userID) {
         try {
-        String sql = "SELECT p FROM Position p"
-                + " WHERE p.status =1"
-                + " AND p.posType =1"
-                + " AND p.posId IN (SELECT u.posId FROM Users u"
-                + " WHERE u.userId = ? AND u.status = 1)";
-        Query query=session.createQuery(sql);
-        query.setParameter(0, userID);
-        List<Position> lst=query.list();
-        if(lst!=null && lst.size() > 0) {
-            return lst.get(0);
-        }
-        }catch(Exception ex) {
-            log.error(ex.getMessage());
+            String sql = "SELECT p FROM Position p"
+                    + " WHERE p.status =1"
+                    + " AND p.posType =1"
+                    + " AND p.posId IN (SELECT u.posId FROM Users u"
+                    + " WHERE u.userId = ? AND u.status = 1)";
+            Query query = session.createQuery(sql);
+            query.setParameter(0, userID);
+            List<Position> lst = query.list();
+            if (lst != null && lst.size() > 0) {
+                return lst.get(0);
+            }
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return null;
-     }
+    }
 
     //HanPT add
     public GridResult findPosition(PositionForm positionSearchForm, int start, int count, String sortField) {
@@ -287,7 +298,8 @@ public class PositionDAOHE extends GenericDAOHibernate<Position, Long> {
             gridResult.setnCount(Long.valueOf(total));
             return gridResult;
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            String msg = ex.getMessage();
             return null;
         }
     }
@@ -308,7 +320,8 @@ public class PositionDAOHE extends GenericDAOHibernate<Position, Long> {
             List<Position> positionList = query.list();
             return positionList;
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            String msg = ex.getMessage();
             return null;
         }
     }

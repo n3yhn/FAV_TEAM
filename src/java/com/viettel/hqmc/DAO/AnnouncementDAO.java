@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.Announcement;
 import com.viettel.hqmc.DAOHE.AnnouncementDAOHE;
 import com.viettel.hqmc.FORM.AnnouncementForm;
@@ -48,7 +49,7 @@ public class AnnouncementDAO extends BaseDAO {
             lstCategory.add(0, new Category(0l, "-- Chọn --"));
             getRequest().setAttribute("lstProvince", lstCategory);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return this.announcementCreatePage;
     }
@@ -67,7 +68,7 @@ public class AnnouncementDAO extends BaseDAO {
             lstCategory.add(0, new Category(0l, "-- Chọn --"));
             getRequest().setAttribute("lstProvince", lstCategory);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return this.announcementSearchPage;
     }
@@ -119,6 +120,7 @@ public class AnnouncementDAO extends BaseDAO {
         } catch (Exception ex) {
             resultMessage.add("3");
             resultMessage.add("Cập nhật đăng kí không thành công");
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         jsonDataGrid.setItems(resultMessage);

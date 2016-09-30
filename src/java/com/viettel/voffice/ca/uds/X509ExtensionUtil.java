@@ -4,34 +4,22 @@
  */
 package com.viettel.voffice.ca.uds;
 
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 import java.util.Vector;
-import org.bouncycastle.asn1.ASN1InputStream;
-import org.bouncycastle.asn1.ASN1OctetString;
-import org.bouncycastle.asn1.ASN1Sequence;
-
-
-
-
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.asn1.x509.X509Extensions;
-import org.bouncycastle.asn1.DERTaggedObject;
 import org.bouncycastle.jce.PrincipalUtil;
 import org.bouncycastle.jce.X509Principal;
-
+import com.viettel.common.util.LogUtil;
 
 /**
  *
  * @author : HungND8@viettel.com.vn
  * @Version: 1.0
- * @Since  : version 1.0
- * @Date   : Feb 9, 2011, 4:52:29 PM
+ * @Since : version 1.0
+ * @Date : Feb 9, 2011, 4:52:29 PM
  */
 public class X509ExtensionUtil {
+
     /**
      * utility class must get a private constructor
      */
@@ -40,99 +28,110 @@ public class X509ExtensionUtil {
 
     /**
      * Get subject of certificate
+     *
      * @param certificate X509Certificate
      * @return <CODE>String</CODE> name of subject or empty <CODE>String</CODE>
      */
     public static String getSubject(X509Certificate certificate) {
         try {
             X509Principal principal = PrincipalUtil.getSubjectX509Principal(certificate);
-            Vector vector =  principal.getValues(X509Principal.CN);
+            Vector vector = principal.getValues(X509Principal.CN);
             if (vector.size() != 1) {
                 return "";
             }
             return vector.firstElement().toString();
         } catch (CertificateEncodingException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "";
         }
     }
 
     /**
      * Get organization of certificate
+     *
      * @param certificate X509Certificate
      * @return <CODE>String</CODE> name of subject or empty <CODE>String</CODE>
      */
     public static String getOrganization(X509Certificate certificate) {
         try {
             X509Principal principal = PrincipalUtil.getSubjectX509Principal(certificate);
-            Vector vector =  principal.getValues(X509Principal.O);
+            Vector vector = principal.getValues(X509Principal.O);
             if (vector.size() != 1) {
                 return "";
             }
             return vector.firstElement().toString();
         } catch (CertificateEncodingException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "";
         }
     }
 
     /**
      * Get unit of certificate
+     *
      * @param certificate X509Certificate
      * @return <CODE>String</CODE> name of subject or empty <CODE>String</CODE>
      */
     public static String getOrganizationUnit(X509Certificate certificate) {
         try {
             X509Principal principal = PrincipalUtil.getSubjectX509Principal(certificate);
-            Vector vector =  principal.getValues(X509Principal.OU);
+            Vector vector = principal.getValues(X509Principal.OU);
             if (vector.size() != 1) {
                 return "";
             }
             return vector.firstElement().toString();
         } catch (CertificateEncodingException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "";
         }
     }
 
     /**
      * Get location of certificate
+     *
      * @param certificate X509Certificate
      * @return <CODE>String</CODE> name of subject or empty <CODE>String</CODE>
      */
     public static String getLocation(X509Certificate certificate) {
         try {
             X509Principal principal = PrincipalUtil.getSubjectX509Principal(certificate);
-            Vector vector =  principal.getValues(X509Principal.L);
+            Vector vector = principal.getValues(X509Principal.L);
             if (vector.size() != 1) {
                 return "";
             }
             return vector.firstElement().toString();
         } catch (CertificateEncodingException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "";
         }
     }
 
     /**
      * Get location of certificate
+     *
      * @param certificate X509Certificate
      * @return <CODE>String</CODE> name of subject or empty <CODE>String</CODE>
      */
     public static String getIssuerName(X509Certificate certificate) {
         try {
             X509Principal principal = PrincipalUtil.getIssuerX509Principal(certificate);
-            Vector vector =  principal.getValues(X509Principal.CN);
+            Vector vector = principal.getValues(X509Principal.CN);
             if (vector.size() != 1) {
                 return "";
             }
             return vector.firstElement().toString();
         } catch (CertificateEncodingException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "";
         }
     }
 
     /**
      * get the CRL URL from X509 Certificate
+     *
      * @param certificate : X509 certificate
-     * @return <CODE>String</CODE> : URL of CRL
-     * or <CODE>null</CODE> if no extension or exception
+     * @return <CODE>String</CODE> : URL of CRL or <CODE>null</CODE> if no
+     * extension or exception
      */
 //    public static String getCRLURL(X509Certificate certificate) {
 //        try {
@@ -164,12 +163,12 @@ public class X509ExtensionUtil {
 //        }
 //        return null;
 //    }
-
     /**
      * get the OCSP URL of a X509 certificate
+     *
      * @param certificate : X509 certificate
-     * @return <CODE>String</CODE> URL of certificate or
-     * <CODE>null</CODE> if certificate has no OCSP URL extension or error
+     * @return <CODE>String</CODE> URL of certificate or <CODE>null</CODE> if
+     * certificate has no OCSP URL extension or error
      */
 //    public static String getOCSPURL(X509Certificate certificate) {
 //        try {
@@ -201,12 +200,13 @@ public class X509ExtensionUtil {
 //        }
 //        return null;
 //    }
-
     /**
      * get the extension value of particular X509 certificate
+     *
      * @param cert : X509 certificate
-     * @param oid : id of particular type,
-     * see <CODE>org.bouncycastle.asn1.x509.X509Extensions</CODE> to get the object id
+     * @param oid : id of particular type, see
+     * <CODE>org.bouncycastle.asn1.x509.X509Extensions</CODE> to get the object
+     * id
      * @return <CODE>DERObject</CODE> of
      * @throws IOException
      */

@@ -128,11 +128,11 @@
                                                                 <td>138A Giảng Võ - Ba Đình - Hà Nội</td> 
                                                             </tr> <tr class="trlienhe"> 
                                                                 <td><h3 class="lhmail">Email:</h3></td> 
-                                                                <td>vfa@vfa.gov.vn</td> 
+                                                                <td>hotrokhachhang@vfa.gov.vn</td> 
                                                             </tr> 
                                                             <tr class="trlienhe"> 
                                                                 <td width="250px"><h3 class="lhdt">Điện thoại:</h3></td> 
-                                                                <td>04.38464489/5060; 04.38463702</td> 
+                                                                <td>04.38464489/1010; 04.38463702</td> 
                                                             </tr> 
                                                             <tr class="trlienhe"> 
                                                                 <td><h3 class="lhdd">Hotline:</h3></td> 
@@ -142,7 +142,7 @@
                                                             </tr> 
                                                             <tr class="trlienhe"> 
                                                                 <td><h3 class="lhfa">Tài khoản ngân hàng: </h3></td> 
-                                                                <td valign="top">Chủ tài khoản: Cục An toàn thực phẩm - Số tài khoản: 1200208026339 - Chi nhánh: Sở Giao dịch Agribank - Địa chỉ: Số 2 Láng Hạ, Phường Thành Công, Quận Ba Đình, TP. Hà Nội</td> 
+                                                                <td valign="top">Chủ tài khoản: Cục An toàn thực phẩm - Số tài khoản: 1200208026339 - Chi nhánh: Sở Giao dịch Agribank - Địa chỉ: Số 2 Láng Hạ, Phường Thành Công, Quận Ba Đình, TP. Hà Nội Kể từ ngày 15/7/2016 Cục ATTP tạm dừng thanh toán bằng hình thức chuyển khoản, do vậy Cục ATTP đề nghị các doanh nghiệp chuyển sang hình thức thanh toán bằng Keypay để tránh ảnh hưởng tới quá trình nộp hồ sơ. . </td> 
                                                             </tr> 
                                                         </tbody>
                                                     </table> 

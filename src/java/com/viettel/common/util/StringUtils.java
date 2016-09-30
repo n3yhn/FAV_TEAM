@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
+
 /**
  *
  * @author thienkq1@viettel.com.vn
@@ -76,7 +77,7 @@ public final class StringUtils {
     public static String convertReaderToString(InputStream in) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         StringBuilder sb = new StringBuilder();
-        String line = null;
+        String line;
         while ((line = reader.readLine()) != null) {
             sb.append(line + "\n");
         }
@@ -252,8 +253,7 @@ public final class StringUtils {
         try {
             return Long.toString(lng);
         } catch (Exception ex) {
-            //System.out.println(ex.getMessage());
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             throw ex;
         }
     }
@@ -269,8 +269,7 @@ public final class StringUtils {
             }
             return arrResult;
         } catch (Exception ex) {
-            //System.out.println(ex.getMessage());
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             throw ex;
         }
     }
@@ -286,8 +285,7 @@ public final class StringUtils {
             }
             return arrResult;
         } catch (Exception ex) {
-            //System.out.println(ex.getMessage());
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             throw ex;
         }
     }
@@ -299,7 +297,7 @@ public final class StringUtils {
         try {
             return Long.parseLong(value);
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             throw ex;
         }
     }
@@ -337,14 +335,14 @@ public final class StringUtils {
     }
 
     public static boolean validString(String temp) {
-        if (temp == null || temp.trim().equals("")) {
+        if (temp == null || "".equals(temp.trim())) {
             return false;
         }
         return true;
     }
 
     public static List convertStrToList(String str) {
-        List choosedIdStrLst = new ArrayList();
+        List choosedIdStrLst = null;
         String[] choosedIdStrArr = str.trim().split(" ");
         if (choosedIdStrArr.length == 0) {
             choosedIdStrArr[0] = str;
@@ -356,9 +354,7 @@ public final class StringUtils {
             }
             choosedIdStrLst = Arrays.asList(arrResult);
         } catch (Exception ex) {
-            //System.out.println(ex.getMessage());
-            log.error(ex.getMessage());
-            //    throw ex;
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return choosedIdStrLst;
@@ -378,7 +374,8 @@ public final class StringUtils {
                 if (validString(str)) {
                     try {
                         lsValue.add(Long.parseLong(str));
-                    } catch (Exception en) {
+                    } catch (Exception e) {
+                        LogUtil.addLog(e);//binhnt sonar a160901
                     }
                 }
             }
@@ -421,7 +418,7 @@ public final class StringUtils {
         try {
             result = Long.valueOf(content);
         } catch (NumberFormatException ex) {
-            //     ex.printStackTrace();
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return result;
     }
@@ -559,31 +556,30 @@ public final class StringUtils {
         }
         return count;
     }
-    
-    private static final String [] EVENT_HANDLER_JS = {"FSCommand", "onAbort", "onActivate", "onAfterPrint", "onAfterUpdate", "onBeforeActivate", 
-        "onBeforeCopy", "onBeforeCut", "onBeforeDeactivate", "onBeforeEditFocus", "onBeforePaste", "onBeforePrint", 
-        "onBeforeUnload", "onBeforeUpdate", "onBegin", "onBlur", "onBounce", "onCellChange", "onChange", 
-        "onClick", "onContextMenu", "onControlSelect", "onCopy", "onCut", "onDataAvailable", "onDataSetChanged", 
-        "onDataSetComplete", "onDblClick", "onDeactivate", "onDrag", "onDragEnd", "onDragLeave", "onDragEnter", 
-        "onDragOver", "onDragDrop", "onDragStart", "onDrop", "onEnd", "onError", "onErrorUpdate", "onFilterChange", 
-        "onFinish", "onFocus", "onFocusIn", "onFocusOut", "onHashChange", "onHelp", "onInput", "onKeyDown", 
-        "onKeyPress", "onKeyUp", "onLayoutComplete", "onLoad", "onLoseCapture", "onMediaComplete", 
-        "onMediaError", "onMessage", "onMouseDown", "onMouseEnter", "onMouseLeave", "onMouseMove", 
-        "onMouseOut", "onMouseOver", "onMouseUp", "onMouseWheel", "onMove", "onMoveEnd", "onMoveStart", 
-        "onOffline", "onOnline", "onOutOfSync", "onPaste", "onPause", "onPopState", "onProgress", 
-        "onPropertyChange", "onReadyStateChange", "onRedo", "onRepeat", "onReset", "onResize", 
-        "onResizeEnd", "onResizeStart", "onResume", "onReverse", "onRowsEnter", "onRowExit", 
-        "onRowDelete", "onRowInserted", "onScroll", "onSeek", "onSelect", "onSelectionChange", 
-        "onSelectStart", "onStart", "onStop", "onStorage", "onSyncRestored", "onSubmit", 
+
+    private static final String[] EVENT_HANDLER_JS = {"FSCommand", "onAbort", "onActivate", "onAfterPrint", "onAfterUpdate", "onBeforeActivate",
+        "onBeforeCopy", "onBeforeCut", "onBeforeDeactivate", "onBeforeEditFocus", "onBeforePaste", "onBeforePrint",
+        "onBeforeUnload", "onBeforeUpdate", "onBegin", "onBlur", "onBounce", "onCellChange", "onChange",
+        "onClick", "onContextMenu", "onControlSelect", "onCopy", "onCut", "onDataAvailable", "onDataSetChanged",
+        "onDataSetComplete", "onDblClick", "onDeactivate", "onDrag", "onDragEnd", "onDragLeave", "onDragEnter",
+        "onDragOver", "onDragDrop", "onDragStart", "onDrop", "onEnd", "onError", "onErrorUpdate", "onFilterChange",
+        "onFinish", "onFocus", "onFocusIn", "onFocusOut", "onHashChange", "onHelp", "onInput", "onKeyDown",
+        "onKeyPress", "onKeyUp", "onLayoutComplete", "onLoad", "onLoseCapture", "onMediaComplete",
+        "onMediaError", "onMessage", "onMouseDown", "onMouseEnter", "onMouseLeave", "onMouseMove",
+        "onMouseOut", "onMouseOver", "onMouseUp", "onMouseWheel", "onMove", "onMoveEnd", "onMoveStart",
+        "onOffline", "onOnline", "onOutOfSync", "onPaste", "onPause", "onPopState", "onProgress",
+        "onPropertyChange", "onReadyStateChange", "onRedo", "onRepeat", "onReset", "onResize",
+        "onResizeEnd", "onResizeStart", "onResume", "onReverse", "onRowsEnter", "onRowExit",
+        "onRowDelete", "onRowInserted", "onScroll", "onSeek", "onSelect", "onSelectionChange",
+        "onSelectStart", "onStart", "onStop", "onStorage", "onSyncRestored", "onSubmit",
         "onTimeError", "onTrackChange", "onUndo", "onUnload", "onURLFlip", "seekSegmentTime"};
-    
-    
+
     public static String removeEventHandlerJS(String input) {
-        if(input != null) {
+        if (input != null) {
             for (String patter : EVENT_HANDLER_JS) {
                 input = Pattern.compile(patter, Pattern.CASE_INSENSITIVE).matcher(input).replaceAll("");
             }
-            while (input.contains("script")){
+            while (input.contains("script")) {
                 String input2 = input.replaceAll("script", "");
                 input = input2;
             }

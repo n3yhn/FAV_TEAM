@@ -7,6 +7,7 @@ package com.viettel.hqmc.DAO;
 
 import com.kpay.security.HashFunction;
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.Business;
 import com.viettel.hqmc.BO.Fee;
 import com.viettel.hqmc.BO.FeePaymentInfo;
@@ -19,7 +20,6 @@ import com.viettel.hqmc.DAOHE.FilesDAOHE;
 import com.viettel.hqmc.DAOHE.ProcedureDAOHE;
 import com.viettel.hqmc.FORM.FeeForm;
 import static com.viettel.voffice.common.util.CommonUtils.UpcaseFirst;
-import com.viettel.voffice.database.BO.Category;
 import com.viettel.voffice.database.DAO.BaseDAO;
 import com.viettel.voffice.database.DAO.GridResult;
 import com.viettel.voffice.database.DAOHibernate.EventLogDAOHE;
@@ -68,7 +68,7 @@ public class FeeDao extends BaseDAO {
                 searchForm = new FeeForm();
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         ProcedureDAOHE cdhe = new ProcedureDAOHE();
         lstCategory = cdhe.getAllProcedure();
@@ -99,7 +99,7 @@ public class FeeDao extends BaseDAO {
                         start = Integer.parseInt(startServerStr);
                     }
                 } catch (Exception ex) {
-                    log.error(ex.getMessage());
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                 }
             }
             FeeDAOHE = new FeeDAOHE();
@@ -108,7 +108,7 @@ public class FeeDao extends BaseDAO {
             getRequest().getSession().setAttribute("approvePage.startServer", start);
             getRequest().getSession().setAttribute("approvePage.countServer", count);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         jsonDataGrid.setItems(gridResult.getLstResult());
         jsonDataGrid.setTotalRows(gridResult.getnCount().intValue());
@@ -176,8 +176,8 @@ public class FeeDao extends BaseDAO {
 
             }
         } catch (Exception ex) {
-            Logger.getLogger(FilesDAO.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return jsonArray.toString();
     }
@@ -215,7 +215,7 @@ public class FeeDao extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa biểu phí thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Xóa biểu phí không thành công");
         }
@@ -253,12 +253,12 @@ public class FeeDao extends BaseDAO {
         if (parts[11] != null && parts[11].trim().length() > 0) {
             fields.put("bank_code", parts[11]);
         }
-        String secure_hash = "";
+        String secure_hash;
         int countObj = 0;
         String[] lstfeeInfoIdNew = null;
         HashFunction hf = new HashFunction();
         ResourceBundle rb = ResourceBundle.getBundle("config");
-        String url_redirect = rb.getString("online_keypay");
+//        String url_redirect = rb.getString("online_keypay");
         String transKey = rb.getString("transkey");
         secure_hash = hf.hashAllFields(fields, transKey);
         boolean check = true;
@@ -307,6 +307,7 @@ public class FeeDao extends BaseDAO {
                 this.onSavePaymentOnlineIPN(lstfeeInfoIdNew[i]);
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             check = false;
         }
         List resultMessage = new ArrayList();
@@ -366,7 +367,7 @@ public class FeeDao extends BaseDAO {
 
 //hieptq update 011214 xac nhan phi tien mat
     public String onSavePaymentCash() {
-        boolean bAcceptPay = false;//binhnt53 update 150215
+        boolean bAcceptPay;//binhnt53 update 150215
         boolean bAcceptSend = false;//binhnt53 update 150215
         FeeDAOHE rdhe = new FeeDAOHE();
         Long paymentInfoId = Long.parseLong(getRequest().getParameter("paymentInfoId"));
@@ -488,8 +489,8 @@ public class FeeDao extends BaseDAO {
             commentReject = new String(decoder.decode(getRequest().getParameter("commentReject").replace("_", "+").getBytes()), "UTF-8");
 
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(FeeDao.class
-                    .getName()).log(Level.SEVERE, null, ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FeeDao.class.getName()).log(Level.SEVERE, null, ex.getMessage());
         }
         boolean bReturn = rdhe.denyFee(paymentInfoId, commentReject);
         List resultMessage = new ArrayList();
@@ -586,13 +587,12 @@ public class FeeDao extends BaseDAO {
             if (parts[11] != null && parts[11].trim().length() > 0) {
                 fields.put("bank_code", parts[11]);
             }
-            String secure_hash = "";
 
             HashFunction hf = new HashFunction();
             ResourceBundle rb = ResourceBundle.getBundle("config");
-            String url_redirect = rb.getString("online_keypay");
+//            String url_redirect = rb.getString("online_keypay");
             String transKey = rb.getString("transkey");
-            secure_hash = hf.hashAllFields(fields, transKey);
+            String secure_hash = hf.hashAllFields(fields, transKey);
             boolean check = true;
             if (secure_hash.equals(parts[17])) {
                 Long userId = getUserId();
@@ -640,32 +640,33 @@ public class FeeDao extends BaseDAO {
         } catch (Exception ex) {
             EventLogDAOHE edhe = new EventLogDAOHE();
             edhe.insertEventLog("KEYPAY ERROR: ", "ERROR:" + ex.getMessage(), getRequest());
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return GRID_DATA;
     }
 
     // hieptq update check KeyPay 170915
     public String onSavePaymentOnlineIPN(String feePaymentInfoId) {
-        try{      
-        
-        FeeDAOHE rdhe = new FeeDAOHE();
-        Long paymentInfoId = Long.parseLong(feePaymentInfoId);
-        FilesDAOHE fdhe = new FilesDAOHE();
-        FeePaymentInfoDAOHE fpidhe = new FeePaymentInfoDAOHE();
-        FeePaymentInfo fpi = fpidhe.findById(paymentInfoId);
-        Files files = fdhe.findById(fpi.getFileId());
-        String fullName = Constants.KEYPAY.KEYPAY;
-        boolean bReturn = rdhe.savePaymentInfoOnline(paymentInfoId, fullName, files.getAgencyId(), files.getAgencyName(), null, null);
-        if (bReturn) {
+        try {
+
+            FeeDAOHE rdhe = new FeeDAOHE();
+            Long paymentInfoId = Long.parseLong(feePaymentInfoId);
+            FilesDAOHE fdhe = new FilesDAOHE();
+            FeePaymentInfoDAOHE fpidhe = new FeePaymentInfoDAOHE();
+            FeePaymentInfo fpi = fpidhe.findById(paymentInfoId);
+            Files files = fdhe.findById(fpi.getFileId());
+            String fullName = Constants.KEYPAY.KEYPAY;
+            boolean bReturn = rdhe.savePaymentInfoOnline(paymentInfoId, fullName, files.getAgencyId(), files.getAgencyName(), null, null);
+            if (bReturn) {
+                EventLogDAOHE edhe = new EventLogDAOHE();
+                edhe.insertEventLog("Xác nhận thanh toán tự động thành công qua IPN ", "phí có id=" + paymentInfoId, getRequest());
+            } else {
+                EventLogDAOHE edhe = new EventLogDAOHE();
+                edhe.insertEventLog("Xác nhận thanh toán tự động thành công qua IPN ", "phí có id=" + paymentInfoId, getRequest());
+            }
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             EventLogDAOHE edhe = new EventLogDAOHE();
-            edhe.insertEventLog("Xác nhận thanh toán tự động thành công qua IPN ", "phí có id=" + paymentInfoId, getRequest());
-        } else {
-            EventLogDAOHE edhe = new EventLogDAOHE();
-            edhe.insertEventLog("Xác nhận thanh toán tự động thành công qua IPN ", "phí có id=" + paymentInfoId, getRequest());
-        }
-        }catch(Exception ex){
-             EventLogDAOHE edhe = new EventLogDAOHE();
             edhe.insertEventLog("KEYPAY ERROR 1: ", "ERROR:" + ex.getMessage(), getRequest());
         }
         return GRID_DATA;
@@ -688,7 +689,7 @@ public class FeeDao extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            System.out.println(ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return result;
     }

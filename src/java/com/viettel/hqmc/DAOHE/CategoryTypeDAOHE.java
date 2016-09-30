@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAOHE;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.CategoryType;
 import com.viettel.hqmc.FORM.CategoryTypeForm;
 import com.viettel.common.util.StringUtils;
@@ -43,6 +44,7 @@ public class CategoryTypeDAOHE extends GenericDAOHibernate<CategoryType, Long> {
             lstFactory.remove(type);
         }
     }
+
     /*
      *
      */
@@ -84,6 +86,7 @@ public class CategoryTypeDAOHE extends GenericDAOHibernate<CategoryType, Long> {
         GridResult gr = new GridResult(total, lstResult);
         return gr;
     }
+
     /*
      * 
      */
@@ -112,7 +115,8 @@ public class CategoryTypeDAOHE extends GenericDAOHibernate<CategoryType, Long> {
             lstCategoryType = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<CategoryType>();
         }
 //        lstCategoryFactory.put(type, lstResult);
@@ -124,6 +128,7 @@ public class CategoryTypeDAOHE extends GenericDAOHibernate<CategoryType, Long> {
     //kiem tra doi tuong co trung khong   
     /**
      * kiem tra doi tuong co bi trung k
+     *
      * @param form
      * @return
      */

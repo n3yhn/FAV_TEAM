@@ -5,6 +5,7 @@
 package com.viettel.voffice.database.DAO;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.client.form.ProcessForm;
 import com.viettel.voffice.database.BO.Process;
 import com.viettel.voffice.database.DAOHibernate.ProcessDAOHE;
@@ -31,7 +32,7 @@ public class ProcessDAO extends BaseDAO {
     public String prepare() {
         try {
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return FORWARD_PAGE;
     }
@@ -59,7 +60,7 @@ public class ProcessDAO extends BaseDAO {
                 jsonDataGrid.setTotalRows(gridResult.getnCount().intValue());
             }
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
 
@@ -90,7 +91,7 @@ public class ProcessDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
 
@@ -162,15 +163,15 @@ public class ProcessDAO extends BaseDAO {
                 Process p = pdaohe.findById(processAddEditForm.getProcessId());
                 if (p != null) {
                     DepartmentDAOHE deptdaohe = new DepartmentDAOHE();
-                    Department deptbo = null;
+                    Department deptbo;
                     UsersDAOHE usersdaohe = new UsersDAOHE();
-                    Users userbo = null;
-                    
+                    Users userbo;
+
                     if (processAddEditForm.getSendUser() != null
                             && processAddEditForm.getSendUser().equals("") == false
                             && processAddEditForm.getSendUserId() != null) {
                         p.setSendUserId(processAddEditForm.getSendUserId());
-                        
+
                         userbo = usersdaohe.findById(processAddEditForm.getSendUserId());
                         if (userbo != null && userbo.getFullName() != null) {
                             p.setSendUser(userbo.getFullName());
@@ -202,7 +203,7 @@ public class ProcessDAO extends BaseDAO {
                             && processAddEditForm.getReceiveGroup().equals("") == false
                             && processAddEditForm.getReceiveGroupId() != null) {
                         p.setReceiveGroupId(processAddEditForm.getReceiveGroupId());
-                        deptbo = new Department();
+//                        deptbo = new Department();
                         deptbo = deptdaohe.findBOById(processAddEditForm.getReceiveGroupId());
                         if (deptbo != null && deptbo.getDeptName() != null) {
                             p.setReceiveGroup(deptbo.getDeptName());
@@ -217,7 +218,7 @@ public class ProcessDAO extends BaseDAO {
                             && processAddEditForm.getSendGroup().equals("") == false
                             && processAddEditForm.getSendGroupId() != null) {
                         p.setSendGroupId(processAddEditForm.getSendGroupId());
-                        deptbo = new Department();
+//                        deptbo = new Department();
                         deptbo = deptdaohe.findBOById(processAddEditForm.getSendGroupId());
                         if (deptbo != null && deptbo.getDeptName() != null) {
                             p.setSendGroup(deptbo.getDeptName());
@@ -249,6 +250,7 @@ public class ProcessDAO extends BaseDAO {
                 resultMessage.add("Cập nhật luồng xử lý không thành công");
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật luồng xử lý không thành công");
         }
@@ -278,7 +280,7 @@ public class ProcessDAO extends BaseDAO {
                 resultMessage.add("Xóa luồng xử lý không thành công");
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Xóa luồng xử lý không thành công");
         }

@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.DAOHE.VReportStaffProcessDAOHE;
 import com.viettel.hqmc.FORM.CategoryTypeForm;
 import com.viettel.hqmc.FORM.FilesForm;
@@ -22,8 +23,8 @@ public class VReportStaffProcessDAO extends BaseDAO {
     private FilesForm searchForm;
     private FilesForm createForm;
     VReportStaffProcessDAOHE VReportStaffProcessDao = new VReportStaffProcessDAOHE();
-    private List<CategoryTypeForm> lstItemOnGrid;    
-    
+    private List<CategoryTypeForm> lstItemOnGrid;
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VReportStaffProcessDAO.class);
 
     /**
@@ -34,11 +35,12 @@ public class VReportStaffProcessDAO extends BaseDAO {
         try {
             //todo code here
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return this.forwardPage;
     }
-    
+
     public String onSearch() {
         getGridInfo();
 
@@ -49,7 +51,7 @@ public class VReportStaffProcessDAO extends BaseDAO {
         jsonDataGrid.setTotalRows(gr.getnCount().intValue());
 
         return GRID_DATA;
-    }   
+    }
 
     public List<CategoryTypeForm> getLstItemOnGrid() {
         return lstItemOnGrid;
@@ -74,5 +76,5 @@ public class VReportStaffProcessDAO extends BaseDAO {
     public void setCreateForm(FilesForm createForm) {
         this.createForm = createForm;
     }
-    
+
 }

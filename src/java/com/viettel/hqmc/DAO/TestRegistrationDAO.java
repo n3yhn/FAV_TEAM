@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.TestRegistration;
 import com.viettel.hqmc.DAOHE.TestRegistrationDAOHE;
 import com.viettel.hqmc.FORM.TestRegistrationForm;
@@ -23,13 +24,13 @@ public class TestRegistrationDAO extends BaseDAO {
     private TestRegistrationForm createForm;
     TestRegistrationDAOHE testRegistrationDao = new TestRegistrationDAOHE();
     private List<TestRegistrationForm> lstItemOnGrid;
-    
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TestRegistrationDAO.class);
+
     /*
      * toShowPage
      * show data perpare after show page
      */
-
     /**
      *
      * @return
@@ -38,7 +39,8 @@ public class TestRegistrationDAO extends BaseDAO {
         try {
             //todo code here
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return this.forwardPage;
     }
@@ -88,6 +90,7 @@ public class TestRegistrationDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật không thành công");
         }
@@ -99,8 +102,7 @@ public class TestRegistrationDAO extends BaseDAO {
 
     /**
      *
-     * @return
-     * @throws Exception
+     * @return @throws Exception
      */
     public String onDelete() throws Exception {
         List resultMessage = new ArrayList();
@@ -119,7 +121,8 @@ public class TestRegistrationDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Xóa không thành công");
         }

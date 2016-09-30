@@ -4,6 +4,7 @@
  */
 package com.viettel.ws.client;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.database.DAO.BaseDAO;
 import com.viettel.vsaadmin.database.BO.Applications;
 import com.viettel.vsaadmin.database.BO.Objects;
@@ -21,6 +22,7 @@ import org.w3c.dom.Document;
 public class UtilDAO extends BaseDAO {
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UtilDAO.class);
+
     public String validate(String userName, String domainCode) {
         String strResult = null;
 
@@ -33,7 +35,8 @@ public class UtilDAO extends BaseDAO {
 
             strResult = JDBCUtil.serialize(doc);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             strResult = "no";
         }
 
@@ -52,6 +55,7 @@ public class UtilDAO extends BaseDAO {
 
             strResult = JDBCUtil.serialize(doc);
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             strResult = "no";
         }
 
@@ -69,14 +73,14 @@ public class UtilDAO extends BaseDAO {
         try {
             String strSQL = "SELECT u.* FROM users u WHERE u.user_name = ? AND u.status = 1 ";
 
-
             Query q = getSession().createSQLQuery(strSQL).addEntity(Users.class);
             q.setParameter(0, strUserName.toLowerCase());
             List rs = q.list();
 
             doc = JDBCUtil.add2Document(rs, doc, "UserData");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return doc;
     }
@@ -102,7 +106,8 @@ public class UtilDAO extends BaseDAO {
             JDBCUtil.add2Document(rs, doc, "Roles");
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return doc;
     }
@@ -139,7 +144,8 @@ public class UtilDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return doc;
     }
@@ -180,7 +186,8 @@ public class UtilDAO extends BaseDAO {
 
             JDBCUtil.add2Document(rs, doc, "ObjectAll");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return doc;
     }
@@ -243,7 +250,8 @@ public class UtilDAO extends BaseDAO {
                 JDBCUtil.add2Document(rs, doc, "ObjectAll");
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return doc;
     }
@@ -261,8 +269,9 @@ public class UtilDAO extends BaseDAO {
                     iReturn = rs.get(0).getAppId();
                 }
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
         }
 
         return iReturn;

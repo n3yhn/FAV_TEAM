@@ -14,6 +14,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import java.util.HashMap;
 import org.hibernate.Query;
+import com.viettel.common.util.LogUtil;
 
 /**
  *
@@ -210,7 +211,8 @@ public class TechnicalStandardDAOHE extends GenericDAOHibernate<TechnicalStandar
     }
 
     /**
-     *findAllStandard
+     * findAllStandard
+     *
      * @return
      */
     public List findAllStandard() {
@@ -224,7 +226,7 @@ public class TechnicalStandardDAOHE extends GenericDAOHibernate<TechnicalStandar
             lstStandard = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<>();
         }
         return lstStandard;

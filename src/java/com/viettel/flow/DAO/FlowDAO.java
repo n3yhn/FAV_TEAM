@@ -5,6 +5,7 @@
 package com.viettel.flow.DAO;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.client.form.FlowForm;
 import com.viettel.voffice.client.form.NodeForm;
 import com.viettel.voffice.client.form.NodeToNodeForm;
@@ -26,6 +27,7 @@ import org.hibernate.Session;
  * @author havm2
  */
 public class FlowDAO extends BaseDAO {
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FlowDAO.class);
     private FlowForm searchFlowForm;
     private FlowForm createForm;
@@ -54,7 +56,6 @@ public class FlowDAO extends BaseDAO {
 //        lstDeptcbx.addAll(lstDept);
 //        lstDeptcbx.add(0, new Procedure(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
 //        getRequest().setAttribute("lstDeptProcedure", lstDeptcbx);
-
         return "searchPage";
     }
 
@@ -72,7 +73,7 @@ public class FlowDAO extends BaseDAO {
             lstDeptProcedure.setIdentifier("deptId");
             lstDeptProcedure.setItems(lstDept);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "lstDeptProcedure";
     }
@@ -126,6 +127,7 @@ public class FlowDAO extends BaseDAO {
         } catch (Exception ex) {
             resultMessage.add("3");
             resultMessage.add("Cập nhật luồng không thành công");
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         jsonDataGrid.setItems(resultMessage);
@@ -143,7 +145,7 @@ public class FlowDAO extends BaseDAO {
             jsonDataGrid.setItems(lstResult);
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return GRID_DATA;
@@ -165,7 +167,7 @@ public class FlowDAO extends BaseDAO {
             }
             jsonDataGrid.setItems(lstResult);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return GRID_DATA;
     }
@@ -185,7 +187,7 @@ public class FlowDAO extends BaseDAO {
                 jsonDataGrid.setTotalRows(0);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return GRID_DATA;
     }
@@ -198,7 +200,7 @@ public class FlowDAO extends BaseDAO {
             lst.add(node.getNodeId());
         } catch (Exception ex) {
             lst.add("");
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         jsonDataGrid.setItems(lst);
         return GRID_DATA;
@@ -272,8 +274,8 @@ public class FlowDAO extends BaseDAO {
             String hql = "update Node n set n.isActive = 0 where n.flowId = :flowId and n.nodeId not in (:nodeList)";
             String[] lstNodeStrId = nodeInFlow.split(",");
             ArrayList lstNodeId = new ArrayList();
-            if(lstNodeStrId != null && lstNodeStrId.length >0){
-                for(String node:lstNodeStrId){
+            if (lstNodeStrId != null && lstNodeStrId.length > 0) {
+                for (String node : lstNodeStrId) {
                     Long id = Long.parseLong(node);
                     lstNodeId.add(id);
                 }
@@ -346,7 +348,7 @@ public class FlowDAO extends BaseDAO {
                 resultMessage.add("Xóa thành công " + n + " bản ghi");
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Xóa luồng không thành công");
         }

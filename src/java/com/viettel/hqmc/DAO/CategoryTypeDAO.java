@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.CategoryType;
 import com.viettel.hqmc.DAOHE.CategoryTypeDAOHE;
 import com.viettel.hqmc.FORM.CategoryTypeForm;
@@ -23,8 +24,9 @@ public class CategoryTypeDAO extends BaseDAO {
     private CategoryTypeForm createForm;
     CategoryTypeDAOHE categoryTypeDao = new CategoryTypeDAOHE();
     private List<CategoryTypeForm> lstItemOnGrid;
-    
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CategoryTypeDAO.class);
+
     /*
      * toShowPage
      * show data perpare after show page
@@ -38,7 +40,7 @@ public class CategoryTypeDAO extends BaseDAO {
         try {
             //todo code here
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return this.forwardPage;
     }
@@ -90,6 +92,7 @@ public class CategoryTypeDAO extends BaseDAO {
         } catch (Exception ex) {
             resultMessage.add("3");
             resultMessage.add("Cập nhật loại danh mục không thành công");
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         jsonDataGrid.setItems(resultMessage);
@@ -99,8 +102,7 @@ public class CategoryTypeDAO extends BaseDAO {
 
     /**
      *
-     * @return
-     * @throws Exception
+     * @return @throws Exception
      */
     public String onDelete() throws Exception {
         List resultMessage = new ArrayList();
@@ -108,7 +110,7 @@ public class CategoryTypeDAO extends BaseDAO {
             CategoryTypeDAOHE cthe = new CategoryTypeDAOHE();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 CategoryTypeForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getCategoryTypeId() != null && form.getCategoryTypeId() != 0D) {
+                if (form != null && form.getCategoryTypeId() != null && form.getCategoryTypeId() != 0L) {
                     CategoryType bo = cthe.getById("categoryTypeId", form.getCategoryTypeId());
                     if (bo != null) {
                         bo.setIsActive(0l);
@@ -119,7 +121,7 @@ public class CategoryTypeDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa danh mục thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Xóa danh mục không thành công");
         }

@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.PaymentHistory;
 import com.viettel.hqmc.DAOHE.PaymentHistoryDAOHE;
 import com.viettel.hqmc.FORM.PaymentHistoryForm;
@@ -24,8 +25,9 @@ public class PaymentHistoryDAO extends BaseDAO {
     private PaymentHistoryForm createForm;
     PaymentHistoryDAOHE categoryTypeDao = new PaymentHistoryDAOHE();
     private List<PaymentHistoryForm> lstItemOnGrid;
-    
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaymentHistoryDAO.class);
+
     /*
      * toShowPage
      * show data perpare after show page
@@ -39,7 +41,8 @@ public class PaymentHistoryDAO extends BaseDAO {
         try {
             //todo code here
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return this.forwardPage;
     }
@@ -88,6 +91,7 @@ public class PaymentHistoryDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật loại danh mục không thành công");
         }
@@ -99,8 +103,7 @@ public class PaymentHistoryDAO extends BaseDAO {
 
     /**
      *
-     * @return
-     * @throws Exception
+     * @return @throws Exception
      */
     public String onDelete() throws Exception {
         List resultMessage = new ArrayList();
@@ -119,7 +122,8 @@ public class PaymentHistoryDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa danh mục thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Xóa danh mục không thành công");
         }

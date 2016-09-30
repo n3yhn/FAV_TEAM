@@ -5,6 +5,7 @@
 package com.viettel.voffice.database.DAOHibernate;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.vsaadmin.database.BO.RoleUserDept;
 import com.viettel.vsaadmin.database.DAOHibernate.DepartmentDAOHE;
 import java.util.ArrayList;
@@ -37,8 +38,8 @@ public class RoleUserDeptDAOHE extends GenericDAOHibernate<RoleUserDept, Long> {
                 deptIdLstOfLeader = new ArrayList<Long>();
                 deptIdLstOfLeader.add(deptId);
             }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<Long>();
         }
         

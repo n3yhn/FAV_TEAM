@@ -6,16 +6,15 @@ package com.viettel.hqmc.DAOHE;
 
 import com.viettel.common.util.Constants;
 import com.viettel.common.util.DateTimeUtils;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.Announcement;
 import com.viettel.hqmc.BO.AnnouncementReceiptPaper;
-import com.viettel.hqmc.BO.ConfirmImportSatistPaper;
 import com.viettel.hqmc.BO.CountNo;
 import com.viettel.hqmc.BO.Files;
 import com.viettel.hqmc.BO.Procedure;
 import com.viettel.hqmc.BO.RequestComment;
 import static com.viettel.hqmc.DAOHE.FilesDAOHE.getFileStatusName;
 import com.viettel.hqmc.FORM.AnnouncementReceiptPaperForm;
-import com.viettel.hqmc.FORM.ConfirmImportSatistPaperForm;
 import com.viettel.hqmc.FORM.FilesForm;
 import com.viettel.voffice.database.DAOHibernate.GenericDAOHibernate;
 import com.viettel.voffice.database.DAOHibernate.ProcessDAOHE;
@@ -113,7 +112,7 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
                                     getSession().beginTransaction().commit();
                                     return true;
                                 } catch (Exception ex) {
-                                    log.error(ex.getMessage());
+                                    LogUtil.addLog(ex);//binhnt sonar a160901
                                     return false;
                                 }
                             } else {//co so roi thuc hien update khong tao moi - binhnt53 14.11.12
@@ -168,7 +167,7 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return false;
         }
 
@@ -451,8 +450,7 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
                                 msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
                                 //email
                                 MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
-                                String msge = "";
-                                msge = "Hồ sơ mã: " + file.getFileCode()
+                                String msge = "Hồ sơ mã: " + file.getFileCode()
                                         + " của doanh nghiệp: " + file.getBusinessName()
                                         + " đang trong trạng thái: đã phê duyệt, doanh nghiệp lưu ý đóng lệ phí cấp số để được cấp bản công bố";
                                 msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
@@ -464,7 +462,7 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -538,7 +536,7 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
                                         getSession().beginTransaction().commit();
                                         return true;
                                     } catch (Exception ex) {
-                                        log.error(ex.getMessage());
+                                        LogUtil.addLog(ex);//binhnt sonar a160901
                                         return false;
                                     }
                                 } else {//co so roi thuc hien update khong tao moi - binhnt53 14.11.12
@@ -593,7 +591,7 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return false;
         }
         return true;

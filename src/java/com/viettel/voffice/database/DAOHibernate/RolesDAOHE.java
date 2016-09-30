@@ -5,6 +5,7 @@
 package com.viettel.voffice.database.DAOHibernate;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.vsaadmin.database.BO.Roles;
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class RolesDAOHE extends GenericDAOHibernate<Roles, Long> {
 
             return lst;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -95,7 +96,7 @@ public class RolesDAOHE extends GenericDAOHibernate<Roles, Long> {
                 role = roles.get(0);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return role.getRoleName();
     }
@@ -113,7 +114,7 @@ public class RolesDAOHE extends GenericDAOHibernate<Roles, Long> {
                 role = roles.get(0);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return role;
     }

@@ -5,16 +5,15 @@
 package com.viettel.ws;
 
 import com.viettel.common.util.DateTimeUtils;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.AnnouncementReceiptPaper;
 import com.viettel.hqmc.BO.Business;
 import com.viettel.hqmc.BO.Files;
 import com.viettel.hqmc.BO.Procedure;
-import com.viettel.hqmc.BO.XmlWs;
 import com.viettel.hqmc.DAOHE.AnnouncementReceiptPaperDAOHE;
 import com.viettel.hqmc.DAOHE.BusinessDAOHE;
 import com.viettel.hqmc.DAOHE.FilesDAOHE;
 import com.viettel.hqmc.DAOHE.FilesNoClobDAOHE;
-import com.viettel.hqmc.DAOHE.XmlWsDAOHE;
 import com.viettel.hqmc.FORM.FilesForm;
 import com.viettel.hqmc.FORM.ReIssueFormForm;
 import com.viettel.hqmc.FORM.TestRegistrationForm;
@@ -24,19 +23,9 @@ import com.viettel.voffice.database.DAOHibernate.VoAttachsDAOHE;
 import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import com.viettel.ws.ANNOUCERECEIVE.ANNOUNCESENDDtoType;
 import com.viettel.ws.BO.ANNOUNCERESULTDto;
-import com.viettel.ws.BO.Body;
-import com.viettel.ws.BO.CBREQUEST_CHANGE_330;
-import com.viettel.ws.BO.Content;
-import com.viettel.ws.BO.DNREQUEST_CHANGE_310;
-import com.viettel.ws.BO.DNREQUEST_DELETE_320;
 import com.viettel.ws.BO.ERRORDto;
 import com.viettel.ws.BO.ERRORLIST;
-import com.viettel.ws.BO.Envelope;
-import com.viettel.ws.BO.ErrorWs;
-import com.viettel.ws.BO.FEE_NOTICE_340;
 import com.viettel.ws.BO.FILERESULTSDto;
-import com.viettel.ws.BO.Header;
-import com.viettel.ws.BO.PERMIT_370;
 import com.viettel.ws.BO.RESULTPAGER;
 import com.viettel.ws.BO.SENDRESPONSEDto;
 import com.viettel.ws.FORM.ANNOUCE_RECEIVE;
@@ -54,7 +43,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -108,7 +96,7 @@ public class FilesWS extends BaseWS {
 //        }
         // check convert
         try {
-            createForm = null;
+//            createForm = null;//sonar
             ANNOUNCESENDDtoType file = XmlToObjectFile(xml);
 //            Helper vali = new Helper();
 //            ANNOUNCESENDDmapFILESFORM a = new ANNOUNCESENDDmapFILESFORM();
@@ -137,7 +125,8 @@ public class FilesWS extends BaseWS {
                 }
             }
         } catch (Exception ex) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
             ERRORDto eRRORDto = new ERRORDto();
             eRRORDto.setERRORCODE("A001-ANNOUNCESEND-0000");
             eRRORDto.setERRORID("");
@@ -159,29 +148,31 @@ public class FilesWS extends BaseWS {
             FilesDAOHE fdhe = new FilesDAOHE();
             fdhe.saveFilesWS(createForm);
 
-        } catch (Exception en) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
-            log.error(en.getMessage());
+//            log.error(en.getMessage());
         }
         return bReturn;
     }
 
     // service tra ket qua xu ly ho so PHHQ
     public String searchFiles(@WebParam(name = "tokenString") String tokenString, @WebParam(name = "name") FilesForm form, @WebParam(name = "start") int start, @WebParam(name = "count") int count) {
-        GridResult gr = null;
-        String xml = "";
+
         if (!ServiceSessionManager.validToken(tokenString)) {
             return "ERR";
         }
         try {
+            GridResult gr;
             FilesNoClobDAOHE fdhe = new FilesNoClobDAOHE();
             gr = fdhe.searchBusinessFiles(form, start, count, null, null);
-            xml = toXML(gr);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+            return toXML(gr);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(en.getMessage());
             // System.out.println(en.getMessage());
         }
-        return xml;
+        return null;
     }
 
     public String login(@WebParam(name = "userName") String userName, @WebParam(name = "password") String password) {
@@ -342,13 +333,15 @@ public class FilesWS extends BaseWS {
                 writer.flush();
                 return writer.toString();
 
-            } catch (Exception en) {
-                log.error(en.getMessage());
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(en.getMessage());
                 return "";
             }
 
         } catch (ParserConfigurationException ex) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";
     }
@@ -362,8 +355,9 @@ public class FilesWS extends BaseWS {
             JAXBElement<ANNOUNCESENDDtoType> je = unmarshaller.unmarshal(streamSource,
                     ANNOUNCESENDDtoType.class);
             return (ANNOUNCESENDDtoType) je.getValue();
-        } catch (JAXBException e) {
-            log.error(e);
+        } catch (JAXBException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
             return null;
         }
     }
@@ -371,7 +365,7 @@ public class FilesWS extends BaseWS {
 //binhnt53 140602 3.1.2.9	Services tiếp nhận hồ sơ xin cấp lại công bố hợp quy/phù hợp
     public boolean receivedReAnnounce(@WebParam(name = "tokenString") String tokenString, @WebParam(name = "createForm") String xml) {
         FilesForm createForm = new FilesForm();
-        RE_ANNOUNCE reAnnounce = new RE_ANNOUNCE();
+        RE_ANNOUNCE reAnnounce;
         ERROR err;
         RESULT lstError = new RESULT();
         if (!ServiceSessionManager.validToken(tokenString)) {
@@ -382,60 +376,62 @@ public class FilesWS extends BaseWS {
         }
         try {
             reAnnounce = xmlToRE_ANNOUNCE(xml);//try
+            //validate data
+            if (reAnnounce.getANNOUNCE_NUMBER().length() > 50) {
+                err = new ERROR();
+
+                lstError.getLstERROR().add(err);
+            }
+            if (reAnnounce.getBUSSINESS_CODE().length() > 50) {
+                err = new ERROR();
+
+                lstError.getLstERROR().add(err);
+            }
+            if (reAnnounce.getDOCUMENT_NUMBER().length() > 50) {
+                err = new ERROR();
+
+                lstError.getLstERROR().add(err);
+            }
+            if (reAnnounce.getFILE_ATTP_CODE().length() > 50) {
+                err = new ERROR();
+
+                lstError.getLstERROR().add(err);
+            }
+            if (reAnnounce.getFILE_CODE().length() > 50) {
+                err = new ERROR();
+
+                lstError.getLstERROR().add(err);
+            }
+            if (reAnnounce.getTYPE().length() > 50) {
+                err = new ERROR();
+
+                lstError.getLstERROR().add(err);
+            }
+            createForm.setFileCode(reAnnounce.getFILE_ATTP_CODE());
+            //!//validate data
+            Procedure procedurebo = getFileType(reAnnounce.getTYPE());
+            if (procedurebo != null) {
+                createForm.setFileType(procedurebo.getProcedureId());
+                createForm.setFileTypeName(procedurebo.getName());
+            }
+            ReIssueFormForm reIssueFormForm;
+            reIssueFormForm = reAnnounce.toReIssueFormForm();
+            createForm.setReIssueForm(reIssueFormForm);
+            createForm.setStatus(com.viettel.common.util.Constants.FILE_STATUS.NEW);
         } catch (Exception ex) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
             err = new ERROR();
-
             lstError.getLstERROR().add(err);
         }
-        //validate data
-        if (reAnnounce.getANNOUNCE_NUMBER().length() > 50) {
-            err = new ERROR();
 
-            lstError.getLstERROR().add(err);
-        }
-        if (reAnnounce.getBUSSINESS_CODE().length() > 50) {
-            err = new ERROR();
-
-            lstError.getLstERROR().add(err);
-        }
-        if (reAnnounce.getDOCUMENT_NUMBER().length() > 50) {
-            err = new ERROR();
-
-            lstError.getLstERROR().add(err);
-        }
-        if (reAnnounce.getFILE_ATTP_CODE().length() > 50) {
-            err = new ERROR();
-
-            lstError.getLstERROR().add(err);
-        }
-        if (reAnnounce.getFILE_CODE().length() > 50) {
-            err = new ERROR();
-
-            lstError.getLstERROR().add(err);
-        }
-        if (reAnnounce.getTYPE().length() > 50) {
-            err = new ERROR();
-
-            lstError.getLstERROR().add(err);
-        }
-        //!//validate data
-        createForm.setFileCode(reAnnounce.getFILE_ATTP_CODE());
-        Procedure procedurebo = getFileType(reAnnounce.getTYPE());
-        if (procedurebo != null) {
-            createForm.setFileType(procedurebo.getProcedureId());
-            createForm.setFileTypeName(procedurebo.getName());
-        }
-        ReIssueFormForm reIssueFormForm = new ReIssueFormForm();
-        reIssueFormForm = reAnnounce.toReIssueFormForm();
-        createForm.setReIssueForm(reIssueFormForm);
-        createForm.setStatus(com.viettel.common.util.Constants.FILE_STATUS.NEW);
         boolean bReturn = true;
         try {
             FilesDAOHE fdhe = new FilesDAOHE();
             fdhe.saveFiles(createForm);
         } catch (Exception ex) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
             err = new ERROR();
 //            err.setERROR_ID(0L);
 //            err.setERROR_CODE("none");
@@ -475,7 +471,7 @@ public class FilesWS extends BaseWS {
         annouceResult.setNSWFILECODE("");
         if (annrpbo != null) {
             RESULTPAGER resultpaper = new RESULTPAGER();
-            Files filesbo = new Files();
+            Files filesbo;
             FilesDAOHE fdaohe = new FilesDAOHE();
             filesbo = fdaohe.getFilesByAnnrpId(annrpbo.getAnnouncementReceiptPaperId());
             if (filesbo != null) {
@@ -488,7 +484,7 @@ public class FilesWS extends BaseWS {
             resultpaper.setBUSINESSFAX(annrpbo.getFax());
             resultpaper.setBUSINESSNAME(annrpbo.getBusinessName());
             resultpaper.setBUSINESSPHONE(annrpbo.getTelephone());
-            Business business = new Business();
+            Business business;
             BusinessDAOHE businessdaohe = new BusinessDAOHE();
             business = businessdaohe.findById(annrpbo.getBusinessId());
             resultpaper.setBUSSINESSCODE(business.getBusinessTaxCode());
@@ -519,11 +515,11 @@ public class FilesWS extends BaseWS {
             lstError.getLstERROR().add(err);
         }
         ANNOUCE_RECEIVE annouceReceive = new ANNOUCE_RECEIVE();
-        AnnouncementReceiptPaper arpbo = null;
+        AnnouncementReceiptPaper arpbo;
         AnnouncementReceiptPaperDAOHE arpdaohe = new AnnouncementReceiptPaperDAOHE();
         arpbo = arpdaohe.getARPToWsRAQ(annNo);
         if (arpbo != null) {
-            Files filesbo = new Files();
+            Files filesbo;
             FilesDAOHE fdaohe = new FilesDAOHE();
             filesbo = fdaohe.getFilesByAnnrpId(arpbo.getAnnouncementReceiptPaperId());
             ANNOUNCE_DETAILS ad = new ANNOUNCE_DETAILS();
@@ -552,7 +548,7 @@ public class FilesWS extends BaseWS {
 //        }
 //        ASSIGNMENT_QUERY reAnnounce = xmlToASSIGNMENT_QUERY(xml);
         AnnouncementReceiptPaperDAOHE annrpdaohe = new AnnouncementReceiptPaperDAOHE();
-        AnnouncementReceiptPaper annrpbo = null;
+        AnnouncementReceiptPaper annrpbo;
         annrpbo = annrpdaohe.getAnnouncementReceiptPaperToWs(xml);
 //        //validate
 //        if (reAnnounce.getANNOUNCE_NUMBER().length() > 50) {
@@ -598,14 +594,15 @@ public class FilesWS extends BaseWS {
     //binhnt53 3.1.2.11	Services tiếp nhận kết quả xử lý đơn xác nhận đạt yêu cầu nhập khẩu
     public String receivedTestRegistration(@WebParam(name = "tokenString") String tokenString, @WebParam(name = "annNo") String xml) {
         FilesForm createForm = new FilesForm();
-        FILERESULTSDto fILERESULTSDto = new FILERESULTSDto();
         if (!ServiceSessionManager.validToken(tokenString)) {
             return "";
         }
         try {
-            fILERESULTSDto = xmlToFILERESULTSDto(xml);//try
+//            FILERESULTSDto fILERESULTSDto = new FILERESULTSDto();
+            xmlToFILERESULTSDto(xml);//sonar
         } catch (Exception ex) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
         }
         //!//validate data
         //createForm.setFileCode(testRegistrationType.getFILE_ATTP_CODE());
@@ -621,7 +618,8 @@ public class FilesWS extends BaseWS {
             FilesDAOHE fdhe = new FilesDAOHE();
             fdhe.saveFiles(createForm);
         } catch (Exception ex) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";
     }
@@ -637,8 +635,9 @@ public class FilesWS extends BaseWS {
 
             return (COMPLAINTS) je.getValue();
 
-        } catch (JAXBException e) {
-            log.error(e);
+        } catch (JAXBException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
             return null;
         }
     }
@@ -658,7 +657,8 @@ public class FilesWS extends BaseWS {
                 return "error";
             }
         } catch (Exception ex) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901            
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
             return "error";
         }
 
@@ -731,20 +731,21 @@ public class FilesWS extends BaseWS {
             String pdfFilePath = rb1.getString("sign_download");
             String imageSignPath = rb1.getString("sign_image");
             File folder = new File(pdfFilePath);
-            File[] listOfFiles = null;
+            File[] listOfFiles;//sonar
             long startTime = System.currentTimeMillis(); //fetch starting time   
             Long timeOut = Long.parseLong(rb1.getString("time_out_cks"));
-            Boolean checkExist = false;
-            String roleSign = "";
-            String name = "";
-            Integer indexFile = 0;
-            byte[] pdf = null;
+            Boolean checkExist;
+            String roleSign;
+            String name;
+            Integer indexFile;
+            byte[] pdf;
             Date sysDate = null;
             VoAttachsDAOHE daoHe = new VoAttachsDAOHE();
             try {
                 sysDate = daoHe.getSysdate();
             } catch (Exception ex) {
-                Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
                 return null;
             }
 
@@ -773,9 +774,7 @@ public class FilesWS extends BaseWS {
                                 if (!splitName[3].startsWith(signType)) {
                                     continue;
                                 }
-
-                                checkExist = true;
-
+                                checkExist = true;//sonar
                                 if (splitName.length == 5) {
                                     String splitTypeStr = splitName[4].substring(0, splitName[4].indexOf(".pdf"));
                                     indexFile = Integer.parseInt(splitTypeStr);
@@ -814,7 +813,8 @@ public class FilesWS extends BaseWS {
                                         dllLoginBcy = read(new File(imageSignPath + "MEtoken.dll"));
                                     }
                                 } catch (IOException ex) {
-                                    Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+                                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                                    Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                                 object.setImageSign(compress(imageSign));
                                 object.setImageStamp(compress(imageStamp));
@@ -823,14 +823,14 @@ public class FilesWS extends BaseWS {
                                     object.setDllLoginBcy(compress(dllLoginBcy));
                                 }
                                 lstFile.add(object);
-
+                                if (checkExist) {//sonar
+                                    break;
+                                }
                             } catch (IOException ex) {
-                                Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, "FileWS: Có lỗi xảy ra trong quá trình tìm kiếm xử lý File trên Applet: " + ex.getMessage());
+                                LogUtil.addLog(ex);//binhnt sonar a160901
+//                                Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, "FileWS: Có lỗi xảy ra trong quá trình tìm kiếm xử lý File trên Applet: " + ex.getMessage());
                             }
                         }
-                    }
-                    if (checkExist) {
-                        break;
                     }
                 } else {
                     Thread.sleep(100);
@@ -839,7 +839,8 @@ public class FilesWS extends BaseWS {
 
             return lstFile;
         } catch (InterruptedException | NumberFormatException ex) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -985,7 +986,8 @@ public class FilesWS extends BaseWS {
             vdhe.commitDb();
             return true;
         } catch (Exception ex) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -1005,8 +1007,9 @@ public class FilesWS extends BaseWS {
             }
 
             return out.toByteArray();
-        } catch (final IOException e) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, e.getMessage());
+        } catch (final IOException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, e.getMessage());
             return data;
         }
     }
@@ -1026,10 +1029,11 @@ public class FilesWS extends BaseWS {
             }
 
             return out.toByteArray();
-        } catch (final IOException | DataFormatException e) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, e.getMessage());
+        } catch (final IOException | DataFormatException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, e.getMessage());
             return data;
         }
     }
-   
+
 }

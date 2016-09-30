@@ -2,6 +2,7 @@ package com.viettel.hqmc.DAO;
 
 import com.viettel.common.util.Constants;
 import com.viettel.common.util.DateTimeUtils;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.AnnouncementReceiptPaper;
 import com.viettel.hqmc.BO.Business;
 import com.viettel.hqmc.BO.EvaluationRecords;
@@ -23,8 +24,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.codec.binary.Base64;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import com.viettel.voffice.database.BO.Category;
@@ -108,6 +107,7 @@ public class ExportFileDAO extends BaseDAO {
     public String onExportPaper() {
         try {
             WordExportUtils wU = new WordExportUtils();
+            WordprocessingMLPackage wmp = new WordprocessingMLPackage();
             // insert ban cong bo
             if (fileId == null) {
                 throw new Exception("Không có hồ sơ");
@@ -134,8 +134,7 @@ public class ExportFileDAO extends BaseDAO {
             String matchingTarget = "";
             String effectiveDate = "";
             String receiptNo = "";
-            String fileCode = "";
-            WordprocessingMLPackage wmp = null;
+            String fileCode;
             // tempwordpaper
             switch (procedure.getDescription()) {
                 case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01:
@@ -160,13 +159,13 @@ public class ExportFileDAO extends BaseDAO {
                     wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(ReceiptPaperAnnounementTemp4Star))));
                     break;
                 case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05:
-                    String contentEdit = "";
+                    String contentEdit;
                     String publishDate = "";
                     String announmentNo = "";
                     String proName = "";
                     String busiName = "";
                     String busiAdd = "";
-                    String titleEdit = "";
+                    String titleEdit;
                     String receiptNoOld = "";
                     receiptNo = "0000";
                     //                    if (filesForm.getAnnouncement().getPublishDate() != null) {
@@ -205,7 +204,9 @@ public class ExportFileDAO extends BaseDAO {
                         }
                     }
                     Date dateNow = getSysdate();
-                    String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd") + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM") + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
+                    String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd")
+                            + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM")
+                            + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
                     if (filesForm.getAnnouncementReceiptPaperForm() != null) {
                         receiptDeptName = filesForm.getAnnouncementReceiptPaperForm().getReceiptDeptName();
                     } else if (filesForm.getConfirmImportSatistPaperForm() != null) {
@@ -338,7 +339,7 @@ public class ExportFileDAO extends BaseDAO {
                     filesForm.getDetailProduct().setDateOfManufactureStr(DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getDateOfManufacture(), "dd/MM/yyyy"));
                 }
             }
-            if (receiptDeptName.equals("Cục ATTP")) {
+            if ("Cục ATTP".equals(receiptDeptName)) {
                 wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
                 wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
                 wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
@@ -370,7 +371,7 @@ public class ExportFileDAO extends BaseDAO {
             }
 
             String signer = "";
-            String rolesigner = "";
+            String rolesigner;
 
             PositionDAOHE posdaohe = new PositionDAOHE();
             Position posbo = posdaohe.findPositionCode(getUserId());
@@ -413,7 +414,7 @@ public class ExportFileDAO extends BaseDAO {
             EventLogDAOHE edhe = new EventLogDAOHE();
             edhe.insertEventLog("Xuất giấy văn thư", "hồ sơ có id =" + filesForm.getFileId(), getRequest());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -556,7 +557,7 @@ public class ExportFileDAO extends BaseDAO {
                     filesForm.getDetailProduct().setDateOfManufactureStr(DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getDateOfManufacture(), "dd/MM/yyyy"));
                 }
             }
-            if (receiptDeptName.equals("Cục ATTP")) {
+            if ("Cục ATTP".equals(receiptDeptName)) {
                 wU.replacePlaceholder(wmpOnlyPaper, "BỘ Y TẾ", "${deptParent}");
                 wU.replacePlaceholder(wmpOnlyPaper, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
                 wU.replacePlaceholder(wmpOnlyPaper, "Cục An toàn thực phẩm", "${receiptDeptNames}");
@@ -588,7 +589,7 @@ public class ExportFileDAO extends BaseDAO {
             }
 
             String signer = "";
-            String rolesigner = "";
+            String rolesigner;
 
             PositionDAOHE posdaohe = new PositionDAOHE();
             Position posbo = posdaohe.findPositionCode(getUserId());
@@ -618,7 +619,7 @@ public class ExportFileDAO extends BaseDAO {
             wU.replacePlaceholder(wmpOnlyPaper, map);
             return wmpOnlyPaper;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -828,7 +829,7 @@ public class ExportFileDAO extends BaseDAO {
                     filesForm.getDetailProduct().setDateOfManufactureStr(DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getDateOfManufacture(), "dd/MM/yyyy"));
                 }
             }
-            if (receiptDeptName.equals("Cục ATTP")) {
+            if ("Cục ATTP".equals(receiptDeptName)) {
                 wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
                 wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
                 wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
@@ -854,7 +855,7 @@ public class ExportFileDAO extends BaseDAO {
                 wU.replacePlaceholder(wmp, effectiveDate, "${effectiveDate}");
             }
             String signer = "";
-            String rolesigner = "";
+            String rolesigner;
 
             PositionDAOHE posdaohe = new PositionDAOHE();
             Position posbo = posdaohe.findPositionCode(getUserId());
@@ -1147,9 +1148,10 @@ public class ExportFileDAO extends BaseDAO {
                 return GRID_DATA;
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Lỗi trong quá trình xử lý File PDF");
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình xử lý File PDF: " + ex.getMessage());
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình xử lý File PDF: " + ex.getMessage());
         }
         jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;
@@ -1237,9 +1239,11 @@ public class ExportFileDAO extends BaseDAO {
                 case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR:
                     String pubDate = "";
                     String annouNo = "";
-                    String effDate = "";
+                    String effDate;
                     if (filesForm.getAnnouncement().getPublishDate() != null) {
-                        pubDate = "ngày " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "yyyy");
+                        pubDate = "ngày " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "dd")
+                                + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "MM")
+                                + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "yyyy");
                     }
                     if (filesForm.getEffectiveDate() != null) {
                         if (filesForm.getEffectiveDate() > 0L) {
@@ -1259,13 +1263,13 @@ public class ExportFileDAO extends BaseDAO {
                     wU.replacePlaceholder(wmp, effDate, "${effDate}");
                     break;
                 case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05:
-                    String contentEdit = "";
+                    String contentEdit;
                     String publishDate = "";
                     String announmentNo = "";
                     String proName = "";
                     String busiName = "";
                     String busiAdd = "";
-                    String titleEdit = "";
+                    String titleEdit;
                     String receiptNoOld = "";
                     if (filesForm.getContentsEditATTP() != null && !filesForm.getContentsEditATTP().isEmpty()) {
                         contentEdit = filesForm.getContentsEditATTP();
@@ -1430,7 +1434,7 @@ public class ExportFileDAO extends BaseDAO {
                     filesForm.getDetailProduct().setDateOfManufactureStr(DateTimeUtils.convertDateToString(filesForm.getDetailProduct().getDateOfManufacture(), "dd/MM/yyyy"));
                 }
             }
-            if (receiptDeptName.equals("Cục ATTP")) {
+            if ("Cục ATTP".equals(receiptDeptName)) {
                 wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
                 wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
                 wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
@@ -1457,7 +1461,7 @@ public class ExportFileDAO extends BaseDAO {
             }
 
             String signer = "";
-            String rolesigner = "";
+            String rolesigner;
 
             PositionDAOHE posdaohe = new PositionDAOHE();
             Position posbo = posdaohe.findPositionCode(getUserId());
@@ -1759,9 +1763,10 @@ public class ExportFileDAO extends BaseDAO {
                 //Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, "Thành Công");
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Lỗi trong quá trình xử lý File PDF");
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình xử lý File PDF: " + ex.getMessage());
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình xử lý File PDF: " + ex.getMessage());
         }
         jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;
@@ -1775,13 +1780,13 @@ public class ExportFileDAO extends BaseDAO {
     public String onExportEvaluation() {
         try {
             WordExportUtils wU = new WordExportUtils();
-            String sendDate = "";
-            String businessName = "";
-            String businessAddress = "";
-            String productName = "";
-            String legalContent = "";
-            String foodSafetyQualityContent = "";
-            String effectUtilityContent = "";
+            String sendDate;
+            String businessName;
+            String businessAddress;
+            String productName;
+            String legalContent;
+            String foodSafetyQualityContent;
+            String effectUtilityContent;
 
             if (fileId == null) {
                 throw new Exception("Không có hồ sơ");
@@ -1790,7 +1795,7 @@ public class ExportFileDAO extends BaseDAO {
             Files form = fdhe.findById(fileId);
             //tim tham dinh
             EvaluationRecordsDAOHE evaluationRecordsDAOHE = new EvaluationRecordsDAOHE();
-            EvaluationRecords evaluationRecords = new EvaluationRecords();
+            EvaluationRecords evaluationRecords;
             evaluationRecords = evaluationRecordsDAOHE.findFilesByFileId(form);
             if (evaluationRecords == null) {
                 throw new Exception("không có thẩm định");
@@ -1804,7 +1809,7 @@ public class ExportFileDAO extends BaseDAO {
                 effectUtilityContent = evaluationRecords.getEffectUtilityContent();
             }
 
-            WordprocessingMLPackage wmp = null;
+            WordprocessingMLPackage wmp;
             wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempPaperWordEvaluation))));
             wU.replacePlaceholder(wmp, sendDate, "${sendDate}");
             wU.replacePlaceholder(wmp, businessName, "${businessName}");
@@ -1857,7 +1862,7 @@ public class ExportFileDAO extends BaseDAO {
             wU.writeDocxToStream(wmp, getResponse());
 
         } catch (Exception en) {
-            log.error(en.getMessage());
+            LogUtil.addLog(en);//binhnt sonar a160901
         }
         return null;
     }
@@ -2783,7 +2788,7 @@ public class ExportFileDAO extends BaseDAO {
 //                    Hiepvv_Home Xem truoc cong van SDBS sau cong bo
                     Long preLong = getRequest().getParameter("isPre") == null ? 0L : Long.parseLong(getRequest().getParameter("isPre"));
                     if (preLong > 0L) {
-                        String contentEdit = "";
+                        String contentEdit;
                         String publishDate = "";
                         String announmentNo = "";
                         String proName = "";
@@ -2791,7 +2796,7 @@ public class ExportFileDAO extends BaseDAO {
                         String busiAdd = "";
                         String receiptNoOld = "";
                         String receiptNo = "0000";
-                        String titleEdit = "";
+                        String titleEdit;
                         if (filesForm.getContentsEditATTP() != null && !filesForm.getContentsEditATTP().isEmpty()) {
                             contentEdit = filesForm.getContentsEditATTP();
                         } else {
@@ -2818,12 +2823,14 @@ public class ExportFileDAO extends BaseDAO {
                         String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd")
                                 + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM")
                                 + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
-                        String receiptDeptName = "";
-                        if (filesForm.getAnnouncementReceiptPaperForm() != null) {
-                            receiptDeptName = filesForm.getAnnouncementReceiptPaperForm().getReceiptDeptName();
-                        } else if (filesForm.getConfirmImportSatistPaperForm() != null) {
-                            receiptDeptName = filesForm.getConfirmImportSatistPaperForm().getTestAgencyName();
-                        }
+                        //binhnt fix sonar
+//                        String receiptDeptName;
+//                        if (filesForm.getAnnouncementReceiptPaperForm() != null) {
+//                            receiptDeptName = filesForm.getAnnouncementReceiptPaperForm().getReceiptDeptName();
+//                        } else if (filesForm.getConfirmImportSatistPaperForm() != null) {
+//                            receiptDeptName = filesForm.getConfirmImportSatistPaperForm().getTestAgencyName();
+//                        }
+                        //!binhnt fix sonar
                         if (filesForm.getFilesSourceID() != null
                                 && filesForm.getFilesSourceID() > 0L) {
                             Files fboOld = fdhe.findById(filesForm.getFilesSourceID());
@@ -2935,10 +2942,10 @@ public class ExportFileDAO extends BaseDAO {
             //wU.createFooterPart(wmp, "Mã hồ sơ: " + fileCode);
             wU.writePDFToStream(wmp, getResponse(), fileId, fileCode, filesForm.getQrCode(), true);
 
-        } catch (NumberFormatException en) {
-            log.error(en.getMessage());
-        } catch (Throwable th) {
-            log.error(th);
+        } catch (NumberFormatException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -2953,11 +2960,12 @@ public class ExportFileDAO extends BaseDAO {
             String strContent = new String(decoder.decode(getRequest().getParameter("content").replace("_", "+").getBytes()), "UTF-8");
             try {
                 fileId = Long.parseLong(strFileId);
-            } catch (NumberFormatException en) {
-                log.error(en.getMessage());
+            } catch (NumberFormatException ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
 
             WordExportUtils wU = new WordExportUtils();
+            WordprocessingMLPackage wmp;
             String businessName = "";
             if (fileId == null) {
                 throw new Exception("Không có hồ sơ");
@@ -2973,7 +2981,6 @@ public class ExportFileDAO extends BaseDAO {
                 fileCode = form.getFileCode();
             }
 
-            WordprocessingMLPackage wmp = null;
             ProcessDAOHE pDaohe = new ProcessDAOHE();
             Process pBo = pDaohe.getProcessByAction(form.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, form.getStatus(), Constants.FILE_STATUS.NEW_CREATE);
             if (pBo == null || pBo.getSendGroupId() == null) {
@@ -2989,7 +2996,7 @@ public class ExportFileDAO extends BaseDAO {
                 wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(bieumauthongbaosuadoibosung))));
             }
 
-            if (receiptDeptName.equals("Cục ATTP")) {
+            if ("Cục ATTP".equals(receiptDeptName)) {
                 wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
                 wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
                 wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
@@ -3009,7 +3016,7 @@ public class ExportFileDAO extends BaseDAO {
             wU.replacePlaceholder(wmp, signedDate, "${signDateStr}");
             wU.replacePlaceholder(wmp, businessName, "${businessName}");
             String signer = "";
-            String rolesigner = "";
+            String rolesigner;
 
             PositionDAOHE posdaohe = new PositionDAOHE();
             Position posbo = posdaohe.findPositionCode(getUserId());
@@ -3039,15 +3046,15 @@ public class ExportFileDAO extends BaseDAO {
             HashMap map = new HashMap();
             map.put("createForm", form);
             wU.replacePlaceholder(wmp, map);
-            if (typeExport.equals("EX_TEMP")) {
+            if ("EX_TEMP".equals(typeExport)) {
                 wU.createFooterPart(wmp, "MA HO SO: " + fileCode);
                 wU.writePDF4Preview(wmp, getResponse(), fileCode);
                 return true;
-            } else if (typeExport.equals("EX_SIGN")) {
+            } else if ("EX_SIGN".equals(typeExport)) {
                 return wU.writePDFToStreamSign(wmp, getResponse(), fileId, fileCode, null, "CVBS", false, 0, true);
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return false;
     }
@@ -3063,8 +3070,8 @@ public class ExportFileDAO extends BaseDAO {
             String strContent = new String(decoder.decode(getRequest().getParameter("content").replace("_", "+").getBytes()), "UTF-8");
             try {
                 fileId = Long.parseLong(strFileId);
-            } catch (NumberFormatException en) {
-                log.error(en.getMessage());
+            } catch (NumberFormatException ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
 
             WordExportUtils wU = new WordExportUtils();
@@ -3083,7 +3090,7 @@ public class ExportFileDAO extends BaseDAO {
                 fileCode = form.getFileCode();
             }
 
-            WordprocessingMLPackage wmp = null;
+            WordprocessingMLPackage wmp;
             ProcessDAOHE pDaohe = new ProcessDAOHE();
             Process pBo = pDaohe.getProcessByAction(form.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, form.getStatus(), Constants.FILE_STATUS.NEW_CREATE);
             if (pBo == null || pBo.getSendGroupId() == null) {
@@ -3099,7 +3106,7 @@ public class ExportFileDAO extends BaseDAO {
                 wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(bieumauthongbaosuadoibosung))));
             }
 
-            if (receiptDeptName.equals("Cục ATTP")) {
+            if ("Cục ATTP".equals(receiptDeptName)) {
                 wU.replacePlaceholder(wmp, "BỘ Y TẾ", "${deptParent}");
                 wU.replacePlaceholder(wmp, "CỤC AN TOÀN THỰC PHẨM", "${receiptDeptName}");
                 wU.replacePlaceholder(wmp, "Cục An toàn thực phẩm", "${receiptDeptNames}");
@@ -3118,7 +3125,7 @@ public class ExportFileDAO extends BaseDAO {
             wU.replacePlaceholder(wmp, businessName, "${businessName}");
 
             String signer = "";
-            String rolesigner = "";
+            String rolesigner;
 
             PositionDAOHE posdaohe = new PositionDAOHE();
             Position posbo = posdaohe.findPositionCode(getUserId());
@@ -3148,15 +3155,15 @@ public class ExportFileDAO extends BaseDAO {
             HashMap map = new HashMap();
             map.put("createForm", form);
             wU.replacePlaceholder(wmp, map);
-            if (typeExport.equals("EX_TEMP")) {
+            if ("EX_TEMP".equals(typeExport)) {
                 wU.createFooterPart(wmp, "MA HO SO: " + fileCode);
                 wU.writeDocxToStream(wmp, getResponse());
                 return "true";
-            } else if (typeExport.equals("EX_SIGN")) {
+            } else if ("EX_SIGN".equals(typeExport)) {
                 return wU.writePDFToStreamSignPlugin(wmp, getResponse(), fileId, fileCode, null, "CVBS", false, 0, true);
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "false";
     }
@@ -3209,7 +3216,7 @@ public class ExportFileDAO extends BaseDAO {
                 jsonDataGrid.setItems(resultMessage);
                 return GRID_DATA;
             }
-            String receiptDeptName = "";
+//            String receiptDeptName;
             String businessName = "";
             String businessAdd = "";
             String telephone = "";
@@ -3323,13 +3330,13 @@ public class ExportFileDAO extends BaseDAO {
                     break;
                 case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05:
 //                    Hiepvv SDBS sau cong bo
-                    String contentEdit = "";
+                    String contentEdit;
                     String publishDate = "";
                     String announmentNo = "";
                     String proName = "";
                     String busiName = "";
                     String busiAdd = "";
-                    String titleEdit = "";
+                    String titleEdit;
                     String receiptNoOld = "";
                     receiptNo = "0000";
                     if (filesForm.getContentsEditATTP() != null && !filesForm.getContentsEditATTP().isEmpty()) {
@@ -3380,7 +3387,7 @@ public class ExportFileDAO extends BaseDAO {
                 case Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR:
                     String pubDate = "";
                     String annouNo = "";
-                    String effDate = "";
+                    String effDate;
                     if (filesForm.getAnnouncement().getPublishDate() != null) {
                         pubDate = "ngày " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "dd") + " tháng " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "MM") + " năm " + DateTimeUtils.convertDateToString(filesForm.getAnnouncement().getPublishDate(), "yyyy");
                     }
@@ -3422,7 +3429,7 @@ public class ExportFileDAO extends BaseDAO {
                     + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM")
                     + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
             if (filesForm.getAnnouncementReceiptPaperForm() != null) {
-                receiptDeptName = filesForm.getAnnouncementReceiptPaperForm().getReceiptDeptName();
+//                receiptDeptName = filesForm.getAnnouncementReceiptPaperForm().getReceiptDeptName();//binhnt fix sonar
                 if (filesForm.getReIssueForm() != null && filesForm.getReIssueForm().getFormNumber() != null) {
                     receiptNo = filesForm.getReIssueForm().getFormNumber();
                 } else {
@@ -3463,7 +3470,7 @@ public class ExportFileDAO extends BaseDAO {
                 }
             } else if (filesForm.getConfirmImportSatistPaperForm() != null) {
 //                wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempPaperWordStatisImport))));
-                receiptDeptName = filesForm.getConfirmImportSatistPaperForm().getTestAgencyName();
+//                receiptDeptName = filesForm.getConfirmImportSatistPaperForm().getTestAgencyName();//binhnt fix sonar
                 businessName = filesForm.getConfirmImportSatistPaperForm().getImportBusinessName();
                 businessAdd = filesForm.getBusinessAddress();
                 telephone = filesForm.getConfirmImportSatistPaperForm().getImportBusinessTel();
@@ -3522,7 +3529,7 @@ public class ExportFileDAO extends BaseDAO {
                 wU.replacePlaceholder(wmp, effectiveDate, "${effectiveDate}");
             }
             String signer = "";
-            String rolesigner = "";
+            String rolesigner;
 
             PositionDAOHE posdaohe = new PositionDAOHE();
             Position posbo = posdaohe.findPositionCode(getUserId());
@@ -3699,7 +3706,8 @@ public class ExportFileDAO extends BaseDAO {
                     }
                     break;
                 case Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP:
-                    if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
+                    if (filesForm.getDetailProduct() != null 
+                            && filesForm.getAnnouncement() != null) {
                         BusinessDAOHE busdaohe = new BusinessDAOHE();
                         Business busbo = busdaohe.findById(filesForm.getDeptId());
                         if (filesForm.getDetailProduct().getSignDate() != null) {
@@ -3953,7 +3961,7 @@ public class ExportFileDAO extends BaseDAO {
             //Hiepvv SDBS sau cong bo
             if (procedure != null
                     && procedure.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)) {
-                if (!fullFile.equals("false")) {
+                if (!"false".equals(fullFile)) {
 //                    Copy file Công văn và các file đính kèm của hs SĐBS sau công bố vào hồ sơ gốc
 
                     resultMessage.add("1");
@@ -3970,7 +3978,7 @@ public class ExportFileDAO extends BaseDAO {
             } else {
                 wmp = onSignOnlyPaper(wU, fdhe, procedurehe, ann, map);
                 String paperOnly = wU.writePDFToStreamSignPlugin(wmp, getResponse(), fileId, fileCode, filesForm.getQrCode(), "PDHS", false, 2, false);
-                if (!fullFile.equals("false") && !paperOnly.equals("false")) {
+                if (!"false".equals(fullFile) && !"false".equals(paperOnly)) {
                     resultMessage.add("1");
                     resultMessage.add("Xuất hồ sơ thành công");
                     resultMessage.add(fullFile + ";" + paperOnly);
@@ -3984,9 +3992,10 @@ public class ExportFileDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Lỗi trong quá trình xử lý File PDF");
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình xử lý File PDF: " + ex.getMessage());
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình xử lý File PDF: " + ex.getMessage());
         }
         jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;
@@ -4888,7 +4897,7 @@ public class ExportFileDAO extends BaseDAO {
 //                    Hiepvv_Home Xem truoc cong van SDBS sau cong bo
                     Long preLong = getRequest().getParameter("isPre") == null ? 0L : Long.parseLong(getRequest().getParameter("isPre"));
                     if (preLong > 0L) {
-                        String contentEdit = "";
+                        String contentEdit;
                         String publishDate = "";
                         String announmentNo = "";
                         String proName = "";
@@ -4896,7 +4905,7 @@ public class ExportFileDAO extends BaseDAO {
                         String busiAdd = "";
                         String receiptNoOld = "";
                         String receiptNo = "0000";
-                        String titleEdit = "";
+                        String titleEdit;
                         if (filesForm.getContentsEditATTP() != null && !filesForm.getContentsEditATTP().isEmpty()) {
                             contentEdit = filesForm.getContentsEditATTP();
                         } else {
@@ -4922,12 +4931,14 @@ public class ExportFileDAO extends BaseDAO {
                         String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd")
                                 + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM")
                                 + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
-                        String receiptDeptName = "";
+                        /* binhnt fix sonar
+//                        String receiptDeptName = "";
                         if (filesForm.getAnnouncementReceiptPaperForm() != null) {
                             receiptDeptName = filesForm.getAnnouncementReceiptPaperForm().getReceiptDeptName();
                         } else if (filesForm.getConfirmImportSatistPaperForm() != null) {
                             receiptDeptName = filesForm.getConfirmImportSatistPaperForm().getTestAgencyName();
                         }
+                         */
                         if (filesForm.getFilesSourceID() != null
                                 && filesForm.getFilesSourceID() > 0L) {
                             Files fboOld = fdhe.findById(filesForm.getFilesSourceID());
@@ -5048,7 +5059,7 @@ public class ExportFileDAO extends BaseDAO {
             //Hiepvv SDBS sau cong bo
             if (procedure != null
                     && procedure.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)) {
-                if (!fullFile.equals("false")) {
+                if (!"false".equals(fullFile)) {
 //                    Copy file Công văn và các file đính kèm của hs SĐBS sau công bố vào hồ sơ gốc
 
                     resultMessage.add("1");
@@ -5062,7 +5073,7 @@ public class ExportFileDAO extends BaseDAO {
                     jsonDataGrid.setItems(resultMessage);
                     return GRID_DATA;
                 }
-            } else if (!fullFile.equals("false")) {
+            } else if (!"false".equals(fullFile)) {
                 resultMessage.add("1");
                 resultMessage.add("Xuất hồ sơ thành công");
                 resultMessage.add(fullFile + ";");
@@ -5075,9 +5086,10 @@ public class ExportFileDAO extends BaseDAO {
                 return GRID_DATA;
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Lỗi trong quá trình xử lý File PDF");
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình xử lý File PDF: " + ex.getMessage());
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình xử lý File PDF: " + ex.getMessage());
         }
         jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;
@@ -5098,7 +5110,8 @@ public class ExportFileDAO extends BaseDAO {
      * @return
      */
     public String onExportEEAA() {
-        boolean result = exportDataEEAA("EX_TEMP");
+//        boolean result = exportDataEEAA("EX_TEMP");
+        exportDataEEAA("EX_TEMP");
         return null;
     }
 
@@ -5108,19 +5121,19 @@ public class ExportFileDAO extends BaseDAO {
             Base64 decoder = new Base64();
             String strFileId = getRequest().getParameter("fileId");
 
-            String receiptDeptName = "";
-            String sendNo = "0";
+//            String receiptDeptName = "";//fix sonar
+//            String sendNo = "0";//fix sonar
             String strTitle = new String(decoder.decode(getRequest().getParameter("title").replace("_", "+").getBytes()), "UTF-8");
             String strContent = new String(decoder.decode(getRequest().getParameter("contents").replace("_", "+").getBytes()), "UTF-8");
 
             try {
                 fileId = Long.parseLong(strFileId);
-            } catch (NumberFormatException en) {
-                log.error(en.getMessage());
+            } catch (NumberFormatException ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
 
             WordExportUtils wU = new WordExportUtils();
-            String businessName = "";
+//            String businessName = "";
             if (fileId == null) {
                 throw new Exception("Không có hồ sơ");
             }
@@ -5128,10 +5141,10 @@ public class ExportFileDAO extends BaseDAO {
             FilesForm form = fdhe.getFilesDetail(fileId);
             String fileCode = "";
             if (form != null) {
-                businessName = form.getBusinessName();
+//                businessName = form.getBusinessName();
                 form.setStaffRequest(strContent);
-                receiptDeptName = form.getAgencyName();
-                sendNo = fdhe.getNewSendNo(form.getAgencyId());
+//                receiptDeptName = form.getAgencyName();//fix sonar
+//                sendNo = fdhe.getNewSendNo(form.getAgencyId());//fix sonar
                 fileCode = form.getFileCode();
             }
 
@@ -5165,11 +5178,13 @@ public class ExportFileDAO extends BaseDAO {
             String signedDate = "Hà Nội, ngày " + DateTimeUtils.convertDateToString(dateNow, "dd")
                     + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM")
                     + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
+            /* fix sonar
             if (form.getAnnouncementReceiptPaperForm() != null) {
                 receiptDeptName = form.getAnnouncementReceiptPaperForm().getReceiptDeptName();
             } else if (form.getConfirmImportSatistPaperForm() != null) {
                 receiptDeptName = form.getConfirmImportSatistPaperForm().getTestAgencyName();
             }
+            */
             if (form.getFilesSourceID() != null
                     && form.getFilesSourceID() > 0L) {
                 Files fboOld = fdhe.findById(form.getFilesSourceID());
@@ -5234,15 +5249,15 @@ public class ExportFileDAO extends BaseDAO {
             HashMap map = new HashMap();
             map.put("createForm", form);
             wU.replacePlaceholder(wmp, map);
-            if (typeExport.equals("EX_TEMP")) {
+            if ("EX_TEMP".equals(typeExport)) {
 //                wU.createFooterPart(wmp, "MA HO SO: " + fileCode);
                 wU.writePDF4Preview(wmp, getResponse(), fileCode);
                 return true;
-            } else if (typeExport.equals("EX_SIGN")) {
+            } else if ("EX_SIGN".equals(typeExport)) {
                 return wU.writePDFToStreamSign(wmp, getResponse(), fileId, fileCode, null, "CVBS", false, 0, true);
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return false;
     }

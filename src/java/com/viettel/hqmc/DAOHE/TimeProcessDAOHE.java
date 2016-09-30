@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
+import com.viettel.common.util.LogUtil;
 
 /**
  *
@@ -33,6 +34,7 @@ public class TimeProcessDAOHE extends GenericDAOHibernate<TimeProcess, Long> {
 
     /**
      * findAllUserAttach
+     *
      * @param UserId
      * @return
      */
@@ -43,7 +45,7 @@ public class TimeProcessDAOHE extends GenericDAOHibernate<TimeProcess, Long> {
             Query query = getSession().createQuery(stringBuilder.toString());
             lstStandard = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<>();
         }
         return lstStandard;
@@ -91,8 +93,8 @@ public class TimeProcessDAOHE extends GenericDAOHibernate<TimeProcess, Long> {
             }
             GridResult result = new GridResult(nCount, list);
             return result;
-        } catch (Exception e) {
-            e.getMessage();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -146,13 +148,13 @@ public class TimeProcessDAOHE extends GenericDAOHibernate<TimeProcess, Long> {
     }
 
     //
-
     /**
-     *kiem tra doi tuong co trung khong   
+     * kiem tra doi tuong co trung khong
+     *
      * @param form
      * @return
      */
-        public boolean isDuplicate(TimeProcessForm form) {
+    public boolean isDuplicate(TimeProcessForm form) {
         if (form == null) {
             return false;
         }
@@ -175,14 +177,12 @@ public class TimeProcessDAOHE extends GenericDAOHibernate<TimeProcess, Long> {
             if (count >= 1l) {
                 return true;
             }
-        } else {
-            if (timeProcessDateFrom.before(timeProcessDateTo)) {
-                if (findDateWork(timeProcessDateFrom, timeProcessDateTo) > 0 && form.getIsDayOff() == 0) {
-                    return true;
-                }
-                if (findDateWorkOff(timeProcessDateFrom, timeProcessDateTo) > 0 && form.getIsDayOff() == 1) {
-                    return true;
-                }
+        } else if (timeProcessDateFrom.before(timeProcessDateTo)) {
+            if (findDateWork(timeProcessDateFrom, timeProcessDateTo) > 0 && form.getIsDayOff() == 0) {
+                return true;
+            }
+            if (findDateWorkOff(timeProcessDateFrom, timeProcessDateTo) > 0 && form.getIsDayOff() == 1) {
+                return true;
             }
         }
 //        Query query = getSession().createQuery(hql);
@@ -217,7 +217,7 @@ public class TimeProcessDAOHE extends GenericDAOHibernate<TimeProcess, Long> {
             voAttachsList = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return voAttachsList;
     }

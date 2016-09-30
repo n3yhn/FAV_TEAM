@@ -6,6 +6,7 @@ package com.viettel.voffice.ca.servlet;
 
 import static com.viettel.common.util.Constants.TEMP.FEATURE_GENERAL_ENTITIES;
 import static com.viettel.common.util.Constants.TEMP.FEATURE_PARAMETER_ENTITIES;
+import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.ca.applet.CommDataBean;
 import com.viettel.voffice.ca.applet.MessageCode;
 import com.viettel.voffice.ca.uds.VTKeyStore;
@@ -60,7 +61,7 @@ public class SigningServlet extends HttpServlet {
             throws ServletException, IOException {
         CommDataBean toClientBean = new CommDataBean();
         try {
-            UserToken userToken = (UserToken) request.getSession().getAttribute("userToken");
+//            UserToken userToken = (UserToken) request.getSession().getAttribute("userToken");
             fromClientBean = getSigntureData(request);
             Certificate[] nntCertChain = fromClientBean.getCertChain();
 
@@ -75,16 +76,18 @@ public class SigningServlet extends HttpServlet {
             } else if (fromClientBean != null && fromClientBean.getType().equals(CommDataBean.TYPE_SIGN_BAN_POSITION)) {
 
                 KeyInfo keyInfo = validateContentSigned(fromClientBean.getContent());
-                String userSigned = null;
+//                String userSigned = null;
                 if (keyInfo != null) {
                     try {
-                        userSigned = getUserSigned(keyInfo);
+                        getUserSigned(keyInfo);
                         fromClientBean.setCode(MessageCode.DA_KY_THANHCONG);
-                        long id = getObjectId(fromClientBean.getContent(), "jpBanPositionId");
+                        getObjectId(fromClientBean.getContent(), "jpBanPositionId");
 //                        }
-                    } catch (CertificateExpiredException expiredEx) {
+                    } catch (CertificateExpiredException ex) {
+                        LogUtil.addLog(ex);//binhnt sonar a160901
                         fromClientBean.setCode(MessageCode.CERT_EXPIRED);
-                    } catch (CertificateNotYetValidException notYetValidEx) {
+                    } catch (CertificateNotYetValidException ex) {
+                        LogUtil.addLog(ex);//binhnt sonar a160901
                         fromClientBean.setCode(MessageCode.CERT_ISVALID);
                     }
                 } else {
@@ -98,26 +101,28 @@ public class SigningServlet extends HttpServlet {
             try {
                 sendToClient(response, toClientBean);
             } catch (Exception ex1) {
-                log.error(ex1);
+                LogUtil.addLog(ex1);//binhnt sonar a160901
+//                log.error(ex1);
             }
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
     public String getUserSigned(KeyInfo keyInfo) throws Exception {
         String userSigned = "";
         Iterator iter = keyInfo.getContent().iterator();
-        X509CertImpl certImpl = null;
+//        X509CertImpl certImpl = null;
         while (iter.hasNext()) {
             XMLStructure kiType = (XMLStructure) iter.next();
             if (kiType instanceof X509Data) {
                 X509Data xd = (X509Data) kiType;
                 Object[] entries = xd.getContent().toArray();
-                X509CRL crl = null;
+//                X509CRL crl = null;
                 for (int i = 0; i < entries.length; i++) {
-                    if (entries[i] instanceof X509CRL) {
-                        crl = (X509CRL) entries[i];
-                    }
+//                    if (entries[i] instanceof X509CRL) {
+//                        crl = (X509CRL) entries[i];
+//                    }
+                    /*SONAR
                     if (entries[i] instanceof X509CertImpl) {
                         certImpl = (X509CertImpl) entries[i];
 //                        try {
@@ -128,6 +133,7 @@ public class SigningServlet extends HttpServlet {
 //                            throw notYetValidEx;
 //                        }
                     }
+                    */
                     if (entries[i] instanceof String) {
                         userSigned += (String) entries[i] + "\n";
                     }
@@ -188,12 +194,12 @@ public class SigningServlet extends HttpServlet {
 
     public Certificate[] getCertChainFromClient(HttpServletRequest request) {
         try {
-            Certificate[] nntCertChain = null;
+            Certificate[] nntCertChain;
             ObjectInputStream fromClient = new ObjectInputStream(request.getInputStream());
             nntCertChain = (Certificate[]) fromClient.readObject();
             return nntCertChain;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -206,7 +212,7 @@ public class SigningServlet extends HttpServlet {
      * @throws Exception
      */
     public CommDataBean getSigntureData(HttpServletRequest request) throws Exception {
-        CommDataBean bean = null;
+        CommDataBean bean;
         ObjectInputStream fromClient = new ObjectInputStream(request.getInputStream());
         bean = (CommDataBean) fromClient.readObject();
 //        fromClient.reset();
@@ -233,7 +239,7 @@ public class SigningServlet extends HttpServlet {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return id;
     }

@@ -5,6 +5,7 @@
 package com.viettel.vsaadmin.database.DAOHibernate;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 //import com.viettel.hqmc.FORM.RegisterForm;
 import com.viettel.voffice.database.DAO.GridResult;
@@ -110,8 +111,9 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
 
                 jsonArray.add(jsonObj);
             }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            System.out.print(e.getMessage());
         }
         return jsonArray.toString();
     }
@@ -211,6 +213,7 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 temp.setParentId(null);
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             throw ex;
         }
         return temp;
@@ -324,7 +327,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             List lst = searchQuery.list();
             result = new GridResult(total, lst);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return result;
     }
@@ -352,7 +356,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             List lst = searchQuery.list();
             result = new GridResult(total, lst);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return result;
     }
@@ -436,6 +441,7 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
 //            }
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
 
@@ -454,7 +460,7 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
         String hql = "select d from Department d where d.deptId in (:deptListId)";
         Query query = getSession().createQuery(hql);
         query.setParameterList("deptListId", idLstLong);
-        List<Department> lst = null;
+        List<Department> lst;
         List<DepartmentForm> result = new ArrayList<DepartmentForm>();
         lst = query.list();
 
@@ -518,7 +524,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return null;
         }
 
@@ -545,7 +552,7 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             for (int i = 0; i < listParam.size(); i++) {
                 searchQuery.setParameter(i, listParam.get(i));
             }
-            lst = searchQuery.list();
+//            lst = searchQuery.list();
 
             //escapeHTML
             lst = searchQuery.list();
@@ -567,7 +574,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
 //            }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return null;
         }
 
@@ -872,7 +880,7 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
     public List<Department> getAllChildIdByParentId(Long parentId) {
         try {
             StringBuilder strBuilder = new StringBuilder();
-            List<Department> lst = new ArrayList<Department>();
+            List<Department> lst;
 
             strBuilder.append(" SELECT d FROM Department d");
             if (parentId != null && parentId > 0) {
@@ -894,8 +902,9 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 return new ArrayList<Department>();
             }
 
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            System.out.print(e.getMessage());
             return new ArrayList<Department>();
         }
     }
@@ -1091,7 +1100,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
 
             return lst;
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            String msg = ex.getMessage();
             return null;
         }
     }
@@ -1116,7 +1126,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
 
             return deptList;
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            String msg = ex.getMessage();
             return null;
         }
     }
@@ -1149,7 +1160,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             }
             return deptList;
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            String msg = ex.getMessage();
             return null;
         }
     }
@@ -1179,7 +1191,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 return deptList;
             }
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            String msg = ex.getMessage();
         }
         return null;
     }
@@ -1217,7 +1230,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 return deptList;
             }
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            String msg = ex.getMessage();
         }
         return null;
     }
@@ -1261,7 +1275,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 return deptList;
             }
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            String msg = ex.getMessage();
         }
         return null;
     }
@@ -1305,7 +1320,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 return deptList;
             }
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            String msg = ex.getMessage();
         }
         return null;
     }
@@ -1347,7 +1363,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 return deptList;
             }
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            String msg = ex.getMessage();
         }
         return null;
     }
@@ -1364,7 +1381,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             deptList = q.list();
             return deptList;
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            String msg = ex.getMessage();
             return deptList;
         }
     }
@@ -1386,7 +1404,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 return department.getDeptName();
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return "";
     }
@@ -1413,7 +1432,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             List<Department> lstDepartment = query.list();
             return lstDepartment;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return null;
     }
@@ -1430,6 +1450,7 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             }
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             ret = null;
         }
         return ret;
@@ -1437,7 +1458,7 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
 
     public List<Department> findOffices(Department dept) {
         List<Department> lstDept = new ArrayList<Department>();
-        List<Department> lstChildDept = null;
+        List<Department> lstChildDept;
 
         if (dept != null) {
             Department parentDept = this.getOriginalParent(dept.getDeptId());
@@ -1454,7 +1475,7 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
     public List<DepartmentForm> findOfficeForm(Department dept) {
         List<Department> lstDept = new ArrayList<Department>();
         List<DepartmentForm> result = new ArrayList<DepartmentForm>();
-        List<Department> lstChildDept = null;
+        List<Department> lstChildDept;
 
         if (dept != null) {
             Department parentDept = this.getOriginalParent(dept.getDeptId());
@@ -1491,7 +1512,7 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
      */
     public List<Department> findDepartmentStore(Department dept) {
         List<Department> lstDept = new ArrayList<Department>();
-        List<Department> lstDeptLevel = null;
+        List<Department> lstDeptLevel;
         if (dept != null && dept.getParentId() != null && dept.getParentId() != 0L) {
             Department parentDept = this.findById(dept.getParentId());
             lstDept.add(parentDept);
@@ -1509,15 +1530,16 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
         }
         return lstDept;
     }
+
     /*
      * Tk list dept cha + dep ngang cap + dep con cua 1 don vi
      * ko lay dept ngang cap nua (4/9/2012)
      */
 
     public List<Department> findDepartment(Department dept) {
-        List<Department> lstDept = new ArrayList<Department>();
-        List<Department> lstDeptLevel = null;
-        List<Department> lstChildDept = null;
+
+        List<Department> lstDeptLevel;
+        List<Department> lstChildDept;
 
         /*if (dept != null && dept.getParentId() != null && dept.getParentId() != 0L) {
          Department parentDept = this.findById(dept.getParentId());
@@ -1542,6 +1564,7 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
         //Lay dept cha:
         if (dept != null) {
             Department parentDept = this.getOriginalParent(dept.getDeptId());
+            List<Department> lstDept = new ArrayList<Department>();
             lstDept.add(parentDept);
             List<Department> listDept = this.getSingleTreeDept(parentDept.getDeptId(), dept.getDeptId());
             lstDept.addAll(listDept);
@@ -1557,9 +1580,10 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             if (lstDeptLevel != null && !lstDeptLevel.isEmpty()) {
                 lstDept.addAll(lstDeptLevel);
             }
+            return lstDept;
         }
+        return null;
 
-        return lstDept;
     }
 
     public List<Department> findInsideDept(Department dept) {
@@ -1573,7 +1597,7 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             try {
 
                 StringBuilder strBuilder = new StringBuilder();
-                List<Department> lst = new ArrayList<Department>();
+//                List<Department> lst = new ArrayList<Department>();
 
                 strBuilder.append(" SELECT d FROM Department d WHERE d.status = 1 ");
                 if (dept.getDeptId() != null && dept.getDeptId() > 0) {
@@ -1589,7 +1613,7 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 }
 
                 //Lay danh sách các dept thuộc cây đơn vị dọc. (có trong deptPath)
-       /*         List<Long> deptLst = new ArrayList<Long>();
+                /*         List<Long> deptLst = new ArrayList<Long>();
                  VDepartment vDepartment = (new VDepartmentDAOHE()).findById(dept.getDeptId(), false);
                  if (vDepartment != null && vDepartment.getDeptPath() != null) {
                  String[] pathStr = vDepartment.getDeptPath().split("/");
@@ -1619,7 +1643,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 List<Department> lstDepartment = query.list();
                 lstDept.addAll(lstDepartment);
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(ex.getMessage());
             }
 
 //            //Lay dept con
@@ -1664,7 +1689,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 List<Department> lstDepartment = query.list();
                 lstDept.addAll(lstDepartment);
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(ex.getMessage());
             }
         }
 
@@ -1673,7 +1699,7 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
 
     //Get don vi gui VB noi bo (VB di), luon lay cac dvi con cua BTP
     public GridResult findInsideDeptBTP(Department dept, int start, int count) {
-        List<Department> lstDept = new ArrayList<Department>();
+//        List<Department> lstDept = new ArrayList<Department>();
         GridResult gridResult = new GridResult();
 
         //Lay dept cha:
@@ -1696,7 +1722,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 List<Department> lstDepartment = query.list();
                 gridResult = new GridResult(total, lstDepartment);
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(ex.getMessage());
             }
         }
 
@@ -1706,8 +1733,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
     // dept con va dept cung cap
     public List<Department> findOfficesCoordinate(Department dept) {
         List<Department> lstDept = new ArrayList<Department>();
-        List<Department> lstDeptLevel = null;
-        List<Department> lstChildDept = null;
+        List<Department> lstDeptLevel;
+        List<Department> lstChildDept;
 
         if (dept != null && dept.getParentId() != null && dept.getParentId() != 0L) {
             //get dept cung cap
@@ -1779,7 +1806,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             List<Department> lstDepartment = query.list();
             return lstDepartment;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return null;
     }
@@ -1877,7 +1905,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 return deptLst;
             }
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            System.out.print(ex.getMessage());
         }
         return null;
     }
@@ -1901,7 +1930,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 return new ArrayList<Long>();
             }
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            System.out.print(ex.getMessage());
         }
         return null;
     }
@@ -1918,7 +1948,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             List<Department> lstDepartment = query.list();
             return lstDepartment;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return null;
     }
@@ -1950,7 +1981,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
 
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return lstDepartment;
     }
@@ -1983,7 +2015,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             List<Department> lstDepartment = query.list();
             return lstDepartment;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return null;
     }
@@ -1999,7 +2032,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             List<Department> lstDepartment = query.list();
             return lstDepartment;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return null;
     }
@@ -2018,7 +2052,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 return false;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return false;
         }
     }
@@ -2036,7 +2071,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 return false;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return false;
         }
     }
@@ -2055,7 +2091,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                 return false;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return false;
         }
     }
@@ -2105,8 +2142,9 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
                     name = dept.getDeptName();
                 }
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
             return null;
         }
         return name;
@@ -2207,7 +2245,8 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             List<Department> lstDepartment = query.list();
             return lstDepartment;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return null;
     }

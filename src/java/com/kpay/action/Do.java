@@ -30,13 +30,12 @@ public class Do extends javax.servlet.http.HttpServlet {
         fields.put("service_code", "720");
         fields.put("currency_code", request.getParameter("currency_code"));
         fields.put("return_url", request.getParameter("return_url"));
-        String secure_hash = "";
 
         HashFunction hf = new HashFunction();
         ResourceBundle rb = ResourceBundle.getBundle("config");
         String url_redirect = rb.getString("online_keypay");
         String transKey = rb.getString("transkey");
-        secure_hash = hf.hashAllFields(fields, transKey);
+        String secure_hash = hf.hashAllFields(fields, transKey);
         //secure_hash = hf.hashAllFields(fields,"41025070");
 
         //String url_redirect = "http://online.keypay.vn/process?";
@@ -46,7 +45,7 @@ public class Do extends javax.servlet.http.HttpServlet {
         String param = "";
         while (i.hasNext()) {
             String key = (String) i.next();
-            String value = ((String[]) params.get(key))[ 0];
+            String value = ((String[]) params.get(key))[0];
             param += key + "=" + URLEncoder.encode(value) + "&";
         }
         url_redirect += param + "secure_hash=" + secure_hash;

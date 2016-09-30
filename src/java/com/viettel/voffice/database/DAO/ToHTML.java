@@ -4,6 +4,7 @@
  */
 package com.viettel.voffice.database.DAO;
 
+import com.viettel.common.util.LogUtil;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -15,11 +16,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -38,6 +37,7 @@ import org.apache.poi.ss.examples.html.XSSFHtmlHelper;
  * @author dungnt78
  */
 public class ToHTML {
+
     private final Workbook wb;
     private final Appendable output;
     private boolean completeHTML;
@@ -80,7 +80,7 @@ public class ToHTML {
     /**
      * Creates a new converter to HTML for the given workbook.
      *
-     * @param wb     The workbook.
+     * @param wb The workbook.
      * @param output Where the HTML output will be written.
      *
      * @return An object for converting the workbook to HTML.
@@ -90,11 +90,11 @@ public class ToHTML {
     }
 
     /**
-     * Creates a new converter to HTML for the given workbook.  If the path ends
+     * Creates a new converter to HTML for the given workbook. If the path ends
      * with "<tt>.xlsx</tt>" an {@link XSSFWorkbook} will be used; otherwise
      * this will use an {@link HSSFWorkbook}.
      *
-     * @param path   The file that has the workbook.
+     * @param path The file that has the workbook.
      * @param output Where the HTML output will be written.
      *
      * @return An object for converting the workbook to HTML.
@@ -105,11 +105,11 @@ public class ToHTML {
     }
 
     /**
-     * Creates a new converter to HTML for the given workbook.  This attempts to
+     * Creates a new converter to HTML for the given workbook. This attempts to
      * detect whether the input is XML (so it should create an {@link
      * XSSFWorkbook} or not (so it should create an {@link HSSFWorkbook}).
      *
-     * @param in     The input stream that has the workbook.
+     * @param in The input stream that has the workbook.
      * @param output Where the HTML output will be written.
      *
      * @return An object for converting the workbook to HTML.
@@ -119,29 +119,33 @@ public class ToHTML {
         try {
             Workbook wb = WorkbookFactory.create(in);
             return create(wb, output);
-        } catch (InvalidFormatException e){
-            throw new IllegalArgumentException("Cannot create workbook from stream", e);
+        } catch (InvalidFormatException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            throw new IllegalArgumentException("Cannot create workbook from stream", ex);
         }
     }
 
     private ToHTML(Workbook wb, Appendable output) {
-        if (wb == null)
+        if (wb == null) {
             throw new NullPointerException("wb");
-        if (output == null)
+        }
+        if (output == null) {
             throw new NullPointerException("output");
+        }
         this.wb = wb;
         this.output = output;
         setupColorMap();
     }
 
     private void setupColorMap() {
-        if (wb instanceof HSSFWorkbook)
+        if (wb instanceof HSSFWorkbook) {
             helper = new HSSFHtmlHelper((HSSFWorkbook) wb);
-        else if (wb instanceof XSSFWorkbook)
+        } else if (wb instanceof XSSFWorkbook) {
             helper = new XSSFHtmlHelper((XSSFWorkbook) wb);
-        else
+        } else {
             throw new IllegalArgumentException(
                     "unknown workbook type: " + wb.getClass().getSimpleName());
+        }
     }
 
     public void setCompleteHTML(boolean completeHTML) {
@@ -167,8 +171,9 @@ public class ToHTML {
                 out.format("</html>%n");
             }
         } finally {
-            if (out != null)
+            if (out != null) {
                 out.close();
+            }
             if (output instanceof Closeable) {
                 Closeable closeable = (Closeable) output;
                 closeable.close();
@@ -189,8 +194,9 @@ public class ToHTML {
     }
 
     private void ensureOut() {
-        if (out == null)
+        if (out == null) {
             out = new Formatter(output);
+        }
     }
 
     public void printStyles() {
@@ -204,15 +210,17 @@ public class ToHTML {
             while ((line = in.readLine()) != null) {
                 out.format("%s%n", line);
             }
-        } catch (IOException e) {
-            throw new IllegalStateException("Reading standard css", e);
+        } catch (IOException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            throw new IllegalStateException("Reading standard css", ex);
         } finally {
             if (in != null) {
                 try {
                     in.close();
-                } catch (IOException e) {
+                } catch (IOException ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                     //noinspection ThrowFromFinallyBlock
-                    throw new IllegalStateException("Reading standard css", e);
+                    throw new IllegalStateException("Reading standard css", ex);
                 }
             }
         }
@@ -259,10 +267,12 @@ public class ToHTML {
     private void fontStyle(CellStyle style) {
         Font font = wb.getFontAt(style.getFontIndex());
 
-        if (font.getBoldweight() >= HSSFFont.BOLDWEIGHT_NORMAL)
+        if (font.getBoldweight() >= HSSFFont.BOLDWEIGHT_NORMAL) {
             out.format("  font-weight: bold;%n");
-        if (font.getItalic())
+        }
+        if (font.getItalic()) {
             out.format("  font-style: italic;%n");
+        }
 
         int fontheight = font.getFontHeightInPoints();
         if (fontheight == 9) {
@@ -275,8 +285,9 @@ public class ToHTML {
     }
 
     private String styleName(CellStyle style) {
-        if (style == null)
+        if (style == null) {
             style = wb.getCellStyleAt((short) 0);
+        }
         StringBuilder sb = new StringBuilder();
         Formatter fmt = new Formatter(sb);
         fmt.format("style_%02x", style.getIndex());
@@ -292,8 +303,9 @@ public class ToHTML {
 
     private static int ultimateCellType(Cell c) {
         int type = c.getCellType();
-        if (type == Cell.CELL_TYPE_FORMULA)
+        if (type == Cell.CELL_TYPE_FORMULA) {
             type = c.getCachedFormulaResultType();
+        }
         return type;
     }
 
@@ -320,8 +332,9 @@ public class ToHTML {
     }
 
     private void ensureColumnBounds(Sheet sheet) {
-        if (gotBounds)
+        if (gotBounds) {
             return;
+        }
 
         Iterator<Row> iter = sheet.rowIterator();
         firstColumn = (iter.hasNext() ? Integer.MAX_VALUE : 0);
@@ -382,8 +395,9 @@ public class ToHTML {
                                 style.getDataFormatString());
                         CellFormatResult result = cf.apply(cell);
                         content = result.text;
-                        if (content.equals(""))
+                        if (content.equals("")) {
                             content = "&nbsp;";
+                        }
                     }
                 }
                 out.format("    <td class=%s %s>%s</td>%n", styleName(style),
@@ -397,15 +411,15 @@ public class ToHTML {
     private String tagStyle(Cell cell, CellStyle style) {
         if (style.getAlignment() == ALIGN_GENERAL) {
             switch (ultimateCellType(cell)) {
-            case HSSFCell.CELL_TYPE_STRING:
-                return "style=\"text-align: left;\"";
-            case HSSFCell.CELL_TYPE_BOOLEAN:
-            case HSSFCell.CELL_TYPE_ERROR:
-                return "style=\"text-align: center;\"";
-            case HSSFCell.CELL_TYPE_NUMERIC:
-            default:
-                // "right" is the default
-                break;
+                case HSSFCell.CELL_TYPE_STRING:
+                    return "style=\"text-align: left;\"";
+                case HSSFCell.CELL_TYPE_BOOLEAN:
+                case HSSFCell.CELL_TYPE_ERROR:
+                    return "style=\"text-align: center;\"";
+                case HSSFCell.CELL_TYPE_NUMERIC:
+                default:
+                    // "right" is the default
+                    break;
             }
         }
         return "";

@@ -65,9 +65,9 @@ public class ReportUtil {
         HSSFWorkbook hm = transformer.transformXLS(is, bean);
         ResourceBundle rb = ResourceBundle.getBundle("config");
         String filePath = rb.getString("report_excel_temp");
-        FileOutputStream fop = null;
+        FileOutputStream fop;
         File file;
-        String fullFilePath = filePath+"report_"+newDate.getTime()+".xls";
+        String fullFilePath = filePath + "report_" + newDate.getTime() + ".xls";
         file = new File(fullFilePath);
         fop = new FileOutputStream(file);
         if (!file.exists()) {
@@ -92,21 +92,21 @@ public class ReportUtil {
             //res.setHeader("Content-Length", String.valueOf(hm.getBytes().length));
             HSSFSheet sheet = hm.getSheetAt(0);
             Iterator it = sheet.rowIterator();
-            String s = "";
+            String s;
             while (it.hasNext()) {
                 HSSFRow hfRow = (HSSFRow) it.next();
 
-                int maxleng = 0;
-                int maxleng2 = 0;
-                int maxleng3 = 0;
-                int maxleng4 = 0;
+                int maxleng;
+                int maxleng2;
+                int maxleng3;
+                int maxleng4;
                 for (int i = 0; i <= hfRow.getLastCellNum(); i++) {
                     HSSFCell cell = hfRow.getCell((short) i);
                     sheet.getColumnWidth((short) i);
                     if (cell != null) {
                         String cellValue = cell.toString();
                         cell.getCellNum();
-                        if (cellValue.equals("&TA1")) {
+                        if ("&TA1".equals(cellValue)) {//
                             HSSFCell cell1 = hfRow.getCell((short) (i + 7));
                             String cellValue1 = cell1.toString();
                             int leng = cellValue1.length() + 1;
@@ -145,7 +145,8 @@ public class ReportUtil {
             //res.setContentLength(hm.getBytes().length);
             res.getOutputStream().flush();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         //res.getOutputStream().close();
     }
@@ -164,18 +165,18 @@ public class ReportUtil {
             //res.setHeader("Content-Length", String.valueOf(hm.getBytes().length));
             HSSFSheet sheet = hm.getSheetAt(0);
             Iterator it = sheet.rowIterator();
-            String s = "";
+            String s;
             while (it.hasNext()) {
                 HSSFRow hfRow = (HSSFRow) it.next();
 
-                int maxleng = 0;
+                int maxleng;
                 for (int i = 0; i <= hfRow.getLastCellNum(); i++) {
                     HSSFCell cell = hfRow.getCell((short) i);
                     sheet.getColumnWidth((short) i);
                     if (cell != null) {
                         String cellValue = cell.toString();
                         cell.getCellNum();
-                        if (cellValue.equals("&TA1")) {
+                        if ("&TA1".equals(cellValue)) {
                             HSSFCell cell1 = hfRow.getCell((short) (i + 3));
                             String cellValue1 = cell1.toString();
                             int leng = cellValue1.length() + 1;
@@ -191,7 +192,8 @@ public class ReportUtil {
             //res.setContentLength(hm.getBytes().length);
             res.getOutputStream().flush();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         //res.getOutputStream().close();
     }
@@ -209,18 +211,18 @@ public class ReportUtil {
             //res.setHeader("Content-Length", String.valueOf(hm.getBytes().length));
             HSSFSheet sheet = hm.getSheetAt(0);
             Iterator it = sheet.rowIterator();
-            String s = "";
+            String s;
             while (it.hasNext()) {
                 HSSFRow hfRow = (HSSFRow) it.next();
 
-                int maxleng = 0;
+                int maxleng;
                 for (int i = 0; i <= hfRow.getLastCellNum(); i++) {
                     HSSFCell cell = hfRow.getCell((short) i);
                     sheet.getColumnWidth((short) i);
                     if (cell != null) {
                         String cellValue = cell.toString();
                         cell.getCellNum();
-                        if (cellValue.equals("&TA1")) {
+                        if ("&TA1".equals(cellValue)) {
                             HSSFCell cell1 = hfRow.getCell((short) (i + 2));
                             String cellValue1 = cell1.toString();
                             int leng = cellValue1.length() + 1;
@@ -236,7 +238,8 @@ public class ReportUtil {
             //res.setContentLength(hm.getBytes().length);
             res.getOutputStream().flush();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
     }
 
@@ -253,19 +256,19 @@ public class ReportUtil {
             //res.setHeader("Content-Length", String.valueOf(hm.getBytes().length));
             HSSFSheet sheet = hm.getSheetAt(0);
             Iterator it = sheet.rowIterator();
-            String s = "";
+            String s;
             while (it.hasNext()) {
                 HSSFRow hfRow = (HSSFRow) it.next();
 
-                int maxleng = 0;
-                int maxleng2 = 0;
+                int maxleng;
+                int maxleng2;
                 for (int i = 0; i <= hfRow.getLastCellNum(); i++) {
                     HSSFCell cell = hfRow.getCell((short) i);
                     sheet.getColumnWidth((short) i);
                     if (cell != null) {
                         String cellValue = cell.toString();
                         cell.getCellNum();
-                        if (cellValue.equals("&TA1")) {
+                        if ("&TA1".equals(cellValue)) {
                             HSSFCell cell1 = hfRow.getCell((short) (i + 2));
                             String cellValue1 = cell1.toString();
                             int leng = cellValue1.length() + 1;
@@ -289,7 +292,8 @@ public class ReportUtil {
             //res.setContentLength(hm.getBytes().length);
             res.getOutputStream().flush();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
     }
 
@@ -306,21 +310,21 @@ public class ReportUtil {
             //res.setHeader("Content-Length", String.valueOf(hm.getBytes().length));
             HSSFSheet sheet = hm.getSheetAt(0);
             Iterator it = sheet.rowIterator();
-            String s = "";
+            String s;
             while (it.hasNext()) {
                 HSSFRow hfRow = (HSSFRow) it.next();
 
-                int maxleng = 0;
-                int maxleng2 = 0;
-                int maxleng3 = 0;
-                int maxleng4 = 0;
+                int maxleng;
+                int maxleng2;
+                int maxleng3;
+                int maxleng4;
                 for (int i = 0; i <= hfRow.getLastCellNum(); i++) {
                     HSSFCell cell = hfRow.getCell((short) i);
                     sheet.getColumnWidth((short) i);
                     if (cell != null) {
                         String cellValue = cell.toString();
                         cell.getCellNum();
-                        if (cellValue.equals("&TA1")) {
+                        if ("&TA1".equals(cellValue)) {
                             HSSFCell cell1 = hfRow.getCell((short) (i + 5));
                             String cellValue1 = cell1.toString();
                             int leng = cellValue1.length() + 1;
@@ -360,7 +364,8 @@ public class ReportUtil {
             //res.setContentLength(hm.getBytes().length);
             res.getOutputStream().flush();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -377,19 +382,19 @@ public class ReportUtil {
             //res.setHeader("Content-Length", String.valueOf(hm.getBytes().length));
             HSSFSheet sheet = hm.getSheetAt(0);
             Iterator it = sheet.rowIterator();
-            String s = "";
+            String s;
             while (it.hasNext()) {
                 HSSFRow hfRow = (HSSFRow) it.next();
 
-                int maxleng = 0;
-                int maxleng2 = 0;
+                int maxleng;
+                int maxleng2;
                 for (int i = 0; i <= hfRow.getLastCellNum(); i++) {
                     HSSFCell cell = hfRow.getCell((short) i);
                     sheet.getColumnWidth((short) i);
                     if (cell != null) {
                         String cellValue = cell.toString();
                         cell.getCellNum();
-                        if (cellValue.equals("&TA1")) {
+                        if ("&TA1".equals(cellValue)) {
                             HSSFCell cell1 = hfRow.getCell((short) (i + 2));
                             String cellValue1 = cell1.toString();
                             int leng = cellValue1.length() + 1;
@@ -413,7 +418,8 @@ public class ReportUtil {
             //res.setContentLength(hm.getBytes().length);
             res.getOutputStream().flush();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
     }
 
@@ -430,19 +436,19 @@ public class ReportUtil {
             //res.setHeader("Content-Length", String.valueOf(hm.getBytes().length));
             HSSFSheet sheet = hm.getSheetAt(0);
             Iterator it = sheet.rowIterator();
-            String s = "";
+            String s;
             while (it.hasNext()) {
                 HSSFRow hfRow = (HSSFRow) it.next();
 
-                int maxleng = 0;
-                int maxleng2 = 0;
+                int maxleng;
+                int maxleng2;
                 for (int i = 0; i <= hfRow.getLastCellNum(); i++) {
                     HSSFCell cell = hfRow.getCell((short) i);
                     sheet.getColumnWidth((short) i);
                     if (cell != null) {
                         String cellValue = cell.toString();
                         cell.getCellNum();
-                        if (cellValue.equals("&TA1")) {
+                        if ("&TA1".equals(cellValue)) {
                             HSSFCell cell1 = hfRow.getCell((short) (i + 2));
                             String cellValue1 = cell1.toString();
                             int leng = cellValue1.length() + 1;
@@ -466,7 +472,8 @@ public class ReportUtil {
             //res.setContentLength(hm.getBytes().length);
             res.getOutputStream().flush();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
     }
 
@@ -483,19 +490,19 @@ public class ReportUtil {
             //res.setHeader("Content-Length", String.valueOf(hm.getBytes().length));
             HSSFSheet sheet = hm.getSheetAt(0);
             Iterator it = sheet.rowIterator();
-            String s = "";
+            String s;
             while (it.hasNext()) {
                 HSSFRow hfRow = (HSSFRow) it.next();
 
-                int maxleng = 0;
-                int maxleng2 = 0;
+                int maxleng;
+                int maxleng2;
                 for (int i = 0; i <= hfRow.getLastCellNum(); i++) {
                     HSSFCell cell = hfRow.getCell((short) i);
                     sheet.getColumnWidth((short) i);
                     if (cell != null) {
                         String cellValue = cell.toString();
                         cell.getCellNum();
-                        if (cellValue.equals("&TA1")) {
+                        if ("&TA1".equals(cellValue)) {
                             HSSFCell cell1 = hfRow.getCell((short) (i + 3));
                             String cellValue1 = cell1.toString();
                             int leng = cellValue1.length() + 1;
@@ -519,7 +526,8 @@ public class ReportUtil {
             //res.setContentLength(hm.getBytes().length);
             res.getOutputStream().flush();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
     }
 
@@ -536,21 +544,21 @@ public class ReportUtil {
             //res.setHeader("Content-Length", String.valueOf(hm.getBytes().length));
             HSSFSheet sheet = hm.getSheetAt(0);
             Iterator it = sheet.rowIterator();
-            String s = "";
+            String s;
             while (it.hasNext()) {
                 HSSFRow hfRow = (HSSFRow) it.next();
 
-                int maxleng = 0;
-                int maxleng2 = 0;
-                int maxleng3 = 0;
-                int maxleng4 = 0;
+                int maxleng;
+                int maxleng2;
+                int maxleng3;
+                int maxleng4;
                 for (int i = 0; i <= hfRow.getLastCellNum(); i++) {
                     HSSFCell cell = hfRow.getCell((short) i);
                     sheet.getColumnWidth((short) i);
                     if (cell != null) {
                         String cellValue = cell.toString();
                         cell.getCellNum();
-                        if (cellValue.equals("&TA1")) {
+                        if ("&TA1".equals(cellValue)) {
                             HSSFCell cell1 = hfRow.getCell((short) (i + 2));
                             String cellValue1 = cell1.toString();
                             int leng = cellValue1.length() + 1;
@@ -590,7 +598,8 @@ public class ReportUtil {
             //res.setContentLength(hm.getBytes().length);
             res.getOutputStream().flush();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
     }
 
@@ -607,21 +616,21 @@ public class ReportUtil {
             //res.setHeader("Content-Length", String.valueOf(hm.getBytes().length));
             HSSFSheet sheet = hm.getSheetAt(0);
             Iterator it = sheet.rowIterator();
-            String s = "";
+            String s;
             while (it.hasNext()) {
                 HSSFRow hfRow = (HSSFRow) it.next();
 
-                int maxleng = 0;
-                int maxleng2 = 0;
-                int maxleng3 = 0;
-                int maxleng4 = 0;
+                int maxleng;
+                int maxleng2;
+                int maxleng3;
+                int maxleng4;
                 for (int i = 0; i <= hfRow.getLastCellNum(); i++) {
                     HSSFCell cell = hfRow.getCell((short) i);
                     sheet.getColumnWidth((short) i);
                     if (cell != null) {
                         String cellValue = cell.toString();
                         cell.getCellNum();
-                        if (cellValue.equals("&TA1")) {
+                        if ("&TA1".equals(cellValue)) {
                             HSSFCell cell1 = hfRow.getCell((short) (i + 2));
                             String cellValue1 = cell1.toString();
                             int leng = cellValue1.length() + 1;
@@ -653,7 +662,8 @@ public class ReportUtil {
             //res.setContentLength(hm.getBytes().length);
             res.getOutputStream().flush();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
     }
 }

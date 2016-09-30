@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package com.viettel.vsaadmin.database.DAOHibernate;
+import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.client.form.EventLogLoginForm;
 import com.viettel.voffice.database.DAO.GridResult;
 import com.viettel.voffice.database.DAOHibernate.GenericDAOHibernate;
@@ -99,7 +100,8 @@ public class EventLogLoginDAOHE extends GenericDAOHibernate<EventLogLogin, Long>
             lstEventLogLogin = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<EventLogLogin>();
         }
 //        lstCategoryFactory.put(type, lstResult);

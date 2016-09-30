@@ -4,6 +4,7 @@
  */
 package com.viettel.filter;
 
+import com.viettel.common.util.LogUtil;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -61,74 +62,71 @@ public final class SessionFilter implements Filter {
                     || req.getRequestURL().toString().endsWith("VideoGuideLinePage.do")
                     || req.getRequestURL().toString().endsWith("openFileSignPublic.do")
                     || req.getRequestURL().toString().endsWith("registerCreateAction!onInsertHomePage.do")
-                    || req.getRequestURL().toString().endsWith("KeypayPage.do")
-                    ) {
+                    || req.getRequestURL().toString().endsWith("KeypayPage.do")) {
                 chain.doFilter(request, response);
                 return;
-            } else {
-                if (!cnn.isAuthenticate()) {
-                    // Chua dang nhap
-                    if (cnn.hadTicket()) {
-                        // Chua dang nhap, co ticket
-                        if (!cnn.getAuthenticate()) {
-                            // Thuc hien validate khong thanh cong
-                            String redirectUrl = cnn.getErrorUrl() + "?errorCode=" + "AuthenticateFailure";
-                            req.setAttribute("VSA-IsPassedVSAFilter", "False");
-                            res.setHeader("VSA-Flag", "InPageRedirect");
-                            res.setHeader("VSA-Location", redirectUrl);
-                            if (req.getHeader("X-Requested-With") != null && req.getHeader("X-Requested-With").length() > 0) {
-                                // La request ajax => Cho qua
-                                chain.doFilter(request, response);
-                            } else {
-                                // Redirect to error page
-                                res.sendRedirect(redirectUrl);
-                            }
+            } else if (!cnn.isAuthenticate()) {
+                // Chua dang nhap
+                if (cnn.hadTicket()) {
+                    // Chua dang nhap, co ticket
+                    if (!cnn.getAuthenticate()) {
+                        // Thuc hien validate khong thanh cong
+                        String redirectUrl = cnn.getErrorUrl() + "?errorCode=" + "AuthenticateFailure";
+                        req.setAttribute("VSA-IsPassedVSAFilter", "False");
+                        res.setHeader("VSA-Flag", "InPageRedirect");
+                        res.setHeader("VSA-Location", redirectUrl);
+                        if (req.getHeader("X-Requested-With") != null && req.getHeader("X-Requested-With").length() > 0) {
+                            // La request ajax => Cho qua
+                            chain.doFilter(request, response);
                         } else {
-                            // Validate thanh cong
-                            String redirectUrl = req.getRequestURL().toString() + "Index.do";
-                            res.setHeader("VSA-Location", redirectUrl);
+                            // Redirect to error page
                             res.sendRedirect(redirectUrl);
-                            chain.doFilter(req, res);
                         }
                     } else {
-                        //logSave("1. req.getRequestURL() = " + req.getRequestURL() + "; cnn.hadTicket() = false");
-                        String[] urlSplit = null;
-                        if (req.getRequestURL() != null) {
-                            urlSplit = req.getRequestURL().toString().split("/");
-                        }
-                        if (req.getRequestURL() != null && urlSplit != null && urlSplit.length == 3) {
-                            String redirectUrl = req.getRequestURL().toString() + "HomePage.do";
-                            req.setAttribute("VSA-IsPassedVSAFilter", "False");
-                            res.setHeader("VSA-Flag", "InPageRedirect");
-                            res.setHeader("VSA-Location", redirectUrl);
-                            res.sendRedirect(redirectUrl);
-                        } else {
-                            // Chua dang nhap, khong co ticket => redirect toi trang dang nhap tren Passport
-                            String redirectUrl = cnn.getPassportLoginURL() + "?appCode=" + cnn.getDomainCode() + "&service=" + URLEncoder.encode(cnn.getServiceURL(), "UTF-8");
-                            req.setAttribute("VSA-IsPassedVSAFilter", "False");
-                            res.setHeader("VSA-Flag", "InPageRedirect");
-                            res.setHeader("VSA-Location", redirectUrl);
-                            res.sendRedirect(redirectUrl);
-                        }
+                        // Validate thanh cong
+                        String redirectUrl = req.getRequestURL().toString() + "Index.do";
+                        res.setHeader("VSA-Location", redirectUrl);
+                        res.sendRedirect(redirectUrl);
+                        chain.doFilter(req, res);
                     }
                 } else {
-                    //logSave("2. req.getRequestURL() = " + req.getRequestURL() + "; cnn.isAuthenticate() = true");
+                    //logSave("1. req.getRequestURL() = " + req.getRequestURL() + "; cnn.hadTicket() = false");
                     String[] urlSplit = null;
                     if (req.getRequestURL() != null) {
                         urlSplit = req.getRequestURL().toString().split("/");
                     }
                     if (req.getRequestURL() != null && urlSplit != null && urlSplit.length == 3) {
-                        String redirectUrl = req.getRequestURL().toString() + "Login.do";
+                        String redirectUrl = req.getRequestURL().toString() + "HomePage.do";
+                        req.setAttribute("VSA-IsPassedVSAFilter", "False");
+                        res.setHeader("VSA-Flag", "InPageRedirect");
                         res.setHeader("VSA-Location", redirectUrl);
                         res.sendRedirect(redirectUrl);
-                        chain.doFilter(request, res);
                     } else {
-                        chain.doFilter(request, response);
+                        // Chua dang nhap, khong co ticket => redirect toi trang dang nhap tren Passport
+                        String redirectUrl = cnn.getPassportLoginURL() + "?appCode=" + cnn.getDomainCode() + "&service=" + URLEncoder.encode(cnn.getServiceURL(), "UTF-8");
+                        req.setAttribute("VSA-IsPassedVSAFilter", "False");
+                        res.setHeader("VSA-Flag", "InPageRedirect");
+                        res.setHeader("VSA-Location", redirectUrl);
+                        res.sendRedirect(redirectUrl);
                     }
+                }
+            } else {
+                //logSave("2. req.getRequestURL() = " + req.getRequestURL() + "; cnn.isAuthenticate() = true");
+                String[] urlSplit = null;
+                if (req.getRequestURL() != null) {
+                    urlSplit = req.getRequestURL().toString().split("/");
+                }
+                if (req.getRequestURL() != null && urlSplit != null && urlSplit.length == 3) {
+                    String redirectUrl = req.getRequestURL().toString() + "Login.do";
+                    res.setHeader("VSA-Location", redirectUrl);
+                    res.sendRedirect(redirectUrl);
+                    chain.doFilter(request, res);
+                } else {
+                    chain.doFilter(request, response);
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             //logSave("SessionFilter, chi tiết lỗi: " + ex.getMessage());
             // EventLogDAOHE edhe = new EventLogDAOHE();
             // edhe.insertEventLog("SessionFilter", "Chi tiết lỗi: " + ex.getMessage(), baseDao.getRequest());
@@ -147,7 +145,8 @@ public final class SessionFilter implements Filter {
     }
 
     /**
-     *  Check SessionFilter
+     * Check SessionFilter
+     *
      * @author DuND1
      * @version 1.0
      * @since 1.0
@@ -179,8 +178,8 @@ public final class SessionFilter implements Filter {
             bw.write(sb.toString());
             bw.close();
 
-        } catch (IOException e) {
-            log.error(e);
+        } catch (IOException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 }

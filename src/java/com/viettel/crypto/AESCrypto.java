@@ -4,6 +4,7 @@
  */
 package com.viettel.crypto;
 
+import com.viettel.common.util.LogUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -60,11 +61,11 @@ public class AESCrypto extends Crypto {
             kgen.init(length);
             this.setupCrypto(kgen.generateKey());
         } catch (Exception e) {
-            System.out.print(e.getMessage());
+            LogUtil.addLog(e);//binhnt sonar a160901
         }
     }
-    
-    public AESCrypto(SecretKey key){
+
+    public AESCrypto(SecretKey key) {
         this.setupCrypto(key);
     }
 
@@ -74,12 +75,12 @@ public class AESCrypto extends Crypto {
     }
 
     public AESCrypto(String key) {
-        if(key.length() < 32){
-            for(int i=key.length();i<32;i++){
+        if (key.length() < 32) {
+            for (int i = key.length(); i < 32; i++) {
                 key = key + " ";
             }
-        } else if(key.length() > 32){
-          key = key.substring(0, 32);
+        } else if (key.length() > 32) {
+            key = key.substring(0, 32);
         }
         SecretKeySpec skey = new SecretKeySpec(hexToByte(key), "AES");
         this.setupCrypto(skey);
@@ -126,6 +127,7 @@ public class AESCrypto extends Crypto {
         OutputStream out = new FileOutputStream(outputFile);
         decrypt(in, out);
     }
+
     //
     // Ma hoa file dinh kem encrypt key da ma hoa
     //
@@ -142,7 +144,7 @@ public class AESCrypto extends Crypto {
         oos.writeObject(encryptedKey);
 
         InputStream is = new FileInputStream(tmpFile);
-        int numRead = 0;
+        int numRead;
         while ((numRead = is.read(buf)) >= 0) {
             oos.write(buf, 0, numRead);
         }
@@ -151,8 +153,8 @@ public class AESCrypto extends Crypto {
         try {
             File f = new File(tmpFile);
             f.delete();
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception e) {
+            LogUtil.addLog(e);//binhnt sonar a160901
         }
     }
 
@@ -176,7 +178,7 @@ public class AESCrypto extends Crypto {
             //
             // Ghi du lieu trong file ra file tam
             //
-            int numRead = 0;
+            int numRead;
             String tmpFile = outputFile + "tmp";
             FileOutputStream fos = new FileOutputStream(tmpFile);
             while ((numRead = ois.read(buf)) >= 0) {
@@ -192,19 +194,21 @@ public class AESCrypto extends Crypto {
 
             File f = new File(tmpFile);
             f.delete();
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception e) {
+            LogUtil.addLog(e);//binhnt sonar a160901
         }
     }
+
     /**
      * Input a string that will be md5 hashed to create the key.
+     *
      * @return void, cipher initialized
      */
     private void setupCrypto(SecretKey key) {
         // Create an 8-byte initialization vector
         this.key = key;
 
-        AlgorithmParameterSpec paramSpec = null;
+        AlgorithmParameterSpec paramSpec;
         paramSpec = new IvParameterSpec(iv);
 //        if (length == 128) {
 //            paramSpec = new IvParameterSpec(iv);
@@ -221,7 +225,7 @@ public class AESCrypto extends Crypto {
             ecipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
             dcipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
         } catch (Exception e) {
-            System.out.print(e.getMessage());
+            LogUtil.addLog(e);//binhnt sonar a160901
         }
     }
 
@@ -231,18 +235,19 @@ public class AESCrypto extends Crypto {
             out = new CipherOutputStream(out, ecipher);
 
             // Read in the cleartext bytes and write to out to encrypt
-            int numRead = 0;
+            int numRead;
             while ((numRead = in.read(buf)) >= 0) {
                 out.write(buf, 0, numRead);
             }
             out.close();
         } catch (java.io.IOException e) {
-            System.out.print(e.getMessage());
+            LogUtil.addLog(e);//binhnt sonar a160901
         }
     }
 
     /**
      * Input is a string to encrypt.
+     *
      * @return a Hex string of the byte array
      */
     public String encrypt(String plaintext) {
@@ -250,7 +255,7 @@ public class AESCrypto extends Crypto {
             byte[] ciphertext = ecipher.doFinal(plaintext.getBytes("UTF-8"));
             return byteToHex(ciphertext);
         } catch (Exception e) {
-            System.out.print(e.getMessage());
+            LogUtil.addLog(e);//binhnt sonar a160901
             return null;
         }
     }
@@ -261,18 +266,19 @@ public class AESCrypto extends Crypto {
             in = new CipherInputStream(in, dcipher);
 
             // Read in the decrypted bytes and write the cleartext to out
-            int numRead = 0;
+            int numRead;
             while ((numRead = in.read(buf)) >= 0) {
                 out.write(buf, 0, numRead);
             }
             out.close();
         } catch (java.io.IOException e) {
-            System.out.print(e.getMessage());
+            LogUtil.addLog(e);//binhnt sonar a160901
         }
     }
 
     /**
      * Input encrypted String represented in HEX
+     *
      * @return a string decrypted in plain text
      */
     public String decrypt(String hexCipherText) {
@@ -280,7 +286,7 @@ public class AESCrypto extends Crypto {
             String plaintext = new String(dcipher.doFinal(this.hexToByte(hexCipherText)), "UTF-8");
             return plaintext;
         } catch (Exception e) {
-            System.out.print(e.getMessage());
+            LogUtil.addLog(e);//binhnt sonar a160901
             return null;
         }
     }
@@ -290,7 +296,7 @@ public class AESCrypto extends Crypto {
             String plaintext = new String(dcipher.doFinal(ciphertext), "UTF-8");
             return plaintext;
         } catch (Exception e) {
-            System.out.print(e.getMessage());
+            LogUtil.addLog(e);//binhnt sonar a160901
             return null;
         }
     }
@@ -301,6 +307,7 @@ public class AESCrypto extends Crypto {
             MessageDigest md = MessageDigest.getInstance("MD5");
             return md.digest(bytesOfMessage);
         } catch (Exception e) {
+            LogUtil.addLog(e);//binhnt sonar a160901
             return null;
         }
     }

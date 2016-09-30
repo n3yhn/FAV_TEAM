@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.database.DAO.BaseDAO;
 import com.viettel.hqmc.BO.TechnicalStandard;
 import com.viettel.hqmc.DAOHE.TechnicalStandardDAOHE;
@@ -47,7 +48,8 @@ public class TechnicalStandardDAO extends BaseDAO {
 //                System.out.println(searchForm.getStandardType());
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return this.forwardPage;
     }
@@ -105,6 +107,7 @@ public class TechnicalStandardDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật Qui chuẩn kĩ thuật thành công");
         }
@@ -136,7 +139,8 @@ public class TechnicalStandardDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa danh mục thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Xóa danh mục không thành công");
         }
@@ -173,7 +177,8 @@ public class TechnicalStandardDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Công bố tiêu chuẩn kĩ thuật thành công. " + result);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Công bố tiêu chuẩn kĩ thuật không thành công");
         }
@@ -210,7 +215,8 @@ public class TechnicalStandardDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Chấm dứt hiệu lực tiêu chuẩn kĩ thuật thành công. " + result);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Chấm dứt hiệu lực tiêu chuẩn kĩ thuật không thành công");
         }
@@ -242,7 +248,8 @@ public class TechnicalStandardDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Cập nhật trạng thái thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Cập nhật trạng thái không thành công");
         }

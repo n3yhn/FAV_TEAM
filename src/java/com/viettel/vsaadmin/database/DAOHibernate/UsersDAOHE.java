@@ -6,6 +6,7 @@ package com.viettel.vsaadmin.database.DAOHibernate;
 
 import com.viettel.common.util.Constants;
 import com.viettel.common.util.DateTimeUtils;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.voffice.database.DAO.GridResult;
 import com.viettel.voffice.database.DAOHibernate.GenericDAOHibernate;
@@ -83,7 +84,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                 bReturn = true;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return bReturn;
 
@@ -198,7 +200,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
 
             return lst;
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            String msg = ex.getMessage();
             return null;
         }
     }
@@ -321,8 +324,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                 }
             }
 
-        } catch (Exception e) {
-            e.getMessage();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            e.getMessage();
             return new ArrayList<Users>();
         }
         return lstResult;
@@ -375,8 +379,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             }
 
 //            lstResult.addAll(roleUsers);
-        } catch (Exception e) {
-            e.getMessage();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            e.getMessage();
             return new ArrayList<Users>();
         }
         return result;
@@ -415,8 +420,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                     }
                 }
             }
-        } catch (Exception e) {
-            e.getMessage();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            e.getMessage();
             return new ArrayList<Users>();
         }
         return lstResult;
@@ -460,8 +466,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                     }
                 }
             }
-        } catch (Exception e) {
-            e.getMessage();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            e.getMessage();
             return new ArrayList<Users>();
         }
         return lstResult;
@@ -539,8 +546,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                     }
                 }
             }
-        } catch (Exception e) {
-            e.getMessage();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            e.getMessage();
             return new ArrayList<Users>();
         }
         return lstResult;
@@ -585,7 +593,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
 
             return gridResult;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return null;
         }
     }
@@ -641,15 +650,16 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
 
             return gridResult;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return null;
         }
     }
+
     /*
      * Lay danh sach lanh dao Lanh dao van phong 
      * Added by SyTv
      */
-
     public List<Users> getLeaderOffice(Long deptId) {
         List<Users> user = new ArrayList<Users>();
         try {
@@ -667,8 +677,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             query.setParameter(5, "%" + Constants.ROLES.LEAD_ROLE + "%");
             user = query.list();
             return user;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -676,7 +687,7 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
     /*
      * Lay danh sach lanh dao
      */
-    /*
+ /*
      public List<Users> getLeader(Long deptId) {
      List<Users> user = new ArrayList<Users>();
      try {
@@ -715,8 +726,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             query.setParameter(4, "%" + Constants.POSITION.GDTT + "%");
             user = query.list();
             return user;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
             return null;
         }
     }
@@ -734,8 +746,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             query.setParameter(4, "%" + Constants.POSITION.LEADER_PCT + "%");
             user = query.list();
             return user;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
             return null;
         }
     }
@@ -779,8 +792,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                 return user;
             }
             return null;
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e.getMessage());
             return null;
         }
     }
@@ -798,8 +812,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             query.setParameter(4, "%" + Constants.POSITION.LEADER_CT + "%");
             user = query.list();
             return user;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
             return null;
         }
     }
@@ -816,8 +831,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             query.setParameter(3, "%" + Constants.POSITION.VFA_CV + "%");
             user = query.list();
             return user;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
             return null;
         }
     }
@@ -841,15 +857,16 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             query.setParameter(6, "%" + Constants.POSITION.PGDTT + "%");//binhnt update 071015
             user = query.list();
             return user;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);            
             return null;
         }
     }
+
     /*
      * Lay danh sach lanh dao cua don vi
      */
-
     public List<Users> getLeaderOfDept(Long deptId) {
 
         Query query = getSession().createQuery("SELECT distinct u FROM Users u WHERE u.status = ? "
@@ -1049,14 +1066,15 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                 return user.get(0);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return null;
     }
 
     public List<Users> getAllLeaderOffice(Long deptId) {
         try {
-            List<Users> users = new ArrayList<Users>();
+            List<Users> users;
             Query query = getSession().createQuery("SELECT u FROM Users u WHERE u.status = ? AND (((u.deptId=? OR u.deptRepresentId = ?)"
                     + " AND (u.posId IN (SELECT p.posId FROM Position p WHERE p.status = 1 and p.posType = 1 and p.posCode LIKE ? escape '!' or p.posCode LIKE ? escape '!')))"
                     + " OR u.userId in ("
@@ -1097,7 +1115,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
 
             return lst;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
 
         return null;
@@ -1120,7 +1139,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             }
             return null;
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            String msg = ex.getMessage();
             return null;
         }
     }
@@ -1146,7 +1166,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                 return userList.get(0);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return null;
     }
@@ -1172,7 +1193,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                 return user;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return null;
     }
@@ -1202,7 +1224,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                 return user;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return null;
     }
@@ -1228,7 +1251,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             result = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return result;
     }
@@ -1250,8 +1274,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             if (user != null) {
                 fullName = user.getFullName();
             }
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e.getMessage());
         }
         return fullName;
     }
@@ -1281,7 +1306,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             result = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return result;
     }
@@ -1295,8 +1321,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
      */
     public UsersForm boToForm(Users bo, UsersForm form) {
         DepartmentDAOHE deptDaoHe = new DepartmentDAOHE();
-        Department dept = null;
-        Department deptParent = null;
+        Department dept;
+        Department deptParent;
         if (bo != null && form != null) {
             form.setUserId(bo.getUserId().toString());
             form.setUserName(bo.getUserName());
@@ -1451,7 +1477,7 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             Query query = getSession().createQuery(hql);
             query.setParameter(0, userId);
             List<VDepartment> lst = query.list();
-            String lstPath = "";
+            String lstPath;
             if (lst != null && lst.size() > 0) {
                 lstPath = lst.get(0).getDeptPath();
                 hql = "select v from VDepartment v, DeptType dt "
@@ -1464,7 +1490,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return deptId;
     }
@@ -1486,7 +1513,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                 return user.get(0).getUserId();
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return null;
     }
@@ -1508,7 +1536,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             result = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return result;
     }
@@ -1530,7 +1559,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             result = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return result;
     }
@@ -1551,7 +1581,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             result = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return result;
     }
@@ -1579,7 +1610,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                 result = true;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return result;
     }
@@ -1614,7 +1646,8 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                 result = true;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return result;
     }
@@ -1638,8 +1671,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             query.setParameter(4, Constants.POSITION.GDTT);
             user = query.list();
             return user;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
             return null;
         }
     }
@@ -1664,8 +1698,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             if (user != null && user.size() > 0) {
                 result = true;
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
             return result;
         }
         return result;

@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.DAOHE;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.BO.BusinessAlert;
 import com.viettel.hqmc.FORM.BusinessAlertForm;
@@ -19,6 +20,8 @@ import org.hibernate.Query;
  * @author Administrator
  */
 public class BusinessAlertDAOHE extends GenericDAOHibernate<BusinessAlert, Long> {
+
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BusinessAlertDAOHE.class);
 
     public BusinessAlertDAOHE() {
         super(BusinessAlert.class);
@@ -76,5 +79,65 @@ public class BusinessAlertDAOHE extends GenericDAOHibernate<BusinessAlert, Long>
         List lstResult = query.list();
         GridResult gr = new GridResult(total, lstResult);
         return gr;
+    }
+
+    public List<BusinessAlertForm> getLstCommentOfDocument(Long userId) {
+        List<BusinessAlertForm> list = new ArrayList<BusinessAlertForm>();
+        try {
+            String countHql = "SELECT count(b) ";
+            String selectHQL = "SELECT b";
+            String hql = " FROM BusinessAlert b"
+                    + " WHERE (b.seen = 0)"
+                    + " and  b.businessId =" + userId;
+            hql += " ORDER BY b.createdDate DESC";
+
+            Query query = getSession().createQuery(selectHQL + hql);
+            Query countQuery = getSession().createQuery(countHql + hql);
+            Long nCount = (Long) countQuery.uniqueResult();
+            List<BusinessAlert> lst = query.list();
+            for (BusinessAlert bo : lst) {
+                list.add(boToForm(bo));
+            }
+            return list;
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
+            return null;
+        }
+    }
+
+    public BusinessAlertForm boToForm(BusinessAlert bo) {
+        BusinessAlertForm form = new BusinessAlertForm();
+        form.setBusinessAlertId(bo.getBusinessAlertId());
+        form.setBusinessId(bo.getBusinessId());
+        form.setContent(bo.getContent());
+        form.setCreatedById(bo.getCreatedById());
+        form.setCreatedByName(bo.getCreatedByName());
+        form.setCreatedDate(bo.getCreatedDate());
+        form.setIsActive(bo.getIsActive());
+        form.setSeen(bo.getSeen());
+        return form;
+    }
+
+    public List<BusinessAlert> getAllBusinessAlertByUserId(Long userId) {
+        List<BusinessAlert> list = new ArrayList<BusinessAlert>();
+        try {
+            String countHql = "SELECT count(b) ";
+            String selectHQL = "SELECT b";
+            String hql = " FROM BusinessAlert b"
+                    + " WHERE (b.seen = 0)"
+                    + " and  b.businessId =" + userId;
+            hql += " ORDER BY b.createdDate DESC";
+
+            Query query = getSession().createQuery(selectHQL + hql);
+            List<BusinessAlert> lst = query.list();
+            for (BusinessAlert bo : lst) {
+                list.add(bo);
+            }
+            return list;
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            return null;
+        }
     }
 }

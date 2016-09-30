@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package com.viettel.hqmc.DAOHE;
+
 import com.viettel.common.util.Constants;
 import com.viettel.hqmc.BO.StandardProduct;
 import com.viettel.hqmc.FORM.StandardProductForm;
@@ -12,11 +13,14 @@ import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
+import com.viettel.common.util.LogUtil;
+
 /**
  *
  * @author vtit_binhnt53
  */
-public class StandardProductDAOHE extends GenericDAOHibernate<StandardProduct, Long>{
+public class StandardProductDAOHE extends GenericDAOHibernate<StandardProduct, Long> {
+
     private static HashMap<String, List> lstFactory = new HashMap();
     private static Logger log = Logger.getLogger(StandardProduct.class);
     private List keyList = new ArrayList();
@@ -31,8 +35,9 @@ public class StandardProductDAOHE extends GenericDAOHibernate<StandardProduct, L
             lstFactory.remove(type);
         }
     }
+
     //FIND ALL 
-   /**
+    /**
      * findAllCategory
      *
      * @param type
@@ -60,7 +65,7 @@ public class StandardProductDAOHE extends GenericDAOHibernate<StandardProduct, L
                 lstCategory = query.list();
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<StandardProduct>();
         }
         lstFactory.put(type, lstCategory);
@@ -111,7 +116,7 @@ public class StandardProductDAOHE extends GenericDAOHibernate<StandardProduct, L
 //                return lstCategory.get(0);
 //            }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return null;

@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.database.DAO.*;
 import com.viettel.hqmc.BO.Business;
 import com.viettel.hqmc.DAOHE.BusinessDAOHE;
@@ -27,19 +28,16 @@ public class BusinessDAO extends BaseDAO {
     private BusinessForm createForm;
     private List<BusinessForm> lstItemOnGrid;
 
-    
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BusinessDAO.class);
-    
+
     /*
      * toShowPage
      * show data perpare after show page
      */
-
     /**
      *
      * @return
      */
-    
     public String prepare() {
         CategoryDAOHE cdhe = new CategoryDAOHE();
         List lstProvince = cdhe.findAllCategory("PROVINCE");
@@ -47,7 +45,7 @@ public class BusinessDAO extends BaseDAO {
         lstCategory.addAll(lstProvince);
         lstCategory.add(0, new Category(0l, "--- Chọn ---"));
         getRequest().setAttribute("lstProvince", lstCategory);
-        
+
         List lstBusinessType = cdhe.findAllCategory("BUSTYPE");
         List lstCategory1 = new ArrayList();
         lstCategory1.addAll(lstBusinessType);
@@ -101,6 +99,7 @@ public class BusinessDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật doanh nghiệp không thành công");
         }
@@ -112,8 +111,7 @@ public class BusinessDAO extends BaseDAO {
 
     /**
      *
-     * @return
-     * @throws Exception
+     * @return @throws Exception
      */
     public String onDelete() throws Exception {
         List resultMessage = new ArrayList();
@@ -121,7 +119,7 @@ public class BusinessDAO extends BaseDAO {
             BusinessDAOHE bdhe = new BusinessDAOHE();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 BusinessForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getBusinessId() != null && form.getBusinessId() != 0D) {
+                if (form != null && form.getBusinessId() != null && form.getBusinessId() != 0L) {
                     Business bo = bdhe.getById("businessId", form.getBusinessId());
                     if (bo != null) {
                         bo.setIsActive(-1l);
@@ -132,7 +130,7 @@ public class BusinessDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa danh mục thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Xóa danh mục không thành công");
         }

@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.DAOHE;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.BO.Files;
 import com.viettel.hqmc.BO.Notification;
@@ -76,8 +77,8 @@ public class NotificationDAOHE extends GenericDAOHibernate<Notification, Long> {
                     }
                 }
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return result;
     }
@@ -143,7 +144,7 @@ public class NotificationDAOHE extends GenericDAOHibernate<Notification, Long> {
                 bReturn = true;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());;
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;

@@ -23,6 +23,7 @@ import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.utils.WordExportUtils.HeaderFooter;
 import com.viettel.voffice.database.BO.VoAttachs;
 import com.viettel.voffice.database.DAO.BaseDAO;
@@ -138,13 +139,15 @@ public class WordExportUtils {
                                 }
                             }
                         }
-                    } catch (Exception en) {
-                        Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, en);
+                    } catch (Exception ex) {
+                        LogUtil.addLog(ex);//binhnt sonar a160901
+//                        Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, en);
                     }
                 }
             }
         } catch (Exception ex) {
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
 
         }
     }
@@ -220,7 +223,7 @@ public class WordExportUtils {
             Relationship relationship = createFooterPart();
             createHeaderReference(wmp, relationship);
         } catch (Exception ex) {
-
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -327,12 +330,13 @@ public class WordExportUtils {
                             System.out.println("null");
                         }
                     } catch (Exception ex) {
-                        log.error(ex.getMessage());
+                        LogUtil.addLog(ex);//binhnt sonar a160901
                     }
                 }
             }
         } catch (Exception ex) {
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901            
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -393,6 +397,7 @@ public class WordExportUtils {
             field.setAccessible(true);
             value = field.get(obj);
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             /* bo ghi log loi k quan tam - binhnt53
              Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
              */
@@ -407,7 +412,8 @@ public class WordExportUtils {
             field.setAccessible(true);
             value = (String) field.get(obj);
         } catch (Exception ex) {
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
         return value;
     }
@@ -499,7 +505,7 @@ public class WordExportUtils {
             // step 3
             document.open();
             PdfContentByte cb = writer.getDirectContent();
-            PdfImportedPage page = null;
+            PdfImportedPage page;
 
             PdfReader reader = null;
             if (inputData != null && inputData.length > 0) {
@@ -516,8 +522,8 @@ public class WordExportUtils {
             // Add label
             PdfReader readerLabel = null;
             if (flagReadLabels) {
-                byte[] data = null;
-                int pageNumberLabel = 0;
+                byte[] data;
+                int pageNumberLabel;
                 ResourceBundle rb = ResourceBundle.getBundle("config");
                 String dir = rb.getString("directory");
                 List<VoAttachs> lstLabels = daoHe.getAttachsByObject(fileId, Constants.OBJECT_TYPE.FILES_LABEL);
@@ -564,10 +570,11 @@ public class WordExportUtils {
                             cb.addTemplate(page, 0, 0);
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+                        LogUtil.addLog(ex);//binhnt sonar a160901
+//                        Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex.getMessage());
                     }
-                    pageNumberLabel = 0;
-                    data = null;
+//                    pageNumberLabel = 0;
+//                    data = null;
                 }
             }
             document.close();
@@ -583,7 +590,8 @@ public class WordExportUtils {
             return a;
 
         } catch (IOException | DocumentException ex) {
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex.getMessage());
         }
         return null;
     }
@@ -614,7 +622,8 @@ public class WordExportUtils {
             of.flush();
             of.close();
         } catch (IOException ex) {
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -632,7 +641,7 @@ public class WordExportUtils {
             input.setFilename(f.getName());
             input.setConvertType("docx2pdf");
 
-            FileOutputStream fop = null;
+            FileOutputStream fop;
             File file;
             ResourceBundle rb1 = ResourceBundle.getBundle("config");
             String PATH1 = rb1.getString("file_sign_link");
@@ -660,7 +669,7 @@ public class WordExportUtils {
                 return false;
             }
             // Create file name
-            String fileOut = "";
+            String fileOut;
             if (signNumberFile == 0) {
                 fileOut = PATH1 + code + "_" + baseDao.getUserId().toString() + "_" + fileId.toString() + "_" + signType + ".pdf";
             } else {
@@ -668,8 +677,8 @@ public class WordExportUtils {
             }
 
             // Try conect 5 times
-            Converter_Service service = null;
-            com.viettel.convert.service.Converter con = null;
+            Converter_Service service;
+            com.viettel.convert.service.Converter con;
             PdfDocxFile output = null;
 
             Integer count = 1;
@@ -680,7 +689,8 @@ public class WordExportUtils {
                     output = con.convert(input);
                     break;
                 } catch (Exception ex) {
-                    Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                    Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
                     // Wait 1s
                     Thread.sleep(1000);
                     count++;
@@ -718,7 +728,8 @@ public class WordExportUtils {
 //            of.close();
             return true;
         } catch (Docx4JException | InterruptedException | IOException ex) {
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -775,8 +786,9 @@ public class WordExportUtils {
             //of.write(output.getContent());
             of.flush();
             of.close();
-        } catch (IOException iOException) {
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, iOException.getMessage());
+        } catch (IOException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, iOException.getMessage());
             return false;
         }
         return true;
@@ -810,7 +822,7 @@ public class WordExportUtils {
 //        File f = new File(getRequest().getRealPath("/WEB-INF/template/download/")+fileName);
 //        template.save(f);
         AbstractHtmlExporter exporter = new HtmlExporterNG2();
-        WordprocessingMLPackage wmp = null;
+        WordprocessingMLPackage wmp;
         wmp = WordprocessingMLPackage.load(new FileInputStream(inputPath));
         String inputFilePath = path;
 
@@ -1008,7 +1020,8 @@ public class WordExportUtils {
                         Element.ALIGN_CENTER, new Phrase(String.format("Trang %d", pagenumber)),
                         rect.getRight() - 25, rect.getBottom() - 18, 0);
             } catch (Exception ex) {
-                Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             try {
@@ -1040,7 +1053,8 @@ public class WordExportUtils {
                      */
                 }
             } catch (BadElementException | IOException ex) {
-                Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -1060,7 +1074,7 @@ public class WordExportUtils {
             input.setFilename(f.getName());
             input.setConvertType("docx2pdf");
 
-            FileOutputStream fop = null;
+            FileOutputStream fop;
             File file;
             ResourceBundle rb1 = ResourceBundle.getBundle("config");
             String PATH1 = rb1.getString("file_sign_link");
@@ -1088,7 +1102,7 @@ public class WordExportUtils {
                 return "false";
             }
             // Create file name
-            String fileOut = "";
+            String fileOut;
             if (signNumberFile == 0) {
                 fileOut = PATH1 + code + "_" + baseDao.getUserId().toString() + "_" + fileId.toString() + "_" + signType + ".pdf";
             } else {
@@ -1096,8 +1110,8 @@ public class WordExportUtils {
             }
 
             // Try conect 5 times
-            Converter_Service service = null;
-            com.viettel.convert.service.Converter con = null;
+            Converter_Service service;
+            com.viettel.convert.service.Converter con;
             PdfDocxFile output = null;
 
             Integer count = 1;
@@ -1108,7 +1122,8 @@ public class WordExportUtils {
                     output = con.convert(input);
                     break;
                 } catch (Exception ex) {
-                    Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                    Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
                     // Wait 1s
                     Thread.sleep(1000);
                     count++;
@@ -1141,7 +1156,8 @@ public class WordExportUtils {
             fop.close();
             return file.getPath() + ";" + file.getName();
         } catch (Docx4JException | InterruptedException | IOException ex) {
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
             return "false";
         }
     }
@@ -1237,7 +1253,8 @@ public class WordExportUtils {
                  rect.getRight() - 25, rect.getBottom() - 18, 0);
                  */
             } catch (Exception ex) {
-                Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             try {
@@ -1269,7 +1286,8 @@ public class WordExportUtils {
                      */
                 }
             } catch (BadElementException | IOException ex) {
-                Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -1288,19 +1306,19 @@ public class WordExportUtils {
             input.setFilename(f.getName());
             input.setConvertType("docx2pdf");
 
-            FileOutputStream fop = null;
+            FileOutputStream fop;
             File file;
             ResourceBundle rb1 = ResourceBundle.getBundle("config");
             String PATH1 = rb1.getString("file_sign_link");
             // Get user Info
             BaseDAO baseDao = new BaseDAO();
             // Create file name
-            String fileOut = "";
+            String fileOut;
             fileOut = PATH1 + signType + "_" + baseDao.getUserId().toString() + "_" + fileId.toString() + ".pdf";
 
             // Try conect 5 times
-            Converter_Service service = null;
-            com.viettel.convert.service.Converter con = null;
+            Converter_Service service;
+            com.viettel.convert.service.Converter con;
             PdfDocxFile output = null;
 
             Integer count = 1;
@@ -1311,7 +1329,8 @@ public class WordExportUtils {
                     output = con.convert(input);
                     break;
                 } catch (Exception ex) {
-                    Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                    Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
                     // Wait 1s
                     Thread.sleep(1000);
                     count++;
@@ -1344,7 +1363,8 @@ public class WordExportUtils {
             fop.close();
             return file.getPath() + ";" + file.getName();
         } catch (Docx4JException | InterruptedException | IOException ex) {
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
             return "false";
         }
     }
@@ -1375,7 +1395,8 @@ public class WordExportUtils {
             of.flush();
             of.close();
         } catch (IOException ex) {
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -1394,7 +1415,7 @@ public class WordExportUtils {
             // step 3
             document.open();
             PdfContentByte cb = writer.getDirectContent();
-            PdfImportedPage page = null;
+            PdfImportedPage page;
 
             PdfReader reader = null;
             if (inputData != null && inputData.length > 0) {
@@ -1417,7 +1438,8 @@ public class WordExportUtils {
             return a;
 
         } catch (IOException | DocumentException ex) {
-            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex.getMessage());
         }
         return null;
     }

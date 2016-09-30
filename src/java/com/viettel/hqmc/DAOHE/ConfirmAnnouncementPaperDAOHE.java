@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAOHE;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.BO.ConfirmAnnouncementPaper;
 import com.viettel.hqmc.FORM.ConfirmAnnouncementPaperForm;
@@ -20,6 +21,7 @@ import org.hibernate.Query;
  * @author vtit_binhnt53
  */
 public class ConfirmAnnouncementPaperDAOHE extends GenericDAOHibernate<ConfirmAnnouncementPaper, Long> {
+
     private static HashMap<String, List> lstFactory = new HashMap();
 
     public static HashMap<String, List> getLstFactory() {
@@ -32,7 +34,7 @@ public class ConfirmAnnouncementPaperDAOHE extends GenericDAOHibernate<ConfirmAn
     private static Logger log = Logger.getLogger(ConfirmAnnouncementPaper.class);
     private List keyList = new ArrayList();
     private List valueList = new ArrayList();
-    
+
     //removeCache
     public static void removeCache(String type) {
         if (lstFactory == null) {
@@ -42,11 +44,10 @@ public class ConfirmAnnouncementPaperDAOHE extends GenericDAOHibernate<ConfirmAn
             lstFactory.remove(type);
         }
     }
-    
+
     /*
      *find all filter by BoForm
      */
-    
     /**
      * find all filter by BoForm
      *
@@ -62,11 +63,11 @@ public class ConfirmAnnouncementPaperDAOHE extends GenericDAOHibernate<ConfirmAn
         List lstParam = new ArrayList();
         if (form != null) {
             //code filter here
-            if (form.getConfirmationNo()!= null && form.getConfirmationNo().trim().length() > 0) {
+            if (form.getConfirmationNo() != null && form.getConfirmationNo().trim().length() > 0) {
                 hql += " and lower(t.confirmationNo) like ? ESCAPE '/' ";
                 lstParam.add(StringUtils.toLikeString(form.getConfirmationNo().trim()));
             }
-            if (form.getDateOfIssue()!= null) {
+            if (form.getDateOfIssue() != null) {
                 hql += " and t.dateOfIssue = ?";
                 lstParam.add(form.getDateOfIssue());
             }
@@ -111,7 +112,8 @@ public class ConfirmAnnouncementPaperDAOHE extends GenericDAOHibernate<ConfirmAn
             lstConfirmAnnouncementPaper = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<ConfirmAnnouncementPaper>();
         }
 //        lstCategoryFactory.put(type, lstResult);
@@ -121,7 +123,6 @@ public class ConfirmAnnouncementPaperDAOHE extends GenericDAOHibernate<ConfirmAn
     }
 
     //kiem tra doi tuong co trung khong   
-    
     public boolean isDuplicate(ConfirmAnnouncementPaperForm form) {
         if (form == null) {
             return false;
@@ -133,7 +134,7 @@ public class ConfirmAnnouncementPaperDAOHE extends GenericDAOHibernate<ConfirmAn
             hql += " and t.confirmAnnouncementPaperId <> ? ";
             lstParam.add(form.getConfirmAnnouncementPaperId());
         }
-        if (form.getConfirmationNo()!= null && form.getConfirmationNo().trim().length() > 0) {
+        if (form.getConfirmationNo() != null && form.getConfirmationNo().trim().length() > 0) {
             hql += " and t.confirmationNo = ? ";
             lstParam.add(form.getConfirmationNo());
         }
@@ -149,6 +150,7 @@ public class ConfirmAnnouncementPaperDAOHE extends GenericDAOHibernate<ConfirmAn
         }
         return bReturn;
     }
+
     /*
      * 
      */

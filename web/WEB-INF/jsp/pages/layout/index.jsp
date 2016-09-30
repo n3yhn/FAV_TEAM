@@ -169,7 +169,7 @@
 
             <jsp:include page="keyboard.jsp"/>
             <sd:Dialog  id="vt-businessAlert" height="auto" width="800px"
-                        key="dialog.titleAddEdit" showFullscreenButton="false"
+                        key="Thông báo" showFullscreenButton="false"
                         >
                 <jsp:include page="pushBusinessAlertDlg.jsp" flush="false"></jsp:include>
             </sd:Dialog>
@@ -178,10 +178,6 @@
             <script type="text/javascript">
                 page.checkChangePassword = function () {//kiem tra ton tai giay cong bo
                     sd.connector.post("UserAction!checkPassIsChanged.do", null, null, null, page.aftercheckChangePassword);
-                };
-
-                page.pushBusinessAlert = function () {//kiem tra ton tai giay cong bo
-                    sd.connector.post("UserAction!pushBusinessAlert.do", null, null, null, page.afterPushBusinessAlert);
                 };
 
                 page.aftercheckChangePassword = function (data) {//sau khi kiem tra ton tai cong bo
@@ -199,20 +195,31 @@
                     }
                 };
 
-                page.afterPushBusinessAlert = function (data) {//sau khi kiem tra ton tai cong bo
+                page.pushBusinessAlert = function () {//kiem tra ton tai giay cong bo
+                    sd.connector.post("UserAction!pushBusinessAlert.do", null, null, null, page.afterPushBusinessAlert);
+                };
+
+                page.afterPushBusinessAlert = function (data) {//sau khi kiem tra ton ti cua thong bao
                     var obj = dojo.fromJson(data);
                     var result = obj.items;
                     var result0 = result[0];
-                    var result1 = result[1];
                     if (result0 == 1) {
-                        var dialog = dijit.byId("vt-businessAlert");
-                        dialog.show();
-
-                        //dijit.byId("gridViewBusinessAlertContentId").vtReload("businessAlertAction!loadBusinessAlertView.do?searchForm.businessId=" + result1);
+                        sd.connector.post("businessAlertAction!getContent4BusinessView.do?", null, null, null, afterContent4BusinessView);
                     }
                 };
-
-//                page.pushBusinessAlert();
+                afterContent4BusinessView = function (data) {
+                    var obj = dojo.fromJson(data);
+                    if (obj.customInfo[0] != "") {
+//                        document.getElementById("evaluationRecordsForm.legalContent").value = obj.customInfo[0];
+                        document.getElementById("pushBusinessAlert.content").innerHTML = obj.customInfo[0];
+                    } else {
+                        document.getElementById("pushBusinessAlert.content").innerHTML = "";
+                    }
+                    page.replaceBrTblpushBusinessAlertForm();
+                    var dialog = dijit.byId("vt-businessAlert");
+                    dialog.show();
+                };
+                page.pushBusinessAlert();
                 page.checkChangePassword();
 
                 var mainProcess = false;

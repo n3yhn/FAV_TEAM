@@ -33,19 +33,23 @@ import java.util.ResourceBundle;
  */
 public class FileUtils {
 
-    /** .*/
+    /**
+     * .
+     */
     public static final int BUFFER_SIZE = 1024 * 8;
-    /** .*/
+    /**
+     * .
+     */
     private static final int COPY_BUFFER_SIZE = 1024 * 1024;
-    
+
     private FileUtils() {
     }
-    
+
     /**
      * check null and Close a stream
-     * 
+     *
      * @param closeable closeable
-     * @throws IOException 
+     * @throws IOException
      */
     public static void closeStream(Closeable closeable) throws IOException {
         if (closeable != null) {
@@ -55,6 +59,7 @@ public class FileUtils {
 
     /**
      * saveFile
+     *
      * @param f f
      * @param fileName fileName
      * @param desDir desDir
@@ -63,7 +68,7 @@ public class FileUtils {
     public static void saveFile(File f, String fileName, File desDir) throws IOException {
         InputStream stream = new FileInputStream(f);
         OutputStream out = new FileOutputStream(desDir.getAbsolutePath() + File.separatorChar + fileName);
-        int bytesRead = 0;
+        int bytesRead;
         byte[] buffer = new byte[BUFFER_SIZE];
         while ((bytesRead = stream.read(buffer, 0, BUFFER_SIZE)) != -1) {
             out.write(buffer, 0, bytesRead);
@@ -90,7 +95,7 @@ public class FileUtils {
         }
         InputStream stream = new FileInputStream(f);
         OutputStream out = new FileOutputStream(file);
-        int bytesRead = 0;
+        int bytesRead;
         byte[] buffer = new byte[BUFFER_SIZE];
         while ((bytesRead = stream.read(buffer, 0, BUFFER_SIZE)) != -1) {
             out.write(buffer, 0, bytesRead);
@@ -184,8 +189,10 @@ public class FileUtils {
 
     /**
      * Writes (and creates) a text file.
+     *
      * @param file the file to which the text should be written
-     * @param lines the text lines of the file in a collection with String-values
+     * @param lines the text lines of the file in a collection with
+     * String-values
      * @throws IOException when there is an input/output error during the saving
      */
     public static void writeTextFile(File file, Collection lines)
@@ -195,6 +202,7 @@ public class FileUtils {
 
     /**
      * Writes (and creates) a text file.
+     *
      * @param file the file to which the text should be written
      * @param lines the text lines of the file
      * @throws IOException when there is an input/output error during the saving
@@ -214,8 +222,11 @@ public class FileUtils {
 
     /**
      * Copies the given files to the specified target directory.
-     * @param files The files which should be copied, when an array element is null, it will be ignored.
-     * @param targetDir The directory to which the given files should be copied to.
+     *
+     * @param files The files which should be copied, when an array element is
+     * null, it will be ignored.
+     * @param targetDir The directory to which the given files should be copied
+     * to.
      * @throws IOException when there is an error while copying the file.
      */
     public static void copy(File[] files, File targetDir)
@@ -226,9 +237,12 @@ public class FileUtils {
     /**
      * Copies the given files to the specified target directory.
      *
-     * @param files The files which should be copied, when an array element is null, it will be ignored.
-     * @param targetDir The directory to which the given files should be copied to.
-     * @param overwrite true when existing target files should be overwritten even when they are newer
+     * @param files The files which should be copied, when an array element is
+     * null, it will be ignored.
+     * @param targetDir The directory to which the given files should be copied
+     * to.
+     * @param overwrite true when existing target files should be overwritten
+     * even when they are newer
      * @throws IOException when there is an error while copying the file.
      */
     public static void copy(File[] files, File targetDir, boolean overwrite)
@@ -251,7 +265,8 @@ public class FileUtils {
      * Copies a file.
      *
      * @param source The file which should be copied
-     * @param target The file or directory to which the source-file should be copied to.
+     * @param target The file or directory to which the source-file should be
+     * copied to.
      * @throws FileNotFoundException when the source file was not found
      * @throws IOException when there is an error while copying the file.
      */
@@ -264,7 +279,8 @@ public class FileUtils {
      * Copies a file.
      *
      * @param source The file which should be copied
-     * @param target The file or directory to which the source-file should be copied to.
+     * @param target The file or directory to which the source-file should be
+     * copied to.
      * @param buffer A buffer used for the copying.
      * @throws FileNotFoundException when the source file was not found
      * @throws IOException when there is an error while copying the file.
@@ -286,8 +302,8 @@ public class FileUtils {
             while ((read = in.read(buffer)) != -1) {
                 out.write(buffer, 0, read);
             }
-        } catch (IOException e) {
-            throw e;
+        } catch (IOException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         } finally {
             in.close();
             out.close();
@@ -295,8 +311,9 @@ public class FileUtils {
     }
 
     /**
-     * Writes the properties which are defined in the given HashMap into a textfile.
-     * The notation in the file will be [name]=[value]\n for each defined property.
+     * Writes the properties which are defined in the given HashMap into a
+     * textfile. The notation in the file will be [name]=[value]\n for each
+     * defined property.
      *
      * @param file the file which should be created or overwritten
      * @param properties the properties which should be written.
@@ -308,11 +325,13 @@ public class FileUtils {
     }
 
     /**
-     * Writes the properties which are defined in the given HashMap into a textfile.
-     * The notation in the file will be [name]=[value]\n for each defined property.
+     * Writes the properties which are defined in the given HashMap into a
+     * textfile. The notation in the file will be [name]=[value]\n for each
+     * defined property.
      *
      * @param file the file which should be created or overwritten
-     * @param delimiter the character that separates a property-name from a property-value.
+     * @param delimiter the character that separates a property-name from a
+     * property-value.
      * @param properties the properties which should be written.
      * @throws IOException when there is an input/output error during the saving
      */
@@ -329,16 +348,15 @@ public class FileUtils {
     }
 
     /**
-     * Reads a properties file.
-     * The notation of the file needs to be
-     * "[name]=[value]\n"
-     * for each defined property.
+     * Reads a properties file. The notation of the file needs to be
+     * "[name]=[value]\n" for each defined property.
      *
      * @param file the file containing the properties
      * @return a hashmap containing all properties found in the file
-
+     *
      * @throws IOException when file could not be read.
-     * @throws IllegalArgumentException when the line does not contain a property
+     * @throws IllegalArgumentException when the line does not contain a
+     * property
      */
     public static HashMap readPropertiesFile(File file)
             throws IOException {
@@ -346,17 +364,17 @@ public class FileUtils {
     }
 
     /**
-     * Reads a properties file.
-     * The notation of the file needs to be
-     * "[name]=[value]\n"
-     * for each defined property.
+     * Reads a properties file. The notation of the file needs to be
+     * "[name]=[value]\n" for each defined property.
      *
      * @param file the file containing the properties
-     * @param delimiter the character that separates a property-name from a property-value.
+     * @param delimiter the character that separates a property-name from a
+     * property-value.
      * @return a hashmap containing all properties found in the file
-
+     *
      * @throws IOException when file could not be read.
-     * @throws IllegalArgumentException when the line does not contain a property
+     * @throws IllegalArgumentException when the line does not contain a
+     * property
      */
     public static HashMap readPropertiesFile(File file, char delimiter)
             throws IOException {
@@ -367,17 +385,18 @@ public class FileUtils {
     }
 
     /**
-     * Reads a properties file.
-     * The notation of the file needs to be
-     * "[name]=[value]\n" where '=' is the defined delimiter character.
-     * for each defined property.
+     * Reads a properties file. The notation of the file needs to be
+     * "[name]=[value]\n" where '=' is the defined delimiter character. for each
+     * defined property.
      *
      * @param file the file containing the properties
-     * @param delimiter the character that separates a property-name from a property-value.
+     * @param delimiter the character that separates a property-name from a
+     * property-value.
      * @param map the hash map to which the properties should be added
-
+     *
      * @throws IOException when file could not be read.
-     * @throws IllegalArgumentException when the line does not contain a property
+     * @throws IllegalArgumentException when the line does not contain a
+     * property
      */
     public static void readPropertiesFile(File file, char delimiter, Map map)
             throws IOException {
@@ -403,19 +422,20 @@ public class FileUtils {
     }
 
     /**
-     * Reads a properties file.
-     * The notation of the file needs to be
-     * "[name]=[value]\n" where '=' is the defined delimiter character.
-     * for each defined property.
+     * Reads a properties file. The notation of the file needs to be
+     * "[name]=[value]\n" where '=' is the defined delimiter character. for each
+     * defined property.
      *
      * @param file the file containing the properties
-     * @param delimiter the character that separates a property-name from a property-value.
+     * @param delimiter the character that separates a property-name from a
+     * property-value.
      * @param comment the character that introduces a comment, e.g. '#'
      * @param map the hash map to which the properties should be added
-     * @param ignoreInvalidProperties when this flag is true, invalid property definition (those that do not contain
-     * the delimiter char) are ignored
+     * @param ignoreInvalidProperties when this flag is true, invalid property
+     * definition (those that do not contain the delimiter char) are ignored
      * @throws IOException when file could not be read.
-     * @throws IllegalArgumentException when the line does not contain a property
+     * @throws IllegalArgumentException when the line does not contain a
+     * property
      */
     public static void readPropertiesFile(File file, char delimiter, char comment, Map map,
             boolean ignoreInvalidProperties)
@@ -423,7 +443,8 @@ public class FileUtils {
         try {
             readProperties(new FileInputStream(file), delimiter, comment, map, ignoreInvalidProperties);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("File [" + file.getAbsolutePath() + "]:  " + e.getMessage());
+            LogUtil.addLog(e);//binhnt a 160901
+//            throw new IllegalArgumentException("File [" + file.getAbsolutePath() + "]:  " + e.getMessage());
         }
     }
 
@@ -432,8 +453,8 @@ public class FileUtils {
      *
      * @param directory the directory containing files
      * @param targetDirName the directory to which the files should be copied to
-     * @param update is true when files should be only copied when the source files are
-     * newer compared to the target files.
+     * @param update is true when files should be only copied when the source
+     * files are newer compared to the target files.
      * @throws IOException when a file could not be copied
      * @throws IllegalArgumentException when the directory is not a directory.
      */
@@ -447,8 +468,8 @@ public class FileUtils {
      *
      * @param directory the directory containing files
      * @param targetDir the directory to which the files should be copied to
-     * @param update is true when files should be only copied when the source files
-     * are newer compared to the target files.
+     * @param update is true when files should be only copied when the source
+     * files are newer compared to the target files.
      * @throws IOException when a file could not be copied
      * @throws IllegalArgumentException when the directory is not a directory.
      */
@@ -514,7 +535,8 @@ public class FileUtils {
      * Reads properties from the given input stream.
      *
      * @param in the input stream
-     * @return a map containing all properties that could be read from the input stream
+     * @return a map containing all properties that could be read from the input
+     * stream
      * @throws IOException when reading from the input stream fails
      */
     public static Map readProperties(InputStream in) throws IOException {
@@ -527,7 +549,8 @@ public class FileUtils {
      * Reads properties from the given file.
      *
      * @param file the file containing properties separated with '='
-     * @return a map containing all properties that could be read from the input stream
+     * @return a map containing all properties that could be read from the input
+     * stream
      * @throws IOException when reading from the file fails
      * @throws FileNotFoundException when the file does not exist
      */
@@ -539,7 +562,8 @@ public class FileUtils {
      * Reads properties from the given reader.
      *
      * @param reader the input reader
-     * @return a map containing all properties that could be read from the reader
+     * @return a map containing all properties that could be read from the
+     * reader
      * @throws IOException when reading fails
      */
     public static Map readProperties(Reader reader)
@@ -553,7 +577,8 @@ public class FileUtils {
      * Reads properties from the given input stream.
      *
      * @param in the input stream
-     * @param delimiter the character that separates a property-name from a property-value.
+     * @param delimiter the character that separates a property-name from a
+     * property-value.
      * @param properties a map containing properties
      * @throws IOException when reading from the input stream fails
      */
@@ -566,7 +591,8 @@ public class FileUtils {
      * Reads properties from the given input stream.
      *
      * @param in the input stream
-     * @param delimiter the character that separates a property-name from a property-value.
+     * @param delimiter the character that separates a property-name from a
+     * property-value.
      * @param properties a map containing properties
      * @param encoding the encoding of the file
      * @throws IOException when reading from the input stream fails
@@ -580,11 +606,14 @@ public class FileUtils {
      * Reads properties from the given input stream.
      *
      * @param in the input stream
-     * @param delimiter the character that separates a property-name from a property-value.
+     * @param delimiter the character that separates a property-name from a
+     * property-value.
      * @param properties a map containing properties
      * @param encoding the encoding of the file
-     * @param translateToAscii true when the FileUtil should translate the code into ASCII only code (using unicode).
-     * @param translateToNative true when escape sequences like \t or \n should be converted to native characters
+     * @param translateToAscii true when the FileUtil should translate the code
+     * into ASCII only code (using unicode).
+     * @param translateToNative true when escape sequences like \t or \n should
+     * be converted to native characters
      * @throws IOException when reading from the input stream fails
      */
     public static void readProperties(InputStream in, char delimiter, Map properties, String encoding,
@@ -597,7 +626,8 @@ public class FileUtils {
      * Reads properties from the given input stream.
      *
      * @param in the input stream
-     * @param delimiter the character that separates a property-name from a property-value.
+     * @param delimiter the character that separates a property-name from a
+     * property-value.
      * @param comment the char denoting comments
      * @param properties a map containing properties
      * @throws IOException when reading from the input stream fails
@@ -611,14 +641,15 @@ public class FileUtils {
      * Reads properties from the given input stream.
      *
      * @param in the input stream
-     * @param delimiter the character that separates a property-name from a property-value.
+     * @param delimiter the character that separates a property-name from a
+     * property-value.
      * @param comment the char denoting comments
      * @param properties a map containing properties
-     * @param ignoreInvalidProperties when this flag is true, invalid property definition
-     * (those that do not contain the delimiter char) are ignored
+     * @param ignoreInvalidProperties when this flag is true, invalid property
+     * definition (those that do not contain the delimiter char) are ignored
      * @throws IOException when reading from the input stream fails
-     * @throws IllegalArgumentException when an invalid property definition is encountered
-     * and ignoreInvalidProperties is false
+     * @throws IllegalArgumentException when an invalid property definition is
+     * encountered and ignoreInvalidProperties is false
      */
     public static void readProperties(InputStream in, char delimiter, char comment, Map properties,
             boolean ignoreInvalidProperties)
@@ -630,15 +661,17 @@ public class FileUtils {
      * Reads properties from the given input stream.
      *
      * @param in the input stream
-     * @param delimiter the character that separates a property-name from a property-value.
+     * @param delimiter the character that separates a property-name from a
+     * property-value.
      * @param comment the char denoting comments
      * @param properties a map containing properties
-     * @param ignoreInvalidProperties when this flag is true, invalid property definition
-     * (those that do not contain the delimiter char) are ignored
-     * @param encoding the encoding of the text file, when null the default charset is used
+     * @param ignoreInvalidProperties when this flag is true, invalid property
+     * definition (those that do not contain the delimiter char) are ignored
+     * @param encoding the encoding of the text file, when null the default
+     * charset is used
      * @throws IOException when reading from the input stream fails
-     * @throws IllegalArgumentException when an invalid property definition is encountered and
-     * ignoreInvalidProperties is false
+     * @throws IllegalArgumentException when an invalid property definition is
+     * encountered and ignoreInvalidProperties is false
      */
     public static void readProperties(InputStream in, char delimiter, char comment, Map properties,
             boolean ignoreInvalidProperties, String encoding)
@@ -650,14 +683,15 @@ public class FileUtils {
      * Reads properties from the given reader.
      *
      * @param reader the input reader
-     * @param delimiter the character that separates a property-name from a property-value.
+     * @param delimiter the character that separates a property-name from a
+     * property-value.
      * @param comment the char denoting comments
      * @param properties a map containing properties
-     * @param ignoreInvalidProperties when this flag is true, invalid property definition
-     * (those that do not contain the delimiter char) are ignored
+     * @param ignoreInvalidProperties when this flag is true, invalid property
+     * definition (those that do not contain the delimiter char) are ignored
      * @throws IOException when reading from the input stream fails
-     * @throws IllegalArgumentException when an invalid property definition is encountered and
-     * ignoreInvalidProperties is false
+     * @throws IllegalArgumentException when an invalid property definition is
+     * encountered and ignoreInvalidProperties is false
      */
     public static void readProperties(Reader reader, char delimiter, char comment, Map properties,
             boolean ignoreInvalidProperties)
@@ -669,17 +703,21 @@ public class FileUtils {
      * Reads properties from the given input stream.
      *
      * @param in the input stream
-     * @param delimiter the character that separates a property-name from a property-value.
+     * @param delimiter the character that separates a property-name from a
+     * property-value.
      * @param comment the char denoting comments
      * @param properties a map containing properties
-     * @param ignoreInvalidProperties when this flag is true, invalid property definition
-     * (those that do not contain the delimiter char) are ignored
-     * @param encoding the encoding of the text file, when null the default charset is used
-     * @param translateToAscii true when the FileUtil should translate the code into ASCII only code (using unicode).
-     * @param translateToNative true when escape sequences like \t or \n should be converted to native characters
+     * @param ignoreInvalidProperties when this flag is true, invalid property
+     * definition (those that do not contain the delimiter char) are ignored
+     * @param encoding the encoding of the text file, when null the default
+     * charset is used
+     * @param translateToAscii true when the FileUtil should translate the code
+     * into ASCII only code (using unicode).
+     * @param translateToNative true when escape sequences like \t or \n should
+     * be converted to native characters
      * @throws IOException when reading from the input stream fails
-     * @throws IllegalArgumentException when an invalid property definition is encountered and
-     * ignoreInvalidProperties is false
+     * @throws IllegalArgumentException when an invalid property definition is
+     * encountered and ignoreInvalidProperties is false
      */
     public static void readProperties(InputStream in, char delimiter, char comment, Map properties,
             boolean ignoreInvalidProperties, String encoding, boolean translateToAscii, boolean translateToNative)
@@ -699,16 +737,19 @@ public class FileUtils {
      * Reads properties from the given reader.
      *
      * @param reader the input reader
-     * @param delimiter the character that separates a property-name from a property-value.
+     * @param delimiter the character that separates a property-name from a
+     * property-value.
      * @param comment the char denoting comments
      * @param properties a map containing properties
-     * @param ignoreInvalidProperties when this flag is true, invalid property definition
-     * (those that do not contain the delimiter char) are ignored
-     * @param translateToAscii true when the FileUtil should translate the code into ASCII only code (using unicode).
-     * @param translateToNative true when escape sequences like \t or \n should be converted to native characters
+     * @param ignoreInvalidProperties when this flag is true, invalid property
+     * definition (those that do not contain the delimiter char) are ignored
+     * @param translateToAscii true when the FileUtil should translate the code
+     * into ASCII only code (using unicode).
+     * @param translateToNative true when escape sequences like \t or \n should
+     * be converted to native characters
      * @throws IOException when reading from the input stream fails
-     * @throws IllegalArgumentException when an invalid property definition is encountered and
-     * ignoreInvalidProperties is false
+     * @throws IllegalArgumentException when an invalid property definition is
+     * encountered and ignoreInvalidProperties is false
      */
     public static void readProperties(Reader reader, char delimiter, char comment, Map properties,
             boolean ignoreInvalidProperties, boolean translateToAscii, boolean translateToNative)
@@ -754,7 +795,8 @@ public class FileUtils {
      *
      * @param file the file to which the text should be written
      * @param lines the text lines of the file
-     * @param encoding the encoding, e.g. "UTF8", null when the default encoding should be used
+     * @param encoding the encoding, e.g. "UTF8", null when the default encoding
+     * should be used
      * @throws IOException when there is an input/output error during the saving
      */
     public static void writeTextFile(File file, String[] lines, String encoding)
@@ -779,8 +821,8 @@ public class FileUtils {
     }
 
     /**
-     * Adds the given line to the specified textfile.
-     * The file is created if necessary.
+     * Adds the given line to the specified textfile. The file is created if
+     * necessary.
      *
      * @param file the text file
      * @param line the line
@@ -792,8 +834,8 @@ public class FileUtils {
     }
 
     /**
-     * Adds the given line to the specified textfile.
-     * The file is created if necessary.
+     * Adds the given line to the specified textfile. The file is created if
+     * necessary.
      *
      * @param file the text file
      * @param lines the lines that should be added
@@ -816,9 +858,11 @@ public class FileUtils {
      * Retrieves all files from the given directory
      *
      * @param dir the directory
-     * @param extension the file extension, when the extension is null, all files are included
+     * @param extension the file extension, when the extension is null, all
+     * files are included
      * @param recursive true when subdirectories should also be read.
-     * @return an String array with the file-names relative to the given directory that do have the given extension
+     * @return an String array with the file-names relative to the given
+     * directory that do have the given extension
      */
     public static String[] filterDirectory(File dir, String extension, boolean recursive) {
         if (dir == null || !dir.exists()) {
@@ -832,7 +876,8 @@ public class FileUtils {
     /**
      * Retrieves all files from the given directory
      *
-     * @param path the start path taken from the base directory towards the current one
+     * @param path the start path taken from the base directory towards the
+     * current one
      * @param dir the directory
      * @param extension the file extension
      * @param recursive true when subdirectories should also be read.

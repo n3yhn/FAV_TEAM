@@ -9,6 +9,7 @@ package com.viettel.voffice.common.util;
  * @author AnhNH
  * Ham ma hoa password
  */
+import com.viettel.common.util.LogUtil;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -29,12 +30,12 @@ public final class PasswordService {
         try {
             md = MessageDigest.getInstance("SHA-1"); //step 2
         } catch (NoSuchAlgorithmException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         try {
             md.update(plaintext.getBytes("UTF-8")); //step 3
         } catch (UnsupportedEncodingException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         byte raw[] = md.digest(); //step 4
@@ -67,8 +68,8 @@ public final class PasswordService {
             }
             //Get complete hashed password in hex format
             generatedPassword = sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        } catch (NoSuchAlgorithmException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return generatedPassword;
     }

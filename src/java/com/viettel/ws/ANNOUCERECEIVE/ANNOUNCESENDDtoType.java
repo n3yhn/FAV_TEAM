@@ -1356,7 +1356,7 @@ public class ANNOUNCESENDDtoType {
     }
 
     public FilesForm wsToForm() throws ParseException, ParserConfigurationException, SAXException, IOException, ClassNotFoundException, SQLException {
-        Helper hp = new Helper();
+//        Helper hp = new Helper();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         FilesForm form = new FilesForm();
         form.setAnnouncement(new AnnouncementForm());
@@ -1405,7 +1405,7 @@ public class ANNOUNCESENDDtoType {
 //        List lst = daoHE.findAll();
 //        String m_name = hp.getMATCHINGTARGET_NAME(matchingtargetlist.getMATCHINGTARGETDto());
 //        form.getAnnouncement().setMatchingTarget(m_name);
-        ProcedureDAOHE pd = new ProcedureDAOHE();
+//        ProcedureDAOHE pd = new ProcedureDAOHE();
 //        form.setFileType(pd.getByProperty("code", filetypecode).get(0).getProcedureId());//err
         //lay status trong
         form.setStatus(Long.parseLong(statuscode));
@@ -1441,7 +1441,7 @@ public class ANNOUNCESENDDtoType {
             form.getDetailProduct().setProductTypeName(form.getProductTypeName());
         }
         //Sua sang lay Id
-        CategoryDAOHE cth = new CategoryDAOHE();
+//        CategoryDAOHE cth = new CategoryDAOHE();
 
         //err
 //        Long type = cth.findCategoryByTypeAndCode("SP", producttypecode).getCategoryId();
@@ -1565,7 +1565,7 @@ public class ANNOUNCESENDDtoType {
     }
 
     public void validateXML() {
-        Validator vd = new Validator();
+//        Validator vd = new Validator();
 //
 //    public String producttypecode;
 //    public String filetypecode;

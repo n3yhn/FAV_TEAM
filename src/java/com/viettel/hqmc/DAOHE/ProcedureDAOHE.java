@@ -6,12 +6,12 @@ package com.viettel.hqmc.DAOHE;
 
 import com.viettel.common.util.StringUtils;
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.Procedure;
 import com.viettel.voffice.database.BO.Category;
 import com.viettel.voffice.database.DAO.GridResult;
 import java.util.List;
 import org.hibernate.Query;
-
 import java.util.ArrayList;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -41,7 +41,7 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
             query.setParameter(0, "1");
             lstCategory = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return lstCategory;
@@ -59,7 +59,7 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
             query.setParameter(0, "1");
             lstCategory = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return lstCategory;
     }
@@ -154,7 +154,7 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
             }
             lstCategory = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return lstCategory;
@@ -178,7 +178,7 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
             query.setParameter(0, "1");
             lstCategory = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return lstCategory;
@@ -213,7 +213,7 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
             lstCategoryFull.addAll(lstCategory);
             return lstCategoryFull;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -356,12 +356,12 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
      */
     public List getAllDeptOfProcedureCbx(Long procedureId, int start, int count) {
         String hql = "";
-        List lstResult = null;
+        List lstResult;
         if (procedureId != -1) {
             hql = " from ProcedureDepartment c where c.procedureId = ? ";
             Query countQuery = getSession().createQuery("select count(*) " + hql);
             countQuery.setParameter(0, procedureId);
-            int total = Integer.parseInt(countQuery.uniqueResult().toString());
+//            int total = Integer.parseInt(countQuery.uniqueResult().toString());
 
             Query query = getSession().createQuery("select c " + hql + " "
                     + "order by c.deptName");
@@ -372,7 +372,7 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
         } else {
             hql = " from ProcedureDepartment c ";
             Query countQuery = getSession().createQuery("select count(*) " + hql);
-            int total = Integer.parseInt(countQuery.uniqueResult().toString());
+//            int total = Integer.parseInt(countQuery.uniqueResult().toString());
             Query query = getSession().createQuery("select distinct c " + hql + " "
                     + "order by c.deptName");
             query.setFirstResult(start);
@@ -442,7 +442,7 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
             List lst = searchQuery.list();
             gr = new GridResult(total, lst);
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return gr;
     }
@@ -478,12 +478,12 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
                 return lstResult.get(0);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
         return null;
     }
-        
+
     public List getAllProcedureAfterAnnounced() {
         List<Category> lstCategory = null;
         try {
@@ -495,7 +495,7 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
             query.setParameter(0, "1");
             lstCategory = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return lstCategory;
     }

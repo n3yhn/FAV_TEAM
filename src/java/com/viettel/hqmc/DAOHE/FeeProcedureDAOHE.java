@@ -6,6 +6,7 @@
 package com.viettel.hqmc.DAOHE;
 
 //import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.BO.Fee;
 //import com.viettel.hqmc.BO.FeeProcedure;
@@ -50,7 +51,8 @@ public class FeeProcedureDAOHE extends GenericDAOHibernate<Fee, Long> {
             Query query = getSession().createQuery(stringBuilder.toString());
             lstStandard = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<>();
         }
         return lstStandard;
@@ -93,8 +95,9 @@ public class FeeProcedureDAOHE extends GenericDAOHibernate<Fee, Long> {
             }
             GridResult result = new GridResult(nCount, list);
             return result;
-        } catch (Exception e) {
-            e.getMessage();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            e.getMessage();
             return new GridResult(0, null);
         }
     }

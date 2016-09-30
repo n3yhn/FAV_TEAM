@@ -5,6 +5,7 @@
 package com.viettel.voffice.database.DAO;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.dojoTag.DojoJSON;
 import com.viettel.voffice.client.form.UploadIframeForm;
 import com.viettel.common.util.UploadFile;
@@ -89,15 +90,14 @@ public class UploadIframeDAO extends BaseDAO {
 
     public String executeUploadIframe() throws FileNotFoundException, IOException {
         HttpServletRequest request = getRequest();
-        String strType = request.getParameter("type");
+//        String strType = request.getParameter("type");
         MultiPartRequestWrapper multi = (MultiPartRequestWrapper) request;
         Enumeration files = multi.getFileParameterNames();
-        String fieldName = "";
+        String fieldName;
         String fileName = "";
-        File file;
         while (files.hasMoreElements()) {
             fieldName = (String) files.nextElement();
-            file = multi.getFiles(fieldName)[0];
+//            File file = multi.getFiles(fieldName)[0];
             fileName = multi.getFileNames(fieldName)[0];
         }
         getRequest().setAttribute("fileName", fileName);
@@ -122,7 +122,7 @@ public class UploadIframeDAO extends BaseDAO {
             MultiPartRequestWrapper multi = (MultiPartRequestWrapper) request;
             Enumeration files = multi.getFileParameterNames();
             String fieldName = "";
-            String fileName = "";
+            String fileName;
             File file;
             while (files.hasMoreElements()) {
                 fieldName = (String) files.nextElement();
@@ -160,7 +160,7 @@ public class UploadIframeDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "uploadResultPage";
     }
@@ -173,7 +173,7 @@ public class UploadIframeDAO extends BaseDAO {
             MultiPartRequestWrapper multi = (MultiPartRequestWrapper) request;
             Enumeration files = multi.getFileParameterNames();
             String fieldName = "";
-            String fileName = "";
+            String fileName;
             File file;
             while (files.hasMoreElements()) {
                 fieldName = (String) files.nextElement();
@@ -210,7 +210,7 @@ public class UploadIframeDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             LOG.error("Error upload", ex);
         }
         return "uploadResultPage";
@@ -224,7 +224,7 @@ public class UploadIframeDAO extends BaseDAO {
             MultiPartRequestWrapper multi = (MultiPartRequestWrapper) request;
             Enumeration files = multi.getFileParameterNames();
             String fieldName = "";
-            String fileName = "";
+            String fileName;
             File file;
             while (files.hasMoreElements()) {
                 fieldName = (String) files.nextElement();
@@ -262,8 +262,7 @@ public class UploadIframeDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            LOG.error("Error upload", ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "uploadResultPage";
     }
@@ -276,7 +275,7 @@ public class UploadIframeDAO extends BaseDAO {
             MultiPartRequestWrapper multi = (MultiPartRequestWrapper) request;
             Enumeration files = multi.getFileParameterNames();
             String fieldName = "";
-            String fileName = "";
+            String fileName;
             File file;
             while (files.hasMoreElements()) {
                 fieldName = (String) files.nextElement();
@@ -310,7 +309,7 @@ public class UploadIframeDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "uploadResultPageImp";
     }
@@ -323,7 +322,7 @@ public class UploadIframeDAO extends BaseDAO {
             Enumeration files = multi.getFileParameterNames();
             String strId = request.getParameter("id");
             String fieldName = "";
-            String fileName = "";
+            String fileName;
             File file;
             while (files.hasMoreElements()) {
                 fieldName = (String) files.nextElement();
@@ -331,7 +330,7 @@ public class UploadIframeDAO extends BaseDAO {
                 fileName = multi.getFileNames(fieldName)[0];
                 fileName = getSafeFileName(fileName);
                 fileName = toNoneUnicode(fileName);
-                if(checkFileExtension(fileName)) {
+                if (checkFileExtension(fileName)) {
 //                if (true) {
                     String filePath = UploadFile.uploadFile("temp", fileName, file, getRequest());
                     VoAttachs bo = new VoAttachs();
@@ -348,7 +347,7 @@ public class UploadIframeDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "uploadResultPageSh";
     }
@@ -381,13 +380,13 @@ public class UploadIframeDAO extends BaseDAO {
                             noError = true;
                             break;
                         } catch (Exception ex) {
-                            log.error(ex.getMessage());
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                     }
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (noError) {
             return "download";
@@ -415,7 +414,7 @@ public class UploadIframeDAO extends BaseDAO {
             response.flushBuffer();
             noError = true;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (noError) {
             return "download";
@@ -459,7 +458,7 @@ public class UploadIframeDAO extends BaseDAO {
             bo.setIsActive(0L);
             daoHe.update(bo);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -472,8 +471,8 @@ public class UploadIframeDAO extends BaseDAO {
             if (Arrays.asList(allows).contains(ext)) {
                 return true;
             }
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return false;
     }
@@ -507,7 +506,7 @@ public class UploadIframeDAO extends BaseDAO {
             resultMessage.add(idSHs);
             customInfo.add(id);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         jsonFile.setItems(resultMessage);
         jsonFile.setCustomInfo(customInfo);
@@ -536,7 +535,7 @@ public class UploadIframeDAO extends BaseDAO {
             resultMessage.add(idSHs);
             customInfo.add(id);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         jsonFile.setItems(resultMessage);
         jsonFile.setCustomInfo(customInfo);
@@ -576,7 +575,7 @@ public class UploadIframeDAO extends BaseDAO {
             resultMessage.add(idSHs);
             customInfo.add(id);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         jsonFile.setItems(resultMessage);
         jsonFile.setCustomInfo(customInfo);
@@ -610,7 +609,7 @@ public class UploadIframeDAO extends BaseDAO {
             resultMessage.add(names);
             customInfo.add(id);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         jsonFile.setItems(resultMessage);
         jsonFile.setCustomInfo(customInfo);
@@ -745,7 +744,7 @@ public class UploadIframeDAO extends BaseDAO {
             resultMessage.add(idSHs);
             customInfo.add(id);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         jsonFile.setItems(resultMessage);
         jsonFile.setCustomInfo(customInfo);
@@ -780,13 +779,13 @@ public class UploadIframeDAO extends BaseDAO {
                             noError = true;
                             break;
                         } catch (Exception ex) {
-                            log.error(ex.getMessage());
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                     }
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (noError) {
             return "download";
@@ -821,11 +820,11 @@ public class UploadIframeDAO extends BaseDAO {
                 response.flushBuffer();
                 noError = true;
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (noError) {
             return "download";
@@ -862,11 +861,11 @@ public class UploadIframeDAO extends BaseDAO {
                 response.flushBuffer();
                 noError = true;
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (noError) {
             return "download";
@@ -898,11 +897,11 @@ public class UploadIframeDAO extends BaseDAO {
                 response.flushBuffer();
                 noError = true;
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (noError) {
             return "download";
@@ -934,11 +933,11 @@ public class UploadIframeDAO extends BaseDAO {
                 response.flushBuffer();
                 noError = true;
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (noError) {
             return "download";
@@ -968,11 +967,11 @@ public class UploadIframeDAO extends BaseDAO {
                 response.flushBuffer();
                 noError = true;
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (noError) {
             return "download";
@@ -1003,11 +1002,11 @@ public class UploadIframeDAO extends BaseDAO {
                     noError = true;
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (noError) {
             return "download";
@@ -1080,7 +1079,7 @@ public class UploadIframeDAO extends BaseDAO {
                 if (!lstBo.get(i).getAttachName().contains("LD")) {
                     continue;
                 }
-                String fileName = "";
+                String fileName;
                 if (lstBo.get(i).getObjectType().equals(40L)) {
                     fileName = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + "_1.pdf";
                     filePath0 = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + "_2.pdf";
@@ -1119,7 +1118,8 @@ public class UploadIframeDAO extends BaseDAO {
             resultMessage.add("success");
             resultMessage.add(fullPath + ";" + fullName + ";" + filePath0 + ";" + fileName0);
         } catch (NumberFormatException | IOException ex) {
-            Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("error");
         }
         jsonFile.setItems(resultMessage);
@@ -1190,7 +1190,7 @@ public class UploadIframeDAO extends BaseDAO {
                 if (!lstBo.get(i).getAttachName().contains("LD")) {
                     continue;
                 }
-                String fileName = "";
+                String fileName;
                 if (lstBo.get(i).getObjectType().equals(40L)) {
                     fileName = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + "_1.pdf";
                     filePath0 = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + "_2.pdf";
@@ -1232,7 +1232,8 @@ public class UploadIframeDAO extends BaseDAO {
             resultMessage.add("success");
             resultMessage.add(fullPath + ";" + fullName + ";" + filePath0 + ";" + fileName0);
         } catch (NumberFormatException | IOException ex) {
-            Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, ex);
             resultMessage.add("error");
         }
         jsonFile.setItems(resultMessage);
@@ -1259,11 +1260,11 @@ public class UploadIframeDAO extends BaseDAO {
                 response.flushBuffer();
                 noError = true;
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (noError) {
             return "download";
@@ -1288,16 +1289,18 @@ public class UploadIframeDAO extends BaseDAO {
                 if (ous != null) {
                     ous.close();
                 }
-            } catch (IOException e) {
-                Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, e);
+            } catch (IOException ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, e);
             }
 
             try {
                 if (ios != null) {
                     ios.close();
                 }
-            } catch (IOException e) {
-                Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, e);
+            } catch (IOException ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, e);
             }
         }
         return ous.toByteArray();
@@ -1367,7 +1370,7 @@ public class UploadIframeDAO extends BaseDAO {
                 if (!lstBo.get(i).getAttachName().contains("LD")) {
                     continue;
                 }
-                String fileName = "";
+                String fileName;
                 if (lstBo.get(i).getObjectType().equals(40L)) {
                     fileName = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + "_1.pdf";
                     filePath0 = pathSaveFile + code + "_" + userId.toString() + "_" + fileId.toString() + "_" + time + "_" + signType + "_2.pdf";
@@ -1406,7 +1409,8 @@ public class UploadIframeDAO extends BaseDAO {
             resultMessage.add("success");
             resultMessage.add(fullPath + ";" + fullName + ";" + filePath0 + ";" + fileName0);
         } catch (NumberFormatException | IOException ex) {
-            Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(UploadIframeDAO.class.getName()).log(Level.SEVERE, null, ex);
             resultMessage.add("error");
         }
         jsonFile.setItems(resultMessage);

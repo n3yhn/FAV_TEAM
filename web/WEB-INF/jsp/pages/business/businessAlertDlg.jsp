@@ -66,7 +66,7 @@
     
     page.getViewLstBusinessAlert = function (objectId) {
         dijit.byId("createBusinessAlertForm.businessId").setValue(objectId);
-        dijit.byId("gridViewBusinessAlertContentId").vtReload("businessAlertAction!loadBusinessAlertView.do?searchForm.businessId=" + objectId);
+        dijit.byId("gridBusinessAlertId").vtReload("businessAlertAction!loadBusinessAlertView.do?searchForm.businessId=" + objectId);
     };
 
     page.insert = function () {

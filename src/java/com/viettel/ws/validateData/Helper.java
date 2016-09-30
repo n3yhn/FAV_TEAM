@@ -6,14 +6,24 @@
 package com.viettel.ws.validateData;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.ResourceBundleUtil;
 import com.viettel.hqmc.BO.Files;
+import com.viettel.hqmc.BO.XmlWs;
 import com.viettel.hqmc.DAOHE.FilesDAOHE;
 import com.viettel.hqmc.DAOHE.XmlMessageDAOHE;
+import com.viettel.hqmc.DAOHE.XmlWsDAOHE;
+import com.viettel.hqmc.FORM.FilesForm;
+import com.viettel.ws.ANNOUCERECEIVE.ANNOUNCESENDDtoType;
 import com.viettel.ws.BO.*;
 import com.viettel.ws.FORM.ERROR;
 import com.viettel.ws.FORM.RESULT;
-import com.viettel.ws.ServiceSessionManager;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -21,9 +31,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.jws.WebParam;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -440,7 +450,8 @@ public class Helper {
             jaxbMarshaller.marshal(obj, sw);
             result = sw.toString();
         } catch (JAXBException ex) {
-            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result.trim();
     }
@@ -507,46 +518,11 @@ public class Helper {
         return ev;
     }
 
-//    public byte[] read(File file) {
-//        // if (file.length() > MAX_FILE_SIZE) {
-//        // throw new FileTooBigException(file);
-//        // }
-//        ByteArrayOutputStream ous = null;
-//        InputStream ios = null;
-//        try {
-//            byte[] buffer = new byte[4096];
-//            ous = new ByteArrayOutputStream();
-//            ios = new FileInputStream(file);
-//            int read = 0;
-//            while ((read = ios.read(buffer)) != -1) {
-//                ous.write(buffer, 0, read);
-//            }
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IOException ex) {
-//            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                if (ous != null) {
-//                    ous.close();
-//                }
-//            } catch (IOException e) {
-////                LogUtils.addLog(e);
-//            }
-//            if (ios != null) {
-//                try {
-//                    ios.close();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        }
-//        return ous.toByteArray();
-//    }
     private void writeXmlToFile(Envelope envelop) {
         try {
             String evlrs = ObjectToXml(envelop);
             System.out.println(evlrs);
+            saveWStoTxt(evlrs);
             if ("true".equals(ResourceBundleUtil.getString("export_service_message_to_file", "config"))) {
                 String type = envelop.getHeader().getSubject().getType();
                 String function = envelop.getHeader().getSubject().getFunction();
@@ -555,7 +531,8 @@ public class Helper {
                 writeXmlToFile(evlrs, "sendMs", fileName);
             }
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -567,7 +544,8 @@ public class Helper {
             XmlMessageDAOHE xmlDAOHE = new XmlMessageDAOHE();
             xmlDAOHE.create(xmlMessage);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            ex.printStackTrace();
         }
     }
 
@@ -577,8 +555,9 @@ public class Helper {
             Unmarshaller unmarshaller = jc.createUnmarshaller();
             StringReader reader = new StringReader(xml);
             return (Envelope) unmarshaller.unmarshal(reader);
-        } catch (JAXBException e) {
-            log.error(e);
+        } catch (JAXBException ex) {
+//            log.error(e);
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -598,16 +577,15 @@ public class Helper {
         Body bd = new Body();
         Content ct = new Content();
         List<com.viettel.ws.BO.Error> errList = new ArrayList<>();
+        FilesDAOHE fDAOHE = new FilesDAOHE();
         com.viettel.ws.BO.Error err = null;
         String type = null;
         String function = null;
         String ref = null;
         String pref = null;
         String msId = null;
-        Files f = null;
-        Boolean isMultiPayment = false;
+//        Boolean isMultiPayment = false;
         Boolean noUpdateProcess = false;
-        FilesDAOHE fDAOHE = new FilesDAOHE();
 //        ProcessDAOHE pdhe = new ProcessDAOHE();
         try {
             Envelope envelop = xmlToEnvelope(evl);
@@ -623,24 +601,34 @@ public class Helper {
                     writeXmlToFile(evl, "receiveMS", envelop.getHeader().getSubject().getType() + "_" + envelop.getHeader().getSubject().getFunction()
                             + "_" + envelop.getHeader().getSubject().getReference());
                 }
-                String docType = Constants.CATEGORY_TYPE.CBSP_SERVICE;
-                f = fDAOHE.findById(Long.parseLong(ref));
+//                String docType = Constants.CATEGORY_TYPE.CBSP_SERVICE;               
+                Files f = fDAOHE.findById(Long.parseLong(ref));//sonar not fix?
                 if (err != null) {
                     errList.add(err);
                     function = Constants.NSW_FUNCTION(100L);
                 } else {
-                    err = new com.viettel.ws.BO.Error();
+//                    err = new com.viettel.ws.BO.Error();
                     switch (function) {
                         default:
                             switch (function) {
+                                case "300":
+                                    errList = reiceiveMs_300(envelop);
+//                                    docType = Constants.CATEGORY_TYPE.CBSP_OBJECT;
+                                    noUpdateProcess = true;
+                                    break;
                                 case "310":
                                     errList = reiceiveMs_310(envelop);
-                                    docType = Constants.CATEGORY_TYPE.CBSP_OBJECT;
+//                                    docType = Constants.CATEGORY_TYPE.CBSP_OBJECT;
                                     noUpdateProcess = true;
                                     break;
                                 case "320":
                                     errList = reiceiveMs_320(envelop);
-                                    docType = Constants.CATEGORY_TYPE.CBSP_OBJECT;
+//                                    docType = Constants.CATEGORY_TYPE.CBSP_OBJECT;
+                                    noUpdateProcess = true;
+                                    break;
+                                case "311":
+                                    errList = reiceiveMs_311(envelop);
+//                                    docType = Constants.CATEGORY_TYPE.CBSP_OBJECT;
                                     noUpdateProcess = true;
                                     break;
 
@@ -665,12 +653,13 @@ public class Helper {
                 function = Constants.NSW_FUNCTION(100L);
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             err = new com.viettel.ws.BO.Error();
             err.setErrorCode("L000-0000-0000");
             err.setErrorName("Lỗi nhận dữ liệu");
             err.setSolution("Kiểm tra lại kết nối giữa 2 hệ thống");
             errList.add(err);
-            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
             // ct.setErrorList(errList);
             function = Constants.NSW_FUNCTION(100L);
         }
@@ -694,19 +683,26 @@ public class Helper {
             jaxbMarshaller.marshal(obj, sw);
             result = sw.toString();
             System.out.println(result);
-        } catch (JAXBException e) {
-            log.error(e);
+            saveWStoTxt(result);
+            saveToDb(result);
+        } catch (JAXBException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
         }
         return result;
     }
 
     //330-Thông báo sửa đổi bổ sung hồ sơ
     public String sendMs_330(Long fileId, String strContent) {
-        ERROR err;
-        RESULT lstError = new RESULT();
-
-        Envelope envelope = new Envelope();
-        Header header = new Header();
+//        ERROR err;//sonar
+//        RESULT lstError = new RESULT();//sonar
+        Envelope envelope;
+        String type = "ATTP";
+        String function = "330";
+        String ref = "330";
+        String pref = "330";
+        String msId = "";
+        envelope = makeEnvelopeSend(type, function, ref, pref, msId);
         Body body = new Body();
         Content content = new Content();
         CBREQUEST_CHANGE_330 cBREQUEST_CHANGE_330 = new CBREQUEST_CHANGE_330();
@@ -723,9 +719,28 @@ public class Helper {
 
         body.setContent(content);
         envelope.setBody(body);
-        envelope.setHeader(header);
 
         return envelopeToXml(envelope);
+    }
+
+    public List<com.viettel.ws.BO.Error> reiceiveMs_300(Envelope envelope) {
+        List<com.viettel.ws.BO.Error> errList = new ArrayList<>();
+        com.viettel.ws.BO.Error err = new com.viettel.ws.BO.Error();
+        FilesForm createForm = null;
+        try {
+            ANNOUNCESENDDtoType ms310 = envelope.getBody().getContent().getANNOUNCESENDDtoType();
+            createForm = ms310.wsToForm();
+            FilesDAOHE fdhe = new FilesDAOHE();
+            fdhe.saveFilesWS(createForm);//sonar
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+            err.setErrorCode("U000-0000-0001");
+            err.setErrorName("Lỗi gửi yêu cầu bổ sung");
+            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
+            errList.add(err);
+        }
+        return errList;
     }
 ///3	310	Yêu cầu SDBS hồ sơ--NSW--> BYT
 
@@ -734,11 +749,19 @@ public class Helper {
         com.viettel.ws.BO.Error err = new com.viettel.ws.BO.Error();
         try {
             DNREQUEST_CHANGE_310 DnReQuestChange310 = envelope.getBody().getContent().getDnRequestChange310();
-            String nswFileCode = DnReQuestChange310.getNswFileCode();
-            FilesDAOHE fileDAOHE = new FilesDAOHE();
-            Files filesBo = fileDAOHE.findByNswCode(nswFileCode);
+            XmlWs xmlWsBo = new XmlWs();
+            xmlWsBo.setContent(envelopeToXml(envelope));
+            xmlWsBo.setReason(DnReQuestChange310.getReason());
+            xmlWsBo.setNswFileCode(DnReQuestChange310.getReason());
+            xmlWsBo.setType((310L));
+            xmlWsBo.setTypeCode("310");
+            xmlWsBo.setTypeName("Yêu cầu SDBS hồ sơ--NSW--> BYT");
+//            xmlWsBo.setCreateDate();
+            XmlWsDAOHE xmlWsdaohe = new XmlWsDAOHE();
+            xmlWsdaohe.create(xmlWsBo);
         } catch (Exception ex) {
-            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
             err.setErrorCode("U000-0000-0001");
             err.setErrorName("Lỗi gửi yêu cầu bổ sung");
             err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
@@ -747,16 +770,38 @@ public class Helper {
         return errList;
     }
 
+    public boolean saveToDb(String content) {
+        try {
+            XmlWs xmlWsBo = new XmlWs();
+            xmlWsBo.setContent(content);
+            XmlWsDAOHE xmlWsdaohe = new XmlWsDAOHE();
+            xmlWsdaohe.create(xmlWsBo);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            return false;
+        }
+        return true;
+    }
+
     public List<com.viettel.ws.BO.Error> reiceiveMs_320(Envelope envelope) {
         List<com.viettel.ws.BO.Error> errList = new ArrayList<>();
         com.viettel.ws.BO.Error err = new com.viettel.ws.BO.Error();
         try {
             DNREQUEST_DELETE_320 DnReQuestDelete320 = envelope.getBody().getContent().getDnRequestDelete320();
-            String nswFileCode = DnReQuestDelete320.getNswFileCode();
-            FilesDAOHE fileDAOHE = new FilesDAOHE();
-            Files filesBo = fileDAOHE.findByNswCode(nswFileCode);
+//            String nswFileCode = DnReQuestDelete320.getNswFileCode();
+            XmlWs xmlWsBo = new XmlWs();
+            xmlWsBo.setContent(envelopeToXml(envelope));
+            xmlWsBo.setReason(DnReQuestDelete320.getReason());
+            xmlWsBo.setNswFileCode(DnReQuestDelete320.getReason());
+            xmlWsBo.setType((320L));
+            xmlWsBo.setTypeCode("320");
+            xmlWsBo.setTypeName("Yêu cầu hủy hồ sơ--NSW--> BYT");
+//            xmlWsBo.setCreateDate();
+            XmlWsDAOHE xmlWsdaohe = new XmlWsDAOHE();
+            xmlWsdaohe.create(xmlWsBo);
         } catch (Exception ex) {
-            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
             err.setErrorCode("U000-0000-0001");
             err.setErrorName("Lỗi gửi yêu cầu bổ sung");
             err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
@@ -766,56 +811,173 @@ public class Helper {
     }
 
     //370	Gửi kết quả kiểm tra hệ thống
-    public String sendMs_370(@WebParam(name = "tokenString") String tokenString, @WebParam(name = "PERMIT_370") String strPERMIT_370) {
+    public String sendMs_370(Long fileId, String strContent) {
         ERROR err;
-        RESULT lstError = new RESULT();
-        Envelope envelope = new Envelope();
-        Header header = new Header();
+//        RESULT lstError = new RESULT();
+        Envelope envelope;
+        String type = "ATTP";
+        String function = "370";
+        String ref = "370";
+        String pref = "370";
+        String msId = "";
+        envelope = makeEnvelopeSend(type, function, ref, pref, msId);
         Body body = new Body();
         Content content = new Content();
 
         PERMIT_370 pERMIT_370 = new PERMIT_370();
-
-        if (!ServiceSessionManager.validToken(tokenString)) {
-            err = new ERROR();
-            err.setERROR_CODE("Validate");
-            lstError.getLstERROR().add(err);
-        }
+        pERMIT_370.setNswFileCode(fileId.toString());
+        pERMIT_370.setStatus(22L);
+        pERMIT_370.setStatusName("Da tra ban cong bo");
+//        if (!ServiceSessionManager.validToken(tokenString)) {
+//            err = new ERROR();
+//            err.setERROR_CODE("Validate");
+//            lstError.getLstERROR().add(err);
+//        }
         content.setPermit370(pERMIT_370);
 
         body.setContent(content);
         envelope.setBody(body);
-        envelope.setHeader(header);
 
         return envelopeToXml(envelope);
     }
     //340-Thông báo lệ phí
-    /*
-    public String sendMs_340(@WebParam(name = "tokenString") String tokenString, @WebParam(name = "annNo") String annNo) {
+
+    public String sendMs_340(Long fileId, String strContent) {
         ERROR err;
-        RESULT lstError = new RESULT();
-        Envelope envelope = new Envelope();
-        Header header = new Header();
+//        RESULT lstError = new RESULT();//sonar
+        Envelope envelope;//sonar
+        String type = "ATTP";
+        String function = "340";
+        String ref = "340";
+        String pref = "340";
+        String msId = "";
+        envelope = makeEnvelopeSend(type, function, ref, pref, msId);
         Body body = new Body();
         Content content = new Content();
-        
+
         FEE_NOTICE_340 fEE_NOTICE_340 = new FEE_NOTICE_340();
-        
-        if (!ServiceSessionManager.validToken(tokenString)) {
-            err = new ERROR();
-            err.setERROR_CODE("Validate");
-            lstError.getLstERROR().add(err);
-        }                
+
+//        if (!ServiceSessionManager.validToken(tokenString)) {
+//            err = new ERROR();
+//            err.setERROR_CODE("Validate");
+//            lstError.getLstERROR().add(err);
+//        }
         content.setFeeNotice340(fEE_NOTICE_340);
-        
-        body.setContent(content);        
+
+        body.setContent(content);
         envelope.setBody(body);
-        envelope.setHeader(header);
-        
+
         return envelopeToXml(envelope);
     }
-     */
-//    
+//dong bo trang thai ho so
+
+    public String sendMs_312(Long fileId) {
+//        ERROR err;
+//        RESULT lstError = new RESULT();
+        Envelope envelope;
+        String type = "ATTP";
+        String function = "312";
+        String ref = "312";
+        String pref = "312";
+        String msId = "";
+        envelope = makeEnvelopeSend(type, function, ref, pref, msId);
+        Body body = new Body();
+        Content content = new Content();
+        FilesDAOHE filedaohe = new FilesDAOHE();
+        SyncFileStatus312 syncFileStatus312 = new SyncFileStatus312();
+        Files filesbo = filedaohe.findById(fileId);
+        if (filesbo != null) {
+            syncFileStatus312.setNswFileCode(filesbo.getFileCode());
+            syncFileStatus312.setStatus(filesbo.getStatus().toString());
+            syncFileStatus312.setStatusName(filesbo.getDisplayStatus());
+        } else {
+            syncFileStatus312.setNswFileCode("");
+            syncFileStatus312.setStatus("");
+            syncFileStatus312.setStatusName("");
+        }
+
+//        if (!ServiceSessionManager.validToken(tokenString)) {
+//            err = new ERROR();
+//            err.setERROR_CODE("Validate");
+//            lstError.getLstERROR().add(err);
+//        }
+        content.setSyncFileStatus312(syncFileStatus312);
+
+        body.setContent(content);
+        envelope.setBody(body);
+
+        return envelopeToXml(envelope);
+    }
+
+    public List<com.viettel.ws.BO.Error> reiceiveMs_311(Envelope envelope) {
+        List<com.viettel.ws.BO.Error> errList = new ArrayList<>();
+        com.viettel.ws.BO.Error err = new com.viettel.ws.BO.Error();
+        try {
+            SyncFileStatus311 syncFileStatus311 = envelope.getBody().getContent().getSyncFileStatus311();
+            XmlWs xmlWsBo = new XmlWs();
+            xmlWsBo.setContent(envelopeToXml(envelope));
+            xmlWsBo.setNswFileCode(syncFileStatus311.getNswFileCode());
+
+            xmlWsBo.setType((311L));
+            xmlWsBo.setTypeCode("311");
+            xmlWsBo.setTypeName("Yêu cầu SDBS hồ sơ--NSW--> BYT");
+//            xmlWsBo.setCreateDate();
+            XmlWsDAOHE xmlWsdaohe = new XmlWsDAOHE();
+            xmlWsdaohe.create(xmlWsBo);
+
+            FilesDAOHE filedaohe = new FilesDAOHE();
+            Files filesbo = filedaohe.findByNswCode(syncFileStatus311.getNswFileCode());
+            if (filesbo != null) {
+                sendMs_312(filesbo.getFileId());
+            }
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+            err.setErrorCode("U000-0000-0001");
+            err.setErrorName("Lỗi gửi yêu cầu bổ sung");
+            err.setSolution("Kiểm tra chỉ tiêu thông tin và hàm validate");
+            errList.add(err);
+        }
+        return errList;
+    }
+
+    public void saveWStoTxt(String content) {
+        try {
+            String separatorFile = String.valueOf(File.separatorChar);
+            ResourceBundle rb = ResourceBundle.getBundle("config");
+            String dir = rb.getString("directory_temp");
+            File file = new File(dir + separatorFile + "bantin.txt");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            BufferedReader br = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+            StringBuilder sb = new StringBuilder();
+            try {
+                String line = br.readLine();
+
+                while (line != null) {
+                    sb.append(line);
+                    sb.append(System.lineSeparator());
+                    line = br.readLine();
+                }
+            } finally {
+                br.close();
+            }
+
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            sb.append(System.lineSeparator());
+            sb.append((new Date()).toString() + ": " + content);
+            bw.write(sb.toString());
+            bw.close();
+
+        } catch (IOException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
+        }
+    }
+
+    //    
 //    public List<ErrorWs> reiceiveMs_350(Envelope envelope) throws Exception {
 //        List<ErrorWs> errList = new ArrayList<>();
 //        ErrorWs err = new ErrorWs();
@@ -831,6 +993,7 @@ public class Helper {
 //        return errList;
 //    }
     //310-Yêu cầu SDBS hồ sơ
+
     /*
     public List<ErrorWs> reiceiveMs_310(Envelope envelope) throws Exception {
         List<ErrorWs> errList = new ArrayList<>();
@@ -927,5 +1090,41 @@ public class Helper {
 //            errList.add(err);
 //        }
 //        return errList;
+//    }
+//    public byte[] read(File file) {
+//        // if (file.length() > MAX_FILE_SIZE) {
+//        // throw new FileTooBigException(file);
+//        // }
+//        ByteArrayOutputStream ous = null;
+//        InputStream ios = null;
+//        try {
+//            byte[] buffer = new byte[4096];
+//            ous = new ByteArrayOutputStream();
+//            ios = new FileInputStream(file);
+//            int read = 0;
+//            while ((read = ios.read(buffer)) != -1) {
+//                ous.write(buffer, 0, read);
+//            }
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (IOException ex) {
+//            Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            try {
+//                if (ous != null) {
+//                    ous.close();
+//                }
+//            } catch (IOException e) {
+////                LogUtils.addLog(e);
+//            }
+//            if (ios != null) {
+//                try {
+//                    ios.close();
+//                } catch (IOException ex) {
+//                    Logger.getLogger(Helper.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//        }
+//        return ous.toByteArray();
 //    }
 }

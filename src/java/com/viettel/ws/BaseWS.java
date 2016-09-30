@@ -5,6 +5,7 @@
 package com.viettel.ws;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.AnnouncementReceiptPaper;
 import com.viettel.hqmc.BO.Procedure;
 import com.viettel.hqmc.DAOHE.ProcedureDAOHE;
@@ -14,7 +15,6 @@ import com.viettel.vsaadmin.database.BO.Department;
 import com.viettel.vsaadmin.database.DAOHibernate.DepartmentDAOHE;
 import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import com.viettel.ws.BO.ANNOUNCERESULTDto;
-import com.viettel.ws.BO.Envelope;
 import com.viettel.ws.BO.FILERESULTSDto;
 import com.viettel.ws.BO.SENDRESPONSEDto;
 import com.viettel.ws.FORM.ANNOUCE_RECEIVE;
@@ -30,8 +30,6 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -64,7 +62,8 @@ public class BaseWS {
             jaxbMarshaller.marshal(obj, sw);
             result = sw.toString();
         } catch (JAXBException ex) {
-            Logger.getLogger(BaseWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(BaseWS.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
@@ -80,7 +79,8 @@ public class BaseWS {
             jaxbMarshaller.marshal(obj, sw);
             result = sw.toString();
         } catch (JAXBException ex) {
-            Logger.getLogger(BaseWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(BaseWS.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
@@ -96,7 +96,8 @@ public class BaseWS {
             jaxbMarshaller.marshal(obj, sw);
             result = sw.toString();
         } catch (JAXBException ex) {
-            Logger.getLogger(BaseWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(BaseWS.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
@@ -111,7 +112,8 @@ public class BaseWS {
                     RE_ANNOUNCE.class);
             objResult = (RE_ANNOUNCE) je.getValue();
         } catch (JAXBException ex) {
-            Logger.getLogger(BaseWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(BaseWS.class.getName()).log(Level.SEVERE, null, ex);
         }
         return objResult;
     }
@@ -124,8 +126,9 @@ public class BaseWS {
             JAXBElement<ASSIGNMENT_QUERY> je = unmarshaller.unmarshal(streamSource,
                     ASSIGNMENT_QUERY.class);
             return (ASSIGNMENT_QUERY) je.getValue();
-        } catch (JAXBException e) {
-            log.error(e);
+        } catch (JAXBException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
             return null;
         }
     }
@@ -134,9 +137,10 @@ public class BaseWS {
         Procedure bo = new Procedure();
         try {
             ProcedureDAOHE prodaohe = new ProcedureDAOHE();
-            Procedure pro = new Procedure();
+//            Procedure pro = new Procedure();
             bo = prodaohe.getProcedureByDescription(type);
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return bo;
     }
@@ -151,8 +155,9 @@ public class BaseWS {
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             jaxbMarshaller.marshal(obj, sw);
             result = sw.toString();
-        } catch (JAXBException e) {
-            log.error(e);
+        } catch (JAXBException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
         }
         return result;
     }        
@@ -168,7 +173,8 @@ public class BaseWS {
             jaxbMarshaller.marshal(obj, sw);
             result = sw.toString();
         } catch (JAXBException ex) {
-            Logger.getLogger(BaseWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(BaseWS.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
@@ -181,8 +187,9 @@ public class BaseWS {
             JAXBElement<TEST_REGISTRATIONType> je = unmarshaller.unmarshal(streamSource,
                     TEST_REGISTRATIONType.class);
             return (TEST_REGISTRATIONType) je.getValue();
-        } catch (JAXBException e) {
-            log.error(e);
+        } catch (JAXBException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
             return null;
         }
     }
@@ -195,14 +202,15 @@ public class BaseWS {
             JAXBElement<FILERESULTSDto> je = unmarshaller.unmarshal(streamSource,
                     FILERESULTSDto.class);
             return (FILERESULTSDto) je.getValue();
-        } catch (JAXBException e) {
-            log.error(e);
+        } catch (JAXBException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
             return null;
         }
     }
 
     public String getNationCode(String nationName) {
-        Category category = new Category();
+        Category category;
         CategoryDAOHE categorydaohe = new CategoryDAOHE();
         category = categorydaohe.findCategoryByName(Constants.CATEGORY_TYPE.NATIONAL, nationName);
         if (category != null && category.getCode() != null) {
@@ -212,7 +220,7 @@ public class BaseWS {
     }
 
     public String getProvinceCode(String provinceName) {
-        Category category = new Category();
+        Category category;
         CategoryDAOHE categorydaohe = new CategoryDAOHE();
         category = categorydaohe.findCategoryByName(Constants.CATEGORY_TYPE.PROVINCE, provinceName);
         if (category != null && category.getCode() != null) {
@@ -222,7 +230,7 @@ public class BaseWS {
     }
 
     public Department getDepartment(Long id) {
-        Department department = new Department();
+        Department department;
         DepartmentDAOHE departmentdaohe = new DepartmentDAOHE();
         department = departmentdaohe.getDeptById(id);
         if (department != null) {
@@ -293,7 +301,8 @@ public class BaseWS {
                     file.delete();
                     //break;
                 } catch (Exception ex) {
-                    Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, "FileWS: Có lỗi xảy ra trong quá trình xóa File tạm trên Applet: " + ex.getMessage());
+                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                    Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, "FileWS: Có lỗi xảy ra trong quá trình xóa File tạm trên Applet: " + ex.getMessage());
                     noError = false;
                     continue;
                 }
@@ -319,14 +328,16 @@ public class BaseWS {
                 if (ous != null) {
                     ous.close();
                 }
-            } catch (IOException e) {
+            } catch (IOException ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
 
             try {
                 if (ios != null) {
                     ios.close();
                 }
-            } catch (IOException e) {
+            } catch (IOException ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         }
         return ous.toByteArray();

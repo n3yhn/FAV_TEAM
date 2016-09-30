@@ -21,10 +21,10 @@ public class TestRefection {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        FilesForm ff = new FilesForm();
+//        FilesForm ff = new FilesForm();
         ANNOUNCESENDDtoType ann = new ANNOUNCESENDDtoType();
-        ANNOUNCESENDDmapFILESFORM af = new ANNOUNCESENDDmapFILESFORM();
-        int a = getObject(ann);
+//        ANNOUNCESENDDmapFILESFORM af = new ANNOUNCESENDDmapFILESFORM();
+        getObject(ann);
         //int b = getObject(wmv);
         //validateObj(ann, af);
 //        Class<?> enclosingClass = getClass().getEnclosingClass();
@@ -52,7 +52,7 @@ public class TestRefection {
     }
 
     public static void validateObj(Object input, Object compare) {//hàm thực hiện validate obj đối với obj đầu vào obj.
-        boolean ck = false;
+//        boolean ck = false;
         try {
             for (Field fieldInput : input.getClass().getDeclaredFields()) {
                 //System.out.println(fieldInput.getName());

@@ -4,6 +4,7 @@
  */
 package com.viettel.voffice.database.DAO;
 
+import com.viettel.common.util.LogUtil;
 import java.lang.reflect.Method;
 import java.util.Comparator;
 
@@ -37,7 +38,7 @@ public class VoComparator<T> implements Comparator<T> {
             getName2 = removeVienameseCharacter(getName2).toUpperCase();
             return getName1.compareTo(getName2);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         throw new UnsupportedOperationException("Not supported yet.");
     }

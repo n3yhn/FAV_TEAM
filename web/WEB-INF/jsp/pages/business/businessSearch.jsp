@@ -26,7 +26,7 @@
             var url = "<div style='text-align:center;cursor:pointer;'><img src='${contextPath}/share/images/edit.png' width='17px' height='17px' \n\
                         title='<sd:Property>category.edit</sd:Property>' \n\
                         onClick='page.showEditPopup(" + row + ");' />\n\
-                        | <img src='share/images/edit.png'\n\
+                        | <img src='share/images/icons/a3.png'\n\
                         width='17px' height='17px' \n\
                         title='Tạo thông báo cho doanh nghiệp' \n\
                         onClick='page.showAlertDlg(" + businessId + ");' /></div>";

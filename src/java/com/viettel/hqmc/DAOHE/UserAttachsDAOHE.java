@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
+import com.viettel.common.util.LogUtil;
 
 /**
  *
@@ -46,24 +47,24 @@ public class UserAttachsDAOHE extends GenericDAOHibernate<UserAttachs, Long> {
             query.setParameter(0, UserId);
             lstStandard = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<>();
         }
         return lstStandard;
     }
-    
-    public List findAllActiveUserAttach(Long userId){
+
+    public List findAllActiveUserAttach(Long userId) {
         try {
 
             StringBuilder stringBuilder = new StringBuilder(" from UserAttachs u ");
             //stringBuilder.append("where u.isActive = 1 and u.status=1 and (u.effectiveDate <= sysdate) and (u.expireDate >= sysdate) order by t.createDate asc");
             stringBuilder.append("where u.isActive=1 and u.status=1 and u.createdBy = ? and (u.expireDate is null or u.expireDate >= ?) order by u.createDate asc");
-            Query query = getSession().createQuery(stringBuilder.toString()); 
+            Query query = getSession().createQuery(stringBuilder.toString());
             query.setParameter(0, userId);
             query.setParameter(1, new Date());
             lstStandard = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<>();
         }
         return lstStandard;
@@ -111,8 +112,8 @@ public class UserAttachsDAOHE extends GenericDAOHibernate<UserAttachs, Long> {
             }
             GridResult result = new GridResult(nCount, list);
             return result;
-        } catch (Exception e) {
-            e.getMessage();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -185,14 +186,13 @@ public class UserAttachsDAOHE extends GenericDAOHibernate<UserAttachs, Long> {
     }
 
     //kiem tra doi tuong co trung khong   
-
     /**
      *
      * @param form
      * @param userId
      * @return
      */
-        public boolean isDuplicate(UserAttachsForm form, Long userId) {
+    public boolean isDuplicate(UserAttachsForm form, Long userId) {
         if (form == null) {
             return false;
         }
@@ -240,7 +240,7 @@ public class UserAttachsDAOHE extends GenericDAOHibernate<UserAttachs, Long> {
             voAttachsList = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return voAttachsList;
     }

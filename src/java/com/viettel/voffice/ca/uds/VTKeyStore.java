@@ -67,7 +67,7 @@ public class VTKeyStore {
         //keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
         CertificateFactory cf = CertificateFactory.getInstance("X509");
 
-        Certificate cert1, cert2 = null;
+        Certificate cert1, cert2;
         cert2 = cf.generateCertificate(new FileInputStream(bundle.getString("micCertFile")));
         cert1 = cf.generateCertificate(new FileInputStream(bundle.getString("rootCACertFiel")));
 
@@ -200,7 +200,7 @@ public class VTKeyStore {
 //        String pass = null;
         CertificateFactory cf = CertificateFactory.getInstance("X509");
 
-        Certificate cert1, cert2 = null;
+        Certificate cert1, cert2;
         if (issuer.equals(VIETTEL_CA)) {
 //            keystore = bundle.getString("vanKeyStore");
 //            pass = bundle.getString("vanKeyStorePass");

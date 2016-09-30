@@ -180,7 +180,7 @@
     };
     var leaderStaffRequestNew;
     onSendFRFtoVT = function() {
-        if (page.validateOnSendFRFtoVT()) {
+        if (page.validateOnSendFRFtoVT_FRFN()) {
             var fileId = dijit.byId("feedbackReviewFormNew.fileId").getValue();
             // document.getElementById("trWait").style.display = "";
             //document.getElementById("labelWait").innerHTML = "Hệ thống đang tạo công văn và ký số, vui lòng chờ  ";
@@ -265,7 +265,7 @@
         return(strText);
     };
 
-    page.validateOnSendFRFtoVT = function() {
+    page.validateOnSendFRFtoVT_FRFN = function() {
         document.getElementById("feedbackReviewFormNew.sendVt").checked = true;
         document.getElementById("feedbackReviewFormNew.statusDeny").checked = false;
 //        if (document.getElementById("ckbIsTypeChangeL").checked == true) {

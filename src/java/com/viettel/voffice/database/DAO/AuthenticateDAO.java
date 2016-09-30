@@ -2,6 +2,7 @@ package com.viettel.voffice.database.DAO;
 
 import com.viettel.common.util.ComboBoxItem;
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.DAO.FeeDao;
 import com.viettel.hqmc.DAOHE.FilesNoClobDAOHE;
 import com.viettel.hqmc.DAOHE.NotificationDAOHE;
@@ -86,8 +87,8 @@ public class AuthenticateDAO extends BaseDAO {
             getRequest().setAttribute("countSelectGIVE_BACK", bnhe.getCountSelectGIVE_BACKHomePage());
             NotificationDAOHE ndaohe = new NotificationDAOHE();
             getRequest().setAttribute("lstNotice", ndaohe.GetNOTICE());
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         try {
             String type = getRequest().getParameter("type");
@@ -97,6 +98,7 @@ public class AuthenticateDAO extends BaseDAO {
                 return "HomePage.Page";
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "HomePage.Page";
         }
     }
@@ -195,7 +197,8 @@ public class AuthenticateDAO extends BaseDAO {
                 }
                 System.out.println("Err_06");
             }
-        } catch (Exception ex) {            
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             edhe.insertEventLog("KEYPAY", "Err=" + "Loi cap nhat KeyPay qua IPN, ma thanh toan: " + files_code + ex, getRequest());//A 16 07 29
             System.out.println("Err_07");
             System.out.println("Loi cap nhat KeyPay qua IPN, ma thanh toan: " + files_code + ex);
@@ -264,13 +267,13 @@ public class AuthenticateDAO extends BaseDAO {
             getRequest().setAttribute("lstPosId", lstCategory2);
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             lstCategory.add(0, new Category(0l, "-- Chọn --"));
             getRequest().setAttribute("lstProvince", lstCategory);
             lstCategory1.add(0, new Category(0l, "-- Chọn --"));
             getRequest().setAttribute("lstBusinessType", lstCategory1);
             lstCategory2.add(0, new Position(0l, "-- Chọn --"));
             getRequest().setAttribute("lstPosId", lstCategory2);
-            log.error(ex.getMessage());
         }
         return "registerHomePage.Page";
     }
@@ -279,7 +282,7 @@ public class AuthenticateDAO extends BaseDAO {
         try {
             //todo code here            
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "resetPasswordHomePage.Page";
     }
@@ -289,7 +292,7 @@ public class AuthenticateDAO extends BaseDAO {
         HttpServletRequest req = getRequest();
         HttpSession session = req.getSession();
         String forwardPage = "indexSuccess";
-        UserToken userToken = null;
+        UserToken userToken;
         String changeDept = getRequest().getParameter("changeDept");
         if (session.getAttribute("workingDeptId") == null || (changeDept != null && changeDept.trim().equals("true"))) {
             UserToken vsaUserToken = (UserToken) session.getAttribute("vsaUserToken");
@@ -451,7 +454,7 @@ public class AuthenticateDAO extends BaseDAO {
             }
         } catch (Exception ex) {
             log.error("Error while perform user login action..");
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             forwardPage = "error";
         }
         log.info("User login has been done!");
@@ -501,10 +504,8 @@ public class AuthenticateDAO extends BaseDAO {
 
     public String changeWorkingDept() {
         HttpServletRequest req = getRequest();
-
-        String forwardPage = "indexSuccess";
         Long deptId = Long.parseLong(req.getParameter("deptId"));
-        forwardPage = loadToken(deptId);
+        String forwardPage = loadToken(deptId);
         return forwardPage;
 
     }
@@ -637,7 +638,8 @@ public class AuthenticateDAO extends BaseDAO {
 
             String willParse = new UtilDAO().validate(userName, deptId, domainCode);
             ut = UserToken.parseXMLResponse(willParse);
-        } catch (Exception en) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return ut;
 
@@ -649,7 +651,7 @@ public class AuthenticateDAO extends BaseDAO {
         HttpSession session = req.getSession();
         String forwardPage = "indexSuccess";
 
-        UserToken userToken = null;
+        UserToken userToken;
 
         Long userId = (Long) session.getAttribute("userId");
         UsersDAOHE udhe = new UsersDAOHE();
@@ -664,7 +666,8 @@ public class AuthenticateDAO extends BaseDAO {
             String willParse = new UtilDAO().validate(userName, deptId, domainCode);
             UserToken ut = UserToken.parseXMLResponse(willParse);
             session.setAttribute("vsaUserToken", ut);
-        } catch (Exception en) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         try {
@@ -679,7 +682,7 @@ public class AuthenticateDAO extends BaseDAO {
             }
         } catch (Exception ex) {
             log.error("Error while perform user login action..");
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             forwardPage = "error";
         }
         log.info("User login has been done!");

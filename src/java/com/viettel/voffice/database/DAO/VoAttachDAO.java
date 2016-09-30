@@ -4,6 +4,7 @@
  */
 package com.viettel.voffice.database.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.client.form.VoAttachForm;
 import com.viettel.voffice.database.BO.VoAttachs;
 import com.viettel.voffice.database.DAOHibernate.VoAttachsDAOHE;
@@ -28,8 +29,8 @@ public class VoAttachDAO extends BaseDAO {
         Long fileId = 0L;
         try {
             fileId = Long.valueOf(fileIdStr);
-        } catch (Exception e) {
-            logger.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         try {
             Users user = getUser();
@@ -44,8 +45,8 @@ public class VoAttachDAO extends BaseDAO {
 
             getRequest().setAttribute("fileId", fileId);
 
-        } catch (Exception e) {
-            logger.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "fileRelationForm";
     }
@@ -55,8 +56,8 @@ public class VoAttachDAO extends BaseDAO {
         Long attachId = 0L;
         try {
             attachId = Long.valueOf(attachIdStr);
-        } catch (Exception e) {
-            logger.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         try {
             VoAttachs bo = voAttDaoHe.findById(attachId, false);
@@ -65,7 +66,7 @@ public class VoAttachDAO extends BaseDAO {
             getRequest().setAttribute("fileId", fileRelationForm.getObjectId());
 
         } catch (Exception ex) {
-            logger.error(ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "fileRelationForm";
     }
@@ -76,8 +77,8 @@ public class VoAttachDAO extends BaseDAO {
         Long attachId = 0L;
         try {
             attachId = Long.valueOf(attachIdStr);
-        } catch (Exception e) {
-            logger.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         try {
             VoAttachs bo = voAttDaoHe.findById(attachId, false);

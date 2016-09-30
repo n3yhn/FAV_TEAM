@@ -4,6 +4,7 @@
  */
 package com.viettel.voffice.database.DAOHibernate;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.database.DAO.GenericHibernateDAO;
 import com.viettel.voffice.common.util.DateTimeUtils;
 import com.viettel.voffice.common.util.StringUtils;
@@ -63,11 +64,11 @@ public class GenericDAOHibernate<T, ID extends Serializable> extends GenericHibe
         try {
             return DateTimeUtils.convertStringToDateTime(DateTimeUtils.convertDateTimeToString(date) + " 23:59:59");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
-    
+
     public Date minDayToCompare(Date date) {
         if (date == null) {
             return null;
@@ -75,7 +76,7 @@ public class GenericDAOHibernate<T, ID extends Serializable> extends GenericHibe
         try {
             return DateTimeUtils.convertStringToDateTime(DateTimeUtils.convertDateTimeToString(date) + " 00:00:00");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -240,7 +241,7 @@ public class GenericDAOHibernate<T, ID extends Serializable> extends GenericHibe
             Date sysdate = (Date) queryObj.uniqueResult();
             return sysdate;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -311,8 +312,7 @@ public class GenericDAOHibernate<T, ID extends Serializable> extends GenericHibe
                 isExisted = Boolean.valueOf(true);
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            //     throw ex;
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return isExisted;
     }
@@ -342,8 +342,7 @@ public class GenericDAOHibernate<T, ID extends Serializable> extends GenericHibe
                 isExisted = Boolean.valueOf(true);
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            // throw ex;
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return isExisted;
     }
@@ -530,7 +529,7 @@ public class GenericDAOHibernate<T, ID extends Serializable> extends GenericHibe
     }
 
     public T getById(String idName, Object idValue, String type) {
-        Session currentSession = null;
+        Session currentSession;
 //        if (type != null && "LTCQ".equals(type)) {
 //            currentSession = getSession("ltcq");
 //        } else {
@@ -550,7 +549,7 @@ public class GenericDAOHibernate<T, ID extends Serializable> extends GenericHibe
     }
 
     public List<T> getByProperty(String propertyName, Object value, String type) {
-        Session currentSession = null;
+        Session currentSession;
 //        if (type != null && "LTCQ".equals(type)) {
 //            currentSession = getSession("ltcq");
 //        } else {
@@ -599,8 +598,8 @@ public class GenericDAOHibernate<T, ID extends Serializable> extends GenericHibe
 
                 jsonArray.add(jsonObj);
             }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return jsonArray.toString();
     }

@@ -11,24 +11,26 @@ import com.viettel.voffice.database.DAO.GridResult;
 import com.viettel.voffice.database.DAOHibernate.GenericDAOHibernate;
 import java.util.List;
 import org.hibernate.Query;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import com.viettel.common.util.LogUtil;
 
 /**
  *
  * @author Administrator
  */
 public class RepositoryDAOHE extends GenericDAOHibernate<Repositories, Long> {
-    
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RepositoryDAOHE.class);
     private static HashMap<String, List> lstRepositoriesFactory = new HashMap();
 
     public RepositoryDAOHE() {
         super(Repositories.class);
     }
-     /**
+
+    /**
      * removeCacheRepositories
+     *
      * @param type
      * @return
      */
@@ -40,8 +42,10 @@ public class RepositoryDAOHE extends GenericDAOHibernate<Repositories, Long> {
             lstRepositoriesFactory.remove(type);
         }
     }
+
     /**
      * findAllRepositories
+     *
      * @return
      */
     public List findAllRepositories() {
@@ -60,13 +64,15 @@ public class RepositoryDAOHE extends GenericDAOHibernate<Repositories, Long> {
             lstRepositories = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<Repositories>();
         }
         return lstRepositories;
     }
-   /**
+
+    /**
      * getRepositoryFromId
+     *
      * @param rep_id
      * @return
      */
@@ -86,13 +92,15 @@ public class RepositoryDAOHE extends GenericDAOHibernate<Repositories, Long> {
             lstRepositories = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<Repositories>();
         }
         return lstRepositories;
     }
-   /**
+
+    /**
      * getRepositoryFromCreator
+     *
      * @param user_id
      * @return
      */
@@ -111,13 +119,15 @@ public class RepositoryDAOHE extends GenericDAOHibernate<Repositories, Long> {
             lstRepositories = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<Repositories>();
         }
         return lstRepositories;
     }
- /**
+
+    /**
      * findAllRepositoriesById
+     *
      * @param repForm
      * @param depId
      * @param userId
@@ -131,12 +141,12 @@ public class RepositoryDAOHE extends GenericDAOHibernate<Repositories, Long> {
         if (lstRepositoriesFactory == null) {
             lstRepositoriesFactory = new HashMap();
         }
-        List<Repositories> lstRepositories = null;
+//        List<Repositories> lstRepositories = null;
         StringBuilder stringBuilder = new StringBuilder(" from Repositories a ");
         stringBuilder.append(" where a.isActive = 1 and a.repCreator = " + userId + "  order by a.repId asc ");
         Query countQuery = getSession().createQuery("select count(a)" + stringBuilder.toString());
         Query query = getSession().createQuery(stringBuilder.toString());
-        lstRepositories = query.list();
+//        lstRepositories = query.list();
         query.setFirstResult(start);
         query.setMaxResults(count);
         int total = Integer.parseInt(countQuery.uniqueResult().toString());
@@ -144,8 +154,10 @@ public class RepositoryDAOHE extends GenericDAOHibernate<Repositories, Long> {
         GridResult gr = new GridResult(total, lstResult);
         return gr;
     }
- /**
+
+    /**
      * onCreateRepositories
+     *
      * @param repoForm
      * @return
      */
@@ -173,13 +185,15 @@ public class RepositoryDAOHE extends GenericDAOHibernate<Repositories, Long> {
                 bReturn = true;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
     }
- /**
+
+    /**
      * deleteRepo
+     *
      * @param userId
      * @param repId
      * @return

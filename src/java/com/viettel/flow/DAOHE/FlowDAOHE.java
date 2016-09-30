@@ -13,6 +13,7 @@ import com.viettel.hqmc.BO.Files;
 import com.viettel.voffice.database.DAO.BaseDAO;
 import com.viettel.voffice.database.DAO.GridResult;
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.DAOHE.FilesDAOHE;
 import com.viettel.voffice.database.DAOHibernate.GenericDAOHibernate;
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.Date;
  * @author Administrator
  */
 public class FlowDAOHE extends GenericDAOHibernate<Flow, Long> {
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FlowDAOHE.class);
 
     public FlowDAOHE() {
@@ -62,7 +64,7 @@ public class FlowDAOHE extends GenericDAOHibernate<Flow, Long> {
             GridResult result = new GridResult(total, lst);
             return result;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -106,7 +108,7 @@ public class FlowDAOHE extends GenericDAOHibernate<Flow, Long> {
             GridResult result = new GridResult(total, lst);
             return result;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -136,7 +138,7 @@ public class FlowDAOHE extends GenericDAOHibernate<Flow, Long> {
             GridResult result = new GridResult(total, lst);
             return result;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -215,7 +217,7 @@ public class FlowDAOHE extends GenericDAOHibernate<Flow, Long> {
      * Tim node ke tiep theo action
      */
     public Node getNextNodeByAction(Long flowId, Long nodeId, String action) {
-        List<Node> lst = null;
+        List<Node> lst;
         Node node = null;
         if (nodeId != null) {
             String hql = "select n from Node n where n.isActive = 1 and n.flowId = ? and n.nodeId in (select ntn.nodeToNodePK.nextId from NodeToNode ntn where ntn.isActive = 1 and ntn.nodeToNodePK.previousId = ? and lower(ntn.action)=?)";
@@ -327,7 +329,7 @@ public class FlowDAOHE extends GenericDAOHibernate<Flow, Long> {
             GridResult result = new GridResult(total, lst);
             return result;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -357,7 +359,7 @@ public class FlowDAOHE extends GenericDAOHibernate<Flow, Long> {
             if (!doc.getStatus().equals(Constants.FILE_STATUS.NEW_TO_ADD)) {
                 doc.setStatus(node.getStatus());
                 doc.setDisplayStatus(FilesDAOHE.getFileStatusName(node.getStatus()));
-            }           
+            }
             String nodePath = doc.getNodeHistory();
             if (nodePath == null || nodePath == "") {
                 nodePath = nextNodeId.toString();
@@ -379,7 +381,7 @@ public class FlowDAOHE extends GenericDAOHibernate<Flow, Long> {
         query.setParameter(3, 0l);
         query.setParameter(4, deptId);
         query.setParameter(5, userId);
-        int n = query.executeUpdate();
+        query.executeUpdate();
         //
         //
         //
@@ -473,7 +475,7 @@ public class FlowDAOHE extends GenericDAOHibernate<Flow, Long> {
         query.setParameter(3, 0l);
         query.setParameter(4, deptId);
         query.setParameter(5, userId);
-        int n = query.executeUpdate();
+        query.executeUpdate();
         //
         //
         //
@@ -552,7 +554,7 @@ public class FlowDAOHE extends GenericDAOHibernate<Flow, Long> {
      */
     public boolean moveDocumentToNextNodeStatus(Long deptId, String deptName, Long userId, String userName, Long fileId, Long status) {
         boolean bReturn = true;
-        boolean bHaveNode = false;
+//        boolean bHaveNode = false;
 
         List<Node> lstNode = getNextNodes(fileId);
 
@@ -577,35 +579,35 @@ public class FlowDAOHE extends GenericDAOHibernate<Flow, Long> {
                 for (int i = 0; i < lstNode.size(); i++) {
                     if (lstNode.get(i).getStatus().equals(status)) {
                         bReturn = moveDocumentToNextNode(deptId, deptName, userId, userName, fileId, lstNode.get(i).getNodeId());
-                        bHaveNode = true;
+//                        bHaveNode = true;
                         break;
                     } else if (Constants.FILE_STATUS.FEDBACK_TO_ADD.equals(status) && Constants.FILE_STATUS.NEW_CREATE.equals(lstNode.get(i).getStatus())) {
                         //
                         // Tim den node tuong duong voi tra lai de bo sung -> moi tao
                         //
                         bReturn = moveDocumentToNextNode(deptId, deptName, userId, userName, fileId, lstNode.get(i).getNodeId());
-                        bHaveNode = true;
+//                        bHaveNode = true;
                         break;
                     } else if (Constants.FILE_STATUS.FEDBACK_TO_EVALUATE.equals(status) && Constants.FILE_STATUS.ASSIGNED.equals(lstNode.get(i).getStatus())) {
                         //
                         // Tim den node tuong duong voi tra lai de tham dinh lai -> da giao viec
                         //
                         bReturn = moveDocumentToNextNode(deptId, deptName, userId, userName, fileId, lstNode.get(i).getNodeId());
-                        bHaveNode = true;
+//                        bHaveNode = true;
                         break;
                     } else if (Constants.FILE_STATUS.FEDBACK_TO_REVIEW.equals(status) && Constants.FILE_STATUS.EVALUATED.equals(lstNode.get(i).getStatus())) {
                         //
                         // Tim den node tuong duong voi tra lai de xem xet -> da tham dinh
                         //
                         bReturn = moveDocumentToNextNode(deptId, deptName, userId, userName, fileId, lstNode.get(i).getNodeId());
-                        bHaveNode = true;
+//                        bHaveNode = true;
                         break;
                     } else if (Constants.FILE_STATUS.EVALUATED.equals(status) && Constants.FILE_STATUS.REVIEWED.equals(lstNode.get(i).getStatus())) {
                         //
                         // Tim den node tuong duong voi tra lai de xem xet -> da tham dinh
                         //
                         bReturn = moveDocumentToNextNode(deptId, deptName, userId, userName, fileId, lstNode.get(i).getNodeId());
-                        bHaveNode = true;
+//                        bHaveNode = true;
                         break;
                     }
                 }
@@ -620,7 +622,7 @@ public class FlowDAOHE extends GenericDAOHibernate<Flow, Long> {
             Query query = getSession().createQuery(hql);
             query.setParameter(0, Constants.FILE_STATUS.APPROVED);
             query.setParameter(1, fileId);
-            int n = query.executeUpdate();
+            query.executeUpdate();
         }
         return bReturn;
 

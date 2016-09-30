@@ -12,6 +12,7 @@ import com.google.zxing.Writer;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.ResourceBundleUtil;
 import com.viettel.common.util.UploadFile;
 import com.viettel.hqmc.BO.Announcement;
@@ -465,7 +466,8 @@ public class FilesDAO extends BaseDAO {
                     start = Integer.parseInt(startServerStr);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
+
             }
         }
 
@@ -501,7 +503,7 @@ public class FilesDAO extends BaseDAO {
         String lstObjectId = getRequest().getParameter("lstObjectId");
         try {
             ProcessDAOHE pDaoHe = new ProcessDAOHE();
-            Long fileId = -1L;
+            Long fileId;
             if (lstProcessOnGrid != null && lstProcessOnGrid.size() > 0) {
                 fileId = lstProcessOnGrid.get(0).getObjectId();
 
@@ -512,8 +514,8 @@ public class FilesDAO extends BaseDAO {
                     lstObjectIdSplit = lstObjectId.split(",");
                     countObj = lstObjectIdSplit.length;
                 }
-                Process processMain = null;
-                List<Process> processSlave = null;
+                Process processMain;
+                List<Process> processSlave;
                 for (int obj = 0; obj < countObj; obj++) {
                     if ("2".equals(type)) {
                         fileId = Long.parseLong(lstObjectIdSplit[obj]);
@@ -611,7 +613,7 @@ public class FilesDAO extends BaseDAO {
                                 getSession().save(p);
                             }
                         }
-                        if (sid.equals("")) {
+                        if ("".equals(sid)) {
                             sid = p.getProcessId().toString();
                         } else {
                             sid = sid + "," + p.getProcessId().toString();
@@ -641,7 +643,10 @@ public class FilesDAO extends BaseDAO {
                             Files f = fDAOHE.findById(fileId);
                             if (lstProcessOnGrid.size() > 0) {
                                 f.setStatus(Constants.FILE_STATUS.ASSIGNED);
-                                if (((f.getStaffProcess() != null && f.getStaffProcess().equals(getUserId()) == false) || f.getStaffProcess() == null) && !staffProcess.equals(0L)) {
+                                if (((f.getStaffProcess() != null
+                                        && f.getStaffProcess().equals(getUserId()) == false)
+                                        || f.getStaffProcess() == null)
+                                        && !staffProcess.equals(0L)) {
                                     f.setStaffProcess(staffProcess);
                                     f.setNameStaffProcess(nameStaffProcess);
                                 }
@@ -664,7 +669,7 @@ public class FilesDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Thực hiện phân công xử lý thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Thực hiện phân công xử lý không thành công");
         }
@@ -799,7 +804,7 @@ public class FilesDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Thực hiện đề xuất thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Thực hiện đề xuất không thành công");
         }
@@ -838,7 +843,8 @@ public class FilesDAO extends BaseDAO {
             Procedure p = new Procedure();
             try {
                 p = cdhe.getProcedureByDescription(announcementFile05);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 p = null;
             }
             lstCategory = new ArrayList();
@@ -1003,7 +1009,8 @@ public class FilesDAO extends BaseDAO {
             Procedure p = new Procedure();
             try {
                 p = cdhe.getProcedureByDescription(announcementFile05);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 p = null;
             }
             lstCategory = new ArrayList();
@@ -1062,7 +1069,8 @@ public class FilesDAO extends BaseDAO {
         Procedure p = new Procedure();
         try {
             p = cdhe.getProcedureByDescription(announcementFile05);
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             p = null;
         }
         lstCategory = new ArrayList();
@@ -1138,7 +1146,8 @@ public class FilesDAO extends BaseDAO {
             Procedure p = new Procedure();
             try {
                 p = cdhe.getProcedureByDescription(announcementFile05);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 p = null;
             }
             lstCategory = new ArrayList();
@@ -1175,7 +1184,8 @@ public class FilesDAO extends BaseDAO {
                     start = Integer.parseInt(startServerStr);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(ex.getMessage());
             }
         }
         //Hiepvv tách riêng SDBS sau công bố
@@ -1184,8 +1194,8 @@ public class FilesDAO extends BaseDAO {
             Procedure p = new Procedure();
             try {
                 p = pHE.getProcedureByDescription(announcementFile05);
-            } catch (Exception ee) {
-                log.error(ee.getMessage());
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
             if (p != null) {
                 searchForm.setFileType(p.getProcedureId());
@@ -1258,8 +1268,8 @@ public class FilesDAO extends BaseDAO {
             Procedure p = new Procedure();
             try {
                 p = pHE.getProcedureByDescription(announcementFile05);
-            } catch (Exception ee) {
-                log.error(ee.getMessage());
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
             if (p != null) {
                 searchForm.setFileType(p.getProcedureId());
@@ -1291,7 +1301,7 @@ public class FilesDAO extends BaseDAO {
                     start = Integer.parseInt(startServerStr);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         }
         FilesNoClobDAOHE fdhe = new FilesNoClobDAOHE();
@@ -1318,7 +1328,7 @@ public class FilesDAO extends BaseDAO {
                     start = Integer.parseInt(startServerStr);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         }
 
@@ -1326,8 +1336,8 @@ public class FilesDAO extends BaseDAO {
         Procedure p = new Procedure();
         try {
             p = pHE.getProcedureByDescription(announcementFile05);
-        } catch (Exception ee) {
-            log.error(ee.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (p != null) {
             searchForm.setFileType(p.getProcedureId());
@@ -1367,7 +1377,7 @@ public class FilesDAO extends BaseDAO {
                     start = Integer.parseInt(startServerStr);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         }
 
@@ -1508,7 +1518,8 @@ public class FilesDAO extends BaseDAO {
             Base64 decoder = new Base64();
             name = new String(decoder.decode(getRequest().getParameter("leaderName").replace("_", "+").getBytes()), "UTF-8");
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (int i = 0; i < lstItemOnGrid.size(); i++) {
             FilesForm form = lstItemOnGrid.get(i);
@@ -1781,9 +1792,10 @@ public class FilesDAO extends BaseDAO {
 //            }
             getSession().getTransaction().commit();
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Phê duyệt không thành công");
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
         }
 
         jsonDataGrid.setItems(resultMessage);
@@ -1823,7 +1835,7 @@ public class FilesDAO extends BaseDAO {
         List resultMessage = new ArrayList();
         List customInfo = new ArrayList();
         try {
-            Files filesBo = new Files();
+            Files filesBo;
             FilesDAOHE fdhe = new FilesDAOHE();
             filesBo = fdhe.findById(createForm.getFileId());
             if (filesBo != null) {
@@ -1855,9 +1867,10 @@ public class FilesDAO extends BaseDAO {
                 resultMessage.add("Cập nhật trạng thái hồ sơ không thành công");
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật luồng xử lý không thành công");
-            Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         jsonDataGrid.setItems(resultMessage);
         jsonDataGrid.setCustomInfo(customInfo);
@@ -1890,7 +1903,7 @@ public class FilesDAO extends BaseDAO {
         //boolean bReturn = exp.exportDataCvSdbs("EX_SIGN");
         String path = exp.exportDataCvSdbsPlugin("EX_SIGN");
         List resultMessage = new ArrayList();
-        if (path.trim().length() > 0 && !path.equals("false")) {
+        if (path.trim().length() > 0 && !"false".equals(path)) {
             resultMessage.add("1");
             resultMessage.add("Xuất công văn SĐBS thành công");
             resultMessage.add(path);
@@ -1908,7 +1921,7 @@ public class FilesDAO extends BaseDAO {
      * @return
      */
     public String toCreateFilePage() {
-        Long fileId = getRequest().getParameter("fileId") == null ? 0L : Long.parseLong(getRequest().getParameter("fileId"));
+//        Long fileId = getRequest().getParameter("fileId") == null ? 0L : Long.parseLong(getRequest().getParameter("fileId"));
         Long fileType = getRequest().getParameter("fileType") == null ? 0L : Long.parseLong(getRequest().getParameter("fileType"));
         Long checkEdit = getRequest().getParameter("checkEdit") == null ? 0L : Long.parseLong(getRequest().getParameter("checkEdit"));
         Long typeFee = getRequest().getParameter("typeFee") == null ? 0L : Long.parseLong(getRequest().getParameter("typeFee"));
@@ -1918,11 +1931,11 @@ public class FilesDAO extends BaseDAO {
             createForm = new FilesForm();
             createForm.setFileType(fileType);
         }
-        Users user = new Users();
+        Users user;
         UsersDAOHE udhe = new UsersDAOHE();
         user = udhe.findById(getUserId());
 
-        Business bus = new Business();
+        Business bus;
         BusinessDAOHE bdhe = new BusinessDAOHE();
         bus = bdhe.findById(user.getBusinessId());
         //San pham ho so goc
@@ -1933,8 +1946,8 @@ public class FilesDAO extends BaseDAO {
         String manuEmail = "";
         String manuFax = "";
         String matchingTaget = "";
-        String nameStaffProcess = "";
-        Long staffProcessId = 0L;
+        String nameStaffProcess;
+        Long staffProcessId;
         Date publishDate = null;
         String strReturn = ERROR_PERMISSION;
         if (createForm.getFileId() != null && createForm.getFileId() > 0l) {
@@ -1961,8 +1974,9 @@ public class FilesDAO extends BaseDAO {
                 try {
                     p = pdaohe.getProcedureByDescription(announcementFile05);
                 } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                     p = null;
-                    Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
+//                    Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 createForm = new FilesForm();
                 if (p != null) {
@@ -2388,7 +2402,7 @@ public class FilesDAO extends BaseDAO {
                     getRequest().setAttribute("lstLeader", lstLeader);
                 }
                 String viewTypeDialog = getRequest().getParameter("viewTypeDialog");
-                if (viewTypeDialog != null && !"".equals(viewTypeDialog) && viewTypeDialog.equals("1")) {
+                if (viewTypeDialog != null && !"".equals(viewTypeDialog) && "1".equals(viewTypeDialog)) {
                     strReturn = tthc.getDescription() + "DialogView";
                 } else {
                     strReturn = tthc.getDescription() + "View";
@@ -2397,19 +2411,18 @@ public class FilesDAO extends BaseDAO {
         }
         try {
             //Check validate ky CA
-            String validCAStatus = "NG";
             if (createForm.getContentSigned() != null) {
+                String validCAStatus = "";
                 if (CommonUtils.checkSecurityPublishCA(createForm.getFileId(), createForm.getContentSigned())) {
                     String contentSigned = createForm.getContentSigned();
                     KeyInfo keyInfo = CommonUtils.validateContentSigned(contentSigned);
-
-                    String userSigned = null;
                     if (keyInfo != null) {
                         try {
-                            userSigned = CommonUtils.getUserSigned(keyInfo);
+                            CommonUtils.getUserSigned(keyInfo);
                             validCAStatus = "OK";
-                        } catch (CertificateExpiredException | CertificateNotYetValidException expiredEx) {
-                            log.error(expiredEx);
+                        } catch (CertificateExpiredException | CertificateNotYetValidException ex) {
+                            LogUtil.addLog(ex);//binhnt sonar a160901
+//                            log.error(expiredEx);
                         }
                     } else {
                         validCAStatus = "NG";
@@ -2428,8 +2441,9 @@ public class FilesDAO extends BaseDAO {
                 }
             }
             getRequest().setAttribute("lstRole", lstRole);
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e.getMessage());
         }
         /*
          if (createForm.getAnnouncement() != null) {
@@ -2454,8 +2468,9 @@ public class FilesDAO extends BaseDAO {
                 Document document = CommonUtils.buildAllPublishDocument(createForm.getFileId());
                 createForm.setContentXml(com.viettel.common.util.StringUtils.escapeHtml(CommonUtils.convertDocument2String(document)));
                 items.add(createForm.getContentXml());
-            } catch (Exception e) {
-                log.error(e.getMessage());
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(e.getMessage());
             }
         }
         //jsonDataGrid.setItems(resultMessage);
@@ -2792,7 +2807,8 @@ public class FilesDAO extends BaseDAO {
                 resultMessage.add("Lưu hồ sơ không thành công: Bạn không được phép xử lý hồ sơ!");
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.clear();
             resultMessage.add("3");
             resultMessage.add("Lưu hồ sơ không thành công");
@@ -2825,15 +2841,16 @@ public class FilesDAO extends BaseDAO {
                     }
                 }
             }
-            String strAlert = "Hủy hồ sơ thành công";
-            strAlert = "Hủy hồ sơ thành công, có " + nSuccess + " hồ sơ bị hủy và " + nError + " hồ sơ không được phép hủy";
+//            String strAlert = "Hủy hồ sơ thành công";
+            String strAlert = "Hủy hồ sơ thành công, có " + nSuccess + " hồ sơ bị hủy và " + nError + " hồ sơ không được phép hủy";
             resultMessage.add("1");
             resultMessage.add(strAlert);
             EventLogDAOHE edhe = new EventLogDAOHE();
             edhe.insertEventLog("Thêm mới hồ sơ", "Hủy hồ sơ có id=" + sid, getRequest());
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Hủy hồ sơ không thành công");
         }
@@ -3149,7 +3166,7 @@ public class FilesDAO extends BaseDAO {
                     start = Integer.parseInt(startServerStr);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         }
 
@@ -3213,7 +3230,7 @@ public class FilesDAO extends BaseDAO {
                     start = Integer.parseInt(startServerStr);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         }
 
@@ -3328,7 +3345,7 @@ public class FilesDAO extends BaseDAO {
                     start = Integer.parseInt(startServerStr);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         }
 
@@ -3365,7 +3382,7 @@ public class FilesDAO extends BaseDAO {
                     start = Integer.parseInt(startServerStr);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         }
 
@@ -3565,7 +3582,7 @@ public class FilesDAO extends BaseDAO {
                 jsonDataGrid.setTotalRows(gridResult.getnCount().intValue());
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return strReturn;
         }
         return GRID_DATA;
@@ -3580,8 +3597,7 @@ public class FilesDAO extends BaseDAO {
         try {
             if (flowForm.getFileId() != null) {
                 FilesDAOHE fHE = new FilesDAOHE();
-                Files f = new Files();
-                f = fHE.findById(flowForm.getFileId());
+                Files f = fHE.findById(flowForm.getFileId());
                 if (f.getFilesSourceID() != null && f.getFilesSourceID() > 0) {
                     gridResult = prodhe.searchProcessOfDoc(Long.valueOf(f.getFilesSourceID()), Long.valueOf(Constants.OBJECT_TYPE.FILES), start, count, "processId");
                 } else {
@@ -3591,7 +3607,7 @@ public class FilesDAO extends BaseDAO {
                 jsonDataGrid.setTotalRows(gridResult.getnCount().intValue());
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return strReturn;
         }
         return GRID_DATA;
@@ -3633,7 +3649,8 @@ public class FilesDAO extends BaseDAO {
         Procedure p = new Procedure();
         try {
             p = cdhe.getProcedureByDescription(announcementFile05);
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             p = null;
         }
         lstCategory = new ArrayList();
@@ -3681,7 +3698,8 @@ public class FilesDAO extends BaseDAO {
         ProcedureDAOHE pdao = new ProcedureDAOHE();
         try {
             p = pdao.getProcedureByDescription(announcementFile05);
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             p = null;
         }
         if (p != null) {
@@ -3799,7 +3817,7 @@ public class FilesDAO extends BaseDAO {
         try {
             fileId = Long.parseLong(strObjectId);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         createForm.setFileId(fileId);
         boolean bReturn = fdhe.onReturnFiles(createForm, getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());
@@ -3900,8 +3918,8 @@ public class FilesDAO extends BaseDAO {
             objectId = Long.parseLong(strObjectId);
 //            objectType = Long.parseLong(strObjectType);
             commentType = Long.parseLong(strCommentType);
-        } catch (NumberFormatException en) {
-            log.error(en.getMessage());
+        } catch (NumberFormatException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         ProcessCommentDAOHE pcdhe = new ProcessCommentDAOHE();
         //VoAttachsDAOHE attDaoHe = new VoAttachsDAOHE();
@@ -3938,17 +3956,17 @@ public class FilesDAO extends BaseDAO {
         String strObjectType = getRequest().getParameter("objectType");
 
         Long objectId = 0l;
-        Long objectType = 0l;
+//        Long objectType = 0l;
         try {
             objectId = Long.parseLong(strObjectId);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
-        try {
-            objectType = Long.parseLong(strObjectType);
-        } catch (Exception en) {
-            log.error(en.getMessage());
-        }
+//        try {
+//            objectType = Long.parseLong(strObjectType);
+//        } catch (Exception ex) {
+//            LogUtil.addLog(ex);//binhnt sonar a160901
+//        }
         ProcessCommentDAOHE pcdhe = new ProcessCommentDAOHE();
         GridResult result = pcdhe.getCommentOfDocument(getUserId(), objectId, 0L, 0l, false, start, count, sortField);//binhnt53 150130 bo object type thua
         List<ProcessCommentForm> listPc = result.getLstResult();
@@ -3976,13 +3994,13 @@ public class FilesDAO extends BaseDAO {
         Long objectType = -1L;
         try {
             objectId = Long.parseLong(strObjectId);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901            
         }
         try {
             objectType = Long.parseLong(strObjectType);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         VoAttachsDAOHE vtdhe = new VoAttachsDAOHE();
@@ -4000,13 +4018,13 @@ public class FilesDAO extends BaseDAO {
         Long objectType = -1L;
         try {
             objectId = Long.parseLong(strObjectId);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         try {
             objectType = Long.parseLong(strObjectType);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         VoAttachsDAOHE vtdhe = new VoAttachsDAOHE();
@@ -4033,13 +4051,14 @@ public class FilesDAO extends BaseDAO {
 
         try {
             objectId = Long.parseLong(strObjectId);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(en.getMessage());
         }
         try {
             objectType = Long.parseLong(strObjectType);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         PaymentHistoryDAOHE pcdhe = new PaymentHistoryDAOHE();
@@ -4062,11 +4081,13 @@ public class FilesDAO extends BaseDAO {
         if ((totalFeeFile.equals(feeFile) && feeFile > 0l) || (totalFeeFile > feeFile)) {
             customInfo.add(1);
         } else // nop thieu
-        if (totalFeeFile < feeFile && totalFeeFile > 0) {
-            customInfo.add(0);
-        } // chua nop
-        else {
-            customInfo.add(-1);
+        {
+            if (totalFeeFile < feeFile && totalFeeFile > 0) {
+                customInfo.add(0);
+            } // chua nop
+            else {
+                customInfo.add(-1);
+            }
         }
 
         jsonDataGrid.setItems(result.getLstResult());
@@ -4270,8 +4291,8 @@ public class FilesDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
-            //System.out.print(ex.getMessage());
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("0");
             resultMessage.add("Xóa ý kiến không thành công");
         }
@@ -4292,8 +4313,7 @@ public class FilesDAO extends BaseDAO {
             Files form = fdhe.findById(createForm.getFileId());
             //tim tham dinh
             EvaluationRecordsDAOHE evaluationRecordsDAOHE = new EvaluationRecordsDAOHE();
-            EvaluationRecords evaluationRecords = new EvaluationRecords();
-            evaluationRecords = evaluationRecordsDAOHE.findFilesByFileId(form);
+            EvaluationRecords evaluationRecords = evaluationRecordsDAOHE.findFilesByFileId(form);
             if (evaluationRecords == null) {
                 resultMessage.add("3");
                 resultMessage.add("Không có phiếu thẩm xét");
@@ -4399,10 +4419,9 @@ public class FilesDAO extends BaseDAO {
         if (createForm.getFileId() != null) {
             FilesDAOHE fdhe = new FilesDAOHE();
             FilesForm form = fdhe.getFilesDetail(createForm.getFileId());
-            Announcement ann = null;
             if (form != null) {
                 if (form.getReIssueForm() != null) {
-                    ann = fdhe.checkAnnouncementFilesExist(form.getReIssueForm().convertToEntity());
+                    Announcement ann = fdhe.checkAnnouncementFilesExist(form.getReIssueForm().convertToEntity());
                     if (ann != null) {
                         resultMessage.add("1");
                         resultMessage.add(createForm.getFileId());
@@ -4458,7 +4477,12 @@ public class FilesDAO extends BaseDAO {
                 createForm.setConfirmAnnouncementPaperId(null);
                 createForm.setConfirmImportSatistPaperId(null);
                 strReturn = tthc.getDescription();
-                if (strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01) || strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03) || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP) || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN) || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP) || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN)) {
+                if (strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01)
+                        || strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03)
+                        || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
+                        || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)
+                        || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP)
+                        || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN)) {
                     String a = fdhe.getReceiptNoNew(getUserId(), getUserLogin(), createForm.getFileType());
                     createForm.getAnnouncement().setAnnouncementNo(a);
                 }
@@ -4549,8 +4573,8 @@ public class FilesDAO extends BaseDAO {
             getRequest().setAttribute("priceTPDB", priceTPDB);
             getRequest().setAttribute("priceETC", priceETC);
             getRequest().setAttribute("fileIdCopy", createForm.getFileId());
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return strReturn;
     }
@@ -4568,7 +4592,7 @@ public class FilesDAO extends BaseDAO {
                 if (CommonUtils.checkSecurityPublishCA(files.getFileId(), signCAForm.getContentSigned())) {
                     String contentSigned = signCAForm.getContentSigned();
                     KeyInfo keyInfo = CommonUtils.validateContentSigned(contentSigned);
-                    String userSigned = null;
+                    String userSigned = "";
                     if (keyInfo != null) {
                         try {
                             userSigned = CommonUtils.getUserSigned(keyInfo);
@@ -4581,10 +4605,10 @@ public class FilesDAO extends BaseDAO {
                                 jsonDataGrid.setItems(resultMessage);
                                 return "gridData";
                             }
-                        } catch (CertificateExpiredException expiredEx) {
-                            log.error(expiredEx);
-                        } catch (CertificateNotYetValidException notYetValidEx) {
-                            log.error(notYetValidEx);
+                        } catch (CertificateExpiredException ex) {
+                            LogUtil.addLog(ex);//binhnt sonar a160901
+                        } catch (CertificateNotYetValidException ex) {
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                     } else {
                         resultMessage.add("0");
@@ -4599,7 +4623,7 @@ public class FilesDAO extends BaseDAO {
                     resultMessage.add("Ký duyệt thành công");
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 resultMessage.add("3");
                 resultMessage.add("Có lỗi trong quá trình gửi hồ sơ");
             }
@@ -4645,7 +4669,7 @@ public class FilesDAO extends BaseDAO {
                     start = Integer.parseInt(startServerStr);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         }
 
@@ -4696,9 +4720,8 @@ public class FilesDAO extends BaseDAO {
      * @return
      */
     public String getRepositoryRecordsDetails() {
-        List items = new ArrayList();
         RepositoryDAOHE rdhe = new RepositoryDAOHE();
-        items = rdhe.getRepositoryFromId(createForm.getRepositoriesId());
+        List items = rdhe.getRepositoryFromId(createForm.getRepositoriesId());
 
         jsonDataGrid.setItems(items);
         return GRID_DATA;
@@ -4875,8 +4898,7 @@ public class FilesDAO extends BaseDAO {
         String barcodeInfo = "";
         if (announcementReceiptPaperId != null && announcementReceiptPaperId > 0L) {
             AnnouncementReceiptPaperDAOHE announcementReceiptPaperDaohe = new AnnouncementReceiptPaperDAOHE();
-            AnnouncementReceiptPaper announcementReceiptPaper = new AnnouncementReceiptPaper();
-            announcementReceiptPaper = announcementReceiptPaperDaohe.findById(announcementReceiptPaperId);
+            AnnouncementReceiptPaper announcementReceiptPaper = announcementReceiptPaperDaohe.findById(announcementReceiptPaperId);
             if (announcementReceiptPaper != null) {
                 if (announcementReceiptPaper.getProductName() != null) {
                     barcodeInfo += "Tên sản phẩm: " + announcementReceiptPaper.getProductName();
@@ -4928,12 +4950,12 @@ public class FilesDAO extends BaseDAO {
                 barcodeInfo = "Sản phẩm hiện tại chưa có thông tin";
             }
         } else if (confirmAnnouncementPaperId != null && confirmAnnouncementPaperId > 0L) {
-            ConfirmAnnouncementPaperDAOHE confirmAnnouncementPaperDaohe = new ConfirmAnnouncementPaperDAOHE();
-            ConfirmAnnouncementPaper confirmAnnouncementPaper = confirmAnnouncementPaperDaohe.findById(confirmAnnouncementPaperId);
+//            ConfirmAnnouncementPaperDAOHE confirmAnnouncementPaperDaohe = new ConfirmAnnouncementPaperDAOHE();
+//            ConfirmAnnouncementPaper confirmAnnouncementPaper = confirmAnnouncementPaperDaohe.findById(confirmAnnouncementPaperId);
             barcodeInfo = "Sản phẩm hiện tại chưa có thông tin";
         } else if (confirmImportSatistPaperId != null && confirmImportSatistPaperId > 0L) {
-            ConfirmImportSatistPaperDAOHE confirmImportSatistPaperDaohe = new ConfirmImportSatistPaperDAOHE();
-            ConfirmImportSatistPaper confirmImportSatistPaper = confirmImportSatistPaperDaohe.findById(announcementReceiptPaperId);
+//            ConfirmImportSatistPaperDAOHE confirmImportSatistPaperDaohe = new ConfirmImportSatistPaperDAOHE();
+//            ConfirmImportSatistPaper confirmImportSatistPaper = confirmImportSatistPaperDaohe.findById(announcementReceiptPaperId);
             barcodeInfo = "Sản phẩm hiện tại chưa có thông tin";
         } else {
             barcodeInfo = "Sản phẩm hiện tại chưa có thông tin";
@@ -4967,7 +4989,7 @@ public class FilesDAO extends BaseDAO {
                     CharBuffer.wrap(barcodeInfo));
             b = bbuf.array();
         } catch (CharacterCodingException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         String data;
@@ -4983,18 +5005,18 @@ public class FilesDAO extends BaseDAO {
                 Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>(2);
                 hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
                 matrix = writer.encode(data, BarcodeFormat.QR_CODE, w, h, hints);
-            } catch (com.google.zxing.WriterException e) {
-                log.error(e.getMessage());
+            } catch (com.google.zxing.WriterException ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
             // change this path to match yours (this is my mac home folder, you can use: c:\\qr_png.png if you are on windows)
             File file = new File(fName);
             try {
                 MatrixToImageWriter.writeToFile(matrix, "PNG", file);//System.out.println("printing to " + file.getAbsolutePath());
-            } catch (IOException e) {
-                log.error(e.getMessage());
+            } catch (IOException ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
-        } catch (UnsupportedEncodingException e) {
-            log.error(e.getMessage());
+        } catch (UnsupportedEncodingException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         //save image into database
         File file = new File(fName);
@@ -5005,6 +5027,7 @@ public class FilesDAO extends BaseDAO {
             fileInputStream.read(bFile);
             fileInputStream.close();
         } catch (IOException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         Files filebo = filehe.findById(form.getFileId());
@@ -5017,7 +5040,7 @@ public class FilesDAO extends BaseDAO {
         try {
             Long fileId = signForm.getFileId();
             HttpServletRequest request = getRequest();
-            HttpServletResponse response = getResponse();
+//            HttpServletResponse response = getResponse();
             FilesDAOHE filesdaohe = new FilesDAOHE();
             Files filesbo = filesdaohe.findById(fileId);
 //            response.setContentType(UploadFile.getCustomContentType());
@@ -5029,7 +5052,8 @@ public class FilesDAO extends BaseDAO {
             sb.append(org.apache.commons.codec.binary.StringUtils.newStringUtf8(Base64.encodeBase64(UploadFile.getCustomImageInBytes(filesbo.getFileCode(), request), false)));
             getRequest().setAttribute("imgsrc", sb.toString());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
     }
 
@@ -5070,6 +5094,7 @@ public class FilesDAO extends BaseDAO {
                 jsonArray.add(jsonObj);
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             Logger.getLogger(FilesDAO.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
@@ -5111,7 +5136,8 @@ public class FilesDAO extends BaseDAO {
             }
             jsonDataGrid.setItems(lstAttach);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
 
         return GRID_DATA;
@@ -5127,7 +5153,7 @@ public class FilesDAO extends BaseDAO {
     public String importFileFromExcel() throws FileNotFoundException, IOException, ParseException {
         List fileInfo = new ArrayList();
         String strReturn = ERROR_PERMISSION;
-        TechnicalStandard ts = new TechnicalStandard();
+//        TechnicalStandard ts = new TechnicalStandard();
         TechnicalStandardDAOHE tshe = new TechnicalStandardDAOHE();
         String err = "";
         Long attachId = Long.parseLong(getRequest().getParameter("attachId"));//get attactId
@@ -5136,7 +5162,7 @@ public class FilesDAO extends BaseDAO {
             fileInfo.add("File not found");
             err += "File not found";
         } else {
-            Category item = null;
+            Category item;
             ResourceBundle rb = ResourceBundle.getBundle("config");//get link tuong doi
             String dir = rb.getString("directoryExcel");
             String linkFile = att.getAttachPath();
@@ -5158,7 +5184,7 @@ public class FilesDAO extends BaseDAO {
             XSSFCell signer = null;
             XSSFCell assessmentMethod = null;
             XSSFCell annoucementNo = null;
-            SimpleDateFormat formatter = null;
+
             XSSFCell pushlishDate = null;
             XSSFCell nationCompanyName = null;
             XSSFCell nationCompanyAddress = null;
@@ -5166,42 +5192,48 @@ public class FilesDAO extends BaseDAO {
 
                 XSSFSheet sheet = wb.getSheetAt(0);
                 try {
-                    XSSFSheet sheet1 = wb.getSheetAt(1);
-                } catch (Exception e) {
-                    log.error(e.getMessage());
+//                    XSSFSheet sheet1 = wb.getSheetAt(1);
+                } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                    log.error(e.getMessage());
                     err += "Không tìm thấy Sheet Chi tiết sản phẩm, ";
                 }
 
                 try {
-                    XSSFSheet sheet2 = wb.getSheetAt(2);
-                } catch (Exception e) {
-                    log.error(e.getMessage());
+//                    XSSFSheet sheet2 = wb.getSheetAt(2);
+                } catch (Exception ex) {
+//                    log.error(e.getMessage());
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                     err += "Không tìm thấy Sheet Chỉ tiêu chất lượng chủ yếu, ";
                 }
 
                 try {
-                    XSSFSheet sheet3 = wb.getSheetAt(3);
-                } catch (Exception e) {
-                    log.error(e.getMessage());
+//                    XSSFSheet sheet3 = wb.getSheetAt(3);
+                } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                    log.error(e.getMessage());
                     err += "Không tìm thấy Sheet Chỉ tiêu vi sinh vật, ";
                 }
 
                 try {
-                    XSSFSheet sheet4 = wb.getSheetAt(4);
-                } catch (Exception e) {
-                    log.error(e.getMessage());
+//                    XSSFSheet sheet4 = wb.getSheetAt(4);
+                } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                    log.error(e.getMessage());
                     err += "Không tìm thấy Sheet Hàm lượng kim loại nặng, ";
                 }
                 try {
-                    XSSFSheet sheet5 = wb.getSheetAt(5);
-                } catch (Exception e) {
-                    log.error(e.getMessage());
+//                    XSSFSheet sheet5 = wb.getSheetAt(5);
+                } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                    log.error(e.getMessage());
                     err += "Không tìm thấy Sheet Hàm lượng hóa chất, ";
                 }
                 try {
-                    XSSFSheet sheet6 = wb.getSheetAt(6);
-                } catch (Exception e) {
-                    log.error(e.getMessage());
+//                    XSSFSheet sheet6 = wb.getSheetAt(6);
+                } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                    log.error(e.getMessage());
                     err += "Không tìm thấy Sheet Kế hoạch kiểm soát chất lượng, ";
                 }
 
@@ -5209,15 +5241,15 @@ public class FilesDAO extends BaseDAO {
                     err += "Không tìm thấy Sheet Bản công bố, ";
                 } else {
                     String sheetName = sheet.getSheetName();
-                    if (!sheetName.equals("Ban_Cong_bo")) {
+                    if (!"Ban_Cong_bo".equals(sheetName)) {
                         err += "Sai tên sheet Bản công bố, ";
                     }
                 }
 
-                XSSFRow firstRow = sheet.getRow(1);
+//                XSSFRow firstRow = sheet.getRow(1);
                 int rowNums = sheet.getLastRowNum();
-                UsersDAOHE sdhe = new UsersDAOHE();
-                formatter = new SimpleDateFormat("dd/MM/yyyy");
+//                UsersDAOHE sdhe = new UsersDAOHE();
+//                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 row = sheet.getRow(1);
                 businessTaxCode = row.getCell((short) 1);
                 productName = row.getCell((short) 3);
@@ -5241,7 +5273,7 @@ public class FilesDAO extends BaseDAO {
                 signer = row.getCell((short) 1);
                 assessmentMethod = row.getCell((short) 3);
                 matchingTarget = "";
-                String standardCode = "";
+                String standardCode;
                 for (int i = 12; i < rowNums; i++) {
                     row = sheet.getRow(i);
                     if (row.getCell((short) 1).toString() != "") {
@@ -5259,8 +5291,9 @@ public class FilesDAO extends BaseDAO {
                     }
                 }
 
-            } catch (Exception e) {
-                log.error(e.getMessage());
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(e.getMessage());
                 err += "lỗi tab bản công bố hợp quy ";
             }
             if (matchingTarget != "" && matchingTarget != null) {
@@ -5295,7 +5328,7 @@ public class FilesDAO extends BaseDAO {
 
                 } else {
                     String sheetName = sheet1.getSheetName();
-                    if (!sheetName.equals("Chi_tiet_san_pham")) {
+                    if (!"Chi_tiet_san_pham".equals(sheetName)) {
                         err += "Sai tên Sheet Chi tiết sản phẩm, ";
                     }
                 }
@@ -5340,8 +5373,9 @@ public class FilesDAO extends BaseDAO {
                 } while (chemicalTargetUnwanted == null);
 
 //                chemicalTargetUnwanted = row.getCell((short) 2);
-            } catch (Exception e) {
-                log.error(e.getMessage());
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(e.getMessage());
                 err += "Lỗi tab chi tiết sản phẩm ";
             }
             // do du lieu vao form
@@ -5352,13 +5386,11 @@ public class FilesDAO extends BaseDAO {
                 createForm.setFileType(fileType);
                 createForm.setFileId(fileId);
             }
-            Users user = new Users();
             UsersDAOHE udhe = new UsersDAOHE();
-            user = udhe.findById(getUserId());
+            Users user = udhe.findById(getUserId());
 
-            Business bus = new Business();
             BusinessDAOHE bdhe = new BusinessDAOHE();
-            bus = bdhe.findById(user.getBusinessId());
+            Business bus = bdhe.findById(user.getBusinessId());
 
             if (createForm.getFileId() != null && createForm.getFileId() > 0l) {
                 FilesDAOHE fdhe = new FilesDAOHE();
@@ -5414,7 +5446,17 @@ public class FilesDAO extends BaseDAO {
                             return strReturn;
                         }
                     }
-                    if (strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01) || strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03) || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP) || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN) || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP) || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN) || strReturn.equals(Constants.FILE_DESCRIPTION.REC_CONFIRM_NORMAL_IMP) || strReturn.equals(Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT) || strReturn.equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_IMP) || strReturn.equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_VN) || strReturn.equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_NORMAL_VN)) {
+                    if (strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01)
+                            || strReturn.equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03)
+                            || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
+                            || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)
+                            || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP)
+                            || strReturn.equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN)
+                            || strReturn.equals(Constants.FILE_DESCRIPTION.REC_CONFIRM_NORMAL_IMP)
+                            || strReturn.equals(Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT)
+                            || strReturn.equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_IMP)
+                            || strReturn.equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_VN)
+                            || strReturn.equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_NORMAL_VN)) {
                         String announcementNoStr = fdhe.getReceiptNoNew(getUserId(), getUserLogin(), createForm.getFileType());
                         createForm.setAnnouncement(new AnnouncementForm());
                         createForm.getAnnouncement().setAnnouncementNo(announcementNoStr);
@@ -5437,7 +5479,8 @@ public class FilesDAO extends BaseDAO {
                         //set thong tin tu excel
 
                         try {
-                            if (businessTaxCode != null && user.getUserName().equals(businessTaxCode.toString())) {
+                            if (businessTaxCode != null 
+                                    && user.getUserName().equals(businessTaxCode.toString())) {
                                 if (matchingTarget != "" && matchingTarget != null) {
                                     createForm.getAnnouncement().setMatchingTarget(matchingTarget.toString());
                                 }
@@ -5491,8 +5534,9 @@ public class FilesDAO extends BaseDAO {
                             } else {
                                 createForm.setStatusExcel(err += "Mã số thuế không chính xác ");
                             }
-                        } catch (Exception parseException) {
-                            log.error(parseException);
+                        } catch (Exception ex) {
+//                            log.error(parseException);
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                             createForm.setStatusExcel(err += "Thêm mới bản công bố hợp quy không thành công ");
                         }
                     }
@@ -5547,7 +5591,7 @@ public class FilesDAO extends BaseDAO {
                 fileError += "Không tìm thấy Sheet Chỉ tiêu chất lượng chủ yếu, ";
             } else {
                 String sheetName = sheet2.getSheetName();
-                if (!sheetName.equals("Chi_tieu_chat_luong_chu_yeu")) {
+                if (!"Chi_tieu_chat_luong_chu_yeu".equals(sheetName)) {
                     fileError += "Sai tên Sheet Chỉ tiêu chất lượng chủ yếu, ";
                 }
             }
@@ -5581,10 +5625,11 @@ public class FilesDAO extends BaseDAO {
             }
             fileError += "Thêm mới các chỉ tiêu chất lượng chủ yếu thành công ";
             customInfo.add(fileError);
-        } catch (Exception e) {
+        } catch (Exception ex) {
             fileError += "Thêm mới các chỉ tiêu chất lượng chủ yếu không thành công ";
             customInfo.add(fileError);
-            log.error(e.getMessage());
+//            log.error(e.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         jsonDataGrid.setCustomInfo(customInfo);
         jsonDataGrid.setItems(lstMainlyTarget);
@@ -5612,7 +5657,7 @@ public class FilesDAO extends BaseDAO {
                 fileError += "Không tìm thấy Sheet Chỉ tiêu vi sinh vật, ";
             } else {
                 String sheetName = sheet3.getSheetName();
-                if (!sheetName.equals("Chi_tieu_vi_sinh_vat")) {
+                if (!"Chi_tieu_vi_sinh_vat".equals(sheetName)) {
                     fileError += "Sai tên Sheet Chỉ tiêu vi sinh vật, ";
                 }
             }
@@ -5623,7 +5668,8 @@ public class FilesDAO extends BaseDAO {
             // vi sinh vat
             for (int i = 2; i < rowNums3; i++) {
                 row = sheet3.getRow(i);
-                if (row.getCell((short) 1) != null && !"".equals(row.getCell((short) 1).toString().trim())) {
+                if (row.getCell((short) 1) != null 
+                        && !"".equals(row.getCell((short) 1).toString().trim())) {
                     ProductTarget temp = new ProductTarget();
                     XSSFCell targetName = row.getCell((short) 1);
                     XSSFCell unitId = row.getCell((short) 2);
@@ -5650,14 +5696,15 @@ public class FilesDAO extends BaseDAO {
                 fileError += "Không tìm thấy Sheet Hàm lượng kim loại nặng, ";
             } else {
                 String sheetName2 = sheet4.getSheetName();
-                if (!sheetName2.equals("Ham_luong_kim_loai_nang")) {
+                if (!"Ham_luong_kim_loai_nang".equals(sheetName2)) {
                     fileError += "Sai tên Sheet Hàm lượng kim loại nặng, ";
                 }
             }
             int rowNums4 = sheet4.getLastRowNum();
             for (int i = 2; i < rowNums4; i++) {
                 row = sheet4.getRow(i);
-                if (row.getCell((short) 1) != null && !"".equals(row.getCell((short) 1).toString().trim())) {
+                if (row.getCell((short) 1) != null 
+                        && !"".equals(row.getCell((short) 1).toString().trim())) {
                     ProductTarget temp = new ProductTarget();
                     XSSFCell targetName = row.getCell((short) 1);
                     XSSFCell unitId = row.getCell((short) 2);
@@ -5684,14 +5731,15 @@ public class FilesDAO extends BaseDAO {
             } else {
                 String sheetName1 = sheet5.getSheetName();
 
-                if (!sheetName1.equals("Ham_luong_hoa_chat")) {
+                if (!"Ham_luong_hoa_chat".equals(sheetName1)) {
                     fileError += "Sai tên Sheet Hàm lượng hóa chất không mong muốn, ";
                 }
             }
             int rowNums5 = sheet5.getLastRowNum();
             for (int i = 2; i < rowNums5; i++) {
                 row = sheet5.getRow(i);
-                if (row.getCell((short) 1) != null && !"".equals(row.getCell((short) 1).toString().trim())) {
+                if (row.getCell((short) 1) != null 
+                        && !"".equals(row.getCell((short) 1).toString().trim())) {
                     ProductTarget temp = new ProductTarget();
                     XSSFCell targetName = row.getCell((short) 1);
                     XSSFCell unitId = row.getCell((short) 2);
@@ -5713,10 +5761,11 @@ public class FilesDAO extends BaseDAO {
             fileError += "Thêm mới các chỉ tiêu vi sinh vật, hàm lượng kim loại nặng, hàm lượng hóa chất không mong muốn thành công ";
             customInfo.add(fileError);
 
-        } catch (Exception e) {
+        } catch (Exception ex) {
             fileError += "Thêm mới các chỉ tiêu vi sinh vật, hàm lượng kim loại nặng, hàm lượng hóa chất không mong muốn không thành công ";
             customInfo.add(fileError);
-            log.error(e.getMessage());
+//            log.error(e.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         jsonDataGrid.setCustomInfo(customInfo);
         jsonDataGrid.setItems(lstProductTarget);
@@ -5731,7 +5780,7 @@ public class FilesDAO extends BaseDAO {
      */
     public String loadQualityControlsExcel() throws FileNotFoundException, IOException {
         // mainly target
-        Category item = new Category();
+//        Category item = new Category();
         String linkFile = getRequest().getParameter("path");
         String fileError = "";
         List customInfo = new ArrayList();
@@ -5745,14 +5794,14 @@ public class FilesDAO extends BaseDAO {
             } else {
                 String sheetName1 = sheet6.getSheetName();
 
-                if (!sheetName1.equals("Ke_Hoach_Kiem_soat")) {
+                if (!"Ke_Hoach_Kiem_soat".equals(sheetName1)) {
                     fileError += "Không tìm thấy Sheet Kế hoạch kiểm soát, ";
                 }
             }
             XSSFRow row;
             int rowNums6 = sheet6.getLastRowNum();
             lstQualityControl = new ArrayList<QualityControlPlan>();
-            CategoryDAOHE cdhed = new CategoryDAOHE();
+//            CategoryDAOHE cdhed = new CategoryDAOHE();
 
             for (int i = 2; i < rowNums6; i++) {
                 row = sheet6.getRow(i);
@@ -5764,7 +5813,7 @@ public class FilesDAO extends BaseDAO {
                     XSSFCell patternFrequence = row.getCell((short) 4);
                     XSSFCell testDevice = row.getCell((short) 5);
                     XSSFCell testMethod = row.getCell((short) 6);
-                    XSSFCell noteForm = row.getCell((short) 7);
+//                    XSSFCell noteForm = row.getCell((short) 7);
                     XSSFCell note = row.getCell((short) 8);
                     temp.setProductProcessDetail(processDetails.toString());
                     temp.setControlTarget(controlTarget.toString());
@@ -5782,10 +5831,11 @@ public class FilesDAO extends BaseDAO {
             }
             fileError = "Thêm mới kế hoạch kiểm soát chất lượng thành công ";
             customInfo.add(fileError);
-        } catch (Exception e) {
+        } catch (Exception ex) {
             fileError = "Thêm mới kế hoạch kiểm soát chất lượng không thành công ";
             customInfo.add(fileError);
-            log.error(e.getMessage());
+//            log.error(e.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         jsonDataGrid.setCustomInfo(customInfo);
@@ -5808,7 +5858,8 @@ public class FilesDAO extends BaseDAO {
         try {
             objectId = Long.parseLong(strObjectId);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
 
         ProcessDAOHE pdhe = new ProcessDAOHE();
@@ -5816,15 +5867,15 @@ public class FilesDAO extends BaseDAO {
         if (result != null) {
             staffId = result.getReceiveUserId();
         }
-        Users u = new Users();
         UsersDAOHE udaohe = new UsersDAOHE();
-        u = udaohe.findById(staffId);
+        Users u = udaohe.findById(staffId);
         try {
             customInfo.add(u.getFullName());
             customInfo.add(u.getEmail());
             customInfo.add(u.getTelephone());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             customInfo.add("N/A");
             customInfo.add("N/A");
             customInfo.add("N/A");
@@ -5848,17 +5899,20 @@ public class FilesDAO extends BaseDAO {
 //        String strProductType = getRequest().getParameter("productType");
 
         Long objectId = 0l;
-        Long objectType = 0l;
+        Long objectType;
 //        Long productType = 0L;
         try {
             objectId = Long.parseLong(strObjectId);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(en.getMessage());
         }
         try {
             objectType = Long.parseLong(strObjectType);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(en.getMessage());
+            objectType = 0l;
         }
 //        try {
 //            productType = Long.parseLong(strProductType);
@@ -5896,13 +5950,13 @@ public class FilesDAO extends BaseDAO {
         String contentsEditATTP = "";
         if (filebo != null) {
             if (filebo.getTitleEditATTP() != null
-                    && !filebo.getTitleEditATTP().trim().equals("")) {
+                    && !"".equals(filebo.getTitleEditATTP().trim())) {
                 titleEditATTP = filebo.getTitleEditATTP();
             } else {
                 titleEditATTP = filebo.getTitleEdit();
             }
             if (filebo.getContentsEditATTP() != null
-                    && !filebo.getContentsEditATTP().trim().equals("")) {
+                    && !"".equals(filebo.getContentsEditATTP().trim())) {
                 contentsEditATTP = filebo.getContentsEditATTP();
             } else {
                 contentsEditATTP = filebo.getContentsEdit();
@@ -5935,15 +5989,15 @@ public class FilesDAO extends BaseDAO {
         Long objectId = 0l;
         try {
             objectId = Long.parseLong(strObjectId);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(en.getMessage());
         }
         FilesDAOHE fdaohe = new FilesDAOHE();
         Files fbo = fdaohe.findById(objectId);
-        EvaluationRecords erbo = new EvaluationRecords();
         EvaluationRecordsDAOHE erdaohe = new EvaluationRecordsDAOHE();
 
-        erbo = erdaohe.findFilesByFileId(fbo);
+        EvaluationRecords erbo = erdaohe.findFilesByFileId(fbo);
         String legal = "";
         String foodSafetyQuality = "";
         String effectUtility = "";
@@ -5978,13 +6032,13 @@ public class FilesDAO extends BaseDAO {
         String contentsEditATTP = "";
         if (filebo != null) {
             if (filebo.getTitleEditATTP() != null
-                    && !filebo.getTitleEditATTP().trim().equals("")) {
+                    && !"".equals(filebo.getTitleEditATTP().trim())) {
                 titleEditATTP = filebo.getTitleEditATTP();
             } else {
                 titleEditATTP = filebo.getTitleEdit();
             }
             if (filebo.getContentsEditATTP() != null
-                    && !filebo.getContentsEditATTP().trim().equals("")) {
+                    && !"".equals(filebo.getContentsEditATTP().trim())) {
                 contentsEditATTP = filebo.getContentsEditATTP();
             } else {
                 contentsEditATTP = filebo.getContentsEdit();
@@ -6006,40 +6060,42 @@ public class FilesDAO extends BaseDAO {
         Long objectId = 0l;
         try {
             objectId = Long.parseLong(strObjectId);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(en.getMessage());
         }
         FilesDAOHE fdaohe = new FilesDAOHE();
         Files fbo = fdaohe.findById(objectId);
-        EvaluationRecords erbo = new EvaluationRecords();
         EvaluationRecordsDAOHE erdaohe = new EvaluationRecordsDAOHE();
 
-        erbo = erdaohe.findFilesByFileId(fbo);
+        EvaluationRecords erbo = erdaohe.findFilesByFileId(fbo);
         String staffContent = "";
         String leaderContent = "";
         if (erbo != null && fbo != null) {
-            if (fbo.getStaffRequest() != null && !fbo.getStaffRequest().trim().equals("null")) {
+            if (fbo.getStaffRequest() != null 
+                    && !"null".equals(fbo.getStaffRequest().trim())) {
                 staffContent += "* Ý kiến chung:" + "\n";
                 staffContent += fbo.getStaffRequest() + "\n";
             }
 //            else {
 //                staffContent += "Không có nội dung." + "\n";
 //            }            
-            if (erbo.getLegalContent() != null && !erbo.getLegalContent().equals("null")) {
+            if (erbo.getLegalContent() != null 
+                    && !"null".equals(erbo.getLegalContent())) {
                 staffContent += "* Về pháp chế:" + "\n";
                 staffContent += erbo.getLegalContent() + "\n";
             }
 //            else {
 //                staffContent += "Không có nội dung." + "\n";
 //            }
-            if (erbo.getFoodSafetyQualityContent() != null && !erbo.getFoodSafetyQualityContent().equals("null")) {
+            if (erbo.getFoodSafetyQualityContent() != null && !"null".equals(erbo.getFoodSafetyQualityContent())) {
                 staffContent += "* Về chỉ tiêu chất lượng an toàn thực phẩm:" + "\n";
                 staffContent += erbo.getFoodSafetyQualityContent() + "\n";
             }
 //            else {
 //                staffContent += "Không có nội dung." + "\n";
 //            }            
-            if (erbo.getEffectUtilityContent() != null && !erbo.getEffectUtilityContent().equals("null")) {
+            if (erbo.getEffectUtilityContent() != null && !"null".equals(erbo.getEffectUtilityContent())) {
                 staffContent += "* Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng:" + "\n";
                 staffContent += erbo.getEffectUtilityContent() + "\n";
             }
@@ -6047,21 +6103,21 @@ public class FilesDAO extends BaseDAO {
 //                staffContent += "Không có nội dung." + "\n";
 //            }
 
-            if (fbo.getLeaderRequest() != null && !fbo.getLeaderRequest().equals("null")) {
+            if (fbo.getLeaderRequest() != null && !"null".equals(fbo.getLeaderRequest())) {
                 leaderContent += "* Ý kiến chung:" + "\n";
                 leaderContent += fbo.getLeaderRequest() + "\n";
             }
 //            else {
 //                leaderContent += "Không có nội dung." + "\n";
 //            }
-            if (fbo.getLeaderStaffRequest() != null && !fbo.getLeaderStaffRequest().equals("null")) {
+            if (fbo.getLeaderStaffRequest() != null && !"null".equals(fbo.getLeaderStaffRequest())) {
                 leaderContent += fbo.getLeaderStaffRequest() + "\n";
             }
 //            else {
 //                leaderContent += "Không có nội dung." + "\n";
 //            }
 
-            if (erbo.getLegalContentL() != null && !erbo.getLegalContentL().equals("null")) {
+            if (erbo.getLegalContentL() != null && !"null".equals(erbo.getLegalContentL())) {
                 leaderContent += "* Về pháp chế:" + "\n";
                 leaderContent += erbo.getLegalContentL() + "\n";
             }
@@ -6069,7 +6125,7 @@ public class FilesDAO extends BaseDAO {
 //                leaderContent += "Không có nội dung." + "\n";
 //            }
 
-            if (erbo.getFoodSafetyQualityContentL() != null && !erbo.getFoodSafetyQualityContentL().equals("null")) {
+            if (erbo.getFoodSafetyQualityContentL() != null && !"null".equals(erbo.getFoodSafetyQualityContentL())) {
                 leaderContent += "* Về chỉ tiêu chất lượng an toàn thực phẩm:" + "\n";
                 leaderContent += erbo.getFoodSafetyQualityContentL() + "\n";
             }
@@ -6077,7 +6133,7 @@ public class FilesDAO extends BaseDAO {
 //                leaderContent += "Không có nội dung." + "\n";
 //            }
 
-            if (erbo.getEffectUtilityContentL() != null && !erbo.getEffectUtilityContentL().equals("null")) {
+            if (erbo.getEffectUtilityContentL() != null && !"null".equals(erbo.getEffectUtilityContentL())) {
                 leaderContent += "* Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng:" + "\n";
                 leaderContent += erbo.getEffectUtilityContentL() + "\n";
             }
@@ -6119,25 +6175,25 @@ public class FilesDAO extends BaseDAO {
         Long objectId = 0l;
         try {
             objectId = Long.parseLong(strObjectId);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+//            log.error(en.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         FilesDAOHE fdaohe = new FilesDAOHE();
         Files fbo = fdaohe.findById(objectId);
-        EvaluationRecords erbo = new EvaluationRecords();
         EvaluationRecordsDAOHE erdaohe = new EvaluationRecordsDAOHE();
 
-        erbo = erdaohe.findFilesByFileId(fbo);
+        EvaluationRecords erbo = erdaohe.findFilesByFileId(fbo);
         String staffContent = "";
 
         //hieptq update 070515
         RequestCommentDAOHE rqcmdhe = new RequestCommentDAOHE();
         RequestComment rqcm = rqcmdhe.findLeaderComment(objectId, 1l);
-        if (rqcm != null && !rqcm.getContent().equals("")) {
+        if (rqcm != null && !"".equals(rqcm.getContent())) {
             staffContent = rqcm.getContent();
         } else if (erbo != null && fbo != null) {
 
-            if (fbo.getStaffRequest() != null && !fbo.getStaffRequest().equals("null")) {
+            if (fbo.getStaffRequest() != null && !"null".equals(fbo.getStaffRequest())) {
                 staffContent += "* Ý kiến chung:" + "\n";
                 staffContent += fbo.getStaffRequest() + "\n";
             }
@@ -6145,7 +6201,7 @@ public class FilesDAO extends BaseDAO {
 //                staffContent += "Không có nội dung." + "\n";
 //            }
 
-            if (erbo.getLegalContent() != null && !erbo.getLegalContent().equals("null")) {
+            if (erbo.getLegalContent() != null && !"null".equals(erbo.getLegalContent())) {
                 staffContent += "* Về pháp chế:" + "\n";
                 staffContent += erbo.getLegalContent() + "\n";
             }
@@ -6153,7 +6209,7 @@ public class FilesDAO extends BaseDAO {
 //                staffContent += "Không có nội dung." + "\n";
 //            }
 
-            if (erbo.getFoodSafetyQualityContent() != null && !erbo.getFoodSafetyQualityContent().equals("null")) {
+            if (erbo.getFoodSafetyQualityContent() != null && !"null".equals(erbo.getFoodSafetyQualityContent())) {
                 staffContent += "* Về chỉ tiêu chất lượng an toàn thực phẩm:" + "\n";
                 staffContent += erbo.getFoodSafetyQualityContent() + "\n";
             }
@@ -6161,7 +6217,7 @@ public class FilesDAO extends BaseDAO {
 //                staffContent += "Không có nội dung." + "\n";
 //            }
 
-            if (erbo.getEffectUtilityContent() != null && !erbo.getEffectUtilityContent().equals("null")) {
+            if (erbo.getEffectUtilityContent() != null && !"null".equals(erbo.getEffectUtilityContent())) {
                 staffContent += "* Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng:" + "\n";
                 staffContent += erbo.getEffectUtilityContent() + "\n";
             }
@@ -6182,8 +6238,9 @@ public class FilesDAO extends BaseDAO {
         Long objectId = 0l;
         try {
             objectId = Long.parseLong(strObjectId);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(en.getMessage());
         }
         FilesDAOHE fdaohe = new FilesDAOHE();
         Files fbo = fdaohe.findById(objectId);
@@ -6193,28 +6250,27 @@ public class FilesDAO extends BaseDAO {
             if (lastRQBo != null) {
                 customInfo.add(lastRQBo.getContent());
             } else {
-                EvaluationRecords erbo = new EvaluationRecords();
                 EvaluationRecordsDAOHE erdaohe = new EvaluationRecordsDAOHE();
-                erbo = erdaohe.findFilesByFileId(fbo);
+                EvaluationRecords erbo = erdaohe.findFilesByFileId(fbo);
                 String staffContent = "";
                 if (erbo != null && fbo != null) {
 
-                    if (fbo.getStaffRequest() != null && !fbo.getStaffRequest().equals("null")) {
+                    if (fbo.getStaffRequest() != null && !"null".equals(fbo.getStaffRequest())) {
                         staffContent += "* Ý kiến chung:" + "\n";
                         staffContent += fbo.getStaffRequest() + "\n\n";
                     }
 
-                    if (erbo.getLegalContent() != null && !erbo.getLegalContent().equals("null")) {
+                    if (erbo.getLegalContent() != null && !"null".equals(erbo.getLegalContent())) {
                         staffContent += "* Về pháp chế:" + "\n";
                         staffContent += erbo.getLegalContent() + "\n\n";
                     }
 
-                    if (erbo.getFoodSafetyQualityContent() != null && !erbo.getFoodSafetyQualityContent().equals("null")) {
+                    if (erbo.getFoodSafetyQualityContent() != null && !"null".equals(erbo.getFoodSafetyQualityContent())) {
                         staffContent += "* Về chỉ tiêu chất lượng an toàn thực phẩm:" + "\n";
                         staffContent += erbo.getFoodSafetyQualityContent() + "\n\n";
                     }
 
-                    if (erbo.getEffectUtilityContent() != null && !erbo.getEffectUtilityContent().equals("null")) {
+                    if (erbo.getEffectUtilityContent() != null && !"null".equals(erbo.getEffectUtilityContent())) {
                         staffContent += "* Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng:" + "\n";
                         staffContent += erbo.getEffectUtilityContent() + "\n";
                     }
@@ -6247,14 +6303,15 @@ public class FilesDAO extends BaseDAO {
         Long objectId = 0l;
         Long objectType = 0l;
         Long fileType = 0l;
-        Long feeFile;
+//        Long feeFile;
 
         try {
             objectId = Long.parseLong(strObjectId);
             fileType = Long.parseLong(strFileType);
             objectType = Long.parseLong(strObjectType);
-        } catch (NumberFormatException en) {
-            log.error(en.getMessage());
+        } catch (NumberFormatException ex) {
+//            log.error(en.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         FeePaymentInfoDAOHE fpidaohe = new FeePaymentInfoDAOHE();
@@ -6275,11 +6332,13 @@ public class FilesDAO extends BaseDAO {
             }
         }
         GridResult result = fpidaohe.getLstFeePaymentInfo(fileId, objectType, 2L, start, count, sortField);
-        FilesDAOHE filesDHE = new FilesDAOHE();
+        /*SONAR
+        FilesDAOHE filesDHE = new FilesDAOHE();        
         feeFile = filesDHE.findById(objectId).getFeeFile();
         if (feeFile == null) {
             feeFile = 0l;
         }
+         */
         customInfo.add(isFee);
         //lay so tiep nhan hien tai
         CountNoDAOHE cndaohe = new CountNoDAOHE();
@@ -6329,18 +6388,21 @@ public class FilesDAO extends BaseDAO {
         String strObjectType = getRequest().getParameter("objectType");
         List customInfo = new ArrayList();
         Long objectId = 0l;
-        Long objectType = 0l;
-        Long feeFile;
+        Long objectType;
+//        Long feeFile;
 
         try {
             objectId = Long.parseLong(strObjectId);
-        } catch (NumberFormatException en) {
-            log.error(en.getMessage());
+        } catch (NumberFormatException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(en.getMessage());
         }
         try {
             objectType = Long.parseLong(strObjectType);
-        } catch (NumberFormatException en) {
-            log.error(en.getMessage());
+        } catch (NumberFormatException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(en.getMessage());
+            objectType = 0L;
         }
         FeePaymentInfoDAOHE fpidaohe = new FeePaymentInfoDAOHE();
         FilesDAOHE bdhe = new FilesDAOHE();
@@ -6360,11 +6422,13 @@ public class FilesDAO extends BaseDAO {
             recipientAddress = filebo.getRecipientAddress();
         }
         GridResult result = fpidaohe.getLstFeePaymentInfo(fileId, objectType, 1L, start, count, sortField);
+        /*SONAR
         FilesDAOHE filesDHE = new FilesDAOHE();
         feeFile = filesDHE.findById(objectId).getFeeFile();
         if (feeFile == null) {
             feeFile = 0l;
         }
+         */
         customInfo.add(isFee);
         customInfo.add(isCourier);
         customInfo.add(recipientAddress);
@@ -6411,7 +6475,8 @@ public class FilesDAO extends BaseDAO {
                 getRequest().setAttribute("productName", productName);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return payFilePage;
     }
@@ -6439,7 +6504,7 @@ public class FilesDAO extends BaseDAO {
             String calink = rb.getString("KEYPAY_LINK");
             getRequest().setAttribute("calink", calink);
             FilesDAOHE fdhe = new FilesDAOHE();
-            Base64 encoder = new Base64();
+//            Base64 encoder = new Base64();
             //Long filesCode = feedhe.getMaxFilesCode();
 //            if (filesCode == 0l || filesCode == null) {
 //                filesCode = 1l;
@@ -6457,7 +6522,6 @@ public class FilesDAO extends BaseDAO {
             countNo.setKeypayNo(filesCode);
             getSession().update(countNo);
             String fileCode = "MF_" + filesCode.toString();
-            String productName = "";
             String productNameNew = "";
             Long amount = feedhe.getAmountKeyPay(lstObjectId);
             for (int i = 0; i < countObj; i++) {
@@ -6470,7 +6534,7 @@ public class FilesDAO extends BaseDAO {
                     productNameNew += files.getProductName() + ",";
                 }
             }
-            productName = newStringUtf8(Base64.encodeBase64(productNameNew.getBytes("UTF-8")));
+            String productName = newStringUtf8(Base64.encodeBase64(productNameNew.getBytes("UTF-8")));
             Files files = fdhe.findById(Long.parseLong(lstObjectIdSplit[0]));
             String businessName = newStringUtf8(Base64.encodeBase64(files.getBusinessName().getBytes("UTF-8")));
             //String businessName = files.getBusinessName();
@@ -6481,7 +6545,8 @@ public class FilesDAO extends BaseDAO {
             getRequest().setAttribute("productName", productName);
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());;
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());;
         }
         return payFilePageMore;
     }
@@ -6498,7 +6563,8 @@ public class FilesDAO extends BaseDAO {
                 searchFeeForm = new FeeForm();
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return feeManagePage;
     }
@@ -6515,7 +6581,8 @@ public class FilesDAO extends BaseDAO {
                 searchFeeForm = new FeeForm();
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return feePayManagePage;
     }
@@ -6581,8 +6648,9 @@ public class FilesDAO extends BaseDAO {
         try {
             thisIdVersion = Long.parseLong(thisVersion);
             oldIdVersion = Long.parseLong(oldVersion);
-        } catch (NumberFormatException en) {
-            log.error(en.getMessage());
+        } catch (NumberFormatException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(en.getMessage());
         }
 
         if (thisIdVersion > 0l) {
@@ -6774,13 +6842,13 @@ public class FilesDAO extends BaseDAO {
                         String contentSigned = createFormOriginal.getContentSigned();
                         KeyInfo keyInfo = CommonUtils.validateContentSigned(contentSigned);
 
-                        String userSigned = null;
                         if (keyInfo != null) {
                             try {
-                                userSigned = CommonUtils.getUserSigned(keyInfo);
+                                CommonUtils.getUserSigned(keyInfo);
                                 validCAStatus = "OK";
-                            } catch (CertificateExpiredException | CertificateNotYetValidException expiredEx) {
-                                log.error(expiredEx);
+                            } catch (CertificateExpiredException | CertificateNotYetValidException ex) {
+                                LogUtil.addLog(ex);//binhnt sonar a160901
+//                                log.error(expiredEx);
                             }
                         } else {
                             validCAStatus = "NG";
@@ -6790,8 +6858,9 @@ public class FilesDAO extends BaseDAO {
                     }
                     getRequest().setAttribute("validCAStatus", validCAStatus);
                 }
-            } catch (Exception e) {
-                log.error(e.getMessage());
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(e.getMessage());
             }
         }
         return strReturn;
@@ -6838,8 +6907,9 @@ public class FilesDAO extends BaseDAO {
                 resultMessage.add("Lưu dữ liệu không thành công");
             }
 
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        } catch (Exception ex) {
+//            log.error(e.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Lưu dữ liệu không thành công");
         }
@@ -6858,18 +6928,18 @@ public class FilesDAO extends BaseDAO {
         getGridInfo();
         List customInfo = new ArrayList();
         String strObjectId = getRequest().getParameter("objectId");
-        String strObjectType = getRequest().getParameter("objectType");
+//        String strObjectType = getRequest().getParameter("objectType");
 
         Long objectId = 0l;
         try {
             objectId = Long.parseLong(strObjectId);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         RequestCommentDAOHE rcdhe = new RequestCommentDAOHE();
         RequestComment lastRQBo = rcdhe.findLastRequestComment(objectId, 1L);
-        String content = "";
-        content = lastRQBo.getContent();
+        String content = lastRQBo.getContent();
         customInfo.add(content);
         ProcedureDAOHE pdhe = new ProcedureDAOHE();
         FilesDAOHE fdaohe = new FilesDAOHE();
@@ -7092,7 +7162,8 @@ public class FilesDAO extends BaseDAO {
                 resultMessage.add(loginCAForm.getPassword());
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("0");
         }
         jsonDataGrid.setItems(resultMessage);
@@ -7120,7 +7191,7 @@ public class FilesDAO extends BaseDAO {
         bo.setLeaderReviewName(createForm.getLeaderReviewName());
         bo.setLeaderApproveId(createForm.getLeaderApproveId());
         bo.setLeaderApproveName(createForm.getLeaderApproveName());
-        UsersDAO udao = new UsersDAO();
+//        UsersDAO udao = new UsersDAO();
         try {
 //            if (!udao.checkUserExist(bo.getNameStaffProcess(), bo.getStaffProcess())
 //                    || !udao.checkUserExist(bo.getLeaderEvaluateName(), bo.getLeaderEvaluateId())
@@ -7132,7 +7203,7 @@ public class FilesDAO extends BaseDAO {
 //                jsonDataGrid.setCustomInfo(customInfo);
 //                return "gridData";
 //            }
-            FilesDAOHE fdhe = new FilesDAOHE();
+//            FilesDAOHE fdhe = new FilesDAOHE();
             String displayStatus = FilesDAOHE.getFileStatusName(bo.getStatus());
             if (!displayStatus.equals(bo.getDisplayStatus())) {
                 resultMessage.add("3");
@@ -7142,7 +7213,8 @@ public class FilesDAO extends BaseDAO {
                 return "gridData";
             }
         } catch (Exception ex) {
-            Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         resultMessage.add("1");
         resultMessage.add("Mời nộp");
@@ -7502,8 +7574,8 @@ public class FilesDAO extends BaseDAO {
             jsonDataGrid.setItems(lstUsers);
             jsonDataGrid.setLabel("fullName");
             jsonDataGrid.setIdentifier("userId");
-        } catch (Exception e) {
-
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return GRID_DATA;
     }
@@ -7521,8 +7593,8 @@ public class FilesDAO extends BaseDAO {
             jsonDataGrid.setItems(lstUsers);
             jsonDataGrid.setLabel("fullName");
             jsonDataGrid.setIdentifier("userId");
-        } catch (Exception e) {
-
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return GRID_DATA;
     }
@@ -7540,8 +7612,8 @@ public class FilesDAO extends BaseDAO {
             jsonDataGrid.setItems(lstUsers);
             jsonDataGrid.setLabel("fullName");
             jsonDataGrid.setIdentifier("userId");
-        } catch (Exception e) {
-
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return GRID_DATA;
     }
@@ -7613,8 +7685,9 @@ public class FilesDAO extends BaseDAO {
         Long objectId = 0l;
         try {
             objectId = Long.parseLong(strObjectId);
-        } catch (NumberFormatException en) {
-            log.error(en.getMessage());
+        } catch (NumberFormatException ex) {
+//            log.error(en.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         RequestCommentDAOHE pcdhe = new RequestCommentDAOHE();
         GridResult result = pcdhe.findLstRequestComment(objectId, start, count, sortField);//binhnt53 150130 bo object type thua
@@ -7666,7 +7739,7 @@ public class FilesDAO extends BaseDAO {
         SignPdfFile pdfSig0 = new SignPdfFile();
         try {
             fileId = getRequest().getParameter("fileId");
-            String rootCert = null, base64Certificate = null, certChain = null;
+            String rootCert, base64Certificate, certChain;
             Base64 decoder = new Base64();
             certChain = new String(decoder.decode(getRequest().getParameter("cert").replace("_", "+").getBytes()), "UTF-8");
             String sToFind = getRequest().getParameter("signType");
@@ -7674,7 +7747,7 @@ public class FilesDAO extends BaseDAO {
             String[] pathArr = path.split(";");
             fileToSign = pathArr[0];
             fileName = pathArr[1];
-            if (sToFind.equals("PDHS") || sToFind.equals("PDHS_VT")) {
+            if ("PDHS".equals(sToFind) || "PDHS_VT".equals(sToFind)) {
                 fileToSign0 = pathArr[2];
                 fileName0 = pathArr[3];
             }
@@ -7683,8 +7756,11 @@ public class FilesDAO extends BaseDAO {
                 chain = certChain.split(",");
                 rootCert = chain[1];
                 base64Certificate = chain[0];
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                base64Certificate = null;
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_001";
+                rootCert = "";
                 result = false;
             }
             // hieptq update 150615
@@ -7697,7 +7773,8 @@ public class FilesDAO extends BaseDAO {
             try {
                 x509Cert = CertUtils.getX509Cert(base64Certificate);
                 x509CertChain = CertUtils.getX509Cert(rootCert);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_003";
                 result = false;
             }
@@ -7710,7 +7787,8 @@ public class FilesDAO extends BaseDAO {
             Long checkOCSP = Long.parseLong(checkOcspStr);
             try {
                 certSerial = x509Cert.getSerialNumber().toString(16);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_004";
                 result = false;
             }
@@ -7737,7 +7815,8 @@ public class FilesDAO extends BaseDAO {
                         result = false;
                     }
                 }
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_007";
                 result = false;
             }
@@ -7746,14 +7825,20 @@ public class FilesDAO extends BaseDAO {
                 //String separator = ResourceBundleUtil.getString("separator");
                 String linkImageSign = folderPath + getUserId() + ".png";
                 String linkImageStamp = folderPath + "attpStamp.png";
-                if ((linkImageSign == null && linkImageSign.equals("")) || (linkImageStamp == null && linkImageStamp.equals(""))) {
+                if ((linkImageSign == null
+                        && "".equals(linkImageSign))
+                        || (linkImageStamp == null
+                        && "".equals(linkImageStamp))) {
                     errorCode = "SI_008";
                     result = false;
                 }
                 try {
                     if (sToFind.equals("PDHS")) {
                         // ky lanh dao
-                        if (fileToSign == null && fileToSign.equals("") || fileToSign0 == null && fileToSign0.equals("")) {
+                        if (fileToSign == null
+                                && "".equals(fileToSign)
+                                || fileToSign0 == null
+                                && "".equals(fileToSign0)) {
                             errorCode = "SI_009";
                             result = false;
                         }
@@ -7786,9 +7871,9 @@ public class FilesDAO extends BaseDAO {
                                 new Certificate[]{x509Cert}, pageNumber, linkImageSign, lx1 + 70, ly1 + 130, 120, 70, "LD");
 
                     }
-                    if (sToFind.equals("PDHS_VT")) {
+                    if ("PDHS_VT".equals(sToFind)) {
                         // ky van thu
-                        if (fileToSign == null && fileToSign.equals("") || fileToSign0 == null && fileToSign0.equals("")) {
+                        if (fileToSign == null && "".equals(fileToSign) || fileToSign0 == null && "".equals(fileToSign0)) {
                             errorCode = "SI_010";
                             result = false;
                         }
@@ -7821,9 +7906,12 @@ public class FilesDAO extends BaseDAO {
                                 new Certificate[]{x509Cert}, pageNumber, linkImageStamp, lx1 + 23, ly1 + 115, 90, 90, "VT");
 
                     }
-                    if (sToFind.equals("CVBS_VT")) {
+                    if ("CVBS_VT".equals(sToFind)) {
                         // ky van thu
-                        if (fileToSign == null && fileToSign.equals("") || fileToSign0 == null && fileToSign0.equals("")) {
+                        if (fileToSign == null
+                                && "".equals(fileToSign)
+                                || fileToSign0 == null
+                                && "".equals(fileToSign0)) {
                             errorCode = "SI_026";
                             result = false;
                         }
@@ -7845,9 +7933,9 @@ public class FilesDAO extends BaseDAO {
                                 new Certificate[]{x509Cert}, pageNumber, linkImageStamp, lx + 23, ly + 130, 90, 90, "VT");
                     }
 
-                    if (sToFind.equals("CVBS")) {
+                    if ("CVBS".equals(sToFind)) {
                         // ky lanh dao
-                        if (fileToSign == null && fileToSign.equals("")) {
+                        if (fileToSign == null && "".equals(fileToSign)) {
                             errorCode = "SI_011";
                             result = false;
                         }
@@ -7870,6 +7958,7 @@ public class FilesDAO extends BaseDAO {
 
                     }
                 } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                     System.out.println("ERROR SI_012|" + ex.getMessage());
                     errorCode = "SI_012";
                     result = false;
@@ -7879,13 +7968,15 @@ public class FilesDAO extends BaseDAO {
                 errorCode = "SI_013";
                 result = false;
             }
-        } catch (JsonSyntaxException jsonSyntaxException) {
+        } catch (JsonSyntaxException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             errorCode = "SI_014";
             result = false;
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             errorCode = "SI_015";
             ex.printStackTrace();
-            System.out.println(ex.getMessage());
+//            System.out.println(ex.getMessage());
             result = false;
         } finally {
 
@@ -7931,7 +8022,7 @@ public class FilesDAO extends BaseDAO {
 //        SignPdfFile pdfSig0 = new SignPdfFile();
         try {
             fileId = getRequest().getParameter("fileId");
-            String rootCert = null, base64Certificate = null, certChain = null;
+            String rootCert = null, base64Certificate = null, certChain;
             Base64 decoder = new Base64();
             certChain = new String(decoder.decode(getRequest().getParameter("cert").replace("_", "+").getBytes()), "UTF-8");
             String sToFind = getRequest().getParameter("signType");
@@ -7945,7 +8036,8 @@ public class FilesDAO extends BaseDAO {
                 chain = certChain.split(",");
                 rootCert = chain[1];
                 base64Certificate = chain[0];
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_001";
                 result = false;
             }
@@ -7958,7 +8050,8 @@ public class FilesDAO extends BaseDAO {
             try {
                 x509Cert = CertUtils.getX509Cert(base64Certificate);
                 x509CertChain = CertUtils.getX509Cert(rootCert);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_003";
                 result = false;
             }
@@ -7971,7 +8064,8 @@ public class FilesDAO extends BaseDAO {
             Long checkOCSP = Long.parseLong(checkOcspStr);
             try {
                 certSerial = x509Cert.getSerialNumber().toString(16);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_004";
                 result = false;
             }
@@ -7996,7 +8090,8 @@ public class FilesDAO extends BaseDAO {
                         result = false;
                     }
                 }
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_007";
                 result = false;
             }
@@ -8004,14 +8099,17 @@ public class FilesDAO extends BaseDAO {
                 String folderPath = ResourceBundleUtil.getString("sign_image");
                 String linkImageSign = folderPath + getUserId() + ".png";
                 String linkImageStamp = folderPath + "attpStamp.png";
-                if ((linkImageSign == null && linkImageSign.equals("")) || (linkImageStamp == null && linkImageStamp.equals(""))) {
+                if ((linkImageSign == null
+                        && "".equals(linkImageSign))
+                        || (linkImageStamp == null
+                        && "".equals(linkImageStamp))) {
                     errorCode = "SI_008";
                     result = false;
                 }
                 try {
-                    if (sToFind.equals("PDHS")) {
+                    if ("PDHS".equals(sToFind)) {
                         if (fileToSign == null
-                                && fileToSign.equals("")) {
+                                && "".equals(fileToSign)) {
                             errorCode = "SI_009";
                             result = false;
                         }
@@ -8032,9 +8130,9 @@ public class FilesDAO extends BaseDAO {
                         base64Hash = pdfSig.createHash(fileToSign, outPutFileFinal,
                                 new Certificate[]{x509Cert}, pageNumber, linkImageSign, lx + 70, ly + 130, 120, 70, "LD");
                     }
-                    if (sToFind.equals("PDHS_VT")) {
+                    if ("PDHS_VT".equals(sToFind)) {
                         // ky van thu
-                        if (fileToSign == null && fileToSign.equals("")) {
+                        if (fileToSign == null && "".equals(fileToSign)) {
                             errorCode = "SI_010";
                             result = false;
                         }
@@ -8055,9 +8153,9 @@ public class FilesDAO extends BaseDAO {
                         base64Hash = pdfSig.createHash(fileToSign, outPutFileFinal,
                                 new Certificate[]{x509Cert}, pageNumber, linkImageStamp, lx + 23, ly + 115, 90, 90, "VT");
                     }
-                    if (sToFind.equals("CVBS_VT")) {
+                    if ("CVBS_VT".equals(sToFind)) {
                         // ky van thu
-                        if (fileToSign == null && fileToSign.equals("")) {
+                        if (fileToSign == null && "".equals(fileToSign)) {
                             errorCode = "SI_026";
                             result = false;
                         }
@@ -8079,7 +8177,7 @@ public class FilesDAO extends BaseDAO {
                                 new Certificate[]{x509Cert}, pageNumber, linkImageStamp, lx + 23, ly + 130, 90, 90, "VT");
                     }
 
-                    if (sToFind.equals("CVBS")) {
+                    if ("CVBS".equals(sToFind)) {
                         // ky lanh dao
                         if (fileToSign == null && fileToSign.equals("")) {
                             errorCode = "SI_011";
@@ -8103,6 +8201,7 @@ public class FilesDAO extends BaseDAO {
                                 new Certificate[]{x509Cert}, pageNumber, linkImageSign, lx + 80, ly + 150, 120, 70, "LD");
                     }
                 } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                     System.out.println("ERROR SI_012|" + ex.getMessage());
                     errorCode = "SI_012";
                     result = false;
@@ -8112,13 +8211,13 @@ public class FilesDAO extends BaseDAO {
                 errorCode = "SI_013";
                 result = false;
             }
-        } catch (JsonSyntaxException jsonSyntaxException) {
+        } catch (JsonSyntaxException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             errorCode = "SI_014";
             result = false;
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             errorCode = "SI_015";
-            ex.printStackTrace();
-            System.out.println(ex.getMessage());
             result = false;
         } finally {
 
@@ -8442,7 +8541,7 @@ public class FilesDAO extends BaseDAO {
                 //String host = rb.getString("ocspUrl");
                 String BCY = rb.getString("BCY");
                 String checkBCY = issuerCert.getIssuerDN().toString();
-                String host = "";
+                String host;
                 if (BCY.equals(checkBCY)) {
                     host = rb.getString("ocspBcyUrl");
                 } else {
@@ -8456,7 +8555,8 @@ public class FilesDAO extends BaseDAO {
                 BasicOCSPResp basicResponse = (BasicOCSPResp) ocspResponse.getResponseObject();
                 responses = (basicResponse == null) ? null : basicResponse.getResponses();
                 //todo use the super exception
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 continue;
             }
             if (responses != null && responses.length == 1) {
@@ -8497,8 +8597,9 @@ public class FilesDAO extends BaseDAO {
             ASN1InputStream asn1InOctets = new ASN1InputStream(aiaDEROctetString.getOctets());
             ASN1Sequence aiaASN1Sequence = (ASN1Sequence) asn1InOctets.readObject();
             authorityInformationAccess = AuthorityInformationAccess.getInstance(aiaASN1Sequence);
-        } catch (IOException e) {
-            throw new Exception("Cannot read certificate to get OCSP URLs", e);
+        } catch (IOException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            throw new Exception("Cannot read certificate to get OCSP URLs", ex);
         }
 
         List<String> ocspUrlList = new ArrayList<String>();
@@ -8550,8 +8651,9 @@ public class FilesDAO extends BaseDAO {
             } else {
                 throw new Exception("Only http is supported for ocsp calls");
             }
-        } catch (IOException e) {
-            throw new Exception("Cannot get ocspResponse from url: " + serviceUrl, e);
+        } catch (IOException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            throw new Exception("Cannot get ocspResponse from url: " + serviceUrl, ex);
         }
     }
 
@@ -8610,8 +8712,8 @@ public class FilesDAO extends BaseDAO {
                 int len = encoded[1];
                 return new String(encoded, 2, len);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -8676,7 +8778,7 @@ public class FilesDAO extends BaseDAO {
                 errorCode = "SI_015";
                 result = false;
             }
-            if (parts.length == 5 && parts[0].equals("LD")) {
+            if (parts.length == 5 && "LD".equals(parts[0])) {
                 paperOnly = parts[0] + "_" + parts[1] + "_" + parts[2] + "_" + parts[3] + "_" + "2" + ".pdf";
             }
             if (parts.length == 6 && parts[0].equals("VT")) {
@@ -8696,7 +8798,7 @@ public class FilesDAO extends BaseDAO {
             Long checkTSA = Long.parseLong(checkTsaStr);
             pdfSig = (SignPdfFile) getRequest().getSession().getAttribute("PDFSignature");
             //Hiepvv hoso SDBS sau cong bo khong can cai nay
-            if (fileName0 != null && fileName0.length() > 0 && (signType.equals("PDHS") || signType.equals("PDHS_VT"))) {
+            if (fileName0 != null && fileName0.length() > 0 && ("PDHS".equals(signType) || "PDHS_VT".equals(signType))) {
                 signatureOriginal = new String(decoder.decode(getRequest().getParameter("signDataOriginal").replace("_", "+").getBytes()), "UTF-8");
                 pdfSig0 = (SignPdfFile) getRequest().getSession().getAttribute("PDFSignature2");
             }
@@ -8706,13 +8808,13 @@ public class FilesDAO extends BaseDAO {
             try {
                 if (checkTSA == 1l) {
                     pdfSig.insertSignatureFinal(signature, fileSignOutLink, outputFile, true);
-                    if (signType.equals("PDHS") || signType.equals("PDHS_VT")) {
+                    if ("PDHS".equals(signType) || "PDHS_VT".equals(signType)) {
                         pdfSig0.insertSignatureFinal(signatureOriginal, fileSignOutLink2, outputFileOriginal, true);
                     }
                 } else {
                     pdfSig.insertSignatureFinal(signature, fileSignOutLink, outputFile, false);
                     //Hiepvv hoso SDBS sau cong bo khong can cai nay
-                    if (fileSignOutLink2 != null && fileSignOutLink2.length() > 0 && (signType.equals("PDHS") || signType.equals("PDHS_VT"))) {
+                    if (fileSignOutLink2 != null && fileSignOutLink2.length() > 0 && ("PDHS".equals(signType) || "PDHS_VT".equals(signType))) {
                         pdfSig0.insertSignatureFinal(signatureOriginal, fileSignOutLink2, outputFileOriginal, false);
                     }
                 }
@@ -8722,10 +8824,12 @@ public class FilesDAO extends BaseDAO {
 //                    copyFileUsingFileStreams(source, dest);
 //                }
             } catch (IOException ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_016";
                 System.out.println("IOException " + ex.toString());
                 result = false;
             } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_017";
                 System.out.println("Exception " + ex.getMessage());
                 result = false;
@@ -8738,7 +8842,7 @@ public class FilesDAO extends BaseDAO {
                         result = false;
                     }
                     //Hiepvv SDBS sau cong bo khong co file 2
-                    if ((signType.equals("PDHS") || signType.equals("PDHS_VT"))
+                    if (("PDHS".equals(signType) || "PDHS_VT".equals(signType))
                             && fileSignOutLink2 != null && fileSignOutLink2.length() > 0) {
                         if (deleteFile(copyPath + paperOnly)) {
                             System.out.println("Deleted file: " + copyPath + paperOnly);
@@ -8760,6 +8864,7 @@ public class FilesDAO extends BaseDAO {
                         result = false;
                     }
                 } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                     System.out.println("Delete file fail ! " + ex.toString());
                 }
             }
@@ -8769,7 +8874,7 @@ public class FilesDAO extends BaseDAO {
                     errorCode = "SI_022";
                     result = false;
                 }
-                if ((signType.equals("PDHS") || signType.equals("PDHS_VT"))
+                if (("PDHS".equals(signType) || "PDHS_VT".equals(signType))
                         //Hiepvv
                         && fileSignOutLink2 != null && fileSignOutLink2.length() > 0) {
                     if (updateSignPlugin(paperOnly, subDir, uploadPath) == false) {
@@ -8778,10 +8883,12 @@ public class FilesDAO extends BaseDAO {
                     }
                 }
             } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_024";
                 result = false;
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             errorCode = "SI_025";
             result = false;
 
@@ -8879,10 +8986,12 @@ public class FilesDAO extends BaseDAO {
 //                    }
                 }
             } catch (IOException ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_016";
                 System.out.println("IOException " + ex.toString());
                 result = false;
             } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_017";
                 System.out.println("Exception " + ex.getMessage());
                 result = false;
@@ -8917,6 +9026,7 @@ public class FilesDAO extends BaseDAO {
                         result = false;
                     }
                 } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                     System.out.println("Delete file fail ! " + ex.toString());
                 }
             }
@@ -8935,10 +9045,12 @@ public class FilesDAO extends BaseDAO {
 //                    }
 //                }
             } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_024";
                 result = false;
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             errorCode = "SI_025";
             result = false;
 
@@ -8963,7 +9075,8 @@ public class FilesDAO extends BaseDAO {
                     result = false;
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             result = false;
         }
         return result;
@@ -8990,7 +9103,7 @@ public class FilesDAO extends BaseDAO {
             if (parts.length == 4) {
                 signType = parts[3].substring(0, parts[3].indexOf(".pdf"));
             } else if (parts.length == 6) {
-                if (parts[0].equals("VT")) {
+                if ("VT".equals(parts[0])) {
                     signType = parts[4];
                     indexFile = Integer.parseInt(parts[5].substring(0, parts[5].indexOf(".pdf")));
                 } else {
@@ -8998,7 +9111,7 @@ public class FilesDAO extends BaseDAO {
                     indexFile = Integer.parseInt(parts[4].substring(0, parts[4].indexOf(".pdf")));
                 }
             } else if (parts.length == 5) {
-                if (parts[0].equals("VT")) {
+                if ("VT".equals(parts[0])) {
                     signType = parts[4].substring(0, parts[4].indexOf(".pdf"));
                 } else {
                     signType = parts[3];
@@ -9012,12 +9125,12 @@ public class FilesDAO extends BaseDAO {
             }
 
             VoAttachsDAOHE vdhe = new VoAttachsDAOHE();
-            if (parts[0].equals("LD")) {
+            if ("LD".equals(parts[0])) {
                 VoAttachs voUpload = new VoAttachs();
                 voUpload.setObjectId(Long.parseLong(fileId));
                 voUpload.setIsActive(1l);
                 voUpload.setCreateDate(vdhe.getSysdate());
-                if (signType.equals("PDHS")) {
+                if ("PDHS".equals(signType)) {
                     if (indexFile == 0 || indexFile == 1) {
                         voUpload.setObjectType(40L);
                     } else if (indexFile == 2) {
@@ -9036,7 +9149,7 @@ public class FilesDAO extends BaseDAO {
                     } else {
                         voUpload.setAttachName("Bancongbo_" + fileName);
                     }
-                } else if (signType.equals("CVBS")) {
+                } else if ("CVBS".equals(signType)) {
                     voUpload.setObjectType(71L);
                     voUpload.setAttachName("CongvanSdbs_" + fileName);
                 } else {
@@ -9045,9 +9158,9 @@ public class FilesDAO extends BaseDAO {
                 }
                 voUpload.setAttachPath(uploadPath + destination + fileName);
                 vdhe.saveDbNotCommit(voUpload);
-            } else if (parts[0].equals("VT")) {
+            } else if ("VT".equals(parts[0])) {
                 List<VoAttachs> voa;
-                if (signType.equals("PDHS")) {
+                if ("PDHS".equals(signType)) {
                     if (indexFile == 0 || indexFile == 1) {
                         voa = vdhe.getAttachsByObject(Long.parseLong(fileId), 40L);
                         if (voa != null && voa.size() > 0) {
@@ -9071,7 +9184,7 @@ public class FilesDAO extends BaseDAO {
                 voUpload.setObjectId(Long.parseLong(fileId));
                 voUpload.setIsActive(1l);
                 voUpload.setCreateDate(vdhe.getSysdate());
-                if (signType.equals("PDHS")) {
+                if ("PDHS".equals(signType)) {
                     if (indexFile == 0 || indexFile == 1) {
                         voUpload.setObjectType(40L);
                     } else if (indexFile == 2) {
@@ -9089,7 +9202,7 @@ public class FilesDAO extends BaseDAO {
                     } else {
                         voUpload.setAttachName("Bancongbo_" + fileName);
                     }
-                } else if (signType.equals("CVBS")) {
+                } else if ("CVBS".equals(signType)) {
                     voUpload.setObjectType(71L);
                     voUpload.setAttachName("CongvanSdbs_" + fileName);
                 } else {
@@ -9100,14 +9213,14 @@ public class FilesDAO extends BaseDAO {
                 vdhe.saveDbNotCommit(voUpload);
             }
             // Update status to File
-            if (signType.equals("PDHS")) {
+            if ("PDHS".equals(signType)) {
                 FilesDAOHE fdhe = new FilesDAOHE();
                 Files file = fdhe.findById(Long.parseLong(fileId));
                 file.setIsDownload(1L);
-                if (parts[0].equals("VT")) {
+                if ("VT".equals(parts[0])) {
                     file.setIsSignPdf(2l);
                     fdhe.saveDbNoCommit(file);
-                } else if (parts[0].equals("LD")) {
+                } else if ("LD".equals(parts[0])) {
                     file.setIsSignPdf(1l);
                     fdhe.saveDbNoCommit(file);
                 } else {
@@ -9117,14 +9230,15 @@ public class FilesDAO extends BaseDAO {
             }
             vdhe.commitDb();
             //Hiepvv_Home copy file SĐBS sau công bố sang file gốc
-            if (signType.equals("PDHS") && parts[0].equals("VT")) {
+            if ("PDHS".equals(signType) && "VT".equals(parts[0])) {
                 if (fileId != null && fileId.length() > 0) {
                     Long fId = Long.parseLong(fileId);
                     result = copyFileChangeAfterAnnouncedToFileSource(fId);
                 }
             }
         } catch (Exception ex) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
             result = false;
         }
         return result;
@@ -9141,21 +9255,19 @@ public class FilesDAO extends BaseDAO {
 
                 f = fDAO.findById(fileId);
 
-                Procedure pro = new Procedure();
-                pro = pdhe.findById(f.getFileType());
+                Procedure pro = pdhe.findById(f.getFileType());
                 String typePro = "";
                 if (pro != null) {
                     typePro = pro.getDescription();
                 }
                 //Nếu là SĐBS sau công bố
-                if (typePro != null && typePro.equalsIgnoreCase(announcementFile05)) {
+                if (typePro != null && announcementFile05.equalsIgnoreCase(typePro)) {
                     boolean isCheck = false;
 
-                    VoAttachs vAtt = new VoAttachs();
-                    VoAttachs voUpload = new VoAttachs();
+                    VoAttachs vAtt;
+                    VoAttachs voUpload;
 
-                    List<VoAttachs> lstVoAtt = new ArrayList<>();
-                    lstVoAtt = vDAO.getLstVoAttachByObjectId(fileId);
+                    List<VoAttachs> lstVoAtt = vDAO.getLstVoAttachByObjectId(fileId);
                     if (lstVoAtt != null && lstVoAtt.size() > 0) {
                         //Check văn thư đóng dấu trả doanh nghiệp
                         for (int i = 0; i < lstVoAtt.size(); i++) {
@@ -9241,8 +9353,9 @@ public class FilesDAO extends BaseDAO {
                     }
                 }
             }
-        } catch (Exception exc) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, exc);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         return true;
@@ -9262,7 +9375,8 @@ public class FilesDAO extends BaseDAO {
                 createForm.setContentsEditATTP(f.getContentsEditATTP());
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return false;
         }
         return true;
@@ -9276,14 +9390,14 @@ public class FilesDAO extends BaseDAO {
         try {
             if (fileId > 0L) {
                 FilesDAOHE fHE = new FilesDAOHE();
-                Files f = new Files();
-                f = fHE.findById(fileId);
+                Files f = fHE.findById(fileId);
                 f.setTitleEditATTP(title);
                 f.setContentsEditATTP(content);
                 getSession().update(f);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return GRID_DATA;
         }
         return GRID_DATA;
@@ -9307,7 +9421,8 @@ public class FilesDAO extends BaseDAO {
                     start = Integer.parseInt(startServerStr);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(ex.getMessage());
             }
         }
 
@@ -9376,6 +9491,7 @@ public class FilesDAO extends BaseDAO {
         try {
             p = pdaohe.getProcedureByDescription(announcementFile05);
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             p = null;
             return GRID_DATA;
         }
@@ -9449,7 +9565,8 @@ public class FilesDAO extends BaseDAO {
                     start = Integer.parseInt(startServerStr);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(ex.getMessage());
             }
         }
 
@@ -9496,7 +9613,8 @@ public class FilesDAO extends BaseDAO {
                     start = Integer.parseInt(startServerStr);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(ex.getMessage());
             }
         }
 
@@ -9605,7 +9723,8 @@ public class FilesDAO extends BaseDAO {
             Base64 decoder = new Base64();
             name = new String(decoder.decode(getRequest().getParameter("leaderName").replace("_", "+").getBytes()), "UTF-8");
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (int i = 0; i < lstItemOnGrid.size(); i++) {
             FilesForm form = lstItemOnGrid.get(i);
@@ -9652,7 +9771,8 @@ public class FilesDAO extends BaseDAO {
             Base64 decoder = new Base64();
             name = new String(decoder.decode(getRequest().getParameter("leaderName").replace("_", "+").getBytes()), "UTF-8");
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (int i = 0; i < lstItemOnGrid.size(); i++) {
             FilesForm form = lstItemOnGrid.get(i);
@@ -9701,7 +9821,8 @@ public class FilesDAO extends BaseDAO {
                     start = Integer.parseInt(startServerStr);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(ex.getMessage());
             }
         }
 
@@ -9728,15 +9849,15 @@ public class FilesDAO extends BaseDAO {
         Long objectId = 0l;
         try {
             objectId = Long.parseLong(strObjectId);
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(en.getMessage());
         }
         FilesDAOHE fdaohe = new FilesDAOHE();
         Files fbo = fdaohe.findById(objectId);
-        EvaluationRecords erbo = new EvaluationRecords();
         EvaluationRecordsDAOHE erdaohe = new EvaluationRecordsDAOHE();
 
-        erbo = erdaohe.findFilesByFileId(fbo);
+        EvaluationRecords erbo = erdaohe.findFilesByFileId(fbo);
         String legal = "";
         String foodSafetyQuality = "";
         String effectUtility = "";
@@ -9769,13 +9890,13 @@ public class FilesDAO extends BaseDAO {
         String contentsEditATTP = "";
         if (fbo != null) {
             if (fbo.getTitleEditATTP() != null
-                    && !fbo.getTitleEditATTP().trim().equals("")) {
+                    && !"".equals(fbo.getTitleEditATTP().trim())) {
                 titleEditATTP = fbo.getTitleEditATTP();
             } else {
                 titleEditATTP = fbo.getTitleEdit();
             }
             if (fbo.getContentsEditATTP() != null
-                    && !fbo.getContentsEditATTP().trim().equals("")) {
+                    && !"".equals(fbo.getContentsEditATTP().trim())) {
                 contentsEditATTP = fbo.getContentsEditATTP();
             } else {
                 contentsEditATTP = fbo.getContentsEdit();
@@ -9794,7 +9915,7 @@ public class FilesDAO extends BaseDAO {
      * @return @throws IOException
      */
     public String actionSignCARegisterCA() throws IOException {
-        boolean result = true;
+        boolean result;
         String base64Hash = "";
         String certSerial = "";
         String errorCode = "";
@@ -9808,7 +9929,8 @@ public class FilesDAO extends BaseDAO {
                 chain = certChain.split(",");
                 rootCert = chain[1];
                 base64Certificate = chain[0];
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_001";
                 result = false;
             }
@@ -9821,7 +9943,8 @@ public class FilesDAO extends BaseDAO {
             try {
                 x509Cert = CertUtils.getX509Cert(base64Certificate);
                 x509CertChain = CertUtils.getX509Cert(rootCert);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_003";
                 result = false;
             }
@@ -9834,7 +9957,8 @@ public class FilesDAO extends BaseDAO {
             Long checkOCSP = Long.parseLong(checkOcspStr);
             try {
                 certSerial = x509Cert.getSerialNumber().toString(16);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_004";
                 result = false;
             }
@@ -9852,14 +9976,17 @@ public class FilesDAO extends BaseDAO {
                         result = false;
                     }
                 }
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_007";
                 result = false;
             }
-        } catch (JsonSyntaxException jsonSyntaxException) {
+        } catch (JsonSyntaxException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             errorCode = "SI_014";
             result = false;
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             errorCode = "SI_015";
             result = false;
         } finally {
@@ -9936,7 +10063,8 @@ public class FilesDAO extends BaseDAO {
                 chain = certChain.split(",");
                 rootCert = chain[1];
                 base64Certificate = chain[0];
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_001";
                 result = false;
             }
@@ -9949,7 +10077,8 @@ public class FilesDAO extends BaseDAO {
             try {
                 x509Cert = CertUtils.getX509Cert(base64Certificate);
                 x509CertChain = CertUtils.getX509Cert(rootCert);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_003";
                 result = false;
             }
@@ -9962,7 +10091,8 @@ public class FilesDAO extends BaseDAO {
             Long checkOCSP = Long.parseLong(checkOcspStr);
             try {
                 certSerial = x509Cert.getSerialNumber().toString(16);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_004";
                 result = false;
             }
@@ -9986,7 +10116,8 @@ public class FilesDAO extends BaseDAO {
                         result = false;
                     }
                 }
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_007";
                 result = false;
             }
@@ -9995,7 +10126,7 @@ public class FilesDAO extends BaseDAO {
                 String folderStampDN = ResourceBundleUtil.getString("directory");
                 String linkImageSign = folderPath + getUserId() + ".png";
                 String linkImageStamp = folderPath + "attp.png";
-                CaUser cabo = null;
+                CaUser cabo;
                 CaUserDAOHE cadaohe = new CaUserDAOHE();
                 List<CaUser> lstCabo = cadaohe.findCaUserBySerialUser("SerialNumber:[" + certSerial + "]", getUserLogin());
                 if (!lstCabo.isEmpty() && lstCabo != null) {
@@ -10003,15 +10134,15 @@ public class FilesDAO extends BaseDAO {
                     folderStampDN += cabo.getSignature();
                 }
                 linkImageSign = linkImageStamp;
-                if ((linkImageSign == null && linkImageSign.equals(""))
-                        || (linkImageStamp == null && linkImageStamp.equals(""))
-                        || (folderStampDN == null && folderStampDN.equals(""))) {
+                if ((linkImageSign == null && "".equals(linkImageSign))
+                        || (linkImageStamp == null && "".equals(linkImageStamp))
+                        || (folderStampDN == null && "".equals(folderStampDN))) {
                     errorCode = "SI_008";
                     result = false;
                 }
                 try {
-                    if (sToFind.equals("CBDN")) {
-                        if (fileToSign == null && fileToSign.equals("")) {
+                    if ("CBDN".equals(sToFind)) {
+                        if (fileToSign == null && "".equals(fileToSign)) {
                             errorCode = "SI_009";
                             result = false;
                         }
@@ -10033,6 +10164,7 @@ public class FilesDAO extends BaseDAO {
                                 new Certificate[]{x509Cert}, pageNumber, folderStampDN, lx + 70, ly + 130, 120, 70, "DN");
                     }
                 } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                     System.out.println("ERROR SI_012|" + ex.getMessage());
                     errorCode = "SI_012";
                     result = false;
@@ -10042,12 +10174,13 @@ public class FilesDAO extends BaseDAO {
                 errorCode = "SI_013";
                 result = false;
             }
-        } catch (JsonSyntaxException jsonSyntaxException) {
+        } catch (JsonSyntaxException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             errorCode = "SI_014";
             result = false;
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             errorCode = "SI_015";
-            ex.printStackTrace();
             System.out.println(ex.getMessage());
             result = false;
         } finally {
@@ -10121,10 +10254,12 @@ public class FilesDAO extends BaseDAO {
             try {
                 pdfSig.insertSignatureFinal(signature, fileSignOutLink, outputFile, false);
             } catch (IOException ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_016";
                 System.out.println("IOException " + ex.toString());
                 result = false;
             } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_017";
                 System.out.println("Exception " + ex.getMessage());
                 result = false;
@@ -10143,6 +10278,7 @@ public class FilesDAO extends BaseDAO {
                         result = false;
                     }
                 } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                     System.out.println("Delete file fail ! " + ex.toString());
                 }
             }
@@ -10153,10 +10289,12 @@ public class FilesDAO extends BaseDAO {
                     result = false;
                 }
             } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_024";
                 result = false;
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             errorCode = "SI_025";
             result = false;
 
@@ -10193,9 +10331,10 @@ public class FilesDAO extends BaseDAO {
             edhe.insertEventLog("Phê duyệt hồ sơ", "hồ sơ có id=" + createForm.getFileId(), getRequest());
             getSession().getTransaction().commit();
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Phê duyệt không thành công");
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
         }
 
         jsonDataGrid.setItems(resultMessage);
@@ -10223,7 +10362,7 @@ public class FilesDAO extends BaseDAO {
             }
             FilesDAOHE fdhe = new FilesDAOHE();
             VoAttachsDAOHE vdhe = new VoAttachsDAOHE();
-            VoAttachs voUpload = null;
+            VoAttachs voUpload;
             Files file = fdhe.findById(Long.parseLong(fileId));
             if (file.getStatus().equals(Constants.FILE_STATUS.NEW_CREATE)) {
                 List<VoAttachs> listVoAtt = vdhe.getAttachsByObject(file.getFileId(), Constants.ATTACH_OBJECT_TYPE.CBDN);
@@ -10282,6 +10421,7 @@ public class FilesDAO extends BaseDAO {
             fdhe.saveDbNoCommit(file);
             vdhe.commitDb();
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
             result = false;
         }

@@ -6,6 +6,7 @@ package com.viettel.voffice.common.util;
 
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
+import com.viettel.common.util.LogUtil;
 
 /**
  *
@@ -15,21 +16,30 @@ import java.text.StringCharacterIterator;
  */
 public final class StringUtils {
 
-    /** alphabeUpCaseNumber.*/
+    /**
+     * alphabeUpCaseNumber.
+     */
     private static String alphabeUpCaseNumber = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    /** INVOICE_MAX_LENGTH.*/
+    /**
+     * INVOICE_MAX_LENGTH.
+     */
     private static final int INVOICE_MAX_LENGTH = 7;
-    /** ZERO.*/
+    /**
+     * ZERO.
+     */
     private static final String ZERO = "0";
-    
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StringUtils.class);
 
-    /** Creates a new instance of StringUtils */
+    /**
+     * Creates a new instance of StringUtils
+     */
     private StringUtils() {
     }
 
     /**
      * method compare two string
+     *
      * @param str1 String
      * @param str2 String
      * @return boolean
@@ -50,6 +60,7 @@ public final class StringUtils {
 
     /**
      * method convert long to string
+     *
      * @param lng Long
      * @return String
      * @throws abc Exception
@@ -58,7 +69,7 @@ public final class StringUtils {
         try {
             return Long.toString(lng);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             throw ex;
         }
     }
@@ -74,7 +85,7 @@ public final class StringUtils {
             }
             return arrResult;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             throw ex;
         }
     }
@@ -90,7 +101,7 @@ public final class StringUtils {
             }
             return arrResult;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             throw ex;
         }
     }
@@ -102,7 +113,7 @@ public final class StringUtils {
         try {
             return Long.parseLong(value);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             throw ex;
         }
     }
@@ -209,9 +220,9 @@ public final class StringUtils {
             ////                addCharEntity(36, result);
             //            } else if (character == '%') {
             ////                addCharEntity(37, result);
-                         else if (character == '\'') {
-                            addCharEntity(39, result);
-                        }// else if (character == '(') {
+            else if (character == '\'') {
+                addCharEntity(39, result);
+            }// else if (character == '(') {
             ////                addCharEntity(40, result);
             //            } else if (character == ')') {
             ////                addCharEntity(41, result);

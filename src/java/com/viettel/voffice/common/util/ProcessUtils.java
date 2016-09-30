@@ -7,7 +7,7 @@ package com.viettel.voffice.common.util;
 import java.util.List;
 import com.viettel.voffice.database.BO.Process;
 import java.util.ArrayList;
-
+import com.viettel.common.util.LogUtil;
 /**
  *
  * @author sytv
@@ -61,7 +61,7 @@ public class ProcessUtils {
                 return null;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -89,7 +89,7 @@ public class ProcessUtils {
                 return null;
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -120,7 +120,7 @@ public class ProcessUtils {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -151,7 +151,7 @@ public class ProcessUtils {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -182,7 +182,7 @@ public class ProcessUtils {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -211,7 +211,7 @@ public class ProcessUtils {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -240,7 +240,7 @@ public class ProcessUtils {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -267,7 +267,7 @@ public class ProcessUtils {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -293,7 +293,7 @@ public class ProcessUtils {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -317,7 +317,8 @@ public class ProcessUtils {
                 return null;
             }
 
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -344,7 +345,7 @@ public class ProcessUtils {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -372,7 +373,7 @@ public class ProcessUtils {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -399,7 +400,7 @@ public class ProcessUtils {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }

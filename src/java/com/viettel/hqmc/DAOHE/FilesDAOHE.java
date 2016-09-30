@@ -7,6 +7,7 @@ package com.viettel.hqmc.DAOHE;
 import com.google.gson.Gson;
 import com.viettel.common.util.Constants;
 import com.viettel.common.util.DateTimeUtils;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.flow.DAOHE.FlowDAOHE;
 import com.viettel.hqmc.BO.Announcement;
@@ -54,7 +55,6 @@ import com.viettel.vsaadmin.database.BO.Users;
 import com.viettel.vsaadmin.database.DAOHibernate.DepartmentDAOHE;
 import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import com.viettel.ws.FORM.ANNOUCE_HANDLING;
-import com.viettel.ws.validateData.Helper;
 import com.viettel.ws.validateData.Validator;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -91,10 +91,10 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
      * @return
      */
     public Files saveFiles(FilesForm createForm) {
-        Files bo = null;
-        Files boRollBack = null;
+        Files bo;
+        Files boRollBack = new Files();
         Long filesId = createForm.getFileId();
-        Boolean isCreateNew = true;
+        Boolean isCreateNew = false;
         Long status = 0L;
         Long announcementId = null;
         Long detailProductId = null;
@@ -268,7 +268,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             if (isCreateNew) {
                 bo.setIsActive(Constants.Status.INACTIVE);
                 getSession().update(bo);
@@ -339,8 +340,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 try {
                     Document document = CommonUtils.buildAllPublishDocument(entity.getFileId());
                     form.setContentXml(StringUtils.escapeHtml(CommonUtils.convertDocument2String(document)));
-                } catch (Exception e) {
-                    log.error(e);
+                } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                    log.error(e);
                 }
                 try {
                     if (entity.getAnnouncementReceiptPaperId() != null) {
@@ -360,12 +362,14 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         form.setConfirmImportSatistPaperForm(new ConfirmImportSatistPaperForm(arp));
                     }
 
-                } catch (Exception e) {
-                    log.error(e);
+                } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                    log.error(e);
                 }
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
         }
         return form;
     }
@@ -421,8 +425,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 form.setLstAttachs(getAttachsOfFile(fileId));
                 form.setLstQualityControl(getQualityControlOfFile(fileId));
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
         }
         return form;
     }
@@ -482,8 +487,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     }
                 }
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
         }
         return form;
     }
@@ -570,7 +576,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             try {
                 TN = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_TN"));
             } catch (NumberFormatException ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(ex.getMessage());
             }
             if (TN > 0) {
                 bo.setDeadlineReceived(getDateWorkingTime(TN));
@@ -686,9 +693,10 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //
 //                }
 //            }
-        } catch (Exception en) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
-            log.error(en.getMessage());
+//            log.error(en.getMessage());
         }
         return bReturn;
     }
@@ -784,7 +792,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             gr = new GridResult(total, lstResult);
             return gr;
         } catch (Exception ex) {
-            log.error(ex.getMessage());;
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             gr = new GridResult(0, null);
         }
         return gr;
@@ -1196,13 +1205,13 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             try {
                                 SD = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_SD"));
                             } catch (NumberFormatException ex) {
-                                log.error(ex.getMessage());
+                                LogUtil.addLog(ex);//binhnt sonar a160901
                             }
                             if (SD > 0) {
                                 file.setDeadlineAddition(getDateWorkingTime(SD));
                             }
                         } catch (Exception ex) {
-                            log.error(ex.getMessage());
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }//!140627 THIET LAP HAN SDBS HO SO
                         //sms
                         /* disable send sms binhnt53 150205
@@ -1222,8 +1231,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     log.error("Lỗi hệ thống: Phân quyền xử lý hồ sơ: " + file.getFileCode());
                     return false;
                 }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -1361,8 +1370,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 getSession().save(newP);
                 getSession().update(file);
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -1597,6 +1606,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 //140721 binhnt
                 if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {
                     try {//140627 THIET LAP HAN SDBS HO SO
+
                         ResourceBundle rb = ResourceBundle.getBundle("config");
                         Procedure procedurebo;
                         ProcedureDAOHE procedureDAOHE = new ProcedureDAOHE();
@@ -1605,13 +1615,13 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         try {
                             SD = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_SD"));
                         } catch (NumberFormatException ex) {
-                            log.error(ex.getMessage());
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                         if (SD > 0) {
                             file.setDeadlineAddition(getDateWorkingTime(SD));
                         }
                     } catch (Exception ex) {
-                        log.error(ex.getMessage());
+                        LogUtil.addLog(ex);//binhnt sonar a160901
                     }//!140627 THIET LAP HAN SDBS HO SO
                     //sms
                     MessageSmsDAOHE msdhe = new MessageSmsDAOHE();
@@ -1626,8 +1636,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 }//!140721
                 update(file);
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -1766,6 +1776,11 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         //Hiepvv 0803 Khong xet lai phi cho SDBS sau cong bo
                         if (!pro.getCode().equals("01") && !pro.getCode().equals("02") && !pro.getDescription().equals("announcementFile05")) {
                             file.setIsFee(0l);
+                            //update binhnt
+//                            if ("true".equals(ResourceBundleUtil.getString("send_service", "config"))) {
+//                                Helper h = new Helper();
+//                                h.sendMs_340(file.getFileId(), "Ho so ma: " + file.getFileCode() + " Da duoc phe duyet yeu cau nop phi ho so.");
+//                            }
                         }
 
                         /* đổi luồng binhnt53 140914
@@ -1998,13 +2013,23 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                                 msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
                             }
                         }
+
+                        //update binhnt
+//                        try {
+//                            if ("true".equals(ResourceBundleUtil.getString("send_service", "config"))) {
+//                                Helper h = new Helper();
+//                                h.sendMs_340(file.getFileId(), "Ho so ma: " + file.getFileCode() + " Da duoc phe duyet yeu cau nop phi ho so.");
+//                            }
+//                        } catch (UnsupportedEncodingException ex) {
+//                            Logger.getLogger(FilesDAOHE.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
                     }
                 } else {
                     return false;
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -2090,7 +2115,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                                         getSession().beginTransaction().commit();
                                         return true;
                                     } catch (Exception ex) {
-                                        log.error(ex.getMessage());
+                                        LogUtil.addLog(ex);//binhnt sonar a160901
                                         return false;
                                     }
                                 } else {//co so roi thuc hien update khong tao moi - binhnt53 14.11.12
@@ -2202,7 +2227,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 
                                 }
                             } catch (Exception ex) {
-                                log.error(ex.getMessage());
+                                LogUtil.addLog(ex);//binhnt sonar a160901
                                 return false;
                             }
                         }
@@ -2211,7 +2236,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return false;
         }
 
@@ -2240,7 +2265,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         try {
             currentDate = getSysdate();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         String fileCode = DateTimeUtils.convertDateToString(currentDate, "yy.MM.")
                 + type.getCode()
@@ -2767,7 +2792,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             try {
                 dateNow = getSysdate();
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 return false;
             }
 
@@ -2996,6 +3021,15 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         filesnew.setIsFee(1l);
                     } else {
                         filesnew.setIsFee(0l);
+                        //update binhnt
+//                        try {
+//                            if ("true".equals(ResourceBundleUtil.getString("send_service", "config"))) {
+//                                Helper h = new Helper();
+//                                h.sendMs_340(filesnew.getFileId(), "Ho so ma: " + filesnew.getFileCode() + " Da duoc phe duyet yeu cau nop phi ho so.");
+//                            }
+//                        } catch (UnsupportedEncodingException ex) {
+//                            Logger.getLogger(FilesDAOHE.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
                     }
                     getSession().update(filesnew);
                     getSession().update(fpifOld);
@@ -3074,7 +3108,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             fs.setContent(json);
             session.saveOrUpdate(fs);
             return true;
-        } catch (Exception en) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return false;
         }
         //
@@ -3853,8 +3888,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 getSession().update(file);
                 bReturn = true;
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -3884,8 +3919,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 getSession().update(file);
                 bReturn = true;
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -3916,8 +3951,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 getSession().update(file);
                 bReturn = true;
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -4066,8 +4101,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 getSession().update(file);
                 bReturn = true;
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -4139,12 +4174,12 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         try {
                             CB = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_CB"));
                         } catch (NumberFormatException ex) {
-                            log.error(ex.getMessage());
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                         try {
                             PH = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_PH"));
                         } catch (NumberFormatException ex) {
-                            log.error(ex.getMessage());
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                         if (CB > 0) {
                             file.setDeadlineApprove(getDateWorkingTime(CB));
@@ -4280,7 +4315,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             }
         } catch (Exception ex) {
             bReturn = false;
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return bReturn;
     }
@@ -4343,12 +4378,12 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     try {
                         CB = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_CB"));
                     } catch (NumberFormatException ex) {
-                        log.error(ex.getMessage());;
+                        LogUtil.addLog(ex);//binhnt sonar a160901
                     }
                     try {
                         PH = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_PH"));
                     } catch (NumberFormatException ex) {
-                        log.error(ex.getMessage());;
+                        LogUtil.addLog(ex);//binhnt sonar a160901
                     }
                     if (CB > 0) {
                         file.setDeadlineApprove(getDateWorkingTime(CB));
@@ -4467,9 +4502,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     bReturn = true;
                 }
             }
-        } catch (Exception en) {
+        } catch (Exception ex) {
             bReturn = false;
-            log.error(en.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (!bCheckCount) {
             return false;
@@ -4560,13 +4595,16 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 String msge;
                 msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: Đã trả bản công bố";
                 msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
-
+//                if ("true".equals(ResourceBundleUtil.getString("send_service", "config"))) {
+//                    Helper h = new Helper();
+//                    h.sendMs_370(file.getFileId(), msge);
+//                }
                 getSession().update(file);//cap nhat ho so
                 bReturn = true;
 
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -4599,7 +4637,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             nCount = 1L;
         }
         String prefix = "";
@@ -4645,7 +4683,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         try {
             currentDate = getSysdate();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         String fileCode = nCount + "/" + DateTimeUtils.convertDateToString(currentDate, "yyyy") + "/" + prefix;
 //        String fileCode = nCount + "         " + DateTimeUtils.convertDateToString(currentDate, "yyyy");
@@ -4677,7 +4715,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             nCount = 1L;
         }
         String fileCode = nCount.toString();
@@ -4704,7 +4742,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             nCount = 1L;
         }
         return nCount.toString();
@@ -4781,7 +4819,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         try {
             currentDate = getSysdate();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         String fileCode = nCount + "/" + DateTimeUtils.convertDateToString(currentDate, "yyyy") + "/" + prefix;
         return fileCode;
@@ -4838,8 +4876,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     form.setConfirmImportSatistPaperForm(
                             new ConfirmImportSatistPaperForm(arp));
                 }
-            } catch (Exception e) {
-                log.error(e);
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
 
         }
@@ -4947,9 +4985,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
                 update(file);
             }
-        } catch (Exception en) {
+        } catch (Exception ex) {
             bReturn = false;
-            log.error(en.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return bReturn;
     }
@@ -4992,7 +5030,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
             }
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return item;
     }
@@ -5085,7 +5123,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         try {
             startDate = getSysdate();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         int balanceDay = numberDate % 5;
         int numberOfWeek = numberDate / 5;
@@ -5223,8 +5261,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             Query query = getSession().createQuery(hql);
             query.setParameter(0, objId);
             return query.executeUpdate();
-        } catch (HibernateException e) {
-            log.error(e);
+        } catch (HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }//!140725
@@ -5269,8 +5307,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             if (!lstObj.isEmpty()) {
                 bo = lstObj.get(0);
             }
-        } catch (HibernateException e) {
-            log.error(e);
+        } catch (HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return bo;
     }
@@ -5327,7 +5365,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 lstFilesForm.add(new FilesForm(lstFiles.get(i)));
             }
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
         return lstFilesForm;
@@ -5441,6 +5479,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     file.setComparisonContent(form.getLeaderRequest());
 
                     file.setIsFee(0L);//bay gio tinh phi giay cong bo
+
                     rcbo.setCreateBy(userId);
                     rcbo.setCreateDate(dateNow);
                     rcbo.setUserId(userId);
@@ -5460,6 +5499,16 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         lastRQBo.setIsLastChange(Constants.ACTIVE_STATUS.DEACTIVE);
                         getSession().update(lastRQBo);
                     }
+
+                    //update binhnt
+//                    try {
+//                        if ("true".equals(ResourceBundleUtil.getString("send_service", "config"))) {
+//                            Helper h = new Helper();
+//                            h.sendMs_340(file.getFileId(), "Ho so ma: " + file.getFileCode() + " Da duoc phe duyet yeu cau nop phi ho so.");
+//                        }
+//                    } catch (UnsupportedEncodingException ex) {
+//                        Logger.getLogger(FilesDAOHE.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
                     getSession().save(rcbo);
 //!cap nhat noi dung thong bao - tao noi dung thong bao
 //-150120
@@ -5489,6 +5538,14 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         getSession().save(newP);
                     }
                     if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {
+//                        try {
+//                            if ("true".equals(ResourceBundleUtil.getString("send_service", "config"))) {
+//                                Helper h = new Helper();
+//                                h.sendMs_330(file.getFileId(), "Da gui cong van yeu cau sdbs");
+//                            }
+//                        } catch (UnsupportedEncodingException ex) {
+//                            Logger.getLogger(FilesDAOHE.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
                         // gui tra ho so cho doanh nghiep sua doi bo sung
                         Process newP = new Process();
                         newP.setObjectId(form.getFileId());
@@ -5520,18 +5577,26 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             try {
                                 SD = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_SD"));
                             } catch (NumberFormatException ex) {
-                                log.error(ex.getMessage());
+                                LogUtil.addLog(ex);//binhnt sonar a160901
                             }
                             if (SD > 0) {
                                 file.setDeadlineAddition(getDateWorkingTime(SD));
                             }
                         } catch (Exception ex) {
-                            log.error(ex.getMessage());
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                         //y kien lanh chuyen thanh y kien cua lanh dao
                     }
                 }
                 if (form.getStatus().equals(Constants.FILE_STATUS.APPROVED)) {
+//                    try {
+//                        if ("true".equals(ResourceBundleUtil.getString("send_service", "config"))) {
+//                            Helper h = new Helper();
+//                            h.sendMs_340(file.getFileId(), "Ho so ma: " + file.getFileCode() + " Da duoc phe duyet yeu cau nop phi ho so.");
+//                        }
+//                    } catch (UnsupportedEncodingException ex) {
+//                        Logger.getLogger(FilesDAOHE.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
                     //===============================tao giay cong bo===============
                     file.setApproveDate(dateNow);
                     ProcedureDAOHE pcdaohe = new ProcedureDAOHE();
@@ -5581,7 +5646,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                                         }
                                     }
                                 } catch (Exception ex) {
-                                    log.error(ex.getMessage());
+                                    LogUtil.addLog(ex);//binhnt sonar a160901
                                     bReturn = false;
                                 }
                             }
@@ -5645,7 +5710,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                                     }
                                 }
                             } catch (Exception ex) {
-                                log.error(ex.getMessage());
+                                LogUtil.addLog(ex);//binhnt sonar a160901
                                 bReturn = false;
                             }
                         }
@@ -5664,8 +5729,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
                 update(file);
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -5762,13 +5827,13 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                                 try {
                                     SD = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_SD"));
                                 } catch (NumberFormatException ex) {
-                                    log.error(ex.getMessage());
+                                    LogUtil.addLog(ex);//binhnt sonar a160901
                                 }
                                 if (SD > 0) {
                                     file.setDeadlineAddition(getDateWorkingTime(SD));
                                 }
                             } catch (Exception ex) {
-                                log.error(ex.getMessage());
+                                LogUtil.addLog(ex);//binhnt sonar a160901
                             }//!140627 THIET LAP HAN SDBS HO SO
                             //sms
                             MessageSmsDAOHE msdhe = new MessageSmsDAOHE();
@@ -5780,6 +5845,15 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             String msge = "";
                             msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: Đã thông báo yêu cầu sửa đổi bổ sung.";
                             msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
+
+//                            try {
+//                                if ("true".equals(ResourceBundleUtil.getString("send_service", "config"))) {
+//                                    Helper h = new Helper();
+//                                    h.sendMs_330(file.getFileId(), msge);
+//                                }
+//                            } catch (UnsupportedEncodingException ex) {
+//                                Logger.getLogger(FilesDAOHE.class.getName()).log(Level.SEVERE, null, ex);
+//                            }
                         }
                         if (status.equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE)) {
                             // Tra lai cho chuyen vien tham dinh
@@ -5967,8 +6041,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     return false;
                 }
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -5994,8 +6068,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 file.setLeaderApproveId(form.getLeaderApproveId());
                 update(file);
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -6079,8 +6153,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 getSession().save(newP);
                 update(file);
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -6123,6 +6197,15 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
                 if (form.getStatus().equals(Constants.FILE_STATUS.APPROVED)) {// Tra lai cho lanh dao don vi xem xet lai
                     file.setIsFee(0L);//bay gio tinh phi giay cong bo
+                    //update binhnt
+//                    try {
+//                        if ("true".equals(ResourceBundleUtil.getString("send_service", "config"))) {
+//                            Helper h = new Helper();
+//                            h.sendMs_340(file.getFileId(), "Ho so ma: " + file.getFileCode() + " Da duoc phe duyet yeu cau nop phi ho so.");
+//                        }
+//                    } catch (UnsupportedEncodingException ex) {
+//                        Logger.getLogger(FilesDAOHE.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
                     Process pReviewComparison = pdhe.getProcessByAction(form.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, Constants.FILE_STATUS.REVIEW_COMPARISON, Constants.FILE_STATUS.NEW_CREATE);
                     if (pReviewComparison != null) {
                         pReviewComparison.setStatus(form.getStatus());
@@ -6216,21 +6299,21 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         try {
                             SD = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_SD"));
                         } catch (NumberFormatException ex) {
-                            log.error(ex.getMessage());
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                         if (SD > 0) {
                             file.setDeadlineAddition(getDateWorkingTime(SD));
                         }
                     } catch (Exception ex) {
-                        log.error(ex.getMessage());
+                        LogUtil.addLog(ex);//binhnt sonar a160901
                     }
                     //y kien lanh chuyen thanh y kien cua lanh dao
                 }
             }
             update(file);
 
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -6356,8 +6439,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 getSession().save(newP);
                 getSession().update(file);
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -6455,7 +6538,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 update(file);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -6847,8 +6930,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     return false;
                 }
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -6886,8 +6969,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
                 getSession().save(rcbo);
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -6900,7 +6983,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             try {
                 dateNow = getSysdate();
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 return false;
             }
 
@@ -7444,13 +7527,13 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             try {
                                 SD = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_SD"));
                             } catch (NumberFormatException ex) {
-                                log.error(ex.getMessage());
+                                LogUtil.addLog(ex);//binhnt sonar a160901
                             }
                             if (SD > 0) {
                                 file.setDeadlineAddition(getDateWorkingTime(SD));
                             }
                         } catch (Exception ex) {
-                            log.error(ex.getMessage());
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }//!140627 THIET LAP HAN SDBS HO SO
                         //sms
                         /* disable send sms binhnt53 150205
@@ -7486,8 +7569,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     log.error("Lỗi hệ thống: Phân quyền xử lý hồ sơ: " + file.getFileCode());
                     return false;
                 }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -7566,8 +7649,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 
                 update(file);
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -7650,8 +7733,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 getSession().save(newP);
                 update(file);
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -7817,7 +7900,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             if (isCreateNew) {
                 bo.setIsActive(Constants.Status.INACTIVE);
                 getSession().update(bo);
@@ -7848,7 +7931,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             try {
                 dateNow = getSysdate();
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 return false;
             }
 
@@ -8091,7 +8174,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             try {
                 dateNow = getSysdate();
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 return false;
             }
 

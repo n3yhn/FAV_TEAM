@@ -7,6 +7,7 @@ package com.viettel.hqmc.DAO;
 
 import com.google.gson.JsonSyntaxException;
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.ResourceBundleUtil;
 import com.viettel.hqmc.BO.AnnouncementReceiptPaper;
 import com.viettel.hqmc.BO.Files;
@@ -73,7 +74,7 @@ public class FilesExpandDAO extends BaseDAO {
         ExportFileDAO exp = new ExportFileDAO();
         String path = exp.onExportPaperSignPlugin();
         List resultMessage = new ArrayList();
-        if (path.trim().length() > 0 && !path.equals("false")) {
+        if (path.trim().length() > 0 && !"false".equals(path)) {
             resultMessage.add("1");
             resultMessage.add("Xuất công văn SĐBS thành công");
             resultMessage.add(path);
@@ -99,7 +100,7 @@ public class FilesExpandDAO extends BaseDAO {
         SignPdfFile pdfSig = new SignPdfFile();
         try {
             fileId = getRequest().getParameter("fileId");
-            String rootCert = null, base64Certificate = null, certChain = null;
+            String rootCert = null, base64Certificate = null, certChain;
             Base64 decoder = new Base64();
             certChain = new String(decoder.decode(getRequest().getParameter("cert").replace("_", "+").getBytes()), "UTF-8");
             String sToFind = getRequest().getParameter("signType");
@@ -112,7 +113,8 @@ public class FilesExpandDAO extends BaseDAO {
                 chain = certChain.split(",");
                 rootCert = chain[1];
                 base64Certificate = chain[0];
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_001";
                 result = false;
             }
@@ -126,7 +128,8 @@ public class FilesExpandDAO extends BaseDAO {
             try {
                 x509Cert = CertUtils.getX509Cert(base64Certificate);
                 x509CertChain = CertUtils.getX509Cert(rootCert);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_003";
                 result = false;
             }
@@ -139,7 +142,8 @@ public class FilesExpandDAO extends BaseDAO {
             Long checkOCSP = Long.parseLong(checkOcspStr);
             try {
                 certSerial = x509Cert.getSerialNumber().toString(16);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_004";
                 result = false;
             }
@@ -164,7 +168,8 @@ public class FilesExpandDAO extends BaseDAO {
                         result = false;
                     }
                 }
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_007";
                 result = false;
             }
@@ -172,15 +177,15 @@ public class FilesExpandDAO extends BaseDAO {
                 String folderPath = ResourceBundleUtil.getString("sign_image");
                 String linkImageSign = folderPath + getUserId() + ".png";
                 String linkImageStamp = folderPath + "attpStamp.png";
-                if ((linkImageSign == null && linkImageSign.equals(""))
-                        || (linkImageStamp == null && linkImageStamp.equals(""))) {
+                if ((linkImageSign == null && "".equals(linkImageSign))
+                        || (linkImageStamp == null && "".equals(linkImageStamp))) {
                     errorCode = "SI_008";
                     result = false;
                 }
                 try {
-                    if (sToFind.equals("PDHS")) {
+                    if ("PDHS".equals(sToFind)) {
                         // ky lanh dao
-                        if (fileToSign == null && fileToSign.equals("")) {
+                        if (fileToSign == null && "".equals(fileToSign)) {
                             errorCode = "SI_009";
                             result = false;
                         }
@@ -201,9 +206,9 @@ public class FilesExpandDAO extends BaseDAO {
                         base64Hash = pdfSig.createHash(fileToSign, outPutFileFinal,
                                 new Certificate[]{x509Cert}, pageNumber, linkImageSign, lx + 70, ly + 130, 120, 70, "LD");
                     }
-                    if (sToFind.equals("PDHS_VT")) {
+                    if ("PDHS_VT".equals(sToFind)) {
                         // ky van thu
-                        if (fileToSign == null && fileToSign.equals("")) {
+                        if (fileToSign == null && "".equals(fileToSign)) {
                             errorCode = "SI_010";
                             result = false;
                         }
@@ -225,6 +230,7 @@ public class FilesExpandDAO extends BaseDAO {
                                 new Certificate[]{x509Cert}, pageNumber, linkImageStamp, lx + 23, ly + 115, 90, 90, "VT");
                     }
                 } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                     System.out.println("ERROR SI_012|" + ex.getMessage());
                     errorCode = "SI_012";
                     result = false;
@@ -234,13 +240,13 @@ public class FilesExpandDAO extends BaseDAO {
                 errorCode = "SI_013";
                 result = false;
             }
-        } catch (JsonSyntaxException jsonSyntaxException) {
+        } catch (JsonSyntaxException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             errorCode = "SI_014";
             result = false;
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             errorCode = "SI_015";
-            ex.printStackTrace();
-            System.out.println(ex.getMessage());
             result = false;
         } finally {
 
@@ -322,10 +328,10 @@ public class FilesExpandDAO extends BaseDAO {
                 errorCode = "SI_015";
                 result = false;
             }
-            if (parts.length == 5 && parts[0].equals("LD")) {
+            if (parts.length == 5 && "LD".equals(parts[0])) {
                 paperOnly = parts[0] + "_" + parts[1] + "_" + parts[2] + "_" + parts[3] + "_" + "2" + ".pdf";
             }
-            if (parts.length == 6 && parts[0].equals("VT")) {
+            if (parts.length == 6 && "VT".equals(parts[0])) {
                 paperOnly = parts[0] + "_" + parts[1] + "_" + parts[2] + "_" + parts[3] + "_" + parts[4] + "_" + "2" + ".pdf";
             }
             //hieptq update 106015
@@ -342,7 +348,7 @@ public class FilesExpandDAO extends BaseDAO {
             Long checkTSA = Long.parseLong(checkTsaStr);
             pdfSig = (SignPdfFile) getRequest().getSession().getAttribute("PDFSignature");
             //Hiepvv hoso SDBS sau cong bo khong can cai nay
-            if (fileName0 != null && fileName0.length() > 0 && (signType.equals("PDHS") || signType.equals("PDHS_VT"))) {
+            if (fileName0 != null && fileName0.length() > 0 && ("PDHS".equals(signType) || "PDHS_VT".equals(signType))) {
                 signatureOriginal = new String(decoder.decode(getRequest().getParameter("signDataOriginal").replace("_", "+").getBytes()), "UTF-8");
                 pdfSig0 = (SignPdfFile) getRequest().getSession().getAttribute("PDFSignature2");
             }
@@ -352,21 +358,23 @@ public class FilesExpandDAO extends BaseDAO {
             try {
                 if (checkTSA == 1l) {
                     pdfSig.insertSignatureFinal(signature, fileSignOutLink, outputFile, true);
-                    if (signType.equals("PDHS") || signType.equals("PDHS_VT")) {
+                    if ("PDHS".equals(signType) || "PDHS_VT".equals(signType)) {
                         pdfSig0.insertSignatureFinal(signatureOriginal, fileSignOutLink2, outputFileOriginal, true);
                     }
                 } else {
                     pdfSig.insertSignatureFinal(signature, fileSignOutLink, outputFile, false);
                     //Hiepvv hoso SDBS sau cong bo khong can cai nay
-                    if (fileSignOutLink2 != null && fileSignOutLink2.length() > 0 && (signType.equals("PDHS") || signType.equals("PDHS_VT"))) {
+                    if (fileSignOutLink2 != null && fileSignOutLink2.length() > 0 && ("PDHS".equals(signType) || "PDHS_VT".equals(signType))) {
                         pdfSig0.insertSignatureFinal(signatureOriginal, fileSignOutLink2, outputFileOriginal, false);
                     }
                 }
             } catch (IOException ex) {
                 errorCode = "SI_016";
                 System.out.println("IOException " + ex.toString());
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 result = false;
             } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_017";
                 System.out.println("Exception " + ex.getMessage());
                 result = false;
@@ -379,7 +387,7 @@ public class FilesExpandDAO extends BaseDAO {
                         result = false;
                     }
                     //Hiepvv SDBS sau cong bo khong co file 2
-                    if ((signType.equals("PDHS") || signType.equals("PDHS_VT"))
+                    if (("PDHS".equals(signType) || "PDHS_VT".equals(signType))
                             && fileSignOutLink2 != null && fileSignOutLink2.length() > 0) {
                         if (deleteFile(copyPath + paperOnly)) {
                             System.out.println("Deleted file: " + copyPath + paperOnly);
@@ -401,6 +409,7 @@ public class FilesExpandDAO extends BaseDAO {
                         result = false;
                     }
                 } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                     System.out.println("Delete file fail ! " + ex.toString());
                 }
             }
@@ -410,7 +419,7 @@ public class FilesExpandDAO extends BaseDAO {
                     errorCode = "SI_022";
                     result = false;
                 }
-                if ((signType.equals("PDHS") || signType.equals("PDHS_VT"))
+                if (("PDHS".equals(signType) || "PDHS_VT".equals(signType))
                         //Hiepvv
                         && fileSignOutLink2 != null && fileSignOutLink2.length() > 0) {
                     if (updateSignPlugin(paperOnly, subDir, uploadPath) == false) {
@@ -419,10 +428,12 @@ public class FilesExpandDAO extends BaseDAO {
                     }
                 }
             } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 errorCode = "SI_024";
                 result = false;
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             errorCode = "SI_025";
             result = false;
 
@@ -587,7 +598,8 @@ public class FilesExpandDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, ex);
             result = false;
         }
         return result;
@@ -602,9 +614,7 @@ public class FilesExpandDAO extends BaseDAO {
             if (fileId != null && fileId > 0L) {
 
                 f = fDAO.findById(fileId);
-
-                Procedure pro = new Procedure();
-                pro = pdhe.findById(f.getFileType());
+                Procedure pro = pdhe.findById(f.getFileType());
                 String typePro = "";
                 if (pro != null) {
                     typePro = pro.getDescription();
@@ -614,10 +624,8 @@ public class FilesExpandDAO extends BaseDAO {
                     boolean isCheck = false;
 
                     VoAttachs vAtt = new VoAttachs();
-                    VoAttachs voUpload = new VoAttachs();
-
-                    List<VoAttachs> lstVoAtt = new ArrayList<>();
-                    lstVoAtt = vDAO.getLstVoAttachByObjectId(fileId);
+                    VoAttachs voUpload;
+                    List<VoAttachs> lstVoAtt = vDAO.getLstVoAttachByObjectId(fileId);
                     if (lstVoAtt != null && lstVoAtt.size() > 0) {
                         //Check văn thư đóng dấu trả doanh nghiệp
                         for (int i = 0; i < lstVoAtt.size(); i++) {
@@ -670,8 +678,9 @@ public class FilesExpandDAO extends BaseDAO {
                     }
                 }
             }
-        } catch (Exception exc) {
-            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, exc);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, exc);
             return false;
         }
         return true;
@@ -686,7 +695,8 @@ public class FilesExpandDAO extends BaseDAO {
                     result = false;
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             result = false;
         }
         return result;
@@ -737,7 +747,8 @@ public class FilesExpandDAO extends BaseDAO {
             jsonDataGrid.setItems(resultMessage);
             return GRID_DATA;
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(FilesExpandDAO.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(FilesExpandDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return GRID_DATA;
     }
@@ -796,9 +807,10 @@ public class FilesExpandDAO extends BaseDAO {
             edhe.insertEventLog("Phê duyệt hồ sơ", "hồ sơ có id=" + createForm.getFileId(), getRequest());
             getSession().getTransaction().commit();
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Phê duyệt không thành công");
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
         }
 
         jsonDataGrid.setItems(resultMessage);

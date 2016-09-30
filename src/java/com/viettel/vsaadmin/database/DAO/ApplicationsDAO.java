@@ -4,8 +4,8 @@
  */
 package com.viettel.vsaadmin.database.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
-import com.viettel.dojoTag.DojoJSON;
 import com.viettel.voffice.database.DAO.BaseDAO;
 import com.viettel.voffice.database.DAO.GridResult;
 import com.viettel.vsaadmin.client.form.ApplicationsForm;
@@ -26,6 +26,7 @@ import viettel.passport.client.UserToken;
  * @author GPDN_THANHHH1
  */
 public class ApplicationsDAO extends BaseDAO {
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ApplicationsDAO.class);
     private static final String PREPARE = "prepare";
     private static final String SEARCH_PAGE = "applicationSearch";
@@ -70,7 +71,7 @@ public class ApplicationsDAO extends BaseDAO {
             }
             getRequest().getSession().setAttribute("applicationsForm", this.applicationsForm);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return PREPARE;
@@ -80,7 +81,7 @@ public class ApplicationsDAO extends BaseDAO {
         try {
             this.jsonDataGrid.setItems(new ArrayList());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "gridData";
     }
@@ -96,7 +97,7 @@ public class ApplicationsDAO extends BaseDAO {
             }
             getRequest().getSession().setAttribute("applicationsForm", this.applicationsForm);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "gridData";
     }
@@ -108,7 +109,7 @@ public class ApplicationsDAO extends BaseDAO {
                 lst = (List) getRequest().getSession().getAttribute("lstErrorTokens");
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         this.jsonDataGrid.setItems(lst);
@@ -120,7 +121,7 @@ public class ApplicationsDAO extends BaseDAO {
 
         List customInfo = new ArrayList();
 
-        UserToken vsaUserToken = (UserToken) getRequest().getSession().getAttribute("vsaUserToken");
+//        UserToken vsaUserToken = (UserToken) getRequest().getSession().getAttribute("vsaUserToken");
         try {
             session = getSession();
             try {
@@ -137,15 +138,16 @@ public class ApplicationsDAO extends BaseDAO {
                 } catch (Exception ex) {
                     customInfo.add("error");
                     customInfo.add(ex.getMessage());
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                 }
                 GridResult result = getListApp(null);
                 this.jsonDataGrid.setItems(result.getLstResult());
                 this.jsonDataGrid.setTotalRows(result.getnCount().intValue());
             } catch (Exception ex) {
-//                this.log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         } catch (Exception ex) {
-//            this.log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         this.jsonDataGrid.setCustomInfo(customInfo);
         return "gridData";
@@ -156,8 +158,7 @@ public class ApplicationsDAO extends BaseDAO {
         GridResult result = null;
         try {
             Session session = getSession();
-            Criteria cri = session.createCriteria(Applications.class);
-
+            session.createCriteria(Applications.class);
 
             String countHQL = "select count(a) ";
             String searchHQL = "select a ";
@@ -182,7 +183,6 @@ public class ApplicationsDAO extends BaseDAO {
                 lstParam.add("%" + StringUtils.escapeSql(applicationsForm.getDescription()) + "%");
             }
 
-
             if (applicationsForm != null && (applicationsForm.getStatus() != null) && (!applicationsForm.getStatus().equals(Long.valueOf(10L)))) {
                 query += " AND a.status=?";
                 lstParam.add(applicationsForm.getStatus());
@@ -202,9 +202,7 @@ public class ApplicationsDAO extends BaseDAO {
             lst = searchQuery.list();
             result = new GridResult(total, lst);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
-        } catch (Throwable ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return result;
@@ -222,6 +220,7 @@ public class ApplicationsDAO extends BaseDAO {
             temp.setStatus(1L);
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return temp;
     }
@@ -229,13 +228,13 @@ public class ApplicationsDAO extends BaseDAO {
     public String onDelete() throws Exception {
         List customInfo = new ArrayList();
         String result = "";
-
+        /* sonar
         UserToken vsaUserToken = (UserToken) getRequest().getSession().getAttribute("vsaUserToken");
         String currentUserName = "";
         if (vsaUserToken != null) {
             currentUserName = vsaUserToken.getUserName();
         }
-
+         */
         String appIds = "";
         ApplicationsForm appForm;
         for (int i = 0; i < this.applicationFormOnGrid.size(); i++) {
@@ -267,7 +266,7 @@ public class ApplicationsDAO extends BaseDAO {
                 query.executeUpdate();
                 getSession().getTransaction().commit();
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         }
         customInfo.add("deleteSucc");
@@ -280,6 +279,7 @@ public class ApplicationsDAO extends BaseDAO {
             this.jsonDataGrid.setTotalRows(gridResult.getnCount().intValue());
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             throw ex;
 //            this.log.error("not get the list[" + ex.getMessage() + "]");
         }
@@ -317,7 +317,7 @@ public class ApplicationsDAO extends BaseDAO {
                 getSession().delete(utnbo);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -326,14 +326,15 @@ public class ApplicationsDAO extends BaseDAO {
         if (this.applicationsForm != null) {
             lockComment = this.applicationsForm.getLockDescription();
         }
-        List lst = new ArrayList();
         List customInfo = new ArrayList();
-
+        /*sonar
+        List lst = new ArrayList();       
         UserToken vsaUserToken = (UserToken) getRequest().getSession().getAttribute("vsaUserToken");
         String currentUserName = "";
         if (vsaUserToken != null) {
             currentUserName = vsaUserToken.getUserName();
         }
+         */
 
 //     for (int i = 0; i < this.gridApplicationForm.getAppId().size(); i++) {
 //       String appCode = (String)this.gridApplicationForm.getAppCode().get(i);
@@ -359,7 +360,7 @@ public class ApplicationsDAO extends BaseDAO {
                 lock(strAppId, lockComment);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         try {
             GridResult gridResult = getListApp(this.applicationsForm);
@@ -367,10 +368,10 @@ public class ApplicationsDAO extends BaseDAO {
             this.jsonDataGrid.setTotalRows(gridResult.getnCount().intValue());
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
 //            this.log.error("not get the list[" + ex.getMessage() + "]");
         }
-		customInfo.add("locksucc");
+        customInfo.add("locksucc");
         this.jsonDataGrid.setCustomInfo(customInfo);
         return "gridData";
     }
@@ -387,28 +388,30 @@ public class ApplicationsDAO extends BaseDAO {
         try {
             Query query = getSession().createQuery(hql);
             int paramSize = params.size();
-            for(int i = 0; i < paramSize; i++){
+            for (int i = 0; i < paramSize; i++) {
                 query.setParameter(i, params.get(i));
             }
             try {
                 query.executeUpdate();
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
     public String onUnlock() {
-        List lst = new ArrayList();
+//        List lst = new ArrayList();
         List customInfo = new ArrayList();
-
+        /*sonar
         UserToken vsaUserToken = (UserToken) getRequest().getSession().getAttribute("vsaUserToken");
+        
         String currentUserName = "";
         if (vsaUserToken != null) {
             currentUserName = vsaUserToken.getUserName();
         }
+         */
 
         //Ghi lai event cua user
 //        for (int i = 0; i < this.gridApplicationForm.getAppId().size(); i++) {
@@ -420,7 +423,6 @@ public class ApplicationsDAO extends BaseDAO {
 //                this.log.error(ex.getMessage());
 //            }
 //        }
-
         try {
             String strAppId = "";
             ApplicationsForm appForm;
@@ -434,17 +436,17 @@ public class ApplicationsDAO extends BaseDAO {
                 unLock(strAppId);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         try {
             GridResult gridResult = getListApp(this.applicationsForm);
             this.jsonDataGrid.setItems(gridResult.getLstResult());
             this.jsonDataGrid.setTotalRows(gridResult.getnCount().intValue());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
 //            this.log.error("not get the list[" + ex.getMessage() + "]");
         }
-		customInfo.add("unLocksucc");
+        customInfo.add("unLocksucc");
         this.jsonDataGrid.setCustomInfo(customInfo);
         return "gridData";
     }
@@ -459,17 +461,17 @@ public class ApplicationsDAO extends BaseDAO {
         try {
             Query query = getSession().createQuery(hql);
             int paramSize = params.size();
-            for(int i = 0; i < paramSize; i++){
+            for (int i = 0; i < paramSize; i++) {
                 query.setParameter(i, params.get(i));
             }
             try {
                 query.executeUpdate();
                 getSession().getTransaction().commit();
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 }

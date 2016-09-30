@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAOHE;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.BO.ConfirmImportSatistPaper;
 import com.viettel.hqmc.FORM.ConfirmImportSatistPaperForm;
@@ -43,6 +44,7 @@ public class ConfirmImportSatistPaperDAOHE extends GenericDAOHibernate<ConfirmIm
             lstFactory.remove(type);
         }
     }
+
     /*
      *
      */
@@ -61,19 +63,19 @@ public class ConfirmImportSatistPaperDAOHE extends GenericDAOHibernate<ConfirmIm
         List lstParam = new ArrayList();
         if (form != null) {
             //code filter here
-            if (form.getProductName()!= null && form.getProductName().trim().length() > 0) {
+            if (form.getProductName() != null && form.getProductName().trim().length() > 0) {
                 hql += " and lower(t.productName) like ? ESCAPE '/' ";
                 lstParam.add(StringUtils.toLikeString(form.getProductName().trim()));
             }
-            if (form.getProductCode()!= null && form.getProductCode().trim().length() > 0) {
+            if (form.getProductCode() != null && form.getProductCode().trim().length() > 0) {
                 hql += " and lower(t.productCode) like ? ESCAPE '/' ";
                 lstParam.add(StringUtils.toLikeString(form.getProductCode().trim()));
             }
-            if (form.getImportBusinessName()!= null && form.getImportBusinessName().trim().length() > 0) {
+            if (form.getImportBusinessName() != null && form.getImportBusinessName().trim().length() > 0) {
                 hql += " and lower(t.importBusinessName) like ? ESCAPE '/' ";
                 lstParam.add(StringUtils.toLikeString(form.getImportBusinessName().trim()));
             }
-            if (form.getExportBusinessName()!= null && form.getExportBusinessName().trim().length() > 0) {
+            if (form.getExportBusinessName() != null && form.getExportBusinessName().trim().length() > 0) {
                 hql += " and lower(t.exportBusinessName) like ? ESCAPE '/' ";
                 lstParam.add(StringUtils.toLikeString(form.getExportBusinessName().trim()));
             }
@@ -93,6 +95,7 @@ public class ConfirmImportSatistPaperDAOHE extends GenericDAOHibernate<ConfirmIm
         GridResult gr = new GridResult(total, lstResult);
         return gr;
     }
+
     /*
      * 
      */
@@ -120,7 +123,8 @@ public class ConfirmImportSatistPaperDAOHE extends GenericDAOHibernate<ConfirmIm
             lstConfirmImportSatistPaper = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<ConfirmImportSatistPaper>();
         }
 //        lstCategoryFactory.put(type, lstResult);
@@ -156,6 +160,7 @@ public class ConfirmImportSatistPaperDAOHE extends GenericDAOHibernate<ConfirmIm
         }
         return bReturn;
     }
+
     /*
      * 
      */

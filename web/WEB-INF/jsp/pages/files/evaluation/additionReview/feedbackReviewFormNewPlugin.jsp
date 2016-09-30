@@ -178,7 +178,7 @@
         var count = 0;
         var cert;
         onSendFRFtoVT = function() {
-            if (page.validateOnSendFRFtoVT()) {
+            if (page.validateOnSendFRFtoVTPlugin()) {
                 var fileId = dijit.byId("feedbackReviewFormNew.fileId").getValue();
                 document.getElementById('trWait').innerHTML = "Hệ thống đang thực hiện phê duyệt:" + (signIndex + 1) + "/" + itemsToSign.length + " hồ sơ  ";
                 document.getElementById("divSignProcess").style.display = "";
@@ -271,7 +271,7 @@
             return(strText);
         };
 
-        page.validateOnSendFRFtoVT = function() {
+        page.validateOnSendFRFtoVTPlugin = function() {
             document.getElementById("feedbackReviewFormNew.sendVt").checked = true;
             document.getElementById("feedbackReviewFormNew.statusDeny").checked = false;
             var leaderStaffRequest = dijit.byId("feedbackReviewFormNew.leaderStaffRequest").getValue();

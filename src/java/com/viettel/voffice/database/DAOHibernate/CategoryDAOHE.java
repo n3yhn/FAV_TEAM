@@ -7,6 +7,7 @@ package com.viettel.voffice.database.DAOHibernate;
 import com.viettel.common.util.StringUtils;
 import com.viettel.voffice.client.form.CategorySearchForm;
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.Procedure;
 import com.viettel.voffice.database.BO.Category;
 import com.viettel.voffice.database.DAO.GridResult;
@@ -64,7 +65,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
             }
 
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<Category>();
         }
         lstCategoryFactory.put(type, lstCategory);
@@ -96,7 +97,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
             }
 
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<Category>();
         }
         lstCategoryFactory.put(type, lstCategory);
@@ -118,7 +119,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
             }
 
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return -1l;
         }
         return lstProcedure.get(0).getTypeFee();
@@ -134,7 +135,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
                 lstPosition = query.list();
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<Category>();
         }
 //        lstCategoryFactory.put(type, lstResult);
@@ -151,7 +152,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
             Query query = getSession().createQuery(stringBuilder.toString());
             lstPosition = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<Category>();
         }
 //        lstCategoryFactory.put(type, lstResult);
@@ -172,7 +173,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
             query.setParameter(0, posName.trim().toLowerCase());
             lstPosition = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<Long>();
         }
         return lstPosition;
@@ -202,7 +203,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
                 }
             }
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<Category>();
         }
         return lstCategory;
@@ -229,7 +230,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return item;
     }
@@ -257,7 +258,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
             lstCategoryFull.addAll(lstCategory);
             return lstCategoryFull;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -287,7 +288,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
             lstCategoryFull.addAll(lstCategory);
             return lstCategoryFull;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -370,7 +371,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
             count.set(total);
             return lstCategory;
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -416,7 +417,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
                 return lstCategory.get(0);
             }
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return null;
@@ -484,7 +485,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
                 return category.getName();
             }
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "";
         }
         return "";
@@ -501,7 +502,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
             query.setParameter(1, categoryName.toLowerCase());
             category = query.list();
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return category;
     }
@@ -587,7 +588,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
             List<Category> lstCategory = query.list();
             return lstCategory.get(0);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -601,7 +602,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
             List<Category> lstCategory = query.list();
             return lstCategory;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }

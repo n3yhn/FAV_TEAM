@@ -9,6 +9,7 @@ import com.viettel.voffice.database.BO.Category;
 import com.viettel.voffice.database.DAOHibernate.GenericDAOHibernate;
 import java.util.List;
 import org.hibernate.Query;
+import com.viettel.common.util.LogUtil;
 
 /**
  *
@@ -32,7 +33,7 @@ public class ProcedureDepartmentDAOHE extends GenericDAOHibernate<ProcedureDepar
             query.setParameter(0, "1");
             lstCategory = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return lstCategory;
     }
@@ -48,7 +49,7 @@ public class ProcedureDepartmentDAOHE extends GenericDAOHibernate<ProcedureDepar
             query.setParameter(0, procedureId);
             lstCategory = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return lstCategory;
     }

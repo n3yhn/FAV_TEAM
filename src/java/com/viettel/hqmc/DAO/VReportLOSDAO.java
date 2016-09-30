@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.DAOHE.VReportLOSDAOHE;
 import com.viettel.hqmc.DAOHE.VReportStaffProcessDAOHE;
 import com.viettel.hqmc.FORM.CategoryTypeForm;
@@ -35,7 +36,8 @@ public class VReportLOSDAO extends BaseDAO {
         try {
             //todo code here
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return this.forwardPage;
     }

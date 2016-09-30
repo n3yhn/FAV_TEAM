@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.VietnameseStandard;
 import com.viettel.hqmc.DAOHE.VietnameseStandardDAOHE;
 import com.viettel.hqmc.FORM.VietnameseStandardForm;
@@ -49,6 +50,7 @@ public class VietnameseStandardDAO extends BaseDAO {
             lstCategory.add(0, new Category(0l, "--- Chọn ---"));
             getRequest().setAttribute("lstStandardType", lstCategory);
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             log.error(ex.getMessage());
         }
         return this.forwardPage;
@@ -111,6 +113,7 @@ public class VietnameseStandardDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật không thành công");
         }
@@ -143,7 +146,8 @@ public class VietnameseStandardDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
+LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Xóa không thành công");
         }

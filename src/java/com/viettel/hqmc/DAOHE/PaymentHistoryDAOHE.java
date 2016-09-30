@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.DAOHE;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.BO.PaymentHistory;
 import com.viettel.hqmc.FORM.PaymentHistoryForm;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
+
 
 /**
  *
@@ -119,7 +121,7 @@ public class PaymentHistoryDAOHE extends GenericDAOHibernate<PaymentHistory, Lon
             lstPaymentHistory = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<PaymentHistory>();
         }
 //        lstCategoryFactory.put(type, lstResult);
@@ -197,8 +199,8 @@ public class PaymentHistoryDAOHE extends GenericDAOHibernate<PaymentHistory, Lon
             }
             GridResult result = new GridResult(nCount, list);
             return result;
-        } catch (Exception e) {
-            e.getMessage();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -222,8 +224,8 @@ public class PaymentHistoryDAOHE extends GenericDAOHibernate<PaymentHistory, Lon
             for (PaymentHistory bo : lst) {
                 result += bo.getIncome();
             }
-        } catch (Exception e) {
-            e.getMessage();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return result;
     }

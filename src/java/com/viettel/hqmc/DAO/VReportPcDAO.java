@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.DAOHE.VReportPcDAOHE;
 import com.viettel.hqmc.FORM.FilesForm;
 import com.viettel.voffice.database.DAO.BaseDAO;
@@ -31,7 +32,8 @@ public class VReportPcDAO extends BaseDAO {
         try {
             //todo code here
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return this.forwardPage;
     }
@@ -47,7 +49,7 @@ public class VReportPcDAO extends BaseDAO {
 
         return GRID_DATA;
     }
-    
+
     public String onsearchReportLProcess() {//141215u binhnt53
         getGridInfo();
         VReportPcDAOHE bdhe = new VReportPcDAOHE();

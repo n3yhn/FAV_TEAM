@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.DAOHE;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.BO.CaUser;
 import com.viettel.hqmc.FORM.CaUserForm;
@@ -70,9 +71,10 @@ public class CaUserDAOHE extends GenericDAOHibernate<CaUser, Long> {
             lstCaUser = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<CaUser>();
-           
+
         }
 //        lstCategoryFactory.put(type, lstResult);
         lstFactory.put("type", lstCaUser);
@@ -101,7 +103,8 @@ public class CaUserDAOHE extends GenericDAOHibernate<CaUser, Long> {
                 }
             }
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
 
         return false;
@@ -129,7 +132,8 @@ public class CaUserDAOHE extends GenericDAOHibernate<CaUser, Long> {
                 }
             }
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
 
         return false;
@@ -197,14 +201,16 @@ public class CaUserDAOHE extends GenericDAOHibernate<CaUser, Long> {
             lstCaUser = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<CaUser>();
         }
 //        lstCategoryFactory.put(type, lstResult);
         return lstCaUser;
     }
 //a 16 07 29
-    public List<CaUser> findCaUserBySerialUser(String serial,String userName) {
+
+    public List<CaUser> findCaUserBySerialUser(String serial, String userName) {
 
         List<CaUser> lstCaUser = null;
         try {
@@ -216,13 +222,15 @@ public class CaUserDAOHE extends GenericDAOHibernate<CaUser, Long> {
             lstCaUser = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return new ArrayList<CaUser>();
         }
 //        lstCategoryFactory.put(type, lstResult);
         return lstCaUser;
     }
 //!a 16 07 29
+
     public List getKeyList() {
         return keyList;
     }

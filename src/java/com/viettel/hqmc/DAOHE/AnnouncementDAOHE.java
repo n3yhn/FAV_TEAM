@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAOHE;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.Announcement;
 import com.viettel.hqmc.FORM.AnnouncementForm;
 import com.viettel.voffice.database.DAO.GridResult;
@@ -83,15 +84,16 @@ public class AnnouncementDAOHE extends GenericDAOHibernate<Announcement, Long> {
             if (!lstObj.isEmpty()) {
                 bo = lstObj.get(0);
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
         }
         return bo;
     }
+
     /*
      *
      */
-
     /**
      * tim kiem ban cong bo
      *
@@ -121,10 +123,10 @@ public class AnnouncementDAOHE extends GenericDAOHibernate<Announcement, Long> {
         GridResult gr = new GridResult(total, lstResult);
         return gr;
     }
+
     /*
      *
      */
-
     /**
      * tim kiem ban cong bo
      *
@@ -149,7 +151,8 @@ public class AnnouncementDAOHE extends GenericDAOHibernate<Announcement, Long> {
             lstAnnouncement = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<Announcement>();
         }
 //        lstCategoryFactory.put(type, lstResult);
@@ -230,15 +233,16 @@ public class AnnouncementDAOHE extends GenericDAOHibernate<Announcement, Long> {
             Query query = getSession().createQuery(hql);
             query.setParameter(0, objId);
             return query.executeUpdate();
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
             return 0;
         }
     }
+
     /*
      * =========================================================================
      */
-
     public List getKeyList() {
         return keyList;
     }

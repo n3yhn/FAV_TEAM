@@ -6,6 +6,7 @@ package com.viettel.voffice.database.DAOHibernate;
 
 import com.viettel.common.util.Constants;
 import com.viettel.common.util.DateTimeUtils;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.Files;
 import com.viettel.hqmc.DAOHE.FilesDAOHE;
 import com.viettel.hqmc.FORM.ProcessReportForm;
@@ -14,7 +15,6 @@ import com.viettel.voffice.database.BO.Process;
 import com.viettel.voffice.database.DAO.BaseDAO;
 import com.viettel.voffice.database.DAO.GridResult;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +51,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             query.setParameter(4, userId);
             query.executeUpdate();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -68,7 +68,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             query.setParameter(3, departmentId);
             query.executeUpdate();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
         }
         return bReturn;
@@ -109,7 +109,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             GridResult result = new GridResult(total, lst);
             return result;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -333,15 +333,13 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
                 getSession().save(item);
             }
 
-        } else {
-            if (!isExist(item.getObjectId(), item.getReceiveGroupId(), item.getReceiveUserId())) {
-                Process oldItem = getProcessNotAssignUSer(item.getObjectId(), item.getReceiveGroupId());
-                if (oldItem != null) {
-                    oldItem.setReceiveUserId(item.getReceiveUserId());
-                    getSession().update(oldItem);
-                } else {
-                    getSession().save(item);
-                }
+        } else if (!isExist(item.getObjectId(), item.getReceiveGroupId(), item.getReceiveUserId())) {
+            Process oldItem = getProcessNotAssignUSer(item.getObjectId(), item.getReceiveGroupId());
+            if (oldItem != null) {
+                oldItem.setReceiveUserId(item.getReceiveUserId());
+                getSession().update(oldItem);
+            } else {
+                getSession().save(item);
             }
         }
         getSession().flush();
@@ -376,7 +374,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
 
     public boolean deleteProcessNotIn(Long userId, Long deptId, Long objectId, Long objectType, String ids) {
         try {
-            String hql = "";
+            String hql;
             if (!ids.equals("")) {
                 ids = "(" + ids + ")";
                 hql = "UPDATE Process p SET p.isActive=0 WHERE (p.sendUserId=? and p.sendGroupId =? ) and p.objectId=? and p.objectType=? and p.processId NOT IN " + ids;
@@ -390,8 +388,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             query.setParameter(3, objectType);
             query.executeUpdate();
             return true;
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return false;
         }
     }
@@ -410,8 +408,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
                 return lst.get(0);
             }
             return null;
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -426,8 +424,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             query.setParameter(3, objectType);
             query.setParameter(4, processType);
             return query.list();
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -572,7 +570,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             bo.setReceiveUserId(form.getReceiveUserId());
             bo.setReceiveUser(form.getReceiveUser());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -626,7 +624,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             count.set(total);
             return lstProcesses;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -648,7 +646,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
         try {
             lst = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         Process result = null;
         if (lst != null && lst.size() > 0) {
@@ -672,7 +670,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
         try {
             lst = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         Process result = null;
         if (lst != null && lst.size() > 0) {
@@ -696,7 +694,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
         try {
             lst = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         Process result = null;
         if (lst != null && lst.size() > 0) {
@@ -718,9 +716,9 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
         try {
             lst = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
-        Process result = null;
+        Process result;
         if (lst != null && lst.size() > 0) {
             result = lst.get(0);
         } else {
@@ -738,7 +736,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             try {
                 lst = query.list();
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
             result = null;
             if (lst != null && lst.size() > 0) {
@@ -763,9 +761,9 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
         try {
             lst = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
-        Process result = null;
+        Process result;
         if (lst != null && lst.size() > 0) {
             result = lst.get(lst.size() - 1);
         } else {
@@ -783,7 +781,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             try {
                 lst = query.list();
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
             result = null;
             if (lst != null && lst.size() > 0) {
@@ -807,7 +805,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
         try {
             lst = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         Process result = null;
         if (lst != null && lst.size() > 0) {
@@ -851,7 +849,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
         try {
             lst = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         Process result = null;
         if (lst != null && lst.size() > 0) {
@@ -873,7 +871,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
         try {
             lst = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return lst;
@@ -893,7 +891,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
         try {
             lst = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         Process result = null;
         if (lst != null && lst.size() > 0) {
@@ -919,7 +917,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
         try {
             lst = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         Process result = null;
         if (lst != null && lst.size() > 0) {
@@ -942,7 +940,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
         try {
             lst = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         Process result = null;
         if (lst != null && lst.size() > 0) {
@@ -964,7 +962,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             query.setParameter(3, sendGroupId);
             lst = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return lst;
@@ -983,7 +981,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             query.setParameter(3, sendUserId);
             lst = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return lst;
     }
@@ -1001,7 +999,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             lst = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return lst;
     }
@@ -1123,7 +1121,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             listParam.add(objectType);
         }
 
-        String sortType = null;
+        String sortType;
         if (sortField != null && !"receiveGroup".equals(sortField) && !"-receiveGroup".equals(sortField)) {
             if (sortField.indexOf('-') != -1) {
                 sortType = " desc";
@@ -1232,8 +1230,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
                 process.setStatus(Constants.PROCESS_STATUS.BOOKED);
                 this.update(process);
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
     }
@@ -1253,8 +1251,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             if (!lst.isEmpty()) {
                 return lst;
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -1274,8 +1272,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             if (!lst.isEmpty()) {
                 return lst;
             }
-        } catch (HibernateException e) {
-            log.error(e);
+        } catch (HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -1295,8 +1293,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             if (!lst.isEmpty()) {
                 return lst;
             }
-        } catch (HibernateException e) {
-            log.error(e);
+        } catch (HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -1317,8 +1315,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             if (!lst.isEmpty()) {
                 return lst.get(0);
             }
-        } catch (HibernateException en) {
-            log.error(en.getMessage());
+        } catch (HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -1336,8 +1334,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             if (!lst.isEmpty()) {
                 return lst.get(0);
             }
-        } catch (HibernateException en) {
-            log.error(en.getMessage());
+        } catch (HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -1356,8 +1354,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             if (!lst.isEmpty()) {
                 return lst.get(0);
             }
-        } catch (HibernateException en) {
-            log.error(en.getMessage());
+        } catch (HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
     }
@@ -1411,8 +1409,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
                     this.update(process);
                 }
             }
-        } catch (HibernateException en) {
-            log.error(en.getMessage());
+        } catch (HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -1432,8 +1430,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             if (count > 0) {
                 result = true;
             }
-        } catch (HibernateException en) {
-            log.error(en.getMessage());
+        } catch (HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
 
         }
         return result;
@@ -1457,8 +1455,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
                     this.update(process);
                 }
             }
-        } catch (HibernateException en) {
-            log.error(en.getMessage());
+        } catch (HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -1474,8 +1472,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             query.setParameter(3, deptId);
             Long result = (Long) query.uniqueResult();
             return result;
-        } catch (HibernateException en) {
-            log.error(en.getMessage());
+        } catch (HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return 0L;
     }
@@ -1494,8 +1492,8 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
 
             Long result = (Long) query.uniqueResult();
             return result;
-        } catch (HibernateException en) {
-            log.error(en.getMessage());
+        } catch (HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return 0L;
     }
@@ -1518,7 +1516,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
             }
 
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return item;
     }
@@ -1540,7 +1538,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
                 item = lstCategory.get(0);
             }
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return item;
     }
@@ -1558,7 +1556,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
                 item = lst.get(0);
             }
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return item;
     }
@@ -1589,7 +1587,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
                 item = lstCategory.get(0);
             }
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return item;
     }
@@ -1647,21 +1645,17 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
                                         item.setStatusOne(Long.parseLong(row[2].toString()));
                                     }
                                 }
-                            } else {
-                                if (processStatus != null && (processStatus.equals(Constants.FILE_STATUS.EVALUATED_TO_ADD))) {
-                                    if (item.getStatusTwo() != null) {
-                                        item.setStatusTwo(Long.parseLong(row[2].toString()) + item.getStatusTwo());
-                                    } else {
-                                        item.setStatusTwo(Long.parseLong(row[2].toString()));
-                                    }
+                            } else if (processStatus != null && (processStatus.equals(Constants.FILE_STATUS.EVALUATED_TO_ADD))) {
+                                if (item.getStatusTwo() != null) {
+                                    item.setStatusTwo(Long.parseLong(row[2].toString()) + item.getStatusTwo());
                                 } else {
-                                    if (processStatus != null) {
-                                        if (item.getStatusThree() != null) {
-                                            item.setStatusThree(Long.parseLong(row[2].toString()) + item.getStatusThree());
-                                        } else {
-                                            item.setStatusThree(Long.parseLong(row[2].toString()));
-                                        }
-                                    }
+                                    item.setStatusTwo(Long.parseLong(row[2].toString()));
+                                }
+                            } else if (processStatus != null) {
+                                if (item.getStatusThree() != null) {
+                                    item.setStatusThree(Long.parseLong(row[2].toString()) + item.getStatusThree());
+                                } else {
+                                    item.setStatusThree(Long.parseLong(row[2].toString()));
                                 }
                             }
                         }
@@ -1676,14 +1670,10 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
                                 if (row[2] != null && !"".equals(row[2])) {
                                     item.setStatusOne(Long.parseLong(row[2].toString()));
                                 }
-                            } else {
-                                if (status != null && (status.equals(Constants.FILE_STATUS.EVALUATED_TO_ADD))) {
-                                    item.setStatusTwo(Long.parseLong(row[2].toString()));
-                                } else {
-                                    if (status != null) {
-                                        item.setStatusThree(Long.parseLong(row[2].toString()));
-                                    }
-                                }
+                            } else if (status != null && (status.equals(Constants.FILE_STATUS.EVALUATED_TO_ADD))) {
+                                item.setStatusTwo(Long.parseLong(row[2].toString()));
+                            } else if (status != null) {
+                                item.setStatusThree(Long.parseLong(row[2].toString()));
                             }
                         }
                         result.put(item.getReceiveUserId(), item);

@@ -1,5 +1,6 @@
 package com.viettel.ws.BO;
 
+import com.viettel.ws.ANNOUCERECEIVE.ANNOUNCESENDDtoType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -15,7 +16,10 @@ import javax.xml.bind.annotation.XmlType;
     "dnRequestDelete320",
     "cbRequestChange330",
     "feeNotice340",
-    "permit370"
+    "permit370",
+    "syncFileStatus312",
+    "syncFileStatus311",
+    "ANNOUNCESENDDtoType"
 })
 public class Content {
 
@@ -53,6 +57,15 @@ public class Content {
 
     @XmlElement(name = "permit370")
     private PERMIT_370 permit370;
+//syncFileStatus312
+    @XmlElement(name = "syncFileStatus312")
+    private SyncFileStatus312 syncFileStatus312;
+    //syncFileStatus312
+    @XmlElement(name = "syncFileStatus311")
+    private SyncFileStatus311 syncFileStatus311;
+//ANNOUNCESENDDtoType
+    @XmlElement(name = "ANNOUNCESENDDtoType")
+    private ANNOUNCESENDDtoType ANNOUNCESENDDtoType;
 
     public ProfilePublishedCosmetics getProfilePublishedCosmetics() {
         return profilePublishedCosmetics;
@@ -124,6 +137,30 @@ public class Content {
 
     public void setPermit370(PERMIT_370 permit370) {
         this.permit370 = permit370;
+    }
+
+    public SyncFileStatus312 getSyncFileStatus312() {
+        return syncFileStatus312;
+    }
+
+    public void setSyncFileStatus312(SyncFileStatus312 syncFileStatus312) {
+        this.syncFileStatus312 = syncFileStatus312;
+    }
+
+    public SyncFileStatus311 getSyncFileStatus311() {
+        return syncFileStatus311;
+    }
+
+    public void setSyncFileStatus311(SyncFileStatus311 syncFileStatus311) {
+        this.syncFileStatus311 = syncFileStatus311;
+    }
+
+    public ANNOUNCESENDDtoType getANNOUNCESENDDtoType() {
+        return ANNOUNCESENDDtoType;
+    }
+
+    public void setANNOUNCESENDDtoType(ANNOUNCESENDDtoType ANNOUNCESENDDtoType) {
+        this.ANNOUNCESENDDtoType = ANNOUNCESENDDtoType;
     }
 
 }

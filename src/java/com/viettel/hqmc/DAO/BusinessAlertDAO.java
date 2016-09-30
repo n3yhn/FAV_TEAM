@@ -6,6 +6,7 @@
 package com.viettel.hqmc.DAO;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.BusinessAlert;
 import com.viettel.hqmc.DAOHE.BusinessAlertDAOHE;
 import com.viettel.hqmc.FORM.BusinessAlertForm;
@@ -30,8 +31,8 @@ public class BusinessAlertDAO extends BaseDAO {
         getGridInfo();
         String strReturn = ERROR_PERMISSION;
         GridResult gridResult = new GridResult(0, new ArrayList());
-        BusinessAlertDAOHE  busalertDaoHe = new BusinessAlertDAOHE();
-        
+        BusinessAlertDAOHE busalertDaoHe = new BusinessAlertDAOHE();
+
         try {
             if (searchForm.getClass() != null) {
                 gridResult = busalertDaoHe.findBusinessAlert(searchForm, start, count, sortField);
@@ -39,9 +40,46 @@ public class BusinessAlertDAO extends BaseDAO {
                 jsonDataGrid.setTotalRows(gridResult.getnCount().intValue());
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return strReturn;
         }
+        return GRID_DATA;
+    }
+
+    public String getContent4BusinessView() {
+        getGridInfo();
+        List customInfo = new ArrayList();
+
+        Long businessId = 0l;
+        try {
+            businessId = getBusinessId();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+        }
+
+        BusinessAlertDAOHE pcdhe = new BusinessAlertDAOHE();
+        List<BusinessAlertForm> result = pcdhe.getLstCommentOfDocument(businessId);
+        String content = "";
+        for (BusinessAlertForm t : result) {
+            content += t.getContent() + "\n";
+
+        }
+        customInfo.add(content);//0
+        jsonDataGrid.setCustomInfo(customInfo);
+        return GRID_DATA;
+    }
+
+    public String onUpdateCheckedSeen() {
+        List resultMessage = new ArrayList();
+        BusinessAlertDAOHE pcdhe = new BusinessAlertDAOHE();
+        List<BusinessAlert> list = pcdhe.getAllBusinessAlertByUserId(getBusinessId());
+        if (list != null && list.isEmpty() == false && list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                list.get(i).setSeen(1L);
+                pcdhe.update(list.get(i));
+            }
+        }
+        jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;
     }
 
@@ -49,7 +87,7 @@ public class BusinessAlertDAO extends BaseDAO {
         List resultMessage = new ArrayList();
         if (createBusinessAlertForm != null) {
             try {
-                BusinessAlertDAOHE bdhe = new BusinessAlertDAOHE();
+//                BusinessAlertDAOHE bdhe = new BusinessAlertDAOHE();
 //                BusinessAlert bus = bdhe.findById(getBusinessId());
                 BusinessAlert bus = new BusinessAlert();
                 bus.setBusinessId(createBusinessAlertForm.getBusinessId());
@@ -65,7 +103,7 @@ public class BusinessAlertDAO extends BaseDAO {
             } catch (Exception ex) {
                 resultMessage.add("3");
                 resultMessage.add("Lỗi");
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         } else {
             resultMessage.add("3");
@@ -75,7 +113,7 @@ public class BusinessAlertDAO extends BaseDAO {
         return GRID_DATA;
     }
 
-    public String toBusinessAlertPage() {        
+    public String toBusinessAlertPage() {
         return this.forwardPage;
     }
 
@@ -94,5 +132,5 @@ public class BusinessAlertDAO extends BaseDAO {
     public void setCreateBusinessAlertForm(BusinessAlertForm createBusinessAlertForm) {
         this.createBusinessAlertForm = createBusinessAlertForm;
     }
-   
+
 }

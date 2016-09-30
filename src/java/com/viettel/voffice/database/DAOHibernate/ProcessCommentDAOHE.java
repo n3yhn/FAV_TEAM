@@ -5,6 +5,7 @@
 package com.viettel.voffice.database.DAOHibernate;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.voffice.client.form.ProcessCommentForm;
 import com.viettel.voffice.database.BO.ProcessComment;
@@ -40,8 +41,8 @@ public class ProcessCommentDAOHE extends GenericDAOHibernate<ProcessComment, Lon
             } else {
                 return null;
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -64,8 +65,8 @@ public class ProcessCommentDAOHE extends GenericDAOHibernate<ProcessComment, Lon
             }
             GridResult result = new GridResult(list.size(), list);
             return result;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, new ArrayList());
         }
 
@@ -118,8 +119,8 @@ public class ProcessCommentDAOHE extends GenericDAOHibernate<ProcessComment, Lon
             }
             GridResult result = new GridResult(nCount, list);
             return result;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -179,8 +180,8 @@ public class ProcessCommentDAOHE extends GenericDAOHibernate<ProcessComment, Lon
 
             VoAttachsDAOHE daoHe = new VoAttachsDAOHE();
             daoHe.updateAttacths(form.getAttachIds(), bo.getProcessCommentId(), Constants.OBJECT_TYPE.FILES);
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
     }
@@ -206,8 +207,8 @@ public class ProcessCommentDAOHE extends GenericDAOHibernate<ProcessComment, Lon
                 list.add(boToForm(bo, userId));
             }
             return list;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -225,8 +226,8 @@ public class ProcessCommentDAOHE extends GenericDAOHibernate<ProcessComment, Lon
             } else {
                 return 0L;
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0L;
         }
     }
@@ -253,8 +254,8 @@ public class ProcessCommentDAOHE extends GenericDAOHibernate<ProcessComment, Lon
             }
             GridResult result = new GridResult(nCount, list);
             return result;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -266,8 +267,8 @@ public class ProcessCommentDAOHE extends GenericDAOHibernate<ProcessComment, Lon
             Query query = getSession().createQuery(hql);
             query.setParameter(0, objId);
             return query.executeUpdate();
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -280,8 +281,8 @@ public class ProcessCommentDAOHE extends GenericDAOHibernate<ProcessComment, Lon
             query.setParameter(0, version);
             query.setParameter(1, objId);
             return query.executeUpdate();
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }

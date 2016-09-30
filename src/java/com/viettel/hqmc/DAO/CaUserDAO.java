@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.Business;
 import com.viettel.hqmc.BO.CaUser;
 import com.viettel.hqmc.DAOHE.BusinessDAOHE;
@@ -44,11 +45,11 @@ public class CaUserDAO extends BaseDAO {
         try {
             //todo code here
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return businessRegisterCAPage;
     }
-    
+
     /**
      *
      * @return
@@ -70,11 +71,11 @@ public class CaUserDAO extends BaseDAO {
         List resultMessage = new ArrayList();
         if (createForm != null) {
             try {
-                CaUser caUserBo = new CaUser();
+                CaUser caUserBo;
 
                 String contentSigned = createForm.getContentSigned();
                 KeyInfo keyInfo = CommonUtils.validateContentSigned(contentSigned);
-                String serialNumber = null;
+                String serialNumber;
                 if (keyInfo != null) {
                     try {
                         //validate serial
@@ -113,9 +114,9 @@ public class CaUserDAO extends BaseDAO {
                         }
 
                     } catch (CertificateExpiredException expiredEx) {
-                        log.error(expiredEx);
+                        LogUtil.addLog(expiredEx);//binhnt sonar a160901
                     } catch (CertificateNotYetValidException notYetValidEx) {
-                        log.error(notYetValidEx);
+                        LogUtil.addLog(notYetValidEx);//binhnt sonar a160901
                     }
                 } else {
                     resultMessage.add("0");
@@ -127,7 +128,7 @@ public class CaUserDAO extends BaseDAO {
             } catch (Exception ex) {
                 resultMessage.add("3");
                 resultMessage.add("Lỗi");
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         } else {
             resultMessage.add("3");
@@ -148,11 +149,12 @@ public class CaUserDAO extends BaseDAO {
                 CaUser caUserBo = new CaUser();
                 String contentSigned = createForm.getContentSigned();
                 KeyInfo keyInfo = CommonUtils.validateContentSigned(contentSigned);
-                String serialNumber = null;
+                String serialNumber;
                 if (keyInfo != null) {
                     try {
                         //validate serial
                         serialNumber = CommonUtils.getSerial(keyInfo);
+                        caUserBo.setCaSerial(serialNumber);
                         CaUserDAOHE caUserDao = new CaUserDAOHE();
                         if (caUserDao.checkCaSerial(serialNumber)) {
                             resultMessage.add("4");
@@ -162,7 +164,9 @@ public class CaUserDAO extends BaseDAO {
                         }
 
                     } catch (CertificateExpiredException expiredEx) {
+                        LogUtil.addLog(expiredEx);//binhnt sonar a160901
                     } catch (CertificateNotYetValidException notYetValidEx) {
+                        LogUtil.addLog(notYetValidEx);//binhnt sonar a160901
                     }
                 } else {
                     resultMessage.add("0");
@@ -170,7 +174,6 @@ public class CaUserDAO extends BaseDAO {
                     jsonDataGrid.setItems(resultMessage);
                     return "gridData";
                 }
-                caUserBo.setCaSerial(serialNumber);
                 caUserBo.setUserName(getUserLogin());
                 caUserBo.setStatus(1);
                 caUserBo.setBusinessId(getBusinessId());
@@ -185,7 +188,7 @@ public class CaUserDAO extends BaseDAO {
             } catch (Exception ex) {
                 resultMessage.add("3");
                 resultMessage.add("Lỗi");
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         } else {
             resultMessage.add("3");
@@ -219,7 +222,7 @@ public class CaUserDAO extends BaseDAO {
             } catch (Exception ex) {
                 resultMessage.add("3");
                 resultMessage.add("Lỗi");
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         } else {
             resultMessage.add("3");
@@ -274,7 +277,7 @@ public class CaUserDAO extends BaseDAO {
             CaUserDAOHE cthe = new CaUserDAOHE();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 CaUserForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getCaUserId() != null && form.getCaUserId() != 0D) {
+                if (form != null && form.getCaUserId() != null && form.getCaUserId() != 0L) {
                     CaUser bo = cthe.getById("caUserId", form.getCaUserId());
                     if (bo != null) {
                         getSession().delete(bo);
@@ -284,7 +287,7 @@ public class CaUserDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa danh mục thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Xóa danh mục không thành công");
         }
@@ -298,7 +301,7 @@ public class CaUserDAO extends BaseDAO {
         try {
             //todo code here
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return businessRegisterCAPage;
     }

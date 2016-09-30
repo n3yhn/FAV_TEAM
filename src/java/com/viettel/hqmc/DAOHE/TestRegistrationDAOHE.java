@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
+import com.viettel.common.util.LogUtil;
 
 /**
  *
@@ -77,19 +78,20 @@ public class TestRegistrationDAOHE extends GenericDAOHibernate<TestRegistration,
             for (int i = 0; i < lstParam.size(); i++) {
                 query.setParameter(i, lstParam.get(i));
             }
-            List<TestRegistration> lstObj = null;
+            List<TestRegistration> lstObj;
             lstObj = query.list();
             if (!lstObj.isEmpty()) {
                 bo = lstObj.get(0);
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return bo;
     }
 
     /**
      * getCountVersion
+     *
      * @param objId
      * @return
      */
@@ -108,6 +110,7 @@ public class TestRegistrationDAOHE extends GenericDAOHibernate<TestRegistration,
 
     /**
      * updateSetNotLastIsTemp
+     *
      * @param objId
      * @return
      */
@@ -117,14 +120,15 @@ public class TestRegistrationDAOHE extends GenericDAOHibernate<TestRegistration,
             Query query = getSession().createQuery(hql);
             query.setParameter(0, objId);
             return query.executeUpdate();
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
 
     /**
      * findTestRegistration
+     *
      * @param form
      * @param start
      * @param count
@@ -163,6 +167,7 @@ public class TestRegistrationDAOHE extends GenericDAOHibernate<TestRegistration,
 
     /**
      * findAllTestRegistration
+     *
      * @return
      */
     public List findAllTestRegistration() {
@@ -183,7 +188,7 @@ public class TestRegistrationDAOHE extends GenericDAOHibernate<TestRegistration,
             lstTestRegistration = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<TestRegistration>();
         }
         lstFactory.put("type", lstTestRegistration);
@@ -193,10 +198,11 @@ public class TestRegistrationDAOHE extends GenericDAOHibernate<TestRegistration,
 
     /**
      * check duplicate before insert into db
+     *
      * @param form
      * @return
      */
-        public boolean isDuplicate(TestRegistrationForm form) {
+    public boolean isDuplicate(TestRegistrationForm form) {
         if (form == null) {
             return false;
         }
@@ -242,6 +248,7 @@ public class TestRegistrationDAOHE extends GenericDAOHibernate<TestRegistration,
         return frm;
     }
 //==============================================================================
+
     public List getKeyList() {
         return keyList;
     }

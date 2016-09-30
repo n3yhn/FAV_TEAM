@@ -6,6 +6,7 @@
 package com.viettel.hqmc.DAOHE;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.BO.FilesNoClob;
 import com.viettel.hqmc.BO.Procedure;
@@ -41,7 +42,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
         try {
             return createQueryLookupFiles(form, deptId, userId, userType, start, count, sortField, sortCustom);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -50,7 +51,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
         try {
             return reportLookup(form, deptId, userId, userType, start, count, sortField, sortCustom);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -74,8 +75,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             Query query = getSession().createQuery(hql);
             int total = Integer.parseInt(query.list().get(0).toString());
             return total;
-        } catch (NumberFormatException | HibernateException e) {
-            log.error(e);
+        } catch (NumberFormatException | HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -94,8 +95,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             Query query = getSession().createQuery(hql);
             int total = Integer.parseInt(query.list().get(0).toString());
             return total;
-        } catch (NumberFormatException | HibernateException e) {
-            log.error(e);
+        } catch (NumberFormatException | HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -114,8 +115,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             Query query = getSession().createQuery(hql);
             int total = Integer.parseInt(query.list().get(0).toString());
             return total;
-        } catch (NumberFormatException | HibernateException e) {
-            log.error(e);
+        } catch (NumberFormatException | HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -148,8 +149,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             }
             int total = Integer.parseInt(query.list().get(0).toString());
             return total;
-        } catch (NumberFormatException | HibernateException e) {
-            log.error(e);
+        } catch (NumberFormatException | HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -180,8 +181,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             SQLQuery countQuery = (SQLQuery) getSession().createSQLQuery(sql);
             int total = Integer.parseInt(countQuery.uniqueResult().toString());
             return total;
-        } catch (NumberFormatException | HibernateException e) {
-            log.error(e);
+        } catch (NumberFormatException | HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -202,8 +203,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             SQLQuery countQuery = (SQLQuery) getSession().createSQLQuery(sql);
             int total = Integer.parseInt(countQuery.uniqueResult().toString());
             return total;
-        } catch (NumberFormatException | HibernateException e) {
-            log.error(e);
+        } catch (NumberFormatException | HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -234,8 +235,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             }
             int total = Integer.parseInt(countQuery.uniqueResult().toString());
             return total;
-        } catch (NumberFormatException | HibernateException e) {
-            log.error(e);
+        } catch (NumberFormatException | HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -255,8 +256,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             SQLQuery countQuery = (SQLQuery) getSession().createSQLQuery(sql);
             int total = Integer.parseInt(countQuery.uniqueResult().toString());
             return total;
-        } catch (NumberFormatException | HibernateException e) {
-            log.error(e);
+        } catch (NumberFormatException | HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -295,8 +296,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             }
             int total = Integer.parseInt(query.list().get(0).toString());
             return total;
-        } catch (NumberFormatException | HibernateException e) {
-            log.error(e);
+        } catch (NumberFormatException | HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -2074,8 +2075,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
              */
             if (form != null && form.getFileType() != null && form.getFileType().longValue() != -1) {
                 ProcedureDAOHE pdaohe = new ProcedureDAOHE();
-                Procedure p = new Procedure();
-                p = pdaohe.getProcedureById(form.getFileType());
+                Procedure p = pdaohe.getProcedureById(form.getFileType());
                 if (p != null && p.getDescription().equals("announcementFile05")) {
                     hql = " from FilesNoClob f, Process p "
                             + " where f.isActive=1"
@@ -2302,8 +2302,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
              */
             GridResult gr = new GridResult(total, lstResult);
             return gr;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -2412,8 +2412,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             List<FilesNoClob> lstResult = query.list();
             GridResult gr = new GridResult(total, lstResult);
             return gr;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -2474,8 +2474,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             List lstResult = query.list();
             GridResult gr = new GridResult(total, lstResult);
             return gr;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -2880,8 +2880,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
 //            }
             gr = new GridResult(total, lstResult);
             return gr;
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901.
             gr = new GridResult(0, null);
         }
         return gr;
@@ -3151,8 +3151,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             }
             int total = Integer.parseInt(query.list().get(0).toString());
             return total;
-        } catch (NumberFormatException | HibernateException e) {
-            log.error(e);
+        } catch (NumberFormatException | HibernateException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -3173,8 +3173,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             query.setParameter(2, deptId);
             int total = Integer.parseInt(query.list().get(0).toString());
             return total;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -3200,8 +3200,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             query.setParameter(3, deptId);
             int total = Integer.parseInt(query.list().get(0).toString());
             return total;
-        } catch (HibernateException | NumberFormatException e) {
-            log.error(e);
+        } catch (HibernateException | NumberFormatException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -4092,8 +4092,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
 
             int total = Integer.parseInt(countQuery.uniqueResult().toString());
             return total;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -4394,8 +4394,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
 
             int total = Integer.parseInt(countQuery.uniqueResult().toString());
             return total;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -4415,7 +4415,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             try {
                 alarmDate = getSysdate();
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
             //
             // tim cac ho so co deadline dien ra trong 2 ngay toi
@@ -4541,8 +4541,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
 
             int total = Integer.parseInt(countQuery.uniqueResult().toString());
             return total;
-        } catch (HibernateException | NumberFormatException e) {
-            log.error(e);
+        } catch (HibernateException | NumberFormatException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
 
@@ -4560,7 +4560,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             //return createQueryLookupFiles(form, deptId, userId, userType, start, count, sortField);
             return createQueryLookupFiles(form, deptId, null, userType, start, count, sortField, "");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
 
@@ -5015,7 +5015,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             GridResult gr = new GridResult(total, lstResult);
             return gr;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -5084,7 +5084,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             GridResult gr = new GridResult(total, lstResult);
             return gr;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -5166,7 +5166,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             GridResult gr = new GridResult(total, lstResult);
             return gr;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -5326,8 +5326,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
 
             int total = Integer.parseInt(countQuery.uniqueResult().toString());
             return total;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
@@ -5519,9 +5519,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
              *Hiepvv 13/01/16
              *Phan cong cong viec cho ho so sua doi sau cong bo
              */
-            Procedure pbo = new Procedure();
             ProcedureDAOHE pdaohe = new ProcedureDAOHE();
-            pbo = pdaohe.getProcedureByDescription(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05);
+            Procedure pbo = pdaohe.getProcedureByDescription(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05);
             List lstParam = new ArrayList();
             lstParam.add(pbo.getProcedureId());
             lstParam.add(Constants.OBJECT_TYPE.FILES);
@@ -5613,8 +5612,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             List<FilesNoClob> lstResult = query.list();
             GridResult gr = new GridResult(total, lstResult);
             return gr;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -5632,7 +5631,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
         try {
             return createQueryLookupFilesAfterAnnounced(form, deptId, userId, userType, start, count, sortField, sortCustom);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }
@@ -6796,8 +6795,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             List<FilesNoClob> lstResult = query.list();
             GridResult gr = new GridResult(total, lstResult);
             return gr;
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new GridResult(0, null);
         }
     }

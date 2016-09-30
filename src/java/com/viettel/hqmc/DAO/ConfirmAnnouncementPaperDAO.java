@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.ConfirmAnnouncementPaper;
 import com.viettel.hqmc.DAOHE.ConfirmAnnouncementPaperDAOHE;
 import com.viettel.hqmc.FORM.ConfirmAnnouncementPaperForm;
@@ -43,7 +44,7 @@ public class ConfirmAnnouncementPaperDAO extends BaseDAO {
         try {
             //todo code here
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return this.confirmAnnouncementPaperPage;
     }
@@ -95,6 +96,7 @@ public class ConfirmAnnouncementPaperDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật không thành công");
         }
@@ -115,7 +117,9 @@ public class ConfirmAnnouncementPaperDAO extends BaseDAO {
             ConfirmAnnouncementPaperDAOHE cthe = new ConfirmAnnouncementPaperDAOHE();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 ConfirmAnnouncementPaperForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getConfirmAnnouncementPaperId() != null && form.getConfirmAnnouncementPaperId() != 0D) {
+                if (form != null
+                        && form.getConfirmAnnouncementPaperId() != null
+                        && form.getConfirmAnnouncementPaperId() != 0L) {
                     ConfirmAnnouncementPaper bo = cthe.getById("confirmAnnouncementPaperId", form.getConfirmAnnouncementPaperId());
                     if (bo != null) {
                         bo.setIsActive(0l);
@@ -128,7 +132,7 @@ public class ConfirmAnnouncementPaperDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Xóa không thành công");
         }

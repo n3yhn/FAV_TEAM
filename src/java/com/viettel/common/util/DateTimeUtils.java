@@ -96,8 +96,9 @@ public class DateTimeUtils {
         try {
             return dateFormat.parse(date);
         } catch (ParseException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             //System.out.println("Date ParseException, string value:" + date);
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
         }
         return null;
     }
@@ -158,8 +159,9 @@ public class DateTimeUtils {
         }
         try {
             return dateFormat.format(date);
-        } catch (Exception e) {
-            throw e;
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            throw ex;
         }
     }
 
@@ -184,8 +186,9 @@ public class DateTimeUtils {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         try {
             return dateFormat.format(calendar.getTime());
-        } catch (Exception e) {
-            throw e;
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            throw ex;
         }
     }
 
@@ -200,8 +203,9 @@ public class DateTimeUtils {
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
         try {
             return dateFormat.format(calendar.getTime());
-        } catch (Exception e) {
-            throw e;
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            throw ex;
         }
     }
 
@@ -229,8 +233,8 @@ public class DateTimeUtils {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
             return dateFormat.format(date);
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "";
     }
@@ -250,7 +254,7 @@ public class DateTimeUtils {
      * @return String
      */
     public static String parseDate(int monthInput) {
-        String dateReturn = "01/01/";
+        String dateReturn;
         Calendar cal = Calendar.getInstance();
         switch (monthInput) {
             case 1:
@@ -289,6 +293,8 @@ public class DateTimeUtils {
             case CONST12:
                 dateReturn = "01/12/";
                 break;
+            default:
+                dateReturn = "01/01/";
         }
         return dateReturn + cal.get(Calendar.YEAR);
     }
@@ -297,8 +303,9 @@ public class DateTimeUtils {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
             return dateFormat.parse(dateStr);
-        } catch (Exception e) {
-            throw e;
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            throw ex;
         }
 
     }
@@ -306,9 +313,9 @@ public class DateTimeUtils {
     public static Date dateFromString(String dateStr) throws Exception {
         try {
             String[] dateParam = dateStr.split("/");
-            int year = 0;
-            int month = 0;
-            int date = 0;
+            int year;
+            int month;
+            int date;
             Date returnDate;
             if (dateParam.length == 3) {
                 year = Integer.parseInt(dateParam[2]);
@@ -325,9 +332,8 @@ public class DateTimeUtils {
             month = month - 1;
             returnDate = new Date(year, month, date);
             return returnDate;
-        } catch (Throwable ex) {
-            //System.out.println(th.getMessage());
-            log.error(ex.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -341,7 +347,7 @@ public class DateTimeUtils {
      */
     public static int compareDate(Date date1, Date date2) {
 
-        int tempDifference = 0;
+        int tempDifference;
         int difference = 0;
         Calendar earlier = Calendar.getInstance();
         Calendar later = Calendar.getInstance();
@@ -418,6 +424,7 @@ public class DateTimeUtils {
             //System.out.println(dateXML.toString());
             return dateXML;
         } catch (DatatypeConfigurationException ex) {
+            LogUtil.addLog(ex);//binhnt a 160901
         }
         return null;
     }

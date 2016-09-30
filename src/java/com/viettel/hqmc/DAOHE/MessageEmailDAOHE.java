@@ -5,6 +5,7 @@
 package com.viettel.hqmc.DAOHE;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.MessageEmail;
 import com.viettel.voffice.database.DAOHibernate.*;
 import com.viettel.voffice.database.DAO.BaseDAO;
@@ -39,7 +40,7 @@ public class MessageEmailDAOHE extends GenericDAOHibernate<MessageEmail, Long> {
             bo.setSentTimeReq(getSysdate());
             bo.setSendCount(0L);
         } catch (Exception ex) {
-            logger.error(ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return bo;
     }
@@ -53,17 +54,18 @@ public class MessageEmailDAOHE extends GenericDAOHibernate<MessageEmail, Long> {
      * @return
      */
     public boolean saveMessageEmail(Long senderId, Long receiverId, String content) {
-        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_EMAIL.equals("0")) return true;
+        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_EMAIL.equals("0")) {
+            return true;
+        }
         boolean result = true;
         try {
             String hql = "update MessageEmailFlag m set m.flag = 1";
             Query updateQuery = getSession().createQuery(hql);
-            int n = updateQuery.executeUpdate();
-            MessageEmail bo = new MessageEmail();
-            bo = this.entityToBo(senderId, receiverId, content);
+            updateQuery.executeUpdate();
+            MessageEmail bo = this.entityToBo(senderId, receiverId, content);
             this.create(bo);
-        } catch (Exception e) {
-            logger.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             result = false;
         }
         return result;
@@ -80,7 +82,7 @@ public class MessageEmailDAOHE extends GenericDAOHibernate<MessageEmail, Long> {
             bo.setSentTimeReq(getSysdate());
             bo.setSendCount(0L);
         } catch (Exception ex) {
-            logger.error(ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return bo;
     }
@@ -94,17 +96,18 @@ public class MessageEmailDAOHE extends GenericDAOHibernate<MessageEmail, Long> {
      * @return
      */
     public boolean saveMessageEmailGroup(Long receiverId, String email, String content) {
-        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_EMAIL.equals("0")) return true;
+        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_EMAIL.equals("0")) {
+            return true;
+        }
         boolean result = true;
         try {
             String hql = "update MessageEmailFlag m set m.flag = 1";
             Query updateQuery = getSession().createQuery(hql);
-            int n = updateQuery.executeUpdate();
-            MessageEmail bo = new MessageEmail();
-            bo = this.entityToBoGroup(receiverId, email, content);
+            updateQuery.executeUpdate();
+            MessageEmail bo = this.entityToBoGroup(receiverId, email, content);
             this.create(bo);
-        } catch (Exception e) {
-            logger.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             result = false;
         }
         return result;

@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.Parameter;
 import com.viettel.hqmc.DAOHE.ParameterDAOHE;
 import com.viettel.hqmc.FORM.ParameterForm;
@@ -34,7 +35,8 @@ public class ParameterDAO extends BaseDAO {
         try {
             //todo code here
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return this.forwardPage;
     }
@@ -84,6 +86,7 @@ public class ParameterDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật cấu hình không thành công");
         }
@@ -115,7 +118,8 @@ public class ParameterDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa cấu hình thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Xóa cấu hình không thành công");
         }

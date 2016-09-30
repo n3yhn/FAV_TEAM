@@ -4,8 +4,7 @@
  */
 package com.viettel.vsaadmin.database.DAO;
 
-//import com.viettel.common.util.log.LogFactory;
-//import com.viettel.database.DAO.BaseDAOMDBAction;
+import com.viettel.common.util.LogUtil;
 import com.viettel.dojoTag.DojoAjaxTreeNode;
 import com.viettel.dojoTag.DojoJSON;
 import com.viettel.vsaadmin.client.form.GridApplicationForm;
@@ -39,7 +38,7 @@ public class ObjectsDAO extends BaseDAO {
     public DojoJSON json = new DojoJSON();
     private List childrenData = new ArrayList();
     private static final Long DELETE_CONSTANT = Long.valueOf(-1L);
-    
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ObjectsDAO.class);
 
     public List getChildrenData() {
@@ -139,7 +138,8 @@ public class ObjectsDAO extends BaseDAO {
         try {
             Criteria cri = session.createCriteria(Objects.class).add(Restrictions.eq("parentId", parentItemId));
             lst = cri.list();
-        } catch (Exception er) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         Objects bo;
         DojoAjaxTreeNode node;
@@ -156,6 +156,7 @@ public class ObjectsDAO extends BaseDAO {
                     node.setMayHaveChildren("false");
                 }
             } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
             this.childrenData.add(node);
 
@@ -176,17 +177,17 @@ public class ObjectsDAO extends BaseDAO {
             this.jsonDataGrid.setItems(grid.getLstResult());
             this.jsonDataGrid.setTotalRows(grid.getnCount().intValue());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "gridData";
     }
 
     public GridResult getListObjById(Long appId, Long parentId) throws Exception {
-        GridResult result = null;
+        GridResult result;
         String countHQL = "select count(o) ";
         String searchHQL = "select o";
         String hql = " from Objects o where o.appId = ? and o.status != ?";
-        String condition = "";
+        String condition;
         if (parentId == 0L || parentId == null) {
             condition = " and (o.parentId is null or o.parentId = 0 )";
         } else {
@@ -209,6 +210,7 @@ public class ObjectsDAO extends BaseDAO {
             List lst = searchQuery.list();
             result = new GridResult(total, lst);
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             throw ex;
         }
         return result;
@@ -217,12 +219,11 @@ public class ObjectsDAO extends BaseDAO {
     public String getData() {
         try {
             List temp = new ArrayList();
-            Session session = null;
+            Session session;
             Long appId = Long.valueOf(Long.parseLong(getRequest().getParameter("appId")));
             session = getSession();
-            List lst = new ArrayList();
             Criteria cri = session.createCriteria(Objects.class).add(Restrictions.isNull("parentId")).add(Restrictions.eq("appId", appId));
-            lst = cri.list();
+            List lst = cri.list();
             Objects bo;
             DojoAjaxTreeNode node;
             for (int i = 0; i < lst.size(); i++) {
@@ -241,7 +242,7 @@ public class ObjectsDAO extends BaseDAO {
             this.json.setLabel("name");
             this.json.setItems(temp);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "treeData";
     }
@@ -250,7 +251,7 @@ public class ObjectsDAO extends BaseDAO {
 
         getGridInfo();
 
-        List lst = new ArrayList();
+//        List lst = new ArrayList();
         Long appId = (Long) getRequest().getSession().getAttribute("appId");
         Long parentId = Long.valueOf(Long.parseLong(getRequest().getParameter("parentId")));
         if (getRequest().getSession().getAttribute("parentId") != null) {
@@ -262,7 +263,7 @@ public class ObjectsDAO extends BaseDAO {
             this.jsonDataGrid.setItems(result.getLstResult());
             this.jsonDataGrid.setTotalRows(result.getnCount().intValue());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "gridData";
     }
@@ -277,10 +278,10 @@ public class ObjectsDAO extends BaseDAO {
                 this.jsonDataGrid.setItems(result.getLstResult());
                 this.jsonDataGrid.setTotalRows(result.getnCount().intValue());
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         this.jsonDataGrid.setCustomInfo(customInfo);
         return "gridData";
@@ -300,7 +301,8 @@ public class ObjectsDAO extends BaseDAO {
                     try {
                         Long l = Long.parseLong(arrIds[i]);
                         lstIds.add(l);
-                    } catch (Exception en) {
+                    } catch (Exception ex) {
+                        LogUtil.addLog(ex);//binhnt sonar a160901
                     }
                 }
             }
@@ -311,10 +313,10 @@ public class ObjectsDAO extends BaseDAO {
             getSession().getTransaction().commit();
             result = "success";
         } catch (org.hibernate.exception.ConstraintViolationException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             result = "Bản ghi đang được sử dụng";
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             result = "error";
         }
         customInfo.add("delete");
@@ -326,8 +328,8 @@ public class ObjectsDAO extends BaseDAO {
     }
 
     public String onUnlock() {
-        boolean yet = true;
-        List lst = new ArrayList();
+//        boolean yet = true;
+//        List lst = new ArrayList();
         List customInfo = new ArrayList();
         Session sess = getSession();
         try {
@@ -342,7 +344,8 @@ public class ObjectsDAO extends BaseDAO {
             sess.getTransaction().commit();
             customInfo.add("unlock");
             customInfo.add("success");
-        } catch (Exception en) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             customInfo.add("unlock");
             customInfo.add("error");
 
@@ -391,7 +394,8 @@ public class ObjectsDAO extends BaseDAO {
                     try {
                         Long l = Long.parseLong(arrIds[i]);
                         lstIds.add(l);
-                    } catch (Exception en) {
+                    } catch (Exception ex) {
+                        LogUtil.addLog(ex);//binhnt sonar a160901
                     }
                 }
             }
@@ -402,7 +406,7 @@ public class ObjectsDAO extends BaseDAO {
             getSession().getTransaction().commit();
             result = "success";
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             result = "error";
         }
         customInfo.add("delete");
@@ -438,11 +442,11 @@ public class ObjectsDAO extends BaseDAO {
                         unlockRecursive(bo.getParentId(), sess);
                     }
                 } catch (Exception ex) {
-                    log.error(ex.getMessage());
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -455,16 +459,16 @@ public class ObjectsDAO extends BaseDAO {
                 try {
                     sess.getTransaction().commit();
                 } catch (Exception ex) {
-                    log.error(ex.getMessage());
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                 }
                 if (bo.getParentId() != null) {
                     unlockRecursive(bo.getParentId(), sess);
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -503,7 +507,7 @@ public class ObjectsDAO extends BaseDAO {
             customInfo.add("success");
             return bo;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             customInfo.add("error");
             return null;
         }

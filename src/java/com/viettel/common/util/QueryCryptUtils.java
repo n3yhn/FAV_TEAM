@@ -38,7 +38,7 @@ public class QueryCryptUtils {
             reqCrypt = QueryCrypt.getInstance().decrypt(req);
         }
 
-        String strResult = null;
+        String strResult;
         if (checkCrypt != null) {
             strResult = reqCrypt.getParameter(parameterName);
         } else {

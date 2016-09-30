@@ -7,6 +7,7 @@ package com.viettel.hqmc.DAO;
 
 import com.viettel.common.util.Constants;
 import com.viettel.common.util.DateTimeUtils;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.ReportUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.BO.FilesNoClob;
@@ -183,10 +184,8 @@ public class ReportDAO extends BaseDAO {
                 if (searchForm.getSearchDateFrom() != null) {
                     header = header + " - Đến ngày: " + dateFormat.format(searchForm.getSearchDateTo());
                 }
-            } else {
-                if (searchForm.getSearchDateTo() != null) {
-                    header += "Đến ngày: " + dateFormat.format(searchForm.getSearchDateTo());
-                }
+            } else if (searchForm.getSearchDateTo() != null) {
+                header += "Đến ngày: " + dateFormat.format(searchForm.getSearchDateTo());
             }
 
             if (data == null) {
@@ -198,8 +197,9 @@ public class ReportDAO extends BaseDAO {
             DateTimeUtils dateUtil = new DateTimeUtils();
             bean.put("ConvertTime", dateUtil);
             ReportUtil.exportReport(getRequest(), bean, templateFile, getResponse());
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex);
         }
     }
 
@@ -207,56 +207,31 @@ public class ReportDAO extends BaseDAO {
         try {
             String templateFile = "/WEB-INF/reportTemplate/reportDayKT.xls";
             //List<FilesNoClob> data;
-            List<FeePaymentFileForm> data = null;
-            List<FeePaymentFileForm> data3 = null;
-            List<FeePaymentFileForm> data2 = null;
-            Long spTM = 0l;
-            Long spTM1 = 0l;
-            Long spTM2 = 0l;
-            Long spTM3 = 0l;
-            Long spCK = 0l;
-            Long spCK1 = 0l;
-            Long spCK2 = 0l;
-            Long spCK3 = 0l;
-            Long spOL = 0l;
-            Long spOL1 = 0l;
-            Long spOL2 = 0l;
-            Long spOL3 = 0l;
-            Long valueTM = 0l;
-            Long valueTM1 = 0l;
-            Long valueTM2 = 0l;
-            Long valueTM3 = 0l;
-            Long valueCK = 0l;
-            Long valueCK1 = 0l;
-            Long valueCK2 = 0l;
-            Long valueCK3 = 0l;
-            Long valueOL = 0l;
-            Long valueOL1 = 0l;
-            Long valueOL2 = 0l;
-            Long valueOL3 = 0l;
-            Long value1 = 0l, value2 = 0l, value3 = 0l, value4 = 0l;
-            Long total1 = 0l, total2 = 0l, total3 = 0l, total4 = 0l;
-            Long checkCountTM = 0l;
-            Long checkCountCK = 0l;
-            Long checkCountOL = 0l;
+            List<FeePaymentFileForm> data;
+            List<FeePaymentFileForm> data3;
+            List<FeePaymentFileForm> data2;
+            Long spTM, spTM1, spTM2, spTM3, spCK, spCK1, spCK2, spCK3, spOL, spOL1, spOL2, spOL3, valueTM, valueTM1, valueTM2, valueTM3, valueCK, valueCK1, valueCK2, valueCK3, valueOL, valueOL1, valueOL2, valueOL3;
+            Long value1, value2, value3, value4;
+            Long total1, total2, total3, total4;
+            Long checkCountTM = 0L;
+            Long checkCountCK = 0L;
+            Long checkCountOL = 0L;
             List lstParam = new ArrayList();
             Map bean = new HashMap();
             //data = fileDao.onsearchDayReportClerical();
             String sql = "";
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String header = "";
+            String header;
 
             if (searchFeeForm.getDateFrom() != null) {
                 header = "Thống kê từ ngày: " + dateFormat.format(searchFeeForm.getDateFrom());
                 if (searchFeeForm.getDateTo() != null) {
                     header = header + " - Đến ngày: " + dateFormat.format(searchFeeForm.getDateTo());
                 }
+            } else if (searchFeeForm.getDateTo() != null) {
+                header = "Tiếp nhận đến ngày: " + dateFormat.format(searchFeeForm.getDateTo());
             } else {
-                if (searchFeeForm.getDateTo() != null) {
-                    header = "Tiếp nhận đến ngày: " + dateFormat.format(searchFeeForm.getDateTo());
-                } else {
-                    header = "Thống kê toàn bộ";
-                }
+                header = "Thống kê toàn bộ";
             }
 
             if (searchFeeForm.getDateFrom() != null) {
@@ -640,9 +615,6 @@ public class ReportDAO extends BaseDAO {
             total3 = spTM2 + spOL2 + spCK2;
             value3 = valueTM2 + valueCK2 + valueOL2;
             //reset checkCount chay tiep nhung lan sau
-            checkCountTM = 0l;
-            checkCountCK = 0l;
-            checkCountOL = 0l;
             spTM3 = spTM + spTM1 + spTM2;
             spCK3 = spCK + spCK1 + spCK2;
             spOL3 = spOL + spOL1 + spOL2;
@@ -744,8 +716,9 @@ public class ReportDAO extends BaseDAO {
             bean.put(
                     "value4", value4);
             ReportUtil.exportReport(getRequest(), bean, templateFile, getResponse());
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
         }
     }
 
@@ -757,7 +730,7 @@ public class ReportDAO extends BaseDAO {
             Map bean = new HashMap();
             String sql = "";
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String header = "";
+            String header;
             List lstParam = new ArrayList();
             if (searchForm.getReceivedDate()
                     != null) {
@@ -765,12 +738,10 @@ public class ReportDAO extends BaseDAO {
                 if (searchForm.getReceivedDateTo() != null) {
                     header = header + " - Đến ngày: " + dateFormat.format(searchForm.getReceivedDateTo());
                 }
+            } else if (searchForm.getReceivedDateTo() != null) {
+                header = "Ký đến ngày: " + dateFormat.format(searchForm.getReceivedDateTo());
             } else {
-                if (searchForm.getReceivedDateTo() != null) {
-                    header = "Ký đến ngày: " + dateFormat.format(searchForm.getReceivedDateTo());
-                } else {
-                    header = "Thống kê toàn bộ";
-                }
+                header = "Thống kê toàn bộ";
             }
 
             if (searchForm.getReceivedDate()
@@ -895,8 +866,9 @@ public class ReportDAO extends BaseDAO {
             DateTimeUtils dateUtil = new DateTimeUtils();
             bean.put("ConvertTime", dateUtil);
             ReportUtil.exportReport(getRequest(), bean, templateFile, getResponse());
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
         }
     }
 
@@ -912,7 +884,7 @@ public class ReportDAO extends BaseDAO {
             if (searchForm != null && searchForm.getTypeDatetime().equals(Constants.TYPE_DATETIME.MONTH)) {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(getSysdate());
-                int month = cal.get(Calendar.MONTH);
+//                int month = cal.get(Calendar.MONTH);
             }
             data = fileDao.onsearchWeekReportClerical(searchForm);
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -922,10 +894,8 @@ public class ReportDAO extends BaseDAO {
                 if (searchForm.getSearchDateTo() != null) {
                     header = header + " - Đến ngày: " + dateFormat.format(searchForm.getSearchDateTo());
                 }
-            } else {
-                if (searchForm.getSearchDateTo() != null) {
-                    header = "Đến ngày: " + dateFormat.format(searchForm.getSearchDateTo());
-                }
+            } else if (searchForm.getSearchDateTo() != null) {
+                header = "Đến ngày: " + dateFormat.format(searchForm.getSearchDateTo());
             }
             if (data == null) {
                 data = new ArrayList<FilesNoClob>();
@@ -935,8 +905,9 @@ public class ReportDAO extends BaseDAO {
             DateTimeUtils dateUtil = new DateTimeUtils();
             bean.put("ConvertTime", dateUtil);
             ReportUtil.exportReport(getRequest(), bean, templateFile, getResponse());
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
         }
     }
 
@@ -946,7 +917,7 @@ public class ReportDAO extends BaseDAO {
             String templateFile = "/WEB-INF/reportTemplate/reportStaffOnRequest.xls";
             List<FilesNoClob> data;
             Map bean = new HashMap();
-            String sql = "";
+            String sql;
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String header = "";
             List lstParam = new ArrayList();
@@ -1356,12 +1327,10 @@ public class ReportDAO extends BaseDAO {
 
             ResourceBundle rb = ResourceBundle.getBundle("config");
             String filePath = rb.getString("report_excel_temp");
-            FileOutputStream fop = null;
-            File file;
             Date newDate = new Date();
             String fullFilePath = filePath + "report_" + newDate.getTime() + ".xls";
-            file = new File(fullFilePath);
-            fop = new FileOutputStream(file);;
+            File file = new File(fullFilePath);
+//            FileOutputStream fop = new FileOutputStream(file);;
             HSSFWorkbook wb = new HSSFWorkbook(myxls);
             HSSFSheet sheet = wb.getSheetAt(0);
             // check hien thi cot
@@ -1471,8 +1440,9 @@ public class ReportDAO extends BaseDAO {
             wb.write(res.getOutputStream());
             res.getOutputStream().flush();
             //fop.close();
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(e);
         }
     }
 
@@ -1503,8 +1473,7 @@ public class ReportDAO extends BaseDAO {
     public String onsearchReportStaffProcessAll() {
         getGridInfo();
         ProcessDAOHE bdhe = new ProcessDAOHE();
-        GridResult gr = null;
-        gr = bdhe.getStaffProcessFiles(searchForm.getSearchDateFrom(), searchForm.getSearchDateTo(), getDepartmentId(), start, count, sortField);
+        GridResult gr = bdhe.getStaffProcessFiles(searchForm.getSearchDateFrom(), searchForm.getSearchDateTo(), getDepartmentId(), start, count, sortField);
         jsonDataGrid.setItems(gr.getLstResult());
         jsonDataGrid.setTotalRows(gr.getnCount().intValue());
         return GRID_DATA;

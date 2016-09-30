@@ -42,19 +42,19 @@ public class App {
     public static P createParagraph(ObjectFactory factory, String content) {
         content = content.replace('\b', ' ');
         P paragraph = factory.createP();
-        String n = "";
-        String sup = "";
-        String sub = "";
-        int i = 0;
-        int ib = 0;
-        int ip = 0;
-        int supindex = 0;
-        int subindex = 0;
-        int lastindex = 0;
-        int firstindex = 0;
-        int nindex = 0;
+        String n;
+//        String sup = "";
+//        String sub = "";
+//        int i = 0;
+//        int ib = 0;
+//        int ip = 0;
+        int supindex;
+        int subindex;
+        int lastindex;
+        int firstindex;
+//        int nindex = 0;
         supindex = content.indexOf("^(");
-        int type = 0;//  = 0 is normal; = 1 is sup; = 2 is sub
+        int type;//  = 0 is normal; = 1 is sup; = 2 is sub
         String value;
         while (!content.isEmpty()) {
             type = 0;
@@ -313,14 +313,14 @@ public class App {
 
     public static R createR(ObjectFactory factory, String content) {
         R paragraph = factory.createR();
-        String n = "";
-        String sup = "";
-        String sub = "";
+        String n;
+        String sup;
+        String sub;
         int i = 0;
-        int ib = 0;
-        int ip = 0;
-        int supindex = 0;
-        int subindex = 0;
+        int ib;
+        int ip;
+        int supindex;
+//        int subindex = 0;
         int nindex = 0;
         //loc tu dau den cuoi chuoi
         while (i < content.length() - 1) {
@@ -334,14 +334,14 @@ public class App {
                     if (content.charAt(i) == '^' && content.charAt(i + 1) == '(') {
                         n = content.substring(nindex, i);
                         paragraph.getContent().add(createNormalText(factory, n));
-                        n = "";
+//                        n = "";
                         ib = i;
                         supindex = ib + 2;
                         for (int j = supindex; j < content.length(); j++) {
                             if (j == content.length() - 1) {
                                 sup = content.substring(supindex, j);
                                 paragraph.getContent().add(createSuperscriptText(factory, sup));
-                                sup = "";
+//                                sup = "";
                                 ib = j + 2;
                                 nindex = ib;
                                 break;
@@ -349,7 +349,7 @@ public class App {
                                 if (content.charAt(j) == '^' && content.charAt(j + 1) == ')') {
                                     sup = content.substring(supindex, j);
                                     paragraph.getContent().add(createSuperscriptText(factory, sup));
-                                    sup = "";
+//                                    sup = "";
                                     nindex = j + 2;
                                     break;
                                 }
@@ -363,14 +363,14 @@ public class App {
                         if (content.charAt(i) == '_' && content.charAt(i + 1) == '(') {
                             n = content.substring(nindex, i);
                             paragraph.getContent().add(createNormalText(factory, n));
-                            n = "";
+//                            n = "";
                             ip = i;
                             supindex = ip + 2;
                             for (int j = supindex; j < content.length(); j++) {
                                 if (j == content.length() - 1) {
                                     sub = content.substring(supindex, j);
                                     paragraph.getContent().add(createSubscriptText(factory, sub));
-                                    sub = "";
+//                                    sub = "";
                                     ip = j + 2;
                                     nindex = ip;
                                     break;
@@ -378,7 +378,7 @@ public class App {
                                     if (content.charAt(j) == '_' && content.charAt(j + 1) == ')') {
                                         sub = content.substring(supindex, j);
                                         paragraph.getContent().add(createSubscriptText(factory, sub));
-                                        sub = "";
+//                                        sub = "";
                                         nindex = j + 2;
                                         break;
                                     }

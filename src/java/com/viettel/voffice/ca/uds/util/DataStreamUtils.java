@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
+import com.viettel.common.util.LogUtil;
 
 /**
  *
@@ -43,7 +43,7 @@ public class DataStreamUtils {
             FileInputStream fileInputStream = new FileInputStream(file);
             fileInputStream.read(b);
         } catch (FileNotFoundException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return b;
     }

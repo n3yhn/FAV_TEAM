@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAOHE;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.BO.AnnouncementReceiptPaper;
 import com.viettel.hqmc.FORM.AnnouncementReceiptPaperForm;
@@ -126,7 +127,7 @@ public class AnnouncementReceiptPaperDAOHE extends GenericDAOHibernate<Announcem
             lstAnnouncementReceiptPaper = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return new ArrayList<AnnouncementReceiptPaper>();
         }
 //        lstCategoryFactory.put(type, lstResult);
@@ -267,7 +268,7 @@ public class AnnouncementReceiptPaperDAOHE extends GenericDAOHibernate<Announcem
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return item;
     }
@@ -287,7 +288,7 @@ public class AnnouncementReceiptPaperDAOHE extends GenericDAOHibernate<Announcem
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return item;
     }
@@ -313,7 +314,7 @@ public class AnnouncementReceiptPaperDAOHE extends GenericDAOHibernate<Announcem
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return item;
     }

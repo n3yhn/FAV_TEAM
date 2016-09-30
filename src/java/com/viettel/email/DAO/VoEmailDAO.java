@@ -5,6 +5,7 @@
 package com.viettel.email.DAO;
 
 import com.sun.mail.pop3.POP3Folder;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.UploadFile;
 import com.viettel.email.form.EmailForm;
 import com.viettel.voffice.database.BO.Email;
@@ -66,7 +67,7 @@ public class VoEmailDAO extends BaseDAO {
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VoEmailDAO.class);
     private EmailUserDAOHE emaulUserDAO = new EmailUserDAOHE();
     private EmailForm emailformsearch;
-    
+
     private static final String separatorFile = String.valueOf(File.separatorChar);
 
     public EmailForm getEmailformsearch() {
@@ -208,14 +209,17 @@ public class VoEmailDAO extends BaseDAO {
             store.connect(host, port, username, password);
             return store;
         } catch (javax.mail.AuthenticationFailedException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         } catch (MessagingException ex) {
             //System.out.println(ex.getMessage());
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         } catch (Exception ex) {
             //System.out.println(ex.getMessage());
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -253,11 +257,11 @@ public class VoEmailDAO extends BaseDAO {
                 if (message.getContent() instanceof Multipart) {
                     Multipart parts = (Multipart) message.getContent();
                     BodyPart p;
-                    boolean attachment = false;
+//                    boolean attachment = false;
                     boolean alternative = parts.getContentType().trim().toLowerCase().startsWith("multipart/alternative") ? true : false;
 
                     InputStreamReader isr;
-                    int available, retrieved;
+                    int retrieved;
                     char[] buffer = new char[512];
                     for (int i = 0; i < parts.getCount(); i++) {
                         p = parts.getBodyPart(i);
@@ -301,18 +305,16 @@ public class VoEmailDAO extends BaseDAO {
                                         sw.write(escapeLineBreaksAndSpacesForHTML(content.toString()));
 
                                     }
-                                } else {
-                                    if (java.io.ByteArrayInputStream.class
-                                            .isInstance(content)) {
-                                        int bcount = ((java.io.ByteArrayInputStream) content).available();
-                                        byte[] c = new byte[bcount];
+                                } else if (java.io.ByteArrayInputStream.class
+                                        .isInstance(content)) {
+                                    int bcount = ((java.io.ByteArrayInputStream) content).available();
+                                    byte[] c = new byte[bcount];
 
-                                        ((java.io.ByteArrayInputStream) content).read(c, 0, bcount);
-                                        sw.write(
-                                                new String(c));
-                                    } else {
-                                        sw.write(content.toString());
-                                    }
+                                    ((java.io.ByteArrayInputStream) content).read(c, 0, bcount);
+                                    sw.write(
+                                            new String(c));
+                                } else {
+                                    sw.write(content.toString());
                                 }
                             }
 
@@ -361,7 +363,8 @@ public class VoEmailDAO extends BaseDAO {
             }
         } catch (Exception ioe) {
             System.err.println("Exception reading mail: " + ioe.getMessage());
-            log.error(ioe);
+//            log.error(ioe);
+            LogUtil.addLog(ioe);//binhnt sonar a160901
         }
         return sw.toString();
     }
@@ -395,22 +398,23 @@ public class VoEmailDAO extends BaseDAO {
     }
 
     public String prepare() {
-        EmailUser eu = emaulUserDAO.findById(getUserId());
+        emaulUserDAO.findById(getUserId());
 
         try {
-            String s = eu.getEmailAddress();
+//            String s = eu.getEmailAddress();
             String folderName = getRequest().getParameter("folder");
             getRequest().getSession().setAttribute("emailFolder", folderName);
             getRequest().setAttribute("listEmail", SuggestEmail());
             return folderName;
         } catch (ObjectNotFoundException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "fail";
         }
     }
+
     /*
      * get suggest list HungTQ
      */
-
     private String SuggestEmail() {
         EmailDAOHE emaildaohe = new EmailDAOHE();
         List<String> suggestString = emaildaohe.findEmailByUserId(getUserId());
@@ -466,7 +470,7 @@ public class VoEmailDAO extends BaseDAO {
             email.setContent(fetchText((Part) mess, true, true));
         }
 
-        if (email.getFolder().equalsIgnoreCase("outbox")) {
+        if ("outbox".equalsIgnoreCase(email.getFolder())) {
             attachId = attachId.replaceAll(";", "; ");
             email.setAttachmentId(attachId);
         }
@@ -505,7 +509,7 @@ public class VoEmailDAO extends BaseDAO {
                     }
 
                 } else if (body.getContentType().startsWith("application")) {
-                    if (!folder.equalsIgnoreCase("outbox")) {
+                    if (!"outbox".equalsIgnoreCase(folder)) {
                         String s = body.getFileName();
                         saveFile(dir + separatorFile + decodeMess(s), body.getInputStream());
                         attachid += saveToVoAttachs(dir + separatorFile + decodeMess(s));
@@ -526,6 +530,7 @@ public class VoEmailDAO extends BaseDAO {
             }
             return result;
         } catch (MessagingException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             result[0] = "<h1>Khong doc duoc mail</h1>";
             result[1] = null;
             return result;
@@ -544,7 +549,8 @@ public class VoEmailDAO extends BaseDAO {
             try {
 
                 output = MimeUtility.decodeText(s);
-            } catch (UnsupportedEncodingException e) {
+            } catch (UnsupportedEncodingException ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 // Don't care
                 output = s;
             }
@@ -594,7 +600,7 @@ public class VoEmailDAO extends BaseDAO {
         ResourceBundle rb = ResourceBundle.getBundle("config");
         String dir = rb.getString("tempDirectory");
         String disposition = part.getDisposition();
-        String contentType = decodeMess(part.getContentType());
+//        String contentType = decodeMess(part.getContentType());
         if (disposition == null) {
         } else if (disposition.equalsIgnoreCase(Part.ATTACHMENT)) {
             String s = part.getFileName();
@@ -618,7 +624,7 @@ public class VoEmailDAO extends BaseDAO {
         List<String> loutput = new ArrayList<String>();
 
         for (String st : input) {
-            if (!st.equalsIgnoreCase("")) {
+            if (!"".equalsIgnoreCase(st)) {
                 loutput.add(st);
             }
         }
@@ -639,7 +645,7 @@ public class VoEmailDAO extends BaseDAO {
     private String convertAddressToString(Address[] add) {
         String temp = "";
         if (add != null) {
-            int j = 0;
+            int j;
             InternetAddress in;
             if (add.length != 1) {
                 for (j = 0; j < add.length; j++) {
@@ -666,7 +672,7 @@ public class VoEmailDAO extends BaseDAO {
 
     private InternetAddress[] convertStringToAddress(String list) throws Exception {
         String[] temp;
-        if (!list.equals("")) {
+        if (!"".equals(list)) {
             temp = list.split(";");
             for (int i = 0; i < temp.length; i++) {
                 temp[i] = temp[i].trim();
@@ -801,8 +807,9 @@ public class VoEmailDAO extends BaseDAO {
                         }
                     }
                 } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                     //System.out.println(en.getMessage());
-                    log.error(ex.getMessage());
+//                    log.error(ex.getMessage());
                 }
                 if (i != messNum) {
                     jsonDataGrid.setCustomInfo("still have");
@@ -836,13 +843,13 @@ public class VoEmailDAO extends BaseDAO {
         } else {
             jsonDataGrid.setCustomInfo("fail connect to server");
         }
-        String s = onSearch();
+        onSearch();
         return GRID_DATA;
     }
 
     public String deleteSelected() {
         listMessForm = new ArrayList<EmailForm>();
-        EmailForm m = emailForm;
+//        EmailForm m = emailForm;
         listMessForm.add(emailForm);
         onDelete();
         return "gridData";
@@ -870,7 +877,7 @@ public class VoEmailDAO extends BaseDAO {
                             vo.delete(v);
                         }
                     }
-                    if (folderName.equalsIgnoreCase("inbox")) {
+                    if ("inbox".equalsIgnoreCase(folderName)) {
                         Store store = getStore();
                         POP3Folder fol = (POP3Folder) store.getFolder(folderName);
                         fol.open(Folder.READ_WRITE);
@@ -891,8 +898,8 @@ public class VoEmailDAO extends BaseDAO {
                 resultMessage.add("Xóa dữ liệu thành công");
             }
         } catch (Exception ex) {
-            //System.out.println(ex.getMessage());
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("0");
             resultMessage.add("Xóa dữ liệu không thành công");
             getSession().getTransaction().rollback();
@@ -988,14 +995,14 @@ public class VoEmailDAO extends BaseDAO {
         msg.setRecipients(Message.RecipientType.CC, convertStringToAddress(sendForm.getRecipients()));
         msg.setRecipients(Message.RecipientType.BCC, convertStringToAddress(sendForm.getBcc()));
         msg.setSubject(sendForm.getSubject());
-        String s1 = msg.getSubject();
+//        String s1 = msg.getSubject();
         Multipart multipart = new MimeMultipart();
         BodyPart part1 = new MimeBodyPart();
         part1.setContent(decodeMess(sendForm.getContent()), "text/html; charset=UTF-8");
         multipart.addBodyPart(part1);
 
-        if (!sendForm.getReceiver().equals("")) {
-            if (!sendForm.getAttachmentId().equals("")) {
+        if (!"".equals(sendForm.getReceiver())) {
+            if (!"".equals(sendForm.getAttachmentId())) {
                 path = convertFilePath(sendForm.getAttachmentId().split(";"));
             }
         }
@@ -1011,7 +1018,8 @@ public class VoEmailDAO extends BaseDAO {
         try {
             Transport.send(msg);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         System.out.println("Message sent to " + sendForm.getReceiver() + " OK.");
         Email email = transformEmail(msg, null, sendForm.getAttachmentId());
@@ -1028,8 +1036,8 @@ public class VoEmailDAO extends BaseDAO {
             String[] name = decodeMess(filename).split("_");
             part2.setFileName(name[name.length - 1]);
             return part2;
-        } catch (Exception e) {
-            e.getStackTrace();
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return null;
 
@@ -1055,9 +1063,12 @@ public class VoEmailDAO extends BaseDAO {
             String folderName = getRequest().getParameter("folder");
             if (folderName != null) {
                 getRequest().getSession().setAttribute("emailFolder", folderName);
-            } else {
-                folderName = getRequest().getSession().getAttribute("emailFolder").toString();
             }
+
+            //binhnt comment fix sonar
+//            else {
+//                folderName = getRequest().getSession().getAttribute("emailFolder").toString();
+//            }
             getGridInfo();
             EmailDAOHE emaildaohe = new EmailDAOHE();
             GridResult gridResult = emaildaohe.search(emailformsearch, getUserId());
@@ -1098,15 +1109,16 @@ public class VoEmailDAO extends BaseDAO {
                         form.setAttachmentNameArray(listAttachName);
                         getRequest().getSession().setAttribute("idSession", idSession);
                     }
-                } catch (Exception e) {
-                    log.error(e);
+                } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                    log.error(e);
                 }
                 list.add(form);
             }
             jsonDataGrid.setItems(list);
             jsonDataGrid.setTotalRows(list.size());
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         int countReturn = start + count;
         if (countReturn >= list.size()) {

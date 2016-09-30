@@ -6,6 +6,7 @@ package com.viettel.vsaadmin.database.DAO;
 
 import com.viettel.dojoTag.DojoJSON;
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.ResourceText;
 import com.viettel.common.util.StringUtils;
 import com.viettel.voffice.database.BO.Category;
@@ -51,9 +52,8 @@ public class DepartmentDAO extends BaseDAO {
     private DojoJSON json = new DojoJSON();
     private PositionDAOHE posDAOHibernate = new PositionDAOHE();
     private UsersDAOHE usersDAOHibernate = new UsersDAOHE();
-    
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DepartmentDAO.class);
 
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DepartmentDAO.class);
 
     public List<UsersForm> getListUnassignedUserForm() {
         return listUnassignedUserForm;
@@ -142,9 +142,9 @@ public class DepartmentDAO extends BaseDAO {
             getRequest().setAttribute("lstProvince", lstCategory);
 
             // this.jsonDataGrid.setItems(lst);
-
             getPosList();
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return this.forwardPage;
     }
@@ -172,15 +172,16 @@ public class DepartmentDAO extends BaseDAO {
             // this.jsonDataGrid.setItems(lst);
 
             getPosList();
-            
+
             CategoryDAOHE cdhe = new CategoryDAOHE();
             List lstProvince = cdhe.findAllCategory("PROVINCE");
             List lstCategory = new ArrayList();
             lstCategory.addAll(lstProvince);
             lstCategory.add(0, new Category(-1l, "--- Chọn ---"));
             getRequest().setAttribute("lstProvince", lstCategory);
-            
+
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return this.forwardPageChildDept;
     }
@@ -194,8 +195,8 @@ public class DepartmentDAO extends BaseDAO {
 
         List lstPos = posDAOHibernate.findAllActive();
         //   getRequest().setAttribute("positionList", lstPos);
-        String posName = "";
-        String posId = "";
+        String posName;
+        String posId;
         String arrPosition = "[";
         String arrPositionId = "[";
         for (int i = 0; i < lstPos.size() - 1; i++) {
@@ -247,6 +248,7 @@ public class DepartmentDAO extends BaseDAO {
             this.jsonDataGrid.setItems(result.getLstResult());
             this.jsonDataGrid.setTotalRows(result.getnCount().intValue());
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_GRID;
     }
@@ -261,7 +263,7 @@ public class DepartmentDAO extends BaseDAO {
             this.jsonDataGrid.setItems(result.getLstResult());
             this.jsonDataGrid.setTotalRows(result.getnCount().intValue());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_GRID;
     }
@@ -276,7 +278,7 @@ public class DepartmentDAO extends BaseDAO {
             this.jsonDataGrid.setItems(result.getLstResult());
             this.jsonDataGrid.setTotalRows(result.getnCount().intValue());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_GRID;
     }
@@ -322,8 +324,8 @@ public class DepartmentDAO extends BaseDAO {
                 this.departmentForm = new DepartmentForm();
                 this.departmentForm.setDeptId(temp.getParentId());
             }
-        } catch (Throwable ex) {
-            log.error(ex.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "error";
         }
 
@@ -354,9 +356,8 @@ public class DepartmentDAO extends BaseDAO {
                 this.jsonDataGrid.setCustomInfo("");
             }
 
-
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_GRID;
     }
@@ -370,7 +371,7 @@ public class DepartmentDAO extends BaseDAO {
         try {
 
             String id = (String) getRequest().getParameter("id");
-            Boolean result = false;
+            Boolean result;
             if ("".equals(id)) {
                 result = deptDaoHibernate.checkNameExisted(this.departmentForm.getDeptName());
             } else {
@@ -379,7 +380,7 @@ public class DepartmentDAO extends BaseDAO {
 
             this.jsonDataGrid.setCustomInfo(result);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_GRID;
     }
@@ -393,7 +394,7 @@ public class DepartmentDAO extends BaseDAO {
         try {
 
             String id = (String) getRequest().getParameter("id");
-            Boolean result = false;
+            Boolean result;
             if ("".equals(id)) {
                 result = deptDaoHibernate.checkCodeExisted(this.departmentForm.getDeptCode());
             } else {
@@ -402,7 +403,7 @@ public class DepartmentDAO extends BaseDAO {
 
             this.jsonDataGrid.setCustomInfo(result);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_GRID;
     }
@@ -449,7 +450,7 @@ public class DepartmentDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         if ("true".equals(childDept)) {
@@ -474,7 +475,7 @@ public class DepartmentDAO extends BaseDAO {
             DepartmentDAOHE.removeCache();
             Session session = getSession();
             if (deptGridForm != null) {
-                ConstraintUtils checkConstraint = new ConstraintUtils();
+//                ConstraintUtils checkConstraint = new ConstraintUtils();
                 //      checkConstraint.setSession(session);
                 //      Long parentId = 0L;
                 for (int i = 0; i < deptGridForm.size(); i++) {
@@ -489,7 +490,7 @@ public class DepartmentDAO extends BaseDAO {
                             if (!deptDaoHibernate.isExistDeptInDept(departmentForm) && !deptDaoHibernate.isExistUsersInDept(departmentForm)) {
                                 session.delete(bo);
                                 countSuccess++;
-                            }else{
+                            } else {
                                 listIdNotDel.add(deptId.toString());
                                 countError++;
                             }
@@ -507,7 +508,7 @@ public class DepartmentDAO extends BaseDAO {
             }
             jsonDataGrid = createMsgDeleteDept(countSuccess, countError, listIdNotDel);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             jsonDataGrid = createMsgUpdate(0, 2);
         }
         return RESULT_GRID;
@@ -534,7 +535,7 @@ public class DepartmentDAO extends BaseDAO {
                 this.jsonDataGrid.setTotalRows(total);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_GRID;
     }
@@ -551,7 +552,7 @@ public class DepartmentDAO extends BaseDAO {
                 getRequest().setAttribute("deptId", deptId);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "listUserPage";
     }
@@ -614,7 +615,7 @@ public class DepartmentDAO extends BaseDAO {
             }
             this.jsonDataGrid.setTotalRows(total.intValue());
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_GRID;
     }
@@ -684,7 +685,7 @@ public class DepartmentDAO extends BaseDAO {
             }
             this.jsonDataGrid.setTotalRows(total.intValue());
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_GRID;
     }
@@ -724,8 +725,8 @@ public class DepartmentDAO extends BaseDAO {
                     }
                 }
             }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "childrenData";
     }
@@ -756,8 +757,8 @@ public class DepartmentDAO extends BaseDAO {
                     }
                 }
             }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "childrenData";
     }
@@ -788,8 +789,8 @@ public class DepartmentDAO extends BaseDAO {
                     }
                 }
             }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "childrenData";
     }
@@ -806,7 +807,6 @@ public class DepartmentDAO extends BaseDAO {
 
             //Query q = getSession().createQuery(hql);
 //            List lst = deptDaoHibernate.getParentDeptForTree(false);
-
             //co order by Name
             List lst = deptDaoHibernate.getDeptListByParentId(null, null, null);
             if (lst.size() > 0) {
@@ -822,8 +822,8 @@ public class DepartmentDAO extends BaseDAO {
                 this.json.setLabel("name");
                 this.json.setItems(temp);
             }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_TREE;
         //   return "tree";
@@ -848,7 +848,7 @@ public class DepartmentDAO extends BaseDAO {
                 this.json.setItems(temp);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_TREE;
         //   return "tree";
@@ -884,7 +884,7 @@ public class DepartmentDAO extends BaseDAO {
                 this.json.setItems(temp);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_TREE;
         //   return "tree";
@@ -916,23 +916,22 @@ public class DepartmentDAO extends BaseDAO {
                 //  }
             }
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
         return null;
     }
+
     //DiuLTT
     /*
      * Search dept tree with its parent and depts at the same level
      */
-
     public String getDeptRootTree() {
         List temp = new ArrayList();
         DepartmentDAOHE deptDaoHe = new DepartmentDAOHE();
 
         try {
-            List<Department> lstChildren = new ArrayList<Department>();
-
+            List<Department> lstChildren;
             //get dept at the same level
             Department userDept = getDepartment();
             if (userDept != null && userDept.getParentId() != null) {
@@ -972,7 +971,8 @@ public class DepartmentDAO extends BaseDAO {
             this.json.setIdentifier("id");
             this.json.setLabel("name");
             this.json.setItems(temp);
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return RESULT_TREE;
@@ -985,7 +985,7 @@ public class DepartmentDAO extends BaseDAO {
     public String getDeptOfParentTree() {
         List temp = new ArrayList();
         DepartmentDAOHE deptDaoHe = new DepartmentDAOHE();
-        Long deptId = getDeptRepresentId();
+//        Long deptId = getDeptRepresentId();
         Department dept = getDeptRepresent();
 
         try {
@@ -1005,11 +1005,11 @@ public class DepartmentDAO extends BaseDAO {
                 temp.add(node);
             }
 
-
             this.json.setIdentifier("id");
             this.json.setLabel("name");
             this.json.setItems(temp);
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return RESULT_TREE;
@@ -1065,8 +1065,8 @@ public class DepartmentDAO extends BaseDAO {
                     return "childrenData";
                 }
             }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "childrenData";
     }
@@ -1087,7 +1087,8 @@ public class DepartmentDAO extends BaseDAO {
         Long deptId = 0l;
         try {
             deptId = Long.parseLong(strDeptId);
-        } catch (Exception en) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         getRequest().getSession().removeAttribute("deptId");
@@ -1108,7 +1109,8 @@ public class DepartmentDAO extends BaseDAO {
         Long deptId = 0l;
         try {
             deptId = Long.parseLong(strDeptId);
-        } catch (Exception en) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         getRequest().getSession().removeAttribute("deptId");
@@ -1131,11 +1133,13 @@ public class DepartmentDAO extends BaseDAO {
             objectId = Long.parseLong(strObjectId);
             objectType = Long.parseLong(strObjectType);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
+        /* sonar
         if (strDeptId == null || strDeptId.trim().length() == 0) {
             strDeptId = (String) getRequest().getSession().getAttribute("deptId");
         }
+         */
 
         getRequest().getSession().removeAttribute("deptId");
         getRequest().getSession().setAttribute("deptId", deptId);
@@ -1152,10 +1156,10 @@ public class DepartmentDAO extends BaseDAO {
         jsonDataGrid.setTotalRows(total);
         return RESULT_GRID;
     }
+
     /*
      *  Tim kiem tat ca user cua phong co dep_id = deptid
      */
-
     public String getUserOfDept(Long deptId) {
         getGridInfo();
         UsersDAOHE daohe = new UsersDAOHE();
@@ -1269,7 +1273,7 @@ public class DepartmentDAO extends BaseDAO {
             }
             return isExisted;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             throw ex;
         }
     }
@@ -1338,7 +1342,7 @@ public class DepartmentDAO extends BaseDAO {
             this.jsonDataGrid.setItems(lst);
             this.jsonDataGrid.setTotalRows(total.intValue());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_GRID;
     }
@@ -1351,9 +1355,8 @@ public class DepartmentDAO extends BaseDAO {
     public String assignUser() {
         try {
             Session session = getSession();
-            Long deptId = null;
             if ((this.usersForm.getDeptId() != null) && (!this.usersForm.getDeptId().equals(""))) {
-                deptId = new Long(this.usersForm.getDeptId());
+                Long deptId = new Long(this.usersForm.getDeptId());
                 Department deptBO = deptDaoHibernate.findById(deptId, false);
                 if (listUnassignedUserForm != null) {
                     for (int i = 0; i < listUnassignedUserForm.size(); i++) {
@@ -1363,7 +1366,6 @@ public class DepartmentDAO extends BaseDAO {
                             Long posId = this.usersForm.getPosId();
                             Criteria cri = session.createCriteria(Users.class).add(Restrictions.eq("userId", userId));
                             List lst = cri.list();
-
 
                             if (lst.size()
                                     > 0) {
@@ -1381,7 +1383,7 @@ public class DepartmentDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_GRID;
     }
@@ -1404,7 +1406,6 @@ public class DepartmentDAO extends BaseDAO {
                             Criteria cri = session.createCriteria(Users.class).add(Restrictions.eq("userId", userId));
                             List lst = cri.list();
 
-
                             if (lst.size()
                                     > 0) {
                                 Users ubo = (Users) lst.get(0);
@@ -1422,7 +1423,7 @@ public class DepartmentDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_GRID;
     }
@@ -1470,10 +1471,12 @@ public class DepartmentDAO extends BaseDAO {
         List temp = new ArrayList();
         String type = getRequest().getParameter("type");
         try {
+            /* sonar
             String deptTypeId = getRequest().getParameter("deptTypeId");
             if (deptTypeId == null) {
                 deptTypeId = "-1";
             }
+             */
             List lst = new ArrayList();
             if ("LTNN".equals(type)) {
                 Department dp2 = new Department();
@@ -1496,7 +1499,8 @@ public class DepartmentDAO extends BaseDAO {
                 this.json.setLabel("name");
                 this.json.setItems(temp);
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_TREE;
     }
@@ -1534,8 +1538,8 @@ public class DepartmentDAO extends BaseDAO {
                     return "childrenData";
                 }
             }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "childrenData";
     }
@@ -1552,12 +1556,14 @@ public class DepartmentDAO extends BaseDAO {
         if (getRequest().getParameter("deptId") != null) {
             currentId = getRequest().getParameter("deptId");
         }
+        /*sonar
         Long deptTypeId = 0L;
         try {
             deptTypeId = Long.parseLong(getRequest().getParameter("deptTypeId"));
-        } catch (Exception en) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
-
+         */
         try {
             if ((parentItemId != null) && (!parentItemId.equals("")) && (!parentItemId.equals(currentId))) {
                 Long parentId = new Long(parentItemId);
@@ -1576,8 +1582,8 @@ public class DepartmentDAO extends BaseDAO {
                     }
                 }
             }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "childrenData";
     }
@@ -1606,8 +1612,8 @@ public class DepartmentDAO extends BaseDAO {
                 this.json.setLabel("name");
                 this.json.setItems(temp);
             }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return RESULT_TREE;
     }
@@ -1642,8 +1648,8 @@ public class DepartmentDAO extends BaseDAO {
                     }
                 }
             }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "childrenData";
     }
@@ -1659,6 +1665,7 @@ public class DepartmentDAO extends BaseDAO {
         List<Department> lstDepartment = query.list();
         return lstDepartment;
     }
+
     private DojoJSON createMsgDeleteDept(int succ, int err, List<String> listNotDel) {
         int i = 0;
         List<String> lst = new ArrayList<String>();

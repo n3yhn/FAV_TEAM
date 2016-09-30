@@ -40,21 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "XmlWs.findByTypeName", query = "SELECT x FROM XmlWs x WHERE x.typeName = :typeName")})
 public class XmlWs implements Serializable {
 
-    @Column(name = "USER_CREATE_ID")
-    private Long userCreateId;
-    @Column(name = "TYPE")
-    private Long type;
-    @Column(name = "NSW_FILE_CODE")
-    private String nswFileCode;
-    @Lob
-    @Column(name = "REASON")
-    private String reason;
-    @Column(name = "CREATE_DATE")
-    @Temporal(TemporalType.DATE)
-    private Date createDate;
-
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @SequenceGenerator(name = "XML_WS_SEQ", sequenceName = "XML_WS_SEQ")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "XML_WS_SEQ")
@@ -70,6 +56,18 @@ public class XmlWs implements Serializable {
     private String typeCode;
     @Column(name = "TYPE_NAME")
     private String typeName;
+    @Column(name = "USER_CREATE_ID")
+    private Long userCreateId;
+    @Column(name = "TYPE")
+    private Long type;
+    @Column(name = "NSW_FILE_CODE")
+    private String nswFileCode;
+    @Lob
+    @Column(name = "REASON")
+    private String reason;
+    @Column(name = "CREATE_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date createDate;
 
     public XmlWs() {
     }
@@ -109,7 +107,6 @@ public class XmlWs implements Serializable {
     public void setUserCreateName(String userCreateName) {
         this.userCreateName = StringUtils.removeEventHandlerJS(userCreateName);
     }
-
 
     public String getTypeCode() {
         return typeCode;
@@ -183,5 +180,5 @@ public class XmlWs implements Serializable {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
-    
+
 }

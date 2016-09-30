@@ -5,8 +5,8 @@
  */
 package com.viettel.hqmc.DAOHE;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.DetailProduct;
-import com.viettel.hqmc.BO.ReIssueForm;
 import com.viettel.voffice.database.DAOHibernate.GenericDAOHibernate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,7 +64,6 @@ public class DetailProductDAOHE extends GenericDAOHibernate<DetailProduct, Long>
     }
 
     //==========================================================================
-      
     /**
      * tim kiem sua doi bo sung
      *
@@ -74,7 +73,7 @@ public class DetailProductDAOHE extends GenericDAOHibernate<DetailProduct, Long>
      * @param isLastVersion
      * @return
      */
-public DetailProduct findIsItempObj(Long objId, Long originalId, Long version, boolean isLastVersion) {//140726
+    public DetailProduct findIsItempObj(Long objId, Long originalId, Long version, boolean isLastVersion) {//140726
         DetailProduct bo = new DetailProduct();
         try {
 
@@ -105,13 +104,13 @@ public DetailProduct findIsItempObj(Long objId, Long originalId, Long version, b
             if (!lstObj.isEmpty()) {
                 bo = lstObj.get(0);
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return bo;
     }
 
-  /**
+    /**
      * dem version
      *
      * @param objId
@@ -130,7 +129,7 @@ public DetailProduct findIsItempObj(Long objId, Long originalId, Long version, b
         return iresult;
     }
 
-  /**
+    /**
      * updateSetNotLastIsTemp
      *
      * @param objId
@@ -142,8 +141,8 @@ public DetailProduct findIsItempObj(Long objId, Long originalId, Long version, b
             Query query = getSession().createQuery(hql);
             query.setParameter(0, objId);
             return query.executeUpdate();
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }

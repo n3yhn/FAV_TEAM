@@ -5,6 +5,7 @@
 package com.viettel.hqmc.DAO;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.ConfirmImportSatistPaper;
 import com.viettel.hqmc.BO.Files;
 import com.viettel.hqmc.DAOHE.ConfirmImportSatistPaperDAOHE;
@@ -44,7 +45,7 @@ public class ConfirmImportSatistPaperDAO extends BaseDAO {
         try {
             //todo code here
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return this.forwardPage;
     }
@@ -96,6 +97,7 @@ public class ConfirmImportSatistPaperDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật không thành công");
         }
@@ -111,7 +113,9 @@ public class ConfirmImportSatistPaperDAO extends BaseDAO {
             ConfirmImportSatistPaperDAOHE cthe = new ConfirmImportSatistPaperDAOHE();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 ConfirmImportSatistPaperForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getConfirmImportSatistPaperId() != null && form.getConfirmImportSatistPaperId() != 0D) {
+                if (form != null
+                        && form.getConfirmImportSatistPaperId() != null
+                        && form.getConfirmImportSatistPaperId() != 0L) {
                     ConfirmImportSatistPaper bo = cthe.getById("confirmImportSatistPaperId", form.getConfirmImportSatistPaperId());
                     if (bo != null) {
                         bo.setIsActive(0l);
@@ -124,7 +128,7 @@ public class ConfirmImportSatistPaperDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Xóa không thành công");
         }
@@ -175,6 +179,7 @@ public class ConfirmImportSatistPaperDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật không thành công");
         }

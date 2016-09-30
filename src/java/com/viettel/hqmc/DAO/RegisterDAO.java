@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.Business;
 import com.viettel.hqmc.BO.MessageGroup;
 import com.viettel.hqmc.BO.MessageGroupPerson;
@@ -44,11 +45,11 @@ public class RegisterDAO extends BaseDAO {
     RegisterDAOHE categoryTypeDao = new RegisterDAOHE();
     private List<RegisterForm> lstItemOnGrid;
     private static final Logger log = Logger.getLogger(RegisterDAO.class);
+
     /*
      * toShowPage
      * show data perpare after show page
      */
-
     /**
      *
      * @return
@@ -76,7 +77,8 @@ public class RegisterDAO extends BaseDAO {
             getRequest().setAttribute("lstPosId", lstCategory2);
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return this.registerCreatePage;
     }
@@ -101,7 +103,8 @@ public class RegisterDAO extends BaseDAO {
 //            lstCategory1.add(0, new Category(0l, "--- Chọn ---"));
 //            getRequest().setAttribute("lstBusinessType", lstCategory1);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return "registerAccountPage";
     }
@@ -125,7 +128,8 @@ public class RegisterDAO extends BaseDAO {
 //            lstCategory1.add(0, new Category(0l, "--- Chọn ---"));
 //            getRequest().setAttribute("lstBusinessType", lstCategory1);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return this.registerSearchPage;
     }
@@ -175,7 +179,8 @@ public class RegisterDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             Long ObjId = createForm.getRegisterId();
             if (ObjId == null) {
@@ -264,7 +269,8 @@ public class RegisterDAO extends BaseDAO {
                 resultMessage.add("Đăng ký tài khoản Doanh nghiệp thành công. Tài khoản của quý khách sẽ được phê duyệt trong 24h làm việc. Thông tin tài khoản đăng nhập vào hệ thống sẽ được gửi vào Email đã đăng ký sau khi tài khoản được phê duyệt. Cám ơn!");
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Đăng ký tài khoản Doanh nghiệp không thành công");
         }
@@ -291,6 +297,7 @@ public class RegisterDAO extends BaseDAO {
                         try {
                             subpass = ubo.getUserName().substring(3, 3);
                         } catch (Exception ex) {
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                             subpass = "123";
                         }
                         String passwordNotEncrypt = "Attp@" + subpass;//BINHNT53 U141230
@@ -319,7 +326,8 @@ public class RegisterDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Lấy lại mật khẩu tài khoản không thành công");
         }
@@ -351,7 +359,8 @@ public class RegisterDAO extends BaseDAO {
             getSession().save(bo);
             return bo.getPosId();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             return -2l;
         }
     }
@@ -447,7 +456,8 @@ public class RegisterDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Phê duyệt tài khoản thất bại");
         }

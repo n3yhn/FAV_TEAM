@@ -42,7 +42,7 @@ public class ImportUsersDAO extends BaseDAO {
             HSSFWorkbook wb = new HSSFWorkbook(myxls);
             HSSFSheet sheet = wb.getSheetAt(0);
             HSSFRow row;
-            HSSFRow firstRow = sheet.getRow(0);
+//            HSSFRow firstRow = sheet.getRow(0);
             int rowNums = sheet.getLastRowNum();
             UsersDAOHE sdhe = new UsersDAOHE();
             SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
@@ -50,7 +50,7 @@ public class ImportUsersDAO extends BaseDAO {
                 row = sheet.getRow(i);
                 if (row != null) {
                     Users entity = new Users();
-                    HSSFCell cellSTT = row.getCell((short) 0);
+//                    HSSFCell cellSTT = row.getCell((short) 0);
                     HSSFCell cellUserName = row.getCell((short) 1);
                     HSSFCell cellFullName = row.getCell((short) 2);
                     HSSFCell cellPassword = row.getCell((short) 3);

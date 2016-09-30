@@ -3,15 +3,10 @@
  * and open the template in the editor.
  */
 package com.viettel.utils;
-import java.*;
-import java.io.*;
 import java.util.*;
 import javax.xml.bind.*;
-import javax.xml.namespace.*;
 import org.docx4j.wml.*;
 import org.docx4j.math.*;
-import org.docx4j.openpackaging.packages.*;
-import org.docx4j.openpackaging.parts.WordprocessingML.*;
 /**
  *
  * @author binhnt53
@@ -87,7 +82,7 @@ public class Processor {
 
     public void processOMath(CTOMath oMath)
     {
-        String tag = getTag(); // tag of innermost <w:sdt>
+//        String tag = getTag(); // tag of innermost <w:sdt>
         if (getTag().equals("MyEquation"))
         {
             List<Object> content = oMath.getEGOMathElements();

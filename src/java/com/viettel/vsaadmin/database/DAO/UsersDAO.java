@@ -6,6 +6,7 @@ package com.viettel.vsaadmin.database.DAO;
 
 import com.viettel.common.util.Constants;
 import com.viettel.common.util.DateTimeUtils;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.dojoTag.DojoJSON;
 import com.viettel.hqmc.BO.Business;
@@ -101,7 +102,7 @@ public class UsersDAO extends BaseDAO {
 //            ws = new DocumentDirectionWS_Service().getDocumentDirectionWSPort();
 //            ws.getDocumentDirection(15);
 //            List lstDoc = ws.getDocumentDirection(getUserId());
-            UserToken vsaUserToken = (UserToken) getRequest().getSession().getAttribute("userToken");
+//            UserToken vsaUserToken = (UserToken) getRequest().getSession().getAttribute("userToken");
             Long currentUserId = getUserId();
             PositionDAOHE posDHE = new PositionDAOHE();
             List<Position> lst = posDHE.findAllActive();
@@ -121,7 +122,8 @@ public class UsersDAO extends BaseDAO {
             getRequest().setAttribute("lstPosition", lst);
             getRequest().setAttribute("lstBusiness", lstBusiness);
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            System.out.print(ex.getMessage());
         }
 
         return this.forwardPage;
@@ -180,7 +182,7 @@ public class UsersDAO extends BaseDAO {
      */
     public String prepareUserOfDept() {
         try {
-            UserToken vsaUserToken = (UserToken) getRequest().getSession().getAttribute("userToken");
+//            UserToken vsaUserToken = (UserToken) getRequest().getSession().getAttribute("userToken");
             Long currentUserId = getUserId();
             PositionDAOHE posDHE = new PositionDAOHE();
             List<Position> lst = posDHE.findAllActive();
@@ -200,6 +202,7 @@ public class UsersDAO extends BaseDAO {
             getRequest().setAttribute("lstPosition", lst);
             getRequest().setAttribute("lstBusiness", lstBusiness);
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             //ex.printStackTrace();
         }
 
@@ -220,7 +223,8 @@ public class UsersDAO extends BaseDAO {
 
             this.jsonDataGrid.setItems(lst);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return "gridData";
     }
@@ -314,7 +318,8 @@ public class UsersDAO extends BaseDAO {
             this.jsonDataGrid.setNumRows(lst.size());
             this.jsonDataGrid.setTotalRows(total.intValue());
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            System.out.print(ex.getMessage());
         }
         return "gridData";
     }
@@ -397,7 +402,8 @@ public class UsersDAO extends BaseDAO {
             this.jsonDataGrid.setNumRows(lst.size());
             this.jsonDataGrid.setTotalRows(total.intValue());
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            System.out.print(ex.getMessage());
         }
         return "gridData";
     }
@@ -432,7 +438,8 @@ public class UsersDAO extends BaseDAO {
                 this.jsonDataGrid.setCustomInfo(msgError);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             msgError.add("insertErr");
             this.jsonDataGrid.setCustomInfo(msgError);
             return "gridData";
@@ -516,7 +523,8 @@ public class UsersDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
 
             msgError.add("updateErr");
             this.jsonDataGrid.setCustomInfo(msgError);
@@ -530,7 +538,7 @@ public class UsersDAO extends BaseDAO {
      * @return struts result
      */
     public String checkIdentityCard() {
-        HttpServletRequest req = getRequest();
+//        HttpServletRequest req = getRequest();
         //String userIdStr = req.getParameter("userId");
         List<Users> lsUser = usersDAOHE.getListUserByIdentityCard(usersForm.getIdentityCard());
         boolean exist = false;
@@ -622,7 +630,8 @@ public class UsersDAO extends BaseDAO {
                         q.executeUpdate();
                         countSuccess++;
                     } catch (ConstraintViolationException ex) {
-                        log.error(ex.getMessage());
+                        LogUtil.addLog(ex);//binhnt sonar a160901
+//                        log.error(ex.getMessage());
                         listIdNotDel.add(id.toString());
                         countError++;
                     }
@@ -633,7 +642,8 @@ public class UsersDAO extends BaseDAO {
             }
             jsonDataGrid = createMsgDelete(countSuccess, countError, listIdNotDel);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             jsonDataGrid = createMsgUpdate(0, 2);
         }
         return "gridData";
@@ -710,7 +720,8 @@ public class UsersDAO extends BaseDAO {
             this.jsonDataGrid.setCustomInfo(msg);
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
 
             msg.add("resetFail");
             this.jsonDataGrid.setCustomInfo(msg);
@@ -756,7 +767,8 @@ public class UsersDAO extends BaseDAO {
                     try {
                         Long l = Long.parseLong(arrUsers[i]);
                         lstUsers.add(l);
-                    } catch (Exception en) {
+                    } catch (Exception ex) {
+                        LogUtil.addLog(ex);//binhnt sonar a160901
                     }
                 }
             }
@@ -770,7 +782,8 @@ public class UsersDAO extends BaseDAO {
             }
             jsonDataGrid = createMsgUpdateStatus(succ, Integer.parseInt(ignore), new String[]{"Khóa", "khóa"});
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             jsonDataGrid = createMsgUpdate(0, 2);
         }
         //!binhnt
@@ -812,7 +825,8 @@ public class UsersDAO extends BaseDAO {
                     try {
                         Long l = Long.parseLong(arrUsers[i]);
                         lstUsers.add(l);
-                    } catch (Exception en) {
+                    } catch (Exception ex) {
+                        LogUtil.addLog(ex);//binhnt sonar a160901
                     }
                 }
             }
@@ -826,7 +840,8 @@ public class UsersDAO extends BaseDAO {
             }
             jsonDataGrid = createMsgUpdateStatusUnlock(succ, Integer.parseInt(ignore), new String[]{"Mở khóa", "hoạt động"});
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             jsonDataGrid = createMsgUpdate(0, 2);
         }
         return "gridData";
@@ -957,6 +972,7 @@ public class UsersDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             throw ex;
         }
 
@@ -991,7 +1007,8 @@ public class UsersDAO extends BaseDAO {
 
             return isExisted;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             throw ex;
         }
     }
@@ -1024,7 +1041,8 @@ public class UsersDAO extends BaseDAO {
             }
             return isExisted;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             throw ex;
         }
     }
@@ -1042,7 +1060,7 @@ public class UsersDAO extends BaseDAO {
             Session session = getSession();
             List listParam = new ArrayList();
             String countHQL = "select count(a) ";
-            String searchHQL = "select a ";
+//            String searchHQL = "select a ";
             String hql = " from Roles a where 1 = 1 ";
 
             if ((this.userRoleFormOnDialog.getRoleName() != null)
@@ -1083,6 +1101,7 @@ public class UsersDAO extends BaseDAO {
             this.jsonDataGrid.setItems(lst);
             this.jsonDataGrid.setTotalRows(total.intValue());
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "gridData";
     }
@@ -1098,7 +1117,7 @@ public class UsersDAO extends BaseDAO {
             Session session = getSession();
             List listParam = new ArrayList();
             String countHQL = "select count(a) ";
-            String searchHQL = "select a ";
+//            String searchHQL = "select a ";
             String hql = " from Roles a where 1 = 1 ";
 
             if ((this.userRoleFormOnDialog.getRoleName() != null)
@@ -1143,7 +1162,8 @@ public class UsersDAO extends BaseDAO {
             this.jsonDataGrid.setItems(lst);
             this.jsonDataGrid.setTotalRows(total.intValue());
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            System.out.print(ex.getMessage());
         }
         return "gridData";
     }
@@ -1161,19 +1181,21 @@ public class UsersDAO extends BaseDAO {
         Long userId = 0l;
         try {
             userId = Long.parseLong(req.getParameter("userId"));
-        } catch (Exception en) {
-            System.out.print(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            System.out.print(en.getMessage());
             userId = 0l;
         }
         Users user = null;
         try {
             user = getUserById(userId);
-        } catch (Exception en) {
-            System.out.print(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            System.out.print(en.getMessage());
         }
-        Long departmentId = 0L;
+//        Long departmentId = 0L;
         if (user != null) {
-            departmentId = user.getDeptId();
+            user.getDeptId();
         }
         try {
             Session session = getSession();
@@ -1195,7 +1217,7 @@ public class UsersDAO extends BaseDAO {
             this.jsonDataGrid.setItems(result.getLstResult());
             this.jsonDataGrid.setTotalRows(result.getnCount().intValue());
         } catch (Exception ex) {
-            System.out.print(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "gridData";
     }
@@ -1216,7 +1238,8 @@ public class UsersDAO extends BaseDAO {
             roleId = Long.parseLong(roleStr);
             deptId = Long.parseLong(deptStr);
             roleUserDeptId = Long.parseLong(roleUserDeptStr);
-        } catch (Exception en) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         try {
@@ -1254,7 +1277,8 @@ public class UsersDAO extends BaseDAO {
                 lstItems.add("0");
                 lstItems.add("Đã tồn tại");
             }
-        } catch (Exception en) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             lstItems.add("0");
             lstItems.add("Có lỗi xảy ra");
         }
@@ -1278,8 +1302,9 @@ public class UsersDAO extends BaseDAO {
 
             try {
                 userId = Long.parseLong(req.getParameter("userId"));
-            } catch (Exception en) {
-                System.out.print(en.getMessage());
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                System.out.print(en.getMessage());
                 userId = 0l;
             }
 
@@ -1287,11 +1312,12 @@ public class UsersDAO extends BaseDAO {
             try {
                 user = getUserById(userId);
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(ex.getMessage());
             }
-            Long departmentId = 0L;
+//            Long departmentId = 0L;
             if (user != null) {
-                departmentId = user.getDeptId();
+                user.getDeptId();
             }
 
             if (userId != null && userId > 0 && strRoleId != null && (!"".equals(strRoleId))) {
@@ -1304,7 +1330,8 @@ public class UsersDAO extends BaseDAO {
                         try {
                             Long l = Long.parseLong(roleUserDeptIdStr[i]);
                             lstRoleUserDeptIds.add(l);
-                        } catch (Exception en) {
+                        } catch (Exception ex) {
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                     }
                 }
@@ -1313,7 +1340,7 @@ public class UsersDAO extends BaseDAO {
                 Query q = session.createQuery(hql);
                 q.setParameter("userId", userId);
                 q.setParameterList("lstRoleUserDept", lstRoleUserDeptIds);
-                int succ = q.executeUpdate();
+                q.executeUpdate();
                 getSession().flush();
 
                 hql = " delete from RoleUser a where a.userId = :userId  and a.roleId in (:lstRole) and a.roleId not in (select rud.roleId from RoleUserDept rud where rud.isActive = 1 and rud.userId =:userIdOfRUD)";
@@ -1325,7 +1352,8 @@ public class UsersDAO extends BaseDAO {
                         try {
                             Long l = Long.parseLong(roleIdStr[i]);
                             lstRoleIds.add(l);
-                        } catch (Exception en) {
+                        } catch (Exception ex) {
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                     }
                 }
@@ -1336,14 +1364,15 @@ public class UsersDAO extends BaseDAO {
                 q.setParameterList("lstRole", lstRoleIds);
                 q.setParameter("userIdOfRUD", userId);
 
-                succ = q.executeUpdate();
+                q.executeUpdate();
 
                 GridResult result = getRoleUserDept(userId);
                 this.jsonDataGrid.setItems(result.getLstResult());
                 this.jsonDataGrid.setTotalRows(result.getnCount().intValue());
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return "gridData";
     }
@@ -1364,6 +1393,7 @@ public class UsersDAO extends BaseDAO {
                 this.jsonDataGrid.setTotalRows(result.getnCount().intValue());
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "gridData";
     }
@@ -1393,7 +1423,8 @@ public class UsersDAO extends BaseDAO {
                         try {
                             Long l = Long.parseLong(roleIdStr[i]);
                             lstRoleIds.add(l);
-                        } catch (Exception en) {
+                        } catch (Exception ex) {
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                     }
                 }
@@ -1406,7 +1437,8 @@ public class UsersDAO extends BaseDAO {
                         try {
                             Long l = Long.parseLong(roleUserDeptIdStr[i]);
                             lstRoleUserDeptIds.add(l);
-                        } catch (Exception en) {
+                        } catch (Exception ex) {
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                     }
                 }
@@ -1415,7 +1447,7 @@ public class UsersDAO extends BaseDAO {
                 Query q = session.createQuery(hql);
                 q.setParameter("userId", userId);
                 q.setParameterList("lstRoleUserDept", lstRoleUserDeptIds);
-                succ = q.executeUpdate();
+                q.executeUpdate();
                 getSession().flush();
                 //
                 // Lock cac role
@@ -1428,7 +1460,7 @@ public class UsersDAO extends BaseDAO {
                 q.setParameterList("lstRole", lstRoleIds);
                 q.setParameter("userIdOfRUD", userId);
 
-                succ = q.executeUpdate();
+                q.executeUpdate();
                 //
                 // end of lock role
                 //
@@ -1439,7 +1471,8 @@ public class UsersDAO extends BaseDAO {
             }
             jsonDataGrid = createMsgUpdateStatus(succ, Integer.parseInt(ignore), new String[]{"Khóa", "khóa"});
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             jsonDataGrid = createMsgUpdate(0, 2);
         }
         return "gridData";
@@ -1470,7 +1503,8 @@ public class UsersDAO extends BaseDAO {
                         try {
                             Long l = Long.parseLong(roleUserDeptIdStr[i]);
                             lstRoleUserDeptIds.add(l);
-                        } catch (Exception en) {
+                        } catch (Exception ex) {
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                     }
                 }
@@ -1479,7 +1513,7 @@ public class UsersDAO extends BaseDAO {
                 Query q = session.createQuery(hql);
                 q.setParameter("userId", userId);
                 q.setParameterList("lstRoleUserDept", lstRoleUserDeptIds);
-                succ = q.executeUpdate();
+                q.executeUpdate();
                 getSession().flush();
 
                 hql = " update RoleUser a set a.isActive = 1  where a.userId = :userId  and a.roleId in (:lstRole)";
@@ -1491,7 +1525,8 @@ public class UsersDAO extends BaseDAO {
                         try {
                             Long l = Long.parseLong(roleIdStr[i]);
                             lstRoleIds.add(l);
-                        } catch (Exception en) {
+                        } catch (Exception ex) {
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                     }
                 }
@@ -1501,7 +1536,7 @@ public class UsersDAO extends BaseDAO {
 
                 q.setParameterList("lstRole", lstRoleIds);
 
-                succ = q.executeUpdate();
+                q.executeUpdate();
 
                 GridResult result = getRoleUserDept(userId);
                 this.jsonDataGrid.setItems(result.getLstResult());
@@ -1509,7 +1544,8 @@ public class UsersDAO extends BaseDAO {
             }
             jsonDataGrid = createMsgUpdateStatusUnlock(succ, Integer.parseInt(ignore), new String[]{"Mở khóa", "hoạt động"});
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             jsonDataGrid = createMsgUpdate(0, 2);
         }
         return "gridData";
@@ -1593,7 +1629,7 @@ public class UsersDAO extends BaseDAO {
         if (lst != null && lst.size() > 0) {
             for (int i = 0; i < lst.size(); i++) {
                 boolean bHasDept = false;
-                RoleUserDept entity = null;
+                RoleUserDept entity;
                 if (lstRoleUserDept != null && lstRoleUserDept.size() > 0) {
                     for (int j = 0; j < lstRoleUserDept.size(); j++) {
                         if (lstRoleUserDept.get(j).getRoleId().equals(lst.get(i).getRoleId())) {
@@ -1627,7 +1663,7 @@ public class UsersDAO extends BaseDAO {
         }
         nameFull = nameFull.trim().toLowerCase();
         nameFull = removeVietnameseChar(nameFull);
-        String shortName = "";
+        String shortName;
         String[] arrName = nameFull.split(" ");
         if (arrName == null || arrName.length <= 1) {
             shortName = nameFull;
@@ -1652,9 +1688,9 @@ public class UsersDAO extends BaseDAO {
      */
     public String searchLeader() {
         getGridInfo();
-        AtomicInteger countAI = new AtomicInteger(count);
-        Department dept = getDepartment();
-        Long deptId = dept.getDeptId();
+//        AtomicInteger countAI = new AtomicInteger(count);
+//        Department dept = getDepartment();
+//        Long deptId = dept.getDeptId();
 //        List<Users> lstUserses = usersDAOHE.getUsersOfDept(deptId, start, countAI, sortField);
 //        jsonDataGrid.setItems(lstUserses);
 //        jsonDataGrid.setTotalRows(countAI.intValue());
@@ -1699,7 +1735,8 @@ public class UsersDAO extends BaseDAO {
         Long deptId = null;
         try {
             deptId = Long.parseLong(deptIdStr);
-        } catch (Exception en) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (this.usersForm == null) {
             this.usersForm = new UsersForm();
@@ -1739,7 +1776,7 @@ public class UsersDAO extends BaseDAO {
             if (deptId.equals(-1L)) {
                 deptId = getDeptRepresentId();
             }
-            List<Users> users = new ArrayList<Users>();
+            List<Users> users;
             users = usersDAOHE.getUsersOfDept(deptId, getUserId());
             Users selectUser = new Users();
             selectUser.setUserId(Constants.COMBOBOX_HEADER_VALUE);
@@ -1753,7 +1790,8 @@ public class UsersDAO extends BaseDAO {
             staffsList.setItems(listUsers);
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return "staffsList";
     }
@@ -1763,12 +1801,13 @@ public class UsersDAO extends BaseDAO {
         List result = new ArrayList();
         String deptIds = getRequest().getParameter("deptIds");
         try {
-            List<Users> users = new ArrayList<Users>();
+            List<Users> users;
             users = usersDAOHE.getUsersOfDept(deptIds, getUserId());
             String usersList = new UsersDAOHE().convertToJSONArray(users, "userId", "fullName", "userName");
             result.add(usersList);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         jsonDataGrid.setItems(result);
         return GRID_DATA;
@@ -1824,9 +1863,9 @@ public class UsersDAO extends BaseDAO {
             HSSFWorkbook wb = new HSSFWorkbook(myxls);
             HSSFSheet sheet = wb.getSheetAt(0);
             HSSFRow row;
-            HSSFRow firstRow = sheet.getRow(1);
+//            HSSFRow firstRow = sheet.getRow(1);
             int rowNums = sheet.getLastRowNum();
-            UsersDAOHE sdhe = new UsersDAOHE();
+//            UsersDAOHE sdhe = new UsersDAOHE();
             SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
             String userError = "";
 
@@ -1933,7 +1972,7 @@ public class UsersDAO extends BaseDAO {
 //                        entity.setPosId(Long.parseLong(cellPosId.toString()));
 //                        entity.setStatus(Long.parseLong(cellStatus.toString()));
 //                        entity.setGender(Long.parseLong(cellGender.toString()));
-                        String gender = "";
+                        String gender;
                         if (cellGender == null) {
                             userError += i + " lỗi Giới tính,";
                             customInfo.add(userError);
@@ -1962,7 +2001,8 @@ public class UsersDAO extends BaseDAO {
 
                     } // end if row != null
                 } // end if att != null
-                catch (Exception e) {
+                catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
                     userError += i + ",";
                     customInfo.add(userError);
 //                    jsonDataGrid.setCustomInfo(customInfo);
@@ -2020,13 +2060,14 @@ public class UsersDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;
     }
 
-    //add new push businessAlert
+    //push businessAlert add by binhnt 
     public String pushBusinessAlert() {
         List resultMessage = new ArrayList();
         try {
@@ -2050,7 +2091,8 @@ public class UsersDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         jsonDataGrid.setItems(resultMessage);
         return GRID_DATA;

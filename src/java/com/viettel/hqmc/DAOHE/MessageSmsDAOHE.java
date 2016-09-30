@@ -5,6 +5,7 @@
 package com.viettel.hqmc.DAOHE;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.MessageSms;
 import com.viettel.voffice.database.DAO.BaseDAO;
 import com.viettel.voffice.database.DAOHibernate.GenericDAOHibernate;
@@ -40,19 +41,20 @@ public class MessageSmsDAOHE extends GenericDAOHibernate<MessageSms, Long> {
      * @return
      */
     public boolean sendMessage(Long sendId, String[] receiverList, String content) {
-        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) return true;
+        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) {
+            return true;
+        }
         boolean result = true;
         try {
             for (String id : receiverList) {
                 if (id != null && !id.equals("")) {
-                    MessageSms bo = new MessageSms();
                     Long userId = Long.valueOf(id);
-                    bo = this.entityToBo(sendId, userId, content);
+                    MessageSms bo = this.entityToBo(sendId, userId, content);
                     this.create(bo);
                 }
             }
-        } catch (Exception e) {
-            logger.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             result = false;
         }
         return result;
@@ -82,7 +84,7 @@ public class MessageSmsDAOHE extends GenericDAOHibernate<MessageSms, Long> {
             bo.setSentTimeReq(getSysdate());
             bo.setSendCount(0L);
         } catch (Exception ex) {
-            logger.error(ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return bo;
     }
@@ -96,18 +98,19 @@ public class MessageSmsDAOHE extends GenericDAOHibernate<MessageSms, Long> {
      * @return
      */
     public boolean saveMessageSMS(Long senderId, Long receiverId, String content) {
-        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) return true;
+        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) {
+            return true;
+        }
         boolean result = true;
         try {
             String hql = "update MessageSmsFlag m set m.flag = 1";
             Query updateQuery = getSession().createQuery(hql);
-            int a = updateQuery.executeUpdate();
-            MessageSms bo = new MessageSms();
-            bo = this.entityToBo(senderId, receiverId, content);
+            updateQuery.executeUpdate();
+            MessageSms bo = this.entityToBo(senderId, receiverId, content);
             this.create(bo);
 
-        } catch (Exception e) {
-            logger.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             result = false;
         }
         return result;
@@ -129,7 +132,7 @@ public class MessageSmsDAOHE extends GenericDAOHibernate<MessageSms, Long> {
             bo.setSentTimeReq(getSysdate());
             bo.setSendCount(0L);
         } catch (Exception ex) {
-            logger.error(ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return bo;
     }
@@ -143,17 +146,18 @@ public class MessageSmsDAOHE extends GenericDAOHibernate<MessageSms, Long> {
      * @return
      */
     public boolean saveMessageSMSGroup(Long receiverId, String cellphone, String content) {
-        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) return true;
+        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) {
+            return true;
+        }
         boolean result = true;
         try {
             String hql = "update MessageSmsFlag m set m.flag = 1";
             Query updateQuery = getSession().createQuery(hql);
-            int a = updateQuery.executeUpdate();
-            MessageSms bo = new MessageSms();
-            bo = this.entityToBoGroup(receiverId, cellphone, content);
+            updateQuery.executeUpdate();
+            MessageSms bo = this.entityToBoGroup(receiverId, cellphone, content);
             this.create(bo);
-        } catch (Exception e) {
-            logger.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             result = false;
         }
         return result;

@@ -4,6 +4,7 @@
  */
 package com.viettel.voffice.database.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.database.BO.VoAttachs;
 import com.viettel.voffice.database.DAOHibernate.VoAttachsDAOHE;
 import java.awt.Color;
@@ -146,14 +147,14 @@ public class ViewFileDAO extends BaseDAO {
                             }
 
                         } catch (Exception ex) {
-                            log.error(ex.getMessage());
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                         }
                         break;
                     }
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         getRequest().setAttribute("fileType", fileType);
         return "view";
@@ -187,6 +188,7 @@ public class ViewFileDAO extends BaseDAO {
             result = true;
             return result;
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return result;
         }
 
@@ -217,7 +219,7 @@ public class ViewFileDAO extends BaseDAO {
             imageWriter.writeImage(document, imageFormat, password, startPage, document.getNumberOfPages(), outputPrefix);
             num = document.getNumberOfPages();
         } catch (IOException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return num;
     }
@@ -256,7 +258,7 @@ public class ViewFileDAO extends BaseDAO {
             html.body().append(html.getElementsByTag("style").outerHtml());
             return html.body().html();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -277,7 +279,7 @@ public class ViewFileDAO extends BaseDAO {
             return html.body().html();
 
         } catch (IOException ex) {
-            log.error(ex.getMessage()); 
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
 
@@ -311,14 +313,14 @@ public class ViewFileDAO extends BaseDAO {
                 output += "<img src = '" + image + "'/><br/>";
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         } finally {
             try {
                 is.close();
                 return output;
             } catch (IOException ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 return null;
             }
         }
@@ -352,7 +354,7 @@ public class ViewFileDAO extends BaseDAO {
             is.close();
             return output;
         } catch (IOException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }

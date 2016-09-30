@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAOHE;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.hqmc.BO.Parameter;
 import com.viettel.hqmc.FORM.ParameterForm;
@@ -110,7 +111,7 @@ public class ParameterDAOHE extends GenericDAOHibernate<Parameter, Long> {
       lstParameter = query.list();
 
     } catch (Exception ex) {
-      log.error(ex.getMessage());
+      LogUtil.addLog(ex);//binhnt sonar a160901
       return new ArrayList<Parameter>();
     }
     lstFactory.put("type", lstParameter);

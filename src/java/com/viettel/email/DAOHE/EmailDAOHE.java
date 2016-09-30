@@ -4,6 +4,7 @@
  */
 package com.viettel.email.DAOHE;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.email.form.EmailForm;
 import com.viettel.voffice.common.util.StringUtils;
 import com.viettel.voffice.database.BO.Email;
@@ -21,7 +22,9 @@ import org.hibernate.Query;
  * @author dungnt78
  */
 public class EmailDAOHE extends GenericDAOHibernate<Email, Long> {
+
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EmailDAOHE.class);
+
     public EmailDAOHE() {
         super(Email.class);
     }
@@ -37,7 +40,7 @@ public class EmailDAOHE extends GenericDAOHibernate<Email, Long> {
             listEmail = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return listEmail;
     }
@@ -52,7 +55,7 @@ public class EmailDAOHE extends GenericDAOHibernate<Email, Long> {
             listEmail = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return listEmail;
     }
@@ -87,8 +90,8 @@ public class EmailDAOHE extends GenericDAOHibernate<Email, Long> {
 
                 jsonArray.add(jsonObj);
             }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return jsonArray.toString();
     }
@@ -104,7 +107,7 @@ public class EmailDAOHE extends GenericDAOHibernate<Email, Long> {
             result = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return result;
     }
@@ -124,7 +127,7 @@ public class EmailDAOHE extends GenericDAOHibernate<Email, Long> {
             getSession().delete(email);
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -141,7 +144,7 @@ public class EmailDAOHE extends GenericDAOHibernate<Email, Long> {
         try {
             StringBuilder sql = new StringBuilder(" from Email a ");
             if (emailformsearch.getFromDate() == null && emailformsearch.getToDate() == null) {
-                if (!emailformsearch.getSubject().equals("")) {
+                if (!"".equals(emailformsearch.getSubject())) {
                     sql.append(" where a.folder like :folder ");
                     sql.append("and a.userId like :userId");
                     sql.append(" and (lower(a.subject) like lower(:subject) or lower(a.content) like lower(:content) )");
@@ -178,7 +181,7 @@ public class EmailDAOHE extends GenericDAOHibernate<Email, Long> {
                 Query query = getSession().createQuery(sql.toString());
                 query.setParameter("folder", emailformsearch.getFolder());
                 query.setParameter("userId", userId);
-                if (!emailformsearch.getSubject().equals("")) {
+                if (!"".equals(emailformsearch.getSubject())) {
                     query.setParameter("subject", "%" + emailformsearch.getSubject() + "%");
                     query.setParameter("content", "%" + emailformsearch.getContent() + "%");
                 }
@@ -191,7 +194,7 @@ public class EmailDAOHE extends GenericDAOHibernate<Email, Long> {
                 email = query.list();
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
         gridResult.setLstResult(email);

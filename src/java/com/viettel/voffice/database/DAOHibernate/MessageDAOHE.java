@@ -5,24 +5,24 @@
 package com.viettel.voffice.database.DAOHibernate;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.database.BO.Message;
 import com.viettel.voffice.database.DAO.BaseDAO;
 import com.viettel.vsaadmin.database.BO.Users;
 import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import org.apache.log4j.Logger;
-import org.hibernate.Query;
 
 /**
  *
  * @author sytv
  */
 public class MessageDAOHE extends GenericDAOHibernate<Message, Long> {
-    
+
     private static Logger logger = Logger.getLogger(MessageDAOHE.class);
     private static final Long ZERO = 0L;
     private UsersDAOHE usersDAOHE = new UsersDAOHE();
     private BaseDAO baseDAO = new BaseDAO();
-    
+
     public MessageDAOHE() {
         super(Message.class);
     }
@@ -39,19 +39,21 @@ public class MessageDAOHE extends GenericDAOHibernate<Message, Long> {
      * @return
      */
     public boolean sendMessage(Long sendId, String[] receiverList, String content) {
-        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) return true;
+        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) {
+            return true;
+        }
         boolean result = true;
         try {
             for (String id : receiverList) {
                 if (id != null && !id.equals("")) {
-                    Message bo = new Message();
+                    Message bo;
                     Long userId = Long.valueOf(id);
                     bo = this.entityToBo(sendId, userId, content);
                     this.create(bo);
                 }
             }
-        } catch (Exception e) {
-            logger.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             result = false;
         }
         return result;
@@ -80,20 +82,21 @@ public class MessageDAOHE extends GenericDAOHibernate<Message, Long> {
             bo.setIsSent(ZERO);
             bo.setSentTimeReq(getSysdate());
         } catch (Exception ex) {
-            logger.error(ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return bo;
     }
-    
+
     public boolean saveMessage(Long senderId, Long receiverId, String content, Long status) {
-        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) return true;
+        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) {
+            return true;
+        }
         boolean result = true;
         try {
-            Message bo = new Message();
-            bo = this.entityToBo(senderId, receiverId, content);
+            Message bo = this.entityToBo(senderId, receiverId, content);
             this.create(bo);
-        } catch (Exception e) {
-            logger.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             result = false;
         }
         return result;

@@ -6,6 +6,7 @@
 package com.viettel.hqmc.DAO;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.UploadFile;
 import com.viettel.hqmc.BO.UserAttachs;
 import com.viettel.hqmc.DAOHE.UserAttachsDAOHE;
@@ -19,8 +20,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 
@@ -107,9 +106,10 @@ public class UserAttachsDAO extends BaseDAO {
             }
 
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Lưu Hồ sơ pháp lí không thành công");
-            Logger.getLogger(UserAttachsDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(UserAttachsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         jsonDataGrid.setItems(resultMessage);
@@ -185,7 +185,8 @@ public class UserAttachsDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return "uploadResultPage";
     }
@@ -201,7 +202,8 @@ public class UserAttachsDAO extends BaseDAO {
                 searchForm = new UserAttachsForm();
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return this.forwardPage;
     }
@@ -231,7 +233,8 @@ public class UserAttachsDAO extends BaseDAO {
             resultMessage.add("Xóa danh mục hồ sơ pháp lí thành công");
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Xóa danh mục hồ sơ pháp lí không thành công");
         }

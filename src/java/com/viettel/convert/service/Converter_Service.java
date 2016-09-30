@@ -1,6 +1,7 @@
 
 package com.viettel.convert.service;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.ResourceBundleUtil;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -33,6 +34,7 @@ public class Converter_Service
         try {
             url = new URL(ResourceBundleUtil.getString("wsdl"));
         } catch (MalformedURLException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             e = new WebServiceException(ex);
         }
         CONVERTER_WSDL_LOCATION = url;

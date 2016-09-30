@@ -5,6 +5,7 @@
 package com.viettel.voffice.database.DAOHibernate;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.common.util.StringUtils;
 import com.viettel.voffice.client.form.VoAttachForm;
 import com.viettel.voffice.database.BO.VoAttachs;
@@ -15,7 +16,6 @@ import com.viettel.vsaadmin.database.DAOHibernate.DepartmentDAOHE;
 import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import java.util.ArrayList;
 import java.util.List;
-//import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 
@@ -66,7 +66,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                 // bo.setUserCreateId(form.getUserCreateId());
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -85,7 +85,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -108,7 +108,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -164,7 +164,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
             gridResult.setnCount(Long.valueOf(total));
             return gridResult;
         } catch (Exception ex) {
-            String msg = ex.getMessage();
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -191,7 +191,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
             voAttachsList = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return voAttachsList;
     }
@@ -219,7 +219,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
             voAttachsList = query.list();
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return voAttachsList;
     }
@@ -281,7 +281,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
             gridResult.setnCount(Long.valueOf(total));
             return gridResult;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -312,7 +312,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                 result += "<a href='uploadiframe!openFile.do?attachId=" + bo.getAttachId().toString() + "' >" + StringUtils.escapeHtml(bo.getAttachName()) + "</a><br/>";
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return result;
     }
@@ -348,7 +348,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
 
             voAttachsList = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return voAttachsList;
     }
@@ -377,7 +377,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (!result.equals("")) {
             result = result.substring(0, result.length() - 1);
@@ -408,7 +408,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (!result.equals("")) {
             result = result.substring(0, result.length() - 1);
@@ -486,7 +486,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                 return (VoAttachs) lst.get(0);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return bo;
     }
@@ -502,7 +502,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                 return (VoAttachs) lst.get(0);
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return voAttach;
     }
@@ -545,12 +545,12 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                 if (lstFiles.size() == 1) {
                     return lstFiles.get(0);
                 } else {
-                    VoAttachs voAtt = new VoAttachs();
+                    VoAttachs voAtt;//sonar
                     boolean check = false;
                     for (int i = 0; i < lstFiles.size(); i++) {
                         voAtt = lstFiles.get(i);
                         if (voAtt.getAttachName().startsWith("Bancongbo_VT")) {
-                            check = true;
+//                            check = true;//sonar
                             return lstFiles.get(i);
                         }
                     }
@@ -560,7 +560,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                 }
             }
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
         return null;
@@ -582,7 +582,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
             }
             return query.list();
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -600,7 +600,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                 return lstFiles.get(0);
             }
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
         return null;
@@ -661,13 +661,12 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
             gridResult.setnCount(Long.valueOf(total));
             return gridResult;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
 
     //Hiepvv Get List VO_ATTACHS BY Object_ID: List file đính kèm của một hồ sơ SĐBS
-
     public List<VoAttachs> getLstVoAttachByObjectId(Long filesId) {
         try {
             StringBuilder stringBuilder = new StringBuilder(" from VoAttachs a ");
@@ -703,12 +702,12 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                 if (lstFiles.size() == 1) {
                     return lstFiles.get(0);
                 } else {
-                    VoAttachs voAtt = new VoAttachs();
+                    VoAttachs voAtt;
                     boolean check = false;
                     for (int i = 0; i < lstFiles.size(); i++) {
                         voAtt = lstFiles.get(i);
                         if (voAtt.getAttachName().startsWith("Bancongbo_VT")) {
-                            check = true;
+//                            check = true;
                             return lstFiles.get(i);
                         }
                     }
@@ -718,11 +717,12 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                 }
             }
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
         return null;
     }
+
     public GridResult getAttachsByIdTypeChanged(Long objectId, Long objectType, int start, int count, String sortField) {
         List voAttachsList = new ArrayList();
         GridResult gridResult = new GridResult();
@@ -731,7 +731,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
             strBuf.append(" and a.objectId = ?");
 //            strBuf.append(" and a.objectType = ?");
             Query query = getSession().createQuery("SELECT count(a) " + strBuf.toString());
-            query.setParameter(0, Constants.Status.CHANGED);            
+            query.setParameter(0, Constants.Status.CHANGED);
             if (objectId != null) {
                 query.setParameter(1, objectId);
             } else {
@@ -776,7 +776,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
             gridResult.setnCount(Long.valueOf(total));
             return gridResult;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }

@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.Notification;
 import com.viettel.hqmc.DAOHE.NotificationDAOHE;
 import com.viettel.hqmc.FORM.NotificationForm;
@@ -88,7 +89,8 @@ public class NotificationDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa thông báo thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Xóa thông báo không thành công");
         }

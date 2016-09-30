@@ -5,17 +5,15 @@
  */
 package com.viettel.ws.validateData;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.common.util.StringUtils;
 import com.viettel.ws.BO.ERRORDto;
-import com.viettel.ws.BO.ERRORLIST;
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -149,6 +147,7 @@ public class Validator implements IValidator {
             Long.parseLong(value);
             return null;
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             ERRORDto eRRORDto = new ERRORDto();
             eRRORDto.setERRORCODE("");
             eRRORDto.setERRORID("");
@@ -162,6 +161,7 @@ public class Validator implements IValidator {
             Integer.parseInt(value);
             return null;
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             ERRORDto eRRORDto = new ERRORDto();
             eRRORDto.setERRORCODE("");
             eRRORDto.setERRORID("");
@@ -182,8 +182,9 @@ public class Validator implements IValidator {
         sdf.setLenient(false);
         try {
             //if not valid, it will throw ParseException
-            Date date = sdf.parse(dateToValidate);
-        } catch (ParseException e) {
+            sdf.parse(dateToValidate);//sonar
+        } catch (ParseException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             //e.printStackTrace();
             ERRORDto eRRORDto = new ERRORDto();
             eRRORDto.setERRORCODE("");
@@ -201,16 +202,14 @@ public class Validator implements IValidator {
             eRRORDto.setERRORID("");
             eRRORDto.setERRORNAME("");
             return eRRORDto;
+        } else if (value.length() == 10 || value.length() == 13) {
+            return null;
         } else {
-            if (value.length() == 10 || value.length() == 13) {
-                return null;
-            } else {
-                ERRORDto eRRORDto = new ERRORDto();
-                eRRORDto.setERRORCODE("");
-                eRRORDto.setERRORID("");
-                eRRORDto.setERRORNAME("");
-                return eRRORDto;
-            }
+            ERRORDto eRRORDto = new ERRORDto();
+            eRRORDto.setERRORCODE("");
+            eRRORDto.setERRORID("");
+            eRRORDto.setERRORNAME("");
+            return eRRORDto;
         }
     }
 
@@ -272,14 +271,15 @@ public class Validator implements IValidator {
     }
 
     public static boolean validateMobileNumber(String mobileNumber) {
-           if(mobileNumber == null)
-               return false;
+        if (mobileNumber == null) {
+            return false;
+        }
         Pattern p = Pattern.compile("^[0-9]{9,14}$");
         Matcher m = p.matcher(mobileNumber);
 
         boolean matchFound = m.matches();
         return matchFound;
-           
+
 //        mobileNumber = mobileNumber.trim();
 //        final String prefix849 = "849";
 //        final String prefix849plus = "+849";
@@ -430,11 +430,11 @@ public class Validator implements IValidator {
                 for (Field fieldCompare : compare.getClass().getDeclaredFields()) {
                     if (fieldInput.getName().toLowerCase().equals(fieldCompare.getName().toLowerCase())) {
                         //validate requied
-                        ERRORDto eRRORDto = null;
+                        ERRORDto eRRORDto;
                         eRRORDto = this.validateRequired(fieldInput.getName(), fieldInput.get(input).toString());
                         if (eRRORDto != null) {
                             eRRORLIST.add(eRRORDto);
-                            eRRORDto = null;
+//                            eRRORDto = null;
                         }
                         //validate datatype
                         String dateType = fieldCompare.getType().getSimpleName();
@@ -448,9 +448,11 @@ public class Validator implements IValidator {
                 }
             }
         } catch (IllegalArgumentException ex) {
-            Logger.getLogger(Validator.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(Validator.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(Validator.class.getName()).log(Level.SEVERE, null, ex);
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            Logger.getLogger(Validator.class.getName()).log(Level.SEVERE, null, ex);
         }
         //list all require here        
         return eRRORLIST;
@@ -493,9 +495,11 @@ public class Validator implements IValidator {
                         + " - " + field.getType()
                         + " - " + field.get(obj));
             } catch (IllegalArgumentException ex) {
-                Logger.getLogger(Validator.class.getName()).log(Level.SEVERE, null, ex);
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                Logger.getLogger(Validator.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalAccessException ex) {
-                Logger.getLogger(Validator.class.getName()).log(Level.SEVERE, null, ex);
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                Logger.getLogger(Validator.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return 0;
@@ -515,9 +519,11 @@ public class Validator implements IValidator {
                         + " - " + field.getType()
                         + " - " + field.get(obj));
             } catch (IllegalArgumentException ex) {
-                Logger.getLogger(Validator.class.getName()).log(Level.SEVERE, null, ex);
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                Logger.getLogger(Validator.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalAccessException ex) {
-                Logger.getLogger(Validator.class.getName()).log(Level.SEVERE, null, ex);
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                Logger.getLogger(Validator.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return 0;

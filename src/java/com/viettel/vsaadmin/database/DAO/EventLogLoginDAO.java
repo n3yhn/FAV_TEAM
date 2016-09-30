@@ -4,11 +4,11 @@
  */
 package com.viettel.vsaadmin.database.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.client.form.EventLogLoginForm;
 import com.viettel.voffice.database.DAO.BaseDAO;
 import com.viettel.voffice.database.DAO.GridResult;
 import com.viettel.vsaadmin.database.DAOHibernate.EventLogLoginDAOHE;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +29,7 @@ public class EventLogLoginDAO  extends BaseDAO{
         try {
             //todo code here
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return this.forwardPage;
     }

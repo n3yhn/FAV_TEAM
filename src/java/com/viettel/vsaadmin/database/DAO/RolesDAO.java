@@ -146,7 +146,7 @@ public class RolesDAO extends BaseDAO {
 
             List params = new ArrayList();
 
-            String sqlCommand = "";
+            String sqlCommand;
             String countHQL = "select count(o) ";
             String searchHQL = "select o ";
             if ("app".equals(strItems[1])) {
@@ -243,7 +243,7 @@ public class RolesDAO extends BaseDAO {
 //            this.jsonDataGrid.setTotalRows(total.intValue());
             //!binhnt53
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "gridData";
     }
@@ -259,7 +259,7 @@ public class RolesDAO extends BaseDAO {
         try {
             session = getSession();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "error";
         }
         try {
@@ -301,7 +301,7 @@ public class RolesDAO extends BaseDAO {
                 session.flush();
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return onSearchFunction();
     }
@@ -334,8 +334,8 @@ public class RolesDAO extends BaseDAO {
                     insertFunctionToRole(ro, obo.getParentId(), session, userName, appCode, appName);
                 }
             }
-        } catch (Exception en) {
-            log.error(en.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -362,8 +362,8 @@ public class RolesDAO extends BaseDAO {
             }
             jsonDataTree.setLabel("name");
             jsonDataTree.setItems(tmp);
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "jsonDataTree";
     }
@@ -408,8 +408,8 @@ public class RolesDAO extends BaseDAO {
                     childrenData.add(node);
                 }
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "childrenData";
     }
@@ -521,8 +521,8 @@ public class RolesDAO extends BaseDAO {
                 query.setParameter(i, lstParam.get(i));
             }
             lstResult = query.list();
-        } catch (Throwable ex) {
-            log.error(ex.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (lstResult == null || lstResult.size() == 0) {
             return 0L;
@@ -549,8 +549,8 @@ public class RolesDAO extends BaseDAO {
                 query.setParameter(i, lstParam.get(i));
             }
             lstResult = query.list();
-        } catch (Throwable ex) {
-            log.error(ex.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         if (lstResult == null || lstResult.size() == 0) {
             return 0L;
@@ -604,7 +604,7 @@ public class RolesDAO extends BaseDAO {
             session.save(temp);
             session.flush();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return onSearch("error");
         }
 
@@ -612,7 +612,7 @@ public class RolesDAO extends BaseDAO {
         try {
             LogUtil.createRole(session, getRequest(), userName, temp.getRoleCode(), temp.getRoleName(), "");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 //        jsonDataGrid.setCustomInfo("addOk");
 //        return "gridData";
@@ -643,6 +643,7 @@ public class RolesDAO extends BaseDAO {
                 temp.setStatus(new Long(rolesForm.getStatus().longValue()));
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             throw ex;
         }
         return temp;
@@ -658,14 +659,14 @@ public class RolesDAO extends BaseDAO {
         try {
             session = getSession();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return onSearch("error");
         }
         Roles temp = null;
         try {
             temp = createBO();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             onSearch("error");
         }
 
@@ -695,7 +696,7 @@ public class RolesDAO extends BaseDAO {
             session.update(temp);
             session.flush();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             onSearch("error");
         }
         return onSearch("updateOk");
@@ -707,13 +708,13 @@ public class RolesDAO extends BaseDAO {
      * @return
      */
     public String onDelete() {
-        String userName = getLoginUser();
+//        String userName = getLoginUser();//sonar
 
         Session session;
         try {
             session = getSession();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return onSearch("deleteNotOk");
         }
 
@@ -755,7 +756,8 @@ public class RolesDAO extends BaseDAO {
                         try {
                             session.delete(rolesBO);
                             session.flush();
-                        } catch (Throwable th) {
+                        } catch (Exception ex) {
+                            LogUtil.addLog(ex);//binhnt sonar a160901
                             deleteFails = "deleteNotOk";
                             countNotDel++;
                         }
@@ -767,8 +769,8 @@ public class RolesDAO extends BaseDAO {
                 deleteFails = "Xóa không thành công " + countNotDel + " bản ghi do có ràng buộc";
             }
 //            jsonDataGrid.setCustomInfo("deleteOk");
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
 //            jsonDataGrid.setCustomInfo("deleteNotOk");
             return onSearch("deleteNotOk");
         }
@@ -792,7 +794,7 @@ public class RolesDAO extends BaseDAO {
         try {
             dbSession = getSession();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return onSearch("lockNotOk");
         }
 
@@ -809,8 +811,8 @@ public class RolesDAO extends BaseDAO {
                 Query roleIdquery = getSession().createQuery(hql);
                 roleIdquery.setParameter("userId", userId);
                 lstRoleId = roleIdquery.list();
-            } catch (Throwable ex) {
-                log.error(ex.getMessage());
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 lstRoleId = new ArrayList<Long>();
             }
             //
@@ -843,8 +845,8 @@ public class RolesDAO extends BaseDAO {
                 }
             }
             dbSession.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             bStrReturn = "lockNotOk";
         }
 
@@ -862,7 +864,7 @@ public class RolesDAO extends BaseDAO {
         try {
             session = getSession();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "error";
         }
 
@@ -889,9 +891,8 @@ public class RolesDAO extends BaseDAO {
 //            session.getTransaction().commit();
             return onSearch("unLockOk");
 //            jsonDataGrid.setCustomInfo("unLockOk");
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-//            jsonDataGrid.setCustomInfo("unLockNotOk");
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return onSearch("unLockNotOk");
         }
 
@@ -941,7 +942,7 @@ public class RolesDAO extends BaseDAO {
         try {
             session = getSession();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "error";
         }
 
@@ -1004,7 +1005,7 @@ public class RolesDAO extends BaseDAO {
             this.jsonDataGrid.setItems(lst);
             this.jsonDataGrid.setTotalRows(total.intValue());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "gridData";
     }
@@ -1019,7 +1020,7 @@ public class RolesDAO extends BaseDAO {
         try {
             session = getSession();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "error";
         }
 
@@ -1062,7 +1063,7 @@ public class RolesDAO extends BaseDAO {
                 */
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             msg = "lockFunctionError";
         }
         this.jsonDataGrid.setCustomInfo(msg);
@@ -1079,7 +1080,7 @@ public class RolesDAO extends BaseDAO {
         try {
             session = getSession();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "error";
         }
         String msg = "unlockFunctionOk";
@@ -1107,7 +1108,7 @@ public class RolesDAO extends BaseDAO {
                 session.getTransaction().commit();
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             msg = "unlockFunctionError";
         }
         this.jsonDataGrid.setCustomInfo(msg);
@@ -1171,7 +1172,7 @@ public class RolesDAO extends BaseDAO {
         try {
             session = getSession();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return "error";
         }
         String msg = "deleteOk";
@@ -1199,17 +1200,17 @@ public class RolesDAO extends BaseDAO {
                 }
 
                 if (!objectId.equals("")) {
-                    objectId = "(" + objectId + ")";
+//                    objectId = "(" + objectId + ")";//sonar
                     hql += " and r.roleObjectPK.objectId in (:objectId)";
                     Query query = getSession().createQuery(hql);
                     query.setParameter("roleId", roleId);
                     query.setParameterList("objectId", lstObjectId);
-                    int nCount = query.executeUpdate();
+                    query.executeUpdate();
                     session.getTransaction().commit();
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             msg = "deleteNotOk";
         }
         this.jsonDataGrid.setCustomInfo(msg);

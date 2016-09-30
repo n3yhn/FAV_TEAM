@@ -11,6 +11,7 @@ import com.viettel.vsaadmin.database.BO.RoleUserPK;
 import com.viettel.vsaadmin.database.BO.Users;
 import java.io.Serializable;
 import java.util.Date;
+import com.viettel.common.util.LogUtil;
 
 /**
  *
@@ -186,7 +187,8 @@ public class RegisterForm implements Serializable {
             } else {
                 item.setManagePassword("Attp@123");
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             item.setManagePassword("Attp@123");
         }//!BINHNT53 U141230
         item.setUserEmail(this.manageEmail);

@@ -4,6 +4,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.database.DAO.BaseDAO;
 import com.viettel.hqmc.DAOHE.ProcedureDAOHE;
 import com.viettel.hqmc.BO.Procedure;
@@ -95,6 +96,7 @@ public class ProcedureDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật thủ tục không thành công");
         }
@@ -124,7 +126,8 @@ public class ProcedureDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Xóa thủ tục không thành công");
         }
@@ -164,7 +167,8 @@ public class ProcedureDAO extends BaseDAO {
                 resultMessage.add("Cập nhật thành công");
 
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(ex.getMessage());
                 resultMessage.add("3");
                 resultMessage.add("Cập nhật không thành công");
             }
@@ -201,7 +205,8 @@ public class ProcedureDAO extends BaseDAO {
                 resultMessage.add("Cập nhật thành công");
 
             } catch (Exception ex) {
-                log.error(ex.getMessage());
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(ex.getMessage());
                 resultMessage.add("3");
                 resultMessage.add("Cập nhật không thành công");
             }
@@ -231,7 +236,8 @@ public class ProcedureDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Cập nhật thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Cập nhật không thành công");
         }
@@ -263,7 +269,8 @@ public class ProcedureDAO extends BaseDAO {
             resultMessage.add("Cập nhật thành công");
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Cập nhật không thành công");
         }

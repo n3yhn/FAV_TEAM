@@ -274,8 +274,8 @@ public class UploadFile {
                 lst.add(fName);
             }
             jsonDataGrid.setItems(lst);
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
+        } catch (Exception e) {
+            LogUtil.addLog(e);//binhnt sonar a160901
         }
         return jsonDataGrid;
     }
@@ -297,7 +297,7 @@ public class UploadFile {
             copy(src, dest);
             return FileUtils.delete(src);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return false;
         }
     }
@@ -318,8 +318,8 @@ public class UploadFile {
             }
             in.close();
             out.close();
-        } catch (IOException ex) {
-            log.error(ex.getMessage());
+        } catch (IOException e) {
+            LogUtil.addLog(e);//binhnt sonar a160901
         }
     }
 
@@ -360,7 +360,7 @@ public class UploadFile {
             imageInByte = baos.toByteArray();
             baos.close();
         } catch (IOException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return imageInByte;
     }

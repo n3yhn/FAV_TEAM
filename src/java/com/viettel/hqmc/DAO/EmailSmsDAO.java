@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.DAO;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.MessageGroup;
 import com.viettel.hqmc.BO.MessageGroupPerson;
 //import com.viettel.hqmc.DAOHE.MessageEmailDAOHE;
@@ -49,7 +50,7 @@ public class EmailSmsDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return false;
         }
 

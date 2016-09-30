@@ -8,6 +8,7 @@ import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 import static com.viettel.common.util.Constants.TEMP.FEATURE_GENERAL_ENTITIES;
 import static com.viettel.common.util.Constants.TEMP.FEATURE_PARAMETER_ENTITIES;
+import com.viettel.common.util.LogUtil;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -16,7 +17,6 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +25,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
@@ -37,7 +36,9 @@ import org.xml.sax.SAXException;
  */
 public class JDBCUtil {
 
-    /** Logger.*/
+    /**
+     * Logger.
+     */
     private static final Log logger = LogFactory.getLog(JDBCUtil.class);
 
     private JDBCUtil() {
@@ -85,6 +86,7 @@ public class JDBCUtil {
                 row.appendChild(node);
 
             } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
                 continue;
             }
         }
@@ -93,6 +95,7 @@ public class JDBCUtil {
 
     /**
      * Create xml string - fastest, but may have encoding issues
+     *
      * @param rs - a Result set
      * @return - XML string of a result set
      * @throws SQLException - If error when read data from database
@@ -126,6 +129,7 @@ public class JDBCUtil {
 
     /**
      * Create document using DOM api
+     *
      * @param rs a result set
      * @return A document of a result set
      * @throws ParserConfigurationException - If error when parse string
@@ -165,6 +169,7 @@ public class JDBCUtil {
 
     /**
      * Create Empty Document
+     *
      * @return A empty document
      * @throws ParserConfigurationException - If error when create document
      */
@@ -185,6 +190,7 @@ public class JDBCUtil {
 
     /**
      * Create document using DOM api
+     *
      * @param rs a result set
      * @param doc a input document for append content
      * @param rsName name of the appended element
@@ -201,7 +207,6 @@ public class JDBCUtil {
 
         //Get root element
         Element root = doc.getDocumentElement();
-
 
         Element rsElement = doc.createElement(rsName);
         root.appendChild(rsElement);
@@ -225,8 +230,9 @@ public class JDBCUtil {
                         node.appendChild(doc.createTextNode(value.toString()));
                         row.appendChild(node);
                     }
-                } catch (Exception e) {
-                    logger.error(e, e);
+                } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                    logger.error(e, e);
                 }
             }
         }
@@ -250,8 +256,9 @@ public class JDBCUtil {
                         node.appendChild(doc.createTextNode(value.toString()));
                         row.appendChild(node);
                     }
-                } catch (Exception e) {
-                    logger.error(e, e);
+                } catch (Exception ex) {
+                    LogUtil.addLog(ex);//binhnt sonar a160901
+//                    logger.error(e, e);
                 }
             }
         }
@@ -261,6 +268,7 @@ public class JDBCUtil {
 
     /**
      * Create document using DOM api
+     *
      * @param rs a result set
      * @param doc a input document for append content
      * @param rsName name of the appended element
@@ -279,17 +287,18 @@ public class JDBCUtil {
         Element root = doc.getDocumentElement();
         Element rsElement = doc.createElement(rsName);
         root.appendChild(rsElement);
-        
+
         for (Object object : rs) {
             Element row = createRowElement(object, doc);
             rsElement.appendChild(row);
         }
-        
+
         return doc;
     }
 
     /**
      * Convert a document to string
+     *
      * @param doc a input document
      * @return a string of document
      * @throws IOException If error when convert
@@ -308,6 +317,7 @@ public class JDBCUtil {
 
     /**
      * Create document from xml string - slower than using DOM api
+     *
      * @param rs a result set
      * @return a document
      * @throws SQLException If error when read data from database

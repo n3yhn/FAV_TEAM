@@ -121,6 +121,7 @@
         <mapping class="com.viettel.hqmc.BO.XmlWs"/>
         <mapping class="com.viettel.hqmc.BO.VReportPc"/>
         <mapping class="com.viettel.hqmc.BO.BusinessAlert"/>
+        <mapping class="com.viettel.ws.BO.XmlMessage"/>
         <!-- End ATTP -->
     </session-factory>
 </hibernate-configuration>

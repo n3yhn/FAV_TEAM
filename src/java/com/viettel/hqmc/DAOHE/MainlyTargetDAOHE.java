@@ -5,6 +5,7 @@
  */
 package com.viettel.hqmc.DAOHE;
 
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.MainlyTarget;
 import com.viettel.voffice.database.DAOHibernate.GenericDAOHibernate;
 import java.util.ArrayList;
@@ -102,25 +103,25 @@ public class MainlyTargetDAOHE extends GenericDAOHibernate<MainlyTarget, Long> {
             for (int i = 0; i < lstParam.size(); i++) {
                 query.setParameter(i, lstParam.get(i));
             }
-            List<MainlyTarget> lstObj = null;
+            List<MainlyTarget> lstObj;
             lstObj = query.list();
             if (!lstObj.isEmpty()) {
                 bo = lstObj.get(0);
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return bo;
     }
 
-      /**
+    /**
      * getCountVersion
      *
      * @param objId
      * @return
      */
     public Long getCountVersion(Long objId) {
-        Long iresult = 0L;
+        Long iresult;
         List lstParam = new ArrayList();
         String hql = "select count(t) from MainlyTarget t where t.originalId = ? ";
         lstParam.add(objId);
@@ -132,8 +133,7 @@ public class MainlyTargetDAOHE extends GenericDAOHibernate<MainlyTarget, Long> {
         return iresult;
     }
 
-    
-        /**
+    /**
      * updateSetNotLastIsTemp
      *
      * @param objId
@@ -145,8 +145,8 @@ public class MainlyTargetDAOHE extends GenericDAOHibernate<MainlyTarget, Long> {
             Query query = getSession().createQuery(hql);
             query.setParameter(0, objId);
             return query.executeUpdate();
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }

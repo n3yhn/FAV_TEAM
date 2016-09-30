@@ -127,7 +127,7 @@
             return true;
         };
         onSendFRFtoVT = function() {
-            if (page.validateOnSendFRFtoVT()) {
+            if (page.validateOnSendFRFtoVT_FRF()) {
                 var fileId = dijit.byId("feedbackReviewForm.fileId").getValue();
                 document.getElementById("trWait").style.display = "";
                 document.getElementById("labelWait").innerHTML = "Hệ thống đang tạo công văn và ký số, vui lòng chờ  ";
@@ -210,7 +210,7 @@
             return(strText);
         };
 
-        page.validateOnSendFRFtoVT = function() {
+        page.validateOnSendFRFtoVT_FRF = function() {
             document.getElementById("feedbackReviewForm.sendVt").checked = true;
             document.getElementById("feedbackReviewForm.statusDeny").checked = false;
             if (document.getElementById("ckbIsTypeChangeL").checked == true) {

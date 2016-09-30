@@ -56,14 +56,14 @@ public class RE_ANNOUNCE {
         bo.setDocumentDate(PUBLISH_DATE);
         //ten to chuc ca nhan
         BusinessDAOHE busdaohe = new BusinessDAOHE();
-        Business bus = new Business();
+        Business bus;
         bus = busdaohe.findByBusinessTaxCode(BUSSINESS_CODE);
         if (bus != null) {
             bo.setBusinessName(bus.getBusinessName());
         }
         //ten co quan tiep nhan
         DepartmentDAOHE deptdaohe = new DepartmentDAOHE();
-        Department deptbo = new Department();
+        Department deptbo;
         deptbo = deptdaohe.findBOById(ANNOUNCE_DEPT_ID);
         if (deptbo != null) {
             bo.setReIssueAgencyId(deptbo.getDeptId());

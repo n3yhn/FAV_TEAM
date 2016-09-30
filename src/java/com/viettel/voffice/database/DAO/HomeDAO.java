@@ -6,6 +6,7 @@ package com.viettel.voffice.database.DAO;
 
 import com.viettel.common.util.Constants;
 import com.viettel.common.util.DateTimeUtils;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.Business;
 import com.viettel.hqmc.DAOHE.BusinessDAOHE;
 import com.viettel.hqmc.DAOHE.FeeDAOHE;
@@ -154,7 +155,7 @@ public class HomeDAO extends BaseDAO {
             jsonDataGrid.setItems(lstResult);
             jsonDataGrid.setTotalRows(total.intValue());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return GRID_DATA;
@@ -232,24 +233,15 @@ public class HomeDAO extends BaseDAO {
                         }
                         if (lstRole.contains(Constants.ROLES.LEAD_UNIT_DEPUTY_ROLE + ";")) {
                             loadCountFilesClericalRole = true;
-                        } else {
-                            if (lstRole.contains(Constants.ROLES.LEAD_UNIT + ";")) {
-                                loadCountFilesClericalRole = true;
-                            } else {
-                                if (lstRole.contains(Constants.ROLES.CV + ";")) {
-                                    loadCountFilesNeedToEvaluate = true;
-                                } else {
-                                    if (lstRole.contains(Constants.ROLES.VT + ";")) {
-                                        loadCountFilesClericalRole = true;
-                                    } else {
-                                        if (lstRole.contains(Constants.ROLES.PGDTT + ";")
-                                                || lstRole.contains(Constants.ROLES.LEADER_OF_STAFF_P + ";")) {
-                                            loadCountFilesNeedToEvaluate = true;
-                                        }
-
-                                    }
-                                }
-                            }
+                        } else if (lstRole.contains(Constants.ROLES.LEAD_UNIT + ";")) {
+                            loadCountFilesClericalRole = true;
+                        } else if (lstRole.contains(Constants.ROLES.CV + ";")) {
+                            loadCountFilesNeedToEvaluate = true;
+                        } else if (lstRole.contains(Constants.ROLES.VT + ";")) {
+                            loadCountFilesClericalRole = true;
+                        } else if (lstRole.contains(Constants.ROLES.PGDTT + ";")
+                                || lstRole.contains(Constants.ROLES.LEADER_OF_STAFF_P + ";")) {
+                            loadCountFilesNeedToEvaluate = true;
                         }
                     }
                 }
@@ -261,7 +253,7 @@ public class HomeDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
     }
 
@@ -311,7 +303,7 @@ public class HomeDAO extends BaseDAO {
         Long filesNeedToSign = null;
 
         try {
-            String menu = "";
+            String menu;
             UserToken token = (UserToken) getRequest().getSession().getAttribute(Constants.VSA_USER_TOKEN);
 
             if (token != null) {
@@ -431,7 +423,7 @@ public class HomeDAO extends BaseDAO {
                  filesReReview, 1l, "darkgray", 3);
                  lstItem.add(item);
                  */
-                /*
+ /*
                  //hồ sơ chờ xem xét đối chiếu
                  filesReviewComparison = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 30l, null));
                  getRequest().setAttribute("filesReviewComparison", filesReviewComparison);
@@ -439,7 +431,7 @@ public class HomeDAO extends BaseDAO {
                  item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.status=" + Constants.FILE_STATUS.COMPARED + "',"), "share/images/document/9_xanh_hssaphethanbosung.png", "Hồ sơ chờ xem xét đối chiếu", filesReviewComparison, 1l, "darkgray", 5);
                  lstItem.add(item);
                  */
-                /*
+ /*
                  //hồ sơ chờ xem xét đối chiếu lại
                  filesReviewComparison = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 31l, null));
                  getRequest().setAttribute("filesReviewComparison", filesReviewComparison);
@@ -700,20 +692,20 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/14_xanh_hsdaguiphanhoi.png",
                         "Hồ sơ đã phê duyệt chưa nộp phí cấp số", filesNeedToReceive, 15l, "cadetblue", 2);
                 lstItem.add(item);
-                
+
                 //Hồ sơ cần gửi thông báo SĐBS cho doanh nghiệp
                 filesNeedToReceive = (Long) (long) fdhe.getCountFileOnHomePage(userId, deptId, -27L, Constants.FILE_STATUS.APPROVE_TO_ADD);
                 countFilesNeedToReceive = "doGoToMenu('filesAction!lookupFilesByClerical.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReceive.replace("',", "?searchForm.searchType=" + -27L + "',"), "share/images/document/14_xanh_hsdaguiphanhoi.png", "Hồ sơ cần gửi thông báo SĐBS", filesNeedToReceive, 15l, "cadetblue", 3);
                 lstItem.add(item);
-                
+
                 //hỒ SƠ CẦN KÍ XÁC NHÂN VĂN THƯ
                 filesNeedToReceive = (Long) (long) fdhe.getCountFileOnHomePage(userId, deptId, -6L, Constants.FILE_STATUS.NEW);
                 countFilesNeedToReceive = "doGoToMenu('filesAction!lookupFilesByClerical.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReceive.replace("',", "?searchForm.searchType=" + -6L + "',"), "share/images/document/14_xanh_hsdaguiphanhoi.png", "Hồ sơ đã nộp lệ phí cấp số, chờ Văn thư ký xác nhận - trả bản mềm", filesNeedToReceive, 15l, "cadetblue",
                         2);
                 lstItem.add(item);
-                
+
                 /*
                  //6- Hồ sơ đã nộp phí cấp số, chờ trả hồ sơ = Đã phê duyệt, đã nộp lệ phí (files.status = 6, fee_payment_info.status = 1, fee.fee_type=1, files.isSignPdf=2)
                  filesNeedToReceive = (Long) (long) fdhe.getCountFileOnHomePage(userId, deptId, -3L, Constants.FILE_STATUS.NEW);
@@ -722,7 +714,6 @@ public class HomeDAO extends BaseDAO {
                  2);
                  lstItem.add(item);
                  */
-                
 //3- Hồ sơ đã tiếp nhận SĐBS (17)
                 filesNeedToReceive = (Long) (long) fdhe.getCountFileOnHomePage(userId, deptId, 0L, Constants.FILE_STATUS.RECEIVED_TO_ADD);
 //                getRequest().setAttribute("filesNeedToReceive", filesNeedToReceive);
@@ -780,7 +771,7 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/7_xanh_hschothamdinh.png",
                         "Hồ sơ mới, chờ CV thẩm định", filesNeedToEvaluate, 1l, "#F0F0F0", 2);
                 lstItem.add(item);
-                
+
                 //2- Hồ sơ chờ thẩm định SĐBS CV = Đã tiếp nhận SĐBS (17)
                 filesNeedComment = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 33L, null));
                 countFilesNeedToEvaluate = "doGoToMenu('filesAction!lookupFilesByStaff.do', '0.1');";
@@ -788,7 +779,7 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/images10.png",
                         "Hồ sơ SĐBS, chờ CV thẩm định", filesNeedComment, 1l, "#F0F0F0", 2);
                 lstItem.add(item);
-                
+
                 // ho so bi tra tham dinh lai
                 filesNeedToReEvaluate = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 26L, null));
                 countFilesNeedToEvaluate = "doGoToMenu('filesAction!lookupFilesByStaff.do', '0.1');";
@@ -813,7 +804,7 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/9_xanh_hssaphethanbosung.png",
                         "Hồ sơ CV đã thẩm định yêu cầu SĐBS, chờ LĐP xem xét", filesReReview, 1l, "darkgray", 3);
                 lstItem.add(item);
-                
+
                 //ho so cho xem xet
                 filesNeedToReview = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 42l, Constants.FILE_STATUS.EVALUATED));
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByStaff.do', '0.1' );";
@@ -822,7 +813,7 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/7_xanh_hschothamdinh.png",
                         "Hồ sơ CV đã thẩm định Đạt, chờ LĐP xem xét", filesNeedToReview, 1l, "darkgray", 1);
                 lstItem.add(item);
-                
+
                 //5- hồ sơ đã xem xét
                 filesReviewed = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 45l, null));
                 getRequest().setAttribute("filesNeedToReview", filesReviewed);
@@ -831,7 +822,7 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/12_xanh_hslanhdaophongdaxemxet.png",
                         "Hồ sơ LĐP đã duyệt, chờ LĐC phê duyệt", filesReviewed, 1l, "#F0F0F0", 1);
                 lstItem.add(item);
-                
+
                 //Hồ sơ lãnh đạo cục đã phê duyệt
                 filesApproved = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 417L, null));
                 getRequest().setAttribute("filesNeedToReview", filesApproved);
@@ -840,7 +831,7 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/11_xanh_hslanhdaocucdapheduyet.png",
                         "Hồ sơ LĐC đã phê duyệt, chờ nộp lệ phí trả hồ sơ", filesApproved, 1l, "#F0F0F0", 6);
                 lstItem.add(item);
-                
+
                 //Hồ sơ lãnh đạo cục đã phê duyệt
                 filesApproved = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 423L, null));
                 getRequest().setAttribute("filesNeedToReview", filesApproved);
@@ -849,7 +840,7 @@ public class HomeDAO extends BaseDAO {
                         "share/images/document/11_xanh_hslanhdaocucdapheduyet.png",
                         "Hồ sơ VT đã trả giấy công bố bản mềm", filesApproved, 1l, "#F0F0F0", 6);
                 lstItem.add(item);
-                
+
                 //Hồ sơ lãnh đạo cục đã phê duyệt
                 filesApproved = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 422L, null));
                 getRequest().setAttribute("filesNeedToReview", filesApproved);
@@ -880,7 +871,7 @@ public class HomeDAO extends BaseDAO {
                  2);
                  lstItem.add(item);
                  */
-                /*
+ /*
                  //Hồ sơ đã có ý kiến của tổ thẩm xét 28
                  filesEvaluated = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 28l, null));
                  getRequest().setAttribute("filesNeedToReview", filesEvaluated);
@@ -900,7 +891,7 @@ public class HomeDAO extends BaseDAO {
                         "Hồ sơ LĐP đã xem xét công văn SĐBS chờ LĐC phê duyệt",
                         filesNeedToReview, 1l, "#F0F0F0", 3);
                 lstItem.add(item);
-                
+
                 //HỒ sơ chuyên viên cần thông báo SĐBS
                 filesNeedToAdd = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, -20L, null));
                 getRequest().setAttribute("filesNeedToReview", filesNeedToAdd);
@@ -962,7 +953,7 @@ public class HomeDAO extends BaseDAO {
                  lstItem.add(item);
                  */
             }
-            
+
             // ho so sai lech
             if (loadCountFilesNeedToComparisonFail) {
                 filesNeedToComparisonFail = (Long) (long) fdhe.getCountFileToProcess(userId, deptId, 16L, null);
@@ -974,7 +965,7 @@ public class HomeDAO extends BaseDAO {
                 //HomeLiveTileForm item = new HomeLiveTileForm("doGoToMenu( 'filesAction!onsearchLookupFilesByClerical.do?searchForm.status=16', '0.0' );", "share/images/document/new_document.png", "Hồ sơ sai lệch", filesNeedToComparisonFail, 16l, "burlywood");
                 lstItem.add(item);
             }
-            
+
             //Ho so cho de xuat
             if (loadCountFilesNeedToPropose) {
                 filesNeedToPropose = (Long) (long) fdhe.getCountFileToPropose(userId, agencyId);
@@ -996,7 +987,7 @@ public class HomeDAO extends BaseDAO {
                         "Tổng số hồ sơ trong ngày",
                         filesStatistics, 1l, "darkgray", 1);
                 lstItem.add(item);
-                
+
                 //--hồ sơ đã phân công--
 //            filesNeedToAssign = (Long) (long) fdhe.getCountFileToAssign(userId, deptId);
                 filesNeedToAssign = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, -3l, null));
@@ -1006,7 +997,7 @@ public class HomeDAO extends BaseDAO {
                         "Hồ sơ Trưởng phòng đã phân công",
                         filesNeedToAssign, 1l, "cadetblue", 1);
                 lstItem.add(item);
-                
+
                 //            filesNeedToAssign = (Long) (long) fdhe.getCountFileToAssign(userId, deptId);
                 filesNeedToAssign = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 211l, null));
                 getRequest().setAttribute("filesNeedToAssign", filesNeedToAssign);
@@ -1034,7 +1025,7 @@ public class HomeDAO extends BaseDAO {
                         "Hồ sơ Chuyên viên đã thẩm định Đạt, chờ Trưởng phòng xem xét",
                         filesNeedToReview, 1l, "darkgray", 2);
                 lstItem.add(item);
-                
+
                 //Hồ sơ đã trình lãnh đạo cục duyệt
                 filesStatistics = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 5L, null));
                 getRequest().setAttribute("filesstatistics", filesStatistics);
@@ -1104,7 +1095,7 @@ public class HomeDAO extends BaseDAO {
                  filesReReview, 1l, "darkgray", 3);
                  lstItem.add(item);
                  */
-                /*
+ /*
                  //hồ sơ chờ xem xét đối chiếu
                  filesReviewComparison = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 30l, null));
                  getRequest().setAttribute("filesReviewComparison", filesReviewComparison);
@@ -1112,7 +1103,7 @@ public class HomeDAO extends BaseDAO {
                  item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.status=" + Constants.FILE_STATUS.COMPARED + "',"), "share/images/document/9_xanh_hssaphethanbosung.png", "Hồ sơ chờ xem xét đối chiếu", filesReviewComparison, 1l, "darkgray", 5);
                  lstItem.add(item);
                  */
-                /*
+ /*
                  //hồ sơ chờ xem xét đối chiếu lại
                  filesReviewComparison = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 31l, null));
                  getRequest().setAttribute("filesReviewComparison", filesReviewComparison);
@@ -1215,7 +1206,7 @@ public class HomeDAO extends BaseDAO {
                  item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.status=" + Constants.FILE_STATUS.FEDBACK_TO_REVIEW.toString() + "',"), "share/images/document/11_xanh_hslanhdaocucdapheduyet.png", "Hồ sơ đã trả xem xét lại", filesNeedToSign, 1l, "crimson", 4);
                  lstItem.add(item);
                  */
-                /*
+ /*
                  //4- Hồ sơ đã trả đối chiếu lại (25)
                  filesNeedToSign = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 3l, Constants.FILE_STATUS.REVIEW_COMPARISON_FAIL));
                  getRequest().setAttribute("filesNeedToSign", filesNeedToSign);
@@ -1344,7 +1335,7 @@ public class HomeDAO extends BaseDAO {
              */
             getRequest().setAttribute("lstItem", lstItem);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
         return "home";
@@ -1376,138 +1367,137 @@ public class HomeDAO extends BaseDAO {
                 msg.add("1");
                 msg.add("Cập nhật thông tin người dùng thành công");
                 this.jsonDataGrid.setItems(msg);
-            } else {
-                if ("updateBusinessInfo".equals(action)) {
-                    Users user = usersDAOHE.getById("userId", userId);
-                    BusinessDAOHE busdaohe = new BusinessDAOHE();
-                    if (user != null && user.getBusinessId() != null && user.getBusinessId() > 0) {
-                        Business bus = busdaohe.findById(user.getBusinessId());
-                        if (userPasswordForm.getBusinessForm() != null) {
-                            if (userPasswordForm.getBusinessForm().getBusinessAddress() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessAddress().length() > 0) {
-                                bus.setBusinessAddress(userPasswordForm.getBusinessForm().getBusinessAddress());
-                            }
-
-                            if (userPasswordForm.getBusinessForm().getBusinessLawRep() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessLawRep().length() > 0) {
-                                bus.setBusinessLawRep(userPasswordForm.getBusinessForm().getBusinessLawRep());
-                            }
-
-                            if (userPasswordForm.getBusinessForm().getBusinessEstablishYear() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessEstablishYear().length() > 0) {
-                                bus.setBusinessEstablishYear(userPasswordForm.getBusinessForm().getBusinessEstablishYear());
-                            }
-
-                            if (userPasswordForm.getBusinessForm().getBusinessWebsite() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessWebsite().length() > 0) {
-                                bus.setBusinessWebsite(userPasswordForm.getBusinessForm().getBusinessWebsite());
-                            }
-
-                            if (userPasswordForm.getBusinessForm().getBusinessFax() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessFax().length() > 0) {
-                                bus.setBusinessFax(userPasswordForm.getBusinessForm().getBusinessFax());
-                            }
-
-                            if (userPasswordForm.getBusinessForm().getBusinessTelephone() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessTelephone().length() > 0) {
-                                bus.setBusinessTelephone(userPasswordForm.getBusinessForm().getBusinessTelephone());
-                            }
-
-                            if (userPasswordForm.getBusinessForm().getBusinessProvince() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessProvince().length() > 0) {
-                                bus.setBusinessProvince(userPasswordForm.getBusinessForm().getBusinessProvince());
-                            }
-
-                            if (userPasswordForm.getBusinessForm().getBusinessProvinceId() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessProvinceId() > 0L) {
-                                bus.setBusinessProvinceId(userPasswordForm.getBusinessForm().getBusinessProvinceId());
-                            }
-
-                            if (userPasswordForm.getBusinessForm().getBusinessAddress() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessAddress().length() > 0) {
-                                bus.setBusinessAddress(userPasswordForm.getBusinessForm().getBusinessAddress());
-                            }
-
-                            if (userPasswordForm.getBusinessForm().getBusinessLicense() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessLicense().length() > 0) {
-                                bus.setBusinessLicense(userPasswordForm.getBusinessForm().getBusinessLicense());
-                            }
-
-                            if (userPasswordForm.getBusinessForm().getBusinessTaxCode() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessTaxCode().length() > 0) {
-                                bus.setBusinessTaxCode(userPasswordForm.getBusinessForm().getBusinessTaxCode());
-                            }
-
-                            if (userPasswordForm.getBusinessForm().getBusinessNameAlias() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessNameAlias().length() > 0) {
-                                bus.setBusinessNameAlias(userPasswordForm.getBusinessForm().getBusinessNameAlias());
-                            }
-
-                            if (userPasswordForm.getBusinessForm().getBusinessNameEng() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessNameEng().length() > 0) {
-                                bus.setBusinessNameEng(userPasswordForm.getBusinessForm().getBusinessNameEng());
-                            }
-
-                            if (userPasswordForm.getBusinessForm().getBusinessName() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessName().length() > 0) {
-                                bus.setBusinessName(userPasswordForm.getBusinessForm().getBusinessName());
-                                user.setBusinessName(userPasswordForm.getBusinessForm().getBusinessName());//150206 U BINHNT53 UPDATE CAP NHAT TEN DOANH NGHIEP CUA USER KHI UPDATE THONG TIN DOANH NGHIEP
-                            }
-
-                            if (userPasswordForm.getBusinessForm().getBusinessTypeName() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessTypeName().length() > 0) {
-                                bus.setBusinessTypeName(userPasswordForm.getBusinessForm().getBusinessTypeName());
-                            }
-                            if (userPasswordForm.getBusinessForm().getUserEmail() != null
-                                    && userPasswordForm.getBusinessForm().getUserEmail().length() > 0) {
-                                bus.setUserEmail(userPasswordForm.getBusinessForm().getUserEmail());
-                            }
-                            if (userPasswordForm.getBusinessForm().getBusinessTypeId() != null
-                                    && userPasswordForm.getBusinessForm().getBusinessTypeId() > 0) {
-                                bus.setBusinessTypeId(userPasswordForm.getBusinessForm().getBusinessTypeId());
-                            }
-                            //141214u binhnt53
-                            if (userPasswordForm.getBusinessForm().getGoverningBody() != null
-                                    && userPasswordForm.getBusinessForm().getGoverningBody().length() > 0) {
-                                bus.setGoverningBody(userPasswordForm.getBusinessForm().getGoverningBody());
-                            }
-                            session.update(bus);
-                            session.update(user);//150206 U BINHNT53 UPDATE CAP NHAT TEN DOANH NGHIEP CUA USER KHI UPDATE THONG TIN DOANH NGHIEP
-                            msg.add("1");
-                            msg.add("Cập nhật thông tin doanh nghiệp thành công");
-                            this.jsonDataGrid.setItems(msg);
-                        } else {
-                            msg.add("3");
-                            msg.add("Không thể cập nhật thông tin");
-                            this.jsonDataGrid.setItems(msg);
+            } else if ("updateBusinessInfo".equals(action)) {
+                Users user = usersDAOHE.getById("userId", userId);
+                BusinessDAOHE busdaohe = new BusinessDAOHE();
+                if (user != null && user.getBusinessId() != null && user.getBusinessId() > 0) {
+                    Business bus = busdaohe.findById(user.getBusinessId());
+                    if (userPasswordForm.getBusinessForm() != null) {
+                        if (userPasswordForm.getBusinessForm().getBusinessAddress() != null
+                                && userPasswordForm.getBusinessForm().getBusinessAddress().length() > 0) {
+                            bus.setBusinessAddress(userPasswordForm.getBusinessForm().getBusinessAddress());
                         }
-                    }
 
-                } else {
-                    String password = "";
-                    String oldPassword = "";
+                        if (userPasswordForm.getBusinessForm().getBusinessLawRep() != null
+                                && userPasswordForm.getBusinessForm().getBusinessLawRep().length() > 0) {
+                            bus.setBusinessLawRep(userPasswordForm.getBusinessForm().getBusinessLawRep());
+                        }
 
-                    if (userPasswordForm != null) {
-                        password = this.userPasswordForm.getPassword();
-                        oldPassword = this.userPasswordForm.getOldPassword();
-                    }
+                        if (userPasswordForm.getBusinessForm().getBusinessEstablishYear() != null
+                                && userPasswordForm.getBusinessForm().getBusinessEstablishYear().length() > 0) {
+                            bus.setBusinessEstablishYear(userPasswordForm.getBusinessForm().getBusinessEstablishYear());
+                        }
 
-                    if (oldPassword == null) {
-                        throw new Exception("password null");
+                        if (userPasswordForm.getBusinessForm().getBusinessWebsite() != null
+                                && userPasswordForm.getBusinessForm().getBusinessWebsite().length() > 0) {
+                            bus.setBusinessWebsite(userPasswordForm.getBusinessForm().getBusinessWebsite());
+                        }
+
+                        if (userPasswordForm.getBusinessForm().getBusinessFax() != null
+                                && userPasswordForm.getBusinessForm().getBusinessFax().length() > 0) {
+                            bus.setBusinessFax(userPasswordForm.getBusinessForm().getBusinessFax());
+                        }
+
+                        if (userPasswordForm.getBusinessForm().getBusinessTelephone() != null
+                                && userPasswordForm.getBusinessForm().getBusinessTelephone().length() > 0) {
+                            bus.setBusinessTelephone(userPasswordForm.getBusinessForm().getBusinessTelephone());
+                        }
+
+                        if (userPasswordForm.getBusinessForm().getBusinessProvince() != null
+                                && userPasswordForm.getBusinessForm().getBusinessProvince().length() > 0) {
+                            bus.setBusinessProvince(userPasswordForm.getBusinessForm().getBusinessProvince());
+                        }
+
+                        if (userPasswordForm.getBusinessForm().getBusinessProvinceId() != null
+                                && userPasswordForm.getBusinessForm().getBusinessProvinceId() > 0L) {
+                            bus.setBusinessProvinceId(userPasswordForm.getBusinessForm().getBusinessProvinceId());
+                        }
+
+                        if (userPasswordForm.getBusinessForm().getBusinessAddress() != null
+                                && userPasswordForm.getBusinessForm().getBusinessAddress().length() > 0) {
+                            bus.setBusinessAddress(userPasswordForm.getBusinessForm().getBusinessAddress());
+                        }
+
+                        if (userPasswordForm.getBusinessForm().getBusinessLicense() != null
+                                && userPasswordForm.getBusinessForm().getBusinessLicense().length() > 0) {
+                            bus.setBusinessLicense(userPasswordForm.getBusinessForm().getBusinessLicense());
+                        }
+
+                        if (userPasswordForm.getBusinessForm().getBusinessTaxCode() != null
+                                && userPasswordForm.getBusinessForm().getBusinessTaxCode().length() > 0) {
+                            bus.setBusinessTaxCode(userPasswordForm.getBusinessForm().getBusinessTaxCode());
+                        }
+
+                        if (userPasswordForm.getBusinessForm().getBusinessNameAlias() != null
+                                && userPasswordForm.getBusinessForm().getBusinessNameAlias().length() > 0) {
+                            bus.setBusinessNameAlias(userPasswordForm.getBusinessForm().getBusinessNameAlias());
+                        }
+
+                        if (userPasswordForm.getBusinessForm().getBusinessNameEng() != null
+                                && userPasswordForm.getBusinessForm().getBusinessNameEng().length() > 0) {
+                            bus.setBusinessNameEng(userPasswordForm.getBusinessForm().getBusinessNameEng());
+                        }
+
+                        if (userPasswordForm.getBusinessForm().getBusinessName() != null
+                                && userPasswordForm.getBusinessForm().getBusinessName().length() > 0) {
+                            bus.setBusinessName(userPasswordForm.getBusinessForm().getBusinessName());
+                            user.setBusinessName(userPasswordForm.getBusinessForm().getBusinessName());//150206 U BINHNT53 UPDATE CAP NHAT TEN DOANH NGHIEP CUA USER KHI UPDATE THONG TIN DOANH NGHIEP
+                        }
+
+                        if (userPasswordForm.getBusinessForm().getBusinessTypeName() != null
+                                && userPasswordForm.getBusinessForm().getBusinessTypeName().length() > 0) {
+                            bus.setBusinessTypeName(userPasswordForm.getBusinessForm().getBusinessTypeName());
+                        }
+                        if (userPasswordForm.getBusinessForm().getUserEmail() != null
+                                && userPasswordForm.getBusinessForm().getUserEmail().length() > 0) {
+                            bus.setUserEmail(userPasswordForm.getBusinessForm().getUserEmail());
+                        }
+                        if (userPasswordForm.getBusinessForm().getBusinessTypeId() != null
+                                && userPasswordForm.getBusinessForm().getBusinessTypeId() > 0) {
+                            bus.setBusinessTypeId(userPasswordForm.getBusinessForm().getBusinessTypeId());
+                        }
+                        //141214u binhnt53
+                        if (userPasswordForm.getBusinessForm().getGoverningBody() != null
+                                && userPasswordForm.getBusinessForm().getGoverningBody().length() > 0) {
+                            bus.setGoverningBody(userPasswordForm.getBusinessForm().getGoverningBody());
+                        }
+                        session.update(bus);
+                        session.update(user);//150206 U BINHNT53 UPDATE CAP NHAT TEN DOANH NGHIEP CUA USER KHI UPDATE THONG TIN DOANH NGHIEP
+                        msg.add("1");
+                        msg.add("Cập nhật thông tin doanh nghiệp thành công");
+                        this.jsonDataGrid.setItems(msg);
+                    } else {
+                        msg.add("3");
+                        msg.add("Không thể cập nhật thông tin");
+                        this.jsonDataGrid.setItems(msg);
                     }
-                    if (oldPassword.trim().equals("")) {
-                        throw new Exception("oldPassword is empty");
-                    }
-                    if (password == null) {
-                        throw new Exception("password null");
-                    }
-                    if (password.trim().equals("")) {
-                        throw new Exception("password is empty");
-                    }
+                }
+
+            } else {
+                String password = "";
+                String oldPassword = "";
+
+                if (userPasswordForm != null) {
+                    password = this.userPasswordForm.getPassword();
+                    oldPassword = this.userPasswordForm.getOldPassword();
+                }
+
+                if (oldPassword == null) {
+                    throw new Exception("password null");
+                }
+                if (oldPassword.trim().equals("")) {
+                    throw new Exception("oldPassword is empty");
+                }
+                if (password == null) {
+                    throw new Exception("password null");
+                }
+                if (password.trim().equals("")) {
+                    throw new Exception("password is empty");
+                }
 //            if (password.equals(oldPassword)) {
 //                throw new Exception("password must be different from oldPassword ");
 //            }
-            /*
+                /*
                      String iChars = "!@#$%^&*-";
                      int countTmp = 0;
                      for (int i = 0; i<password.length(); i++){
@@ -1540,54 +1530,52 @@ public class HomeDAO extends BaseDAO {
                      if (countTmp == 0) {
                      throw new Exception("password must has one or more number characters");
                      }
-                     */
+                 */
 
-                    Users bo = new UsersDAOHE().findById(userId, false);
-                    String encryptedOldPass = PasswordService.getInstance().encrypt(bo.getUserName().toLowerCase() + oldPassword);
-                    String encryptedOldPassNoSalt = PasswordService.getInstance().encrypt(oldPassword);
-                    if (encryptedOldPass.equals(bo.getPassword()) || encryptedOldPassNoSalt.equals(bo.getPassword()) || encryptedOldPass.equals(bo.getForgotPassword()) || encryptedOldPassNoSalt.equals(bo.getForgotPassword())) {
-                        String passwordEncrypt = PasswordService.getInstance().encrypt(bo.getUserName().toLowerCase() + password);
+                Users bo = new UsersDAOHE().findById(userId, false);
+                String encryptedOldPass = PasswordService.getInstance().encrypt(bo.getUserName().toLowerCase() + oldPassword);
+                String encryptedOldPassNoSalt = PasswordService.getInstance().encrypt(oldPassword);
+                if (encryptedOldPass.equals(bo.getPassword()) || encryptedOldPassNoSalt.equals(bo.getPassword()) || encryptedOldPass.equals(bo.getForgotPassword()) || encryptedOldPassNoSalt.equals(bo.getForgotPassword())) {
+                    String passwordEncrypt = PasswordService.getInstance().encrypt(bo.getUserName().toLowerCase() + password);
 
-                        if (userPasswordForm.getEmail() != null && userPasswordForm.getEmail().length() > 0) {
-                            bo.setEmail(userPasswordForm.getEmail());
-                        }
-                        bo.setPassword(passwordEncrypt);
-                        bo.setLastChangePassword(new Date());//binhnt53 u150105 cap nhat luu ngay nguoi dung thay doi mat khau
-                        bo.setPasswordchanged(1L);
-                        session.saveOrUpdate(bo);
-                        msg.add("1");
-                        msg.add("Thay đổi mật khẩu thành công");
-                        this.jsonDataGrid.setItems(msg);
-                        //sms
-                        MessageSmsDAOHE msdhe = new MessageSmsDAOHE();
-                        String smsmsg;
-                        smsmsg = "Doanh nghiệp: " + bo.getBusinessName() + " vừa mới cập nhật mật khẩu, mật khẩu mới là: " + password;
-                        msdhe.saveMessageSMS(userId, userId, smsmsg);
-                        //email
-                        MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
-                        String msge;
-                        msge = "Doanh nghiệp: " + bo.getBusinessName() + " vừa mới cập nhật mật khẩu, mật khẩu mới là: " + password;
-                        msedhe.saveMessageEmail(userId, userId, msge);
-                    } else {
-                        msg.add("3");
-                        msg.add("Mật khẩu cũ không đúng");
-                        this.jsonDataGrid.setItems(msg);
-                        return "gridData";
+                    if (userPasswordForm.getEmail() != null && userPasswordForm.getEmail().length() > 0) {
+                        bo.setEmail(userPasswordForm.getEmail());
                     }
-
-                    if (userPasswordForm.getEmailPassword() != null && userPasswordForm.getEmail() != null
-                            && !"".equals(userPasswordForm.getEmailPassword()) && !"".equals(userPasswordForm.getEmail())) {
-                        EmailUser eu = new EmailUser();
-                        eu.setUserId(userId);
-                        eu.setEmailAddress(userPasswordForm.getEmail());
-                        eu.setEmailPassword(encryptDataByUserName(userPasswordForm.getEmailPassword()));
-                        session.saveOrUpdate(eu);
-                    }
+                    bo.setPassword(passwordEncrypt);
+                    bo.setLastChangePassword(new Date());//binhnt53 u150105 cap nhat luu ngay nguoi dung thay doi mat khau
+                    bo.setPasswordchanged(1L);
+                    session.saveOrUpdate(bo);
+                    msg.add("1");
+                    msg.add("Thay đổi mật khẩu thành công");
+                    this.jsonDataGrid.setItems(msg);
+                    //sms
+                    MessageSmsDAOHE msdhe = new MessageSmsDAOHE();
+                    String smsmsg;
+                    smsmsg = "Doanh nghiệp: " + bo.getBusinessName() + " vừa mới cập nhật mật khẩu, mật khẩu mới là: " + password;
+                    msdhe.saveMessageSMS(userId, userId, smsmsg);
+                    //email
+                    MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
+                    String msge;
+                    msge = "Doanh nghiệp: " + bo.getBusinessName() + " vừa mới cập nhật mật khẩu, mật khẩu mới là: " + password;
+                    msedhe.saveMessageEmail(userId, userId, msge);
+                } else {
+                    msg.add("3");
+                    msg.add("Mật khẩu cũ không đúng");
+                    this.jsonDataGrid.setItems(msg);
+                    return "gridData";
                 }
 
+                if (userPasswordForm.getEmailPassword() != null && userPasswordForm.getEmail() != null
+                        && !"".equals(userPasswordForm.getEmailPassword()) && !"".equals(userPasswordForm.getEmail())) {
+                    EmailUser eu = new EmailUser();
+                    eu.setUserId(userId);
+                    eu.setEmailAddress(userPasswordForm.getEmail());
+                    eu.setEmailPassword(encryptDataByUserName(userPasswordForm.getEmailPassword()));
+                    session.saveOrUpdate(eu);
+                }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             msg.add("3");
             msg.add("Thay đổi mật khẩu không thành công");
             this.jsonDataGrid.setItems(msg);
@@ -1610,8 +1598,8 @@ public class HomeDAO extends BaseDAO {
             if (total != 0) {
                 result = true;
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return false;
         }
         return result;

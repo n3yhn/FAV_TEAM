@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import com.viettel.common.util.LogUtil;
 /**
  *
  * @author thangdd8@viettel.com.vn
@@ -49,7 +49,7 @@ public class FileUtils {
     public static void saveFile(File f, String fileName, File desDir) throws IOException {
         InputStream stream = new FileInputStream(f);
         OutputStream out = new FileOutputStream(desDir.getAbsolutePath() + File.separatorChar + fileName);
-        int bytesRead = 0;
+        int bytesRead;
         byte[] buffer = new byte[BUFFER_SIZE];
         while ((bytesRead = stream.read(buffer, 0, BUFFER_SIZE)) != -1) {
             out.write(buffer, 0, bytesRead);
@@ -245,8 +245,9 @@ public class FileUtils {
             while ((read = in.read(buffer)) != -1) {
                 out.write(buffer, 0, read);
             }
-        } catch (IOException e) {
-            throw e;
+        } catch (IOException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            throw ex;
         } finally {
             in.close();
             out.close();
@@ -381,8 +382,9 @@ public class FileUtils {
             throws IOException {
         try {
             readProperties(new FileInputStream(file), delimiter, comment, map, ignoreInvalidProperties);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("File [" + file.getAbsolutePath() + "]:  " + e.getMessage());
+        } catch (IllegalArgumentException ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+            throw new IllegalArgumentException("File [" + file.getAbsolutePath() + "]:  " + ex.getMessage());
         }
     }
 

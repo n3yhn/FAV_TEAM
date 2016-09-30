@@ -6,6 +6,7 @@
 package com.viettel.hqmc.DAO;
 
 import com.viettel.common.util.Constants;
+import com.viettel.common.util.LogUtil;
 import com.viettel.hqmc.BO.TimeProcess;
 import com.viettel.hqmc.DAOHE.TimeProcessDAOHE;
 import com.viettel.hqmc.FORM.TimeProcessForm;
@@ -62,7 +63,8 @@ public class TimeProcessDAO extends BaseDAO {
                 searchForm = new TimeProcessForm();
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
         }
         return this.forwardPage;
     }
@@ -128,6 +130,7 @@ public class TimeProcessDAO extends BaseDAO {
                 }
             }
         } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             resultMessage.add("3");
             resultMessage.add("Cập nhật không thành công");
         }
@@ -162,7 +165,8 @@ public class TimeProcessDAO extends BaseDAO {
             resultMessage.add("1");
             resultMessage.add("Xóa danh mục ngày nghỉ lễ thành công");
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
+//            log.error(ex.getMessage());
             resultMessage.add("3");
             resultMessage.add("Xóa danh mục ngày nghỉ lễ không thành công");
         }

@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
+import com.viettel.common.util.LogUtil;
 
 /**
  *
@@ -63,7 +64,7 @@ public class ProductTargetDAOHE extends GenericDAOHibernate<ProductTarget, Long>
     }
 
     //==========================================================================
-      /**
+    /**
      * findIsItempObj
      *
      * @param objId
@@ -100,25 +101,26 @@ public class ProductTargetDAOHE extends GenericDAOHibernate<ProductTarget, Long>
             for (int i = 0; i < lstParam.size(); i++) {
                 query.setParameter(i, lstParam.get(i));
             }
-            List<ProductTarget> lstObj = null;
+            List<ProductTarget> lstObj;
             lstObj = query.list();
             if (!lstObj.isEmpty()) {
                 bo = lstObj.get(0);
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return bo;
     }
-  /**
+
+    /**
      * getCountVersion
      *
      * @param objId
-
+     *
      * @return
      */
     public Long getCountVersion(Long objId) {
-        Long iresult = 0L;
+        Long iresult;
         List lstParam = new ArrayList();
         String hql = "select count(t) from ProductTarget t where t.originalId = ? ";
         lstParam.add(objId);
@@ -129,7 +131,8 @@ public class ProductTargetDAOHE extends GenericDAOHibernate<ProductTarget, Long>
         iresult = Long.parseLong(query.uniqueResult().toString()) + 1L;
         return iresult;
     }
-  /**
+
+    /**
      * updateSetNotLastIsTemp
      *
      * @param objId
@@ -141,8 +144,8 @@ public class ProductTargetDAOHE extends GenericDAOHibernate<ProductTarget, Long>
             Query query = getSession().createQuery(hql);
             query.setParameter(0, objId);
             return query.executeUpdate();
-        } catch (Exception e) {
-            log.error(e);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return 0;
         }
     }
