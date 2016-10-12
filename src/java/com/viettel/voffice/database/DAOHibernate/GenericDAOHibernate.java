@@ -89,7 +89,7 @@ public class GenericDAOHibernate<T, ID extends Serializable> extends GenericHibe
         char[] toChar = {'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'd', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i',
             'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'};
         String des = "";
-        if (source == null || source.equals("")) {
+        if (source == null || "".equals(source)) {
         } else {
             for (int i = 0; i < source.length(); i++) {
                 char addChar = source.charAt(i);
@@ -445,7 +445,7 @@ public class GenericDAOHibernate<T, ID extends Serializable> extends GenericHibe
         // Build sql
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append(" FROM ").append(entityName).append(" obj ");
-        if (entityClass.getSimpleName().equalsIgnoreCase("position")) {
+        if ("position".equalsIgnoreCase(entityClass.getSimpleName())) {
             sqlBuilder.append(" WHERE obj.status = 1");
         } else {
             sqlBuilder.append(" WHERE obj.isActive = 1");

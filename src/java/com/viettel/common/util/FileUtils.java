@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -23,7 +24,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -540,7 +541,7 @@ public class FileUtils {
      * @throws IOException when reading from the input stream fails
      */
     public static Map readProperties(InputStream in) throws IOException {
-        Map map = new HashMap();
+        ConcurrentHashMap map = new ConcurrentHashMap();
         readProperties(in, '=', '#', map, false);
         return map;
     }
@@ -568,7 +569,7 @@ public class FileUtils {
      */
     public static Map readProperties(Reader reader)
             throws IOException {
-        Map map = new HashMap();
+        ConcurrentHashMap map = new ConcurrentHashMap();
         readProperties(reader, '=', '#', map, false);
         return map;
     }

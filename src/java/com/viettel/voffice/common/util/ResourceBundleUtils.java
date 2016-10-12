@@ -14,15 +14,20 @@ import java.util.ResourceBundle;
  */
 public class ResourceBundleUtils {
 
-    /** rb.*/
-    private static ResourceBundle rb = null;
+    /**
+     * rb.
+     */
+    private static volatile ResourceBundle rb = null;
 
-    /** Creates a new instance of ResourceBundleUtils */
+    /**
+     * Creates a new instance of ResourceBundleUtils
+     */
     private ResourceBundleUtils() {
     }
 
     /**
      * method get resource
+     *
      * @param key String
      * @return String
      */

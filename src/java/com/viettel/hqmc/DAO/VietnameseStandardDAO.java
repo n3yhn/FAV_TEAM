@@ -135,7 +135,7 @@ public class VietnameseStandardDAO extends BaseDAO {
             VietnameseStandardDAOHE cthe = new VietnameseStandardDAOHE();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 VietnameseStandardForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getVietnameseStandardId() != null && form.getVietnameseStandardId() != 0D) {
+                if (form != null && form.getVietnameseStandardId() != null && form.getVietnameseStandardId() != 0L) {
                     VietnameseStandard bo = cthe.getById("vietnameseStandardId", form.getVietnameseStandardId());
                     if (bo != null) {
                         bo.setIsActive(0l);

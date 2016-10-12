@@ -110,7 +110,7 @@ public class TestRegistrationDAO extends BaseDAO {
             TestRegistrationDAOHE cthe = new TestRegistrationDAOHE();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 TestRegistrationForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getTestRegistrationId() != null && form.getTestRegistrationId() != 0D) {
+                if (form != null && form.getTestRegistrationId() != null && form.getTestRegistrationId() != 0L) {
                     TestRegistration bo = cthe.getById("testRegistrationId", form.getTestRegistrationId());
                     if (bo != null) {
                         bo.setIsActive(0l);

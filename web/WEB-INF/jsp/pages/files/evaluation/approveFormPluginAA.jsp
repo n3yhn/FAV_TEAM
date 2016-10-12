@@ -3,8 +3,7 @@
 <%@taglib prefix="sx" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<object id="plugin0" type="application/x-viettelcasigner" width="3" height="10">
-</object>
+
 
 <div>
     <table style="width: 98%">
@@ -657,4 +656,5 @@
 <sd:TextBox id="txtBase64HashAFP" key="" name="txtBase64Hash" type="hidden"/>
 <input type="hidden" id="certSerial" value="" />
 <sd:TextBox id="txtCertSerialAFP" key="" name="txtCertSerial" type="hidden"/>
-
+<object id="plugin0" type="application/x-viettelcasigner" width="3" height="10">
+</object>

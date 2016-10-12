@@ -107,7 +107,7 @@ public class ParameterDAO extends BaseDAO {
             ParameterDAOHE cthe = new ParameterDAOHE();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 ParameterForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getParameterId() != null && form.getParameterId() != 0D) {
+                if (form != null && form.getParameterId() != null && form.getParameterId() != 0L) {
                     Parameter bo = cthe.getById("parameterId", form.getParameterId());
                     if (bo != null) {
                         bo.setIsActive(0l);

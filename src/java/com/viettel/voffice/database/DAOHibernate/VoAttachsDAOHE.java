@@ -73,7 +73,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
     public void updateAttacths(String ids, Long objectId, Long objectType) {
         try {
             String[] idArr;
-            if (ids != null && !ids.equals("")) {
+            if (ids != null && !"".equals(ids)) {
                 idArr = ids.split(";");
                 for (String idAttStr : idArr) {
                     Long idAtt = Long.parseLong(idAttStr);
@@ -94,7 +94,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
         try {
             String[] idArr;
 
-            if (ids != null && !ids.equals("")) {
+            if (ids != null && !"".equals(ids)) {
                 idArr = ids.split(";");
                 for (String idAttStr : idArr) {
                     Long idAtt = Long.parseLong(idAttStr);
@@ -379,7 +379,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
         }
-        if (!result.equals("")) {
+        if (!"".equals(result)) {
             result = result.substring(0, result.length() - 1);
         }
         return result;
@@ -410,14 +410,14 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
         }
-        if (!result.equals("")) {
+        if (!"".equals(result)) {
             result = result.substring(0, result.length() - 1);
         }
         return result;
     }
 
     public String getAttachLinksById(String attachIds) {
-        if (attachIds.equals("")) {
+        if ("".equals(attachIds)) {
             return "";
         }
         String result = "";
@@ -436,7 +436,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
     }
 
     public String getAttachLinksByIdForPortal(String attachIds) {
-        if (attachIds.equals("")) {
+        if ("".equals(attachIds)) {
             return "";
         }
         String result = "";
@@ -455,7 +455,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
     }
 
     public String getAttachLinksIconByIdForPortal(String attachIds) {
-        if (attachIds.equals("")) {
+        if ("".equals(attachIds)) {
             return "";
         }
         String result = "";
@@ -532,11 +532,11 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                     + " order by (CASE WHEN a.createDate IS NULL THEN 1 ELSE 0 END), a.createDate DESC, a.attachId DESC");
             Query query = getSession().createQuery(stringBuilder.toString());
             query.setParameter(0, filesId);
-            if (signType.equals("PDHS")) {
+            if ("PDHS".equals(signType)) {
                 query.setParameter(1, 40L);
-            } else if (signType.equals("PDHS_PUBLIC")) {
+            } else if ("PDHS_PUBLIC".equals(signType)) {
                 query.setParameter(1, 41L);
-            } else if (signType.equals("CVBS")) {
+            } else if ("CVBS".equals(signType)) {
                 query.setParameter(1, 71L);
             }
             lstFiles = query.list();
@@ -573,10 +573,10 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                     + " order by (CASE WHEN a.createDate IS NULL THEN 1 ELSE 0 END), a.createDate DESC, a.attachId DESC");
             Query query = getSession().createQuery(stringBuilder.toString());
             query.setParameter(0, filesId);
-            if (signType.equals("PDHS")) {
+            if ("PDHS".equals(signType)) {
                 query.setParameter(1, 40L);
                 query.setParameter(2, 41L);
-            } else if (signType.equals("CVBS")) {
+            } else if ("CVBS".equals(signType)) {
                 query.setParameter(1, 71L);
                 query.setParameter(2, 71L);
             }
@@ -676,7 +676,7 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
             query.setParameter(0, filesId);
             return query.list();
         } catch (HibernateException ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return null;
         }
     }
@@ -689,11 +689,11 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
                     + " order by (CASE WHEN a.createDate IS NULL THEN 1 ELSE 0 END), a.createDate ASC, a.attachId ASC");
             Query query = getSession().createQuery(stringBuilder.toString());
             query.setParameter(0, filesId);
-            if (signType.equals("PDHS")) {
+            if ("PDHS".equals(signType)) {
                 query.setParameter(1, 40L);
-            } else if (signType.equals("PDHS_PUBLIC")) {
+            } else if ("PDHS_PUBLIC".equals(signType)) {
                 query.setParameter(1, 41L);
-            } else if (signType.equals("CVBS")) {
+            } else if ("CVBS".equals(signType)) {
                 query.setParameter(1, 71L);
             }
             lstFiles = query.list();

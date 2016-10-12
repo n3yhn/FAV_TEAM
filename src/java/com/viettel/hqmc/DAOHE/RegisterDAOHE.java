@@ -23,7 +23,7 @@ import com.viettel.common.util.LogUtil;
  */
 public class RegisterDAOHE extends GenericDAOHibernate<Register, Long> {
 
-    private static HashMap<String, List> lstFactory = new HashMap();
+    private static volatile HashMap<String, List> lstFactory = new HashMap();
 
     public static HashMap<String, List> getLstFactory() {
         return lstFactory;
@@ -116,9 +116,9 @@ public class RegisterDAOHE extends GenericDAOHibernate<Register, Long> {
      * @return
      */
     public List findAllRegister() {
-        if (lstFactory == null) {
-            lstFactory = new HashMap();
-        }
+//        if (lstFactory == null) {
+//            lstFactory = new HashMap();
+//        }
 
         if (lstFactory.containsKey("type")) {
             return lstFactory.get("type");
@@ -149,7 +149,6 @@ public class RegisterDAOHE extends GenericDAOHibernate<Register, Long> {
      * @param form
      * @return
      */
-
     public boolean isDuplicate(RegisterForm form) {
         if (form == null) {
             return false;

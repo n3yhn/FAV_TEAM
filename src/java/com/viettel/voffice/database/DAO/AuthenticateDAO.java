@@ -92,7 +92,7 @@ public class AuthenticateDAO extends BaseDAO {
         }
         try {
             String type = getRequest().getParameter("type");
-            if (type != null && type.equals("lookupBYT")) {
+            if (type != null && "lookupBYT".equals(type)) {
                 return "LookupBYT.Page";
             } else {
                 return "HomePage.Page";
@@ -179,7 +179,7 @@ public class AuthenticateDAO extends BaseDAO {
         try {
             Thread.sleep(4000);
             System.out.println("175");
-            if (feedao.checkPaymentStatus(feeInfoId) == true && responseCode.equals("00")) {
+            if (feedao.checkPaymentStatus(feeInfoId) == true && "00".equals(responseCode)) {
                 // cap nhat ban ghi khi thanh toan thanh cong
                 System.out.println("Err_01");
                 feedao.onInsertFeePaymentInfoIpn(paymentInfo, files_code, hash, feeInfoId);
@@ -294,7 +294,8 @@ public class AuthenticateDAO extends BaseDAO {
         String forwardPage = "indexSuccess";
         UserToken userToken;
         String changeDept = getRequest().getParameter("changeDept");
-        if (session.getAttribute("workingDeptId") == null || (changeDept != null && changeDept.trim().equals("true"))) {
+        if (session.getAttribute("workingDeptId") == null
+                || (changeDept != null && "true".equals(changeDept.trim()))) {
             UserToken vsaUserToken = (UserToken) session.getAttribute("vsaUserToken");
             if (vsaUserToken == null || vsaUserToken.getUserID() == null) {
                 forwardPage = "loginErrorPermission";
@@ -401,7 +402,7 @@ public class AuthenticateDAO extends BaseDAO {
             if (lstDepartment.size() > 1) {
                 forwardPage = "selectDept";
                 session.setAttribute("userId", vsaUserToken.getUserID());
-                if (changeDept != null && changeDept.trim().equals("true")) {
+                if (changeDept != null && "true".equals(changeDept.trim())) {
                 } else {
                     session.removeAttribute("vsaUserToken");
                 }

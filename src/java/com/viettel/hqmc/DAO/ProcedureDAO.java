@@ -115,7 +115,7 @@ public class ProcedureDAO extends BaseDAO {
         try {
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 Procedure form = lstItemOnGrid.get(i);
-                if (form != null && form.getProcedureId() != null && form.getProcedureId() != 0D) {
+                if (form != null && form.getProcedureId() != null && form.getProcedureId() != 0L) {
                     Procedure bo = pdhe.getById("procedureId", form.getProcedureId());
                     if (bo != null) {
                         bo.setIsActive("2");

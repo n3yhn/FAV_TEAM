@@ -308,7 +308,7 @@ public class DepartmentDAO extends BaseDAO {
              }
              */
             DepartmentDAOHE.removeCache();
-            if (bCreate) {
+//            if (bCreate) {//sonar
                 Boolean deptExisted = deptDaoHibernate.checkDeptExisted(this.departmentForm.getDeptCode());
                 //Boolean deptExisted = checkDeptExisted(this.departmentForm.getDeptCode(), Long.valueOf(0L));
                 if (!deptExisted.booleanValue()) {
@@ -323,7 +323,7 @@ public class DepartmentDAO extends BaseDAO {
                 }
                 this.departmentForm = new DepartmentForm();
                 this.departmentForm.setDeptId(temp.getParentId());
-            }
+//            }
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
             return "error";
@@ -419,17 +419,17 @@ public class DepartmentDAO extends BaseDAO {
         try {
             Session session = getSession();
             DepartmentDAOHE.removeCache();
-            if ((this.departmentForm.getDeptId() != null) && (!this.departmentForm.getDeptId().equals(""))) {
+            if ((this.departmentForm.getDeptId() != null) && (!"".equals(this.departmentForm.getDeptId()))) {
                 Long deptId = new Long(this.departmentForm.getDeptId());
                 Boolean deptExisted = deptDaoHibernate.checkDeptExistedForUpdate(this.departmentForm.getDeptCode(), deptId);
                 //    Boolean deptExisted = checkDeptExisted(this.departmentForm.getDeptCode(), deptId);
                 if (!deptExisted.booleanValue()) {
-                    boolean parentOK = true;
+//                    boolean parentOK = true;
 //                    if ((this.departmentForm.getParentId() != null) && (!this.departmentForm.getParentId().equals(""))) {
 //                        parentOK = checkDeptParent(this.departmentForm.getParentId(), deptId);
 //                    }
 
-                    if (parentOK) {
+//                    if (parentOK) {//fix sonar
                         Department bo = deptDaoHibernate.findById(deptId, false);//getDeptById(deptId);
 
                         Boolean isUpdate = Boolean.valueOf(true);
@@ -440,10 +440,10 @@ public class DepartmentDAO extends BaseDAO {
                         this.jsonDataGrid.setCustomInfo(msgError);
                         this.departmentForm = new DepartmentForm();
                         // this.departmentForm.setDeptId(temp.getParentId().toString());
-                    } else {
-                        msgError.add("parentNOK");
-                        this.jsonDataGrid.setCustomInfo(msgError);
-                    }
+//                    } else {
+//                        msgError.add("parentNOK");
+//                        this.jsonDataGrid.setCustomInfo(msgError);
+//                    }
                 } else {
                     msgError.add("updateErr");
                     this.jsonDataGrid.setCustomInfo(msgError);
@@ -523,7 +523,7 @@ public class DepartmentDAO extends BaseDAO {
         try {
             getGridInfo();
             int ncount = start + count;
-            if ((this.departmentForm.getDeptId() != null) && (!this.departmentForm.getDeptId().equals(""))) {
+            if ((this.departmentForm.getDeptId() != null) && (!"".equals(this.departmentForm.getDeptId()))) {
                 Long deptId = new Long(this.departmentForm.getDeptId());
                 List lst = usersDAOHibernate.getListUserOfDept(deptId);
                 int total = lst.size();
@@ -547,7 +547,7 @@ public class DepartmentDAO extends BaseDAO {
      */
     public String actionListUser() {
         try {
-            if ((this.departmentForm.getDeptId() != null) && (!this.departmentForm.getDeptId().equals(""))) {
+            if ((this.departmentForm.getDeptId() != null) && (!"".equals(this.departmentForm.getDeptId()))) {
                 Long deptId = new Long(this.departmentForm.getDeptId());
                 getRequest().setAttribute("deptId", deptId);
             }
@@ -706,7 +706,7 @@ public class DepartmentDAO extends BaseDAO {
     public String getCheckedChildrenDataByNode() {
         String parentItemId = getRequest().getParameter("parentItemId");
         try {
-            if ((parentItemId != null) && (!parentItemId.equals(""))) {
+            if ((parentItemId != null) && (!"".equals(parentItemId))) {
                 Long parentId = new Long(parentItemId);
 //                String hql = "from Department      where parentId = ?";
 //               Query q = getSession().createQuery(hql);
@@ -739,7 +739,7 @@ public class DepartmentDAO extends BaseDAO {
     public String getChildrenDataByNode() {
         String parentItemId = getRequest().getParameter("parentItemId");
         try {
-            if ((parentItemId != null) && (!parentItemId.equals(""))) {
+            if ((parentItemId != null) && (!"".equals(parentItemId))) {
                 Long parentId = new Long(parentItemId);
 //                String hql = "from Department      where parentId = ?";
 //               Query q = getSession().createQuery(hql);
@@ -771,7 +771,7 @@ public class DepartmentDAO extends BaseDAO {
     public String getChildrenLevel1ByDept() {
         String parentItemId = getRequest().getParameter("parentItemId");
         try {
-            if ((parentItemId != null) && (!parentItemId.equals(""))) {
+            if ((parentItemId != null) && (!"".equals(parentItemId))) {
                 Long parentId = new Long(parentItemId);
 //                String hql = "from Department      where parentId = ?";
 //               Query q = getSession().createQuery(hql);
@@ -900,7 +900,7 @@ public class DepartmentDAO extends BaseDAO {
         officeList.add(deptPlus);
         try {
             if (deptId != null) {
-                if (deptId.equals("-1")) {
+                if ("-1".equals(deptId)) {
                     list = deptDaoHibernate.findDeptChildren(getDepartmentId());
                 } else {
                     officeList = deptDaoHibernate.search(Long.valueOf(deptId));
@@ -935,7 +935,7 @@ public class DepartmentDAO extends BaseDAO {
             //get dept at the same level
             Department userDept = getDepartment();
             if (userDept != null && userDept.getParentId() != null) {
-                lstChildren = deptDaoHe.getAllChildIdByParentId(userDept.getParentId());
+//                lstChildren = deptDaoHe.getAllChildIdByParentId(userDept.getParentId());
                 //List lstChildNode = new ArrayList();
                 //get parent node
 //                Department dept = deptDaoHe.findBOById(userDept.getParentId());
@@ -1026,7 +1026,7 @@ public class DepartmentDAO extends BaseDAO {
 
         try {
             Department userDept = getDepartment();
-            if ((parentItemId != null) && (!parentItemId.equals(""))) { // && (!parentItemId.equals(currentId))
+            if ((parentItemId != null) && (!"".equals(parentItemId))) { // && (!parentItemId.equals(currentId))
                 Long parentId = new Long(parentItemId);
 
                 if (userDept != null && (!parentId.equals(userDept.getParentId()))) {
@@ -1355,13 +1355,13 @@ public class DepartmentDAO extends BaseDAO {
     public String assignUser() {
         try {
             Session session = getSession();
-            if ((this.usersForm.getDeptId() != null) && (!this.usersForm.getDeptId().equals(""))) {
+            if ((this.usersForm.getDeptId() != null) && (!"".equals(this.usersForm.getDeptId()))) {
                 Long deptId = new Long(this.usersForm.getDeptId());
                 Department deptBO = deptDaoHibernate.findById(deptId, false);
                 if (listUnassignedUserForm != null) {
                     for (int i = 0; i < listUnassignedUserForm.size(); i++) {
                         usersForm = listUnassignedUserForm.get(i);
-                        if (usersForm != null && usersForm.getUserId() != null && !usersForm.getUserId().equals("")) {
+                        if (usersForm != null && usersForm.getUserId() != null && !"".equals(usersForm.getUserId())) {
                             Long userId = new Long(usersForm.getUserId());
                             Long posId = this.usersForm.getPosId();
                             Criteria cri = session.createCriteria(Users.class).add(Restrictions.eq("userId", userId));
@@ -1396,12 +1396,12 @@ public class DepartmentDAO extends BaseDAO {
     public String removeUser() {
         try {
             Session session = getSession();
-            if ((this.departmentForm.getDeptId() != null) && (!this.departmentForm.getDeptId().equals(""))) {
+            if ((this.departmentForm.getDeptId() != null) && (!"".equals(this.departmentForm.getDeptId()))) {
                 Long deptId = new Long(this.departmentForm.getDeptId());
                 if (userOfDeptForm != null) {
                     for (int i = 0; i < userOfDeptForm.size(); i++) {
                         usersForm = userOfDeptForm.get(i);
-                        if (usersForm != null && usersForm.getUserId() != null && !usersForm.getUserId().equals("")) {
+                        if (usersForm != null && usersForm.getUserId() != null && !"".equals(usersForm.getUserId())) {
                             Long userId = new Long((String) usersForm.getUserId());
                             Criteria cri = session.createCriteria(Users.class).add(Restrictions.eq("userId", userId));
                             List lst = cri.list();
@@ -1515,7 +1515,7 @@ public class DepartmentDAO extends BaseDAO {
 
         try {
             Department userDept = getDepartment();
-            if ((parentItemId != null) && (!parentItemId.equals(""))) { // && (!parentItemId.equals(currentId))
+            if ((parentItemId != null) && (!"".equals(parentItemId))) { // && (!parentItemId.equals(currentId))
                 Long parentId = new Long(parentItemId);
 
                 if (userDept != null) {
@@ -1565,7 +1565,7 @@ public class DepartmentDAO extends BaseDAO {
         }
          */
         try {
-            if ((parentItemId != null) && (!parentItemId.equals("")) && (!parentItemId.equals(currentId))) {
+            if ((parentItemId != null) && (!"".equals(parentItemId)) && (!parentItemId.equals(currentId))) {
                 Long parentId = new Long(parentItemId);
                 List lst = deptDaoHibernate.getDeptListByParentId(parentId, false);// q.list();
                 if (lst.size() > 0) {
@@ -1631,7 +1631,7 @@ public class DepartmentDAO extends BaseDAO {
             currentId = getRequest().getParameter("deptId");
         }
         try {
-            if ((parentItemId != null) && (!parentItemId.equals("")) && (!parentItemId.equals(currentId))) {
+            if ((parentItemId != null) && (!"".equals(parentItemId)) && (!parentItemId.equals(currentId))) {
                 Long parentId = new Long(parentItemId);
                 List lst = this.findListMajorByFacultyId(parentId);// q.list();
                 if (lst.size() > 0) {

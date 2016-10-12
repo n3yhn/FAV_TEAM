@@ -51,7 +51,7 @@ public class VoComparator<T> implements Comparator<T> {
         char[] toChar = {'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'd', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i',
             'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'};
         String des = "";
-        if (source == null || source.equals("")) {
+        if (source == null || "".equals(source)) {
         } else {
             for (int i = 0; i < source.length(); i++) {
                 char addChar = source.charAt(i);

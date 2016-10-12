@@ -168,7 +168,7 @@ public class ProcessDAO extends BaseDAO {
                     Users userbo;
 
                     if (processAddEditForm.getSendUser() != null
-                            && processAddEditForm.getSendUser().equals("") == false
+                            && "".equals(processAddEditForm.getSendUser()) == false
                             && processAddEditForm.getSendUserId() != null) {
                         p.setSendUserId(processAddEditForm.getSendUserId());
 
@@ -183,7 +183,7 @@ public class ProcessDAO extends BaseDAO {
                         p.setSendUserId(null);
                     }
                     if (processAddEditForm.getReceiveUser() != null
-                            && processAddEditForm.getReceiveUser().equals("") == false
+                            && "".equals(processAddEditForm.getReceiveUser()) == false
                             && processAddEditForm.getReceiveUserId() != null) {
                         p.setReceiveUserId(processAddEditForm.getReceiveUserId());
 
@@ -200,7 +200,7 @@ public class ProcessDAO extends BaseDAO {
                     }
 
                     if (processAddEditForm.getReceiveGroup() != null
-                            && processAddEditForm.getReceiveGroup().equals("") == false
+                            && "".equals(processAddEditForm.getReceiveGroup()) == false
                             && processAddEditForm.getReceiveGroupId() != null) {
                         p.setReceiveGroupId(processAddEditForm.getReceiveGroupId());
 //                        deptbo = new Department();
@@ -215,7 +215,7 @@ public class ProcessDAO extends BaseDAO {
                         p.setReceiveGroup(null);
                     }
                     if (processAddEditForm.getSendGroup() != null
-                            && processAddEditForm.getSendGroup().equals("") == false
+                            && "".equals(processAddEditForm.getSendGroup()) == false
                             && processAddEditForm.getSendGroupId() != null) {
                         p.setSendGroupId(processAddEditForm.getSendGroupId());
 //                        deptbo = new Department();

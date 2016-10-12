@@ -505,7 +505,7 @@ public class UsersDAO extends BaseDAO {
             UsersDAOHE.removeCache();
             Session session = getSession();
 
-            if ((this.usersForm.getUserId() != null) && (!this.usersForm.getUserId().equals(""))) {
+            if ((this.usersForm.getUserId() != null) && (!"".equals(this.usersForm.getUserId()))) {
                 Long userId = new Long(this.usersForm.getUserId());
                 Boolean userExisted = checkUserExisted(this.usersForm.getUserName(), userId);
                 if (!userExisted.booleanValue()) {
@@ -664,7 +664,7 @@ public class UsersDAO extends BaseDAO {
             if (password == null) {
                 throw new Exception("password null");
             }
-            if (password.trim().equals("")) {
+            if ("".equals(password.trim())) {
                 throw new Exception("password is empty");
             }
 
@@ -672,7 +672,7 @@ public class UsersDAO extends BaseDAO {
                 throw new Exception("password null");
             }
 
-            if (password.trim().equals("")) {
+            if ("".equals(password.trim())) {
                 throw new Exception("password is empty");
             }
 
@@ -884,7 +884,7 @@ public class UsersDAO extends BaseDAO {
             } else {
                 temp.setDeptName(null);
             }
-            if ((this.usersForm.getDateOfBirth() != null) && (!this.usersForm.getDateOfBirth().equals(""))) {
+            if ((this.usersForm.getDateOfBirth() != null) && (!"".equals(this.usersForm.getDateOfBirth()))) {
                 temp.setDateOfBirth(DateTimeUtils.convertStringToTime(this.usersForm.getDateOfBirth(), "yyyy-MM-dd"));
             } else {
                 temp.setDateOfBirth(null);
@@ -912,12 +912,12 @@ public class UsersDAO extends BaseDAO {
 
             temp.setIdentityCard(this.usersForm.getIdentityCard());
 
-            if ((this.usersForm.getIssueDateIdent() != null) && (!this.usersForm.getIssueDateIdent().equals(""))) {
+            if ((this.usersForm.getIssueDateIdent() != null) && (!"".equals(this.usersForm.getIssueDateIdent()))) {
                 temp.setIssueDateIdent(DateTimeUtils.convertStringToTime(this.usersForm.getIssueDateIdent(), "yyyy-MM-dd"));
             } else {
                 temp.setIssueDateIdent(null);
             }
-            if ((this.usersForm.getIssueDatePassport() != null) && (!this.usersForm.getIssueDatePassport().equals(""))) {
+            if ((this.usersForm.getIssueDatePassport() != null) && (!"".equals(this.usersForm.getIssueDatePassport()))) {
                 temp.setIssueDatePassport(DateTimeUtils.convertStringToTime(this.usersForm.getIssueDatePassport(), "yyyy-MM-dd"));
             } else {
                 temp.setIssueDatePassport(null);
@@ -929,7 +929,7 @@ public class UsersDAO extends BaseDAO {
 //            if (StringUtils.validString(this.usersForm.getPosId())) {
 //                temp.setPosId(Long.valueOf(this.usersForm.getPosId()));
 //            }
-            if ((this.usersForm.getLocationId() != null) && (!this.usersForm.getLocationId().equals(""))) {
+            if ((this.usersForm.getLocationId() != null) && (!"".equals(this.usersForm.getLocationId()))) {
                 temp.setLocationId(new Long(this.usersForm.getLocationId()));
             } else {
                 temp.setLocationId(null);
@@ -938,7 +938,7 @@ public class UsersDAO extends BaseDAO {
             temp.setPassportNumber(this.usersForm.getPassportNumber());
             temp.setStaffCode(this.usersForm.getStaffCode());
 
-            if ((this.usersForm.getStatus() != null) && (!this.usersForm.getStatus().equals(""))) {
+            if ((this.usersForm.getStatus() != null) && (!"".equals(this.usersForm.getStatus()))) {
                 temp.setStatus(new Long(this.usersForm.getStatus()));
             }
 
@@ -959,10 +959,11 @@ public class UsersDAO extends BaseDAO {
                 temp.setPassword(encryptedPass);
                 Date now = new Date();
                 if (!isUpdate.booleanValue()) {
-                    int val = Math.abs(random.nextInt());
-                    if (val < 100000) {
-                        val += 100000;
-                    }
+                    //sonar
+//                    int val = Math.abs(random.nextInt());
+//                    if (val < 100000) {
+//                        val += 100000;
+//                    }
                     temp.setCreateDate(now);
                     temp.setPasswordchanged(0L);
                     temp.setUserRight(Long.valueOf(0L));
@@ -1024,7 +1025,7 @@ public class UsersDAO extends BaseDAO {
     public Boolean checkUserExist(String fullName, Long userId) throws Exception {
         Boolean isExisted = Boolean.valueOf(false);
         Session session = getSession();
-        if (fullName == null || userId == null || fullName.equals("")) {
+        if (fullName == null || userId == null || "".equals(fullName)) {
             return true;
         }
         String hql = "from Users where userId = ? "
@@ -1081,7 +1082,7 @@ public class UsersDAO extends BaseDAO {
                 listParam.add(StringUtils.toLikeString(this.userRoleFormOnDialog.getCode()));
             }
 
-            if ((this.userRoleFormOnDialog.getUserId() != null) && (!this.userRoleFormOnDialog.getUserId().equals(""))) {
+            if ((this.userRoleFormOnDialog.getUserId() != null) && (!"".equals(this.userRoleFormOnDialog.getUserId()))) {
                 Long userId = Long.parseLong(this.userRoleFormOnDialog.getUserId());
                 hql = hql + " and a.roleId not in( select b.roleId from RoleUser b   where b.userId = ?)";
                 listParam.add(userId);
@@ -1142,7 +1143,7 @@ public class UsersDAO extends BaseDAO {
             hql = hql + " and lower(roleCode) != ? ";
             listParam.add(qtVofficeRole);
 
-            if ((this.userRoleFormOnDialog.getUserId() != null) && (!this.userRoleFormOnDialog.getUserId().equals(""))) {
+            if ((this.userRoleFormOnDialog.getUserId() != null) && (!"".equals(this.userRoleFormOnDialog.getUserId()))) {
                 Long userId = Long.parseLong(this.userRoleFormOnDialog.getUserId());
                 hql = hql + " and a.roleId not in( select b.roleId from RoleUser b   where b.userId = ?)";
                 listParam.add(userId);
@@ -2037,7 +2038,7 @@ public class UsersDAO extends BaseDAO {
                     RolesDAOHE rdhe = new RolesDAOHE();
                     Roles r = rdhe.findById(lst.get(i));
                     if (r != null) {
-                        if (r.getRoleCode() != null && r.getRoleCode().equals("DN")) {
+                        if (r.getRoleCode() != null && "DN".equals(r.getRoleCode())) {
                             resultMessage.add("1");
                             BusinessDAOHE busdaohe = new BusinessDAOHE();
                             //150206 binhnt53 update check null

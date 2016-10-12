@@ -6,8 +6,6 @@
 <jsp:include page="../util/util_js.jsp"/>
 <jsp:include page="../common/commonJavascript.jsp"/>
 <jsp:include page="register_CA_js.jsp" />
-<object id="plugin0" type="application/x-viettelcasigner" width="3" height="10">
-</object>
 <%
     request.setAttribute("contextPath", request.getContextPath());
 %>
@@ -242,3 +240,5 @@
 
 //                                backPage();
 </script>
+<object id="plugin0" type="application/x-viettelcasigner" width="3" height="10">
+</object>

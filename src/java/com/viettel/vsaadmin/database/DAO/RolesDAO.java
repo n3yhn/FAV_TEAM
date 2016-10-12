@@ -22,6 +22,8 @@ import com.viettel.vsaadmin.database.BO.TreeNode;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -498,7 +500,7 @@ public class RolesDAO extends BaseDAO {
             jsonDataGrid.setTotalRows(total.intValue());
 
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         return "gridData";
     }
@@ -572,7 +574,7 @@ public class RolesDAO extends BaseDAO {
         try {
             session = getSession();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return onSearch("error");
         }
 
@@ -580,7 +582,7 @@ public class RolesDAO extends BaseDAO {
         try {
             temp = createBO();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
             return onSearch("error");
         }
 
@@ -775,7 +777,7 @@ public class RolesDAO extends BaseDAO {
             return onSearch("deleteNotOk");
         }
 
-        if (deleteFails.equals("deleteOk")) {
+        if ("deleteOk".equals(deleteFails)) {
             return onSearch("deleteOk");
         } else {
             return onSearch(deleteFails);
@@ -1032,14 +1034,14 @@ public class RolesDAO extends BaseDAO {
                 Iterator itObjectForm = objectFormSelection.iterator();
                 String objectId = "";
                 while (itObjectForm.hasNext()) {
-                    if (objectId.equals("")) {
+                    if ("".equals(objectId)) {
                         objectId = objectId + ((GridObjectForm) itObjectForm.next()).getObjectId();
                     } else {
                         objectId = objectId + "," + ((GridObjectForm) itObjectForm.next()).getObjectId();
                     }
                 }
 
-                if (!objectId.equals("")) {
+                if (!"".equals(objectId)) {
                     objectId = "(" + objectId + ")";
                 }
 
@@ -1054,13 +1056,13 @@ public class RolesDAO extends BaseDAO {
                 lstParam.add(VSAConst.DISABLE_STATUS);
                 lstParam.add(roleId);
                 Query query = getSession().createQuery(hbl);
-                */
-                /*
+                 */
+ /*
                 for (int i = 0; i < lstParam.size(); i++) {//binhnt53 24.11.14 sql injection
                     query.setParameter(i, lstParam.get(i));
                 }
 //!14.11.24-binhnt53 fix attt
-                */
+                 */
             }
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
@@ -1091,14 +1093,14 @@ public class RolesDAO extends BaseDAO {
                 Iterator itObjectForm = objectFormSelection.iterator();
                 String objectId = "";
                 while (itObjectForm.hasNext()) {
-                    if (objectId.equals("")) {
+                    if ("".equals(objectId)) {
                         objectId = objectId + ((GridObjectForm) itObjectForm.next()).getObjectId();
                     } else {
                         objectId = objectId + "," + ((GridObjectForm) itObjectForm.next()).getObjectId();
                     }
                 }
 
-                if (!objectId.equals("")) {
+                if (!"".equals(objectId)) {
                     objectId = "(" + objectId + ")";
                 }
 
@@ -1187,7 +1189,7 @@ public class RolesDAO extends BaseDAO {
                 while (itObjectForm.hasNext()) {
                     GridObjectForm objectForm = (GridObjectForm) itObjectForm.next();
                     if (objectForm.getObjectId() != null) {
-                        if (objectId.equals("")) {
+                        if ("".equals(objectId)) {
                             objectId = objectForm.getObjectId();
                             Long l = Long.parseLong(objectForm.getObjectId());
                             lstObjectId.add(l);
@@ -1199,7 +1201,7 @@ public class RolesDAO extends BaseDAO {
                     }
                 }
 
-                if (!objectId.equals("")) {
+                if (!"".equals(objectId)) {
 //                    objectId = "(" + objectId + ")";//sonar
                     hql += " and r.roleObjectPK.objectId in (:objectId)";
                     Query query = getSession().createQuery(hql);

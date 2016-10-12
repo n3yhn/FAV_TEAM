@@ -17,14 +17,13 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 
-
 /**
  *
  * @author BINHNT53
  */
 public class PaymentHistoryDAOHE extends GenericDAOHibernate<PaymentHistory, Long> {
 
-    private static HashMap<String, List> lstFactory = new HashMap();
+    private static volatile HashMap<String, List> lstFactory = new HashMap();
 
     public static HashMap<String, List> getLstFactory() {
         return lstFactory;
@@ -46,6 +45,7 @@ public class PaymentHistoryDAOHE extends GenericDAOHibernate<PaymentHistory, Lon
             lstFactory.remove(type);
         }
     }
+
     /*
      *
      */
@@ -57,6 +57,7 @@ public class PaymentHistoryDAOHE extends GenericDAOHibernate<PaymentHistory, Lon
     public PaymentHistoryDAOHE() {
         super(PaymentHistory.class);
     }
+
     /**
      * findPaymentHistory
      *
@@ -94,6 +95,7 @@ public class PaymentHistoryDAOHE extends GenericDAOHibernate<PaymentHistory, Lon
         GridResult gr = new GridResult(total, lstResult);
         return gr;
     }
+
     /*
      * 
      */
@@ -103,9 +105,9 @@ public class PaymentHistoryDAOHE extends GenericDAOHibernate<PaymentHistory, Lon
      * @return
      */
     public List findAllPaymentHistory() {
-        if (lstFactory == null) {
-            lstFactory = new HashMap();
-        }
+//        if (lstFactory == null) {
+//            lstFactory = new HashMap();
+//        }
 
         if (lstFactory.containsKey("type")) {
             return lstFactory.get("type");

@@ -54,7 +54,7 @@ public class CaUserDAOHE extends GenericDAOHibernate<CaUser, Long> {
      */
     public List findAllCaUser() {
         if (lstFactory == null) {
-            lstFactory = new HashMap();
+//            lstFactory = new HashMap();//sonar
         }
 
         if (lstFactory.containsKey("type")) {

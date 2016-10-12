@@ -36,9 +36,8 @@ public class CategoryDAO extends BaseDAO {
     CategoryDAOHE categoryDao = new CategoryDAOHE();
     BusinessDAOHE bhe = new BusinessDAOHE();
     private List<CategorySearchForm> lstItemOnGrid;
-    
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CategoryDAO.class);
 
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CategoryDAO.class);
 
     /**
      * @return String
@@ -47,21 +46,21 @@ public class CategoryDAO extends BaseDAO {
         try {
             String type = getRequest().getParameter("type");
             String categoryName = "Danh mục";
-            if (type.equals("NATION")) {
+            if ("NATION".equals(type)) {
                 categoryName = "Danh mục quốc gia";
-            } else if (type.equals("PROVINCE")) {
+            } else if ("PROVINCE".equals(type)) {
                 categoryName = "Danh mục tỉnh, thành phố";
-            } else if (type.equals("TTHC")) {
+            } else if ("TTHC".equals(type)) {
                 categoryName = "Danh mục thủ tục hành chính";
-            } else if (type.equals("SP")) {
+            } else if ("SP".equals(type)) {
                 categoryName = "Danh mục sản phẩm";
-            } else if (type.equals("DOCTYPE")) {
+            } else if ("DOCTYPE".equals(type)) {
                 categoryName = "Danh mục loại tài liệu";
-            } else if (type.equals("DVI")) {
+            } else if ("DVI".equals(type)) {
                 categoryName = "Danh mục đơn vị";
             }
             List lstCategoryType = new ArrayList();
-           // lstCategoryType.add(0, new CategoryType("0", "--- Chọn ---"));
+            // lstCategoryType.add(0, new CategoryType("0", "--- Chọn ---"));
             lstCategoryType.add(new CategoryType("SP", "DBT"));
             lstCategoryType.add(new CategoryType("SP", "TPCN"));
             lstCategoryType.add(new CategoryType("SP", "TPK"));
@@ -74,6 +73,7 @@ public class CategoryDAO extends BaseDAO {
         }
         return this.forwardPage;
     }
+
     /*
      * 
      */
@@ -212,7 +212,6 @@ public class CategoryDAO extends BaseDAO {
 //        jsonDataGrid.setCustomInfo(customInfo);
 //        return "gridData";
 //    }
-    
     public String insertCategory() {
         List resultMessage = new ArrayList();
         List customInfo = new ArrayList();
@@ -253,8 +252,8 @@ public class CategoryDAO extends BaseDAO {
         jsonDataGrid.setCustomInfo(customInfo);
         return "gridData";
     }
-    
-     public String insertCategorySp() {
+
+    public String insertCategorySp() {
         List resultMessage = new ArrayList();
         List customInfo = new ArrayList();
 
@@ -313,7 +312,7 @@ public class CategoryDAO extends BaseDAO {
             boolean bReturn = false;
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 CategorySearchForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getCategoryId() != null && form.getCategoryId() != 0D) {
+                if (form != null && form.getCategoryId() != null && form.getCategoryId() != 0L) {
                     if (!bhe.isExistProvince(form.getCategoryId())) {
                         Category bo = categoryDao.getById("categoryId", form.getCategoryId());
                         if (bo != null) {
@@ -346,6 +345,7 @@ public class CategoryDAO extends BaseDAO {
         jsonDataGrid.setItems(resultMessage);
         return "gridData";
     }
+
     /*
      * oninsert 
      */
@@ -384,6 +384,7 @@ public class CategoryDAO extends BaseDAO {
         jsonDataGrid.setCustomInfo(customInfo);
         return GRID_DATA;
     }
+
     /*
      * 
      */
@@ -399,6 +400,7 @@ public class CategoryDAO extends BaseDAO {
 
         return GRID_DATA;
     }
+
     /*
      * 
      */
@@ -409,7 +411,7 @@ public class CategoryDAO extends BaseDAO {
             CategoryDAOHE cthe = new CategoryDAOHE();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 CategorySearchForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getCategoryId() != null && form.getCategoryId() != 0D) {
+                if (form != null && form.getCategoryId() != null && form.getCategoryId() != 0L) {
                     if (!bhe.isExistProvince(form.getCategoryId())) {
                         Category bo = cthe.getById("categoryId", form.getCategoryId());
                         if (bo != null) {

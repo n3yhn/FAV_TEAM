@@ -282,12 +282,12 @@
     <definition name="announcementFile03DialogView" extends="content.definition" >
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createAnnounFilesPage03Dialog.jsp"/>
     </definition>        
-    <definition name="reAnnouncementView" extends="content.definition" >
+<!--    <definition name="reAnnouncementView" extends="content.definition" >
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReAnnounFilesPage.jsp"/>
-    </definition>
-    <definition name="reAnnouncementDialogView" extends="content.definition" >
+    </definition>-->
+<!--    <definition name="reAnnouncementDialogView" extends="content.definition" >
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createReAnnounFilesPageDialog.jsp"/>
-    </definition>
+    </definition>-->
     <definition name="confirmNormalImportView" extends="content.definition" >
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/viewPage/createConfirmNormalImport.jsp"/>
     </definition>

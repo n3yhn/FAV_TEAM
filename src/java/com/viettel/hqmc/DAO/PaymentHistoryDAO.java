@@ -111,7 +111,7 @@ public class PaymentHistoryDAO extends BaseDAO {
             PaymentHistoryDAOHE cthe = new PaymentHistoryDAOHE();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 PaymentHistoryForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getPaymentHistoryId() != null && form.getPaymentHistoryId() != 0D) {
+                if (form != null && form.getPaymentHistoryId() != null && form.getPaymentHistoryId() != 0L) {
                     PaymentHistory bo = cthe.getById("categoryTypeId", form.getPaymentHistoryId());
                     if (bo != null) {
                         bo.setStatus(0l);

@@ -121,7 +121,7 @@ public class UploadIframeDAO extends BaseDAO {
             String strId = request.getParameter("id");
             MultiPartRequestWrapper multi = (MultiPartRequestWrapper) request;
             Enumeration files = multi.getFileParameterNames();
-            String fieldName = "";
+            String fieldName;
             String fileName;
             File file;
             while (files.hasMoreElements()) {
@@ -172,7 +172,7 @@ public class UploadIframeDAO extends BaseDAO {
             String strId = request.getParameter("id");
             MultiPartRequestWrapper multi = (MultiPartRequestWrapper) request;
             Enumeration files = multi.getFileParameterNames();
-            String fieldName = "";
+            String fieldName;
             String fileName;
             File file;
             while (files.hasMoreElements()) {
@@ -223,7 +223,7 @@ public class UploadIframeDAO extends BaseDAO {
             String strId = request.getParameter("id");
             MultiPartRequestWrapper multi = (MultiPartRequestWrapper) request;
             Enumeration files = multi.getFileParameterNames();
-            String fieldName = "";
+            String fieldName;
             String fileName;
             File file;
             while (files.hasMoreElements()) {
@@ -274,7 +274,7 @@ public class UploadIframeDAO extends BaseDAO {
             String strId = request.getParameter("id");
             MultiPartRequestWrapper multi = (MultiPartRequestWrapper) request;
             Enumeration files = multi.getFileParameterNames();
-            String fieldName = "";
+            String fieldName;
             String fileName;
             File file;
             while (files.hasMoreElements()) {
@@ -321,7 +321,7 @@ public class UploadIframeDAO extends BaseDAO {
             MultiPartRequestWrapper multi = (MultiPartRequestWrapper) request;
             Enumeration files = multi.getFileParameterNames();
             String strId = request.getParameter("id");
-            String fieldName = "";
+            String fieldName;
             String fileName;
             File file;
             while (files.hasMoreElements()) {
@@ -691,7 +691,7 @@ public class UploadIframeDAO extends BaseDAO {
 //        try {
         Long fileId = filesForm.getFileId();
         HttpServletRequest request = getRequest();
-        HttpServletResponse response = getResponse();
+//        HttpServletResponse response = getResponse();
         FilesDAOHE filesdaohe = new FilesDAOHE();
         Files filesbo = filesdaohe.findById(fileId);
 //            response.setContentType(UploadFile.getCustomContentType());
@@ -1044,10 +1044,10 @@ public class UploadIframeDAO extends BaseDAO {
             if (lstRole != null && lstRole.size() > 0) {
                 for (Integer i = 0; i < lstRole.size(); i++) {
                     code = lstRole.get(i).getRoleCode();
-                    if (!"".equals(code) && (code.equals("voffice_vtb")
+                    if (!"".equals(code) && ("voffice_vtb".equals(code)
                             || code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
                             || code.equals(Constants.ROLES.DIRECTOR_ROLE))) {
-                        if (code.equals("voffice_vtb")) {
+                        if ("voffice_vtb".equals(code)) {
                             code = "VT";
                         } else if (code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
                                 || code.equals(Constants.ROLES.DIRECTOR_ROLE)) {
@@ -1155,10 +1155,10 @@ public class UploadIframeDAO extends BaseDAO {
             if (lstRole != null && lstRole.size() > 0) {
                 for (Integer i = 0; i < lstRole.size(); i++) {
                     code = lstRole.get(i).getRoleCode();
-                    if (!"".equals(code) && (code.equals("voffice_vtb")
+                    if (!"".equals(code) && ("voffice_vtb".equals(code)
                             || code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
                             || code.equals(Constants.ROLES.DIRECTOR_ROLE))) {
-                        if (code.equals("voffice_vtb")) {
+                        if ("voffice_vtb".equals(code)) {
                             code = "VT";
                         } else if (code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
                                 || code.equals(Constants.ROLES.DIRECTOR_ROLE)) {
@@ -1335,10 +1335,10 @@ public class UploadIframeDAO extends BaseDAO {
             if (lstRole != null && lstRole.size() > 0) {
                 for (Integer i = 0; i < lstRole.size(); i++) {
                     code = lstRole.get(i).getRoleCode();
-                    if (!"".equals(code) && (code.equals("voffice_vtb")
+                    if (!"".equals(code) && ("voffice_vtb".equals(code)
                             || code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
                             || code.equals(Constants.ROLES.DIRECTOR_ROLE))) {
-                        if (code.equals("voffice_vtb")) {
+                        if ("voffice_vtb".equals(code)) {
                             code = "VT";
                         } else if (code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
                                 || code.equals(Constants.ROLES.DIRECTOR_ROLE)) {

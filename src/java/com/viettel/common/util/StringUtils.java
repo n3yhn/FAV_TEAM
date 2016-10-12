@@ -342,7 +342,6 @@ public final class StringUtils {
     }
 
     public static List convertStrToList(String str) {
-        List choosedIdStrLst = null;
         String[] choosedIdStrArr = str.trim().split(" ");
         if (choosedIdStrArr.length == 0) {
             choosedIdStrArr[0] = str;
@@ -352,12 +351,12 @@ public final class StringUtils {
             for (int i = 0; i < choosedIdStrArr.length; i++) {
                 arrResult[i] = Long.parseLong(choosedIdStrArr[i]);
             }
-            choosedIdStrLst = Arrays.asList(arrResult);
+            return Arrays.asList(arrResult);
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
         }
 
-        return choosedIdStrLst;
+        return null;
     }
 
     /**

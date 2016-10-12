@@ -57,16 +57,16 @@ import sun.security.x509.X509CertImpl;
 public class CommonUtils {
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CommonUtils.class);
-    public static String[] attrPublishDocToSignedArr = {"fileId", "fileType", "fileTypeName", "fileCode", "announcementId", "detailProductId", "testRegistrationId", "reIssueFormId", "businessName", "userCreateId", "userCreateName", "deptId", "deptName", "announcementNo", "businessLicence", "businessAddress", "productName", "manufactureName", "manufactureAddress", "matchingTarget", "nationName"};
-    public static String[] attrLstDetailsArr = {"announcementId", "detailProductId", "testRegistrationId", "reIssueFormId"};
-    public static String[] attrAnnounmenceArr = {"announcementId", "announcementNo", "businessName", "businessLicence", "businessAddress", "businessTelephone", "businessFax", "businessEmail", "productName", "manufactureName", "manufactureAddress", "manufactureTel", "manufactureFax", "manufactureEmail", "nationName", "matchingTarget", "assessmentMethod"};
-    public static String[] attrDetailsProductArr = {"detailProductId", "productType", "productTypeName", "productSmell", "productStatus", "productColor", "productOtherStatus", "components", "useage", "timeInUse", "objectUse", "guideline", "preservation", "packateMaterial", "packageRecipe", "productionProcess", "counterfeitDistinctive", "signDate", "signer", "origin", "productNo", "otherTarget"};
-    public static String[] attrTestRegistrationArr = {"testRegistrationId", "exportBusinessName", "exportBusinessAdd", "exportBusinessMail", "exportBusinessTel", "exportBusinessFax", "exportContractCode", "exportContractDate", "exportLadingCode", "exportLadingDate", "exportPort", "importBusinessName", "importBusinessAddress", "importBusinessEmail", "importBusinessTel", "importBusinessFax", "importPort", "importDate", "productName", "productDescription", "productCode", "productOrigin", "productAmount", "productWeight", "productValue", "gatheringAdd", "testDate", "testAdd", "businessRepresent", "businessSigndate", "businessSignAdd", "agencyRepresent", "agencySignAdd", "agencySigndate", "standardTargetNo", "standardTargetDate", "releaseDocumentNo", "releaseDocumentDate", "testAgency", "isActive"};
-    public static String[] attrAttachFileNotSignedArr = {"serialVersionUID", "attachId"};
-    public static String[] attrDestroyRecordNotSignedArr = {"serialVersionUID", "destroyRecordId", "contentSigned", "userSigned", "status"};
-    public static String[] attrMainlytarget = {"targetName", "unitName", "unitId", "publishLevel"};
-    public static String[] attrProductTarget = {"targetName", "targetType", "unitName", "unitId", "maxLevel"};
-    public static String[] attrQuanlityControl = {"productProcessDetail", "controlTarget", "technicalRegulation", "patternFrequence", "testDevice", "testMethod", "noteForm", "note"};
+    protected static String[] attrPublishDocToSignedArr = {"fileId", "fileType", "fileTypeName", "fileCode", "announcementId", "detailProductId", "testRegistrationId", "reIssueFormId", "businessName", "userCreateId", "userCreateName", "deptId", "deptName", "announcementNo", "businessLicence", "businessAddress", "productName", "manufactureName", "manufactureAddress", "matchingTarget", "nationName"};
+    protected static String[] attrLstDetailsArr = {"announcementId", "detailProductId", "testRegistrationId", "reIssueFormId"};
+    protected static String[] attrAnnounmenceArr = {"announcementId", "announcementNo", "businessName", "businessLicence", "businessAddress", "businessTelephone", "businessFax", "businessEmail", "productName", "manufactureName", "manufactureAddress", "manufactureTel", "manufactureFax", "manufactureEmail", "nationName", "matchingTarget", "assessmentMethod"};
+    protected static String[] attrDetailsProductArr = {"detailProductId", "productType", "productTypeName", "productSmell", "productStatus", "productColor", "productOtherStatus", "components", "useage", "timeInUse", "objectUse", "guideline", "preservation", "packateMaterial", "packageRecipe", "productionProcess", "counterfeitDistinctive", "signDate", "signer", "origin", "productNo", "otherTarget"};
+    protected static String[] attrTestRegistrationArr = {"testRegistrationId", "exportBusinessName", "exportBusinessAdd", "exportBusinessMail", "exportBusinessTel", "exportBusinessFax", "exportContractCode", "exportContractDate", "exportLadingCode", "exportLadingDate", "exportPort", "importBusinessName", "importBusinessAddress", "importBusinessEmail", "importBusinessTel", "importBusinessFax", "importPort", "importDate", "productName", "productDescription", "productCode", "productOrigin", "productAmount", "productWeight", "productValue", "gatheringAdd", "testDate", "testAdd", "businessRepresent", "businessSigndate", "businessSignAdd", "agencyRepresent", "agencySignAdd", "agencySigndate", "standardTargetNo", "standardTargetDate", "releaseDocumentNo", "releaseDocumentDate", "testAgency", "isActive"};
+    protected static String[] attrAttachFileNotSignedArr = {"serialVersionUID", "attachId"};
+    protected static String[] attrDestroyRecordNotSignedArr = {"serialVersionUID", "destroyRecordId", "contentSigned", "userSigned", "status"};
+    protected static String[] attrMainlytarget = {"targetName", "unitName", "unitId", "publishLevel"};
+    protected static String[] attrProductTarget = {"targetName", "targetType", "unitName", "unitId", "maxLevel"};
+    protected static String[] attrQuanlityControl = {"productProcessDetail", "controlTarget", "technicalRegulation", "patternFrequence", "testDevice", "testMethod", "noteForm", "note"};
 
     public static String getWSPassword() {
         ResourceBundle rb = ResourceBundle.getBundle("config");
@@ -149,7 +149,7 @@ public class CommonUtils {
                             element.appendChild(elmt);
                         } else {
                             //check announcement
-                            if (fieldArr[i].getName().trim().equals("announcementId")) {
+                            if ("announcementId".equals(fieldArr[i].getName().trim())) {
                                 Class cls1 = publicBo.getAnnouncement().getClass();
                                 Field[] fieldArr1 = cls1.getDeclaredFields();
                                 String fieldName1;
@@ -195,7 +195,7 @@ public class CommonUtils {
                                 }
                             }
                             //check detailProduct
-                            if (fieldArr[i].getName().trim().equals("detailProductId")) {
+                            if ("detailProductId".equals(fieldArr[i].getName().trim())) {
                                 Class cls1 = publicBo.getDetailProduct().getClass();
                                 Field[] fieldArr1 = cls1.getDeclaredFields();
                                 String fieldName1;
@@ -241,7 +241,7 @@ public class CommonUtils {
                                 }
                             }//
                             //check testRegistrationId
-                            if (fieldArr[i].getName().trim().equals("testRegistrationId")) {
+                            if ("testRegistrationId".equals(fieldArr[i].getName().trim())) {
                                 Class cls1 = publicBo.getTestRegistration().getClass();
                                 Field[] fieldArr1 = cls1.getDeclaredFields();
                                 String fieldName1;
@@ -515,20 +515,20 @@ public class CommonUtils {
         String userSigned = "";
 //        String serial = "";
         Iterator iter = keyInfo.getContent().iterator();
-        X509CertImpl certImpl = null;
+//        X509CertImpl certImpl;
         while (iter.hasNext()) {
             XMLStructure kiType = (XMLStructure) iter.next();
             if (kiType instanceof X509Data) {
                 X509Data xd = (X509Data) kiType;
                 Object[] entries = xd.getContent().toArray();
-                X509CRL crl = null;
+//                X509CRL crl;
                 for (int i = 0; i < entries.length; i++) {
-                    if (entries[i] instanceof X509CRL) {
-                        crl = (X509CRL) entries[i];
-                    }
-                    if (entries[i] instanceof X509CertImpl) {
-                        certImpl = (X509CertImpl) entries[i];
-                    }
+//                    if (entries[i] instanceof X509CRL) {
+//                        crl = (X509CRL) entries[i];
+//                    }
+//                    if (entries[i] instanceof X509CertImpl) {
+//                        certImpl = (X509CertImpl) entries[i];
+//                    }
                     if (entries[i] instanceof String) {
                         userSigned += (String) entries[i] + "\n";
                     }
@@ -541,7 +541,7 @@ public class CommonUtils {
     public static String getSerial(KeyInfo keyInfo) throws Exception {
         String serial = "";
         Iterator iter = keyInfo.getContent().iterator();
-        X509CertImpl certImpl = null;
+        X509CertImpl certImpl;
         while (iter.hasNext()) {
             XMLStructure kiType = (XMLStructure) iter.next();
             if (kiType instanceof X509Data) {
@@ -597,7 +597,7 @@ public class CommonUtils {
             return xmlString;
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
-            log.error(ex.getMessage());
+//            log.error(ex.getMessage());
             return null;
         }
     }
@@ -663,7 +663,7 @@ public class CommonUtils {
         String userSigned = "";
 //        String serial;
         Iterator iter = keyInfo.getContent().iterator();
-        X509CertImpl certImpl = null;
+        X509CertImpl certImpl;
         while (iter.hasNext()) {
             XMLStructure kiType = (XMLStructure) iter.next();
             if (kiType instanceof X509Data) {

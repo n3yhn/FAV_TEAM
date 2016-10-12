@@ -46,24 +46,29 @@ public class VLookupHomepageDAOHE extends GenericDAOHibernate<VLookupHomepage, L
                 hql += " AND lower(v.businessAddress) like ? ESCAPE '/' ";
                 lstParam.add(StringUtils.toLikeString(form.getBusinessAddress().toLowerCase().trim()));
             }
-            if (form.getAnnouncementNo()!= null && !"".equals(form.getAnnouncementNo().trim())) {
+            if (form.getAnnouncementNo() != null && !"".equals(form.getAnnouncementNo().trim())) {
                 hql += " AND lower(v.receiptNo) like ? ESCAPE '/' ";
                 lstParam.add(StringUtils.toLikeString(form.getAnnouncementNo().toLowerCase().trim()));
             }
-            if (form.getFileTypeName()!= null && !"-1".equals(form.getFileTypeName().trim())) {
-                if (form.getFileTypeName().equals("TPCN") || form.getFileTypeName().equals("DBT"))
-                {
+            if (form.getFileTypeName() != null && !"-1".equals(form.getFileTypeName().trim())) {
+                if ("TPCN".equals(form.getFileTypeName()) || "DBT".equals(form.getFileTypeName())) {
                     hql += " AND v.code like ? ";
                     lstParam.add(form.getFileTypeName());
-                }   
-                else
-                {
+                } else {
                     hql += " AND v.code not like 'TPCN' and v.code not like 'DBT' ";
                 }
             }
+//            if (form.getSendDateTo() != null) {
+//                hql += " AND v.receiptDate=? ";
+//                lstParam.add(form.getSendDateTo());
+//            }
+            if (form.getSendDateFrom()!= null) {
+                hql += " AND v.receiptDate >= ?";
+                lstParam.add(minDayToCompare(form.getSendDateFrom()));
+            }
             if (form.getSendDateTo() != null) {
-                hql += " AND v.receiptDate=? ";
-                lstParam.add(form.getSendDateTo());
+                hql += " AND v.receiptDate <= ?";
+                lstParam.add(maxDayToCompare(form.getSendDateTo()));
             }
         }
 

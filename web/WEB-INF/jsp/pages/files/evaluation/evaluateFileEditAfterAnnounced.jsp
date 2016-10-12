@@ -682,7 +682,7 @@
                 };
 
                 page.search = function () {
-                    dijit.byId("filesGrid").vtReload('filesAction!onSearchFileToEvaluate.do', "searchForm", null, page.afterSearch);
+                    dijit.byId("filesGrid").vtReload('filesAction!onSearchFileToEvaluate4AA.do', "searchForm", null, page.afterSearch);
                 };
 
                 page.afterSearch = function () {

@@ -150,7 +150,7 @@ public class TimeProcessDAO extends BaseDAO {
             userAttachsDAOHE = new TimeProcessDAOHE();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 TimeProcessForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getTimeProcessId() != null && form.getTimeProcessId() != 0D) {
+                if (form != null && form.getTimeProcessId() != null && form.getTimeProcessId() != 0L) {
                     TimeProcess bo = userAttachsDAOHE.getById("timeProcessId", form.getTimeProcessId());
                     if (bo != null) {
                         bo.setIsActive(Constants.ACTIVE_STATUS.DELETED);

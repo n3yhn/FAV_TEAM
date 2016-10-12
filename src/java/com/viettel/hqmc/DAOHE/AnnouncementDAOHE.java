@@ -79,7 +79,7 @@ public class AnnouncementDAOHE extends GenericDAOHibernate<Announcement, Long> {
             for (int i = 0; i < lstParam.size(); i++) {
                 query.setParameter(i, lstParam.get(i));
             }
-            List<Announcement> lstObj = null;
+            List<Announcement> lstObj;
             lstObj = query.list();
             if (!lstObj.isEmpty()) {
                 bo = lstObj.get(0);
@@ -134,7 +134,7 @@ public class AnnouncementDAOHE extends GenericDAOHibernate<Announcement, Long> {
      */
     public List findAllAnnouncement() {
         if (lstFactory == null) {
-            lstFactory = new HashMap();
+//            lstFactory = new HashMap();//sonar
         }
 
         if (lstFactory.containsKey("type")) {
@@ -209,7 +209,7 @@ public class AnnouncementDAOHE extends GenericDAOHibernate<Announcement, Long> {
      * @return
      */
     public Long getCountVersion(Long objId) {
-        Long iresult = 0L;
+        Long iresult;
         List lstParam = new ArrayList();
         String hql = "select count(t) from Announcement t where t.originalId = ? ";
         lstParam.add(objId);

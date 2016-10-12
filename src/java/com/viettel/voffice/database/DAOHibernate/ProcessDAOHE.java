@@ -375,7 +375,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
     public boolean deleteProcessNotIn(Long userId, Long deptId, Long objectId, Long objectType, String ids) {
         try {
             String hql;
-            if (!ids.equals("")) {
+            if (!"".equals(ids)) {
                 ids = "(" + ids + ")";
                 hql = "UPDATE Process p SET p.isActive=0 WHERE (p.sendUserId=? and p.sendGroupId =? ) and p.objectId=? and p.objectType=? and p.processId NOT IN " + ids;
             } else {
@@ -827,7 +827,7 @@ public class ProcessDAOHE extends GenericDAOHibernate<Process, Long> {
         try {
             lst = query.list();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            LogUtil.addLog(ex);//binhnt sonar a160901
         }
         Process result = null;
         if (lst != null && lst.size() > 0) {

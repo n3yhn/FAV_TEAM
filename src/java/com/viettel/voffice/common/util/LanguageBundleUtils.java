@@ -17,16 +17,25 @@ public class LanguageBundleUtils {
 
     private LanguageBundleUtils() {
     }
-    /** RESOURCE.*/
+    /**
+     * RESOURCE.
+     */
     private static final String RESOURCE = "com/viettel/config/Language";
-    /** local.*/
+    /**
+     * local.
+     */
     private static Locale local = null;
-    /** languageRb.*/
-    private static ResourceBundle languageRb = null;
+    /**
+     * languageRb.
+     */
+    private static volatile ResourceBundle languageRb = null;
 
-    /** .*/
+    /**
+     * .
+     */
     /**
      * getString
+     *
      * @param key String
      * @return value
      */

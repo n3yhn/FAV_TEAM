@@ -102,7 +102,7 @@ public final class IpUtils {
                 return false;
             }
             String octet = octets[3];
-            if (!octet.equalsIgnoreCase("*")) {
+            if (!"*".equalsIgnoreCase(octet)) {
                 if ((octet.charAt(0) == '[') && (octet.charAt(octet.length() - 1) == ']')) {
                     octet = octet.substring(1, octet.length() - 1);
                     int pos = octet.indexOf("-");
@@ -167,7 +167,8 @@ public final class IpUtils {
         int value = -1;
         try {
             value = Integer.parseInt(octet);
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
             value = -1;
         }
 

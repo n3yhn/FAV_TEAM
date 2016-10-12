@@ -22,7 +22,7 @@ import com.viettel.common.util.LogUtil;
 public class RepositoryDAOHE extends GenericDAOHibernate<Repositories, Long> {
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RepositoryDAOHE.class);
-    private static HashMap<String, List> lstRepositoriesFactory = new HashMap();
+    private static volatile HashMap<String, List> lstRepositoriesFactory = new HashMap();
 
     public RepositoryDAOHE() {
         super(Repositories.class);
@@ -49,9 +49,9 @@ public class RepositoryDAOHE extends GenericDAOHibernate<Repositories, Long> {
      * @return
      */
     public List findAllRepositories() {
-        if (lstRepositoriesFactory == null) {
-            lstRepositoriesFactory = new HashMap();
-        }
+//        if (lstRepositoriesFactory == null) {
+//            lstRepositoriesFactory = new HashMap();
+//        }
 
         List<Repositories> lstRepositories = null;
 
@@ -77,9 +77,9 @@ public class RepositoryDAOHE extends GenericDAOHibernate<Repositories, Long> {
      * @return
      */
     public List getRepositoryFromId(Long rep_id) {
-        if (lstRepositoriesFactory == null) {
-            lstRepositoriesFactory = new HashMap();
-        }
+//        if (lstRepositoriesFactory == null) {
+//            lstRepositoriesFactory = new HashMap();
+//        }
 
         List<Repositories> lstRepositories = null;
 
@@ -105,9 +105,9 @@ public class RepositoryDAOHE extends GenericDAOHibernate<Repositories, Long> {
      * @return
      */
     public List getRepositoryFromCreator(Long user_id) {
-        if (lstRepositoriesFactory == null) {
-            lstRepositoriesFactory = new HashMap();
-        }
+//        if (lstRepositoriesFactory == null) {
+//            lstRepositoriesFactory = new HashMap();
+//        }
 
         List<Repositories> lstRepositories = null;
 
@@ -138,9 +138,9 @@ public class RepositoryDAOHE extends GenericDAOHibernate<Repositories, Long> {
      */
     public GridResult findAllRepositoriesById(RepositoriesForm repForm, Long depId, Long userId, int start, int count, String sortField) {
 
-        if (lstRepositoriesFactory == null) {
-            lstRepositoriesFactory = new HashMap();
-        }
+//        if (lstRepositoriesFactory == null) {
+//            lstRepositoriesFactory = new HashMap();
+//        }
 //        List<Repositories> lstRepositories = null;
         StringBuilder stringBuilder = new StringBuilder(" from Repositories a ");
         stringBuilder.append(" where a.isActive = 1 and a.repCreator = " + userId + "  order by a.repId asc ");

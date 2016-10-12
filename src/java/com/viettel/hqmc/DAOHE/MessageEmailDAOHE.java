@@ -54,7 +54,7 @@ public class MessageEmailDAOHE extends GenericDAOHibernate<MessageEmail, Long> {
      * @return
      */
     public boolean saveMessageEmail(Long senderId, Long receiverId, String content) {
-        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_EMAIL.equals("0")) {
+        if ("0".equals(Constants.FLAG_SEND_SMSEMAIL.FLAG_EMAIL)) {
             return true;
         }
         boolean result = true;
@@ -96,7 +96,7 @@ public class MessageEmailDAOHE extends GenericDAOHibernate<MessageEmail, Long> {
      * @return
      */
     public boolean saveMessageEmailGroup(Long receiverId, String email, String content) {
-        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_EMAIL.equals("0")) {
+        if ("0".equals(Constants.FLAG_SEND_SMSEMAIL.FLAG_EMAIL)) {
             return true;
         }
         boolean result = true;

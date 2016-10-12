@@ -21,7 +21,7 @@ import com.viettel.common.util.LogUtil;
  */
 public class TestRegistrationDAOHE extends GenericDAOHibernate<TestRegistration, Long> {
 
-    private static HashMap<String, List> lstFactory = new HashMap();
+    private volatile static HashMap<String, List> lstFactory = new HashMap();
 
     public static HashMap<String, List> getLstFactory() {
         return lstFactory;
@@ -96,7 +96,7 @@ public class TestRegistrationDAOHE extends GenericDAOHibernate<TestRegistration,
      * @return
      */
     public Long getCountVersion(Long objId) {
-        Long iresult = 0L;
+        Long iresult;
         List lstParam = new ArrayList();
         String hql = "select count(t) from TestRegistration t where t.originalId = ? ";
         lstParam.add(objId);
@@ -171,9 +171,9 @@ public class TestRegistrationDAOHE extends GenericDAOHibernate<TestRegistration,
      * @return
      */
     public List findAllTestRegistration() {
-        if (lstFactory == null) {
-            lstFactory = new HashMap();
-        }
+//        if (lstFactory == null) {//sonar
+//            lstFactory = new HashMap();
+//        }
 
         if (lstFactory.containsKey("type")) {
             return lstFactory.get("type");

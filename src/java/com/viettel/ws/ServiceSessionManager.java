@@ -14,7 +14,7 @@ import java.util.UUID;
  */
 public class ServiceSessionManager {
 
-    private static Map<String, ServiceToken> lstToken;
+    private static volatile Map<String, ServiceToken> lstToken;
 
     public static String generateToken(String userName) {
         UUID uid = java.util.UUID.randomUUID();

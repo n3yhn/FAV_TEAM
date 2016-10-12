@@ -178,12 +178,12 @@ public class StandardProductDAO extends BaseDAO {
         List resultMessage = new ArrayList();
         try {
             if (lstItemOnGrid.size() > 0) {
-                StandardProductForm form = lstItemOnGrid.get(0);
+//                StandardProductForm form = lstItemOnGrid.get(0);
                 StandardProductDAOHE.removeCache(NONE);
             }
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 StandardProductForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getVietnameseStandardId() != null && form.getVietnameseStandardId() != 0D) {
+                if (form != null && form.getVietnameseStandardId() != null && form.getVietnameseStandardId() != 0L) {
                     StandardProduct bo = categoryTypeDao.getById("vietnameseStandardId", form.getVietnameseStandardId());
                     if (bo != null) {
                         //bo.setIsActive(0L);

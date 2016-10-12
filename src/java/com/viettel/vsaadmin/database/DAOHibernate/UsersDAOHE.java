@@ -54,7 +54,7 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
     private static final Long POS_ID_LD = 1L;           // Lanh dao
     private static final Long POS_ID_LDP = 27L;         // truong phong
     private static final Long POS_ID_LDVP = 32L;        // lanh dao van phong
-    private static HashMap<Long, List> lstFactory = new HashMap();
+    private static volatile HashMap<Long, List> lstFactory = new HashMap();
 
     public static void removeCache() {
         if (lstFactory == null) {
@@ -439,7 +439,7 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
         List lstResult = new ArrayList<Users>();
         String sql = "";
         try {
-            if (deptIds != null && !deptIds.equals("")) {
+            if (deptIds != null && !"".equals(deptIds)) {
                 String[] depts = deptIds.split(";");
                 Long[] deptId = new Long[depts.length];
                 for (int i = 0; i < depts.length; i++) {
@@ -493,7 +493,7 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             listParam.add(Constants.Status.ACTIVE);
             listParam.add(deptId);
             listParam.add(deptId);
-            if (pos != null && pos.equals("LEADER")) {
+            if (pos != null && "LEADER".equals(pos)) {
                 sql += " and u.posId in (SELECT p.posId FROM Position p WHERE p.status = 1 and p.posType = 1 and p.posCode like ? )";
                 listParam.add("%" + Constants.POSITION.LEADER_CODE + "%");
 
@@ -504,7 +504,7 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
                 listParam.add(deptId);
                 listParam.add("%" + Constants.ROLES.LEAD_ROLE + "%");
                 listParam.add("%" + Constants.ROLES.LEAD_OFFICE_ROLE + "%");
-            } else if (pos != null && pos.equals("STAFF")) {
+            } else if (pos != null && "STAFF".equals(pos)) {
                 sql += " and u.posId not in (SELECT p.posId FROM Position p WHERE p.status = 1 and p.posType = 1 and (p.posCode like ? or p.posCode like ?) )";
                 listParam.add("%" + Constants.POSITION.LEAD_CODE + "%");
                 listParam.add("%" + Constants.POSITION.LEAD_OFFICE_CODE + "%");
@@ -567,7 +567,7 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
         int total = 0;
         GridResult gridResult = new GridResult();
         try {
-            if (staffs != null && !staffs.equals("")) {
+            if (staffs != null && !"".equals(staffs)) {
                 String[] depts = staffs.split(";");
                 Long[] deptId = new Long[depts.length];
                 for (int i = 0; i < depts.length; i++) {
@@ -925,9 +925,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
     }
 
     public List<Users> getLeaderOfDeptBTP(Long deptId) {
-        if (lstFactory == null) {
-            lstFactory = new HashMap();
-        }
+//        if (lstFactory == null) {
+//            lstFactory = new HashMap();
+//        }
 
         if (lstFactory.containsKey(deptId)) {
             return lstFactory.get(deptId);
@@ -997,9 +997,9 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
      * Lay danh sach lanh dao cua don vi va cac lanh dao don vi cha
      */
     public List<Users> getAllLeaderOfDept(Long deptId) {
-        if (lstFactory == null) {
-            lstFactory = new HashMap();
-        }
+//        if (lstFactory == null) {
+//            lstFactory = new HashMap();
+//        }
 
         if (lstFactory.containsKey(deptId)) {
             return lstFactory.get(deptId);
@@ -1445,7 +1445,7 @@ public class UsersDAOHE extends GenericDAOHibernate<Users, Long> {
             bo.setStaffCode(form.getStaffCode());
             bo.setIdentityCard(form.getIdentityCard());
 
-            if ((form.getIssueDateIdent() != null) && (!form.getIssueDateIdent().equals(""))) {
+            if ((form.getIssueDateIdent() != null) && (!"".equals(form.getIssueDateIdent()))) {
                 bo.setIssueDateIdent(DateTimeUtils.convertStringToTime(form.getIssueDateIdent(), "yyyy-MM-dd"));
             } else {
                 bo.setIssueDateIdent(form.getIssueDateIdentDate());

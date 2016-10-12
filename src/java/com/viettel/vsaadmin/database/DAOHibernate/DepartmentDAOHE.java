@@ -39,7 +39,7 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
      * log tool.
      */
     private static Logger log = Logger.getLogger(DepartmentDAOHE.class);
-    private static HashMap<Long, List> lstFactory = new HashMap();
+    private static volatile HashMap<Long, List> lstFactory = new HashMap();
 
     public static void removeCache() {
         if (lstFactory == null) {
@@ -199,15 +199,15 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
             temp.setProvinceId(departmentForm.getProvinceId());
             temp.setProvinceName(departmentForm.getProvinceName());
 
-            if ((departmentForm.getStatus() != null) && (!departmentForm.getStatus().equals("")) && (!"ALL".equals(departmentForm.getStatus()))) {
+            if ((departmentForm.getStatus() != null) && (!"".equals(departmentForm.getStatus())) && (!"ALL".equals(departmentForm.getStatus()))) {
                 temp.setStatus(new Long(departmentForm.getStatus()));
             }
 
-            if ((departmentForm.getDeptTypeId() != null) && (!departmentForm.getDeptTypeId().equals(""))) {
+            if ((departmentForm.getDeptTypeId() != null) && (!"".equals(departmentForm.getDeptTypeId()))) {
                 temp.setDeptTypeId(new Long(departmentForm.getDeptTypeId()));
             }
 
-            if ((departmentForm.getParentId() != null) && (!departmentForm.getParentId().equals("")) && (!departmentForm.getParentId().equals(departmentForm.getDeptId()))) {
+            if ((departmentForm.getParentId() != null) && (!"".equals(departmentForm.getParentId())) && (!departmentForm.getParentId().equals(departmentForm.getDeptId()))) {
                 temp.setParentId(new Long(departmentForm.getParentId()));
             } else if (isUpdate.booleanValue()) {
                 temp.setParentId(null);
@@ -1198,9 +1198,9 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
     }
 
     public List<DepartmentForm> getPublishdeptOfCQ_BTP2(Long parentId) {
-        if (lstFactory == null) {
-            lstFactory = new HashMap();
-        }
+//        if (lstFactory == null) {
+//            lstFactory = new HashMap();
+//        }
 
         if (lstFactory.containsKey(parentId)) {
             return lstFactory.get(parentId);
@@ -1237,9 +1237,9 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
     }
 
     public List<DepartmentForm> getPublishdeptOfDV_BTP(Long parentId) {
-        if (lstFactory == null) {
-            lstFactory = new HashMap();
-        }
+//        if (lstFactory == null) {
+//            lstFactory = new HashMap();
+//        }
 
         if (lstFactory.containsKey(parentId)) {
             return lstFactory.get(parentId);
@@ -1535,7 +1535,6 @@ public class DepartmentDAOHE extends GenericDAOHibernate<Department, Long> {
      * Tk list dept cha + dep ngang cap + dep con cua 1 don vi
      * ko lay dept ngang cap nua (4/9/2012)
      */
-
     public List<Department> findDepartment(Department dept) {
 
         List<Department> lstDeptLevel;

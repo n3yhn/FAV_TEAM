@@ -174,7 +174,7 @@ public class EmailDAOHE extends GenericDAOHibernate<Email, Long> {
                 }
                 sql.append(" and a.folder like :folder ");
                 sql.append("and a.userId like :userId");
-                if (!emailformsearch.getSubject().equals("")) {
+                if (!"".equals(emailformsearch.getSubject())) {
                     sql.append(" and ( lower(a.subject) like lower(:subject) or  lower(a.content) like lower(:content)  )");
                 }
                 sql.append(" ORDER BY a.sentDate DESC");

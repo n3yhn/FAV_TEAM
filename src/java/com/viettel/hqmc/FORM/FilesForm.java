@@ -216,7 +216,8 @@ public class FilesForm implements Serializable {
     private String titleEdit;       //Tieu de sua doi
     private String titleEditATTP;       //Tieu de sua doi. Dung đe xuat cong van
     //End SDBS
-    
+    private Integer orderBy;
+
     public FilesForm() {
     }
 
@@ -433,18 +434,18 @@ public class FilesForm implements Serializable {
         entity.setIsHaveSubLabel(isHaveSubLabel);
         //hiepvv edit after announced
 //        if(filesSourceID!=null){
-            entity.setFilesSourceID(filesSourceID);
-            entity.setFileSourceCode(fileSourceCode);
-            entity.setContentsEdit(contentsEdit);
-            entity.setContentsEditATTP(contentsEditATTP);
-            entity.setNoteEdit(noteEdit);
-            entity.setTitleEdit(titleEdit);
-            entity.setTitleEditATTP(titleEditATTP);
+        entity.setFilesSourceID(filesSourceID);
+        entity.setFileSourceCode(fileSourceCode);
+        entity.setContentsEdit(contentsEdit);
+        entity.setContentsEditATTP(contentsEditATTP);
+        entity.setNoteEdit(noteEdit);
+        entity.setTitleEdit(titleEdit);
+        entity.setTitleEditATTP(titleEditATTP);
 //            entity.setUserSigned("fileUploaded");
-            entity.setIsFee(1L);
+        entity.setIsFee(1L);
 //            entity.setIsSignPdf(1L);
 //        }
-        
+
         return entity;
     }
 
@@ -478,14 +479,14 @@ public class FilesForm implements Serializable {
         }
         //Hiepvv Sua doi bo sung sau cong bo U 16 07 29
 //        if(filesSourceID!=null){
-            entity.setFilesSourceID(filesSourceID);
-            entity.setFileSourceCode(fileSourceCode);
-            entity.setContentsEdit(contentsEdit);
-            entity.setContentsEditATTP(contentsEditATTP);
-            entity.setNoteEdit(noteEdit);
-            entity.setTitleEdit(titleEdit);
-            entity.setTitleEditATTP(titleEditATTP);
-            entity.setIsFee(1L);
+        entity.setFilesSourceID(filesSourceID);
+        entity.setFileSourceCode(fileSourceCode);
+        entity.setContentsEdit(contentsEdit);
+        entity.setContentsEditATTP(contentsEditATTP);
+        entity.setNoteEdit(noteEdit);
+        entity.setTitleEdit(titleEdit);
+        entity.setTitleEditATTP(titleEditATTP);
+        entity.setIsFee(1L);
 //            entity.setUserSigned("fileUploaded");
 //            entity.setIsSignPdf(1L);
 //        }
@@ -1775,6 +1776,7 @@ public class FilesForm implements Serializable {
     public void setBusinessFax(String businessFax) {
         this.businessFax = businessFax;
     }
+
     public Date getReceiptDate() {
         return receiptDate;
     }
@@ -1926,7 +1928,7 @@ public class FilesForm implements Serializable {
     public void setNameStaffProcessCheck(Long nameStaffProcessCheck) {
         this.nameStaffProcessCheck = nameStaffProcessCheck;
     }
-    
+
     public String getFileSourceCode() {
         return fileSourceCode;
     }
@@ -1974,6 +1976,13 @@ public class FilesForm implements Serializable {
     public void setTitleEditATTP(String titleEditATTP) {
         this.titleEditATTP = titleEditATTP;
     }
-    
-    
+
+    public Integer getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(Integer orderBy) {
+        this.orderBy = orderBy;
+    }
+
 }

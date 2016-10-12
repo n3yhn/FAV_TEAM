@@ -351,8 +351,8 @@ public class HomeDAO extends BaseDAO {
                 getRequest().setAttribute("filesNeedToReview", filesNeedToReview);
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 2L + "',"),
                         "share/images/document/7_xanh_hschothamdinh.png",
-                        "Hồ sơ CV đã TĐ Đạt, chờ TP xem xét",
-                        filesNeedToReview, 1l, "darkgray", 2);
+                        "Hs CV đã tĐịnh Đạt, chờ TP xXét",
+                        filesNeedToReview, 1l, "darkgray", 3);
                 lstItem.add(item);
                 //Hồ sơ đã trình lãnh đạo cục duyệt
                 filesStatistics = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, -5L, null));
@@ -360,7 +360,7 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByLeaderOfStaff.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 5 + "',"),
                         "share/images/document/15_xanh_tonghophs.png",
-                        "Hồ sơ LĐP đã xem xét Đạt, chờ LĐC phê duyệt",
+                        "Hs LĐP đã xXét Đạt, chờ LĐC pDuyệt",
                         filesStatistics, 1l, "darkgray", 2);
                 lstItem.add(item);
                 //Hồ sơ đã cấp giấy chứng nhận
@@ -380,8 +380,8 @@ public class HomeDAO extends BaseDAO {
                     getRequest().setAttribute("filesNeedToReview", filesNeedToReview);
                     item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 2L + "',"),
                             "share/images/document/7_xanh_hschothamdinh.png",
-                            "Hồ sơ CV đã thẩm định, chờ PP thẩm định",
-                            filesNeedToReview, 1l, "darkgray", 2);
+                            "Hs CV đã tĐịnh, chờ PP tĐịnh",
+                            filesNeedToReview, 1l, "darkgray", 3);
                     lstItem.add(item);
                 }
                 // ho so cho xem xet sua doi bo sung
@@ -390,27 +390,27 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByLeaderOfStaff.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 7L + "',"),
                         "share/images/document/9_xanh_hssaphethanbosung.png",
-                        "Hồ sơ CV đã thẩm định y/c SĐBS, chờ TP xem xét",
+                        "Hs CV đã tĐịnh y/c SĐBS, chờ TP xXét",
                         filesReReview,
                         1l,
                         "darkgray",
-                        3);
+                        8);
                 lstItem.add(item);
                 // ho so sap het han bo sung
                 filesOutOfAdd = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 22l, null));
                 countFilesNeedToEvaluate = "doGoToMenu('filesAction!lookupFilesByLeaderOfStaff.do', '0.1');";
                 item = new HomeLiveTileForm(countFilesNeedToEvaluate.replace("',", "?searchForm.searchType=" + 30 + "',"),
                         "share/images/document/10_xanh_hscholanhdaoxemxet.png",
-                        "Hồ sơ đã gửi công văn y/c doanh nghiệp SĐBS",
-                        filesOutOfAdd, 1l, "darkgray", 3);
+                        "Hs đã gửi công văn y/c SĐBS",
+                        filesOutOfAdd, 1l, "darkgray", 6);
                 lstItem.add(item);
                 // 3 ho so sap het han bo sung
                 filesOutOfAdd = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 39L, null));
                 countFilesNeedToEvaluate = "doGoToMenu('filesAction!lookupFilesByLeaderOfStaff.do', '0.1');";
                 item = new HomeLiveTileForm(countFilesNeedToEvaluate.replace("',", "?searchForm.searchType=" + 39 + "',"),
                         "share/images/document/10_xanh_hscholanhdaoxemxet.png",
-                        "Hồ sơ LĐC đã từ chối phê duyệt gửi công văn y/c SĐBS",
-                        filesOutOfAdd, 1l, "darkgray", 3);
+                        "Hs LĐC đã tChối pDuyệt cVăn SĐBS",
+                        filesOutOfAdd, 1l, "darkgray", 8);
                 lstItem.add(item);
                 // ho so cho xem xet du thao sdbs
                 /*binhnt53 150126
@@ -769,7 +769,7 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToEvaluate = "doGoToMenu( 'filesAction!lookupFilesByStaff.do', '0.1' );";
                 HomeLiveTileForm item = new HomeLiveTileForm(countFilesNeedToEvaluate.replace("',", "?searchForm.searchType=" + 50 + "',"),
                         "share/images/document/7_xanh_hschothamdinh.png",
-                        "Hồ sơ mới, chờ CV thẩm định", filesNeedToEvaluate, 1l, "#F0F0F0", 2);
+                        "Hs nộp mới, chờ CV tĐịnh", filesNeedToEvaluate, 1l, "#F0F0F0", 7);
                 lstItem.add(item);
 
                 //2- Hồ sơ chờ thẩm định SĐBS CV = Đã tiếp nhận SĐBS (17)
@@ -777,7 +777,7 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToEvaluate = "doGoToMenu('filesAction!lookupFilesByStaff.do', '0.1');";
                 item = new HomeLiveTileForm(countFilesNeedToEvaluate.replace("',", "?searchForm.searchType=" + 33 + "',"),
                         "share/images/document/images10.png",
-                        "Hồ sơ SĐBS, chờ CV thẩm định", filesNeedComment, 1l, "#F0F0F0", 2);
+                        "Hs nộp SĐBS, chờ CV tĐịnh", filesNeedComment, 1l, "#F0F0F0", 7);
                 lstItem.add(item);
 
                 // ho so bi tra tham dinh lai
@@ -785,7 +785,7 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToEvaluate = "doGoToMenu('filesAction!lookupFilesByStaff.do', '0.1');";
                 item = new HomeLiveTileForm(countFilesNeedToEvaluate.replace("',", "?searchForm.searchType=" + 26 + "',"),
                         "share/images/document/8_xanh_hsbitrathamdinhlai.png",
-                        "Hồ sơ yêu cầu CV thẩm định lại", filesNeedToReEvaluate, 1L, "#F0F0F0", 2);
+                        "Hs yêu cầu CV thẩm định lại", filesNeedToReEvaluate, 1L, "#F0F0F0", 7);
                 lstItem.add(item);
                 //3- Hồ sơ chuyên viên cần thông báo SĐBS 150115
 //                filesNeedToAdd = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 19L, null));
@@ -802,7 +802,7 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByStaff.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 47L + "',"),
                         "share/images/document/9_xanh_hssaphethanbosung.png",
-                        "Hồ sơ CV đã thẩm định yêu cầu SĐBS, chờ LĐP xem xét", filesReReview, 1l, "darkgray", 3);
+                        "Hs CV đã tĐịnh SĐBS, chờ LĐP xXét", filesReReview, 1l, "darkgray", 8);
                 lstItem.add(item);
 
                 //ho so cho xem xet
@@ -811,7 +811,7 @@ public class HomeDAO extends BaseDAO {
                 getRequest().setAttribute("filesNeedToReview", filesNeedToReview);
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 42L + "',"),
                         "share/images/document/7_xanh_hschothamdinh.png",
-                        "Hồ sơ CV đã thẩm định Đạt, chờ LĐP xem xét", filesNeedToReview, 1l, "darkgray", 1);
+                        "Hs CV đã tĐịnh Đạt, chờ LĐP xXét", filesNeedToReview, 1l, "darkgray", 3);
                 lstItem.add(item);
 
                 //5- hồ sơ đã xem xét
@@ -820,7 +820,7 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByStaff.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.status=" + 46 + "',"),
                         "share/images/document/12_xanh_hslanhdaophongdaxemxet.png",
-                        "Hồ sơ LĐP đã duyệt, chờ LĐC phê duyệt", filesReviewed, 1l, "#F0F0F0", 1);
+                        "Hs LĐP đã xXét, chờ LĐC pDuyệt", filesReviewed, 1l, "#F0F0F0", 2);
                 lstItem.add(item);
 
                 //Hồ sơ lãnh đạo cục đã phê duyệt
@@ -829,7 +829,7 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByStaff.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 417 + "',"),
                         "share/images/document/11_xanh_hslanhdaocucdapheduyet.png",
-                        "Hồ sơ LĐC đã phê duyệt, chờ nộp lệ phí trả hồ sơ", filesApproved, 1l, "#F0F0F0", 6);
+                        "Hs LĐC đã pDuyệt, chờ nộp lệ phí", filesApproved, 1l, "#F0F0F0", 6);
                 lstItem.add(item);
 
                 //Hồ sơ lãnh đạo cục đã phê duyệt
@@ -838,7 +838,7 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByStaff.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 423 + "',"),
                         "share/images/document/11_xanh_hslanhdaocucdapheduyet.png",
-                        "Hồ sơ VT đã trả giấy công bố bản mềm", filesApproved, 1l, "#F0F0F0", 6);
+                        "Hs VT đã trả giấy công bố bản mềm", filesApproved, 1l, "#F0F0F0", 6);
                 lstItem.add(item);
 
                 //Hồ sơ lãnh đạo cục đã phê duyệt
@@ -847,7 +847,7 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByStaff.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 422 + "',"),
                         "share/images/document/11_xanh_hslanhdaocucdapheduyet.png",
-                        "Hồ sơ VT đã trả giấy công bố bản cứng", filesApproved, 1l, "#F0F0F0", 6);
+                        "Hs VT đã trả giấy công bố bản cứng", filesApproved, 1l, "#F0F0F0", 6);
                 lstItem.add(item);
                 //Hồ sơ chuyên viên đã gửi thông báo sửa đổi bổ sung
 //                filesAnnouceToAdd = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 22l, null));
@@ -888,8 +888,8 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByStaff.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + -26 + "',"),
                         "share/images/document/10_xanh_hscholanhdaoxemxet.png",
-                        "Hồ sơ LĐP đã xem xét công văn SĐBS chờ LĐC phê duyệt",
-                        filesNeedToReview, 1l, "#F0F0F0", 3);
+                        "Hs LĐP đã xXét SĐBS, chờ LĐC pDuyệt",
+                        filesNeedToReview, 1l, "#F0F0F0", 2);
                 lstItem.add(item);
 
                 //HỒ sơ chuyên viên cần thông báo SĐBS
@@ -898,8 +898,9 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByStaff.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + -20 + "',"),
                         "share/images/document/13_xanh_hslanhdaocucycbosung.png",
-                        "Hồ sơ VT đã gửi công văn SĐBS", filesNeedToAdd, 1l, "#F0F0F0", 3);
+                        "Hs VT đã gửi cVăn SĐBS", filesNeedToAdd, 1l, "#F0F0F0", 6);
                 lstItem.add(item);
+
                 /*
                  // ho so sap qua thoi han bo sung ( con 5 ngay )
                  filesOutOfAdd = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 27L, null));
@@ -1003,8 +1004,8 @@ public class HomeDAO extends BaseDAO {
                 getRequest().setAttribute("filesNeedToAssign", filesNeedToAssign);
                 item = new HomeLiveTileForm(countFilesNeedToAssign.replace("',", "?searchForm.status=" + Constants.FILE_STATUS.RECEIVED + "&searchForm.searchTypeNew=1" + "',"),
                         "share/images/document/14_xanh_hsdaguiphanhoi.png",
-                        "Hồ sơ chờ Trưởng phòng phân công (Nhóm thực phẩm thường)",
-                        filesNeedToAssign, 1l, "cadetblue", 2);
+                        "Hs chờ LĐP pCông(Thực phẩm thường)",
+                        filesNeedToAssign, 1l, "cadetblue", 3);
                 lstItem.add(item);
 
                 // phan cong thuc pham khac
@@ -1012,8 +1013,8 @@ public class HomeDAO extends BaseDAO {
                 getRequest().setAttribute("filesNeedToAssign2", filesNeedToAssign2);
                 item = new HomeLiveTileForm(countFilesNeedToAssign.replace("',", "?searchForm.status=" + Constants.FILE_STATUS.RECEIVED + "&searchForm.searchTypeNew=2" + "',"),
                         "share/images/document/14_xanh_hsdaguiphanhoi.png",
-                        "Hồ sơ chờ Trưởng phòng phân công (Nhóm thực phẩm khác)",
-                        filesNeedToAssign2, 1l, "cadetblue", 2);
+                        "Hs chờ LĐP pCông(Thực phẩm khác)",
+                        filesNeedToAssign2, 1l, "cadetblue", 3);
                 lstItem.add(item);
 
                 //ho so cho xem xet
@@ -1022,8 +1023,8 @@ public class HomeDAO extends BaseDAO {
                 getRequest().setAttribute("filesNeedToReview", filesNeedToReview);
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 2L + "',"),
                         "share/images/document/7_xanh_hschothamdinh.png",
-                        "Hồ sơ Chuyên viên đã thẩm định Đạt, chờ Trưởng phòng xem xét",
-                        filesNeedToReview, 1l, "darkgray", 2);
+                        "Hs CV đã tĐịnh Đạt, chờ LĐP xXét",
+                        filesNeedToReview, 1l, "darkgray", 3);
                 lstItem.add(item);
 
                 //Hồ sơ đã trình lãnh đạo cục duyệt
@@ -1032,7 +1033,7 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByLeaderOfStaff.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 5 + "',"),
                         "share/images/document/15_xanh_tonghophs.png",
-                        "Hồ sơ Trưởng phòng đã xem xét Đạt, chờ Lãnh đạo cục phê duyệt",
+                        "Hs LĐP đã xXét Đạt, chờ LĐC pDuyệt",
                         filesStatistics, 1l, "darkgray", 2);
                 lstItem.add(item);
 
@@ -1065,7 +1066,7 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByLeaderOfStaff.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 7L + "',"),
                         "share/images/document/9_xanh_hssaphethanbosung.png",
-                        "Hồ sơ Chuyên viên đã thẩm định y/c SĐBS, chờ Trưởng phòng xem xét",
+                        "Hs CV đã tĐịnh SĐBS, chờ TP xXét",
                         filesReReview, 1l, "darkgray", 3);
                 lstItem.add(item);
                 // ho so sap het han bo sung
@@ -1073,16 +1074,16 @@ public class HomeDAO extends BaseDAO {
                 countFilesNeedToEvaluate = "doGoToMenu('filesAction!lookupFilesByLeaderOfStaff.do', '0.1');";
                 item = new HomeLiveTileForm(countFilesNeedToEvaluate.replace("',", "?searchForm.searchType=" + 30 + "',"),
                         "share/images/document/10_xanh_hscholanhdaoxemxet.png",
-                        "Hồ sơ đã gửi công văn yêu cầu doanh nghiệp SĐBS",
-                        filesOutOfAdd, 1l, "darkgray", 3);
+                        "Hs đã gửi cVăn y/c dNghiệp SĐBS",
+                        filesOutOfAdd, 1l, "darkgray", 6);
                 lstItem.add(item);
                 // 3 ho so sap het han bo sung
                 filesOutOfAdd = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 39L, null));
                 countFilesNeedToEvaluate = "doGoToMenu('filesAction!lookupFilesByLeaderOfStaff.do', '0.1');";
                 item = new HomeLiveTileForm(countFilesNeedToEvaluate.replace("',", "?searchForm.searchType=" + 39 + "',"),
                         "share/images/document/10_xanh_hscholanhdaoxemxet.png",
-                        "Hồ sơ Lãnh đạo cục đã từ chối phê duyệt gửi công văn thông báo SĐBS",
-                        filesOutOfAdd, 1l, "darkgray", 3);
+                        "Hs LĐC đã tChối pDuyệt cVăn SĐBS",
+                        filesOutOfAdd, 1l, "darkgray", 8);
                 lstItem.add(item);
                 // ho so cho xem xet du thao sdbs
                 /*
@@ -1167,6 +1168,15 @@ public class HomeDAO extends BaseDAO {
                             "Hồ sơ Cục Trưởng có thể phân công phê duyệt",
                             filesNeedToSign, 1l, "crimson", 2);
                     lstItem.add(item);
+                    //ho so cho lanh dao phe duyet thong bao sdbs (26)
+                    filesNeedToSign = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 226L, Constants.FILE_STATUS.REVIEW_TO_ADD));
+                    getRequest().setAttribute("filesNeedToSign", filesNeedToSign);
+                    countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByLeaderApproveSdbs.do', '0.1' );";
+                    item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 26L + "',"),
+                            "share/images/document/11_xanh_hslanhdaocucdapheduyet.png",
+                            "Hồ sơ chờ phê duyệt công văn thông báo SĐBS",
+                            filesNeedToSign, 1l, "crimson", 2);
+                    lstItem.add(item);
                 } else {
                     //1- Hồ sơ chờ phê duyệt = Đã xem xét (5)
                     filesNeedToApprove = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 3l, Constants.FILE_STATUS.REVIEWED));
@@ -1183,7 +1193,7 @@ public class HomeDAO extends BaseDAO {
                     item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.searchType=" + 26L + "',"),
                             "share/images/document/11_xanh_hslanhdaocucdapheduyet.png",
                             "Hồ sơ chờ phê duyệt công văn thông báo SĐBS",
-                            filesNeedToSign, 1l, "crimson", 3);
+                            filesNeedToSign, 1l, "crimson", 2);
                     lstItem.add(item);
                     //u260515 binhnt53
                     //5- Hồ sơ đã trả kết quả  = Đã trả hồ sơ (22)
@@ -1485,13 +1495,13 @@ public class HomeDAO extends BaseDAO {
                 if (oldPassword == null) {
                     throw new Exception("password null");
                 }
-                if (oldPassword.trim().equals("")) {
+                if ("".trim().equals(oldPassword)) {
                     throw new Exception("oldPassword is empty");
                 }
                 if (password == null) {
                     throw new Exception("password null");
                 }
-                if (password.trim().equals("")) {
+                if ("".equals(password.trim())) {
                     throw new Exception("password is empty");
                 }
 //            if (password.equals(oldPassword)) {

@@ -7,8 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="sd" uri="struts-dojo-tags" %>
 <%@taglib prefix="sx" tagdir="/WEB-INF/tags" %>
-<object id="plugin0" type="application/x-viettelcasigner" width="3" height="10">
-</object>
+
 <form id="feedbackReviewForm" name="createForm">
     <table width="100%" class="viewTable" id="tblFeedbackEvaluateForm">
         <tr hidden="true">
@@ -273,3 +272,5 @@
 <sd:TextBox id="txtBase64HashFRF" key="" name="txtBase64Hash" type="hidden"/>
 <input type="hidden" id="certSerial" value="" />
 <sd:TextBox id="txtCertSerialFRF" key="" name="txtCertSerial" type="hidden"/>
+<object id="plugin0" type="application/x-viettelcasigner" width="3" height="10">
+</object>

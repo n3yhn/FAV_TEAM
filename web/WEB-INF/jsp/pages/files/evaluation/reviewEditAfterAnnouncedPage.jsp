@@ -701,7 +701,7 @@
     };
 
     page.search = function () {
-        dijit.byId("filesGrid").vtReload('filesAction!onSearchFileToReview.do', "searchForm");
+        dijit.byId("filesGrid").vtReload('filesAction!onSearchFileToReview4AA.do', "searchForm");
     };
 
     page.reset = function () {

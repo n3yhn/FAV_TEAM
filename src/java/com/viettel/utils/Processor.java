@@ -3,10 +3,12 @@
  * and open the template in the editor.
  */
 package com.viettel.utils;
+
 import java.util.*;
 import javax.xml.bind.*;
 import org.docx4j.wml.*;
 import org.docx4j.math.*;
+
 /**
  *
  * @author binhnt53
@@ -27,64 +29,52 @@ public class Processor {
 //    }
 
     private Stack<String> tags = new Stack<String>();
-    private void pushTag(String tag)
-    {
+
+    private void pushTag(String tag) {
         tags.push(tag);
     }
-    private String getTag()
-    {
+
+    private String getTag() {
         return tags.peek();
     }
-    private void popTag()
-    {
+
+    private void popTag() {
         tags.pop();
     }
 
     private static final org.docx4j.wml.ObjectFactory wmlFactory = new org.docx4j.wml.ObjectFactory();
     private static final org.docx4j.math.ObjectFactory mathFactory = new org.docx4j.math.ObjectFactory();
 
-    public void processContent(List<Object> content)
-    {
-        for (Object child : content)
-        {
-            if (child instanceof SdtBlock)
-            {
+    public void processContent(List<Object> content) {
+        for (Object child : content) {
+            if (child instanceof SdtBlock) {
                 processBlock((SdtBlock) child);
-            }
-            else if (child instanceof P)
-            {
+            } else if (child instanceof P) {
                 processP((P) child);
-            }
-            else if (child instanceof JAXBElement)
-            {
+            } else if (child instanceof JAXBElement) {
                 JAXBElement<?> elem = (JAXBElement<?>) child;
                 Class<?> elemType = elem.getDeclaredType();
-                if (elemType.equals(CTOMath.class))
-                {
+                if (elemType.equals(CTOMath.class)) {
                     processOMath((CTOMath) elem.getValue());
                 }
             }
         }
     }
 
-    public void processP(P p)
-    {
+    public void processP(P p) {
         processContent(p.getContent());
     }
 
-    public void processBlock(SdtBlock block)
-    {
+    public void processBlock(SdtBlock block) {
         String tag = block.getSdtPr().getTag().getVal();
         pushTag(tag);
         processContent(block.getSdtContent().getContent());
         popTag();
     }
 
-    public void processOMath(CTOMath oMath)
-    {
+    public void processOMath(CTOMath oMath) {
 //        String tag = getTag(); // tag of innermost <w:sdt>
-        if (getTag().equals("MyEquation"))
-        {
+        if ("MyEquation".equals(getTag())) {
             List<Object> content = oMath.getEGOMathElements();
             content.clear();
 
@@ -94,8 +84,7 @@ public class Processor {
         }
     }
 
-    private JAXBElement<CTR> makeRun(String text)
-    {
+    private JAXBElement<CTR> makeRun(String text) {
         // <m:r>
         CTR run = mathFactory.createCTR();
         List<Object> content = run.getContent();
@@ -116,8 +105,7 @@ public class Processor {
         return mathFactory.createCTOMathArgR(run);
     }
 
-    private JAXBElement<CTSSup> makeSSup(Object expr, Object exp)
-    {
+    private JAXBElement<CTSSup> makeSSup(Object expr, Object exp) {
         // <m:ssup>
         CTSSup ssup = mathFactory.createCTSSup();
 

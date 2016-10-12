@@ -95,7 +95,7 @@ public class ConfirmAnnouncementPaperDAOHE extends GenericDAOHibernate<ConfirmAn
      */
     public List findAllConfirmAnnouncementPaper() {
         if (lstFactory == null) {
-            lstFactory = new HashMap();
+//            lstFactory = new HashMap();//sonar
         }
 
         if (lstFactory.containsKey("type")) {

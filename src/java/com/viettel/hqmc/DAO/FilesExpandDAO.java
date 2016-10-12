@@ -464,7 +464,7 @@ public class FilesExpandDAO extends BaseDAO {
             if (parts.length == 4) {
                 signType = parts[3].substring(0, parts[3].indexOf(".pdf"));
             } else if (parts.length == 6) {
-                if (parts[0].equals("VT")) {
+                if ("VT".equals(parts[0])) {
                     signType = parts[4];
                     indexFile = Integer.parseInt(parts[5].substring(0, parts[5].indexOf(".pdf")));
                 } else {
@@ -472,7 +472,7 @@ public class FilesExpandDAO extends BaseDAO {
                     indexFile = Integer.parseInt(parts[4].substring(0, parts[4].indexOf(".pdf")));
                 }
             } else if (parts.length == 5) {
-                if (parts[0].equals("VT")) {
+                if ("VT".equals(parts[0])) {
                     signType = parts[4].substring(0, parts[4].indexOf(".pdf"));
                 } else {
                     signType = parts[3];
@@ -486,12 +486,12 @@ public class FilesExpandDAO extends BaseDAO {
             }
 
             VoAttachsDAOHE vdhe = new VoAttachsDAOHE();
-            if (parts[0].equals("LD")) {
+            if ("LD".equals(parts[0])) {
                 VoAttachs voUpload = new VoAttachs();
                 voUpload.setObjectId(Long.parseLong(fileId));
                 voUpload.setIsActive(1l);
                 voUpload.setCreateDate(vdhe.getSysdate());
-                if (signType.equals("PDHS")) {
+                if ("PDHS".equals(signType)) {
                     if (indexFile == 0 || indexFile == 1) {
                         voUpload.setObjectType(40L);
                     } else if (indexFile == 2) {
@@ -510,7 +510,7 @@ public class FilesExpandDAO extends BaseDAO {
                     } else {
                         voUpload.setAttachName("Bancongbo_" + fileName);
                     }
-                } else if (signType.equals("CVBS")) {
+                } else if ("CVBS".equals(signType)) {
                     voUpload.setObjectType(71L);
                     voUpload.setAttachName("CongvanSdbs_" + fileName);
                 } else {
@@ -519,9 +519,9 @@ public class FilesExpandDAO extends BaseDAO {
                 }
                 voUpload.setAttachPath(uploadPath + destination + fileName);
                 vdhe.saveDbNotCommit(voUpload);
-            } else if (parts[0].equals("VT")) {
+            } else if ("VT".equals(parts[0])) {
                 List<VoAttachs> voa;
-                if (signType.equals("PDHS")) {
+                if ("PDHS".equals(signType)) {
                     if (indexFile == 0 || indexFile == 1) {
                         voa = vdhe.getAttachsByObject(Long.parseLong(fileId), 40L);
                         if (voa != null && voa.size() > 0) {
@@ -545,7 +545,7 @@ public class FilesExpandDAO extends BaseDAO {
                 voUpload.setObjectId(Long.parseLong(fileId));
                 voUpload.setIsActive(1l);
                 voUpload.setCreateDate(vdhe.getSysdate());
-                if (signType.equals("PDHS")) {
+                if ("PDHS".equals(signType)) {
                     if (indexFile == 0 || indexFile == 1) {
                         voUpload.setObjectType(40L);
                     } else if (indexFile == 2) {
@@ -563,7 +563,7 @@ public class FilesExpandDAO extends BaseDAO {
                     } else {
                         voUpload.setAttachName("Bancongbo_" + fileName);
                     }
-                } else if (signType.equals("CVBS")) {
+                } else if ("CVBS".equals(signType)) {
                     voUpload.setObjectType(71L);
                     voUpload.setAttachName("CongvanSdbs_" + fileName);
                 } else {
@@ -574,14 +574,14 @@ public class FilesExpandDAO extends BaseDAO {
                 vdhe.saveDbNotCommit(voUpload);
             }
             // Update status to File
-            if (signType.equals("PDHS")) {
+            if ("PDHS".equals(signType)) {
                 FilesDAOHE fdhe = new FilesDAOHE();
                 Files file = fdhe.findById(Long.parseLong(fileId));
                 file.setIsDownload(1L);
-                if (parts[0].equals("VT")) {
+                if ("VT".equals(parts[0])) {
                     file.setIsSignPdf(2l);
                     fdhe.saveDbNoCommit(file);
-                } else if (parts[0].equals("LD")) {
+                } else if ("LD".equals(parts[0])) {
                     file.setIsSignPdf(1l);
                     fdhe.saveDbNoCommit(file);
                 } else {
@@ -591,7 +591,7 @@ public class FilesExpandDAO extends BaseDAO {
             }
             vdhe.commitDb();
             //Hiepvv_Home copy file SĐBS sau công bố sang file gốc
-            if (signType.equals("PDHS") && parts[0].equals("VT")) {
+            if ("PDHS".equals(signType) && "VT".equals(parts[0])) {
                 if (fileId != null && fileId.length() > 0) {
                     Long fId = Long.parseLong(fileId);
                     result = copyFileChangeAfterAnnouncedToFileSource(fId);
@@ -623,7 +623,7 @@ public class FilesExpandDAO extends BaseDAO {
                 if (typePro != null && typePro.equalsIgnoreCase(announcementFile05)) {
                     boolean isCheck = false;
 
-                    VoAttachs vAtt = new VoAttachs();
+                    VoAttachs vAtt;
                     VoAttachs voUpload;
                     List<VoAttachs> lstVoAtt = vDAO.getLstVoAttachByObjectId(fileId);
                     if (lstVoAtt != null && lstVoAtt.size() > 0) {

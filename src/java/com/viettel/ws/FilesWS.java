@@ -803,9 +803,9 @@ public class FilesWS extends BaseWS {
                                 byte[] imageSign = null;
                                 byte[] dllLoginBcy = null;
                                 try {
-                                    if (roleSign.equals("VT")) {
+                                    if ("VT".equals(roleSign)) {
                                         imageStamp = read(new File(imageSignPath + "attpStamp.png"));
-                                    } else if (roleSign.equals("LD")) {
+                                    } else if ("LD".equals(roleSign)) {
                                         imageSign = read(new File(imageSignPath + userId + ".png"));
                                     }
                                     // Get dll login
@@ -823,9 +823,7 @@ public class FilesWS extends BaseWS {
                                     object.setDllLoginBcy(compress(dllLoginBcy));
                                 }
                                 lstFile.add(object);
-                                if (checkExist) {//sonar
-                                    break;
-                                }
+                                break;
                             } catch (IOException ex) {
                                 LogUtil.addLog(ex);//binhnt sonar a160901
 //                                Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, "FileWS: Có lỗi xảy ra trong quá trình tìm kiếm xử lý File trên Applet: " + ex.getMessage());
@@ -873,7 +871,7 @@ public class FilesWS extends BaseWS {
             }
 
             VoAttachsDAOHE vdhe = new VoAttachsDAOHE();
-            if (parts[0].equals("LD")) {
+            if ("LD".equals(parts[0])) {
                 String filePath = PATH1 + fileName;
                 FileOutputStream fos = new FileOutputStream(filePath);
                 BufferedOutputStream outputStream = new BufferedOutputStream(fos);
@@ -884,7 +882,7 @@ public class FilesWS extends BaseWS {
                 voUpload.setObjectId(Long.parseLong(fileId));
                 voUpload.setIsActive(1l);
                 voUpload.setCreateDate(vdhe.getSysdate());
-                if (signType.equals("PDHS")) {
+                if ("PDHS".equals(signType)) {
                     if (indexFile == 0 || indexFile == 1) {
                         voUpload.setObjectType(40L);
                     } else if (indexFile == 2) {
@@ -895,7 +893,7 @@ public class FilesWS extends BaseWS {
                     }
 
                     voUpload.setAttachName("Bancongbo_" + fileName);
-                } else if (signType.equals("CVBS")) {
+                } else if ("CVBS".equals(signType)) {
                     voUpload.setObjectType(71L);
                     voUpload.setAttachName("CongvanSdbs_" + fileName);
                 } else {
@@ -904,7 +902,7 @@ public class FilesWS extends BaseWS {
                 }
                 voUpload.setAttachPath(uploadPath + fileName);
                 vdhe.saveDbNotCommit(voUpload);
-            } else if (parts[0].equals("VT")) {
+            } else if ("VT".equals(parts[0])) {
                 Date newDate = new Date();
                 if (parts.length == 4) {
                     fileName = parts[0] + "_" + parts[1] + "_" + parts[2] + "_" + newDate.getTime() + "_" + parts[3];
@@ -920,7 +918,7 @@ public class FilesWS extends BaseWS {
 
                 // Delete old file BCB
                 List<VoAttachs> voa;
-                if (signType.equals("PDHS")) {
+                if ("PDHS".equals(signType)) {
                     if (indexFile == 0 || indexFile == 1) {
                         voa = vdhe.getAttachsByObject(Long.parseLong(fileId), 40L);
                         if (voa != null && voa.size() > 0) {
@@ -944,7 +942,7 @@ public class FilesWS extends BaseWS {
                 voUpload.setObjectId(Long.parseLong(fileId));
                 voUpload.setIsActive(1l);
                 voUpload.setCreateDate(vdhe.getSysdate());
-                if (signType.equals("PDHS")) {
+                if ("PDHS".equals(signType)) {
                     if (indexFile == 0 || indexFile == 1) {
                         voUpload.setObjectType(40L);
                     } else if (indexFile == 2) {
@@ -954,7 +952,7 @@ public class FilesWS extends BaseWS {
                         return false;
                     }
                     voUpload.setAttachName("Bancongbo_" + fileName);
-                } else if (signType.equals("CVBS")) {
+                } else if ("CVBS".equals(signType)) {
                     voUpload.setObjectType(71L);
                     voUpload.setAttachName("CongvanSdbs_" + fileName);
                 } else {
@@ -968,14 +966,14 @@ public class FilesWS extends BaseWS {
             }
 
             // Update status to File
-            if (signType.equals("PDHS")) {
+            if ("PDHS".equals(signType)) {
                 FilesDAOHE fdhe = new FilesDAOHE();
                 Files file = fdhe.findById(Long.parseLong(fileId));
                 file.setIsDownload(1L);
-                if (parts[0].equals("VT")) {
+                if ("VT".equals(parts[0])) {
                     file.setIsSignPdf(2l);
                     fdhe.saveDbNoCommit(file);
-                } else if (parts[0].equals("LD")) {
+                } else if ("LD".equals(parts[0])) {
                     file.setIsSignPdf(1l);
                     fdhe.saveDbNoCommit(file);
                 } else {

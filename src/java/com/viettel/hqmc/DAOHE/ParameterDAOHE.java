@@ -22,7 +22,7 @@ import org.hibernate.Query;
  */
 public class ParameterDAOHE extends GenericDAOHibernate<Parameter, Long> {
 
-  private static HashMap<String, List> lstFactory = new HashMap();
+  private static volatile HashMap<String, List> lstFactory = new HashMap();
 
   public static HashMap<String, List> getLstFactory() {
     return lstFactory;
@@ -93,9 +93,9 @@ public class ParameterDAOHE extends GenericDAOHibernate<Parameter, Long> {
      * @return
      */
   public List findAllParameter() {
-    if (lstFactory == null) {
-      lstFactory = new HashMap();
-    }
+//    if (lstFactory == null) {
+//      lstFactory = new HashMap();
+//    }
 
     if (lstFactory.containsKey("type")) {
       return lstFactory.get("type");

@@ -94,7 +94,7 @@ public final class StringUtils {
     }
 
     public static boolean validString(String temp) {
-        return (temp != null) && (!temp.trim().equals(""));
+        return (temp != null) && (!"".equals(temp.trim()));
     }
 }
 

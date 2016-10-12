@@ -22,7 +22,6 @@ import com.viettel.voffice.database.DAOHibernate.CategoryDAOHE;
 import com.viettel.voffice.database.DAOHibernate.ProcessDAOHE;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -138,7 +138,7 @@ public class ReportDAO extends BaseDAO {
             String templateFile = "/WEB-INF/reportTemplate/reportDayClerical.xls";
             List<FilesNoClob> data;
 
-            Map bean = new HashMap();
+            ConcurrentHashMap bean = new ConcurrentHashMap();
             data = fileDao.onsearchDayReportClerical(searchForm);
             for (int i = 0; i < data.size(); i++) {
                 if (data.get(i) != null && data.get(i).getStatus() != null && (data.get(i).getStatus().equals(Constants.FILE_STATUS.NEW_CREATE)
@@ -217,7 +217,7 @@ public class ReportDAO extends BaseDAO {
             Long checkCountCK = 0L;
             Long checkCountOL = 0L;
             List lstParam = new ArrayList();
-            Map bean = new HashMap();
+            ConcurrentHashMap bean = new ConcurrentHashMap();
             //data = fileDao.onsearchDayReportClerical();
             String sql = "";
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -332,15 +332,15 @@ public class ReportDAO extends BaseDAO {
                             Long countTM = 0l, countCK = 0l, countOL = 0l, totalTM = 0l, totalCK = 0l, totalOL = 0l;
                             List<String> myList = new ArrayList<>(Arrays.asList(feePaymentType.split(",")));
                             for (int j = 0; j < myList.size(); j++) {
-                                if (myList.get(j).toString().equals("1")) {
+                                if ("1".equals(myList.get(j).toString())) {
                                     countOL++;
                                     checkCountOL++;
                                 }
-                                if (myList.get(j).toString().equals("2")) {
+                                if ("2".equals(myList.get(j).toString())) {
                                     countTM++;
                                     checkCountTM++;
                                 }
-                                if (myList.get(j).toString().equals("3")) {
+                                if ("3".equals(myList.get(j).toString())) {
                                     countCK++;
                                     checkCountCK++;
                                 }
@@ -452,15 +452,15 @@ public class ReportDAO extends BaseDAO {
                             Long countTM = 0l, countCK = 0l, countOL = 0l, totalTM = 0l, totalCK = 0l, totalOL = 0l;
                             List<String> myList = new ArrayList<>(Arrays.asList(feePaymentType.split(",")));
                             for (int j = 0; j < myList.size(); j++) {
-                                if (myList.get(j).toString().equals("1")) {
+                                if ("1".equals(myList.get(j).toString())) {
                                     countOL++;
                                     checkCountOL++;
                                 }
-                                if (myList.get(j).toString().equals("2")) {
+                                if ("2".equals(myList.get(j).toString())) {
                                     countTM++;
                                     checkCountTM++;
                                 }
-                                if (myList.get(j).toString().equals("3")) {
+                                if ("3".equals(myList.get(j).toString())) {
                                     countCK++;
                                     checkCountCK++;
                                 }
@@ -569,15 +569,15 @@ public class ReportDAO extends BaseDAO {
                             Long countTM = 0l, countCK = 0l, countOL = 0l, totalTM = 0l, totalCK = 0l, totalOL = 0l;
                             List<String> myList = new ArrayList<>(Arrays.asList(feePaymentType.split(",")));
                             for (int j = 0; j < myList.size(); j++) {
-                                if (myList.get(j).toString().equals("1")) {
+                                if ("1".equals(myList.get(j).toString())) {
                                     countOL++;
                                     checkCountOL++;
                                 }
-                                if (myList.get(j).toString().equals("2")) {
+                                if ("2".equals(myList.get(j).toString())) {
                                     countTM++;
                                     checkCountTM++;
                                 }
-                                if (myList.get(j).toString().equals("3")) {
+                                if ("3".equals(myList.get(j).toString())) {
                                     countCK++;
                                     checkCountCK++;
                                 }
@@ -727,7 +727,7 @@ public class ReportDAO extends BaseDAO {
         try {
             String templateFile = "/WEB-INF/reportTemplate/reportStaff.xls";
             List<FilesNoClob> data;
-            Map bean = new HashMap();
+            ConcurrentHashMap bean = new ConcurrentHashMap();
             String sql = "";
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String header;
@@ -880,7 +880,7 @@ public class ReportDAO extends BaseDAO {
             String templateFile = "/WEB-INF/reportTemplate/reportWeekClerical.xls";
             List<FilesNoClob> data;
 //            List<FilesNoClob> tiepnhansdbs;
-            Map bean = new HashMap();
+            ConcurrentHashMap bean = new ConcurrentHashMap();
             if (searchForm != null && searchForm.getTypeDatetime().equals(Constants.TYPE_DATETIME.MONTH)) {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(getSysdate());
@@ -916,7 +916,7 @@ public class ReportDAO extends BaseDAO {
         try {
             String templateFile = "/WEB-INF/reportTemplate/reportStaffOnRequest.xls";
             List<FilesNoClob> data;
-            Map bean = new HashMap();
+            ConcurrentHashMap bean = new ConcurrentHashMap();
             String sql;
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String header = "";
@@ -1324,12 +1324,13 @@ public class ReportDAO extends BaseDAO {
             bean.put("ConvertTime", dateUtil);
             String fileTemp = ReportUtil.exportReportSaveFileTemp(getRequest(), bean, templateFile);
             InputStream myxls = new FileInputStream(fileTemp);//get file excel
-
-            ResourceBundle rb = ResourceBundle.getBundle("config");
-            String filePath = rb.getString("report_excel_temp");
             Date newDate = new Date();
-            String fullFilePath = filePath + "report_" + newDate.getTime() + ".xls";
-            File file = new File(fullFilePath);
+//fix sonar
+//            ResourceBundle rb = ResourceBundle.getBundle("config");
+//            String filePath = rb.getString("report_excel_temp");
+            
+//            String fullFilePath = filePath + "report_" + newDate.getTime() + ".xls";
+//            File file = new File(fullFilePath);
 //            FileOutputStream fop = new FileOutputStream(file);;
             HSSFWorkbook wb = new HSSFWorkbook(myxls);
             HSSFSheet sheet = wb.getSheetAt(0);

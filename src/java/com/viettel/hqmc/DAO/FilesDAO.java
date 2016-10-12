@@ -19,8 +19,6 @@ import com.viettel.hqmc.BO.Announcement;
 import com.viettel.hqmc.BO.AnnouncementReceiptPaper;
 import com.viettel.hqmc.BO.Business;
 import com.viettel.hqmc.BO.CaUser;
-import com.viettel.hqmc.BO.ConfirmAnnouncementPaper;
-import com.viettel.hqmc.BO.ConfirmImportSatistPaper;
 import com.viettel.hqmc.BO.CountNo;
 import com.viettel.hqmc.BO.EvaluationRecords;
 import com.viettel.hqmc.BO.Fee;
@@ -33,12 +31,10 @@ import com.viettel.hqmc.BO.ProductTarget;
 import com.viettel.hqmc.BO.QualityControlPlan;
 import com.viettel.hqmc.BO.Repositories;
 import com.viettel.hqmc.BO.RequestComment;
-import com.viettel.hqmc.BO.TechnicalStandard;
 import com.viettel.hqmc.BO.UserAttachs;
 import com.viettel.hqmc.DAOHE.AnnouncementReceiptPaperDAOHE;
 import com.viettel.hqmc.DAOHE.BusinessDAOHE;
 import com.viettel.hqmc.DAOHE.CaUserDAOHE;
-import com.viettel.hqmc.DAOHE.ConfirmAnnouncementPaperDAOHE;
 import com.viettel.hqmc.DAOHE.ConfirmImportSatistPaperDAOHE;
 import com.viettel.hqmc.DAOHE.CountNoDAOHE;
 import com.viettel.hqmc.DAOHE.EvaluationRecordsDAOHE;
@@ -91,7 +87,6 @@ import com.viettel.voffice.database.DAOHibernate.VoAttachsDAOHE;
 import com.viettel.vsaadmin.database.BO.Department;
 import com.viettel.vsaadmin.database.BO.Roles;
 import com.viettel.vsaadmin.database.BO.Users;
-import com.viettel.vsaadmin.database.DAO.UsersDAO;
 import com.viettel.vsaadmin.database.DAOHibernate.DepartmentDAOHE;
 import com.viettel.vsaadmin.database.DAOHibernate.UsersDAOHE;
 import com.viettel.ws.FilesWS;
@@ -130,7 +125,6 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.bind.JAXBException;
 import javax.xml.crypto.dsig.keyinfo.KeyInfo;
@@ -142,6 +136,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.xmlbeans.impl.piccolo.io.FileFormatException;
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
@@ -269,8 +264,8 @@ public class FilesDAO extends BaseDAO {
     private FeeDAOHE FeeDAOHE;
     private FeePaymentFileForm searchFeeFormNew;
     private LoginCAForm loginCAForm;
-    private static Long fileSourceID;
-    private static boolean isEdit = false;
+    private volatile Long fileSourceID;
+    private boolean isEdit = false;
     private static final String separatorFile = String.valueOf(File.separatorChar);
 
     /**
@@ -382,6 +377,13 @@ public class FilesDAO extends BaseDAO {
             lstProductType.add(0, new Category(Constants.COMBOBOX_HEADER_VALUE, Constants.COMBOBOX_HEADER_TEXT_SELECT));
         }
         getRequest().setAttribute("lstProductType", lstProductType);
+        searchForm = new FilesForm();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -12);
+        Date result1 = cal.getTime();
+
+        searchForm.setSendDateFrom(result1);
+
         return "lookupHomePage.Page";
     }
 
@@ -1213,6 +1215,45 @@ public class FilesDAO extends BaseDAO {
         return GRID_DATA;
     }
 
+    public String onSearchFileToEvaluate4AA() {
+        getGridInfo();
+
+        if (searchForm.getFlagSavePaging() != null && searchForm.getFlagSavePaging() == 1) {
+            try {
+                String startServerStr = getRequest().getSession().getAttribute("evaluatePage.startServer") == null ? "" : getRequest().getSession().getAttribute("evaluatePage.startServer").toString();
+                String countServerStr = getRequest().getSession().getAttribute("evaluatePage.countServer") == null ? "" : getRequest().getSession().getAttribute("evaluatePage.countServer").toString();
+
+                if (!startServerStr.isEmpty() && !countServerStr.isEmpty()) {
+                    count = Integer.parseInt(countServerStr);
+                    start = Integer.parseInt(startServerStr);
+                }
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
+//                log.error(ex.getMessage());
+            }
+        }
+        ProcedureDAOHE pHE = new ProcedureDAOHE();
+        Procedure p = new Procedure();
+        try {
+            p = pHE.getProcedureByDescription(announcementFile05);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+        }
+        if (p != null) {
+            searchForm.setFileType(p.getProcedureId());
+            searchForm.setNoteEdit(announcementFile05);
+        }
+        FilesNoClobDAOHE fdhe = new FilesNoClobDAOHE();
+        GridResult gr = fdhe.searchFilesToProcess(searchForm, getDepartmentId(), getUserId(), 1L, start, count, sortField);
+
+        getRequest().getSession().setAttribute("evaluatePage.startServer", start);
+        getRequest().getSession().setAttribute("evaluatePage.countServer", count);
+
+        jsonDataGrid.setItems(gr.getLstResult());
+        jsonDataGrid.setTotalRows(gr.getnCount().intValue());
+        return GRID_DATA;
+    }
+
     /**
      * Tim kiem ho so de pho phong tham dinh
      *
@@ -1275,6 +1316,26 @@ public class FilesDAO extends BaseDAO {
                 searchForm.setFileType(p.getProcedureId());
                 searchForm.setNoteEdit(announcementFile05);
             }
+        }
+        FilesNoClobDAOHE fdhe = new FilesNoClobDAOHE();
+        GridResult gr = fdhe.searchFilesToProcess(searchForm, getDepartmentId(), getUserId(), 2l, start, count, sortField);
+        jsonDataGrid.setItems(gr.getLstResult());
+        jsonDataGrid.setTotalRows(gr.getnCount().intValue());
+        return GRID_DATA;
+    }
+
+    public String onSearchFileToReview4AA() {
+        getGridInfo();
+        ProcedureDAOHE pHE = new ProcedureDAOHE();
+        Procedure p = new Procedure();
+        try {
+            p = pHE.getProcedureByDescription(announcementFile05);
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+        }
+        if (p != null) {
+            searchForm.setFileType(p.getProcedureId());
+            searchForm.setNoteEdit(announcementFile05);
         }
         FilesNoClobDAOHE fdhe = new FilesNoClobDAOHE();
         GridResult gr = fdhe.searchFilesToProcess(searchForm, getDepartmentId(), getUserId(), 2l, start, count, sortField);
@@ -1523,7 +1584,7 @@ public class FilesDAO extends BaseDAO {
         }
         for (int i = 0; i < lstItemOnGrid.size(); i++) {
             FilesForm form = lstItemOnGrid.get(i);
-            if (form != null && form.getFileId() != null && form.getFileId() != 0D) {
+            if (form != null && form.getFileId() != null && form.getFileId() != 0L) {
                 boolean check = fdhe.validateRoleUser(form.getFileId(), form, getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());
                 if (check) {
                     form.setStatus(Constants.FILE_STATUS.REVIEWED);
@@ -1900,7 +1961,7 @@ public class FilesDAO extends BaseDAO {
 
     public String onExportCvSdbsSignPlugin() {
         ExportFileDAO exp = new ExportFileDAO();
-        //boolean bReturn = exp.exportDataCvSdbs("EX_SIGN");
+        exp.exportDataCvSdbs("EX_SIGN");
         String path = exp.exportDataCvSdbsPlugin("EX_SIGN");
         List resultMessage = new ArrayList();
         if (path.trim().length() > 0 && !"false".equals(path)) {
@@ -2412,7 +2473,7 @@ public class FilesDAO extends BaseDAO {
         try {
             //Check validate ky CA
             if (createForm.getContentSigned() != null) {
-                String validCAStatus = "";
+                String validCAStatus = "NG";
                 if (CommonUtils.checkSecurityPublishCA(createForm.getFileId(), createForm.getContentSigned())) {
                     String contentSigned = createForm.getContentSigned();
                     KeyInfo keyInfo = CommonUtils.validateContentSigned(contentSigned);
@@ -2424,11 +2485,7 @@ public class FilesDAO extends BaseDAO {
                             LogUtil.addLog(ex);//binhnt sonar a160901
 //                            log.error(expiredEx);
                         }
-                    } else {
-                        validCAStatus = "NG";
                     }
-                } else {
-                    validCAStatus = "NG";
                 }
                 getRequest().setAttribute("validCAStatus", validCAStatus);
             }
@@ -2831,7 +2888,7 @@ public class FilesDAO extends BaseDAO {
             String sid = "";
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 FilesForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getFileId() != null && form.getFileId() != 0D) {
+                if (form != null && form.getFileId() != null && form.getFileId() != 0L) {
                     int nReturn = fdhe.deleteFile(getUserId(), getBusinessId(), form.getFileId());
                     sid += form.getFileId() + ",";
                     if (nReturn == 0) {
@@ -3284,7 +3341,6 @@ public class FilesDAO extends BaseDAO {
         lstRepositories.addAll(allRep);
         lstRepositories.add(0, new Repositories(Constants.COMBOBOX_REPOSITORY_HEADER_VALUE, Constants.COMBOBOX_REPOSITORY_HEADER_TEXT));
         getRequest().setAttribute("lstRepository", lstRepositories);
-
         return lookupFilesByStaffPage;
     }
 
@@ -3323,6 +3379,15 @@ public class FilesDAO extends BaseDAO {
         lstRepositories.addAll(allRep);
         lstRepositories.add(0, new Repositories(Constants.COMBOBOX_REPOSITORY_HEADER_VALUE, Constants.COMBOBOX_REPOSITORY_HEADER_TEXT));
         getRequest().setAttribute("lstRepository", lstRepositories);
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -1);
+        Date result1 = cal.getTime();
+        cal.add(Calendar.MONTH, 2);
+        Date result2 = cal.getTime();
+
+        searchForm.setSendDateFrom(result1);
+        searchForm.setSendDateTo(result2);
 
         return lookupFilesByStaffDonothingPage;
     }
@@ -3773,6 +3838,25 @@ public class FilesDAO extends BaseDAO {
         edhe.insertEventLog("Văn thư tiếp nhận", "hồ sơ có id=" + createForm.getFileId(), getRequest());
         return GRID_DATA;
     }
+//binhnt add 160926
+
+    public String onReceivedFileToStaff() {
+        FilesDAOHE fdhe = new FilesDAOHE();
+        createForm = fdhe.getFilesDetail(createForm.getFileId());
+        boolean bReturn = fdhe.onReceivedFileToStaff(createForm, getUserId(), getUserName());
+        List resultMessage = new ArrayList();
+        if (bReturn) {
+            resultMessage.add("1");
+            resultMessage.add("Lưu dữ liệu thành công");
+        } else {
+            resultMessage.add("3");
+            resultMessage.add("Lưu dữ liệu không thành công");
+        }
+        jsonDataGrid.setItems(resultMessage);
+        EventLogDAOHE edhe = new EventLogDAOHE();
+        edhe.insertEventLog("Văn thư tiếp nhận", "hồ sơ có id=" + createForm.getFileId(), getRequest());
+        return GRID_DATA;
+    }
 
     //hieptq update 120115
     public String onReceivedMoreFile() {
@@ -4044,8 +4128,8 @@ public class FilesDAO extends BaseDAO {
         String strObjectId = getRequest().getParameter("objectId");
         String strObjectType = getRequest().getParameter("objectType");
         List customInfo = new ArrayList();
-        Long objectId = 0l;
-        Long objectType = 0l;
+        Long objectId;
+        Long objectType;
         Long totalFeeFile;
         Long feeFile;
 
@@ -4054,11 +4138,13 @@ public class FilesDAO extends BaseDAO {
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
 //            log.error(en.getMessage());
+            objectId = 0L;
         }
         try {
             objectType = Long.parseLong(strObjectType);
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
+            objectType = 0L;
         }
 
         PaymentHistoryDAOHE pcdhe = new PaymentHistoryDAOHE();
@@ -4081,14 +4167,12 @@ public class FilesDAO extends BaseDAO {
         if ((totalFeeFile.equals(feeFile) && feeFile > 0l) || (totalFeeFile > feeFile)) {
             customInfo.add(1);
         } else // nop thieu
-        {
-            if (totalFeeFile < feeFile && totalFeeFile > 0) {
+         if (totalFeeFile < feeFile && totalFeeFile > 0) {
                 customInfo.add(0);
             } // chua nop
             else {
                 customInfo.add(-1);
             }
-        }
 
         jsonDataGrid.setItems(result.getLstResult());
         jsonDataGrid.setTotalRows(result.getnCount().intValue());
@@ -5479,7 +5563,7 @@ public class FilesDAO extends BaseDAO {
                         //set thong tin tu excel
 
                         try {
-                            if (businessTaxCode != null 
+                            if (businessTaxCode != null
                                     && user.getUserName().equals(businessTaxCode.toString())) {
                                 if (matchingTarget != "" && matchingTarget != null) {
                                     createForm.getAnnouncement().setMatchingTarget(matchingTarget.toString());
@@ -5668,7 +5752,7 @@ public class FilesDAO extends BaseDAO {
             // vi sinh vat
             for (int i = 2; i < rowNums3; i++) {
                 row = sheet3.getRow(i);
-                if (row.getCell((short) 1) != null 
+                if (row.getCell((short) 1) != null
                         && !"".equals(row.getCell((short) 1).toString().trim())) {
                     ProductTarget temp = new ProductTarget();
                     XSSFCell targetName = row.getCell((short) 1);
@@ -5703,7 +5787,7 @@ public class FilesDAO extends BaseDAO {
             int rowNums4 = sheet4.getLastRowNum();
             for (int i = 2; i < rowNums4; i++) {
                 row = sheet4.getRow(i);
-                if (row.getCell((short) 1) != null 
+                if (row.getCell((short) 1) != null
                         && !"".equals(row.getCell((short) 1).toString().trim())) {
                     ProductTarget temp = new ProductTarget();
                     XSSFCell targetName = row.getCell((short) 1);
@@ -5738,7 +5822,7 @@ public class FilesDAO extends BaseDAO {
             int rowNums5 = sheet5.getLastRowNum();
             for (int i = 2; i < rowNums5; i++) {
                 row = sheet5.getRow(i);
-                if (row.getCell((short) 1) != null 
+                if (row.getCell((short) 1) != null
                         && !"".equals(row.getCell((short) 1).toString().trim())) {
                     ProductTarget temp = new ProductTarget();
                     XSSFCell targetName = row.getCell((short) 1);
@@ -6072,7 +6156,7 @@ public class FilesDAO extends BaseDAO {
         String staffContent = "";
         String leaderContent = "";
         if (erbo != null && fbo != null) {
-            if (fbo.getStaffRequest() != null 
+            if (fbo.getStaffRequest() != null
                     && !"null".equals(fbo.getStaffRequest().trim())) {
                 staffContent += "* Ý kiến chung:" + "\n";
                 staffContent += fbo.getStaffRequest() + "\n";
@@ -6080,7 +6164,7 @@ public class FilesDAO extends BaseDAO {
 //            else {
 //                staffContent += "Không có nội dung." + "\n";
 //            }            
-            if (erbo.getLegalContent() != null 
+            if (erbo.getLegalContent() != null
                     && !"null".equals(erbo.getLegalContent())) {
                 staffContent += "* Về pháp chế:" + "\n";
                 staffContent += erbo.getLegalContent() + "\n";
@@ -7861,8 +7945,11 @@ public class FilesDAO extends BaseDAO {
                         SearchTextLocations ptl2 = new SearchTextLocations();
                         List local2 = ptl2.searchLocation(sToFind, fileToSign0,
                                 SearchTextLocations.SEARCH_TOPDOWN, SearchTextLocations.FIND_ONE);
-                        String location2 = local2.get(0).toString();
-                        String parts2[] = location2.split(";");
+                        String location2 = "0;0;0";
+                        if (local2 != null && local2.size() > 0) {
+                            location2 = local2.get(0).toString();
+                        }
+                        String[] parts2 = location2.split(";");
                         pageNumber = Integer.parseInt(parts2[0]);
                         int lx1 = (int) Float.parseFloat(parts2[1]);
                         int ly1 = (int) Float.parseFloat(parts2[2]);
@@ -8781,7 +8868,7 @@ public class FilesDAO extends BaseDAO {
             if (parts.length == 5 && "LD".equals(parts[0])) {
                 paperOnly = parts[0] + "_" + parts[1] + "_" + parts[2] + "_" + parts[3] + "_" + "2" + ".pdf";
             }
-            if (parts.length == 6 && parts[0].equals("VT")) {
+            if (parts.length == 6 && "VT".equals(parts[0])) {
                 paperOnly = parts[0] + "_" + parts[1] + "_" + parts[2] + "_" + parts[3] + "_" + parts[4] + "_" + "2" + ".pdf";
             }
             //hieptq update 106015
@@ -9367,8 +9454,7 @@ public class FilesDAO extends BaseDAO {
         try {
             if (fileId > 0L) {
                 FilesDAOHE fHE = new FilesDAOHE();
-                Files f = new Files();
-                f = fHE.findById(fileId);
+                Files f = fHE.findById(fileId);
                 createForm = new FilesForm();
                 createForm.setFileId(fileId);
                 createForm.setTitleEditATTP(f.getTitleEditATTP());
@@ -9728,7 +9814,7 @@ public class FilesDAO extends BaseDAO {
         }
         for (int i = 0; i < lstItemOnGrid.size(); i++) {
             FilesForm form = lstItemOnGrid.get(i);
-            if (form != null && form.getFileId() != null && form.getFileId() != 0D) {
+            if (form != null && form.getFileId() != null && form.getFileId() != 0L) {
                 boolean check = fdhe.validateRoleUser(form.getFileId(), form, getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());
                 if (check) {
                     form.setStatus(Constants.FILE_STATUS.EVALUATED);
@@ -9776,7 +9862,7 @@ public class FilesDAO extends BaseDAO {
         }
         for (int i = 0; i < lstItemOnGrid.size(); i++) {
             FilesForm form = lstItemOnGrid.get(i);
-            if (form != null && form.getFileId() != null && form.getFileId() != 0D) {
+            if (form != null && form.getFileId() != null && form.getFileId() != 0L) {
                 boolean check = fdhe.validateRoleUser(form.getFileId(), form,
                         getDepartmentId(), getDepartment().getDeptName(), getUserId(), getUserName());
                 if (check) {
@@ -9921,9 +10007,9 @@ public class FilesDAO extends BaseDAO {
         String errorCode = "";
         SignPdfFile pdfSig = new SignPdfFile();
         try {
-            String rootCert = null, base64Certificate = null, certChain = null;
+            String rootCert = null, base64Certificate = null;
             Base64 decoder = new Base64();
-            certChain = new String(decoder.decode(getRequest().getParameter("cert").replace("_", "+").getBytes()), "UTF-8");
+            String certChain = new String(decoder.decode(getRequest().getParameter("cert").replace("_", "+").getBytes()), "UTF-8");
             String[] chain;
             try {
                 chain = certChain.split(",");
@@ -10049,10 +10135,9 @@ public class FilesDAO extends BaseDAO {
         try {
             fileId = getRequest().getParameter("fileId");
             String rootCert = null,
-                    base64Certificate = null,
-                    certChain = null;
+                    base64Certificate = null;
             Base64 decoder = new Base64();
-            certChain = new String(decoder.decode(getRequest().getParameter("cert").replace("_", "+").getBytes()), "UTF-8");
+            String certChain = new String(decoder.decode(getRequest().getParameter("cert").replace("_", "+").getBytes()), "UTF-8");
             String sToFind = getRequest().getParameter("signType");
             String path = getRequest().getParameter("path");
             String[] pathArr = path.split(";");

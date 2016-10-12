@@ -151,7 +151,7 @@ public final class StringUtils {
     }
 
     public static boolean validString(String temp) {
-        if (temp == null || temp.trim().equals("")) {
+        if (temp == null || "".equals(temp.trim())) {
             return false;
         }
         return true;

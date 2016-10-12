@@ -430,7 +430,7 @@ public class WordExportUtils {
                     for (Object object : textElements) {
                         Text text = (Text) object;
                         String attribute = text.getValue();
-                        if (attribute.equals("index")) {
+                        if ("index".equals(attribute)) {
                             text.setValue(String.valueOf(i + 1));
                         } else {
                             Object obj = replacements.get(i);
@@ -652,10 +652,15 @@ public class WordExportUtils {
             if (lstRole != null && lstRole.size() > 0) {
                 for (Integer i = 0; i < lstRole.size(); i++) {
                     code = lstRole.get(i).getRoleCode();
-                    if (!"".equals(code) && (code.equals("voffice_vtb") || code.equals(Constants.ROLES.LEAD_MONITOR_ROLE) || code.equals(Constants.ROLES.DIRECTOR_ROLE) || code.equals(Constants.ROLES.LEAD_UNIT))) {
-                        if (code.equals("voffice_vtb")) {
+                    if (!"".equals(code)
+                            && ("voffice_vtb".equals(code)
+                            || code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
+                            || code.equals(Constants.ROLES.DIRECTOR_ROLE) || code.equals(Constants.ROLES.LEAD_UNIT))) {
+                        if ("voffice_vtb".equals(code)) {
                             code = "VT";
-                        } else if (code.equals(Constants.ROLES.LEAD_MONITOR_ROLE) || code.equals(Constants.ROLES.DIRECTOR_ROLE) || code.equals(Constants.ROLES.LEAD_UNIT)) {
+                        } else if (code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
+                                || code.equals(Constants.ROLES.DIRECTOR_ROLE)
+                                || code.equals(Constants.ROLES.LEAD_UNIT)) {
                             code = "LD";
                         }
                         break;
@@ -756,10 +761,16 @@ public class WordExportUtils {
         if (lstRole != null && lstRole.size() > 0) {
             for (Integer i = 0; i < lstRole.size(); i++) {
                 code = lstRole.get(i).getRoleCode();
-                if (!"".equals(code) && (code.equals("voffice_vtb") || code.equals(Constants.ROLES.LEAD_MONITOR_ROLE) || code.equals(Constants.ROLES.DIRECTOR_ROLE) || code.equals(Constants.ROLES.LEAD_UNIT))) {
-                    if (code.equals("voffice_vtb")) {
+                if (!"".equals(code)
+                        && ("voffice_vtb".equals(code)
+                        || code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
+                        || code.equals(Constants.ROLES.DIRECTOR_ROLE)
+                        || code.equals(Constants.ROLES.LEAD_UNIT))) {
+                    if ("voffice_vtb".equals(code)) {
                         code = "VT";
-                    } else if (code.equals(Constants.ROLES.LEAD_MONITOR_ROLE) || code.equals(Constants.ROLES.DIRECTOR_ROLE) || code.equals(Constants.ROLES.LEAD_UNIT)) {
+                    } else if (code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
+                            || code.equals(Constants.ROLES.DIRECTOR_ROLE)
+                            || code.equals(Constants.ROLES.LEAD_UNIT)) {
                         code = "LD";
                     }
                     break;
@@ -915,13 +926,13 @@ public class WordExportUtils {
     /**
      * The different epochs.
      */
-    public static final String[] EPOCH
+    protected static final String[] EPOCH
             = {"Forties", "Fifties", "Sixties", "Seventies", "Eighties",
                 "Nineties", "Twenty-first Century"};
     /**
      * The fonts for the title.
      */
-    public static final Font[] FONT = new Font[4];
+    protected static final Font[] FONT = new Font[4];
 
     static {
         FONT[0] = new Font(FontFamily.HELVETICA, 24);
@@ -1085,10 +1096,16 @@ public class WordExportUtils {
             if (lstRole != null && lstRole.size() > 0) {
                 for (Integer i = 0; i < lstRole.size(); i++) {
                     code = lstRole.get(i).getRoleCode();
-                    if (!"".equals(code) && (code.equals("voffice_vtb") || code.equals(Constants.ROLES.LEAD_MONITOR_ROLE) || code.equals(Constants.ROLES.DIRECTOR_ROLE) || code.equals(Constants.ROLES.LEAD_UNIT))) {
-                        if (code.equals("voffice_vtb")) {
+                    if (!"".equals(code)
+                            && ("voffice_vtb".equals(code)
+                            || code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
+                            || code.equals(Constants.ROLES.DIRECTOR_ROLE)
+                            || code.equals(Constants.ROLES.LEAD_UNIT))) {
+                        if ("voffice_vtb".equals(code)) {
                             code = "VT";
-                        } else if (code.equals(Constants.ROLES.LEAD_MONITOR_ROLE) || code.equals(Constants.ROLES.DIRECTOR_ROLE) || code.equals(Constants.ROLES.LEAD_UNIT)) {
+                        } else if (code.equals(Constants.ROLES.LEAD_MONITOR_ROLE)
+                                || code.equals(Constants.ROLES.DIRECTOR_ROLE)
+                                || code.equals(Constants.ROLES.LEAD_UNIT)) {
                             code = "LD";
                         }
                         break;

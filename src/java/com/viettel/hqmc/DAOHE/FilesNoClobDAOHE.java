@@ -1237,7 +1237,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                 condition += " AND f.signDate <= ? ";
                 lstParam.add(maxDayToCompare(form.getSignDateTo()));
             }
-            if (form.getSignDateFrom() != null || form.getSignDateFrom() != null) {
+            if (form.getSignDateFrom() != null) {
                 condition += " AND f.status = ? ";
                 lstParam.add(22l);
             }
@@ -1371,7 +1371,9 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                 condition += " and f.receivedDate <= ?";
                 lstParam.add(maxDayToCompare(form.getReceivedDateTo()));
             }
-            if (form.getReceiveNo() != null && !form.getReceiveNo().equals("") && !form.getReceiveNo().trim().equals("")) {
+            if (form.getReceiveNo() != null
+                    && !"".equals(form.getReceiveNo())
+                    && !"".equals(form.getReceiveNo().trim())) {
                 condition += " and f.receiveNo like ?";
                 lstParam.add(form.getReceiveNo().trim());
             }
@@ -1420,11 +1422,25 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
         //!hieptq update
         Query countQuery = getSession().createQuery("select count(distinct f.fileId) " + hql + " where 1=1 " + condition);
         String finalSql = "select distinct f " + hql + " where 1=1 " + condition + " order by ";
-        if (sortCustom.isEmpty()) {
+        String orderBy = "";
+        if (form.getOrderBy() != null) {
+            switch (form.getOrderBy()) {
+                case 1:
+                    orderBy = "f.modifyDate DESC";
+                    break;
+                case 2:
+                    orderBy = "f.modifyDate ASC";
+                    break;
+                default:
+                    orderBy = "f.modifyDate DESC";
+            }
+            finalSql += orderBy;
+        } else if (sortCustom.isEmpty()) {
             finalSql += "f.modifyDate DESC";
         } else {
             finalSql += sortCustom;
         }
+
         Query query = getSession().createQuery(finalSql);
 
         for (int i = 0;
@@ -2076,7 +2092,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
             if (form != null && form.getFileType() != null && form.getFileType().longValue() != -1) {
                 ProcedureDAOHE pdaohe = new ProcedureDAOHE();
                 Procedure p = pdaohe.getProcedureById(form.getFileType());
-                if (p != null && p.getDescription().equals("announcementFile05")) {
+                if (p != null && "announcementFile05".equals(p.getDescription())) {
                     hql = " from FilesNoClob f, Process p "
                             + " where f.isActive=1"
                             + " and f.fileId = p.objectId"
@@ -2084,7 +2100,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                             + " and p.isActive = 1"
                             + " and (f.isTemp is null or f.isTemp = 0 ) ";
                 }
-                if (p != null && p.getDescription().equals("announcement4star")) {
+                if (p != null && "announcement4star".equals(p.getDescription())) {
                     hql = " from FilesNoClob f, Process p "
                             + " where f.isActive=1"
                             + " and f.fileId = p.objectId"
@@ -3222,10 +3238,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                     + " Process p"
                     + " where f.isActive=1"
                     + " and f.fileId = p.objectId"
-                    + " and p.objectType = ?"
                     + " and (f.isTemp = null or f.isTemp = 0 ) ";
             List lstParam = new ArrayList();
-            lstParam.add(Constants.OBJECT_TYPE.FILES);
             switch (Integer.parseInt(searchType.toString())) {
                 case -29:
                     //tim de cuc truong phe duyet
@@ -3571,13 +3585,17 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                 case 2://
                     // tim de review
                     //
-                    hql += " and (f.status = ?)";
+                    hql = "from FilesNoClob f, Process p, DetailProduct d, Business b "
+                            + "where f.fileId = p.objectId "
+                            + "and f.detailProductId = d.detailProductId "
+                            + "and f.deptId = b.businessId "
+                            + "and f.isActive = 1 "
+                            + "and (f.isTemp = null or f.isTemp = 0 ) ";
+                    hql += " and f.status = ? ";
                     lstParam.add(Constants.FILE_STATUS.EVALUATED);
-//                        lstParam.add(Constants.FILE_STATUS.FEDBACK_TO_REVIEW);
-//                        lstParam.add(Constants.FILE_STATUS.FEDBACK_TO_ADD);
-                    hql += " and p.receiveGroupId = ?"
-                            + " and p.receiveUserId = ?";
+                    hql += " and p.receiveGroupId = ?";
                     lstParam.add(deptId);
+                    hql += " and p.receiveUserId = ?";
                     lstParam.add(userId);
                     hql += " and ((f.leaderEvaluateId = ?"
                             + " and f.leaderReviewId = null)"
@@ -6485,7 +6503,7 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                 condition += " AND f.signDate <= ? ";
                 lstParam.add(maxDayToCompare(form.getSignDateTo()));
             }
-            if (form.getSignDateFrom() != null || form.getSignDateFrom() != null) {
+            if (form.getSignDateFrom() != null) {
                 condition += " AND f.status = ? ";
                 lstParam.add(22l);
             }
@@ -6628,8 +6646,8 @@ public class FilesNoClobDAOHE extends GenericDAOHibernate<FilesNoClob, Long> {
                 lstParam.add(maxDayToCompare(form.getReceivedDateTo()));
             }
             if (form.getReceiveNo() != null
-                    && !form.getReceiveNo().equals("")
-                    && !form.getReceiveNo().trim().equals("")) {
+                    && !"".equals(form.getReceiveNo())
+                    && !"".equals(form.getReceiveNo().trim())) {
                 condition += " and f.receiveNo like ?";
                 lstParam.add(form.getReceiveNo().trim());
             }

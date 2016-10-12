@@ -153,8 +153,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
      * @return
      */
     public FeePaymentInfo findFeePaymentInfoFileIdFeeIdIsActive(Long fileId, Long feeId, Long isActive) {
-        List<FeePaymentInfo> lstStandardNew = null;
         try {
+            List<FeePaymentInfo> lstStandardNew = null;
             StringBuilder stringBuilder = new StringBuilder(" from FeePaymentInfo u ");
             stringBuilder.append("where u.fileId = ? and u.isActive = ? and u.feeId = ?");
             Query query = getSession().createQuery(stringBuilder.toString());
@@ -163,11 +163,15 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             query.setParameter(2, feeId);
 
             lstStandardNew = query.list();
+            if (!lstStandardNew.isEmpty() && lstStandardNew.size() > 0) {
+                return lstStandardNew.get(0);
+            } else {
+                return null;
+            }
         } catch (HibernateException ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
-//            log.error(ex.getMessage());
         }
-        return lstStandardNew.get(0);
+        return null;
     }
 
     /**
@@ -317,7 +321,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                     feepro.setIsActive(1l);
                     getSession().save(feepro);
                     // Giai phong bo nho
-                    feepro = null;
+//                    feepro = null;//sonar
                 }
                 bReturn = true;
             } else {
@@ -360,7 +364,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                         feepro.setIsActive(1l);
                         getSession().save(feepro);
                         // Giai phong bo nho
-                        feepro = null;
+//                        feepro = null;
                     }
                 }
                 if (stt == 0) {
@@ -372,7 +376,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                         feepro.setIsActive(0l);
                         getSession().save(feepro);
                         // Giai phong bo nho
-                        feepro = null;
+//                        feepro = null;
                     }
                 }
                 getSession().update(fee);
@@ -407,7 +411,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
 
         FilesDAOHE fdhe = new FilesDAOHE();
         Files filesBo = fdhe.findById(fileId);
-        String sql = "";
+        String sql;
         if (filesBo != null
                 && (filesBo.getStatus().equals(Constants.FILE_STATUS.APPROVED)
                 || filesBo.getStatus().equals(Constants.FILE_STATUS.COMPARED)
@@ -496,8 +500,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                 && filesBo.getFileType() != null
                 && filesBo.getFileType() > 0L) {
             ProcedureDAOHE pDAO = new ProcedureDAOHE();
-            Procedure p = new Procedure();
-            p = pDAO.findById(filesBo.getFileType());
+            Procedure p = pDAO.findById(filesBo.getFileType());
             if (p != null) {
                 if (p.getDescription() != null
                         && p.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)) {
@@ -579,13 +582,11 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
 
     //hieptq update 130115
     public List getLstFpiId(String lstObjectId) {
-        FilesDAOHE fdhe = new FilesDAOHE();
+//        FilesDAOHE fdhe = new FilesDAOHE();
         List lstParam = new ArrayList();
         String[] lstObjectIdSplit = lstObjectId.split(",");
         int countObj = lstObjectIdSplit.length;
-
-        String sql = "";
-        sql = "from fee f inner join fee_payment_info fpi on f.fee_id = fpi.fee_id "
+        String sql = "from fee f inner join fee_payment_info fpi on f.fee_id = fpi.fee_id "
                 + "where f.is_Active=1 "
                 + "and fpi.is_Active=1 and f.fee_type = 2 and (";
 
@@ -611,13 +612,12 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
 
     //hieptq update 130115
     public Long getAmountKeyPay(String lstObjectId) {
-        FilesDAOHE fdhe = new FilesDAOHE();
+//        FilesDAOHE fdhe = new FilesDAOHE();
         List lstParam = new ArrayList();
         String[] lstObjectIdSplit = lstObjectId.split(",");
         int countObj = lstObjectIdSplit.length;
         Long amount = 0l;
-        String sql = "";
-        sql = "from fee f inner join fee_payment_info fpi on f.fee_id = fpi.fee_id "
+        String sql = "from fee f inner join fee_payment_info fpi on f.fee_id = fpi.fee_id "
                 + "where f.is_Active=1 "
                 + "and fpi.is_Active=1 and f.fee_type = 2 and (";
 
@@ -880,7 +880,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                 + "and (f.user_Signed is not null or f.status = 18) "
                 + "and f.status <> -1";
         UsersDAOHE udhe = new UsersDAOHE();
-        Users user = udhe.findById(userId);
+//        Users user = udhe.findById(userId);
         List lstParam = new ArrayList();
 //        lstParam.add(user.getDeptId());
         if (searchFeeFormNew.getBusinessName() != null && !"".equals(searchFeeFormNew.getBusinessName().trim())) {
@@ -1108,7 +1108,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
 //            String filesCode = filescode;
 //            if (!filescode.equals("null"){
             if (filescode != null && !filescode.isEmpty()) {
-                if (!filescode.equals("null")) {
+                if (!"null".equals(filescode)) {
                     fpif.setFilesCode(filescode);
                 }
             }
@@ -1147,7 +1147,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
         boolean bReturn = true;
         try {
             Date dateNow = getSysdate();
-            String a = "";
+            String a;
             List params = new ArrayList();
 
             if (billPath.trim().length() == 0) {
@@ -1182,10 +1182,9 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             }
             query.executeUpdate();
             String[] lstVo = billPath.split(";");
-            FeePaymentInfo fpif = new FeePaymentInfo();
             FeeDAOHE fdhe = new FeeDAOHE();
             List<FeePaymentInfo> list = fdhe.findFeePaymentInfo(paymentInfoId);
-            fpif = list.get(0);
+            FeePaymentInfo fpif = list.get(0);
             fpif.setPaymentDate(paymentDate);
             getSession().update(fpif);
             VoAttachsDAOHE vadhe = new VoAttachsDAOHE();
@@ -1211,12 +1210,12 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                 if (file.getStatus().equals(Constants.FILE_STATUS.NEW_CREATE) || file.getStatus().equals(Constants.FILE_STATUS.NEW_TO_ADD)) {
                     file.setIsFee(1L);
                     getSession().update(file);
-                } else if (pde.getCode().equals("01") || pde.getCode().equals("02")) {
+                } else if ("01".equals(pde.getCode()) || "02".equals(pde.getCode())) {
                     file.setIsFee(1L);
                     getSession().update(file);
                 } else {
                     List<FeePaymentInfo> feeCheck = fdhe1.findFeePaymentInfoFileId(fee.getFileId());
-                    FeePaymentInfo fpifnew = null;
+                    FeePaymentInfo fpifnew;
                     int check = 0;
                     for (int i = 0; i < feeCheck.size(); i++) {
                         fpifnew = feeCheck.get(i);
@@ -1316,10 +1315,9 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             }
             query.executeUpdate();
             String[] lstVo = billPath.split(";");
-            FeePaymentInfo fpif = new FeePaymentInfo();
             FeeDAOHE fdhe = new FeeDAOHE();
             List<FeePaymentInfo> list = fdhe.findFeePaymentInfo(paymentInfoId);
-            fpif = list.get(0);
+            FeePaymentInfo fpif = list.get(0);
             fpif.setPaymentDate(paymentDate);
             getSession().update(fpif);
             VoAttachsDAOHE vadhe = new VoAttachsDAOHE();
@@ -1367,7 +1365,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             ProcedureDAOHE pdhe = new ProcedureDAOHE();
             Procedure pde = pdhe.findById(file.getFileType());
             if (file != null && file.getIsActive().equals(1L)) {
-                Long confirmFeeStatus = 0L;
+                Long confirmFeeStatus;
                 file.setModifyDate(dateNow);
                 if (file.getStatus().equals(Constants.FILE_STATUS.NEW)
                         || file.getStatus().equals(Constants.FILE_STATUS.NEW_TO_ADD)
@@ -1377,13 +1375,13 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                     getSession().update(file);
                     confirmFeeStatus = Constants.FILE_STATUS.CONFIRM_FEE_EVALUATE;
                 } else {
-                    if (pde.getCode().equals("01") || pde.getCode().equals("02")) {
+                    if ("01".equals(pde.getCode()) || "02".equals(pde.getCode())) {
                         file.setIsFee(1L);
                         getSession().update(file);
                     } else {
                         List<FeePaymentInfo> feeCheck = fdhe1.findFeePaymentInfoFileId(fee.getFileId());
                         int check = 0;
-                        FeePaymentInfo fpifnew = null;
+                        FeePaymentInfo fpifnew;
                         for (int i = 0; i < feeCheck.size(); i++) {
                             fpifnew = feeCheck.get(i);
                             if (fpifnew.getStatus() == 1 && fpifnew.getIsActive() == 1) {
@@ -1464,7 +1462,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             ProcedureDAOHE pdhe = new ProcedureDAOHE();
             Procedure pde = pdhe.findById(file.getFileType());
             if (file != null && file.getIsActive().equals(1L)) {
-                Long confirmFeeStatus = 0L;
+                Long confirmFeeStatus;
                 file.setModifyDate(dateNow);
                 if (file.getStatus().equals(Constants.FILE_STATUS.NEW_CREATE)
                         || file.getStatus().equals(Constants.FILE_STATUS.NEW)
@@ -1474,13 +1472,13 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                     getSession().update(file);
                     confirmFeeStatus = Constants.FILE_STATUS.CONFIRM_FEE_EVALUATE;
                 } else {
-                    if (pde.getCode().equals("01") || pde.getCode().equals("02")) {
+                    if ("01".equals(pde.getCode()) || "02".equals(pde.getCode())) {
                         file.setIsFee(1L);
                         getSession().update(file);
                     } else {
                         List<FeePaymentInfo> feeCheck = fdhe1.findFeePaymentInfoFileId(fee.getFileId());
                         int check = 0;
-                        FeePaymentInfo fpifnew = null;
+                        FeePaymentInfo fpifnew;
                         for (int i = 0; i < feeCheck.size(); i++) {
                             fpifnew = feeCheck.get(i);
                             if (fpifnew.getStatus() == 1 && fpifnew.getIsActive() == 1) {
@@ -1602,7 +1600,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             ProcedureDAOHE pdhe = new ProcedureDAOHE();
             Procedure pde = pdhe.findById(file.getFileType());
             if (file != null && file.getIsActive().equals(1L)) {
-                Long confirmFeeStatus = 0L;
+                Long confirmFeeStatus;
                 file.setModifyDate(dateNow);
                 if (file.getStatus().equals(Constants.FILE_STATUS.NEW)
                         || file.getStatus().equals(Constants.FILE_STATUS.NEW_TO_ADD)
@@ -1611,13 +1609,14 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                     getSession().update(file);
                     confirmFeeStatus = Constants.FILE_STATUS.CONFIRM_FEE_EVALUATE;
                 } else {//la le phi cap giay
-                    if (pde.getCode().equals("01") || pde.getCode().equals("02")) {//check co phai ho so cong bo hop qui k
+                    if ("01".equals(pde.getCode())
+                            || "02".equals(pde.getCode())) {//check co phai ho so cong bo hop qui k
                         file.setIsFee(1L);
                         getSession().update(file);
                     } else {
                         List<FeePaymentInfo> feeCheck = fdhe1.findFeePaymentInfoFileId(fee.getFileId());
                         int check = 0;
-                        FeePaymentInfo fpifnew = null;
+                        FeePaymentInfo fpifnew;
                         for (int i = 0; i < feeCheck.size(); i++) {
                             fpifnew = feeCheck.get(i);
                             if (fpifnew.getStatus() == 1 && fpifnew.getIsActive() == 1) {
@@ -1761,7 +1760,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             Long fileId = fdhe.getFileIdByFileCode(fileCode);
             FeePaymentInfoDAOHE fpidhe = new FeePaymentInfoDAOHE();
             List lstParam = new ArrayList();
-            List<FeePaymentInfo> lstFeePaymentInfo = null;
+            List<FeePaymentInfo> lstFeePaymentInfo;
             String hql = "select fpi from FeePaymentInfo fpi where fpi.fileId = ?";
             lstParam.add(fileId);
             Query query = getSession().createQuery(hql);
@@ -1798,6 +1797,22 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
         return 0l;
     }
 
+    public Long getFileByCode4Change(String fileCode, Long status) {
+        String sql = "select f.fileId from Files f "
+                + "where f.fileCode = ? "
+                + "and f.status = ?"
+                + "and f.isTemp = null "
+                + "and f.isActive = 1";
+        Query query = getSession().createQuery(sql);
+        query.setParameter(0, fileCode);
+        query.setParameter(1, status);
+        List<Long> result = query.list();
+        if (result != null && result.size() > 0) {
+            return result.get(0);
+        }
+        return 0l;
+    }
+
     //hieptq update 090615
     public boolean onChangeFileType(String fileCode, String fileTypeNew) {
         try {
@@ -1806,7 +1821,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             ProcedureDAOHE pdhe = new ProcedureDAOHE();
 
             Long proceduceIdNew = Long.parseLong(fileTypeNew);
-            Long fileId = feedhe.getFileIdByFileCode(fileCode);
+            Long fileId = feedhe.getFileByCode4Change(fileCode, Constants.FILE_STATUS.EVALUATED_TO_ADD);
 
             Fee feeWantChange = feedhe.findFeeByFeeType(1L);
             Files fileBo = fdhe.findById(fileId);

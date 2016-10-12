@@ -9,11 +9,11 @@
 <script type="text/javascript">
     page.getNoDept = function(index) {
         return dijit.byId("deptGrid").currentRow + index + 1;
-    }
+    };
 
     page.getIndexDept = function(index) {
         return index + 1;
-    }
+    };
 
     page.formatSelect = function(inData) {
         var item = dijit.byId("deptGrid").getItem(inData - 1);
@@ -26,7 +26,7 @@
         }
         return url;
 
-    }
+    };
 </script>
 <table width="100%" style="table-layout:fixed;">
     <tr>
@@ -120,23 +120,23 @@
         }
         if (document.getElementById("Unsign").checked == true) {
 
-            msg.confirm('<sd:Property>Bạn có chắc chắn muốn gửi hồ sơ đến đơn vị "</sd:Property>' + item.deptName + '<sd:Property>" không?</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', function() {
-                            sd.connector.post("filesAction!onSelectFlow.do?" + token.getTokenParamString() + "&createForm.deptId=" + item.deptId + "&createForm.fileId=" + workingFileId, null, null, null, page.afterSend);
-                        });
-                    }
-                    if (document.getElementById("Sign").checked == true)
-                    {
-                        sd.connector.post("filesAction!loadFile.do?createForm.fileId=" + workingFileId, null, null, null, page.afterShow);
-                    }
+    msg.confirm('<sd:Property>Bạn có chắc chắn muốn gửi hồ sơ đến đơn vị "</sd:Property>' + item.deptName + '<sd:Property>" không?</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', function() {
+                    sd.connector.post("filesAction!onSelectFlow.do?" + token.getTokenParamString() + "&createForm.deptId=" + item.deptId + "&createForm.fileId=" + workingFileId, null, null, null, page.afterSend);
+                });
+            }
+            if (document.getElementById("Sign").checked == true)
+            {
+                sd.connector.post("filesAction!loadFile.do?createForm.fileId=" + workingFileId, null, null, null, page.afterShow);
+            }
 
-                };
+        };
 
-                page.onSelectDeptNew = function(row) {
-               
-                    document.getElementById("Sign").checked = true;
-                    var item = dijit.byId("filesGrid").getItem(row);
-                    sd.connector.post("filesAction!loadFile.do?createForm.fileId=" + item.fileId, null, null, null, page.afterShow);
-                    
-                };
+    page.onSelectDeptNew = function(row) {
+
+        document.getElementById("Sign").checked = true;
+        var item = dijit.byId("filesGrid").getItem(row);
+        sd.connector.post("filesAction!loadFile.do?createForm.fileId=" + item.fileId, null, null, null, page.afterShow);
+
+    };
 
 </script>

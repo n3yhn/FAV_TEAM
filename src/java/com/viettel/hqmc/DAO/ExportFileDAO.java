@@ -107,7 +107,7 @@ public class ExportFileDAO extends BaseDAO {
     public String onExportPaper() {
         try {
             WordExportUtils wU = new WordExportUtils();
-            WordprocessingMLPackage wmp = new WordprocessingMLPackage();
+            WordprocessingMLPackage wmp = null;
             // insert ban cong bo
             if (fileId == null) {
                 throw new Exception("Không có hồ sơ");
@@ -3706,8 +3706,7 @@ public class ExportFileDAO extends BaseDAO {
                     }
                     break;
                 case Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP:
-                    if (filesForm.getDetailProduct() != null 
-                            && filesForm.getAnnouncement() != null) {
+                    if (filesForm.getDetailProduct() != null && filesForm.getAnnouncement() != null) {
                         BusinessDAOHE busdaohe = new BusinessDAOHE();
                         Business busbo = busdaohe.findById(filesForm.getDeptId());
                         if (filesForm.getDetailProduct().getSignDate() != null) {
@@ -5148,7 +5147,7 @@ public class ExportFileDAO extends BaseDAO {
                 fileCode = form.getFileCode();
             }
 
-            WordprocessingMLPackage wmp = null;
+            WordprocessingMLPackage wmp;
 //                String contentEdit = "";
             String publishDate = "";
             String announmentNo = "";
@@ -5184,7 +5183,7 @@ public class ExportFileDAO extends BaseDAO {
             } else if (form.getConfirmImportSatistPaperForm() != null) {
                 receiptDeptName = form.getConfirmImportSatistPaperForm().getTestAgencyName();
             }
-            */
+             */
             if (form.getFilesSourceID() != null
                     && form.getFilesSourceID() > 0L) {
                 Files fboOld = fdhe.findById(form.getFilesSourceID());

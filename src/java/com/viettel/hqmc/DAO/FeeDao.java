@@ -31,13 +31,10 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 //import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.ConcurrentHashMap;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.codec.binary.Base64;
@@ -238,7 +235,7 @@ public class FeeDao extends BaseDAO {
 
         // hieptq update 030615 hash lai noi dung so voi sercure hash keypay gui lai
         String[] parts = hash.split(";");
-        Map<String, String> fields = new HashMap<String, String>();
+        ConcurrentHashMap<String, String> fields = new ConcurrentHashMap<String, String>();
         fields.put("command", parts[0]);
         fields.put("merchant_trans_id", parts[1]);
         fields.put("merchant_code", parts[2]);
@@ -572,7 +569,7 @@ public class FeeDao extends BaseDAO {
             FeeDAOHE rdhe = new FeeDAOHE();
             // hieptq update 030615 hash lai noi dung so voi sercure hash keypay gui lai
             String[] parts = hash.split(";");
-            Map<String, String> fields = new HashMap<String, String>();
+            ConcurrentHashMap<String, String> fields = new ConcurrentHashMap<String, String>();
             fields.put("command", parts[0]);
             fields.put("merchant_trans_id", parts[1]);
             fields.put("merchant_code", parts[2]);

@@ -99,7 +99,7 @@ public class DetailProductDAOHE extends GenericDAOHibernate<DetailProduct, Long>
             for (int i = 0; i < lstParam.size(); i++) {
                 query.setParameter(i, lstParam.get(i));
             }
-            List<DetailProduct> lstObj = null;
+            List<DetailProduct> lstObj;
             lstObj = query.list();
             if (!lstObj.isEmpty()) {
                 bo = lstObj.get(0);
@@ -117,7 +117,7 @@ public class DetailProductDAOHE extends GenericDAOHibernate<DetailProduct, Long>
      * @return
      */
     public Long getCountVersion(Long objId) {
-        Long iresult = 0L;
+        Long iresult;
         List lstParam = new ArrayList();
         String hql = "select count(t) from DetailProduct t where t.originalId = ? ";
         lstParam.add(objId);

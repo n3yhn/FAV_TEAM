@@ -321,7 +321,7 @@ public class FlowDAO extends BaseDAO {
             ArrayList lstFlowIds = new ArrayList();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 FlowForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getFlowId() != null && form.getFlowId() != 0D) {
+                if (form != null && form.getFlowId() != null && form.getFlowId() != 0L) {
                     //deleteIds = deleteIds + "," + form.getFlowId();
                     lstFlowIds.add(form.getFlowId());
                 }

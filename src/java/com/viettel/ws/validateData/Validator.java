@@ -159,7 +159,7 @@ public class Validator implements IValidator {
     public ERRORDto validateIsIntNumber(String value) {
         try {
             Integer.parseInt(value);
-            return null;
+//            return null;
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
             ERRORDto eRRORDto = new ERRORDto();
@@ -168,6 +168,7 @@ public class Validator implements IValidator {
             eRRORDto.setERRORNAME("");
             return eRRORDto;
         }
+        return null;
     }
 
     @Override

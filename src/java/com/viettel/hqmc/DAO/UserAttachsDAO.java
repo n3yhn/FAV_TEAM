@@ -127,8 +127,8 @@ public class UserAttachsDAO extends BaseDAO {
             String strId = request.getParameter("id");
             MultiPartRequestWrapper multi = (MultiPartRequestWrapper) request;
             Enumeration files = multi.getFileParameterNames();
-            String fieldName = "";
-            String fileName = "";
+            String fieldName;
+            String fileName;
             File file;
             while (files.hasMoreElements()) {
                 fieldName = (String) files.nextElement();
@@ -141,7 +141,7 @@ public class UserAttachsDAO extends BaseDAO {
                     String filePath = UploadFile.uploadFileUserAttach("temp", fileName, file, getRequest(), getUserLogin());
                     UserAttachs bo = new UserAttachs();
                     userAttachsDAOHE = new UserAttachsDAOHE();
-                    Long id = 0L;
+                    Long id;
                     int version = userAttachsDAOHE.isDuplicateFileName(fileName, getUserId());
                     if (createForm != null && createForm.getUserAttachsId() != null) {
                         bo = userAttachsDAOHE.findById(createForm.getUserAttachsId());
@@ -219,7 +219,7 @@ public class UserAttachsDAO extends BaseDAO {
             userAttachsDAOHE = new UserAttachsDAOHE();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 UserAttachsForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getUserAttachsId() != null && form.getUserAttachsId() != 0D) {
+                if (form != null && form.getUserAttachsId() != null && form.getUserAttachsId() != 0L) {
                     UserAttachs bo = userAttachsDAOHE.getById("userAttachsId", form.getUserAttachsId());
                     if (bo != null) {
                         bo.setIsActive(Constants.ACTIVE_STATUS.DELETED);

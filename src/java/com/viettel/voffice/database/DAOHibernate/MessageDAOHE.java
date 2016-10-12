@@ -39,13 +39,13 @@ public class MessageDAOHE extends GenericDAOHibernate<Message, Long> {
      * @return
      */
     public boolean sendMessage(Long sendId, String[] receiverList, String content) {
-        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) {
+        if ("0".equals(Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS)) {
             return true;
         }
         boolean result = true;
         try {
             for (String id : receiverList) {
-                if (id != null && !id.equals("")) {
+                if (id != null && !"".equals(id)) {
                     Message bo;
                     Long userId = Long.valueOf(id);
                     bo = this.entityToBo(sendId, userId, content);
@@ -88,7 +88,7 @@ public class MessageDAOHE extends GenericDAOHibernate<Message, Long> {
     }
 
     public boolean saveMessage(Long senderId, Long receiverId, String content, Long status) {
-        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) {
+        if ("0".equals(Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS)) {
             return true;
         }
         boolean result = true;

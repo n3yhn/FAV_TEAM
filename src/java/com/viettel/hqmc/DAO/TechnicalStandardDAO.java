@@ -128,7 +128,7 @@ public class TechnicalStandardDAO extends BaseDAO {
             TechnicalStandardDAOHE cthe = new TechnicalStandardDAOHE();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 TechnicalStandardForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getTechnicalStandardId() != null && form.getTechnicalStandardId() != 0D) {
+                if (form != null && form.getTechnicalStandardId() != null && form.getTechnicalStandardId() != 0L) {
                     TechnicalStandard bo = cthe.getById("technicalStandardId", form.getTechnicalStandardId());
                     if (bo != null) {
                         bo.setIsActive(0l);
@@ -162,7 +162,7 @@ public class TechnicalStandardDAO extends BaseDAO {
             TechnicalStandardDAOHE cthe = new TechnicalStandardDAOHE();
             for (int i = 0; i < lstItemPublished.size(); i++) {
                 TechnicalStandardForm form = lstItemPublished.get(i);
-                if (form != null && form.getTechnicalStandardId() != null && form.getTechnicalStandardId() != 0D) {
+                if (form != null && form.getTechnicalStandardId() != null && form.getTechnicalStandardId() != 0L) {
                     TechnicalStandard bo = cthe.getById("technicalStandardId", form.getTechnicalStandardId());
                     if (bo != null) {
                         if (bo.getStatus() == 0L) {
@@ -200,7 +200,7 @@ public class TechnicalStandardDAO extends BaseDAO {
             TechnicalStandardDAOHE cthe = new TechnicalStandardDAOHE();
             for (int i = 0; i < lstItemTerminate.size(); i++) {
                 TechnicalStandardForm form = lstItemTerminate.get(i);
-                if (form != null && form.getTechnicalStandardId() != null && form.getTechnicalStandardId() != 0D) {
+                if (form != null && form.getTechnicalStandardId() != null && form.getTechnicalStandardId() != 0L) {
                     TechnicalStandard bo = cthe.getById("technicalStandardId", form.getTechnicalStandardId());
                     if (bo != null) {
                         if (bo.getStatus() == 1L) {
@@ -237,7 +237,7 @@ public class TechnicalStandardDAO extends BaseDAO {
             TechnicalStandardDAOHE cthe = new TechnicalStandardDAOHE();
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 TechnicalStandardForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getTechnicalStandardId() != null && form.getTechnicalStandardId() != 0D) {
+                if (form != null && form.getTechnicalStandardId() != null && form.getTechnicalStandardId() != 0L) {
                     TechnicalStandard bo = cthe.getById("technicalStandardId", form.getTechnicalStandardId());
                     if (bo != null) {
                         bo.setStatus(0l);

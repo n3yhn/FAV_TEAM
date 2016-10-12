@@ -80,65 +80,65 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
             typeName = cats.get(0).getDescription();
         }
         List<String> lstType = new ArrayList();
-        if (typeName.equals("announcementFile01")) {
+        if ("announcementFile01".equals(typeName)) {
             lstType.add("confirmNormalVN");
             lstType.add("confirmFuncVN");
             lstType.add("confirmNormalImport");
             lstType.add("confirmFuncImport");
             lstType.add("announcementFile03");
         }
-        if (typeName.equals("announcementFile03")) {
+        if ("announcementFile03".equals(typeName)) {
             lstType.add("confirmNormalVN");
             lstType.add("confirmFuncVN");
             lstType.add("confirmNormalImport");
             lstType.add("confirmFuncImport");
             lstType.add("announcementFile01");
         }
-        if (typeName.equals("confirmNormalImport")) {
+        if ("confirmNormalImport".equals(typeName)) {
             lstType.add("announcementFile01");
             lstType.add("announcementFile03");
             lstType.add("confirmFuncImport");
         }
-        if (typeName.equals("confirmFuncImport")) {
+        if ("confirmFuncImport".equals(typeName)) {
             lstType.add("announcementFile01");
             lstType.add("announcementFile03");
             lstType.add("confirmNormalImport");
         }
-        if (typeName.equals("confirmFuncVN")) {
+        if ("confirmFuncVN".equals(typeName)) {
             lstType.add("announcementFile01");
             lstType.add("announcementFile03");
             lstType.add("confirmNormalVN");
         }
-        if (typeName.equals("confirmNormalVN")) {
+        if ("confirmNormalVN".equals(typeName)) {
             lstType.add("announcementFile01");
             lstType.add("announcementFile03");
             lstType.add("confirmFuncVN");
         }
-        if (typeName.equals("confirmNormalVN")) {
+        if ("confirmNormalVN".equals(typeName)) {
             lstType.add("announcementFile01");
             lstType.add("announcementFile03");
             lstType.add("confirmFuncVN");
         }
-        if (typeName.equals("announcement4star")) {
+        if ("announcement4star".equals(typeName)) {
             lstType.add("none");
         }
 
-        if (typeName.equals("reConfirmNormalVN")) {
+        if ("reConfirmNormalVN".equals(typeName)) {
             lstType.add("reConfirmFuncVN");
         }
-        if (typeName.equals("reConfirmFuncVN")) {
+        if ("reConfirmFuncVN".equals(typeName)) {
             lstType.add("reConfirmNormalVN");
         }
-        if (typeName.equals("reAnnouncement")) {
+        if ("reAnnouncement".equals(typeName)) {
             lstType.add("none");
         }
-        if (typeName.equals("reConfirmNormalImp")) {
+        if ("reConfirmNormalImp".equals(typeName)) {
             lstType.add("reConfirmFuncImport");
         }
-        if (typeName.equals("reConfirmFuncImport")) {
+        if ("reConfirmFuncImport".equals(typeName)) {
             lstType.add("reConfirmNormalImp");
         }
-        if (typeName.equals("confirmSatisfactory")) {
+        if ("confirmSatisfactory".equals(typeName)) {
             lstType.add("none");
         }
         List<Category> lstCategory = null;
@@ -281,27 +281,35 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
         String hql = " from Procedure c where 1 = 1 ";
         List lstParam = new ArrayList();
         if (form != null) {
-            if (form.getCode() != null && !form.getCode().equals("")) {
+            if (form.getCode() != null 
+                    && !"".equals(form.getCode())) {
                 hql += " and lower(c.code) LIKE ? ESCAPE '/' ";
                 lstParam.add(StringUtils.toLikeString(form.getCode().trim().toLowerCase()));
             }
 
-            if (form.getName() != null && !form.getName().equals("")) {
+            if (form.getName() != null 
+                    && !"".equals(form.getName())) {
                 hql += " and lower(c.name) LIKE ? ESCAPE '/' ";
                 lstParam.add(StringUtils.toLikeString(form.getName().trim().toLowerCase()));
             }
-            if (form.getIsActive() != null && !form.getIsActive().equals("") && !form.getIsActive().equals("-1")) {
+            if (form.getIsActive() != null 
+                    && !"".equals(form.getIsActive()) 
+                    && !"-1".equals(form.getIsActive())) {
                 hql += " and c.isActive = ? ";
                 lstParam.add(form.getIsActive().trim());
             } else {
                 hql += " and (c.isActive = '1' or c.isActive = '0')";
 
             }
-            if (form.getType() != null && form.getType().trim().length() > 0 && form.getType().equals("0") != true) {
+            if (form.getType() != null 
+                    && form.getType().trim().length() > 0 
+                    && "0".equals(form.getType()) != true) {
                 hql += " and lower(c.type) like ? escape'!'";
                 lstParam.add("%" + convertToLikeString(form.getType()) + "%");
             }
-            if (form.getIsActive() != null && form.getIsActive().trim().length() > 0 && form.getIsActive().equals("-1") != true) {
+            if (form.getIsActive() != null 
+                    && form.getIsActive().trim().length() > 0 
+                    && "-1".equals(form.getIsActive()) != true) {
                 hql += " and lower(c.isActive) like ? escape'!'";
                 lstParam.add("%" + convertToLikeString(form.getIsActive()) + "%");
             }
@@ -355,7 +363,7 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
      * @return
      */
     public List getAllDeptOfProcedureCbx(Long procedureId, int start, int count) {
-        String hql = "";
+        String hql;
         List lstResult;
         if (procedureId != -1) {
             hql = " from ProcedureDepartment c where c.procedureId = ? ";
@@ -371,7 +379,7 @@ public class ProcedureDAOHE extends GenericDAOHibernate<Procedure, Long> {
             lstResult = query.list();
         } else {
             hql = " from ProcedureDepartment c ";
-            Query countQuery = getSession().createQuery("select count(*) " + hql);
+//            Query countQuery = getSession().createQuery("select count(*) " + hql);
 //            int total = Integer.parseInt(countQuery.uniqueResult().toString());
             Query query = getSession().createQuery("select distinct c " + hql + " "
                     + "order by c.deptName");

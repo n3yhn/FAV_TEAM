@@ -12,7 +12,7 @@ package com.viettel.common.util;
 public final class CategoryConstant {
 
 
-    public static final String[] COMMENT_TYPE=new String[]{
+    protected static final String[] COMMENT_TYPE=new String[]{
         "Nhiệm kỳ, chức vụ",
         "Nhận xét hàng năm",
         "Quy hoạch, bổ nhiệm",

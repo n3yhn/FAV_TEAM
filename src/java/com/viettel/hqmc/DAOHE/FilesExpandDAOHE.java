@@ -55,10 +55,13 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
             if (file != null) {
                 if (form.getStatus().equals(Constants.FILE_STATUS.APPROVED)) {
                     file.setApproveDate(dateNow);
-                    //Hiepvv 1403 Lay y kien cua LDC in len noi dung cong van
-                    if (form.getLeaderRequest() != null && !form.getLeaderRequest().isEmpty()) {
-                        file.setContentsEditATTP(form.getLeaderRequest());
+                    if (form.getContentsEditATTP() != null && !"".equals(form.getContentsEditATTP())) {
+                        file.setContentsEditATTP(form.getContentsEditATTP());
                     }
+                    //Hiepvv 1403 Lay y kien cua LDC in len noi dung cong van
+//                    if (form.getLeaderRequest() != null && !form.getLeaderRequest().isEmpty()) {
+//                        file.setContentsEditATTP(form.getLeaderRequest());
+//                    }
                     ProcedureDAOHE pcdaohe = new ProcedureDAOHE();
                     Procedure procedure = pcdaohe.findById(file.getFileType());
                     if (procedure != null && procedure.getProcedureId() > 0) {
@@ -67,7 +70,7 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
                                 AnnouncementReceiptPaperForm arpForm = new AnnouncementReceiptPaperForm();
                                 AnnouncementDAOHE announcementHE = new AnnouncementDAOHE();
                                 Announcement announcement = announcementHE.findById(file.getAnnouncementId());
-
+                                
                                 arpForm.setBusinessName(announcement.getBusinessName());
                                 arpForm.setProductName(announcement.getProductName());
                                 arpForm.setManufactureName(announcement.getManufactureName());
@@ -163,17 +166,17 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
                         }
                         //!tao giay tiep nhan
                     }
-
+                    
                 }
             }
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
             return false;
         }
-
+        
         return true;
     }
-
+    
     public boolean onApproveByLDP4AA(FilesForm form, Long deptId, String deptName, Long userId, String userName) {
         boolean bReturn = true;
         try {
@@ -267,9 +270,9 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
                         ProcedureDAOHE pdheNew = new ProcedureDAOHE();
                         Procedure pro = pdheNew.findById(file.getFileType());
                         //Hiepvv 0803 Khong xet lai phi cho SDBS sau cong bo
-                        if (!pro.getCode().equals("01")
-                                && !pro.getCode().equals("02")
-                                && !pro.getDescription().equals("announcementFile05")) {
+                        if (!"01".equals(pro.getCode())
+                                && !"02".equals(pro.getCode())
+                                && !"announcementFile05".equals(pro.getDescription())) {
                             file.setIsFee(0l);
                         }
                     } else {
@@ -297,7 +300,7 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
                             rcbo.setObjectId(form.getFileId());
                             rcbo.setRequestType(Constants.REQUEST_COMMENT_TYPE.TBSDBS);
                             rcbo.setIsLastChange(Constants.ACTIVE_STATUS.ACTIVE);
-
+                            
                             RequestCommentDAOHE rqdaohe = new RequestCommentDAOHE();
                             RequestComment lastRQBo = rqdaohe.findLastRequestComment(file.getFileId(), Constants.ACTIVE_STATUS.ACTIVE);
                             if (lastRQBo != null) {
@@ -384,7 +387,7 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
                             rcbo.setIsLastChange(Constants.ACTIVE_STATUS.ACTIVE);
                             rcbo.setObjectId(form.getFileId());
                             rcbo.setRequestType(Constants.REQUEST_COMMENT_TYPE.TBSDBS);
-
+                            
                             RequestCommentDAOHE rqdaohe = new RequestCommentDAOHE();
                             RequestComment lastRQBo = rqdaohe.findLastRequestComment(file.getFileId(), Constants.ACTIVE_STATUS.ACTIVE);
                             if (lastRQBo != null) {
@@ -467,7 +470,7 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
         }
         return bReturn;
     }
-
+    
     public boolean onCreatePaperByLeaderForAA(FilesForm form, Long deptId, String deptName, Long userId, String userName) {
         try {
             Date dateNow = getSysdate();
@@ -491,7 +494,7 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
                                     AnnouncementReceiptPaperForm arpForm = new AnnouncementReceiptPaperForm();
                                     AnnouncementDAOHE announcementHE = new AnnouncementDAOHE();
                                     Announcement announcement = announcementHE.findById(file.getAnnouncementId());
-
+                                    
                                     arpForm.setBusinessName(announcement.getBusinessName());
                                     arpForm.setProductName(announcement.getProductName());
                                     arpForm.setManufactureName(announcement.getManufactureName());
@@ -587,7 +590,7 @@ public class FilesExpandDAOHE extends GenericDAOHibernate<Files, Long> {
                             }
                         }
                     }
-
+                    
                 }
             }
         } catch (Exception ex) {

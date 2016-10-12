@@ -98,7 +98,7 @@ public class CategoryTypeDAOHE extends GenericDAOHibernate<CategoryType, Long> {
      */
     public List findAllCategoryType() {
         if (lstFactory == null) {
-            lstFactory = new HashMap();
+//            lstFactory = new HashMap();//sonar
         }
 
         if (lstFactory.containsKey("type")) {

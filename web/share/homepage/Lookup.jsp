@@ -59,11 +59,9 @@
             page.getRow = function (inRow) {
                 return inRow;
             };
-
             page.getIndex = function (index) {
                 return index + 1;
             };
-
             page.formatBusName = function (inData) {
                 var row = inData - 1;
                 var item = dijit.byId("grid").getItem(inData - 1);
@@ -80,26 +78,24 @@
                 var url = "";
                 if (item != null) {
                     var status = item.code;
-                    if (status.toString() != "" && status.toString().trim() != "")
-                    {
-                        status = status.toString().trim();
-                        if (status == "TPCN")
-                        {
-                            url = "Thực phẩm chức năng";
+                    if (status.toString() != "" && status.toString().trim() != "") {
+                        switch (status) {
+                            case "TPCN":
+                                url = "Thực phẩm chức năng";
+                                break;
+                            case "DBT":
+                                url = "Thực phẩm chức năng";
+                                break;
+                            default:
+                                url = "Thực phẩm thường";
+                                break;
                         }
-                        else if (status == "DBT")
-                        {
-                            url = "Thực phẩm tăng cường vi chất dinh dưỡng";
-                        }
-                        else
-                        {
-                            url = "Thực phẩm thường";
-                        }
+                    } else {
+                        url = "...";
                     }
                 }
                 return url;
             };
-
             page.formatAction = function (inData) {
                 var item = dijit.byId("grid").getItem(inData - 1);
                 var url = "";
@@ -110,9 +106,9 @@
                         url += "<img src='share/images/document_open.png' width='17px' height='17px' title='Xuất giấy công bố' onClick='page.formatLinkDownloadPdf(" + item.fileId + ");' />";
                         url += "</div>";
                     }
+                    return url;
                 }
-                return url;
-            }
+            };
             // enter key
             page.searchDefault = function (evt) {
                 var dk = dojo.keys;
@@ -121,14 +117,11 @@
                         page.search();
                         break;
                 }
-            }
-
+            };
             dojo.connect(dojo.byId("searchForm"), "onkeypress", page.searchDefault);
         </script>
         <body class="${fn:escapeXml(JSLibTheme)}" <%--onkeydown="checkToRefresh(event);"--%> style="background-color: white !important; padding:2px" >
             <div id="vt-content-wrapper" class="no-space clear-both" style="align:right">
-
-
                 <div class="wrapper_reg" style="background-color: white;">
                     <div class="header_hp" style="background-color: white;">
                         <div class="logo1"><img hspace="5" src="share/homepage/images/logo.png" width="269" height="68" /></div>
@@ -225,6 +218,20 @@
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <td align="right">
+                                                                                                    <sd:Label key="Ngày cấp Từ ngày"/>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <sd:DatePicker cssStyle="width:40%"
+                                                                                                                   id="searchForm.sendDateFrom"
+                                                                                                                   key="" format="dd/MM/yyyy"
+                                                                                                                   name="searchForm.sendDateFrom"/>
+                                                                                                    <sd:Label key="Đến ngày"/>
+                                                                                                    <sd:DatePicker cssStyle="width:40%; float: right;" 
+                                                                                                                   id="searchForm.sendDateTo"
+                                                                                                                   key="" format="dd/MM/yyyy"
+                                                                                                                   name="searchForm.sendDateTo"/>
+                                                                                                </td>
+                                                                                                <td align="right">
                                                                                                     <sd:Label key="Nhóm sản phẩm"/>
                                                                                                 </td>
                                                                                                 <td>
@@ -234,16 +241,7 @@
                                                                                                         <sd:Option value='TPCN'>Thực phẩm chức năng </sd:Option> 
                                                                                                         <sd:Option value='DBT'>Thực phẩm tăng cường vi chất dinh dưỡng </sd:Option>
                                                                                                     </sd:SelectBox>
-                                                                                                </td>
-                                                                                                <td align="right">
-                                                                                                    <sd:Label key="Ngày cấp"/>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <sd:DatePicker cssStyle="width:90%"
-                                                                                                                   id="searchForm.sendDateTo"
-                                                                                                                   key="" format="dd/MM/yyyy"
-                                                                                                                   name="searchForm.sendDateTo"/>
-                                                                                                </td>
+                                                                                                </td>                                                                                                
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <td colspan="4">&nbsp;</td>
@@ -303,35 +301,53 @@
                                                                         </td>
                                                                     </tr>
                                                                 </table>
-
-
-
-                                                            </div> </div> </div> </div> </div> </div> </div> </div> </div> </div> <form action="#" id="hrefFm" method="post" name="hrefFm"> <span></span> </form> </div><!--End #main--> <div id="footer"> <p align="right">Copyright © 2014 Cục An toàn thực phẩm - Bộ Y tế</p> </div><!--End #footer-->
+                                                            </div> 
+                                                        </div> 
+                                                    </div> 
+                                                </div> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                            </div>
+                        </div> 
+                        <form action="#" id="hrefFm" method="post" name="hrefFm"> <span></span> </form> </div><!--End #main--> <div id="footer"> <p align="right">Copyright © 2014 Cục An toàn thực phẩm - Bộ Y tế</p> </div><!--End #footer-->
                 </div>
-
-
             </div>
         </body>
-    </html>
-    <script>
-        page.search = function () {
-            dijit.byId("grid").vtReload('filesAction!onSearchLookUpHomePage.do?', "searchForm");
-        };
-        page.reset = function () {
-            dijit.byId("searchForm.businessName").setValue("");
-            dijit.byId("searchForm.productName").setValue("");
-            dijit.byId("searchForm.businessAddress").setValue("");
-            dijit.byId("searchForm.sendDateTo").setValue("");
+        <%--
+        <sd:Dialog  id="viewChangeReceipt" height="auto" width="500px"
+                    key="Phiên bản hồ sơ" showFullscreenButton="false"
+                    >
+            <div id="selectOldVersionFilesDlgDiv">
+                <jsp:include page="../other/selectOldVersionFilesDlg.jsp" flush="false"/>
+            </div>
+        </sd:Dialog>
+        --%>
+        <script>
+            page.search = function () {
+                dijit.byId("grid").vtReload('filesAction!onSearchLookUpHomePage.do?', "searchForm");
+            };
+            page.reset = function () {
+                dijit.byId("searchForm.businessName").setValue("");
+                dijit.byId("searchForm.productName").setValue("");
+                dijit.byId("searchForm.businessAddress").setValue("");
+                dijit.byId("searchForm.sendDateFrom").setValue("");
+                dijit.byId("searchForm.sendDateTo").setValue("");
+                page.search();
+            };
+            page.formatLinkDownloadPdf = function (fileId) {
+                document.location = "uploadiframe!openFileSignPublic.do?fileId=" + fileId;
+            };
+//            page.checkHaveIsChange = function (fileId) {
+//                document.location = "uploadiframe!openFileSignPublic.do?fileId=" + fileId;
+//            };
+            page.searchByBusinessName = function (row) {
+                var item = dijit.byId("grid").getItem(row);
+                dijit.byId("searchForm.businessName").setValue(item.businessName);
+                dijit.byId("grid").vtReload('filesAction!onSearchLookUpHomePage.do?', "searchForm");
+            };
             page.search();
-        };
-        page.formatLinkDownloadPdf = function (fileId) {
-            document.location = "uploadiframe!openFileSignPublic.do?fileId=" + fileId;
-        };
-        page.searchByBusinessName = function (row) {
-            var item = dijit.byId("grid").getItem(row);
-            dijit.byId("searchForm.businessName").setValue(item.businessName);
-            dijit.byId("grid").vtReload('filesAction!onSearchLookUpHomePage.do?', "searchForm");
-        };
-        page.search();
-    </script>
+        </script>
+    </html>
 </s:i18n>

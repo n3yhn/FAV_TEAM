@@ -307,31 +307,32 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
         try {
             StringBuilder strBuf = new StringBuilder(" from Category a where a.isActive <> -1 ");//binhnt update active = 1;deactive = 0;
             if (form != null) {
-                if (form.getType() != null && !form.getType().equals("")) {
+                if (form.getType() != null && !"".equals(form.getType())) {
                     strBuf.append(" and a.type= ? ");
                     paramList.add(form.getType());
                     //Neu la kho luu tru thi tim theo don vi tao Kho luu tru
-                    if (form.getType().equals("VOLT")) {
+                    if ("VOLT".equals(form.getType())) {
                         strBuf.append(" and a.createdBy = ? ");
                         paramList.add(form.getCreatedBy());
                     }
                     //Neu la kho luu tru thi tim theo don vi tao Kho luu tru
-                    if (form.getType().equals("DVI") && form.getCreatedBy() != null && form.getCreatedBy() > 0) {
+                    if ("DVI".equals(form.getType()) && form.getCreatedBy() != null && form.getCreatedBy() > 0) {
                         strBuf.append(" and a.createdBy = ? ");
                         paramList.add(form.getCreatedBy());
                     }
                 }
 
-                if (form.getCode() != null && !form.getCode().equals("")) {
+                if (form.getCode() != null && !"".equals(form.getCode())) {
                     strBuf.append(" and lower(a.code) LIKE ? ESCAPE '/' ");
                     paramList.add(StringUtils.toLikeString(form.getCode().trim().toLowerCase()));
                 }
 
-                if (form.getName() != null && !form.getName().equals("")) {
+                if (form.getName() != null && !"".equals(form.getName())) {
                     strBuf.append(" and lower(a.name) LIKE ? ESCAPE '/' ");
                     paramList.add(StringUtils.toLikeString(form.getName().trim().toLowerCase()));
                 }
-                if (form.getIsActive() != null && !form.getIsActive().equals("") && !form.getIsActive().equals("-1")) {
+                if (form.getIsActive() != null && !"".equals(form.getIsActive())
+                        && !"-1".equals(form.getIsActive())) {
                     strBuf.append(" and a.isActive = ? ");
                     paramList.add(form.getIsActive().trim());
                 }
@@ -538,6 +539,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
         }
         return bReturn;
     }
+
     /*
      *
      */
@@ -554,11 +556,15 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
                 hql += " and lower(c.code) like ? escape'!'";
                 lstParam.add("%" + convertToLikeString(form.getCode()) + "%");
             }
-            if (form.getType() != null && form.getType().trim().length() > 0 && form.getType().equals("0") != true) {
+            if (form.getType() != null
+                    && form.getType().trim().length() > 0
+                    && "0".equals(form.getType()) != true) {
                 hql += " and lower(c.type) like ? escape'!'";
                 lstParam.add("%" + convertToLikeString(form.getType()) + "%");
             }
-            if (form.getIsActive() != null && form.getIsActive().trim().length() > 0 && form.getIsActive().equals("-1") != true) {
+            if (form.getIsActive() != null 
+                    && form.getIsActive().trim().length() > 0 
+                    && "-1".equals(form.getIsActive()) != true) {
                 hql += " and lower(c.isActive) like ? escape'!'";
                 lstParam.add("%" + convertToLikeString(form.getIsActive()) + "%");
             }
@@ -640,7 +646,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
      }
      */
 
-    /*
+ /*
      public Category findQuocTichVN() {
      try {
      StringBuilder strBuf = new StringBuilder(" from Category a ");
@@ -687,7 +693,7 @@ public class CategoryDAOHE extends GenericDAOHibernate<Category, Long> {
      return new Category();
      }
      */
-    /*
+ /*
      public List<Category> findCategoryOrderByCode(String type) {
      try {
      Query query = getSession().createQuery("select a from Category a where a.isActive = ? and a.type=? order by a.code");

@@ -21,7 +21,7 @@ import com.viettel.common.util.LogUtil;
  */
 public class StandardProductDAOHE extends GenericDAOHibernate<StandardProduct, Long> {
 
-    private static HashMap<String, List> lstFactory = new HashMap();
+    private volatile static HashMap<String, List> lstFactory = new HashMap();
     private static Logger log = Logger.getLogger(StandardProduct.class);
     private List keyList = new ArrayList();
     private List valueList = new ArrayList();
@@ -44,9 +44,9 @@ public class StandardProductDAOHE extends GenericDAOHibernate<StandardProduct, L
      * @return
      */
     public List findAllCategory(String type) {
-        if (lstFactory == null) {
-            lstFactory = new HashMap();
-        }
+//        if (lstFactory == null) {//sonar
+//            lstFactory = new HashMap();
+//        }
 
         if (lstFactory.containsKey(type)) {
             return lstFactory.get(type);

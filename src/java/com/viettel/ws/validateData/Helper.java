@@ -602,7 +602,7 @@ public class Helper {
                             + "_" + envelop.getHeader().getSubject().getReference());
                 }
 //                String docType = Constants.CATEGORY_TYPE.CBSP_SERVICE;               
-                Files f = fDAOHE.findById(Long.parseLong(ref));//sonar not fix?
+//                Files f = fDAOHE.findById(Long.parseLong(ref));//sonar not fix?
                 if (err != null) {
                     errList.add(err);
                     function = Constants.NSW_FUNCTION(100L);

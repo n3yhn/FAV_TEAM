@@ -17,8 +17,8 @@ import java.security.cert.Certificate;
  * @since Sep 29, 2010
  */
 public class CommDataBean implements Serializable {
-    public static String TYPE_INIT="INIT";
-    public static String TYPE_SIGN_BAN_POSITION="SIGN_BAN_POSITION";    
+    public static final String TYPE_INIT="INIT";
+    public static final String TYPE_SIGN_BAN_POSITION="SIGN_BAN_POSITION";    
     private String content;
     private String type;
     private int code;    

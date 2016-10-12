@@ -20,11 +20,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Formatter;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.apache.poi.ss.usermodel.CellStyle.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -70,7 +70,7 @@ public class ToHTML {
 
     @SuppressWarnings({"unchecked"})
     private static <K, V> Map<K, V> mapFor(Object... mapping) {
-        Map<K, V> map = new HashMap<K, V>();
+        ConcurrentHashMap<K, V> map = new ConcurrentHashMap<K, V>();
         for (int i = 0; i < mapping.length; i += 2) {
             map.put((K) mapping[i], (V) mapping[i + 1]);
         }
@@ -395,7 +395,7 @@ public class ToHTML {
                                 style.getDataFormatString());
                         CellFormatResult result = cf.apply(cell);
                         content = result.text;
-                        if (content.equals("")) {
+                        if ("".equals(content)) {
                             content = "&nbsp;";
                         }
                     }

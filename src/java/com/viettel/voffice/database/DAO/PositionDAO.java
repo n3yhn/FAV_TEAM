@@ -99,7 +99,7 @@ public class PositionDAO extends BaseDAO {
         try {
             for (int i = 0; i < lstItemOnGrid.size(); i++) {
                 PositionForm form = lstItemOnGrid.get(i);
-                if (form != null && form.getPosId() != null && form.getPosId() != 0D) {
+                if (form != null && form.getPosId() != null && form.getPosId() != 0L) {
                     Position bo = positionDAOHE.getById("posId", form.getPosId());
                     if (bo != null) {
                         bo.setStatus(Constants.Status.INACTIVE);

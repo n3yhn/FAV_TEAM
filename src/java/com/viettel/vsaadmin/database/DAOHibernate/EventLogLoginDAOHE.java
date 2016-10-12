@@ -19,28 +19,28 @@ import org.hibernate.Query;
  * @author vtit_binhnt53
  */
 public class EventLogLoginDAOHE extends GenericDAOHibernate<EventLogLogin, Long>{
-    private static HashMap<String, List> lstFactory = new HashMap();
+    private HashMap<String, List> lstFactory = new HashMap();
 
-    public static HashMap<String, List> getLstFactory() {
-        return lstFactory;
-    }
-
-    public static void setLstFactory(HashMap<String, List> lstFactory) {
-        EventLogLoginDAOHE.lstFactory = lstFactory;
-    }
+//    public static HashMap<String, List> getLstFactory() {
+//        return lstFactory;
+//    }
+//
+//    public static void setLstFactory(HashMap<String, List> lstFactory) {
+//        EventLogLoginDAOHE.lstFactory = lstFactory;
+//    }
     private static Logger log = Logger.getLogger(EventLogLogin.class);
     private List keyList = new ArrayList();
     private List valueList = new ArrayList();
     //removeCache
 
-    public static void removeCache(String type) {
-        if (lstFactory == null) {
-            return;
-        }
-        if (lstFactory.containsKey(type)) {
-            lstFactory.remove(type);
-        }
-    }
+//    public static void removeCache(String type) {
+//        if (lstFactory == null) {
+//            return;
+//        }
+//        if (lstFactory.containsKey(type)) {
+//            lstFactory.remove(type);
+//        }
+//    }
     /*
      *
      */

@@ -106,7 +106,7 @@ public class ConfirmImportSatistPaperDAOHE extends GenericDAOHibernate<ConfirmIm
      */
     public List findAllConfirmImportSatistPaper() {
         if (lstFactory == null) {
-            lstFactory = new HashMap();
+//            lstFactory = new HashMap();//sonar
         }
 
         if (lstFactory.containsKey("type")) {

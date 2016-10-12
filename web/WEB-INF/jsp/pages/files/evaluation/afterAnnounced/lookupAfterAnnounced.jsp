@@ -3,8 +3,6 @@
 <%@taglib prefix="sd" uri="struts-dojo-tags" %>
 <%@taglib prefix="sx" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<object id="plugin0" type="application/x-viettelcasigner" width="3" height="10">
-</object>
 <%
     request.setAttribute("contextPath", request.getContextPath());
 %>
@@ -811,8 +809,7 @@
             var path = result[1];
             sd.connector.post("filesAction!actionSignCAForAA.do?fileId=" + fileId + "&cert=" + cert + "&signType=" + signTypeCheck + "&path=" + path, null, null, null, page.signPluginC);
             count++;
-        }
-        else
+        } else
         {
             msg.alert("Ký số không thành công: Kiểm tra quá trình xử lý File", "Cảnh báo");
             document.getElementById("divSignProcess").style.display = "none";
@@ -869,8 +866,7 @@
     page.showSignMore = function () {
         if (!dijit.byId("filesGrid").vtIsChecked()) {
             msg.alert('Bạn chưa chọn hồ sơ để thực hiện ký số', 'Cảnh báo');
-        }
-        else {
+        } else {
             itemsToSign = dijit.byId("filesGrid").vtGetCheckedItems();
             signIndex = 0;
             msg.confirm('Bạn có chắc chắn muốn ký số phê duyệt nhiều hồ sơ?', '<sd:Property>confirm.title1</sd:Property>', page.signMoreFiles);
@@ -889,8 +885,7 @@
                     if (signType == "PDHS")
                     {
                         sd.connector.post("filesAction!onReturnFiles.do?signFileId=" + signFileId + "&" + token.getTokenParamString(), null, "feedbackGiveBackForm", null, page.afterAproveVT);
-                    }
-                    else if (signType == "CVBS")
+                    } else if (signType == "CVBS")
                     {
                         dijit.byId("feedbackGiveBackForm.fileId").setValue(signFileId);
                         sd.connector.post("filesAction!onFeedbackGiveBack.do?" + token.getTokenParamString(), null, "feedbackGiveBackForm", null, page.afterAproveVT);
@@ -908,8 +903,7 @@
                             page.search();
                             count = 0;
                         }
-                    }
-                    else
+                    } else
                     {
                         if (result[0] == "1") {
                             if (signIndex == itemsToSign.length - 1)
@@ -918,14 +912,12 @@
                                 document.getElementById("divSignProcess").style.display = "none";
                                 page.search();
                                 count = 0;
-                            }
-                            else
+                            } else
                             {
                                 signIndex++;
                                 page.signMoreFiles();
                             }
-                        }
-                        else
+                        } else
                         {
                             msg.alert('Ký số không thành công', 'Lỗi hệ thống');
                             document.getElementById("divSignProcess").style.display = "none";
@@ -971,8 +963,8 @@
                     page.rplBrTblComparisonDlg();
                     dijit.byId("comparisonDlg").show();
                 };
-                
-page.UploadFileSignVT = function (row)
+
+                page.UploadFileSignVT = function (row)
                 {
                     var item = dijit.byId("filesGrid").getItem(row);
                     workingFileId = item.fileId;
@@ -980,7 +972,7 @@ page.UploadFileSignVT = function (row)
                     dijit.byId("upload").show();
                 };
 
-page.hideSignMore = function ()
+                page.hideSignMore = function ()
                 {
                     var searchType = dijit.byId("searchForm.searchType").getValue();
                     checkSignType = searchType;
@@ -988,13 +980,12 @@ page.hideSignMore = function ()
                     if ((searchType != null && searchType == "-6") || (searchType != null && searchType == "-27"))
                     {
                         document.getElementById("trSignMore").style.display = "";
-                    }
-                    else
+                    } else
                     {
                         document.getElementById("trSignMore").style.display = "none";
                     }
                 };
-                page.hideSignMore();                
+                page.hideSignMore();
                 function deleteAllCookies() {
                     var cookies = document.cookie.split(";");
                     for (var i = 0; i < cookies.length; i++) {
@@ -1013,3 +1004,5 @@ page.hideSignMore = function ()
 <sd:TextBox id="txtBase64HashC" key="" name="txtBase64Hash" type="hidden"/>
 <input type="hidden" id="certSerial" value="" />
 <sd:TextBox id="txtCertSerialC" key="" name="txtCertSerial" type="hidden"/>
+    <object id="plugin0" type="application/x-viettelcasigner" width="3" height="10">
+    </object>

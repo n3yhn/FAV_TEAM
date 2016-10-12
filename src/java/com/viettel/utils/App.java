@@ -48,12 +48,12 @@ public class App {
 //        int i = 0;
 //        int ib = 0;
 //        int ip = 0;
-        int supindex;
         int subindex;
         int lastindex;
         int firstindex;
 //        int nindex = 0;
-        supindex = content.indexOf("^(");
+//        int supindex = content.indexOf("^(");//sonar
+        int supindex;
         int type;//  = 0 is normal; = 1 is sup; = 2 is sub
         String value;
         while (!content.isEmpty()) {
@@ -327,8 +327,8 @@ public class App {
             if (content.substring(nindex).contains("_(") == false && content.substring(nindex).contains("^(") == false) {
                 paragraph.getContent().add(createNormalText(factory, content.substring(nindex)));
                 break;
-            } else {
-                //kiem tra chuoi co chua ki tu danh dau k
+            } else //kiem tra chuoi co chua ki tu danh dau k
+            {
                 if (content.substring(nindex).contains("^(")) {
                     //kiem tra ki tu thu i co phai la ^ k
                     if (content.charAt(i) == '^' && content.charAt(i + 1) == '(') {
@@ -345,20 +345,18 @@ public class App {
                                 ib = j + 2;
                                 nindex = ib;
                                 break;
-                            } else {
-                                if (content.charAt(j) == '^' && content.charAt(j + 1) == ')') {
-                                    sup = content.substring(supindex, j);
-                                    paragraph.getContent().add(createSuperscriptText(factory, sup));
+                            } else if (content.charAt(j) == '^' && content.charAt(j + 1) == ')') {
+                                sup = content.substring(supindex, j);
+                                paragraph.getContent().add(createSuperscriptText(factory, sup));
 //                                    sup = "";
-                                    nindex = j + 2;
-                                    break;
-                                }
+                                nindex = j + 2;
+                                break;
                             }
                             ib++;
                         }
                     }
-                } else {
-                    //kiem tra ki tu thu i co phai la ^ k
+                } else //kiem tra ki tu thu i co phai la ^ k
+                {
                     if (content.substring(nindex).contains("_(")) {
                         if (content.charAt(i) == '_' && content.charAt(i + 1) == '(') {
                             n = content.substring(nindex, i);
@@ -374,14 +372,12 @@ public class App {
                                     ip = j + 2;
                                     nindex = ip;
                                     break;
-                                } else {
-                                    if (content.charAt(j) == '_' && content.charAt(j + 1) == ')') {
-                                        sub = content.substring(supindex, j);
-                                        paragraph.getContent().add(createSubscriptText(factory, sub));
+                                } else if (content.charAt(j) == '_' && content.charAt(j + 1) == ')') {
+                                    sub = content.substring(supindex, j);
+                                    paragraph.getContent().add(createSubscriptText(factory, sub));
 //                                        sub = "";
-                                        nindex = j + 2;
-                                        break;
-                                    }
+                                    nindex = j + 2;
+                                    break;
                                 }
                                 ip++;
                             }

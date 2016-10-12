@@ -258,7 +258,7 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
         try {
 
             Fee fee = new Fee();
-            List procedure = null;
+//            List procedure = null;
 
             Long stt = feeForm.getIsActive();
             Long feeType = feeForm.getFeeType();
@@ -338,7 +338,7 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
                 fdhe.deleteProcedure(feeForm.getFeeId());
                 for (int i = 0; i < list.size(); i++) {
                     FeeProcedure feepro1 = (FeeProcedure) findById(FeeProcedure.class, "feeId", feeForm.getFeeId());
-                    String id = list.get(i);
+//                    String id = list.get(i);
                     feepro1.setIsActive(1l);
                     getSession().save(feepro1);
                 }
@@ -360,7 +360,7 @@ public class FeePaymentInfoDAOHE extends GenericDAOHibernate<FeePaymentInfo, Lon
      * @return
      */
     public void deleteProcedure(Long feeId) {
-        int iReturn = 0;
+//        int iReturn = 0;
         // 11/11/2014 viethd
         //String a = " update FeeProcedure fp set fp.isActive = 0 where fp.feeId=" + feeId;
         String a = " update FeeProcedure fp set fp.isActive = 0 where fp.feeId= ? ";

@@ -49,7 +49,8 @@ public class UploadFile {
         ResourceBundle rb = ResourceBundle.getBundle("config");
         String dir = rb.getString("directory");
         String subDir = separatorFile + String.valueOf(cal.getTime().getYear() + 1900)
-                + String.valueOf(cal.getTime().getMonth() + 1) + String.valueOf(cal.getTime().getDate());
+                + separatorFile + String.valueOf(cal.getTime().getMonth() + 1)
+                + separatorFile + String.valueOf(cal.getTime().getDate());
         String subFolder = dir + subDir;
         File folderExisting = new File(getSafeFileName(dir));
         if (!folderExisting.isDirectory()) {
@@ -177,7 +178,8 @@ public class UploadFile {
         ResourceBundle rb = ResourceBundle.getBundle("config");
         String dir = rb.getString("directoryExcel");
         String subDir = separatorFile + String.valueOf(cal.getTime().getYear() + 1900)
-                + String.valueOf(cal.getTime().getMonth() + 1) + String.valueOf(cal.getTime().getDate());
+                + separatorFile + String.valueOf(cal.getTime().getMonth() + 1)
+                + separatorFile + String.valueOf(cal.getTime().getDate());
         String subFolder = dir + subDir;
         File folderExisting = new File(getSafeFileName(dir));
         if (!folderExisting.isDirectory()) {

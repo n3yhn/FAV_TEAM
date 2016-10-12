@@ -319,5 +319,5 @@
                                             else {
                                                 alert("Bạn chưa chọn Trạng thái thu phí hồ sơ");
                                             }
-                                        };
+    };
 </script>

@@ -92,8 +92,8 @@ public class BusinessAlertDAOHE extends GenericDAOHibernate<BusinessAlert, Long>
             hql += " ORDER BY b.createdDate DESC";
 
             Query query = getSession().createQuery(selectHQL + hql);
-            Query countQuery = getSession().createQuery(countHql + hql);
-            Long nCount = (Long) countQuery.uniqueResult();
+//            Query countQuery = getSession().createQuery(countHql + hql);//sonar
+//            Long nCount = (Long) countQuery.uniqueResult();
             List<BusinessAlert> lst = query.list();
             for (BusinessAlert bo : lst) {
                 list.add(boToForm(bo));
@@ -122,7 +122,7 @@ public class BusinessAlertDAOHE extends GenericDAOHibernate<BusinessAlert, Long>
     public List<BusinessAlert> getAllBusinessAlertByUserId(Long userId) {
         List<BusinessAlert> list = new ArrayList<BusinessAlert>();
         try {
-            String countHql = "SELECT count(b) ";
+//            String countHql = "SELECT count(b) ";//sonar
             String selectHQL = "SELECT b";
             String hql = " FROM BusinessAlert b"
                     + " WHERE (b.seen = 0)"

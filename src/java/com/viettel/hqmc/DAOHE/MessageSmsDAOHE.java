@@ -41,13 +41,13 @@ public class MessageSmsDAOHE extends GenericDAOHibernate<MessageSms, Long> {
      * @return
      */
     public boolean sendMessage(Long sendId, String[] receiverList, String content) {
-        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) {
+        if ("0".equals(Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS)) {
             return true;
         }
         boolean result = true;
         try {
             for (String id : receiverList) {
-                if (id != null && !id.equals("")) {
+                if (id != null && !"".equals(id)) {
                     Long userId = Long.valueOf(id);
                     MessageSms bo = this.entityToBo(sendId, userId, content);
                     this.create(bo);
@@ -98,7 +98,7 @@ public class MessageSmsDAOHE extends GenericDAOHibernate<MessageSms, Long> {
      * @return
      */
     public boolean saveMessageSMS(Long senderId, Long receiverId, String content) {
-        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) {
+        if ("0".equals(Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS)) {
             return true;
         }
         boolean result = true;
@@ -146,7 +146,7 @@ public class MessageSmsDAOHE extends GenericDAOHibernate<MessageSms, Long> {
      * @return
      */
     public boolean saveMessageSMSGroup(Long receiverId, String cellphone, String content) {
-        if (Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS.equals("0")) {
+        if ("0".equals(Constants.FLAG_SEND_SMSEMAIL.FLAG_SMS)) {
             return true;
         }
         boolean result = true;

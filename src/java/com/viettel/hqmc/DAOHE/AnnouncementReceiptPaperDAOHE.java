@@ -110,7 +110,7 @@ public class AnnouncementReceiptPaperDAOHE extends GenericDAOHibernate<Announcem
      */
     public List findAllAnnouncementReceiptPaper() {
         if (lstFactory == null) {
-            lstFactory = new HashMap();
+//            lstFactory = new HashMap();
         }
 
         if (lstFactory.containsKey("type")) {
@@ -189,12 +189,12 @@ public class AnnouncementReceiptPaperDAOHE extends GenericDAOHibernate<Announcem
                 return false;
             }
             if (arrString[2].length() == 9) {
-                if (arrString[2].substring(5, 9).equals("TNCB")) {
+                if ("TNCB".equals(arrString[2].substring(5, 9))) {
                     if (arrString[2].charAt(4) == '-') {
-                        if (arrString[2].substring(0, 4).equals("ATTP")) {
+                        if ("ATTP".equals(arrString[2].substring(0, 4))) {
                             return true;
                         } else {
-                            if (arrString[2].substring(0, 2).equals("YT")) {
+                            if ("YT".equals(arrString[2].substring(0, 2))) {
                                 return true;
                             } else {
                                 return false;

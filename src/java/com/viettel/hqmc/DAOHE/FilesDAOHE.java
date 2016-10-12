@@ -92,19 +92,19 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
      */
     public Files saveFiles(FilesForm createForm) {
         Files bo;
-        Files boRollBack = new Files();
+//        Files boRollBack;
         Long filesId = createForm.getFileId();
-        Boolean isCreateNew = false;
-        Long status = 0L;
+//        Boolean isCreateNew;
+//        Long status = 0L;
         Long announcementId = null;
         Long detailProductId = null;
         Long reIssueFormId = null;
         Long testRegistrationId = null;
         Long productTypeIdOld = null;
 
-        if (createForm.getStatus() != null) {
-            status = createForm.getStatus();
-        }
+//        if (createForm.getStatus() != null) {
+//            status = createForm.getStatus();
+//        }
         if (filesId != null) {
             String hql = "select dt.productType from DetailProduct dt "
                     + "where "
@@ -123,11 +123,11 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         if (filesId == null) {//la them moi            
             bo = createForm.convertToEntity();
         } else {//la sua
-            isCreateNew = false;
-            boRollBack = findById(filesId);
+//            isCreateNew = false;
+//            boRollBack = findById(filesId);
             bo = findById(filesId);
 
-            if (status.equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)
+            if (bo.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)//binhnt update fix bug 16 09 20
                     && bo.getHaveTemp() != null
                     && bo.getHaveTemp().equals(1l)) {
                 //
@@ -140,7 +140,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 saveFiles(cloneForm);
                 //update toan bo process_comment cua lan tham dinh truoc thanh
                 ProcessCommentDAOHE pcdhe = new ProcessCommentDAOHE();
-                int r = pcdhe.updateVersion(filesId, cloneForm.getVersion());
+                pcdhe.updateVersion(filesId, cloneForm.getVersion());
             }
             bo = createForm.updateToEntity(bo);
         }
@@ -270,13 +270,13 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
 //            log.error(ex.getMessage());
-            if (isCreateNew) {
-                bo.setIsActive(Constants.Status.INACTIVE);
-                getSession().update(bo);
-            } else {
-                getSession().update(boRollBack);
-
-            }
+//            if (isCreateNew) {
+//                bo.setIsActive(Constants.Status.INACTIVE);
+//                getSession().update(bo);
+//            } else {
+//                getSession().update(boRollBack);
+//
+//            }
             return null;
         }
 
@@ -337,13 +337,13 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     form.setConfirmImportSatistPaperForm(new ConfirmImportSatistPaperForm());
                 }
                 //set contentXml
-                try {
-                    Document document = CommonUtils.buildAllPublishDocument(entity.getFileId());
-                    form.setContentXml(StringUtils.escapeHtml(CommonUtils.convertDocument2String(document)));
-                } catch (Exception ex) {
-                    LogUtil.addLog(ex);//binhnt sonar a160901
-//                    log.error(e);
-                }
+//                try {
+//                    Document document = CommonUtils.buildAllPublishDocument(entity.getFileId());
+//                    form.setContentXml(StringUtils.escapeHtml(CommonUtils.convertDocument2String(document)));
+//                } catch (Exception ex) {
+//                    LogUtil.addLog(ex);//binhnt sonar a160901
+////                    log.error(e);
+//                }
                 try {
                     if (entity.getAnnouncementReceiptPaperId() != null) {
                         AnnouncementReceiptPaper annp = (AnnouncementReceiptPaper) findById(
@@ -509,7 +509,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         boolean bReturn = true;
         try {
             Files bo = findById(fileId);
-//            FlowDAOHE fdhe = new FlowDAOHE();
             DepartmentDAOHE ddhe = new DepartmentDAOHE();
             Date dateNow = getSysdate();
             Department dept = ddhe.findById(deptId);
@@ -517,22 +516,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             bo.setAgencyId(dept.getDeptId());
             bo.setAgencyName(dept.getDeptName());
             bo.setModifyDate(dateNow);
-            //
-            // neu co flow
-            //
-/*
-             Flow flow = fdhe.findByDept(deptId, bo.getFileType());
-             if (flow != null) {
-             //
-             // Gui toi cho don vi & luong duoc chon
-             //
-             bo.setFlowId(flow.getFlowId());
-             bo.setNodeId(null);
-             bo.setNodeHistory("");
 
-             } else {
-             }
-             */
             ProcedureDAOHE pdhe = new ProcedureDAOHE();
             Procedure pro = pdhe.findById(bo.getFileType());
             if (pro != null && pro.getDeadline() != null) {
@@ -566,10 +550,11 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     getSession().update(p);
                 }
             }
+
             bo.setSendDate(dateNow);
             //140623 THIET LAP HAN TIEP NHAN HO SO
             ResourceBundle rb = ResourceBundle.getBundle("config");
-            Procedure procedurebo = new Procedure();
+            Procedure procedurebo;
             ProcedureDAOHE procedureDAOHE = new ProcedureDAOHE();
             procedurebo = procedureDAOHE.findById(bo.getFileType());
             int TN = 0;
@@ -577,7 +562,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 TN = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_TN"));
             } catch (NumberFormatException ex) {
                 LogUtil.addLog(ex);//binhnt sonar a160901
-//                log.error(ex.getMessage());
             }
             if (TN > 0) {
                 bo.setDeadlineReceived(getDateWorkingTime(TN));
@@ -592,16 +576,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             //140623 THIET LAP HAN TIEP NHAN HO SO
             getSession().update(bo);
 
-            // Chay toi node dau tien
-//            if (flow != null) {
-//                bReturn = fdhe.moveDocumentToNextNode(businessId, businessName, userId, userName, bo.getFileId());
-//            } else {
-            // Xem trong file cau hinh co don vi la phong ban xu ly ko
-//            String hql = "select p from ProcedureDepartment p where p.deptId = ? and p.procedureId = ? ";
-//            Query query = getSession().createQuery(hql);
-//            query.setParameter(0, deptId);
-//            query.setParameter(1, bo.getFileType());
-//            List lst = query.list();
             // gui den cho co quan truoc
             Process p = new Process();
             p.setObjectId(fileId);
@@ -627,21 +601,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 p.setReceiveGroup(dept.getDeptName());
                 p.setReceiveGroupId(dept.getDeptId());
             }
-            /*
-             if (lst != null && lst.size() > 0) {
-             ProcedureDepartment pd = (ProcedureDepartment) lst.get(0);
-             if (pd.getProcessDeptId() != null && pd.getProcessDeptId() > 0l) {
-             p.setReceiveGroup(pd.getProcessDeptName());
-             p.setReceiveGroupId(pd.getProcessDeptId());
-             } else {
-             p.setReceiveGroup(dept.getDeptName());
-             p.setReceiveGroupId(dept.getDeptId());
-             }
-             } else {
-             p.setReceiveGroup(dept.getDeptName());
-             p.setReceiveGroupId(dept.getDeptId());
-             }
-             */
+
             p.setProcessType(Constants.PROCESS_TYPE.MAIN);
             //140404 binhnt53
             if (bo.getStatus().equals(Constants.FILE_STATUS.NEW)
@@ -661,38 +621,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             p.setIsActive(Constants.ACTIVE_STATUS.ACTIVE);
             getSession().save(p);
 
-//                if (lst != null && lst.size() > 0) {
-//                    ProcedureDepartment pd = (ProcedureDepartment) lst.get(0);
-//                    if (pd.getProcessDeptId() != null && pd.getProcessDeptId() > 0l) {
-//                        Process pAuto = new Process();
-//                        pAuto.setObjectId(fileId);
-//                        pAuto.setObjectType(Constants.OBJECT_TYPE.FILES);
-//                        pAuto.setSendDate(new Date());
-//                        pAuto.setSendGroup(dept.getDeptName());
-//                        pAuto.setSendGroupId(dept.getDeptId());
-//
-//                        pAuto.setReceiveDate(new Date());
-//                        pAuto.setReceiveGroup(pd.getProcessDeptName());
-//                        pAuto.setReceiveGroupId(pd.getProcessDeptId());
-//
-//                        //140404 binhnt53
-//                        //                        pAuto.setProcessStatus(Constants.FILE_STATUS.NEW); // De xu ly
-//                        if (bo.getStatus().equals(Constants.FILE_STATUS.NEW) || bo.getStatus().equals(Constants.FILE_STATUS.RECEIVED_REJECT)) {
-//                            pAuto.setProcessStatus(Constants.FILE_STATUS.NEW); // De xu ly
-//                        }
-//                        if (bo.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {
-//                            pAuto.setProcessStatus(Constants.FILE_STATUS.NEW_TO_ADD); // De xu ly
-//                        }
-//                        //!140404 binhnt53
-//
-//                        pAuto.setProcessType(Constants.PROCESS_TYPE.MAIN);
-//                        pAuto.setStatus(0l);
-//                        pAuto.setIsActive(1l);
-//                        getSession().save(pAuto);
-//                    }
-//
-//                }
-//            }
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
             bReturn = false;
@@ -867,7 +795,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         List<String> lstLeader = new ArrayList<String>();
                         lstLeader.add(Constants.POSITION.LEADER_OF_STAFF_T);
                         lstLeader.add(Constants.POSITION.GDTT);
-                        Users ubo = null;
+                        Users ubo;
                         List<Users> lstLeaderOfDept = udaohe.findLstUserByLstPosition(deptId, lstLeader);
                         if (lstLeaderOfDept != null
                                 && lstLeaderOfDept.size() > 0) {
@@ -981,7 +909,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             updateSetNotLastIsTemp(file.getFileId());
                             //xóa bản ghi temp trước nếu có (lưu vào vùng lưu trữ)
                             ProcessCommentDAOHE pcdaohe = new ProcessCommentDAOHE();
-                            int a = pcdaohe.updateSetNotLastIsTemp(file.getFileId());
+                            pcdaohe.updateSetNotLastIsTemp(file.getFileId());
                         }
                         if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATE_TO_ADD)) {//da soan du thao thong bao sdbs ho so                           
                             /*
@@ -1146,7 +1074,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         EvaluationRecords evaluationRecordsBo;
                         evaluationRecordsBo = evaRecordForm.convertToEntity();
                         getSession().save(evaluationRecordsBo);
-                        boolean bInsertRC = insertRequestComment(
+                        insertRequestComment(
                                 file.getFileId(),
                                 form,
                                 userId,
@@ -1184,7 +1112,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         EvaluationRecords evaluationRecordsBo;
                         evaluationRecordsBo = evaRecordForm.convertToEntity();
                         getSession().save(evaluationRecordsBo);
-                        boolean bInsertRC = insertRequestComment(
+                        insertRequestComment(
                                 file.getFileId(),
                                 form,
                                 userId,
@@ -1625,13 +1553,11 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     }//!140627 THIET LAP HAN SDBS HO SO
                     //sms
                     MessageSmsDAOHE msdhe = new MessageSmsDAOHE();
-                    String msg = "";
-                    msg = "Ho so ma: " + file.getFileCode() + " cua doanh nghiep: " + file.getBusinessName() + " dang trong trang thai: da thong bao yeu cau sdbs";
+                    String msg = "Ho so ma: " + file.getFileCode() + " cua doanh nghiep: " + file.getBusinessName() + " dang trong trang thai: da thong bao yeu cau sdbs";
                     msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
                     //email
                     MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
-                    String msge = "";
-                    msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: Đã thông báo yêu cầu sửa đổi bổ sung.";
+                    String msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: Đã thông báo yêu cầu sửa đổi bổ sung.";
                     msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
                 }//!140721
                 update(file);
@@ -1658,15 +1584,16 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         if (file == null) {
             bReturn = false;
         } else {
-            Long objectId = file.getFileId();
-            ProcessDAOHE psdhe = new ProcessDAOHE();
-            List<Process> lstPs = psdhe.getProcessOfOffice(objectId, Constants.OBJECT_TYPE.FILES);
-            if (!lstPs.isEmpty()) {
-                for (Process process : lstPs) {
-                    if (process.getStatus().equals(Constants.FILE_STATUS.ALERT_COMPARISON) && process.getStatus().equals(Constants.FILE_STATUS.ALERT_COMPARISON)) {
-                    }
-                }
-            }
+//            Long objectId = file.getFileId();
+//            ProcessDAOHE psdhe = new ProcessDAOHE();
+//            List<Process> lstPs = psdhe.getProcessOfOffice(objectId, Constants.OBJECT_TYPE.FILES);
+//            if (!lstPs.isEmpty()) {
+//                for (Process process : lstPs) {
+//                    if (process.getStatus().equals(Constants.FILE_STATUS.ALERT_COMPARISON) 
+//                            && process.getStatus().equals(Constants.FILE_STATUS.ALERT_COMPARISON)) {
+//                    }
+//                }
+//            }
         }
         return bReturn;
     }
@@ -1774,7 +1701,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         ProcedureDAOHE pdheNew = new ProcedureDAOHE();
                         Procedure pro = pdheNew.findById(file.getFileType());
                         //Hiepvv 0803 Khong xet lai phi cho SDBS sau cong bo
-                        if (!pro.getCode().equals("01") && !pro.getCode().equals("02") && !pro.getDescription().equals("announcementFile05")) {
+                        if (!"01".equals(pro.getCode()) && !"02".equals(pro.getCode()) && !"announcementFile05".equals(pro.getDescription())) {
                             file.setIsFee(0l);
                             //update binhnt
 //                            if ("true".equals(ResourceBundleUtil.getString("send_service", "config"))) {
@@ -2006,8 +1933,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                                 msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
                                 //email
                                 MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
-                                String msge = "";
-                                msge = "Hồ sơ mã: " + file.getFileCode()
+                                String msge = "Hồ sơ mã: " + file.getFileCode()
                                         + " của doanh nghiệp: " + file.getBusinessName()
                                         + " đang trong trạng thái: đã phê duyệt, doanh nghiệp lưu ý đóng lệ phí cấp số để được cấp bản công bố";
                                 msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
@@ -2809,9 +2735,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);
                 // check le phi cap so theo loai ho so
                 if (feenew != null && feenew.size() > 0) {
-                    FeePaymentInfo fpif = new FeePaymentInfo();
                     for (int i = 0; i < feenew.size(); i++) {
-                        fpif = new FeePaymentInfo();
+                        FeePaymentInfo fpif = new FeePaymentInfo();
                         fpif.setCreateDate(dateNow);
                         fpif.setStatus(0l);
                         fpif.setFileId(fileId);
@@ -2940,7 +2865,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 List<Category> cate1 = ctdhe.findCategoryByTypeAndCodeNew("SP", "DBT");
                 Long feeIdOld, feeIdNew;
                 int check = 0, check1 = 0;
-                FeePaymentInfo fpifOld = null;
+                FeePaymentInfo fpifOld;
                 for (int i = 0; i < cate1.size(); i++) {
                     if (productTypeIdOld.equals(cate1.get(i).getCategoryId())) {
                         check = 1;
@@ -2968,7 +2893,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         break;
                     }
                 }
-                Long costNew = 0l;
+                Long costNew;
                 if (check1 == 1) {
                     Fee findfee1 = fdhe.findFeeByCode("TPDB");
                     feeIdNew = findfee1.getFeeId();
@@ -3014,10 +2939,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     fpifOld.setStatus(0l);
                     //Hiepvv 0803 Khong tinh phi SDBS sau cong bo
                     ProcedureDAOHE pHE = new ProcedureDAOHE();
-                    Procedure pdu = new Procedure();
-                    pdu = pHE.findById(filesnew.getFileType());
+                    Procedure pdu = pHE.findById(filesnew.getFileType());
                     if (pdu != null && pdu.getDescription() != null
-                            && pdu.getDescription().equals("announcementFile05")) {
+                            && "announcementFile05".equals(pdu.getDescription())) {
                         filesnew.setIsFee(1l);
                     } else {
                         filesnew.setIsFee(0l);
@@ -3060,9 +2984,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);
                 // check le phi cap so theo loai ho so
                 if (feenew != null && feenew.size() > 0) {
-                    FeePaymentInfo fpif = new FeePaymentInfo();
                     for (int i = 0; i < feenew.size(); i++) {
-                        fpif = new FeePaymentInfo();
+                        FeePaymentInfo fpif = new FeePaymentInfo();
                         //Thong tin co ban, status=1 = da dong phi
                         fpif.setCreateDate(dateNow);
                         fpif.setStatus(1l);
@@ -3190,21 +3113,21 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             typeFile = tthc.getDescription();
         }
         //Hiepvv Khong validate voi ks4s
-        if (typeFile.equalsIgnoreCase("announcement4star")) {
+        if ("announcement4star".equalsIgnoreCase(typeFile)) {
 
         } else if (form.getProductName() == null || form.getProductName().trim().isEmpty()) {
             error = "Chưa nhập tên sản phẩm";
             return error;
         }
         //Hiepvv Khong validate voi ho so sua doi sau cong bo
-        if (!(typeFile.equalsIgnoreCase("announcementFile05"))
+        if (!("announcementFile05".equalsIgnoreCase(typeFile))
                 && (form.getManufactureName() == null
                 || form.getManufactureName().trim().isEmpty())) {
             error = "Chưa nhập tên nhà sản xuất";
             return error;
         }
         //Hiepvv Khong validate voi ho so sua doi sau cong bo
-        if (!(typeFile.equalsIgnoreCase("announcementFile05"))
+        if (!("announcementFile05".equalsIgnoreCase(typeFile))
                 && (form.getManufactureAddress() == null
                 || form.getManufactureAddress().trim().isEmpty())) {
             error = "Chưa nhập địa chỉ nhà sản xuất";
@@ -3232,16 +3155,21 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             }
         }
         //Hiepvv Khong validate voi ho so sua doi sau cong bo
-        if (!(typeFile.equalsIgnoreCase("announcementFile05")) && (form.getNationName() == null || form.getNationName().trim().isEmpty())) {
+        if (!("announcementFile05".equalsIgnoreCase(typeFile))
+                && (form.getNationName() == null
+                || form.getNationName().trim().isEmpty())) {
             error = "Chưa nhập nước xuất xứ";
             return error;
         }
-        if (form.getAnnouncementNo() == null || form.getAnnouncementNo().trim().isEmpty()) {
+        if (form.getAnnouncementNo() == null
+                || form.getAnnouncementNo().trim().isEmpty()) {
             error = "Chưa nhập số bản công bố";
             return error;
         }
 
-        if (!(typeFile.equalsIgnoreCase("announcementFile05")) && (form.getMatchingTarget() == null || form.getMatchingTarget().trim().isEmpty())) {
+        if (!("announcementFile05".equalsIgnoreCase(typeFile))
+                && (form.getMatchingTarget() == null
+                || form.getMatchingTarget().trim().isEmpty())) {
             error = "Chưa nhập phù hợp với QCKT/QĐATTP";
             return error;
         }
@@ -3301,8 +3229,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         ProcedureDAOHE pdhe = new ProcedureDAOHE();
         Procedure tthc = pdhe.findById(file.getFileType());
         //Hiepvv Khong validate voi ho so sua doi sau cong bo va KS4s
-        if (tthc.getDescription().equalsIgnoreCase("announcement4star")
-                || tthc.getDescription().equalsIgnoreCase("announcementFile05")
+        if ("announcement4star".equalsIgnoreCase(tthc.getDescription())
+                || "announcementFile05".equalsIgnoreCase(tthc.getDescription())
                 || tthc.getDescription().equals(Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT)
                 || tthc.getDescription().equals(Constants.FILE_DESCRIPTION.REC_CONFIRM_NORMAL_IMP)
                 || tthc.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_IMP)
@@ -3317,7 +3245,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         }
 
         //hieptq update check reset fee 100715
-        if (createForm.getUserSigned() != null && createForm.getUserSigned().equals("reset")) {
+        if (createForm.getUserSigned() != null && "reset".equals(createForm.getUserSigned())) {
             //
             // validate thong tin chi tiet
             //
@@ -3348,7 +3276,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     error = "Chưa nhập tên chỉ tiêu chất lượng chính";
                     return error;
                 }
-                if (item.getUnitName() == null || item.getUnitName().equals("-- Chọn --")) {
+                if (item.getUnitName() == null || "-- Chọn --".equals(item.getUnitName())) {
                     error = "Chưa nhập đơn vị của chỉ tiêu chất lượng chính";
                     return error;
                 }
@@ -3368,7 +3296,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     error = "Chưa nhập tên chỉ tiêu vi sinh vật";
                     return error;
                 }
-                if (item.getUnitName() == null || item.getUnitName().equals("-- Chọn --")) {
+                if (item.getUnitName() == null || "-- Chọn --".equals(item.getUnitName())) {
                     error = "Chưa nhập đơn vị của chỉ tiêu vi sinh vật";
                     return error;
                 }
@@ -3385,7 +3313,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     error = "Chưa nhập tên chỉ tiêu hàm lượng kim loại nặng";
                     return error;
                 }
-                if (item.getUnitName() == null || item.getUnitName().equals("-- Chọn --")) {
+                if (item.getUnitName() == null || "-- Chọn --".equals(item.getUnitName())) {
                     error = "Chưa nhập đơn vị của chỉ tiêu hàm lượng kim loại nặng";
                     return error;
                 }
@@ -3402,7 +3330,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     error = "Chưa nhập tên chỉ tiêu hàm lượng hóa chất không mong muốn";
                     return error;
                 }
-                if (item.getUnitName() == null || item.getUnitName().equals("-- Chọn --")) {
+                if (item.getUnitName() == null || "-- Chọn --".equals(item.getUnitName())) {
                     error = "Chưa nhập đơn vị của chỉ tiêu chất hàm lượng hóa chất không mong muốn";
                     return error;
                 }
@@ -3456,7 +3384,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             }
         }
         //Hiepvv Khong validate voi ho so sua doi sau cong bo
-        if (count == 0 && !(pd.getDescription().equalsIgnoreCase("announcementFile05"))) {
+        if (count == 0 && !("announcementFile05".equalsIgnoreCase(pd.getDescription()))) {
             error = "Chưa chọn nhãn cho sản phẩm";
             return error;
         } else//150709 binhnt53 add check max nhan duoc chon
@@ -3835,7 +3763,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 
         query.setFirstResult(start);
         query.setMaxResults(count);
-        int total = Integer.parseInt(countQuery.uniqueResult().toString());
+//        int total = Integer.parseInt(countQuery.uniqueResult().toString());
         List<Files> lstResult = query.list();
         if (!lstResult.isEmpty()) {
             return lstResult.get(0);
@@ -3965,7 +3893,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
      * @return
      */
     public static String getFileStatusName(Long status) {
-        String statusName = "";
+        String statusName;
         switch (status.intValue()) {
             case 0:
                 statusName = "Mới tạo";
@@ -4065,9 +3993,12 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 break;
             case 32:
                 statusName = "Hồ sơ kế toán đã xác nhận lệ phí cấp số";
+                break;
             case 33:
                 statusName = "Hồ sơ đã bị VT từ chối tiếp nhận SĐBS";
                 break;
+            default:
+                statusName = "";
         }
         return statusName;
     }
@@ -4163,10 +4094,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 if (!form.getStatus().equals(Constants.FILE_STATUS.RECEIVED_REJECT)) {
                     file.setReceivedDate(dateNow);
                     ResourceBundle rb = ResourceBundle.getBundle("config");
-                    Procedure procedurebo = new Procedure();
                     ProcedureDAOHE procedureDAOHE = new ProcedureDAOHE();
-                    procedurebo = procedureDAOHE.findById(file.getFileType());
-                    if (procedurebo.getDescription().equalsIgnoreCase("announcement4star")) {
+                    Procedure procedurebo = procedureDAOHE.findById(file.getFileType());
+                    if ("announcement4star".equalsIgnoreCase(procedurebo.getDescription())) {
                         file.setDeadlineApprove(getDateWorkingTime(15));
                         file.setDeadlineComment(getDateWorkingTime(15));
                     } else {
@@ -4304,12 +4234,111 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
                 //email
                 MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
-                String msge = "";
-                msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: Đã tiếp nhận";
+                String msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: Đã tiếp nhận";
                 msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
                 //send group leader of dept 140915 binhnt53
                 EmailSmsDAO emdao = new EmailSmsDAO();
-                boolean ck = emdao.alertLeaderOfStaffAssignFiles(deptId, file.getFileCode(), file.getBusinessName());
+                emdao.alertLeaderOfStaffAssignFiles(deptId, file.getFileCode(), file.getBusinessName());
+                //
+                bReturn = true;
+            }
+        } catch (Exception ex) {
+            bReturn = false;
+            LogUtil.addLog(ex);//binhnt sonar a160901
+        }
+        return bReturn;
+    }
+
+    public boolean onReceivedFileToStaff(FilesForm form, Long userId, String userName) {
+        boolean bReturn = true;
+        try {
+            Date dateNow = getSysdate();
+            Files file = findById(form.getFileId());
+            if (file == null) {
+                bReturn = false;
+            } else {
+                Long processStatus = file.getStatus();
+                file.setStatus(Constants.FILE_STATUS.RECEIVED_TO_ADD);
+                file.setDisplayStatus(getFileStatusName(Constants.FILE_STATUS.RECEIVED_TO_ADD));
+                file.setReceivedDate(dateNow);
+                ResourceBundle rb = ResourceBundle.getBundle("config");
+                ProcedureDAOHE procedureDAOHE = new ProcedureDAOHE();
+                Procedure procedurebo = procedureDAOHE.findById(file.getFileType());
+                if ("announcement4star".equalsIgnoreCase(procedurebo.getDescription())) {
+                    file.setDeadlineApprove(getDateWorkingTime(15));
+                    file.setDeadlineComment(getDateWorkingTime(15));
+                } else {
+                    int CB = 0, PH = 0;
+                    try {
+                        CB = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_CB"));
+                    } catch (NumberFormatException ex) {
+                        LogUtil.addLog(ex);//binhnt sonar a160901
+                    }
+                    try {
+                        PH = Integer.parseInt(rb.getString(procedurebo.getDescription() + "_PH"));
+                    } catch (NumberFormatException ex) {
+                        LogUtil.addLog(ex);//binhnt sonar a160901
+                    }
+                    if (CB > 0) {
+                        file.setDeadlineApprove(getDateWorkingTime(CB));
+                    }
+                    if (PH > 0) {
+                        file.setDeadlineComment(getDateWorkingTime(PH));
+                    }
+                }
+
+                ProcessDAOHE psdhe = new ProcessDAOHE();
+                Process ptmp = psdhe.getProcessByAction(file.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, processStatus, Constants.FILE_STATUS.NEW_CREATE);
+                if (ptmp != null) {
+                    if (processStatus.equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {
+                        ptmp.setStatus(Constants.FILE_STATUS.RECEIVED_TO_ADD);
+                    }
+                    ptmp.setLastestComment(form.getStaffRequest());
+                    getSession().update(ptmp);
+                }
+
+                Process newP = new Process();
+                newP.setObjectId(form.getFileId());
+                newP.setObjectType(Constants.OBJECT_TYPE.FILES);
+                newP.setProcessType(Constants.PROCESS_TYPE.MAIN);
+                newP.setSendDate(dateNow);
+                newP.setSendGroup(ptmp.getReceiveGroup());
+                newP.setSendGroupId(ptmp.getReceiveGroupId());
+                newP.setSendUserId(userId);
+                newP.setSendUser(userName);
+
+                if (file.getStatus().equals(Constants.FILE_STATUS.RECEIVED_TO_ADD)) {
+                    //gui cho chuyen vien tham dinh ho so
+                    newP.setReceiveDate(dateNow);
+                    //140407
+                    ProcessDAOHE processDAOHE = new ProcessDAOHE();
+                    Process userAction = processDAOHE.findProcessByActionEvaluate(file.getFileId());
+                    if (userAction != null) {
+                        newP.setReceiveUser(userAction.getReceiveUser());
+                        newP.setReceiveUserId(userAction.getReceiveUserId());
+                        newP.setReceiveGroup(userAction.getReceiveGroup());
+                        newP.setReceiveGroupId(userAction.getReceiveGroupId());
+                    } else {
+                        newP.setReceiveGroup(ptmp.getReceiveGroup());
+                        newP.setReceiveGroupId(ptmp.getReceiveGroupId());
+                    }
+                    //
+                    newP.setProcessStatus(file.getStatus()); // De xu ly
+                    newP.setStatus(0l); // Moi den chua xu ly
+                    newP.setIsActive(1l);
+                }
+                
+                getSession().save(newP);
+                getSession().update(file);
+                
+                MessageSmsDAOHE msdhe = new MessageSmsDAOHE();
+                String msg = "Ho so ma: " + file.getFileCode() + " cua doanh nghiep: " + file.getBusinessName() + " dang trong trang thai: da tiep nhan";
+                msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
+                MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
+                String msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: Đã tiếp nhận";
+                msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
+                EmailSmsDAO emdao = new EmailSmsDAO();
+                emdao.alertLeaderOfStaffAssignFiles(ptmp.getReceiveGroupId(), file.getFileCode(), file.getBusinessName());
                 //
                 bReturn = true;
             }
@@ -4371,7 +4400,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     file.setSignDate(getSysdate());
                     //140627 UPDATE BO SUNG THOI GIAN HAN CONG BO, PHAN HOI HO SO
                     ResourceBundle rb = ResourceBundle.getBundle("config");
-                    Procedure procedurebo = new Procedure();
+                    Procedure procedurebo;
                     ProcedureDAOHE procedureDAOHE = new ProcedureDAOHE();
                     procedurebo = procedureDAOHE.findById(file.getFileType());
                     int CB = 0, PH = 0;
@@ -4493,12 +4522,11 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
                     //email
                     MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
-                    String msge = "";
-                    msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: Đã tiếp nhận";
+                    String msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: Đã tiếp nhận";
                     msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
                     //send group leader of dept 140915 binhnt53
                     EmailSmsDAO emdao = new EmailSmsDAO();
-                    boolean ck = emdao.alertLeaderOfStaffAssignFiles(deptId, file.getFileCode(), file.getBusinessName());
+                    emdao.alertLeaderOfStaffAssignFiles(deptId, file.getFileCode(), file.getBusinessName());
                     bReturn = true;
                 }
             }
@@ -4592,8 +4620,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
                 //email
                 MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
-                String msge;
-                msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: Đã trả bản công bố";
+                String msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: Đã trả bản công bố";
                 msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
 //                if ("true".equals(ResourceBundleUtil.getString("send_service", "config"))) {
 //                    Helper h = new Helper();
@@ -4640,8 +4667,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
             LogUtil.addLog(ex);//binhnt sonar a160901
             nCount = 1L;
         }
-        String prefix = "";
-        String fileTypeName = "";
+        String prefix;
+        String fileTypeName;
         switch (procedure.getDescription()) {
             case "announcementFile01":
                 fileTypeName = "TNCB";
@@ -4671,7 +4698,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 fileTypeName = "XNCB";
         }
         if (deptBo != null && deptBo.getDeptCode() != null) {
-            if (deptBo.getDeptCode().equals("ATTP")) {
+            if ("ATTP".equals(deptBo.getDeptCode())) {
                 prefix = "ATTP-" + fileTypeName;
             } else {
                 prefix = "YT" + deptBo.getDeptCode() + "-" + fileTypeName;
@@ -5067,8 +5094,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         stringBuilder.append("  where f.fileId=? ");
         Query query = getSession().createQuery(stringBuilder.toString());
         query.setParameter(0, fileId);
-        List<Files> lstItem = new ArrayList();
-        lstItem = query.list();
+        List<Files> lstItem = query.list();
         Files item = null;
         if (lstItem != null && lstItem.size() > 0) {
             item = lstItem.get(0);
@@ -5211,7 +5237,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
      * @return
      */
     public boolean checkIsDayOff(Date dayCheck) {
-        boolean ck = false;
         String hql = " from TimeProcess t where t.isActive = 1 and t.isDayOff = 0";
         List lstParam = new ArrayList();
         if (dayCheck != null) {
@@ -5224,9 +5249,10 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         }
         int total = Integer.parseInt(countQuery.uniqueResult().toString());
         if (total > 0) {
-            ck = true;
+            return true;
+        } else {
+            return false;
         }
-        return ck;
     }
 //140725
 
@@ -5602,7 +5628,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     ProcedureDAOHE pcdaohe = new ProcedureDAOHE();
                     Procedure procedure = pcdaohe.findById(file.getFileType());
                     if (procedure != null && procedure.getProcedureId() > 0) {
-                        if (!procedure.getCode().equals("12")) {//tao giay tiep nhan cong bo
+                        if (!"12".equals(procedure.getCode())) {//tao giay tiep nhan cong bo
                             if (file.getAnnouncementId() != null) {//Cấp giấy tiếp nhận bản công bố hợp quy (bên thứ nhất)
                                 AnnouncementReceiptPaperForm arpForm = new AnnouncementReceiptPaperForm();
                                 AnnouncementDAOHE announcementHE = new AnnouncementDAOHE();
@@ -5723,8 +5749,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
                     //email
                     MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
-                    String msge = "";
-                    msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: đã phê duyệt.";
+                    String msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: đã phê duyệt.";
                     msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
                 }
                 update(file);
@@ -5816,7 +5841,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             //xóa b?n ghi temp trý?c n?u có (lýu vào vùng lýu tr?)
                             updateSetNotLastIsTemp(file.getFileId());//
                             ProcessCommentDAOHE pcdaohe = new ProcessCommentDAOHE();
-                            int a = pcdaohe.updateSetNotLastIsTemp(file.getFileId());
+                            pcdaohe.updateSetNotLastIsTemp(file.getFileId());
 
                             try {//140627 THIET LAP HAN SDBS HO SO
                                 ResourceBundle rb = ResourceBundle.getBundle("config");
@@ -5837,13 +5862,11 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             }//!140627 THIET LAP HAN SDBS HO SO
                             //sms
                             MessageSmsDAOHE msdhe = new MessageSmsDAOHE();
-                            String msg = "";
-                            msg = "Ho so ma: " + file.getFileCode() + " cua doanh nghiep: " + file.getBusinessName() + " dang trong trang thai: da thong bao yeu cau sdbs";
+                            String msg = "Ho so ma: " + file.getFileCode() + " cua doanh nghiep: " + file.getBusinessName() + " dang trong trang thai: da thong bao yeu cau sdbs";
                             msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
                             //email
                             MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
-                            String msge = "";
-                            msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: Đã thông báo yêu cầu sửa đổi bổ sung.";
+                            String msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: Đã thông báo yêu cầu sửa đổi bổ sung.";
                             msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
 
 //                            try {
@@ -5903,7 +5926,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             // xoa ban ghi lanh dao comment khi bi tra lai
                             RequestCommentDAOHE rcdhe = new RequestCommentDAOHE();
                             RequestComment rc = rcdhe.findLeaderComment(form.getFileId(), 1l);
-                            if (rc != null && !rc.getContent().equals("")) {
+                            if (rc != null && !"".equals(rc.getContent())) {
                                 rc.setIsActive(0l);
                                 getSession().update(rc);
                             }
@@ -5933,25 +5956,28 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             RequestComment rcbo = new RequestComment();
                             if (form.getEvaluationRecordsForm() != null) {
                                 String content = "";
-                                if (form.getLeaderStaffRequest() != null && !form.getLeaderStaffRequest().equals("null")) {
+                                if (form.getLeaderStaffRequest() != null && !"null".equals(form.getLeaderStaffRequest())) {
                                     content += "* Ý kiến chung:" + "\n";
                                     content += form.getLeaderStaffRequest() + "\n";
                                 }
-                                if (form.getEvaluationRecordsForm().getLegalContentL() != null && !form.getEvaluationRecordsForm().getLegalContentL().equals("null")) {
+                                if (form.getEvaluationRecordsForm().getLegalContentL() != null
+                                        && !"null".equals(form.getEvaluationRecordsForm().getLegalContentL())) {
                                     content += "* Về pháp chế:" + "\n";
                                     content += form.getEvaluationRecordsForm().getLegalContentL() + "\n";
                                 }
 
-                                if (form.getEvaluationRecordsForm().getFoodSafetyQualityContentL() != null && !form.getEvaluationRecordsForm().getFoodSafetyQualityContentL().equals("null")) {
+                                if (form.getEvaluationRecordsForm().getFoodSafetyQualityContentL() != null
+                                        && !"null".equals(form.getEvaluationRecordsForm().getFoodSafetyQualityContentL())) {
                                     content += "* Về chỉ tiêu chất lượng an toàn thực phẩm:" + "\n";
                                     content += form.getEvaluationRecordsForm().getFoodSafetyQualityContentL() + "\n";
                                 }
 
-                                if (form.getEvaluationRecordsForm().getEffectUtilityContentL() != null && !form.getEvaluationRecordsForm().getEffectUtilityContentL().equals("null")) {
+                                if (form.getEvaluationRecordsForm().getEffectUtilityContentL() != null
+                                        && !"null".equals(form.getEvaluationRecordsForm().getEffectUtilityContentL())) {
                                     content += "* Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng:" + "\n";
                                     content += form.getEvaluationRecordsForm().getEffectUtilityContentL() + "\n";
                                 }
-                                if (content != null && !content.equals("null")) {
+                                if (content != null && !"null".equals(content)) {
                                     rcbo.setContent(content);
                                 } else {
                                     rcbo.setContent("Không có nội dung.");
@@ -6003,7 +6029,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             evaluationRecords.setMainContentL(form.getLeaderStaffRequest());
                             getSession().update(evaluationRecords);
                         }
-                        boolean bInsertRC = insertRequestCommentLeader(file.getFileId(), form, userId, userName, deptId, deptName, dateNow);//binhnt53 150130
+                        insertRequestCommentLeader(file.getFileId(), form, userId, userName, deptId, deptName, dateNow);//binhnt53 150130
                     }
 
                     if (p != null) {
@@ -6011,9 +6037,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         p.setLastestComment(form.getLeaderStaffRequest());
                         getSession().update(p);
                     } else {
-                        Process pFeedbacktoAdd = null;
                         ProcessDAOHE psdhe = new ProcessDAOHE();
-                        pFeedbacktoAdd = psdhe.getProcessByAction(form.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, Constants.FILE_STATUS.FEDBACK_TO_ADD, Constants.FILE_STATUS.NEW_CREATE);
+                        Process pFeedbacktoAdd = psdhe.getProcessByAction(form.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, Constants.FILE_STATUS.FEDBACK_TO_ADD, Constants.FILE_STATUS.NEW_CREATE);
                         if (pFeedbacktoAdd != null) {
                             pFeedbacktoAdd.setStatus(status);
                             pFeedbacktoAdd.setLastestComment(form.getLeaderStaffRequest());
@@ -6023,8 +6048,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     // Hiepvv_Home Update Title And Content of File SDBS after announced
                     if (form.getContentsEditATTP() != null
                             && form.getTitleEditATTP() != null
-                            && (!form.getContentsEditATTP().trim().equals("")
-                            || !form.getTitleEditATTP().trim().equals(""))
+                            && (!"".equals(form.getContentsEditATTP().trim())
+                            || !"".equals(form.getTitleEditATTP().trim()))
                             && (file.getFilesSourceID() != null
                             && file.getFilesSourceID() > 0
                             && file.getFileSourceCode() != null)) {
@@ -6240,8 +6265,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
                     //email
                     MessageEmailDAOHE msedhe = new MessageEmailDAOHE();
-                    String msge = "";
-                    msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: đã phê duyệt.";
+                    String msge = "Hồ sơ mã: " + file.getFileCode() + " của doanh nghiệp: " + file.getBusinessName() + " đang trong trạng thái: đã phê duyệt.";
                     msedhe.saveMessageEmail(userId, file.getUserCreateId(), msge);
                 }
                 if (form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_REVIEW)) {// Tra lai cho lanh dao don vi xem xet lai
@@ -6565,7 +6589,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_ADD)
                     || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE)) {
 
-                if (form.getStaffRequest() != null && !form.getStaffRequest().equals("null")) {
+                if (form.getStaffRequest() != null && !"null".equals(form.getStaffRequest())) {
                     staffContent += "* Ý kiến chung:" + "\n";
                     staffContent += form.getStaffRequest() + "\n";
                 }
@@ -6574,7 +6598,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                }
 
                 if (form.getEvaluationRecordsForm().getLegalContent() != null
-                        && !form.getEvaluationRecordsForm().getLegalContent().equals("null")) {
+                        && !"null".equals(form.getEvaluationRecordsForm().getLegalContent())) {
                     staffContent += "* Về pháp chế:" + "\n";
                     staffContent += form.getEvaluationRecordsForm().getLegalContent() + "\n";
                 }
@@ -6583,7 +6607,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                }
 
                 if (form.getEvaluationRecordsForm().getFoodSafetyQualityContent() != null
-                        && !form.getEvaluationRecordsForm().getFoodSafetyQualityContent().equals("null")) {
+                        && !"null".equals(form.getEvaluationRecordsForm().getFoodSafetyQualityContent())) {
                     staffContent += "* Về chỉ tiêu chất lượng an toàn thực phẩm:" + "\n";
                     staffContent += form.getEvaluationRecordsForm().getFoodSafetyQualityContent() + "\n";
                 }
@@ -6592,7 +6616,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                }
 
                 if (form.getEvaluationRecordsForm().getEffectUtilityContent() != null
-                        && !form.getEvaluationRecordsForm().getEffectUtilityContent().equals("null")) {
+                        && !"null".equals(form.getEvaluationRecordsForm().getEffectUtilityContent())) {
                     staffContent += "* Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng:" + "\n";
                     staffContent += form.getEvaluationRecordsForm().getEffectUtilityContent() + "\n";
                 }
@@ -6652,7 +6676,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_ADD)
                     || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE)) {
 
-                if (form.getStaffRequest() != null && !form.getStaffRequest().equals("null")) {
+                if (form.getStaffRequest() != null && !"null".equals(form.getStaffRequest())) {
                     staffContent += "* Ý kiến chung:" + "\n";
                     staffContent += form.getStaffRequest() + "\n";
                 }
@@ -6661,7 +6685,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                }
 
                 if (form.getEvaluationRecordsFormOnGrid().getLegalContent() != null
-                        && !form.getEvaluationRecordsFormOnGrid().getLegalContent().equals("null")) {
+                        && !"null".equals(form.getEvaluationRecordsFormOnGrid().getLegalContent())) {
                     staffContent += "* Về pháp chế:" + "\n";
                     staffContent += form.getEvaluationRecordsFormOnGrid().getLegalContent() + "\n";
                 }
@@ -6670,7 +6694,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                }
 
                 if (form.getEvaluationRecordsFormOnGrid().getFoodSafetyQualityContent() != null
-                        && !form.getEvaluationRecordsFormOnGrid().getFoodSafetyQualityContent().equals("null")) {
+                        && !"null".equals(form.getEvaluationRecordsFormOnGrid().getFoodSafetyQualityContent())) {
                     staffContent += "* Về chỉ tiêu chất lượng an toàn thực phẩm:" + "\n";
                     staffContent += form.getEvaluationRecordsFormOnGrid().getFoodSafetyQualityContent() + "\n";
                 }
@@ -6679,7 +6703,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                }
 
                 if (form.getEvaluationRecordsFormOnGrid().getEffectUtilityContent() != null
-                        && !form.getEvaluationRecordsFormOnGrid().getEffectUtilityContent().equals("null")) {
+                        && !"null".equals(form.getEvaluationRecordsFormOnGrid().getEffectUtilityContent())) {
                     staffContent += "* Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng:" + "\n";
                     staffContent += form.getEvaluationRecordsFormOnGrid().getEffectUtilityContent() + "\n";
                 }
@@ -6743,7 +6767,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     || form.getStatus().equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE)
                     || form.getStatus().equals(Constants.FILE_STATUS.REVIEW_TO_ADD)) {
 
-                if (form.getLeaderStaffRequest() != null && !form.getLeaderStaffRequest().equals("null")) {
+                if (form.getLeaderStaffRequest() != null && !"null".equals(form.getLeaderStaffRequest())) {
                     leaderContent += "* Ý kiến chung:" + "\n";
                     leaderContent += form.getLeaderStaffRequest() + "\n";
                 }
@@ -6752,7 +6776,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                }
 
                 if (form.getEvaluationRecordsForm().getLegalContentL() != null
-                        && !form.getEvaluationRecordsForm().getLegalContentL().equals("null")) {
+                        && !"null".equals(form.getEvaluationRecordsForm().getLegalContentL())) {
                     leaderContent += "* Về pháp chế:" + "\n";
                     leaderContent += form.getEvaluationRecordsForm().getLegalContentL() + "\n";
                 }
@@ -6761,7 +6785,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                }
 
                 if (form.getEvaluationRecordsForm().getFoodSafetyQualityContentL() != null
-                        && !form.getEvaluationRecordsForm().getFoodSafetyQualityContentL().equals("null")) {
+                        && !"null".equals(form.getEvaluationRecordsForm().getFoodSafetyQualityContentL())) {
                     leaderContent += "* Về chỉ tiêu chất lượng an toàn thực phẩm:" + "\n";
                     leaderContent += form.getEvaluationRecordsForm().getFoodSafetyQualityContentL() + "\n";
                 }
@@ -6770,7 +6794,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 //                }
 
                 if (form.getEvaluationRecordsForm().getEffectUtilityContentL() != null
-                        && !form.getEvaluationRecordsForm().getEffectUtilityContentL().equals("null")) {
+                        && !"null".equals(form.getEvaluationRecordsForm().getEffectUtilityContentL())) {
                     leaderContent += "* Về cơ chế tác dụng, công dụng và hướng dẫn sử dụng:" + "\n";
                     leaderContent += form.getEvaluationRecordsForm().getEffectUtilityContentL() + "\n";
                 }
@@ -6824,11 +6848,11 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
      * @return
      */
     public boolean validateRoleUser(Long objectId, FilesForm form, Long deptId, String deptName, Long userId, String userName) {
-        Files fbo = null;
+        Files fbo;
         FilesDAOHE fdaohe = new FilesDAOHE();
-        Long status = -1L;
+        Long status;
         ProcessDAOHE psdaohe = new ProcessDAOHE();
-        Process pbo = null;
+        Process pbo;
         if ((objectId == null && form == null) || deptId == null || userId == null) {
             return false;
         }
@@ -6917,8 +6941,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         p.setLastestComment(form.getLeaderStaffRequest());
                         getSession().update(p);
                     } else {
-                        Process pFeedbacktoAdd = null;
-                        pFeedbacktoAdd = pdhe.getProcessByAction(form.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, Constants.FILE_STATUS.FEDBACK_TO_ADD, Constants.FILE_STATUS.NEW_CREATE);
+                        Process pFeedbacktoAdd = pdhe.getProcessByAction(form.getFileId(), Constants.Status.ACTIVE, Constants.OBJECT_TYPE.FILES, Constants.FILE_STATUS.FEDBACK_TO_ADD, Constants.FILE_STATUS.NEW_CREATE);
                         if (pFeedbacktoAdd != null) {
                             pFeedbacktoAdd.setStatus(status);
                             pFeedbacktoAdd.setLastestComment(form.getLeaderStaffRequest());
@@ -7000,7 +7023,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);
                 // check le phi cap so theo loai ho so
                 if (feenew != null && feenew.size() > 0) {
-                    FeePaymentInfo fpif = new FeePaymentInfo();
+                    FeePaymentInfo fpif;
                     for (int i = 0; i < feenew.size(); i++) {
                         fpif = new FeePaymentInfo();
                         fpif.setCreateDate(dateNow);
@@ -7113,7 +7136,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         try {
             Files file = findById(form.getFileId());//lay thong tin chi tiet ho so
             Date dateNow = getSysdate();
-            UsersDAOHE udaohe = new UsersDAOHE();
+            UsersDAOHE udaohe;
             if (file == null) {
                 bReturn = false;
             } else// Cap nhat trang thai ho so
@@ -7138,7 +7161,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     if (form.getLeaderReviewId() != null) {//gui lanh dao tham dinh
                         udaohe = new UsersDAOHE();
                         Users uReceive = udaohe.findById(form.getLeaderReviewId());
-                        if (form.getLeaderReviewName() == null || form.getLeaderReviewName().equals("")) {
+                        if (form.getLeaderReviewName() == null || "".equals(form.getLeaderReviewName())) {
                             form.setLeaderReviewName(uReceive.getFullName());
                         }
                         List<String> lstStaff = new ArrayList<String>();
@@ -7183,7 +7206,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         List<String> lstLeader = new ArrayList<String>();
                         lstLeader.add(Constants.POSITION.LEADER_OF_STAFF_T);
                         lstLeader.add(Constants.POSITION.GDTT);
-                        Users ubo = null;
+                        Users ubo;
                         List<Users> lstLeaderOfDept = udaohe.findLstUserByLstPosition(deptId, lstLeader);
                         if (lstLeaderOfDept != null
                                 && lstLeaderOfDept.size() > 0) {
@@ -7307,7 +7330,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         updateSetNotLastIsTemp(file.getFileId());
                         //xóa bản ghi temp trước nếu có (lưu vào vùng lưu trữ)
                         ProcessCommentDAOHE pcdaohe = new ProcessCommentDAOHE();
-                        int a = pcdaohe.updateSetNotLastIsTemp(file.getFileId());
+                        pcdaohe.updateSetNotLastIsTemp(file.getFileId());
                     } else if (form.getStatus().equals(Constants.FILE_STATUS.EVALUATE_TO_ADD)) {//da soan du thao thong bao sdbs ho so                           
                         /*
                      ho so sau khi da tra lai chuyen vien de soan du thao tb sdbs
@@ -7468,7 +7491,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         EvaluationRecords evaluationRecordsBo;
                         evaluationRecordsBo = evaRecordForm.convertToEntity();
                         getSession().save(evaluationRecordsBo);
-                        boolean bInsertRC = insertRequestComment(
+                        insertRequestComment(
                                 file.getFileId(),
                                 form,
                                 userId,
@@ -7506,7 +7529,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         EvaluationRecords evaluationRecordsBo;
                         evaluationRecordsBo = evaRecordForm.convertToEntity();
                         getSession().save(evaluationRecordsBo);
-                        boolean bInsertRC = insertRequestCommentOnGrid(
+                        insertRequestCommentOnGrid(
                                 file.getFileId(),
                                 form,
                                 userId,
@@ -7551,8 +7574,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     // Hiepvv_Home Update Title And Content of File SDBS after announced
                     if (form.getContentsEditATTP() != null
                             && form.getTitleEditATTP() != null
-                            && (!form.getContentsEditATTP().trim().equals("")
-                            || !form.getTitleEditATTP().trim().equals(""))
+                            && (!"".equals(form.getContentsEditATTP().trim())
+                            || !"".equals(form.getTitleEditATTP().trim()))
                             && (file.getFilesSourceID() != null
                             && file.getFilesSourceID() > 0
                             && file.getFileSourceCode() != null)) {
@@ -7741,10 +7764,10 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
     }
 
     public Files saveFilesWS(FilesForm createForm) {
-        Files bo = null;
-        Files boRollBack = null;
+        Files bo;
+        Files boRollBack;
         Long filesId = createForm.getFileId();
-        Boolean isCreateNew = true;
+//        Boolean isCreateNew;
         Long status = 0L;
         Long announcementId = null;
         Long detailProductId = null;
@@ -7768,8 +7791,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         if (filesId == null) {//la them moi            
             bo = createForm.convertToEntity();
         } else {//la sua
-            isCreateNew = false;
-            boRollBack = findById(filesId);
+//            isCreateNew = false;
+//            boRollBack = findById(filesId);
             bo = findById(filesId);
 
             if (status.equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)
@@ -7782,7 +7805,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 saveFiles(cloneForm);
                 //update toan bo process_comment cua lan tham dinh truoc thanh
                 ProcessCommentDAOHE pcdhe = new ProcessCommentDAOHE();
-                int r = pcdhe.updateVersion(filesId, cloneForm.getVersion());
+                pcdhe.updateVersion(filesId, cloneForm.getVersion());
             }
             bo = createForm.updateToEntity(bo);
         }
@@ -7901,13 +7924,13 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
-            if (isCreateNew) {
-                bo.setIsActive(Constants.Status.INACTIVE);
-                getSession().update(bo);
-            } else {
-                getSession().update(boRollBack);
-
-            }
+//            if (isCreateNew) {
+//                bo.setIsActive(Constants.Status.INACTIVE);
+//                getSession().update(bo);
+//            } else {
+//                getSession().update(boRollBack);
+//
+//            }
             return null;
         }
 
@@ -7949,7 +7972,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);
                 // check le phi cap so theo loai ho so
                 if (feenew != null && feenew.size() > 0) {
-                    FeePaymentInfo fpif = new FeePaymentInfo();
+                    FeePaymentInfo fpif;
                     for (int i = 0; i < feenew.size(); i++) {
                         fpif = new FeePaymentInfo();
                         fpif.setCreateDate(dateNow);
@@ -8078,7 +8101,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 List<Category> cate1 = ctdhe.findCategoryByTypeAndCodeNew("SP", "DBT");
                 Long feeIdOld, feeIdNew;
                 int check = 0, check1 = 0;
-                FeePaymentInfo fpifOld = null;
+                FeePaymentInfo fpifOld;
                 for (int i = 0; i < cate1.size(); i++) {
                     if (productTypeIdOld.equals(cate1.get(i).getCategoryId())) {
                         check = 1;
@@ -8106,7 +8129,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         break;
                     }
                 }
-                Long costNew = 0l;
+                Long costNew;
                 if (check1 == 1) {
                     Fee findfee1 = fdhe.findFeeByCode("TPDB");
                     feeIdNew = findfee1.getFeeId();
@@ -8149,7 +8172,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     fpifOld.setStatus(0l);
                     //Hiepvv 0803 Khong tinh phi SDBS sau cong bo
                     ProcedureDAOHE pHE = new ProcedureDAOHE();
-                    Procedure pdu = new Procedure();
+                    Procedure pdu;
                     pdu = pHE.findById(filesnew.getFileType());
                     if (pdu != null
                             && pdu.getDescription() != null
@@ -8189,7 +8212,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);
                 // check le phi cap so theo loai ho so
                 if (feenew != null && feenew.size() > 0) {
-                    FeePaymentInfo fpif = new FeePaymentInfo();
+                    FeePaymentInfo fpif;
                     for (int i = 0; i < feenew.size(); i++) {
                         fpif = new FeePaymentInfo();
                         fpif.setCreateDate(dateNow);
@@ -8312,7 +8335,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);
                 // check le phi cap so theo loai ho so
                 if (feenew != null && feenew.size() > 0) {
-                    FeePaymentInfo fpif = new FeePaymentInfo();
+                    FeePaymentInfo fpif;
                     for (int i = 0; i < feenew.size(); i++) {
                         fpif = new FeePaymentInfo();
                         //Thong tin co ban, status=1 = da dong phi

@@ -484,7 +484,7 @@
                             <sd:Option value="22">Đã trả bản công bố</sd:Option>
                             <sd:Option value="40">Tổng số hồ sơ trong ngày</sd:Option>
 
-                        </sd:SelectBox>
+                        </sd:SelectBox>                        
                     </td>
                 </tr>
                 <tr>
@@ -638,18 +638,26 @@
                                      checked="false" key="" value="1"
                                      ></sd:CheckBox>                    
                         </td>
-                    </tr>
+                    </tr>            
                     <tr>
                         <td align="right">
                         <sd:Label key="Tìm theo từ"/>
                     </td>
-                    <td colspan="3">
+                    <td>
                         <sd:TextBox cssStyle="width:100%"
                                     id="searchForm.searchFullText"
                                     key=""
                                     name="searchForm.searchFullText" maxlength="250"/>
                     </td>
-                </tr>                
+                    <td align="right"><sd:Label key="Sắp xếp theo"/></td>
+                    <td>
+                        <sd:SelectBox key="" id="searchForm.orderBy" name="searchForm.orderBy" cssStyle="width:100%">
+                            <sd:Option value="-1" selected='true' >-- Chọn --</sd:Option>
+                            <sd:Option value="1">Ngày nộp giảm dần</sd:Option>                            
+                            <sd:Option value="2">Ngày nộp tăng dần</sd:Option>                            
+                        </sd:SelectBox>                        
+                    </td>
+                </tr> 
                 <tr style="text-align: center">
                     <td colspan="4">
 

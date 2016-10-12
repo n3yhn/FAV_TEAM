@@ -189,7 +189,7 @@ public class ProcessCommentDAOHE extends GenericDAOHibernate<ProcessComment, Lon
     public List<ProcessCommentForm> getLstCommentOfDocument(Long userId, Long objectId, Long objectType, int start, int nRecord, String sortField) {
         List<ProcessCommentForm> list = new ArrayList<ProcessCommentForm>();
         try {
-            String countHql = "SELECT count(pc) ";
+//            String countHql = "SELECT count(pc) ";
             String selectHQL = "SELECT pc";
             String hql = " FROM ProcessComment pc, Process p WHERE (pc.isActive = 1) and (pc.processId = p.processId) and pc.lastIsTemp = 1"
                     + " and  p.objectId =" + objectId
@@ -197,9 +197,8 @@ public class ProcessCommentDAOHE extends GenericDAOHibernate<ProcessComment, Lon
             hql += " ORDER BY pc.createdDate DESC";
 
             Query query = getSession().createQuery(selectHQL + hql);
-            Query countQuery = getSession().createQuery(countHql + hql);
-            Long nCount = (Long) countQuery.uniqueResult();
-
+//            Query countQuery = getSession().createQuery(countHql + hql);
+//            Long nCount = (Long) countQuery.uniqueResult();
             query.setFirstResult(start);
             query.setMaxResults(nRecord);
             List<ProcessComment> lst = query.list();
