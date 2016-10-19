@@ -1504,9 +1504,9 @@ public class HomeDAO extends BaseDAO {
                 if ("".equals(password.trim())) {
                     throw new Exception("password is empty");
                 }
-//            if (password.equals(oldPassword)) {
-//                throw new Exception("password must be different from oldPassword ");
-//            }
+                if (password.equals(oldPassword)) {
+                    throw new Exception("password must be different from oldPassword ");
+                }
                 /*
                      String iChars = "!@#$%^&*-";
                      int countTmp = 0;
@@ -1545,7 +1545,10 @@ public class HomeDAO extends BaseDAO {
                 Users bo = new UsersDAOHE().findById(userId, false);
                 String encryptedOldPass = PasswordService.getInstance().encrypt(bo.getUserName().toLowerCase() + oldPassword);
                 String encryptedOldPassNoSalt = PasswordService.getInstance().encrypt(oldPassword);
-                if (encryptedOldPass.equals(bo.getPassword()) || encryptedOldPassNoSalt.equals(bo.getPassword()) || encryptedOldPass.equals(bo.getForgotPassword()) || encryptedOldPassNoSalt.equals(bo.getForgotPassword())) {
+                if (encryptedOldPass.equals(bo.getPassword())
+                        || encryptedOldPassNoSalt.equals(bo.getPassword())
+                        || encryptedOldPass.equals(bo.getForgotPassword())
+                        || encryptedOldPassNoSalt.equals(bo.getForgotPassword())) {
                     String passwordEncrypt = PasswordService.getInstance().encrypt(bo.getUserName().toLowerCase() + password);
 
                     if (userPasswordForm.getEmail() != null && userPasswordForm.getEmail().length() > 0) {

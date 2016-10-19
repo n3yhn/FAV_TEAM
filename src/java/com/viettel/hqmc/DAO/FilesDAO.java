@@ -136,7 +136,6 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.xmlbeans.impl.piccolo.io.FileFormatException;
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
@@ -1923,6 +1922,8 @@ public class FilesDAO extends BaseDAO {
                 getSession().save(filesBo);
                 resultMessage.add("1");
                 resultMessage.add("Cập nhật trạng thái hồ sơ thành công");
+                EventLogDAOHE edhe = new EventLogDAOHE();
+                edhe.insertEventLog("Chuyển luồng hồ sơ",getUserLogin() + " FileId=" + createForm.getFileId(), getRequest());
             } else {
                 resultMessage.add("3");
                 resultMessage.add("Cập nhật trạng thái hồ sơ không thành công");
@@ -7983,7 +7984,10 @@ public class FilesDAO extends BaseDAO {
                         SearchTextLocations ptl2 = new SearchTextLocations();
                         List local2 = ptl2.searchLocation(sToFindtemp, fileToSign0,
                                 SearchTextLocations.SEARCH_TOPDOWN, SearchTextLocations.FIND_ONE);
-                        String location2 = local2.get(0).toString();
+                        String location2 = "0;0;0";
+                        if (local != null && local2.size() > 0) {
+                            location2 = local2.get(0).toString();
+                        }
                         String parts2[] = location2.split(";");
                         pageNumber = Integer.parseInt(parts2[0]);
                         int lx1 = (int) Float.parseFloat(parts2[1]);
@@ -10250,7 +10254,6 @@ public class FilesDAO extends BaseDAO {
                     }
                 } catch (Exception ex) {
                     LogUtil.addLog(ex);//binhnt sonar a160901
-                    System.out.println("ERROR SI_012|" + ex.getMessage());
                     errorCode = "SI_012";
                     result = false;
                 }

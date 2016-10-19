@@ -196,7 +196,7 @@ public class ExportFileDAO extends BaseDAO {
                                     && arpbo.getReceiptDate() != null
                                     && arpbo.getSignDate() != null
                                     && arpbo.getReceiptNo() != null) {
-                                receiptNo = arpbo.getReceiptNo();
+                                receiptNoOld = arpbo.getReceiptNo();
                                 publishDate = " ngày " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "dd")
                                         + " tháng " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "MM") + " năm "
                                         + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "yyyy");
@@ -3216,7 +3216,6 @@ public class ExportFileDAO extends BaseDAO {
                 jsonDataGrid.setItems(resultMessage);
                 return GRID_DATA;
             }
-//            String receiptDeptName;
             String businessName = "";
             String businessAdd = "";
             String telephone = "";
@@ -3338,7 +3337,6 @@ public class ExportFileDAO extends BaseDAO {
                     String busiAdd = "";
                     String titleEdit;
                     String receiptNoOld = "";
-                    receiptNo = "0000";
                     if (filesForm.getContentsEditATTP() != null && !filesForm.getContentsEditATTP().isEmpty()) {
                         contentEdit = filesForm.getContentsEditATTP();
                     } else {
@@ -3365,6 +3363,26 @@ public class ExportFileDAO extends BaseDAO {
                         titleEdit = filesForm.getTitleEditATTP();
                     } else {
                         titleEdit = "sửa đổi bổ sung hồ sơ đã công bố";
+                    }
+                    if (filesForm.getFilesSourceID() != null
+                            && filesForm.getFilesSourceID() > 0L) {
+                        Files fboOld = fdhe.findById(filesForm.getFilesSourceID());
+                        if (fboOld != null
+                                && fboOld.getAnnouncementReceiptPaperId() != null) {
+                            AnnouncementReceiptPaperDAOHE arpDaohe = new AnnouncementReceiptPaperDAOHE();
+                            AnnouncementReceiptPaper arpbo = arpDaohe.findById(fboOld.getAnnouncementReceiptPaperId());
+                            if (arpbo != null
+                                    && arpbo.getReceiptDate() != null
+                                    && arpbo.getSignDate() != null
+                                    && arpbo.getReceiptNo() != null) {
+                                receiptNoOld = arpbo.getReceiptNo();
+                                publishDate = " ngày " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "dd")
+                                        + " tháng " + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "MM") + " năm "
+                                        + DateTimeUtils.convertDateToString(arpbo.getSignDate(), "yyyy");
+                            }
+                        }
+                    } else {
+                        receiptNoOld = "unknown";
                     }
                     wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempSignsuadoisaucongbo))));
                     //Các biến truyền vào Công văn
@@ -3429,7 +3447,6 @@ public class ExportFileDAO extends BaseDAO {
                     + " tháng " + DateTimeUtils.convertDateToString(dateNow, "MM")
                     + " năm " + DateTimeUtils.convertDateToString(dateNow, "yyyy");
             if (filesForm.getAnnouncementReceiptPaperForm() != null) {
-//                receiptDeptName = filesForm.getAnnouncementReceiptPaperForm().getReceiptDeptName();//binhnt fix sonar
                 if (filesForm.getReIssueForm() != null && filesForm.getReIssueForm().getFormNumber() != null) {
                     receiptNo = filesForm.getReIssueForm().getFormNumber();
                 } else {

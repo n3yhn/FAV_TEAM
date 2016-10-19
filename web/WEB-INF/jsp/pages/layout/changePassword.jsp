@@ -531,7 +531,7 @@
                                                                                                         dijit.byId("userPasswordForm.oldPassword").setValue("");
                                                                                                         dijit.byId("userPasswordForm.password").setValue("");
                                                                                                         dijit.byId("userPasswordForm.retypePassword").setValue("");
-                                                                                                        if (result0 == "1") {
+                                                                                                        if (result0 == "1") {                                                                                                            
                                                                                                             alert(result1);
                                                                                                             var dialog = dijit.byId("vt-changePasswowrdDialog");
                                                                                                             dialog.hide();

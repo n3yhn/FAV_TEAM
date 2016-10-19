@@ -616,7 +616,9 @@
 
         } else if (status == 7) {
             document.getElementById("evaluationRecord.statusDeny").checked = true;
+            
         }
+        onchangeStatusEBLFOG();
         
         var statusName = getStatusEBLP(parseInt(status));
         document.getElementById("evaluationRecord.statusL").innerHTML = statusName;

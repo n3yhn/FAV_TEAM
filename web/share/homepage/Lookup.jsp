@@ -3,16 +3,16 @@
 <%@page import="com.viettel.common.util.StringUtils"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.ResourceBundle"%>
-
-
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <%@taglib prefix="sd" uri="struts-dojo-tags"%>
-
+<%@taglib tagdir="/WEB-INF/tags" prefix="tags" %>
+<%
+    request.setAttribute("contextPath", request.getContextPath());
+%>
 <%
     ResourceBundle rb = ResourceBundle.getBundle("config");
     String projectVersion = rb.getString("project.version");
@@ -29,17 +29,9 @@
     request.setAttribute("CSS_JS_contextPath", request.getContextPath());
 
     String ua = request.getHeader("User-Agent");
-    boolean isFirefox = (ua != null && ua.indexOf("Firefox/") != -1);
-    boolean isMSIE = (ua != null && ua.indexOf("MSIE") != -1);
-    boolean isNew = request.getSession(false).isNew();
 %>
 
 <s:i18n name="com/viettel/config/Language">
-    <% if (isMSIE) {%>
-    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
-    <% } else {%>
-    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" >
-    <% }%>
     <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -77,13 +69,31 @@
                 var item = dijit.byId("grid").getItem(inData - 1);
                 var url = "";
                 if (item != null) {
-                    var status = item.code;
-                    if (status.toString() != "" && status.toString().trim() != "") {
-                        switch (status) {
-                            case "TPCN":
+                    var code = parseInt(item.productType);
+                    if (code != null) {
+                        switch (code) {
+                            case 66846:
                                 url = "Thực phẩm chức năng";
                                 break;
-                            case "DBT":
+                            case 66761:
+                                url = "Thực phẩm chức năng";
+                                break;
+                            case 3368113:
+                                url = "Thực phẩm chức năng";
+                                break;
+                            case 3385104:
+                                url = "Thực phẩm chức năng";
+                                break;
+                            case 3373120:
+                                url = "Thực phẩm chức năng";
+                                break;
+                            case 3398258:
+                                url = "Thực phẩm chức năng";
+                                break;
+                            case 3398258:
+                                url = "Thực phẩm chức năng";
+                                break;
+                            case 3398259:
                                 url = "Thực phẩm chức năng";
                                 break;
                             default:
@@ -99,13 +109,19 @@
             page.formatAction = function (inData) {
                 var item = dijit.byId("grid").getItem(inData - 1);
                 var url = "";
+                url += "<div style='text-align:center;cursor:pointer;'>";
                 if (item != null) {
-                    if (item.isDownload != null && item.isDownload == 1 && item.isExist != null && item.isExist.toString() != "")
+                    if (item.isDownload != null
+                            && item.isDownload == 1
+                            && item.isExist != null
+                            && item.isExist.toString() != "")
                     {
-                        url += "<div style='text-align:center;cursor:pointer;'>";
                         url += "<img src='share/images/document_open.png' width='17px' height='17px' title='Xuất giấy công bố' onClick='page.formatLinkDownloadPdf(" + item.fileId + ");' />";
-                        url += "</div>";
                     }
+                    if (item.haveAdditional != null && item.haveAdditional == 1) {
+                        url += "<img src='share/images/signature.png' width='17px' height='17px' title='Xem danh sách giấy bổ sung sau công bố' onClick='page.showListAdditionalFile (" + item.fileId + ");' />";
+                    }
+                    url += "</div>";
                     return url;
                 }
             };
@@ -120,7 +136,7 @@
             };
             dojo.connect(dojo.byId("searchForm"), "onkeypress", page.searchDefault);
         </script>
-        <body class="${fn:escapeXml(JSLibTheme)}" <%--onkeydown="checkToRefresh(event);"--%> style="background-color: white !important; padding:2px" >
+        <body class="${fn:escapeXml(JSLibTheme)}" style="background-color: white !important; padding:2px" >
             <div id="vt-content-wrapper" class="no-space clear-both" style="align:right">
                 <div class="wrapper_reg" style="background-color: white;">
                     <div class="header_hp" style="background-color: white;">
@@ -150,12 +166,6 @@
                                             <div class="portlet-body"> 
                                                 <div class="portlet-borderless-container" style=""> 
                                                     <div class="portlet-body"> <div id="main"> <div class="dgdan"> <p class="iconthutuc"> <a class="dd" href="#">Tra cứu thông tin hồ sơ</a> </p> </div> <div class="box_nd"> 
-                                                                <%--<div class="truong"> <table class="table1"> <tbody>
-                                                                <tr> 
-                                                                    <td><h3>Cấp giấy tiếp nhận bản công bố phù hợp quy định an toàn thực phẩm; Cấp lại Giấy Tiếp nhận bản công bố hợp quy và Giấy Xác nhận công bố phù hợp quy định an toàn thực phẩm thuộc thẩm quyền của Bộ Y tế</h3></td> 
-                                                                    <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td> 
-                                                                </tr> </tbody></table> </div> 
-                                                                --%>
                                                                 <table style="width: 100%">
                                                                     <tr>
                                                                         <td align="center">
@@ -297,6 +307,12 @@
                                                                                                             formatter="page.formatAction" get="page.getIndex"/>
                                                                                     </sd:DataGrid>
                                                                                 </sd:TitlePane>
+                                                                                <%--
+                                                                                <sd:Dialog  id="lstAdditionalFileDlg111" height="auto" width="500"
+                                                                                            key="Xem danh sách công văn bổ sung sau công bố." showFullscreenButton="false">
+
+                                                                                </sd:Dialog>
+                                                                                --%>
                                                                             </div>
                                                                         </td>
                                                                     </tr>
@@ -315,15 +331,6 @@
                 </div>
             </div>
         </body>
-        <%--
-        <sd:Dialog  id="viewChangeReceipt" height="auto" width="500px"
-                    key="Phiên bản hồ sơ" showFullscreenButton="false"
-                    >
-            <div id="selectOldVersionFilesDlgDiv">
-                <jsp:include page="../other/selectOldVersionFilesDlg.jsp" flush="false"/>
-            </div>
-        </sd:Dialog>
-        --%>
         <script>
             page.search = function () {
                 dijit.byId("grid").vtReload('filesAction!onSearchLookUpHomePage.do?', "searchForm");
@@ -339,15 +346,20 @@
             page.formatLinkDownloadPdf = function (fileId) {
                 document.location = "uploadiframe!openFileSignPublic.do?fileId=" + fileId;
             };
-//            page.checkHaveIsChange = function (fileId) {
-//                document.location = "uploadiframe!openFileSignPublic.do?fileId=" + fileId;
-//            };
             page.searchByBusinessName = function (row) {
                 var item = dijit.byId("grid").getItem(row);
                 dijit.byId("searchForm.businessName").setValue(item.businessName);
                 dijit.byId("grid").vtReload('filesAction!onSearchLookUpHomePage.do?', "searchForm");
             };
             page.search();
+//
+            page.showListAdditionalFile = function (fileId) {
+//                alert(fileId);
+////                page.getViewProcess(fileId);
+//                alert(dijit.byId("lstAdditionalFileDlg111"));
+//                dijit.byId("lstAdditionalFileDlg111").show();
+//                alert("ok");
+            };
         </script>
     </html>
 </s:i18n>

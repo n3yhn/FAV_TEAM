@@ -82,35 +82,7 @@
         var passwordCa;
         var flagSign;
         var cert;
-        var count = 0;       
-
-        afterOnUpdateFileOnDb = function (data) {
-            var obj = dojo.fromJson(data);
-            var result = obj.items;
-            
-            if (result[0] == "1") {
-                if (signIndex == itemsToSign.length - 1) {
-                    msg.alert('Ký số thành công', 'Thông báo');
-                    document.getElementById("divSignProcess").style.display = "none";
-                    document.getElementById("trWait").style.display = "none";
-                    count = 0;
-                    onCloseBusinessSignFormDlg();
-                    msg.alert('Ký số thành công', 'Thông báo');
-                    page.search();
-                } else {
-                    signIndex++;
-                    page.signFileUsingPlugin();
-                }
-            } else {
-                msg.alert('Ký số không thành công', 'Lỗi hệ thống');
-                onCloseBusinessSignFormDlg();
-                document.getElementById("divSignProcess").style.display = "none";
-                document.getElementById("trWait").style.display = "none";
-                count = 0;
-                page.search();
-            }
-            
-        };
+        var count = 0;
 
         page.utf8_to_b64AFCV = function (str) {
             return window.btoa(unescape(encodeURIComponent(str)));
@@ -182,7 +154,7 @@
                 sd.connector.post("filesAction!actionSignCAFile.do?fileId=" + fileId
                         + "&cert=" + cert
                         + "&signType=" + signType
-                        + "&path=" + path, null, null, null, page.signPluginAFP);
+                        + "&path=" + path, null, null, null, page.signPluginAFP1);
                 count++;
             } else {
                 alert(result[1]);
@@ -191,7 +163,7 @@
         };
 
 
-        page.signPluginAFP = function (data)
+        page.signPluginAFP1 = function (data)
         {
             var obj = dojo.fromJson(data);
             var result = obj.items;
@@ -209,7 +181,7 @@
                         + "&outPutPath=" + outPutPath
                         + "&signData=" + signData
                         + "&signType=" + signType
-                        + "&fileName=" + fileName, null, null, null, page.afterSignPluginAFP);
+                        + "&fileName=" + fileName, null, null, null, page.afterSignPluginBSFP);
             } else
             {
                 alert("Ký số không thành công ! " + result[1]);
@@ -217,20 +189,20 @@
             }
         };
 
-        page.afterSignPluginAFP = function (data)
+        page.afterSignPluginBSFP = function (data)
         {
             var obj = dojo.fromJson(data);
             var result = obj.items;
             if (result[0] == "1") {
-                onUpdateFileOnDb();
+                onUpdateFileOnDb1();
             } else
             {
                 alert("Ký số không thành công !");
                 onCloseBusinessSignFormDlg();
             }
         };
-        onUpdateFileOnDb = function () {
-            sd.connector.post("filesAction!onUpdateIsSignFile.do?" + token.getTokenParamString(), null, "businessSignForm", null, afterOnUpdateFileOnDb);
+        onUpdateFileOnDb1 = function () {
+            sd.connector.post("filesAction!onUpdateIsSignFile.do?" + token.getTokenParamString(), null, "businessSignForm", null, afterOnUpdateFileOnDb1);
         };
         function deleteAllCookies() {
             var cookies = document.cookie.split(";");
@@ -241,6 +213,32 @@
                 document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
             }
         }
+        afterOnUpdateFileOnDb1 = function (data) {
+            var obj = dojo.fromJson(data);
+            var result = obj.items;
+            if (result[0] == "1") {
+                if (signIndex == itemsToSign.length - 1) {
+                    msg.alert('Ký số thành công', 'Thông báo');
+                    document.getElementById("divSignProcess").style.display = "none";
+                    document.getElementById("trWait").style.display = "none";
+                    count = 0;
+                    onCloseBusinessSignFormDlg();
+                    msg.alert('Ký số thành công', 'Thông báo');
+                    page.search();
+                } else {
+                    signIndex++;
+                    page.signFileUsingPlugin();
+                }
+            } else {
+                msg.alert('Ký số không thành công', 'Lỗi hệ thống');
+                onCloseBusinessSignFormDlg();
+                document.getElementById("divSignProcess").style.display = "none";
+                document.getElementById("trWait").style.display = "none";
+                count = 0;
+                page.search();
+            }
+        };
+
         deleteAllCookies();
     </script>
 

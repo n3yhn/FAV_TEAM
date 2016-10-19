@@ -33,13 +33,13 @@
                                     </td>
                                 </tr>                                
                                 <tr id="trTitleEditATTP" style="display:none">
-                                    <td style="text-align: right"><sd:Label key="Tiêu đề hồ sơ SĐBS"/></td>
+                                    <td style="text-align: right"><sd:Label key="Tiêu đề trả lời công văn BS sau công bố"/></td>
                                     <td>
                                         <sd:Textarea key="" id="evaluateForm.titleEditATTP" name="createForm.titleEditATTP" rows="1" cssStyle="width:99%" maxlength="255" trim="true"/>
                                     </td>
                                 </tr>
                                 <tr id="trContentsEditATTP" style="display:none">
-                                    <td style="text-align: right"><sd:Label key="Tiêu đề hồ sơ SĐBS"/></td>
+                                    <td style="text-align: right"><sd:Label key="Nội dung trả lời công văn BS sau công bố"/></td>
                                     <td>
                                         <sd:Textarea key="" id="evaluateForm.contentsEditATTP" name="createForm.contentsEditATTP" rows="10" cssStyle="width:99%" maxlength="2000" trim="true"/>
                                     </td>
@@ -295,15 +295,15 @@
         var btnExportEEAA = document.getElementById('btnExportEEAA');
         if (document.getElementById("evaluateForm.statusDeny").checked) {
             trTitleEditATTP.style.display = 'none';
-            trContentsEditATTP.style.display = 'none';
-            btnExportEEAA.style.display = 'none';
+            trContentsEditATTP.style.display = 'none';            
             trStaffRequest.style.display = '';
+            btnExportEEAA.style.display = 'none';
             dijit.byId("evaluateForm.staffRequest").setValue("Yêu cầu bổ sung hồ sơ");
         } else {
             dijit.byId("evaluateForm.staffRequest").setValue("");
-            trTitleEditATTP.style.display = '';//
-            trContentsEditATTP.style.display = '';//
-            trStaffRequest.style.display = 'none';//
+            trTitleEditATTP.style.display = '';
+            trContentsEditATTP.style.display = '';
+            trStaffRequest.style.display = 'none';
             btnExportEEAA.style.display = '';
         }
     };

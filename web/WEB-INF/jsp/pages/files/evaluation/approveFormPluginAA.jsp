@@ -104,7 +104,7 @@
                                 </tr>
                                 <tr id="trTitleEditATTP" style="display:none">
                                     <td style="text-align: right">
-                                        <sd:Label key="Tiêu đề hồ sơ SĐBS"/></td>
+                                        <sd:Label key="Tiêu đề trả lời công văn BS sau công bố"/></td>
                                     <td>
                                         <sd:Textarea 
                                             id="approveForm.titleEditATTP" 
@@ -114,7 +114,7 @@
                                 </tr>
                                 <tr id="trContentsEditATTP" style="display:none">
                                     <td style="text-align: right">
-                                        <sd:Label key="Tiêu đề hồ sơ SĐBS"/></td>
+                                        <sd:Label key="Nội dung trả lời công văn BS sau công bố"/></td>
                                     <td>
                                         <sd:Textarea 
                                             id="approveForm.contentsEditATTP"

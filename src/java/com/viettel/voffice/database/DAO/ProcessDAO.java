@@ -8,6 +8,7 @@ import com.viettel.common.util.Constants;
 import com.viettel.common.util.LogUtil;
 import com.viettel.voffice.client.form.ProcessForm;
 import com.viettel.voffice.database.BO.Process;
+import com.viettel.voffice.database.DAOHibernate.EventLogDAOHE;
 import com.viettel.voffice.database.DAOHibernate.ProcessDAOHE;
 import com.viettel.vsaadmin.database.BO.Department;
 import com.viettel.vsaadmin.database.BO.Users;
@@ -241,6 +242,9 @@ public class ProcessDAO extends BaseDAO {
                     getSession().beginTransaction().commit();
                     resultMessage.add("1");
                     resultMessage.add("Cập nhật luồng xử lý thành công");
+
+                    EventLogDAOHE edhe = new EventLogDAOHE();
+                    edhe.insertEventLog("Chuyển luồng hồ sơ", getUserLogin() + " ProcessId=" + processAddEditForm.getProcessId().toString(), getRequest());
                 } else {
                     resultMessage.add("3");
                     resultMessage.add("Cập nhật luồng xử lý không thành công");

@@ -290,6 +290,9 @@ public class Files implements Serializable {
     private String titleEditATTP;
     @Column(name = "IS_COPY")
     private Long isCopy;
+    @Column(name = "HAVE_ADDITIONAL")
+    private Long haveAdditional;
+
     //end
     @Transient
     String proposeUserName;
@@ -415,23 +418,27 @@ public class Files implements Serializable {
         entity.setRecipientAddress(originalFiles.getRecipientAddress());
         entity.setIsHaveSubLabel(originalFiles.getIsHaveSubLabel());
         //Ho so SDBS sau cong bo
-        if(originalFiles.getFilesSourceID()!=null)
+        if (originalFiles.getFilesSourceID() != null) {
             entity.setFilesSourceID(originalFiles.getFilesSourceID());
+        }
+        if (originalFiles.getHaveAdditional()!= null) {
+            entity.setHaveAdditional(originalFiles.getHaveAdditional());
+        }
         entity.setFileSourceCode(originalFiles.getFileSourceCode());
         entity.setContentsEdit(originalFiles.getContentsEdit());
         entity.setContentsEdit(originalFiles.getContentsEditATTP());
         entity.setTitleEditATTP(originalFiles.getTitleEditATTP());
         entity.setNoteEdit(originalFiles.getNoteEdit());
         entity.setTitleEdit(originalFiles.getTitleEdit());
-        
+
         //end SDBS
         return entity;
     }
 
-    public Files cloneEntity(){
+    public Files cloneEntity() {
         return cloneEntity(this);
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -544,7 +551,6 @@ public class Files implements Serializable {
     public void setNoteEdit(String noteEdit) {
         this.noteEdit = StringUtils.removeEventHandlerJS(noteEdit);
     }
-    
 
     public Date getRepDate() {
         return repDate;
@@ -1317,7 +1323,12 @@ public class Files implements Serializable {
         this.isCopy = isCopy;
     }
 
-    
-    
-   
+    public Long getHaveAdditional() {
+        return haveAdditional;
+    }
+
+    public void setHaveAdditional(Long haveAdditional) {
+        this.haveAdditional = haveAdditional;
+    }
+
 }

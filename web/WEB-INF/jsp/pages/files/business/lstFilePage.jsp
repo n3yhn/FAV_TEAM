@@ -100,7 +100,7 @@
                     {
                         url += " | <img src='share/images/edit.png' width='17px' height='17px' title='Bổ sung hồ sơ' onClick='page.showEditFile(" + item.fileId + ");' />";
 //                        url += " | <img src='share/images/signature.png' width='20px' height='20px' title='Ký CA' onClick='page.signCa(" + row + ");' />";
-                        url += " | <img src='share/images/icons/UpArrow.png' width='17px' height='17px' title='Upload' onClick='page.Upload(" + row + ");' />";
+//                        url += " | <img src='share/images/icons/UpArrow.png' width='17px' height='17px' title='Upload' onClick='page.Upload(" + row + ");' />";
                     } else {
                         url += " | <img src='share/images/edit.png' width='17px' height='17px' title='Bổ sung hồ sơ' onClick='page.showEditFile(" + item.fileId + ");' />";
                         if (item.userSigned == "fileUploaded" || item.userSigned == "CBDN") {

@@ -42,6 +42,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -2023,6 +2024,7 @@ public class UsersDAO extends BaseDAO {
             Long currentUserId = vsaUserToken.getUserID();
             UsersDAOHE daohe = new UsersDAOHE();
             Users entity = daohe.findById(currentUserId);
+
             if (entity != null) {
                 if (entity.getPasswordchanged().equals(1L)) {
                     resultMessage.add("1");
@@ -2031,7 +2033,25 @@ public class UsersDAO extends BaseDAO {
                     resultMessage.add("0");
                     resultMessage.add("Mật khẩu của bạn hiện tại là mật khẩu mặc định, Vui lòng cập nhật mật khẩu mới");
                 }
+                //lay ngay doi mat khau so sanh voi ngay hien tai co lech khong
+                if (entity.getLastChangePassword() != null) {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(entity.getLastChangePassword());
+                    cal.add(Calendar.MONTH, 1);
+                    Date datePlus = cal.getTime();
+                    Date sysdate = getSysdate();
+
+                    if (datePlus.before(sysdate)) {
+                        resultMessage.set(0, "0");
+                        resultMessage.set(1, "Mật khẩu của bạn đã quá hạn! Vui lòng thay đổi bằng một mật khẩu khác và không giống mật khẩu hiện tại!");
+                    }
+                } else {
+                    resultMessage.set(0, "0");
+                    resultMessage.set(1, "Mật khẩu của bạn đã quá hạn! Vui lòng thay đổi bằng một mật khẩu khác và không giống mật khẩu hiện tại!");
+                }
+
             }
+
             List<Long> lst = daohe.getListRoleIdsByUser(currentUserId);
             if (lst.size() > 0) {
                 for (int i = 0; i < lst.size(); i++) {

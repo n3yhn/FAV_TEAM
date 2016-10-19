@@ -215,6 +215,7 @@ public class FilesForm implements Serializable {
     private String noteEdit;       // Ghi chu SDBS
     private String titleEdit;       //Tieu de sua doi
     private String titleEditATTP;       //Tieu de sua doi. Dung đe xuat cong van
+    private Long haveAdditional;
     //End SDBS
     private Integer orderBy;
 
@@ -331,6 +332,7 @@ public class FilesForm implements Serializable {
         noteEdit = entity.getNoteEdit();
         titleEdit = entity.getTitleEdit();
         titleEditATTP = entity.getTitleEditATTP();
+        haveAdditional = entity.getHaveAdditional();
     }
 
     public Files convertToEntity() {
@@ -445,6 +447,7 @@ public class FilesForm implements Serializable {
         entity.setIsFee(1L);
 //            entity.setIsSignPdf(1L);
 //        }
+        entity.setHaveAdditional(haveAdditional);
 
         return entity;
     }
@@ -1984,5 +1987,4 @@ public class FilesForm implements Serializable {
     public void setOrderBy(Integer orderBy) {
         this.orderBy = orderBy;
     }
-
 }

@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VLookupHomepage.findByStatus", query = "SELECT v FROM VLookupHomepage v WHERE v.status = :status"),
     @NamedQuery(name = "VLookupHomepage.findByIsExist", query = "SELECT v FROM VLookupHomepage v WHERE v.isExist = :isExist")})
 public class VLookupHomepage implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @Column(name = "FILE_ID")
@@ -70,6 +71,8 @@ public class VLookupHomepage implements Serializable {
     private Long status;
     @Column(name = "IS_EXIST")
     private BigInteger isExist;
+    @Column(name = "HAVE_ADDITIONAL")
+    private Long haveAdditional;
 
     public VLookupHomepage() {
     }
@@ -169,5 +172,14 @@ public class VLookupHomepage implements Serializable {
     public void setIsExist(BigInteger isExist) {
         this.isExist = isExist;
     }
+
+    public Long getHaveAdditional() {
+        return haveAdditional;
+    }
+
+    public void setHaveAdditional(Long haveAdditional) {
+        this.haveAdditional = haveAdditional;
+    }
     
+
 }

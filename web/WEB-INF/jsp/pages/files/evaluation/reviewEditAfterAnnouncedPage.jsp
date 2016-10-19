@@ -679,6 +679,7 @@
         } else {
             document.getElementById("reviewForm.statusDeny").checked = true;
         }
+        onchangeStatusREAAFOG();
         dijit.byId("reviewForm.legalL").setValue(1);
         dijit.byId("reviewForm.foodSafetyQualityL").setValue(1);
         dijit.byId("reviewForm.effectUtilityL").setValue(1);

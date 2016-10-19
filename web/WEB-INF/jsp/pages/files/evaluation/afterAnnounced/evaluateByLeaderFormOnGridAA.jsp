@@ -58,7 +58,7 @@
                                 </tr>
 
                                 <tr id="trTitleEditATTP" style="display:">
-                                    <td style="text-align: right"><sd:Label key="Tiêu đề hồ sơ SĐBS"/></td>
+                                    <td style="text-align: right"><sd:Label key="Tiêu đề trả lời công văn BS sau công bố"/></td>
                                     <td>
                                         <sd:Textarea key=""
                                                      id="evaluationRecord.titleEditATTP"
@@ -68,7 +68,7 @@
                                     </td>
                                 </tr>
                                 <tr id="trContentsEditATTP" style="display:">
-                                    <td style="text-align: right"><sd:Label key="Tiêu đề hồ sơ SĐBS"/></td>
+                                    <td style="text-align: right"><sd:Label key="Nội dung trả lời công văn BS sau công bố"/></td>
                                     <td>
                                         <sd:Textarea key=""
                                                      id="evaluationRecord.contentsEditATTP"
