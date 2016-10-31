@@ -81,7 +81,7 @@
                     url = "<div style='text-align:center;cursor:pointer;'><img src='${contextPath}/share/images/icons/payment.png' width='17px' height='17px' \n\
                         title='<sd:Property>Keypay</sd:Property>' \n\
                         onClick='page.pay(" + row + ");' /> ";
-                    url += " | <img src='share/images/icons/attach.png' width='17px' height='17px' title='Chuyển khoản' onClick='page.payFeeTransfer(" + row + ");' />";
+//                    url += " | <img src='share/images/icons/attach.png' width='17px' height='17px' title='Chuyển khoản' onClick='page.payFeeTransfer(" + row + ");' />";
 //                    url += " | <img src='share/images/icons/bill.png' width='17px' height='17px' title='Tiền mặt' onClick='page.payFeeCash(" + row + ");' /></div>";
             }
         }

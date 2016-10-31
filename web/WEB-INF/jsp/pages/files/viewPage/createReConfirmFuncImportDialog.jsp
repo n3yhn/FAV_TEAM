@@ -7,12 +7,6 @@
     request.setAttribute("contextPath", request.getContextPath());
 %>
 <div class="buttonDiv" id="buttonDiv">
-    <%--<sx:ButtonBack onclick="backPage();"/>
-    <sd:Button id="btnReceived" key="" onclick="page.showReceivedDlg();" cssStyle="display:none" cssClass="buttonGroup">
-        <img src="${contextPath}/share/images/icons/Answer.png" height="14" width="18">
-        <span style="font-size:12px">Tiếp nhận hồ sơ</span>
-    </sd:Button>
-    --%>
     <sd:Button id="btnRejectReceived" key="" onclick="page.rejectReceived();" cssStyle="display:none" cssClass="buttonGroup"> 
         <img src="${contextPath}/share/images/icons/unapproved.png" height="14" width="18">
         <span style="font-size:12px">Từ chối hồ sơ</span>
@@ -29,12 +23,6 @@
         <img src="share/images/icons/chat.png" height="14" width="14" alt="Ý kiến thẩm định"/>
         <span style="font-size:12px">Ý kiến thẩm định</span>
     </sd:Button>
-    <%--
-    <sd:Button id="btnEvaluationDetails" key="" onclick="page.showEvaluateDetailsForm();" cssStyle="display:none" cssClass="buttonGroup">
-        <img src="share/images/icons/export.jpg" height="14" width="14" alt="Kết luận thẩm định"/>
-        <span style="font-size:12px">Kết luận thẩm định</span>
-    </sd:Button>
-    --%>
     <sd:Button id="btnAnnouncementReceiptPaper" key="" onclick="page.showAnnouncementReceiptPaperDlg();" cssStyle="display:none" cssClass="buttonGroup">
         <img src="share/images/icons/document_management.png" height="14" width="14" alt="Chi tiết giấy tiếp nhận hồ sơ"/>
         <span style="font-size:12px">Giấy tiếp nhận hồ sơ</span>

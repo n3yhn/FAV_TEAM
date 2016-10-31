@@ -657,7 +657,7 @@
             bReturn = false;
         } else {
             phoneNumber = phoneNumber.trim();
-            if (phoneNumber.length > 14) {
+            if (phoneNumber.length > 14 || phoneNumber.length < 5) {
                 bReturn = false
             } else {
                 try {

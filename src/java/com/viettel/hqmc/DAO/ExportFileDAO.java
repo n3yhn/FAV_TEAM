@@ -3430,16 +3430,16 @@ public class ExportFileDAO extends BaseDAO {
                     wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(reReceiptPaperAnnounementSign))));
                     break;
                 case Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_IMP:
-                    //wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempReConfirmFuncImport))));
+                    wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(reReceiptPaperConfirmFucnImpSign))));
                     break;
                 case Constants.FILE_DESCRIPTION.RE_CONFIRM_NORMAL_VN:
-                    //wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempReConfirmFuncImport))));
+                    wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(reReceiptPaperConfirmFucnImpSign))));
                     break;
                 case Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_VN:
-                    //wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempReConfirmFuncImport))));
+                    wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(reReceiptPaperConfirmFucnImpSign))));
                     break;
                 case Constants.FILE_DESCRIPTION.REC_CONFIRM_NORMAL_IMP:
-                    //wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(tempReConfirmFuncImport))));
+                    wmp = WordprocessingMLPackage.load(new FileInputStream(new File(getRequest().getRealPath(reReceiptPaperConfirmFucnImpSign))));
                     break;
             }
             //binhnt update 260216

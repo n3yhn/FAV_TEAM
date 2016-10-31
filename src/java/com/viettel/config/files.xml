@@ -124,6 +124,7 @@
             <result type="tiles" name="confirmFuncVNSign">confirmFuncVNSign</result>
             <result type="tiles" name="reConfirmFuncVNSign">reConfirmFuncVNSign</result>
             <result type="tiles" name="confirmSatisfactorySign">confirmSatisfactorySign</result>
+            <result type="tiles" name="announcement4starSign">announcement4starSign</result>
             <!-- End xem trang ky -->
             <!-- LDC phe duyet SDBS -->
             <result type="tiles" name="lookupFilesByLeaderApproveSdbs.Page">lookupFilesByLeaderApproveSdbs.Page</result>

@@ -41,7 +41,6 @@ import com.viettel.hqmc.FORM.EvaluationRecordsFormOnGrid;
 import com.viettel.hqmc.FORM.FilesForm;
 import com.viettel.hqmc.FORM.ReIssueFormForm;
 import com.viettel.hqmc.FORM.TestRegistrationForm;
-import com.viettel.voffice.common.util.CommonUtils;
 import com.viettel.voffice.database.BO.Category;
 import com.viettel.voffice.database.BO.Process;
 import com.viettel.voffice.database.BO.VoAttachs;
@@ -68,7 +67,6 @@ import javax.xml.bind.Marshaller;
 import org.apache.commons.lang.time.DateUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.w3c.dom.Document;
 
 /**
  *
@@ -233,13 +231,19 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         // Luu thong tin danh sach san pham nhap khau cho khach san 4 sao        
         saveProductInFile(createForm.getLstProductInFile(), filesId);
         try {//lưu phí thẩm định hồ sơ
+            if (createForm.getDetailProduct() != null
+                    && createForm.getDetailProduct().getProductType() != null
+                    && createForm.getDetailProduct().getProductTypeName() != null) {
+                createForm.setProductType(createForm.getDetailProduct().getProductType());
+                createForm.setProductTypeName(createForm.getDetailProduct().getProductTypeName());
+            }
             ProcedureDAOHE pdheCheck = new ProcedureDAOHE();
             Procedure pro = pdheCheck.getProcedureTypeFee(createForm.getFileType());
             if (pro != null
                     && (pro.getTypeFee() == 2 || pro.getTypeFee() == 3)
                     && !pro.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)
                     && !pro.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05)) {
-                if (!saveFee(filesId, createForm.getFileType(), null, pro, productTypeIdOld)) {
+                if (!saveFee(filesId, createForm.getFileType(), createForm.getDetailProduct().getProductType(), pro, productTypeIdOld)) {
                     return null;
                 }
             } //Sua doi sua cong bo. Tao mot ban ghi trong FeePaymentInfo de VanThu nhin thay hoso cua loai nay
@@ -269,14 +273,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
 
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
-//            log.error(ex.getMessage());
-//            if (isCreateNew) {
-//                bo.setIsActive(Constants.Status.INACTIVE);
-//                getSession().update(bo);
-//            } else {
-//                getSession().update(boRollBack);
-//
-//            }
             return null;
         }
 
@@ -4327,10 +4323,10 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     newP.setStatus(0l); // Moi den chua xu ly
                     newP.setIsActive(1l);
                 }
-                
+
                 getSession().save(newP);
                 getSession().update(file);
-                
+
                 MessageSmsDAOHE msdhe = new MessageSmsDAOHE();
                 String msg = "Ho so ma: " + file.getFileCode() + " cua doanh nghiep: " + file.getBusinessName() + " dang trong trang thai: da tiep nhan";
                 msdhe.saveMessageSMS(userId, file.getUserCreateId(), msg);
@@ -5880,6 +5876,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         }
                         if (status.equals(Constants.FILE_STATUS.FEDBACK_TO_EVALUATE)) {
                             // Tra lai cho chuyen vien tham dinh
+                            if (form.getLeaderStaffRequest() != null) {
+                                file.setLeaderStaffRequest(userName + " " + dateTime + ":\n" + form.getLeaderStaffRequest());
+                            }
                             if (p != null) {
                                 //lay process tham dinh ho so
                                 ProcessDAOHE psdhe = new ProcessDAOHE();

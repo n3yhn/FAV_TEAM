@@ -397,6 +397,15 @@ public final class Constants {
         public static final String REC_CONFIRM_NORMAL_IMP = "reConfirmNormalImp";
         public static final String RE_CONFIRM_FUNC_VN = "reConfirmFuncVN";
         public static final String RE_CONFIRM_NORMAL_VN = "reConfirmNormalVN";
+        
+        public static final Long  RE_ANNOUNCEMENT_ID = 66741L;
+        public static final Long RE_CONFIRM_FUNC_IMP_ID = 66747L;
+        public static final Long REC_CONFIRM_NORMAL_IMP_ID = 66743L;
+        public static final Long RE_CONFIRM_FUNC_VN_ID = 66749L;
+        public static final Long RE_CONFIRM_NORMAL_VN_ID = 66745L;
+        
+        
+        
 
         public static final String CONFIRM_FUNC_IMP_TL = "confirmTL";
         //hiepvv SDBS sau cong bo

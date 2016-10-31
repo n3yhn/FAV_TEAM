@@ -452,10 +452,13 @@
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcementReceiptPaperSignDlg.jsp"/>    
     </definition>
     <definition name="reConfirmFuncVNSign" extends="content.definition" >
-        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcementReceiptPaperSignDlg.jsp"/>    
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcement4star"/>    
     </definition>
     <definition name="confirmSatisfactorySign" extends="content.definition" >
         <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/confirmImportSatistPaperSignDlg.jsp"/>    
+    </definition>
+    <definition name="announcement4starSign" extends="content.definition" >
+        <put-attribute name="body" value="/WEB-INF/jsp/pages/files/provide/tabViewProvide/announcementReceiptPaperSignDlg.jsp"/>    
     </definition>
     <!-- end Sign page -->
     

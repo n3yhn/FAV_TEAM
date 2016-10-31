@@ -52,7 +52,8 @@ public class UploadFile {
                 + separatorFile + String.valueOf(cal.getTime().getMonth() + 1)
                 + separatorFile + String.valueOf(cal.getTime().getDate());
         String subFolder = dir + subDir;
-        File folderExisting = new File(getSafeFileName(dir));
+        //linhdx sua
+        File folderExisting = new File(dir);
         if (!folderExisting.isDirectory()) {
             folderExisting.mkdir();
         }
@@ -322,7 +323,8 @@ public class UploadFile {
             out.close();
         } catch (IOException e) {
             LogUtil.addLog(e);//binhnt sonar a160901
-        }
+        } 
+         
     }
 
     /**

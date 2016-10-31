@@ -40,6 +40,15 @@
                         <div id="createForm.announcement.productName"> ${fn:escapeXml(createForm.announcement.productName)} </div>
                 </td>
             </tr>
+            <tr>
+                <td width="25%"><sd:Label>Nhóm sản phẩm</sd:Label></td>
+                    <td width="25%">
+                        <div id="createForm.detailProduct.productType">${fn:escapeXml(createForm.detailProduct.productTypeName)}</div>
+                </td>
+                <td width="25%"><sd:Label></sd:Label></td>
+                    <td width="25%">
+                </td>
+            </tr>
         </table>
     </sd:FieldSet>
     <br/>
@@ -122,7 +131,7 @@
     </sd:FieldSet> 
 </div>
 <script type="text/javascript">
-    page.replaceNewLineByBr = function() {
+    page.replaceNewLineByBr = function () {
         var table = document.getElementById("detailDiv1");
         var divs = table.getElementsByTagName("div");
         var i = 0;
@@ -135,7 +144,7 @@
             }
         }
     };
-    page.replace = function() {
+    page.replace = function () {
         var content = "";
         content = document.getElementById("createForm.announcement.matchingTarget").innerHTML;
         if (content != "") {
@@ -144,7 +153,7 @@
         }
     };
 
-    page.checkModifiredTabAnnouncement = function() {
+    page.checkModifiredTabAnnouncement = function () {
         var announcementId = '${fn:escapeXml(createFormClone.announcement.announcementId)}';
 
         if (announcementId != null && announcementId > 0) {

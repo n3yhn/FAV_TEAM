@@ -1923,7 +1923,7 @@ public class FilesDAO extends BaseDAO {
                 resultMessage.add("1");
                 resultMessage.add("Cập nhật trạng thái hồ sơ thành công");
                 EventLogDAOHE edhe = new EventLogDAOHE();
-                edhe.insertEventLog("Chuyển luồng hồ sơ",getUserLogin() + " FileId=" + createForm.getFileId(), getRequest());
+                edhe.insertEventLog("Chuyển luồng hồ sơ", getUserLogin() + " FileId=" + createForm.getFileId(), getRequest());
             } else {
                 resultMessage.add("3");
                 resultMessage.add("Cập nhật trạng thái hồ sơ không thành công");
@@ -4114,6 +4114,18 @@ public class FilesDAO extends BaseDAO {
 
         VoAttachsDAOHE vtdhe = new VoAttachsDAOHE();
         GridResult result = vtdhe.getAttachsByIdTypeChanged(objectId, objectType, start, count, sortField);
+        //linhdx add de co the download
+        String idSession = (String) getRequest().getSession().getAttribute("idSession");
+        if (idSession == null) {
+            idSession = "";
+        }
+        List lstAttach = result.getLstResult();
+        for (int i = 0; i < lstAttach.size(); i++) {
+            VoAttachs bo = (VoAttachs) lstAttach.get(i);
+            idSession += bo.getAttachId().toString();
+            idSession += ";";
+        }
+        getRequest().getSession().setAttribute("idSession", idSession);
         jsonDataGrid.setItems(result.getLstResult());
         jsonDataGrid.setTotalRows(result.getnCount().intValue());
         return GRID_DATA;
@@ -4168,12 +4180,14 @@ public class FilesDAO extends BaseDAO {
         if ((totalFeeFile.equals(feeFile) && feeFile > 0l) || (totalFeeFile > feeFile)) {
             customInfo.add(1);
         } else // nop thieu
-         if (totalFeeFile < feeFile && totalFeeFile > 0) {
+        {
+            if (totalFeeFile < feeFile && totalFeeFile > 0) {
                 customInfo.add(0);
             } // chua nop
             else {
                 customInfo.add(-1);
             }
+        }
 
         jsonDataGrid.setItems(result.getLstResult());
         jsonDataGrid.setTotalRows(result.getnCount().intValue());
@@ -5981,31 +5995,26 @@ public class FilesDAO extends BaseDAO {
 
         String strObjectId = getRequest().getParameter("objectId");
         String strObjectType = getRequest().getParameter("objectType");
-//        String strProductType = getRequest().getParameter("productType");
 
         Long objectId = 0l;
         Long objectType;
-//        Long productType = 0L;
         try {
             objectId = Long.parseLong(strObjectId);
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
-//            log.error(en.getMessage());
         }
         try {
             objectType = Long.parseLong(strObjectType);
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
-//            log.error(en.getMessage());
             objectType = 0l;
         }
-//        try {
-//            productType = Long.parseLong(strProductType);
-//        } catch (Exception en) {
-//            log.error(en.getMessage());
-//        }
         ProcessCommentDAOHE pcdhe = new ProcessCommentDAOHE();
         List<ProcessCommentForm> result = pcdhe.getLstCommentOfDocument(getUserId(), objectId, objectType, start, count, sortField);
+        //160628 bo sung noi dung sua sau cong bo
+        FilesDAOHE filesDaohe = new FilesDAOHE();
+        Files filebo = filesDaohe.findById(objectId);
+
         String legal = "";
         String foodSafetyQuality = "";
         String effectUtility = "";
@@ -6027,10 +6036,15 @@ public class FilesDAO extends BaseDAO {
         customInfo.add(legal);//0
         customInfo.add(foodSafetyQuality);//1
         customInfo.add(effectUtility);//2
-        customInfo.add(standard);//3
-        //160628 bo sung noi dung sua sau cong bo
-        FilesDAOHE filesDaohe = new FilesDAOHE();
-        Files filebo = filesDaohe.findById(objectId);
+        if (standard != null && !"".equals(standard)) {
+            customInfo.add(standard);//3    
+        } else if (Constants.FILE_STATUS.FEDBACK_TO_EVALUATE.equals(filebo.getStatus())
+                && filebo.getLeaderStaffRequest() != null
+                && !"".equals(filebo.getLeaderStaffRequest().trim())) {
+            customInfo.add(filebo.getLeaderStaffRequest());//3
+        } else {
+            customInfo.add(standard);//3    
+        }
         String titleEditATTP = "";
         String contentsEditATTP = "";
         if (filebo != null) {
@@ -6049,24 +6063,11 @@ public class FilesDAO extends BaseDAO {
         }
         customInfo.add(titleEditATTP);//4
         customInfo.add(contentsEditATTP);//5
-        //!160628
-        /*
-         CategoryDAOHE catedaohe = new CategoryDAOHE();
-         Category catebo = catedaohe.findById(productType);
-         if (catebo != null) {
-         if (catebo.getCode() != null && catebo.getCode().equals("TPCN")) {
-         customInfo.add(1);
-         } else {
-         customInfo.add(0);
-         }
-         } else {
-         customInfo.add(0);
-         } */
         jsonDataGrid.setCustomInfo(customInfo);
         return GRID_DATA;
     }//!140704
 
-    //get noi dung tham dinh - tham dinh lanh dao phong
+//get noi dung tham dinh - tham dinh lanh dao phong
     public String getCommentEvaluateFormByLeader() {
         getGridInfo();
         List customInfo = new ArrayList();
@@ -6418,11 +6419,11 @@ public class FilesDAO extends BaseDAO {
         }
         GridResult result = fpidaohe.getLstFeePaymentInfo(fileId, objectType, 2L, start, count, sortField);
         /*SONAR
-        FilesDAOHE filesDHE = new FilesDAOHE();        
-        feeFile = filesDHE.findById(objectId).getFeeFile();
-        if (feeFile == null) {
-            feeFile = 0l;
-        }
+         FilesDAOHE filesDHE = new FilesDAOHE();        
+         feeFile = filesDHE.findById(objectId).getFeeFile();
+         if (feeFile == null) {
+         feeFile = 0l;
+         }
          */
         customInfo.add(isFee);
         //lay so tiep nhan hien tai
@@ -6508,11 +6509,11 @@ public class FilesDAO extends BaseDAO {
         }
         GridResult result = fpidaohe.getLstFeePaymentInfo(fileId, objectType, 1L, start, count, sortField);
         /*SONAR
-        FilesDAOHE filesDHE = new FilesDAOHE();
-        feeFile = filesDHE.findById(objectId).getFeeFile();
-        if (feeFile == null) {
-            feeFile = 0l;
-        }
+         FilesDAOHE filesDHE = new FilesDAOHE();
+         feeFile = filesDHE.findById(objectId).getFeeFile();
+         if (feeFile == null) {
+         feeFile = 0l;
+         }
          */
         customInfo.add(isFee);
         customInfo.add(isCourier);
@@ -9210,6 +9211,7 @@ public class FilesDAO extends BaseDAO {
                 }
             }
             String fileId = parts[2];
+
             if ("".equals(fileId) || "".equals(signType)) {
                 Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình upload file ký lên server: Tên File không đúng định dạng");
                 result = false;
@@ -9226,6 +9228,7 @@ public class FilesDAO extends BaseDAO {
                         voUpload.setObjectType(40L);
                     } else if (indexFile == 2) {
                         voUpload.setObjectType(41L);
+
                     } else {
                         Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình upload file ký lên server: PDHS không xác định được thứ tự File ký");
                         result = false;
@@ -9243,6 +9246,7 @@ public class FilesDAO extends BaseDAO {
                 } else if ("CVBS".equals(signType)) {
                     voUpload.setObjectType(71L);
                     voUpload.setAttachName("CongvanSdbs_" + fileName);
+
                 } else {
                     Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình upload file ký lên server: Tên File không đúng định dạng");
                     result = false;
@@ -9280,6 +9284,7 @@ public class FilesDAO extends BaseDAO {
                         voUpload.setObjectType(40L);
                     } else if (indexFile == 2) {
                         voUpload.setObjectType(41L);
+
                     } else {
                         Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình upload file ký lên server: PDHS không xác định được thứ tự File ký");
                         result = false;
@@ -9296,6 +9301,7 @@ public class FilesDAO extends BaseDAO {
                 } else if ("CVBS".equals(signType)) {
                     voUpload.setObjectType(71L);
                     voUpload.setAttachName("CongvanSdbs_" + fileName);
+
                 } else {
                     Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình upload file ký lên server: Tên File không đúng định dạng");
                     result = false;
@@ -9314,8 +9320,10 @@ public class FilesDAO extends BaseDAO {
                 } else if ("LD".equals(parts[0])) {
                     file.setIsSignPdf(1l);
                     fdhe.saveDbNoCommit(file);
+
                 } else {
-                    Logger.getLogger(FilesWS.class.getName()).log(Level.SEVERE, null, "Lỗi trong quá trình upload file ký lên server: Tên File không đúng định dạng");
+                    Logger.getLogger(FilesWS.class
+                            .getName()).log(Level.SEVERE, null, "Lỗi trong quá trình upload file ký lên server: Tên File không đúng định dạng");
                     result = false;
                 }
             }

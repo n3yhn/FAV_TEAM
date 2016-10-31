@@ -452,7 +452,8 @@
                                       key="" data="lstFileType"
                                       valueField="procedureId"
                                       labelField="name"
-                                      name="searchForm.fileType" >
+                                      name="searchForm.fileType"
+                                      readonly="true">
                         </sd:SelectBox>
                     </td>
                 </tr>
@@ -702,7 +703,7 @@
 
     page.reset = function () {
         dijit.byId("searchForm.fileCode").setValue("");
-        dijit.byId("searchForm.fileType").setValue("-1");
+//        dijit.byId("searchForm.fileType").setValue("-1");
         dijit.byId("searchForm.sendDateFrom").setValue("");
         dijit.byId("searchForm.sendDateTo").setValue("");
         page.search();
@@ -1004,5 +1005,5 @@
 <sd:TextBox id="txtBase64HashC" key="" name="txtBase64Hash" type="hidden"/>
 <input type="hidden" id="certSerial" value="" />
 <sd:TextBox id="txtCertSerialC" key="" name="txtCertSerial" type="hidden"/>
-    <object id="plugin0" type="application/x-viettelcasigner" width="3" height="10">
-    </object>
+<object id="plugin0" type="application/x-viettelcasigner" width="3" height="10">
+</object>

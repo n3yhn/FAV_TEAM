@@ -21,7 +21,6 @@
             </td>
         </tr>
         <tr>
-
             <td width="25%" ><sd:Label required="true">Điện thoại</sd:Label><font style="color:red">*</font></td>
                 <td width="25%">
                 <sd:TextBox key="" id="createForm.announcement.businessTelephone" name="createForm.announcement.businessTelephone" maxlength="20" cssStyle="width:99%" trim="true"/>
@@ -45,11 +44,11 @@
             <td width="25%"><sd:Label required="true">Nhóm sản phẩm</sd:Label><font style="color:red">*</font></td>
                 <td width="25%">
                 <sd:SelectBox key="" id="createForm.detailProduct.productType" name="createForm.detailProduct.productType" cssStyle="width:98%"
-                          data="lstProductType" valueField="categoryId" labelField="name" value="${fn:escapeXml(createForm.detailProduct.productType)}"/>
-            <sd:TextBox key="" id="createForm.detailProduct.productTypeName" name="createForm.detailProduct.productTypeName" cssStyle="display:none" trim="true" maxlength="255"/>
+                              data="lstProductType" valueField="categoryId" labelField="name" value="${fn:escapeXml(createForm.detailProduct.productType)}" onchange="page.showFee()"/>
+                <sd:TextBox key="" id="createForm.detailProduct.productTypeName" name="createForm.detailProduct.productTypeName" cssStyle="display:none" trim="true" maxlength="255"/>
             </td>
             <td width="25%"></td>
-                <td width="25%">
+            <td width="25%">
             </td>            
         </tr>
     </table>
@@ -118,16 +117,18 @@
                 <td width="25%">
                 <sx:DatePicker key="" id="createForm.announcement.publishDate" name="createForm.announcement.publishDate" format="dd/MM/yyyy" cssStyle="width:99%"/>
             </td>
-
         </tr>
         <tr>
             <td width="25%"><sd:Label required="true">Phù hợp với QCKT/QĐATTP</sd:Label><font style="color:red">*</font></td>
                 <td width="25%">
-                <tags:MutipleSelect disabled="false" id="createForm.announcement.matchingTarget" name="createForm.announcement.matchingTarget" data="${lstStandard}"  allowCode="false" /> 
+                <tags:MutipleSelect
+                    disabled="false"
+                    id="createForm.announcement.matchingTarget"
+                    name="createForm.announcement.matchingTarget"
+                    data="${lstStandard}"
+                    allowCode="false" /> 
 
             </td>
-
-
             <td width="25%"><sd:Label>Phương thức đánh giá phù hợp</sd:Label></td>
                 <td width="25%">
                 <sd:Textarea key="" id="createForm.announcement.assessmentMethod" name="createForm.announcement.assessmentMethod" rows="4" cssStyle="width:99%" maxlength="2000" trim="true"/>
@@ -247,8 +248,11 @@
             dijit.byId("createForm.announcement.matchingTarget").focus();
             return false;
         }
+        var productTypeName = dijit.byId("createForm.detailProduct.productType").attr("displayedValue");
+        dijit.byId("createForm.detailProduct.productTypeName").setValue(productTypeName);
         return true;
     };
+
     page.onFillData = function () {
         dijit.byId("createForm.announcement.manufactureName").setValue(dijit.byId("createForm.announcement.businessName").getValue());
         dijit.byId("createForm.announcement.manufactureTel").setValue(dijit.byId("createForm.announcement.businessTelephone").getValue());
@@ -257,50 +261,37 @@
         dijit.byId("createForm.announcement.manufactureEmail").setValue(dijit.byId("createForm.announcement.businessEmail").getValue());
     };
 
-    page.showFee = function()
+    page.showFee = function () {
+        var productTypeName = dijit.byId("createForm.detailProduct.productType").attr("displayedValue");
+        dijit.byId("createForm.detailProduct.productTypeName").setValue(productTypeName);
+
+        var check = dijit.byId("createForm.detailProduct.productType").getValue();
+        var dbtId = "${fn:escapeXml(dbtId)}";
+        var checkDBT = dbtId.split(";");
+        var tpcnId = "${fn:escapeXml(tpcnId)}";
+        var priceDBT = "${fn:escapeXml(priceTPDB)}";
+        var priceTPCN = "${fn:escapeXml(priceTPCN)}";
+        var priceETC = "${fn:escapeXml(priceETC)}";
+        var tlId = "${tlId}";
+        var dem = 0;
+        for (var i = 0; i < checkDBT.length; i++)
         {
-            var productTypeName = dijit.byId("createForm.detailProduct.productType").attr("displayedValue");
-            dijit.byId("createForm.detailProduct.productTypeName").setValue(productTypeName);
-
-            var check = dijit.byId("createForm.detailProduct.productType").getValue();
-            var dbtId = "${fn:escapeXml(dbtId)}";
-            var checkDBT = dbtId.split(";");
-            var tpcnId = "${fn:escapeXml(tpcnId)}";
-            var priceDBT = "${fn:escapeXml(priceTPDB)}";
-            var priceTPCN = "${fn:escapeXml(priceTPCN)}";
-            var priceETC = "${fn:escapeXml(priceETC)}";
-            var tlId = "${tlId}";
-            var dem = 0;
-            for (var i = 0; i < checkDBT.length; i++)
+            if (check == checkDBT[i])
             {
-                if (check == checkDBT[i])
-                {
-                    dem = 1;
-                    break;
-                }
+                dem = 1;
+                break;
             }
-            if (dem == 1)
-            {
-                alert("Phí thẩm định nhóm sản phẩm này có giá: " + priceDBT + " VNĐ, Chú ý chọn đúng nhóm SP vì có liên quan tới phí");
-            } else {
-                if (check == tpcnId)
-                {
-                    alert("Phí thẩm định nhóm sản phẩm này có giá: " + priceTPCN + " VNĐ, Chú ý chọn đúng nhóm SP vì có liên quan tới phí");
-                } else {
-                    if (check == -1)
-                    {
+        }
+        if (dem == 1) {
+            alert("Phí thẩm định nhóm sản phẩm này có giá: " + priceDBT + " VNĐ, Chú ý chọn đúng nhóm SP vì có liên quan tới phí");
+        } else if (check == tpcnId) {
+            alert("Phí thẩm định nhóm sản phẩm này có giá: " + priceTPCN + " VNĐ, Chú ý chọn đúng nhóm SP vì có liên quan tới phí");
+        } else if (check == -1) {
 
-                    } else {
-                        if (check == tlId)
-                        {
-                            alert("Phí thẩm định nhóm sản phẩm này có giá: " + 0 + " VNĐ, Chú ý: Nhóm thuốc lá không phải đóng phí");
-                        } else {
-                            if (check != dbtId && check != tpcnId && check != -1) {
-                                alert("Phí thẩm định nhóm sản phẩm này có giá: " + priceETC + " VNĐ, Chú ý chọn đúng nhóm SP vì có liên quan tới phí");
-                            }
-                        }
-                    }
-                }
-            }
-        };
+        } else if (check == tlId) {
+            alert("Phí thẩm định nhóm sản phẩm này có giá: " + 0 + " VNĐ, Chú ý: Nhóm thuốc lá không phải đóng phí");
+        } else if (check != dbtId && check != tpcnId && check != -1) {
+            alert("Phí thẩm định nhóm sản phẩm này có giá: " + priceETC + " VNĐ, Chú ý chọn đúng nhóm SP vì có liên quan tới phí");
+        }
+    };
 </script>

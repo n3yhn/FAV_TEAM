@@ -31,7 +31,7 @@
         if (item != null) {
             var attachId = parseInt(item.attachId);
             var name = item.attachName;
-            url = "<a href='uploadiframe!openFileUserAttachPdfCVBSold.do?attachId=" + attachId + "' >" + name + "</a>";//141215u binhnt53
+            url = "<a href='uploadiframe!openFileIsChanged.do?attachId=" + attachId + "' >" + name + "</a>";//141215u binhnt53
         }
         return url;
     };
@@ -79,7 +79,7 @@
                                  rowsPerPage="10">
                         <sd:ColumnDataGrid key="voPublishDocument.No" get="page.getNo" width="5%" 
                                            headerStyles="text-align:center;font-weight: bold;font-size:10px;font-family:Tahoma,helvetica,arial" styles="text-align:center;" />
-                        <sd:ColumnDataGrid  key="Tên tệp" field="attachName"  cellStyles="text-align:left;"
+                        <sd:ColumnDataGrid  key="Tên tài liệu" field="categoryName"  cellStyles="text-align:left;"
                                                 width="50%"  headerStyles="text-align:center;" />
                         <sd:ColumnDataGrid  key="Link download" get="page.getNo" formatter="page.formatFilesAttachOV" cellStyles="text-align:left;"
                                             width="50%" headerStyles="text-align:center;" />

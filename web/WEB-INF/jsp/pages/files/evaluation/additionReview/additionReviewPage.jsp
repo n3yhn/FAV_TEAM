@@ -38,15 +38,16 @@
         if (item != null) {
             var status = parseInt(item.status);
             var url = "<div style='text-align:center;cursor:pointer;display:inline'><img src='share/images/icons/view.png' width='17px' height='17px' title='Xem hồ sơ' onClick='page.showViewFile(" + item.fileId + ");' />";
-            switch (status) {
-                case 4:
-//                    url += "| <img src='share/images/Document.png' width='17px' height='17px' title='Xuất giấy Thẩm định hồ sơ' onClick='page.downloadWord(" + item.fileId + ");' /> | <img src='share/images/icons/view.png' width='17px' height='17px' title='Xem chi tiết thẩm định hồ sơ' onClick='page.showEvaluateDetailsForm(" + row + ");' />";
-                case 7:
-                    url += " | <img src='share/images/edit.png' width='17px' height='17px' title='Xem xét SĐBS' onClick='page.showEvaluateForm(" + row + ");' />";
-                    //url += " | <img src='/share/images/signature.png' width='17px' height='17px' title='Ký phê duyệt SĐBS' onClick='page.showFeedbackReviewFormNew(" + row + ");' />";
-                    break;
-                default:
-                    ;
+    //linhdx comment bo chuc nang nay, thuc hien tham dinh o man hinh danh sach            
+//            switch (status) {
+//                case 4:
+////                    url += "| <img src='share/images/Document.png' width='17px' height='17px' title='Xuất giấy Thẩm định hồ sơ' onClick='page.downloadWord(" + item.fileId + ");' /> | <img src='share/images/icons/view.png' width='17px' height='17px' title='Xem chi tiết thẩm định hồ sơ' onClick='page.showEvaluateDetailsForm(" + row + ");' />";
+//                case 7:
+//                    url += " | <img src='share/images/edit.png' width='17px' height='17px' title='Xem xét SĐBS' onClick='page.showEvaluateForm(" + row + ");' />";
+//                    //url += " | <img src='/share/images/signature.png' width='17px' height='17px' title='Ký phê duyệt SĐBS' onClick='page.showFeedbackReviewFormNew(" + row + ");' />";
+//                    break;
+//                default:
+//                    ;
             }
         }
         url += "</div>";

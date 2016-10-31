@@ -737,11 +737,6 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
             } else {
                 query.setParameter(1, -1L);
             }
-//            if (objectType != null) {
-//                query.setParameter(2, objectType);
-//            } else {
-//                query.setParameter(2, -1L);
-//            }
             int total = query.list().size();
             String sortType = null;
             if (sortField != null) {
@@ -764,11 +759,6 @@ public class VoAttachsDAOHE extends GenericDAOHibernate<VoAttachs, Long> {
             } else {
                 query.setParameter(1, -1L);
             }
-//            if (objectType != null) {
-//                query.setParameter(2, objectType);
-//            } else {
-//                query.setParameter(2, -1L);
-//            }
             query.setFirstResult(start);
             query.setMaxResults(count);
             voAttachsList = query.list();

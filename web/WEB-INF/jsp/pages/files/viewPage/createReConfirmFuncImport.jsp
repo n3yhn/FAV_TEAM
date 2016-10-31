@@ -12,6 +12,14 @@
         <img src="${contextPath}/share/images/icons/Answer.png" height="14" width="18">
         <span style="font-size:12px">Tiếp nhận hồ sơ</span>
     </sd:Button>
+    <sd:Button id="btnReviewFiles" key="" onclick="page.showReviewForm();" cssStyle="display:none" cssClass="buttonGroup">
+        <img src="share/images/edit.png" height="14" width="14" alt="Kết luận thẩm định"/>
+        <span style="font-size:12px">Trưởng  Phòng Xem xét hồ sơ</span>
+    </sd:Button>
+        <sd:Button id="btnFeedbackReviewForm" key="" onclick="page.showFeedbackReviewForm();" cssStyle="display:none" cssClass="buttonGroup">
+        <img src="share/images/icons/foward_email.png" height="14" width="14" alt="Chức năng Lãnh đạo phòng xem xét công văn SĐBS"/>
+        <span style="font-size:12px">Trưởng phòng xem xét công văn SĐBS</span>
+    </sd:Button>
     <sd:Button id="btnRejectReceived" key="" onclick="page.rejectReceived();" cssStyle="display:none" cssClass="buttonGroup"> 
         <img src="${contextPath}/share/images/icons/unapproved.png" height="14" width="18">
         <span style="font-size:12px">Từ chối hồ sơ</span>
@@ -86,11 +94,10 @@
         <jsp:include page="../lookup/lookupProcessDlg.jsp" />
     </div>
 </sd:Dialog>
-<%--<sd:Dialog  id="evaluateViewDetailsDlg" height="auto" width="800px"
-            key="Chi tiết kết quả thẩm định" showFullscreenButton="false"
-            >
-    <jsp:include page="../evaluation/reviewFormViewDetails.jsp" flush="false"></jsp:include>
-</sd:Dialog>--%>
+<sd:Dialog  id="reviewDlg" height="auto" width="600px"
+            key="Kết quả xem xét" showFullscreenButton="false">
+    <jsp:include page="../evaluation/reviewForm.jsp" flush="false"></jsp:include>
+</sd:Dialog>
 <sd:Dialog  id="rejectReceivedDlg" height="auto" width="800px"
             key="Từ chối tiếp nhận hồ sơ" showFullscreenButton="false"
             >
@@ -202,9 +209,124 @@
         return strStatus;
     };
 
+    page.showBtnReviewFiles = function () {
+        var status = dijit.byId("createForm.status").getValue();
+        var leaderReviewId = dijit.byId("createForm.leaderReviewId").getValue();
+        var viewType = dijit.byId("createForm.viewType").getValue();
+        if ((status == 4 || status == 7 || status == 9) && (viewType == 3) && leaderReviewId == '${userId}') {
+            dijit.byId("btnReviewFiles").domNode.style.display = "";
+        }
+    };
+
+    page.showReviewForm = function () {//show form kết luận xem xét hồ sơ
+        var fileId = dijit.byId("createForm.fileId").getValue();
+        dijit.byId("reviewForm.fileId").setValue(fileId);
+        sd.connector.post("filesAction!getCommentEvaluateFormByLeader.do?objectId=" + fileId, null, null, null, afterShowReviewForm);
+    };
+
+    afterShowReviewForm = function (data) {
+        var obj = dojo.fromJson(data);
+        if (obj.customInfo[0] != "") {
+            document.getElementById("reviewForm.legalContentL").innerHTML = obj.customInfo[0];
+        } else {
+            document.getElementById("reviewForm.legalContentL").innerHTML = "";
+        }
+        if (obj.customInfo[1] != "") {
+            document.getElementById("reviewForm.foodSafetyQualityContentL").innerHTML = obj.customInfo[1];
+        } else {
+            document.getElementById("reviewForm.foodSafetyQualityContentL").innerHTML = "";
+        }
+        if (obj.customInfo[2] != "") {
+            document.getElementById("reviewForm.effectUtilityContentL").innerHTML = obj.customInfo[2];
+        } else {
+            document.getElementById("reviewForm.effectUtilityContentL").innerHTML = "";
+        }
+        if (obj.customInfo[3] != "") {
+            document.getElementById("reviewForm.leaderStaffRequest").innerHTML = obj.customInfo[3];
+        } else {
+            document.getElementById("reviewForm.leaderStaffRequest").innerHTML = "";
+        }
+        var status = dijit.byId("createForm.status").getValue();
+        var statusName = page.getStatusName(parseInt(status));
+        document.getElementById("reviewForm.status").innerHTML = statusName;
+        document.getElementById("reviewForm.staffRequest").innerHTML = escapeHtml_(obj.customInfo[3]);
+        document.getElementById("reviewForm.statusAccept").checked = true;
+        dijit.byId("reviewForm.legalL").setValue(1);
+        dijit.byId("reviewForm.foodSafetyQualityL").setValue(1);
+        dijit.byId("reviewForm.effectUtilityL").setValue(1);
+        dijit.byId("reviewDlg").show();
+        page.replaceBrTblReviewForm(); //on reviewForm.jsp
+    };
+
+    page.getStatusName = function (status) {
+        switch (status) {
+            case 1:
+                url = "Mới nộp";
+                break;
+            case 2:
+                url = "Đã được đề xuất xử lý";
+                break;
+            case 3:
+                url = "Đã phân công xử lý";
+                break;
+            case 4:
+                url = "Đã thẩm định";
+                break;
+            case 5:
+                url = "Đã xem xét kết quả";
+                break;
+            case 6:
+                url = "Đã phê duyệt kết quả";
+                break;
+            case 7:
+                url = "Chuyên viên KL: SĐBS";
+                break;
+            case 8:
+                url = "Đã trả lại để thẩm định lại";
+                break;
+            case 9:
+                url = "Đã trả lại để xem xét lại";
+                break;
+            default:
+                url = "Mới tạo";
+        }
+        return url;
+    };
+
+page.showBtnFeedbackReviewForm = function () {
+        var status = dijit.byId("createForm.status").getValue();
+        var leaderReviewId = dijit.byId("createForm.leaderReviewId").getValue();
+        var viewType = dijit.byId("createForm.viewType").getValue();
+        if ((status == 28 || status == 7 || status == 4) && (viewType == 3) && leaderReviewId == '${userId}') {
+            dijit.byId("btnFeedbackReviewForm").domNode.style.display = "";
+        }
+    };
+
+
+page.showFeedbackReviewForm = function () {
+        var fileId = dijit.byId("createForm.fileId").getValue();
+        var isTypeChange = dijit.byId("createForm.isTypeChange").getValue();
+        if (isTypeChange == '1') {
+            dijit.byId("ckbIsTypeChangeL").attr("checked", "on");
+        } else {
+            dijit.byId("ckbIsTypeChangeL").attr("checked", "");
+        }
+        dijit.byId("feedbackReviewForm.fileId").setValue(fileId);
+        sd.connector.post("filesAction!getCommentFeedbackReview.do?objectId=" + fileId, null, null, null, afterShowFeedbackReviewForm);
+    };
+    afterShowFeedbackReviewForm = function (data) {
+        var obj = dojo.fromJson(data);
+        if (obj.customInfo[0] != "") {
+            dijit.byId("feedbackReviewForm.leaderStaffRequest").setValue(obj.customInfo[0]);
+        } else {
+            dijit.byId("feedbackReviewForm.leaderStaffRequest").setValue("Chuyên viên chưa nhập ý kiến");
+        }
+        dijit.byId("feedbackReviewFormDlg").show();
+    };
     page.showAnnouncementReceiptPaperButton();
     page.showResultEvaluationButton();
     page.showCommentEvalutionButton();
     page.showBtnViewFLow();
     page.showReceivedButton();
+    page.showBtnReviewFiles();
 </script>  

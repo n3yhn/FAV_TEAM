@@ -806,7 +806,7 @@ public class UploadIframeDAO extends BaseDAO {
             try {
                 VoAttachs bo = daoHe.getLstVoAttachByFilesId(id, "PDHS");
                 //Hiepvv 1403 Download SDBS sau cong bo
-                if (!bo.getAttachName().startsWith("Bancongbo_VT")
+                if (!bo.getAttachName().startsWith("Bancongbo_VT") && !bo.getAttachName().startsWith("Bancongbo_LD")
                         && !bo.getAttachName().startsWith("CongvanSDBSsaucongbo_VT")) {
                     return "errorNoFile";
                 }
@@ -991,6 +991,41 @@ public class UploadIframeDAO extends BaseDAO {
             try {
                 VoAttachs bo = daoHe.findById(id, false);
                 if (bo != null && bo.getObjectType() == 71L) {
+                    linkFile = bo.getAttachPath();
+                    linkFile = dir + linkFile;
+                    File file = new File(linkFile);
+                    inputStream = new FileInputStream(file);
+                    HttpServletResponse response = getResponse();
+                    response.setHeader("Cache-Control", "no-cache");
+                    response.setHeader("Content-Disposition", "attachment; filename=\"" + bo.getAttachName() + "\"");
+                    response.flushBuffer();
+                    noError = true;
+                }
+            } catch (Exception ex) {
+                LogUtil.addLog(ex);//binhnt sonar a160901
+            }
+
+        } catch (Exception ex) {
+            LogUtil.addLog(ex);//binhnt sonar a160901
+        }
+        if (noError) {
+            return "download";
+        } else {
+            return "errorNoFile";
+        }
+    }
+
+    public String openFileIsChanged() {//141215u binhnt53
+        String linkFile = "";
+        boolean noError = false;
+        try {
+            ResourceBundle rb = ResourceBundle.getBundle("config");
+            String dir = rb.getString("directory");
+            VoAttachsDAOHE daoHe = new VoAttachsDAOHE();
+            Long id = Long.parseLong(getRequest().getParameter("attachId"));
+            try {
+                VoAttachs bo = daoHe.findById(id, false);
+                if (bo != null && bo.getIsActive() == -1L) {
                     linkFile = bo.getAttachPath();
                     linkFile = dir + linkFile;
                     File file = new File(linkFile);

@@ -1847,8 +1847,7 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                     return true;
                 } else//hop quy sang phu hop
                 // truong hop chuyen sang loai moi them tien - thuc pham chuc nang
-                {
-                    if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
+                 if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
                             || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)) {
 //                            // update phi ban ghi cu
                         String hql = "select fpif from FeePaymentInfo fpif "
@@ -1882,7 +1881,14 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
 //                            getSession().update(dp);
                         getSession().update(fileBo);
                         return true;
-                    } else {//thuc pham thuong k can them tien
+                    } else if (!proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.REC_CONFIRM_NORMAL_IMP)
+                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT)
+                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_IMP)
+                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_VN)
+                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_NORMAL_VN)
+                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05_PAPER)
+                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)) {
+
                         FeePaymentInfo fpif = new FeePaymentInfo();
                         fpif.setCreateDate(getSysdate());
                         fpif.setStatus(0l);
@@ -1898,10 +1904,8 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                         getSession().update(fileBo);
                         return true;
                     } //}
-                }
             } else// phu hop sang phu hop or nguoc lai
-            {
-                if (proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP)
+             if (proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP)
                         || proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
                         || proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)
                         || proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN)) {
@@ -1948,7 +1952,13 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                             getSession().update(fileBo);
                             return true;
                         }
-                    } else {
+                    } else if (!proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.REC_CONFIRM_NORMAL_IMP)
+                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT)
+                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_IMP)
+                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_VN)
+                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_NORMAL_VN)
+                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05_PAPER)
+                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)) {
                         String hql = "select fpif from FeePaymentInfo fpif "
                                 + "where fpif.fileId =:fileId "
                                 + "and fpif.isActive = 1";
@@ -1969,7 +1979,6 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
                         return true;
                     }
                 }
-            }
         } catch (NumberFormatException | HibernateException ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
             return false;

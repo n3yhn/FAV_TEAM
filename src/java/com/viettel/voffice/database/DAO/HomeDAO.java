@@ -721,13 +721,14 @@ public class HomeDAO extends BaseDAO {
                 item = new HomeLiveTileForm(countFilesNeedToReceive.replace("',", "?searchForm.searchType=0&searchForm.status=" + Constants.FILE_STATUS.RECEIVED_TO_ADD + "',"), "share/images/document/14_xanh_hsdaguiphanhoi.png", "Hồ sơ đã tiếp nhận SĐBS", filesNeedToReceive, 15l, "cadetblue",
                         3);
                 lstItem.add(item);
+                /*binhnt update theo nghiep vu moi
                 // hồ sơ chờ tiếp nhận SĐBS
                 filesNeedToReceive = (Long) (long) fdhe.getCountFileOnHomePage(userId, deptId, 0L, Constants.FILE_STATUS.NEW_TO_ADD);
-//                getRequest().setAttribute("filesNeedToReceive", filesNeedToReceive);
                 countFilesNeedToReceive = "doGoToMenu('filesAction!lookupFilesByClerical.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReceive.replace("',", "?searchForm.searchType=0&searchForm.status=" + Constants.FILE_STATUS.NEW_TO_ADD + "',"), "share/images/document/14_xanh_hsdaguiphanhoi.png", "Hồ sơ chờ tiếp nhận SĐBS", filesNeedToReceive, 15l, "cadetblue",
                         3);
                 lstItem.add(item);
+                */
                 //hồ sơ đã gửi công văn SĐBS
                 filesNeedToReceive = (Long) (long) fdhe.getCountFileOnHomePage(userId, deptId, 20L, Constants.FILE_STATUS.EVALUATED_TO_ADD);
 //                getRequest().setAttribute("filesNeedToReceive", filesNeedToReceive);

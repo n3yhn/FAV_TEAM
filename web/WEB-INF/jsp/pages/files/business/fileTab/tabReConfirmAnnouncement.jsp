@@ -25,8 +25,8 @@
             <sd:TextBox key="" id="createForm.reIssueForm.address" name="createForm.reIssueForm.address" maxlength="250" cssStyle="width:98%" trim="true"/>
         </td>
         <td width="25%"><sd:Label required="true">Email</sd:Label><font style="color:red">*</font></td>
-        <td width="25%">
-        <sd:TextBox key="" id="createForm.reIssueForm.email" name="createForm.reIssueForm.email" cssStyle="width:98%" trim="true" maxlength="100"/>
+            <td width="25%">
+            <sd:TextBox key="" id="createForm.reIssueForm.email" name="createForm.reIssueForm.email" cssStyle="width:98%" trim="true" maxlength="100"/>
         </td>
     </tr>
     <tr>
@@ -65,50 +65,65 @@
     </tr>    
 </table>
 <script type="text/javascript">
-    page.validateReIssueForm = function(){
+    page.validateReIssueForm = function () {
         var tabs = dijit.byId("files_tab");
         var panel = dijit.byId("tab.annoucement");
-        tabs.selectChild(panel);        
-        if(!dijit.byId("createForm.reIssueForm.businessName").getValue()){
+        var today = new Date();
+        tabs.selectChild(panel);
+        if (!dijit.byId("createForm.reIssueForm.businessName").getValue()) {
             alert("[Tên tổ chức cá nhân] chưa nhập");
             dijit.byId("createForm.reIssueForm.businessName").focus();
-            return false;       
+            return false;
         }
-        if(!dijit.byId("createForm.reIssueForm.identificationNumber").getValue()){
+        if (!dijit.byId("createForm.reIssueForm.identificationNumber").getValue()) {
             alert("[Số đăng ký kinh doanh/số chứng minh thư] chưa nhập");
             dijit.byId("createForm.reIssueForm.identificationNumber").focus();
-            return false;       
+            return false;
         }
-        if(!dijit.byId("createForm.reIssueForm.address").getValue()){
+        if (!dijit.byId("createForm.reIssueForm.address").getValue()) {
             alert("[Địa chỉ] chưa nhập");
             dijit.byId("createForm.reIssueForm.address").focus();
-            return false;       
+            return false;
         }
-        if(!dijit.byId("createForm.reIssueForm.email").getValue()){
+        if (!dijit.byId("createForm.reIssueForm.email").getValue()) {
             alert("[Email] chưa nhập");
             dijit.byId("createForm.reIssueForm.email").focus();
-            return false;       
+            return false;
         } else {
-            if(!sd.validator.isEmail(dijit.byId("createForm.reIssueForm.email").getValue())){
+            if (!sd.validator.isEmail(dijit.byId("createForm.reIssueForm.email").getValue())) {
                 alert("[Email] không đúng định dạng");
                 dijit.byId("createForm.reIssueForm.email").focus();
-                return false;       
+                return false;
             }
         }
-        if(dijit.byId("createForm.reIssueForm.telephone").getValue()){
-            if(!validatePhone(dijit.byId("createForm.reIssueForm.telephone").getValue())){
+        if (dijit.byId("createForm.reIssueForm.telephone").getValue()) {
+            if (!validatePhone(dijit.byId("createForm.reIssueForm.telephone").getValue())) {
                 alert("[Số điện thoại] không đúng định dạng");
                 dijit.byId("createForm.reIssueForm.telephone").focus();
-                return false;       
+                return false;
             }
         }
-        if(dijit.byId("createForm.reIssueForm.fax").getValue()){
-            if(!validatePhone(dijit.byId("createForm.reIssueForm.telephone").getValue())){
+        if (dijit.byId("createForm.reIssueForm.fax").getValue()) {
+            if (!validatePhone(dijit.byId("createForm.reIssueForm.telephone").getValue())) {
                 alert("[Fax] không đúng định dạng");
                 dijit.byId("createForm.reIssueForm.fax").focus();
-                return false;       
+                return false;
             }
         }
-        return true;       
-    }
+
+        var signDate = dijit.byId("createForm.reIssueForm.signDate").getValue();
+        if (signDate != null) {
+            //add code if u need
+            if (signDate > today) {
+                alert("[Ngày ký] nhỏ hơn ngày hiện tại");
+                dijit.byId("createForm.reIssueForm.signDate").focus();
+                return false;
+            }
+        } else {
+            alert("Vui lòng nhập [Ngày ký]");
+            dijit.byId("createForm.reIssueForm.signDate").focus();
+            return false;
+        }
+        return true;
+    };
 </script>

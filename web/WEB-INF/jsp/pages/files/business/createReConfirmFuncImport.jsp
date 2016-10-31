@@ -18,11 +18,16 @@
         <sd:TextBox key="" id="createForm.fileType" name="createForm.fileType" cssStyle="display:none" />
         <sd:TextBox key="" id="createForm.countUA" name="createForm.countUA" cssStyle="display:none" />
         <sd:Tab id="files_tab" height="400px" width="100%">
-            <sd:ContentPane key="Đơn đề nghị cấp lại" id="tab.annoucement">
+            <sd:ContentPane key="Đơn đề nghị cấp lại" id="tab.reannoucement">
                 <div id="tabReIssueFormDiv" style="overflow: auto;">
                     <jsp:include page="./fileTab/tabReConfirmAnnouncement.jsp"/>
                 </div>
-            </sd:ContentPane>    
+            </sd:ContentPane>
+            <sd:ContentPane key="Bản công bố đã công bố" id="tab.annoucement">
+                <div id="tabAnnouncementDiv" style="overflow: auto;">
+                    <jsp:include page="./fileTab/tabReAnnouncementProductDetail.jsp"/>
+                </div>
+            </sd:ContentPane>
             <sd:ContentPane key="Tài liệu đính kèm" id="tab.attachs">
                 <div id="tabAttachDiv" style="overflow: auto;">
                     <jsp:include page="./fileTab/tabAttachs.jsp"/>
@@ -34,7 +39,7 @@
 </sd:TitlePane>
 <script type="text/javascript">
     var ckInsert = false;
-    page.afterCommit = function(data) {
+    page.afterCommit = function (data) {
         var obj = dojo.fromJson(data);
         var result = obj.items;
         var result0 = result[0];
@@ -48,7 +53,7 @@
         ckInsert = false;
     };
 
-    page.validateFilesData = function() {
+    page.validateFilesData = function () {
         if (!page.validateReIssueForm()) {
             return false;
         }
@@ -56,11 +61,10 @@
             return false;
         }
         page.renameElementOfAttachs();
-
         return true;
     };
 
-    page.saveFiles = function() {
+    page.saveFiles = function () {
         if (!ckInsert) {
             if (page.validateFilesData()) {
                 ckInsert = true;
