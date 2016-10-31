@@ -18,7 +18,7 @@
         if (item != null) {
             var url = "<div style='text-align:center;cursor:pointer;'>";
 //            url += "<img src='share/images/icons/view.png' width='17px' height='17px' title='Sửa luồng hồ sơ' onClick='page.editProcessAction(" + item.processId + ");' />";
-            url += "<img src='share/images/icons/deleteStand.png' width='17px' height='17px' title='Xóa luồng hồ sơ' onClick='page.deleteProcessAction(" + item.processId + ");' />";
+            url += "<img src='share/images/icons/deleteStand.png' width='17px' height='17px' title='Xóa luồng hồ sơ' onClick='page.deleteProcessAction(" + item.businessAlertId + ");' />";
             url += "</div>";
         }
         return url;
@@ -37,7 +37,7 @@
                              rowSelector="0px" 
                              rowsPerPage="100"> 
                     <sd:ColumnDataGrid headerStyles="text-align:center;font-weight: bold" cellStyles="text-align:center;" key="customer.No" get="page.getNo" width="5%"/>
-                    <sd:ColumnDataGrid  key="Ngày" field="createdDate" type="date" format="dd/MM/yyyy HH:mm"
+                    <sd:ColumnDataGrid  key="Ngày" field="createdDate" type="date" format="dd/MM/yyyy"
                                         width="12%"  headerStyles="text-align:center;" />
                     <sd:ColumnDataGrid editable="true" key="Hành động" headerStyles="text-align:center;" width="5%" cellStyles="text-align:center;"
                                        formatter="page.formatEdit" get="page.getIndex"/>        
@@ -63,9 +63,10 @@
 </sd:Dialog>
 
 <script type="text/javascript">
-    
+    var workingFileId = dijit.byId("createBusinessAlertForm.businessId").getValue();
     page.getViewLstBusinessAlert = function (objectId) {
         dijit.byId("createBusinessAlertForm.businessId").setValue(objectId);
+        workingFileId = objectId;
         dijit.byId("gridBusinessAlertId").vtReload("businessAlertAction!loadBusinessAlertView.do?searchForm.businessId=" + objectId);
     };
 
@@ -78,7 +79,7 @@
         dijit.byId("createBusinessAlertForm.businessId").setValue("");
         dijit.byId("createBusinessAlertForm.content").setValue("");
         dijit.byId("createBusinessAlertForm.businessAlertId").setValue("");
-        
+
     };
 
     page.setItem = function (item) {
@@ -103,5 +104,21 @@
         page.setItem(item);
         dijit.byId("dlgAddEditBusinessAlert").show();
     };
+    page.deleteProcessAction = function (objectId) {
+        msg.confirm('Bạn có chắc chắn muốn xóa thông báo này không?', '<sd:Property>confirm.title</sd:Property>', page.executeDelete = function () {
+                    sd.connector.post("businessAlertAction!onDelete.do?businessAlertId=" + objectId + "&" + token.getTokenParamString(), null, null, null, page.afterDeleteBusinessAlert);
+                });
+            };
+            page.afterDeleteBusinessAlert = function (data) {
+                var obj = dojo.fromJson(data);
+                var result = obj.items;
+                var result0 = result[0];
+                if (result0 == "3") {
+                    alert(result[1]);
+                } else {
+                    alert(result[1]);
+                    page.getViewLstBusinessAlert(workingFileId);
+                }
+            };
 
 </script>

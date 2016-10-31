@@ -18,7 +18,7 @@
         <sd:TextBox key="" id="createForm.fileId" name="createForm.fileId" cssStyle="display:none" />
         <sd:TextBox key="" id="createForm.fileType" name="createForm.fileType" cssStyle="display:none" />
         <sd:TextBox key="" id="createForm.countUA" name="createForm.countUA" cssStyle="display:none" />
-        
+
         <sd:Tab id="files_tab" height="750px" width="100%">
             <sd:ContentPane key="Bản công bố" id="tab.Announcement4Star">
                 <div id="tabAnnouncement4StarDiv" style="overflow: auto;">
@@ -34,13 +34,18 @@
                 <div id="tabAttachDiv" style="overflow: auto;">
                     <jsp:include page="./fileTab/tabAttachs.jsp"/>
                 </div>
-            </sd:ContentPane>    
+            </sd:ContentPane>  
+            <sd:ContentPane key="Nhập thông tin từ file Excel" id="tab.excel">
+                <div id="tabExcel" style="overflow: auto;">
+                    <jsp:include page="./fileTab/importFilesExcel4Star.jsp"/>
+                </div>
+            </sd:ContentPane>
         </sd:Tab>
     </form>     
 </sd:TitlePane>
 <script type="text/javascript">
     var ckInsert = false;
-    page.afterCommit = function(data) {
+    page.afterCommit = function (data) {
         var obj = dojo.fromJson(data);
         var result = obj.items;
         var result0 = result[0];
@@ -53,10 +58,10 @@
         ckInsert = false;
     };
 
-    page.validateFilesData = function() {
-        if(!page.validateAnnouncement4Star())
+    page.validateFilesData = function () {
+        if (!page.validateAnnouncement4Star())
         {
-             return false;
+            return false;
         }
         if (!page.validateProductInFile()) {
             return false;
@@ -68,7 +73,7 @@
         return true;
     };
 
-    page.saveFiles = function() {
+    page.saveFiles = function () {
         if (!ckInsert) {
             if (page.validateFilesData()) {
                 ckInsert = true;
@@ -77,7 +82,7 @@
         }
     };
 
-    page.insertFileDraff = function() {
+    page.insertFileDraff = function () {
         page.setAttachLabel();
         sd.connector.post("filesAction!onInsert.do?" + token.getTokenParamString(), null, "createForm", null, page.afterCommit);
     }

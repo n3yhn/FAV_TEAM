@@ -216,9 +216,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         // Luu thong tin cac danh sach chi tieu chinh
         saveMainlytarget(createForm.getLstMainlyTarget(), filesId);
         // Luu thong tin danh sach chi tieu san pham
-        saveProductTarget(createForm.getLstBioTarget(), filesId, Constants.PRODUCT_TARGET_TYPE.BIO);
-        saveProductTarget(createForm.getLstHeavyMetal(), filesId, Constants.PRODUCT_TARGET_TYPE.HEAVY_METAL);
-        saveProductTarget(createForm.getLstChemical(), filesId, Constants.PRODUCT_TARGET_TYPE.CHEMICAL);
+        saveProductTarget(createForm.getLstBioTarget(), filesId, Constants.PRODUCT_TARGET_TYPE.BIO, createForm.getStatus());
+        saveProductTarget(createForm.getLstHeavyMetal(), filesId, Constants.PRODUCT_TARGET_TYPE.HEAVY_METAL, createForm.getStatus());
+        saveProductTarget(createForm.getLstChemical(), filesId, Constants.PRODUCT_TARGET_TYPE.CHEMICAL, createForm.getStatus());
         // Luu thong tin danh sach tai lieu
         saveAttachs(createForm.getLstAttachs(), filesId, createForm.getLstAttachLabel());
 
@@ -810,10 +810,10 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     file.setDisplayStatus(getFileStatusName(form.getStatus()));
                     String dateTime = DateTimeUtils.convertDateToString(dateNow, "dd/MM/yyyy HH:mm");
                     //file.setStaffRequest(userName + " " + dateTime + ":\n" + form.getStaffRequest());
-                    String prefix = userName + " " + dateTime + ":\n";
+//                    String prefix = userName + " " + dateTime + ":\n";
                     if (form.getStaffRequest()
                             != null && form.getStaffRequest().trim().length() > 0) {
-                        file.setStaffRequest(prefix + form.getStaffRequest());
+                        file.setStaffRequest(form.getStaffRequest());
                     }
                     file.setModifyDate(dateNow);
                     if (form.getEffectiveDate() != null) {
@@ -2329,9 +2329,13 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         return false;
     }
 
-    private boolean checkProductTargetIsModify(ProductTarget target, List<ProductTarget> lstItem) {
-        if (target.getProductTargetId() == null || target.getProductTargetId() <= 0l) {
+    private boolean checkProductTargetIsModify(ProductTarget target, List<ProductTarget> lstItem, Long status) {
+        if (status.equals(Constants.FILE_STATUS.EVALUATED_TO_ADD)) {
             return false;
+        }
+        if (target.getProductTargetId() == null
+                || target.getProductTargetId() <= 0l) {
+            return true;
         }
 
         if (lstItem == null) {
@@ -2342,7 +2346,8 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         }
 
         for (ProductTarget item : lstItem) {
-            if (target.getProductTargetId().equals(item.getProductTargetId()) || target.getProductTargetId().equals(item.getOriginalId())) {
+            if (target.getProductTargetId().equals(item.getProductTargetId())
+                    || target.getProductTargetId().equals(item.getOriginalId())) {
                 if (item.getMaxLevel() != null && target.getMaxLevel() != null) {
                     if (!item.getMaxLevel().equals(target.getMaxLevel())) {
                         return true;
@@ -2438,7 +2443,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
     /**
      * luu danh sach chi tieu san pham
      */
-    private void saveProductTarget(List<ProductTarget> lstItems, Long fileId, Long type) {
+    private void saveProductTarget(List<ProductTarget> lstItems, Long fileId, Long type, Long status) {
         List<Long> lstUpdateItems = new ArrayList();
         Long previousVersionId = getLastVersionIdOfFile(fileId);
         List lstProductTarget = null;
@@ -2451,7 +2456,7 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     continue;
                 }
                 item.setFileId(fileId);
-                if (checkProductTargetIsModify(item, lstProductTarget)) {
+                if (checkProductTargetIsModify(item, lstProductTarget, status)) {
                     item.setIsTemp(1l);
                 } else {
                     item.setIsTemp(0l);
@@ -2718,15 +2723,18 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 return false;
             }
 
-            String hql = "select fpif from FeePaymentInfo fpif where fpif.fileId =:fileId and fpif.isActive = 1";
+            String hql = "select fpif from FeePaymentInfo fpif"
+                    + " where"
+                    + " fpif.fileId =:fileId"
+                    + " and fpif.isActive = 1";
             Query query = getSession().createQuery(hql);
             query.setParameter("fileId", fileId);
-            List<FeePaymentInfo> FeePaymentInfo = query.list();
+            List<FeePaymentInfo> lstFeePaymentInfo = query.list();
             //
             // truong hop sao chep va luu tam productType co the = null, vi the phai set = -1
             //
 
-            if (FeePaymentInfo.isEmpty()) {
+            if (lstFeePaymentInfo.isEmpty()) {
                 FeeDAOHE fdhe = new FeeDAOHE();
                 List<FeeProcedure> feenew = fdhe.findAllFeeByProcedureId(fileType);
                 // check le phi cap so theo loai ho so
@@ -2745,7 +2753,13 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 }
 
                 // hieptq update 280515 set phi ho so cap lai
-                if (productType == null) {
+                if (pro != null
+                        && pro.getDescription() != null
+                        && (pro.getDescription().equals(Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT)
+                        || pro.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_IMP)
+                        || pro.getDescription().equals(Constants.FILE_DESCRIPTION.REC_CONFIRM_NORMAL_IMP)
+                        || pro.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_VN)
+                        || pro.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_NORMAL_VN))) {
                     if (pro != null && pro.getTypeFee() == 2l) {
                         FeePaymentInfo fpif = new FeePaymentInfo();
                         Fee findfee1 = fdhe.findFeeByCode("CLT");
@@ -2756,7 +2770,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             fpif.setFeeId(findfee1.getFeeId());
                             fpif.setCost(findfee1.getPrice());
                             fpif.setCostCheck(findfee1.getPrice());
-                            fpif.setFeeIdOld(findfee1.getFeeId());
                         } else {
                             return false;
                         }
@@ -2773,7 +2786,6 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                             fpif.setFeeId(findfee1.getFeeId());
                             fpif.setCost(findfee1.getPrice());
                             fpif.setCostCheck(findfee1.getPrice());
-                            fpif.setFeeIdOld(findfee1.getFeeId());
                         } else {
                             return false;
                         }
@@ -2783,72 +2795,73 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                     } else {
                         return false;
                     }
-                }
-
-                //check loai thuc pham (thuc pham dac biet)
-                CategoryDAOHE ctdhe = new CategoryDAOHE();
-                Category cate = ctdhe.findCategoryByTypeAndCode("SP", "TPCN");
-                List<Category> cate1 = ctdhe.findCategoryByTypeAndCodeNew("SP", "DBT");
-                int check = 0;
-                for (int i = 0; i < cate1.size(); i++) {
-                    if (productType.equals(cate1.get(i).getCategoryId())) {
-                        check = 1;
-                        break;
-                    }
-                }
-
-                if (check == 1) {
-                    FeePaymentInfo fpif = new FeePaymentInfo();
-                    Fee findfee1 = fdhe.findFeeByCode("TPDB");
-                    fpif.setCreateDate(dateNow);
-                    fpif.setStatus(0l);
-                    fpif.setFileId(fileId);
-                    if (findfee1 != null) {
-                        fpif.setFeeId(findfee1.getFeeId());
-                        fpif.setCost(findfee1.getPrice());
-                        fpif.setCostCheck(findfee1.getPrice());
-                        fpif.setFeeIdOld(findfee1.getFeeId());
-                    } else {
-                        return false;
-                    }
-                    fpif.setIsActive(1l);
-                    getSession().save(fpif);
                 } else {
-                    // thuc pham chuc nang
-                    FeePaymentInfo fpif = new FeePaymentInfo();
-                    if (productType.equals(cate.getCategoryId())) {
-                        Fee findfee2 = fdhe.findFeeByCode("TPCN");
+                    //check loai thuc pham (thuc pham dac biet)
+                    CategoryDAOHE ctdhe = new CategoryDAOHE();
+                    Category cate = ctdhe.findCategoryByTypeAndCode("SP", "TPCN");
+                    List<Category> cate1 = ctdhe.findCategoryByTypeAndCodeNew("SP", "DBT");
+                    int check = 0;
+                    for (int i = 0; i < cate1.size(); i++) {
+                        if (productType.equals(cate1.get(i).getCategoryId())) { 
+                            check = 1;
+                            break;
+                        }
+                    }
 
+                    if (check == 1) {
+                        FeePaymentInfo fpif = new FeePaymentInfo();
+                        Fee findfee1 = fdhe.findFeeByCode("TPDB");
                         fpif.setCreateDate(dateNow);
                         fpif.setStatus(0l);
                         fpif.setFileId(fileId);
-                        if (findfee2 != null) {
-                            fpif.setFeeId(findfee2.getFeeId());
-                            fpif.setCost(findfee2.getPrice());
-                            fpif.setCostCheck(findfee2.getPrice());
-                            fpif.setFeeIdOld(findfee2.getFeeId());
+                        if (findfee1 != null) {
+                            fpif.setFeeId(findfee1.getFeeId());
+                            fpif.setCost(findfee1.getPrice());
+                            fpif.setCostCheck(findfee1.getPrice());
+                            fpif.setFeeIdOld(findfee1.getFeeId());
                         } else {
                             return false;
                         }
                         fpif.setIsActive(1l);
                         getSession().save(fpif);
                     } else {
-                        Fee findfee3 = fdhe.findFeeByCode("TPK");
-                        fpif.setCreateDate(dateNow);
-                        fpif.setStatus(0l);
-                        fpif.setFileId(fileId);
-                        if (findfee3 != null) {
-                            fpif.setFeeId(findfee3.getFeeId());
-                            fpif.setCost(findfee3.getPrice());
-                            fpif.setCostCheck(findfee3.getPrice());
-                            fpif.setFeeIdOld(findfee3.getFeeId());
+                        // thuc pham chuc nang
+                        FeePaymentInfo fpif = new FeePaymentInfo();
+                        if (productType.equals(cate.getCategoryId())) {
+                            Fee findfee2 = fdhe.findFeeByCode("TPCN");
+
+                            fpif.setCreateDate(dateNow);
+                            fpif.setStatus(0l);
+                            fpif.setFileId(fileId);
+                            if (findfee2 != null) {
+                                fpif.setFeeId(findfee2.getFeeId());
+                                fpif.setCost(findfee2.getPrice());
+                                fpif.setCostCheck(findfee2.getPrice());
+                                fpif.setFeeIdOld(findfee2.getFeeId());
+                            } else {
+                                return false;
+                            }
+                            fpif.setIsActive(1l);
+                            getSession().save(fpif);
                         } else {
-                            return false;
+                            Fee findfee3 = fdhe.findFeeByCode("TPK");
+                            fpif.setCreateDate(dateNow);
+                            fpif.setStatus(0l);
+                            fpif.setFileId(fileId);
+                            if (findfee3 != null) {
+                                fpif.setFeeId(findfee3.getFeeId());
+                                fpif.setCost(findfee3.getPrice());
+                                fpif.setCostCheck(findfee3.getPrice());
+                                fpif.setFeeIdOld(findfee3.getFeeId());
+                            } else {
+                                return false;
+                            }
+                            fpif.setIsActive(1l);
+                            getSession().save(fpif);
                         }
-                        fpif.setIsActive(1l);
-                        getSession().save(fpif);
                     }
                 }
+
                 // }
             }
             // sua nhom san pham va chuyen loai ho so - map lai phi
@@ -4929,8 +4942,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                 // Cap nhat trang thai ho so
                 file.setStatus(form.getStatus());
                 file.setDisplayStatus(getFileStatusName(form.getStatus()));
-                String dateTime = DateTimeUtils.convertDateToString(dateNow, "dd/MM/yyyy HH:mm");
-                file.setStaffRequest(userName + " " + dateTime + ":\n" + form.getStaffRequest());
+//                String dateTime = DateTimeUtils.convertDateToString(dateNow, "dd/MM/yyyy HH:mm");
+//                file.setStaffRequest(userName + " " + dateTime + ":\n" + form.getStaffRequest());
+                file.setStaffRequest(form.getStaffRequest());
                 file.setDisplayRequest(form.getStaffRequest());
                 file.setModifyDate(dateNow);
                 file.setEffectiveDate(form.getEffectiveDate());
@@ -7223,12 +7237,12 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
                         file.setHaveTemp(1l);
                     }
                     file.setDisplayStatus(getFileStatusName(file.getStatus()));
-                    String dateTime = DateTimeUtils.convertDateToString(dateNow, "dd/MM/yyyy HH:mm");
+//                    String dateTime = DateTimeUtils.convertDateToString(dateNow, "dd/MM/yyyy HH:mm");
                     //file.setStaffRequest(userName + " " + dateTime + ":\n" + form.getStaffRequest());
-                    String prefix = userName + " " + dateTime + ":\n";
+//                    String prefix = userName + " " + dateTime + ":\n";
                     if (form.getStaffRequest()
                             != null && form.getStaffRequest().trim().length() > 0) {
-                        String strStaffRequest = prefix + form.getStaffRequest();
+                        String strStaffRequest = form.getStaffRequest();
                         if (strStaffRequest.trim().length() < 1800) {//u 16 07 29
                             file.setStaffRequest(strStaffRequest.trim());
                         }
@@ -7877,9 +7891,9 @@ public class FilesDAOHE extends GenericDAOHibernate<Files, Long> {
         filesId = bo.getFileId();
 
         saveMainlytarget(createForm.getLstMainlyTarget(), filesId);
-        saveProductTarget(createForm.getLstBioTarget(), filesId, Constants.PRODUCT_TARGET_TYPE.BIO);
-        saveProductTarget(createForm.getLstHeavyMetal(), filesId, Constants.PRODUCT_TARGET_TYPE.HEAVY_METAL);
-        saveProductTarget(createForm.getLstChemical(), filesId, Constants.PRODUCT_TARGET_TYPE.CHEMICAL);
+        saveProductTarget(createForm.getLstBioTarget(), filesId, Constants.PRODUCT_TARGET_TYPE.BIO, createForm.getStatus());
+        saveProductTarget(createForm.getLstHeavyMetal(), filesId, Constants.PRODUCT_TARGET_TYPE.HEAVY_METAL, createForm.getStatus());
+        saveProductTarget(createForm.getLstChemical(), filesId, Constants.PRODUCT_TARGET_TYPE.CHEMICAL, createForm.getStatus());
         saveAttachs(createForm.getLstAttachs(), filesId, createForm.getLstAttachLabel());
         saveQualityPlan(createForm.getLstQualityControl(), filesId);
         saveProductInFile(createForm.getLstProductInFile(), filesId);// Luu thong tin danh sach san pham nhap khau cho khach san 4 sao        

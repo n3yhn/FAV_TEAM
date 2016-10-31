@@ -90,6 +90,9 @@
     };
 
     page.validateFilesData = function() {
+        if(!page.validateAnnouncementAfterEdit()){
+            return false;
+        }
         if (!page.validateAttachData2NotRequireRNI()) {
             return false;
         }

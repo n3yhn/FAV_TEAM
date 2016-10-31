@@ -133,5 +133,18 @@
         dijit.byId("createForm.announcement.manufactureFax").setValue(dijit.byId("createForm.announcement.businessFax").getValue());
         dijit.byId("createForm.announcement.manufactureEmail").setValue(dijit.byId("createForm.announcement.businessEmail").getValue());
     };
+    page.validateAnnouncementAfterEdit = function () {
+        if (!dijit.byId("createForm.titleEdit").getValue()) {
+            alert("[Về việc] chưa nhập");
+            dijit.byId("createForm.titleEdit").focus();
+            return false;
+        }
+        if (!dijit.byId("createForm.contentsEdit").getValue()) {
+            alert("[Nội dung sửa đổi] chưa nhập");
+            dijit.byId("createForm.contentsEdit").focus();
+            return false;
+        }
+        return true;
+    }
 
 </script>

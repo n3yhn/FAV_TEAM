@@ -706,7 +706,6 @@ public class ReportDAO extends BaseDAO {
                     "total3", total3);
             bean.put(
                     "total4", total4);
-
             bean.put(
                     "value1", value1);
             bean.put(
@@ -770,24 +769,35 @@ public class ReportDAO extends BaseDAO {
                 sql += " and f.is_30 = 1  ";
             }
             // thuc pham thuong
-            SQLQuery query = (SQLQuery) getSession().createSQLQuery("select f.business_name,f.file_code,f.business_address,b.business_telephone,f.product_name,f.product_type_name,f.nation_name,arp.receipt_no,arp.sign_date,dp.packate_material,dp.object_use,ROW_NUMBER() OVER (ORDER BY arp.sign_date) idx  from files f, announcement_receipt_paper arp, business b, detail_product dp "
-                    + "where b.business_id = f.dept_id and f.announcement_receipt_paper_id = arp.announcement_receipt_paper_id  and f.detail_product_id = dp.detail_product_id and f.is_active = 1 " + sql + " order by arp.sign_date ");
+            SQLQuery query = (SQLQuery) getSession().createSQLQuery("select f.business_name,"
+                    + " f.file_code,"
+                    + " f.business_address,"
+                    + " b.business_telephone,"
+                    + " f.product_name,"
+                    + " f.product_type_name,"
+                    + " f.nation_name,"
+                    + " arp.receipt_no,"
+                    + " arp.sign_date,"
+                    + " dp.packate_material,"
+                    + " dp.object_use,"
+                    + " ROW_NUMBER() OVER (ORDER BY arp.sign_date) idx  from files f,"
+                    + " announcement_receipt_paper arp,"
+                    + " business b,"
+                    + " detail_product dp"
+                    + " where b.business_id = f.dept_id"
+                    + " and f.announcement_receipt_paper_id = arp.announcement_receipt_paper_id"
+                    + " and f.detail_product_id = dp.detail_product_id"
+                    + " and f.is_active = 1 " + sql + " order by arp.sign_date ");
 
-            for (int i = 0;
-                    i < lstParam.size();
-                    i++) {
-
+            for (int i = 0; i < lstParam.size(); i++) {
                 query.setParameter(i, lstParam.get(i));
-
             }
 
             // thuc pham thuong
             List lstResult = query.list();
             FilesForm item = new FilesForm();
             List result = new ArrayList<FilesForm>();
-            if (lstResult
-                    != null && lstResult.size()
-                    > 0) {
+            if (lstResult != null && lstResult.size() > 0) {
                 for (int i = 0; i < lstResult.size(); i++) {
                     Object[] row = (Object[]) lstResult.get(i);
                     if (row.length > 0) {
@@ -866,9 +876,9 @@ public class ReportDAO extends BaseDAO {
             DateTimeUtils dateUtil = new DateTimeUtils();
             bean.put("ConvertTime", dateUtil);
             ReportUtil.exportReport(getRequest(), bean, templateFile, getResponse());
+//            ReportUtil.exportReportSaveFileTemp(getRequest(), bean, templateFile);
         } catch (Exception ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
-//            log.error(e);
         }
     }
 
@@ -1328,7 +1338,7 @@ public class ReportDAO extends BaseDAO {
 //fix sonar
 //            ResourceBundle rb = ResourceBundle.getBundle("config");
 //            String filePath = rb.getString("report_excel_temp");
-            
+
 //            String fullFilePath = filePath + "report_" + newDate.getTime() + ".xls";
 //            File file = new File(fullFilePath);
 //            FileOutputStream fop = new FileOutputStream(file);;

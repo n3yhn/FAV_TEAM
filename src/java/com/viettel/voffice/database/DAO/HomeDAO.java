@@ -423,7 +423,7 @@ public class HomeDAO extends BaseDAO {
                  filesReReview, 1l, "darkgray", 3);
                  lstItem.add(item);
                  */
- /*
+                /*
                  //hồ sơ chờ xem xét đối chiếu
                  filesReviewComparison = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 30l, null));
                  getRequest().setAttribute("filesReviewComparison", filesReviewComparison);
@@ -431,7 +431,7 @@ public class HomeDAO extends BaseDAO {
                  item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.status=" + Constants.FILE_STATUS.COMPARED + "',"), "share/images/document/9_xanh_hssaphethanbosung.png", "Hồ sơ chờ xem xét đối chiếu", filesReviewComparison, 1l, "darkgray", 5);
                  lstItem.add(item);
                  */
- /*
+                /*
                  //hồ sơ chờ xem xét đối chiếu lại
                  filesReviewComparison = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 31l, null));
                  getRequest().setAttribute("filesReviewComparison", filesReviewComparison);
@@ -722,13 +722,13 @@ public class HomeDAO extends BaseDAO {
                         3);
                 lstItem.add(item);
                 /*binhnt update theo nghiep vu moi
-                // hồ sơ chờ tiếp nhận SĐBS
-                filesNeedToReceive = (Long) (long) fdhe.getCountFileOnHomePage(userId, deptId, 0L, Constants.FILE_STATUS.NEW_TO_ADD);
-                countFilesNeedToReceive = "doGoToMenu('filesAction!lookupFilesByClerical.do', '0.1' );";
-                item = new HomeLiveTileForm(countFilesNeedToReceive.replace("',", "?searchForm.searchType=0&searchForm.status=" + Constants.FILE_STATUS.NEW_TO_ADD + "',"), "share/images/document/14_xanh_hsdaguiphanhoi.png", "Hồ sơ chờ tiếp nhận SĐBS", filesNeedToReceive, 15l, "cadetblue",
-                        3);
-                lstItem.add(item);
-                */
+                 // hồ sơ chờ tiếp nhận SĐBS
+                 filesNeedToReceive = (Long) (long) fdhe.getCountFileOnHomePage(userId, deptId, 0L, Constants.FILE_STATUS.NEW_TO_ADD);
+                 countFilesNeedToReceive = "doGoToMenu('filesAction!lookupFilesByClerical.do', '0.1' );";
+                 item = new HomeLiveTileForm(countFilesNeedToReceive.replace("',", "?searchForm.searchType=0&searchForm.status=" + Constants.FILE_STATUS.NEW_TO_ADD + "',"), "share/images/document/14_xanh_hsdaguiphanhoi.png", "Hồ sơ chờ tiếp nhận SĐBS", filesNeedToReceive, 15l, "cadetblue",
+                 3);
+                 lstItem.add(item);
+                 */
                 //hồ sơ đã gửi công văn SĐBS
                 filesNeedToReceive = (Long) (long) fdhe.getCountFileOnHomePage(userId, deptId, 20L, Constants.FILE_STATUS.EVALUATED_TO_ADD);
 //                getRequest().setAttribute("filesNeedToReceive", filesNeedToReceive);
@@ -816,7 +816,7 @@ public class HomeDAO extends BaseDAO {
                 lstItem.add(item);
 
                 //5- hồ sơ đã xem xét
-                filesReviewed = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 45l, null));
+                filesReviewed = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, -5L, null));
                 getRequest().setAttribute("filesNeedToReview", filesReviewed);
                 countFilesNeedToReview = "doGoToMenu( 'filesAction!lookupFilesByStaff.do', '0.1' );";
                 item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.status=" + 46 + "',"),
@@ -872,7 +872,7 @@ public class HomeDAO extends BaseDAO {
                  2);
                  lstItem.add(item);
                  */
- /*
+                /*
                  //Hồ sơ đã có ý kiến của tổ thẩm xét 28
                  filesEvaluated = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 28l, null));
                  getRequest().setAttribute("filesNeedToReview", filesEvaluated);
@@ -1097,7 +1097,7 @@ public class HomeDAO extends BaseDAO {
                  filesReReview, 1l, "darkgray", 3);
                  lstItem.add(item);
                  */
- /*
+                /*
                  //hồ sơ chờ xem xét đối chiếu
                  filesReviewComparison = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 30l, null));
                  getRequest().setAttribute("filesReviewComparison", filesReviewComparison);
@@ -1105,7 +1105,7 @@ public class HomeDAO extends BaseDAO {
                  item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.status=" + Constants.FILE_STATUS.COMPARED + "',"), "share/images/document/9_xanh_hssaphethanbosung.png", "Hồ sơ chờ xem xét đối chiếu", filesReviewComparison, 1l, "darkgray", 5);
                  lstItem.add(item);
                  */
- /*
+                /*
                  //hồ sơ chờ xem xét đối chiếu lại
                  filesReviewComparison = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 31l, null));
                  getRequest().setAttribute("filesReviewComparison", filesReviewComparison);
@@ -1217,7 +1217,7 @@ public class HomeDAO extends BaseDAO {
                  item = new HomeLiveTileForm(countFilesNeedToReview.replace("',", "?searchForm.status=" + Constants.FILE_STATUS.FEDBACK_TO_REVIEW.toString() + "',"), "share/images/document/11_xanh_hslanhdaocucdapheduyet.png", "Hồ sơ đã trả xem xét lại", filesNeedToSign, 1l, "crimson", 4);
                  lstItem.add(item);
                  */
- /*
+                /*
                  //4- Hồ sơ đã trả đối chiếu lại (25)
                  filesNeedToSign = (Long) (long) (fdhe.getCountFileToProcess(userId, deptId, 3l, Constants.FILE_STATUS.REVIEW_COMPARISON_FAIL));
                  getRequest().setAttribute("filesNeedToSign", filesNeedToSign);
@@ -1494,54 +1494,87 @@ public class HomeDAO extends BaseDAO {
                 }
 
                 if (oldPassword == null) {
-                    throw new Exception("password null");
+                    msg.add("3");
+                    msg.add("Mật khẩu cũ không được để trống");
+                    this.jsonDataGrid.setItems(msg);
+                    return "gridData";
                 }
                 if ("".trim().equals(oldPassword)) {
-                    throw new Exception("oldPassword is empty");
+                    msg.add("3");
+                    msg.add("Mật khẩu cũ không được để trống");
+                    this.jsonDataGrid.setItems(msg);
+                    return "gridData";
                 }
                 if (password == null) {
-                    throw new Exception("password null");
+                    msg.add("3");
+                    msg.add("Mật khẩu mới không được để trống");
+                    this.jsonDataGrid.setItems(msg);
+                    return "gridData";
                 }
                 if ("".equals(password.trim())) {
-                    throw new Exception("password is empty");
+                    msg.add("3");
+                    msg.add("Mật khẩu mới không được để trống");
+                    this.jsonDataGrid.setItems(msg);
+                    return "gridData";
                 }
                 if (password.equals(oldPassword)) {
-                    throw new Exception("password must be different from oldPassword ");
+                    msg.add("3");
+                    msg.add("Mật khẩu mới phải khác mật khẩu cũ");
+                    this.jsonDataGrid.setItems(msg);
+                    return "gridData";
                 }
-                /*
-                     String iChars = "!@#$%^&*-";
-                     int countTmp = 0;
-                     for (int i = 0; i<password.length(); i++){
-                     for (int j = 0; j <iChars.length(); j++){
-                     if (password.charAt(i) == iChars.charAt(j)){
-                     countTmp++;
-                     }
-                     }
-                     }
-                     if (countTmp == 0) {
-                     throw new Exception("password must has one or more special characters");
-                     }
 
-                     countTmp = 0;
-                     for (int i = 0; i<password.length(); i++){
-                     if (Character.isLetter(password.charAt(i))){
-                     countTmp++;
-                     }
-                     }
-                     if (countTmp == 0) {
-                     throw new Exception("password must has one or more anphabet characters");
-                     }
+                String iChars = "!@#$%^&*-";
+                int countTmp = 0;
+                for (int i = 0; i < password.length(); i++) {
+                    for (int j = 0; j < iChars.length(); j++) {
+                        if (password.charAt(i) == iChars.charAt(j)) {
+                            countTmp++;
+                        }
+                    }
+                }
+                if (countTmp == 0) {
+                    msg.add("3");
+                    msg.add("Mật khẩu mới phải có ít nhất 1 ký tự đặc biệt");
+                    this.jsonDataGrid.setItems(msg);
+                    return "gridData";
+                    //throw new Exception("password must has one or more special characters");
+                }
 
-                     countTmp = 0;
-                     for (int i = 0; i<password.length(); i++){
-                     if (Character.isDigit(password.charAt(i))){
-                     countTmp++;
-                     }
-                     }
-                     if (countTmp == 0) {
-                     throw new Exception("password must has one or more number characters");
-                     }
-                 */
+                countTmp = 0;
+                for (int i = 0; i < password.length(); i++) {
+                    if (Character.isLetter(password.charAt(i))) {
+                        countTmp++;
+                    }
+                }
+                if (countTmp == 0) {
+                    msg.add("3");
+                    msg.add("Mật khẩu mới phải có ít nhất 1 ký tự alphabet");
+                    this.jsonDataGrid.setItems(msg);
+                    return "gridData";
+                    //throw new Exception("password must has one or more anphabet characters");
+                }
+
+                countTmp = 0;
+                for (int i = 0; i < password.length(); i++) {
+                    if (Character.isDigit(password.charAt(i))) {
+                        countTmp++;
+                    }
+                }
+                if (countTmp == 0) {
+                    msg.add("3");
+                    msg.add("Mật khẩu mới phải có ít nhất 1 ký tự số");
+                    this.jsonDataGrid.setItems(msg);
+                    return "gridData";
+                    //throw new Exception("password must has one or more number characters");
+                }
+                if(password.length() < 8){
+                    msg.add("3");
+                    msg.add("Mật khẩu mới phải có ít nhất 8 ký tự");
+                    this.jsonDataGrid.setItems(msg);
+                    return "gridData";
+                }
+                
 
                 Users bo = new UsersDAOHE().findById(userId, false);
                 String encryptedOldPass = PasswordService.getInstance().encrypt(bo.getUserName().toLowerCase() + oldPassword);

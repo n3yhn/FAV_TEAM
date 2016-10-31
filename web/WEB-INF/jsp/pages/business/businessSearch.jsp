@@ -148,10 +148,14 @@
                 <sx:ButtonDelete onclick="page.deleteItem()" />
                 <sx:ButtonSearch id="btnShowSearchPanel" onclick="page.showSearchPanel();" />
                 <sd:TextBox id="createForm.businessId" 
-                                name="createForm.businessId" 
-                                cssStyle="display:none" 
-                                key=""
-                                trim="true"/>
+                            name="createForm.businessId" 
+                            cssStyle="display:none" 
+                            key=""
+                            trim="true"/>
+                <sd:Button id="btnAlertAllBusiness" key="" onclick="page.alertAllBusiness()">
+                    <img src="${contextPath}/share/images/icons/payment.png" height="20" width="20"/>
+                    <span style="font-size:12px" title="">Thông báo cho tất cả doanh nghiệp</span>
+                </sd:Button>
             </td>
         </tr>
     </table>
@@ -238,45 +242,49 @@
         page.setItem(item);
         dijit.byId("createDlg").show();
     };
-    
+
     page.showAlertDlg = function (businessId) {
         page.getViewLstBusinessAlert(businessId);
         dijit.byId("businessAlertDlg").show();
     };
-
+    page.alertAllBusiness = function () {
+        page.getViewLstBusinessAlert(0);
+        workingFileId = 0;
+        dijit.byId("businessAlertDlg").show();
+    };
     page.deleteItem = function () {
         if (!dijit.byId("businessGrid").vtIsChecked()) {
             msg.alert('<sd:Property>alert.select</sd:Property>', '<sd:Property>confirm.title</sd:Property>');
                     } else {
                         msg.confirm('<sd:Property>confirm.delete</sd:Property>', '<sd:Property>confirm.title1</sd:Property>', page.deleteItemExecute);
                                 }
-    };
+                            };
 
-    page.deleteItemExecute = function () {
-        var content = dijit.byId("businessGrid").vtGetCheckedDataForPost("lstItemOnGrid");
-        sd.connector.post("businessAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
-    };
+                            page.deleteItemExecute = function () {
+                                var content = dijit.byId("businessGrid").vtGetCheckedDataForPost("lstItemOnGrid");
+                                sd.connector.post("businessAction!onDelete.do?" + token.getTokenParamString(), null, null, content, page.returnMessageDelete);
+                            };
 
-    page.returnMessageDelete = function (data) {
-        var obj = dojo.fromJson(data);
-        var result = obj.items;
-        resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
-        page.search();
-    };
+                            page.returnMessageDelete = function (data) {
+                                var obj = dojo.fromJson(data);
+                                var result = obj.items;
+                                resultMessage_show("resultDeleteMessage", result[0], result[1], 5000);
+                                page.search();
+                            };
 
-    page.showSearchPanel = function () {
-        var panel = document.getElementById("searchDiv");
-        panel.setAttribute("style", "display:;");
-        dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
-    };
+                            page.showSearchPanel = function () {
+                                var panel = document.getElementById("searchDiv");
+                                panel.setAttribute("style", "display:;");
+                                dijit.byId("btnShowSearchPanel").setAttribute("style", "display:none;");
+                            };
 
-    page.reset = function () {
-        dijit.byId("searchForm.businessName").setValue("");
-        dijit.byId("searchForm.userFullname").setValue("");
-        dijit.byId("searchForm.businessTaxCode").setValue("");
-        dijit.byId("searchForm.businessLicense").setValue("");
-    };
-    //dijit.byId("categoryTitle").attr("open", false);
-    page.search();
+                            page.reset = function () {
+                                dijit.byId("searchForm.businessName").setValue("");
+                                dijit.byId("searchForm.userFullname").setValue("");
+                                dijit.byId("searchForm.businessTaxCode").setValue("");
+                                dijit.byId("searchForm.businessLicense").setValue("");
+                            };
+                            //dijit.byId("categoryTitle").attr("open", false);
+                            page.search();
 
 </script>

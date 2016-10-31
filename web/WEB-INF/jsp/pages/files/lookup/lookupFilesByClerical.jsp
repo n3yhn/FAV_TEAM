@@ -536,7 +536,7 @@
                             <sd:Option value="15">Đã được văn thư đối chiếu hồ sơ gốc</sd:Option>
                             <sd:Option value="16">Đã được văn thư đối chiếu hồ sơ gốc, có sai lệch</sd:Option>
                             <sd:Option value="17">Đã được văn thư tiếp nhận hồ sơ SĐBS</sd:Option>
-                            <sd:Option value="18">Chờ văn thư tiếp nhận hồ sơ SĐBS</sd:Option>
+                            <%--<sd:Option value="18">Chờ văn thư tiếp nhận hồ sơ SĐBS</sd:Option>--%>
                             <sd:Option value="6">Lãnh đạo cục đã phê duyệt kết quả</sd:Option>
                             <sd:Option value="7">Chuyên viên KL: SĐBS</sd:Option>
                             <sd:Option value="8">Lãnh đạo phòng trả lại để thẩm định lại</sd:Option>

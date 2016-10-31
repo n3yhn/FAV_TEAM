@@ -61,6 +61,9 @@ public class BusinessAlert implements Serializable {
     private String createdByName;
     @Column(name = "SEEN")
     private Long seen;
+    //PARENT_ID
+    @Column(name = "PARENT_ID")
+    private Long parentId;
     @Lob
     @Column(name = "CONTENT")
     private String content;
@@ -154,6 +157,14 @@ public class BusinessAlert implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 
     @Override

@@ -115,7 +115,8 @@
                                                     Hỗ trợ chung
                                                 </td>
                                                 <td>
-                                                    <label style="color:Blue"> Mr. Giang: 0916011001 Mr Việt:0946665888 Mr. Toán: 0904028182 </label>;                                                </td>
+                                                    <label style="color:Blue"> Mr. Giang: 0916011001; Mr. Việt: 0946665888; Mr.Toán: 0904028182 </label>; 
+                                                </td>
                                             </tr>                                                                                       
 
                                             <tr>
@@ -214,10 +215,10 @@
                                         <li><a href="GuideRegisterHtmlPage.do?type=1">Các bước thực hiện quy trình trên hệ thống</a></li>                                                
                                         <li><a href="/GuideLinePage.do">Tài liệu & Video hướng dẫn sử dụng</a></li>
                                         <li>Biểu mẫu Excel khai báo Hồ sơ dành cho Doanh nghiệp,  tải về: <a href="http://vfa.gov.vn/BM_KhaiBao_2007.rar">Excel 2007</a> / <a href="http://vfa.gov.vn/BM_KhaiBao_2010.rar">Excel 2010</a></li>
-                                       <li>Chú ý bắt buộc sử dụng trình duyệt Firefox (Phiên bản 7.0 trở lên), tải về: <a href="http://vfa.gov.vn/Firefox Setup 32.0_En.rar">Tiếng Anh</a> / <a href="http://vfa.gov.vn/Firefox Setup 32.0_Vi.rar">Tiếng Việt</a></li>
+                                        <li>Chú ý bắt buộc sử dụng trình duyệt Firefox (Phiên bản 7.0 trở lên), tải về: <a href="http://vfa.gov.vn/Firefox Setup 32.0_En.rar">Tiếng Anh</a> / <a href="http://vfa.gov.vn/Firefox Setup 32.0_Vi.rar">Tiếng Việt</a></li>
                                         <!--<li>Tải Java hỗ trợ Doanh nghiệp ký số: <a href="http://vfa.gov.vn/jdk-7u71-windows-i586.rar">Tải về</a></li>-->
                                         <li>Plugin Firefox hỗ trợ chữ ký số: <a href="http://congbomypham.cqldvn.gov.vn/Share/huongdan/ViettelCASigner.rar">Tải về</a></li>
-                                        <li>Tài liệu Hướng dẫn chữ kí số: <a href="http://congbosanpham.vfa.gov.vn/share/download/BYT_HDSD_Cai dat ky so_v1.0.rar">Tải về</a></li>
+                                        <li>Tài liệu Hướng dẫn chữ kí số: <a href="http://congbomypham.cqldvn.gov.vn/Share/huongdan/HDCD_QT03_13039_Viettel_CA_Cai_dat_plugin_v1.0.doc">Tải về</a></li>
                                         
                                     </ul>
                                 </td>

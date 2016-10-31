@@ -591,7 +591,6 @@ public class WordExportUtils {
 
         } catch (IOException | DocumentException ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
-//            Logger.getLogger(WordExportUtils.class.getName()).log(Level.SEVERE, null, ex.getMessage());
         }
         return null;
     }

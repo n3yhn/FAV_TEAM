@@ -2037,7 +2037,7 @@ public class UsersDAO extends BaseDAO {
                 if (entity.getLastChangePassword() != null) {
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(entity.getLastChangePassword());
-                    cal.add(Calendar.MONTH, 1);
+                    cal.add(Calendar.MONTH, 3);
                     Date datePlus = cal.getTime();
                     Date sysdate = getSysdate();
 

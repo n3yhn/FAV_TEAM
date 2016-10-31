@@ -510,7 +510,7 @@
                             <sd:Option value="15">Đã được văn thư đối chiếu hồ sơ gốc</sd:Option>
                             <sd:Option value="16">Đã được văn thư đối chiếu hồ sơ gốc, có sai lệch</sd:Option>
                             <sd:Option value="17">Đã được văn thư tiếp nhận hồ sơ SĐBS</sd:Option>
-                            <sd:Option value="18">Chờ văn thư tiếp nhận hồ sơ SĐBS</sd:Option>
+                            <%--<sd:Option value="18">Chờ văn thư tiếp nhận hồ sơ SĐBS</sd:Option>--%>
                             <sd:Option value="6">Lãnh đạo cục đã phê duyệt kết quả</sd:Option>
                             <sd:Option value="7">Chuyên viên KL: SĐBS</sd:Option>
                             <sd:Option value="8">Lãnh đạo phòng trả lại để thẩm định lại</sd:Option>
@@ -776,7 +776,7 @@
             flagSignMore = isSignMore;
             signFileId = fileId;
             // hieptq update check loai ky nhieu -6 ky hs moi, -27 ky cvsdbs
-            if (checkSignType == "-6") {
+            if (checkSignType == "-66") {
                 signType = "PDHS";
             }
             if (checkSignType == "-27")
@@ -974,7 +974,7 @@
                         var searchType = dijit.byId("searchForm.searchType").getValue();
                         checkSignType = searchType;
                         // hieptq update -6 ky duyet hs, -27 cvsdbs
-                        if ((searchType != null && searchType == "-6") || (searchType != null && searchType == "-27"))
+                        if ((searchType != null && searchType == "-66") || (searchType != null && searchType == "-27"))
                         {
                             document.getElementById("trSignMore").style.display = "";
                         } else

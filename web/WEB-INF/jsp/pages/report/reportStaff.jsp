@@ -133,24 +133,24 @@
                                                 return true;
                                             }
 
-                                            page.checkBlankDate = function(value) {
-                                                return value == null || dojo.trim(value.toString()) == "";
-                                            }
+    page.checkBlankDate = function(value) {
+        return value == null || dojo.trim(value.toString()) == "";
+    }
 
-                                            page.isDate = function(id, isNull, name) {
-                                                if (isNull == true) {
-                                                    if (dojo.trim(id.getValue()) == "") {
-                                                        id.focus();
-                                                        alert("Bạn phải nhập " + name, "<sd:Property>confirm.title</sd:Property>");
-                                                                        return false;
-                                                                    }
-                                                                }
-                                                                if (!id.isValid()) {
-                                                                    id.focus();
-                                                                    alert(name + " nhập không hợp lệ!", "<sd:Property>confirm.title</sd:Property>");
-                                                                                return false;
-                                                                            }
+    page.isDate = function(id, isNull, name) {
+        if (isNull == true) {
+            if (dojo.trim(id.getValue()) == "") {
+                id.focus();
+                alert("Bạn phải nhập " + name, "<sd:Property>confirm.title</sd:Property>");
+                                return false;
+                            }
+                        }
+                        if (!id.isValid()) {
+                            id.focus();
+                            alert(name + " nhập không hợp lệ!", "<sd:Property>confirm.title</sd:Property>");
+                                        return false;
+                                    }
 
-                                                                            return true;
-                                                                        }
+                                    return true;
+                                }
 </script>

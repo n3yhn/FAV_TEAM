@@ -779,7 +779,7 @@
                         page.sendFile = function (row) {
                             var item = dijit.byId("filesGrid").getItem(row);
                             if (item.isFee == 0) {
-                                msg.alert("Do bạn đã đổi sang một nhóm sản phẩm có phí cao hơn nhóm sản phẩm ban đầu nên bạn phải thanh toán thêm tiền còn thiếu để gửi hồ sơ đi, sau khi thanh toán thành công phải đợi kế toán xác nhận lại tiền (chú ý up cả hóa đơn cũ và mới lên)");
+                                msg.alert("Hồ sơ đã chuyển sang nhóm sản phẩm có phí cao, yêu cầu bạn thanh toán thêm lệ phí trước khi gửi thẩm định lại hồ sơ và đính kèm đầy đủ hóa đơn cũ và  mới khi xác nhận thanh toán.");
                             } else {
                                 page.showDept(row);
                             }
@@ -983,13 +983,24 @@
                                         sd.connector.post("filesAction!preparePaymentMore.do?lstObjectId=" + lstObjectId, 'createDiv', null, null, afterLoadPayForm);
                                     };
                                     page.showSignCAFile = function () {//160705 - 1
-                                        if (!dijit.byId("filesGrid").vtIsChecked()) {
+                                         if (!dijit.byId("filesGrid").vtIsChecked()) {
                                             msg.alert('Bạn chưa chọn hồ sơ để thực hiện ký số!', 'Cảnh báo');
                                         } else {
                                             itemsToSign = dijit.byId("filesGrid").vtGetCheckedItems();
+                                            var length = itemsToSign.length;
+                                            for(var i=0; i<length; i++){
+                                                sd.connector.post("filesAction!onValidate.do?searchForm.fileId=" + itemsToSign[i].fileId, null, null, null, function (data) {
+                                                    var obj = dojo.fromJson(data);
+                                                    var result = obj.items;
+                                                    if (result[0] != "1") {
+                                                        msg.alert(result[1] + ", Hãy cập nhật lại thông tin hồ sơ", "Thông báo");
+                                                    } 
+                                                });
+
+                                            }    
                                             signIndex = 0;
                                             msg.confirm('Bạn có chắc chắn muốn ký số hồ sơ?', '<sd:Property>confirm.title1</sd:Property>', page.signFileUsingPlugin);
-                                                    }
+                                        }
                                                 };
                                                 page.signFileUsingPlugin = function () {//160705 - 2
                                                     dijit.byId("businessSignFormPluginDlg").show();

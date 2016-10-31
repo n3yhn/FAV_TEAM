@@ -106,7 +106,7 @@
 </sd:TitlePane>
 <sd:TitlePane key="documentReceive.versionRequest" id="versionRequestTiles">
     <div id="versionRequestGridDiv" style="width:100%;">
-        <sd:DataGrid clientSort="true" 
+        <sd:DataGrid clientSort="false" 
                      id="versionGridId"
                      style="width:auto;height:auto"
                      getDataUrl="" 

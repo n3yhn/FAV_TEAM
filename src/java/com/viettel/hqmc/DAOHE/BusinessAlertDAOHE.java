@@ -38,10 +38,40 @@ public class BusinessAlertDAOHE extends GenericDAOHibernate<BusinessAlert, Long>
         Query query = session.createQuery(sqlBuilder);
         query.setParameter(0, id);
         List<BusinessAlert> lsObject = query.list();
+        findByBusinessPublicAll(id);
         if (lsObject != null && lsObject.size() > 0) {
+            
             return lsObject;
         }
         return null;
+    }
+
+    public boolean findByBusinessPublicAll(Long businessId) {
+        // Build sql
+        String sqlBuilder = "SELECT b FROM BusinessAlert b"
+                + " WHERE"
+                + " b.isActive = 1"
+                + " and b.businessId = 0"
+                + " and b.businessAlertId not in (select bb.parentId from BusinessAlert bb where bb.businessId = ?)";
+
+        Query query = session.createQuery(sqlBuilder);
+        query.setParameter(0, businessId);
+        List<BusinessAlert> lsObject = query.list();
+        if (lsObject != null && lsObject.size() > 0) {
+            for (int i = 0; i < lsObject.size(); i++) {
+                BusinessAlert temp = new BusinessAlert();
+                temp.setBusinessId(businessId);
+                temp.setContent(lsObject.get(i).getContent());
+                temp.setCreatedById(lsObject.get(i).getCreatedById());
+                temp.setCreatedByName(lsObject.get(i).getCreatedByName());
+                temp.setCreatedDate(lsObject.get(i).getCreatedDate());
+                temp.setIsActive(lsObject.get(i).getIsActive());
+                temp.setParentId(lsObject.get(i).getBusinessAlertId());
+                temp.setSeen(0L);                
+                getSession().save(temp);
+            }
+        }
+        return true;
     }
 
     public List<BusinessAlert> getAllBusinessAlert() {
@@ -63,6 +93,9 @@ public class BusinessAlertDAOHE extends GenericDAOHibernate<BusinessAlert, Long>
             if (form.getBusinessId() != null && form.getBusinessId() > 0) {
                 hql += " and b.businessId = ? ";
                 lstParam.add(form.getBusinessId());
+            } else {
+                hql += " and b.businessId = ? ";
+                lstParam.add(0L);
             }
         }
 

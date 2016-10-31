@@ -23,6 +23,7 @@
     };
 
     page.formatAction = function(inData) {
+        
         var item = dijit.byId("filesGrid").getItem(inData - 1);
         var row = inData - 1;
         var url = "";
@@ -41,6 +42,7 @@
                     //url += " | <img src='share/images/signature.png' width='20px' height='20px' title='Phê duyệt công văn SĐBS' onClick='page.showFeedbackApproveForm(" + row + ");' />";
                     break;
                 case 6:
+                    
                     if ((item.announcementReceiptPaperId != null
                             && item.announcementReceiptPaperId > 0)
                             || (item.confirmImportSatistPaperId != null && item.confirmImportSatistPaperId > 0)
@@ -53,6 +55,9 @@
                             url += " | <img src='share/images/icons/UpArrow.png' width='17px' height='17px' title='Upload' onClick='page.UploadFileSign(" + row + ");' />";
                         }
                     }
+                    break;
+                case 22:
+                    url += " | <img src='share/images/document_open.png' width='17px' height='17px' title='Xuất giấy công bố' onClick='page.formatLinkDownloadPdf(" + item.fileId + ");' />";
                     break;
                 default:
                     ;

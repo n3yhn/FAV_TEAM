@@ -489,7 +489,7 @@
     page.sendFile = function(row) {
         var item = dijit.byId("filesGrid").getItem(row);
         if (item.isFee == 0) {
-            msg.alert("Do bạn đã đổi sang một nhóm sản phẩm có phí cao hơn nhóm sản phẩm ban đầu nên bạn phải thanh toán thêm tiền còn thiếu để gửi hồ sơ đi, sau khi thanh toán thành công phải đợi kế toán xác nhận lại tiền (chú ý up cả hóa đơn cũ và mới lên)");
+            msg.alert("Hồ sơ đã chuyển sang nhóm sản phẩm có phí cao, yêu cầu bạn thanh toán thêm lệ phí trước khi gửi thẩm định lại hồ sơ và đính kèm đầy đủ hóa đơn cũ và mới  khi xác nhận thanh toán.");
         } else {
             page.showDept(row);
         }

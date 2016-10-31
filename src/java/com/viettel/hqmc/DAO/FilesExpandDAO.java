@@ -311,7 +311,7 @@ public class FilesExpandDAO extends BaseDAO {
 
             String paperOnly = "";
 
-            File folderExisting = new File(getSafeFileName(strPath));
+            File folderExisting = new File(strPath);
             if (!folderExisting.isDirectory()) {
                 folderExisting.mkdir();
             }

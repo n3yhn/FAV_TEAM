@@ -1829,161 +1829,238 @@ public class FeeDAOHE extends GenericDAOHibernate<Fee, Long> {
             //if (file.getStatus().equals(Constants.FILE_STATUS.EVALUATED_TO_ADD) || file.getStatus().equals(Constants.FILE_STATUS.RECEIVED_REJECT) || file.getStatus().equals(Constants.FILE_STATUS.RECEIVED_REJECT_TO_ADD)) {
             Long fileType = fileBo.getFileType();
             Procedure proBoNew = pdhe.findById(proceduceIdNew);
-            Procedure proBo = pdhe.findById(fileType);
-            // check hop qui sang phu hop
-            if (proBo.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01)
-                    || proBo.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03)
-                    || proBo.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01_TL)
-                    || proBo.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03_TL)) {
-                // check hop quy sang hop quy thi return
-                if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01)
-                        || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03)
-                        || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01_TL)
-                        || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03_TL)) {
-                    fileBo.setFileType(proBoNew.getProcedureId());
-                    fileBo.setFileTypeName(proBoNew.getName());
-                    fileBo.setUserSigned("");
-                    getSession().update(fileBo);
-                    return true;
-                } else//hop quy sang phu hop
-                // truong hop chuyen sang loai moi them tien - thuc pham chuc nang
-                 if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
-                            || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)) {
-//                            // update phi ban ghi cu
+            Procedure proBoOld = pdhe.findById(fileType);
+            if (proBoNew != null
+                    && proBoOld != null
+                    && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.REC_CONFIRM_NORMAL_IMP)
+                    && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT)
+                    && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_IMP)
+                    && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_VN)
+                    && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_NORMAL_VN)
+                    && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05_PAPER)
+                    && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)
+                    && !proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.REC_CONFIRM_NORMAL_IMP)
+                    && !proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT)
+                    && !proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_IMP)
+                    && !proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_VN)
+                    && !proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_NORMAL_VN)
+                    && !proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05_PAPER)
+                    && !proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)) {
+                //la hop quy
+                if (proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01)
+                        || proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03)
+                        || proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01_TL)
+                        || proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03_TL)) {
+                    //TH Hợp quy -> hợp quy
+                    if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01)
+                            || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03)
+                            || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01_TL)
+                            || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03_TL)) {
+                        fileBo.setFileType(proBoNew.getProcedureId());
+                        fileBo.setFileTypeName(proBoNew.getName());
+                        fileBo.setUserSigned("1. Hợp quy -> hợp quy");
+                        getSession().update(fileBo);
+                        return true;
+                    } else//Hợp qui-->phù hợp chức năng
+                    {
+                        if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
+                                || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)) {
+//                            //  phi ban ghi cu update
+                            String hql = "select fpif from FeePaymentInfo fpif "
+                                    + "where fpif.fileId =:fileId "
+                                    + "and fpif.isActive = 1"
+                                    + "and fpif.status = 1";
+                            Query query = getSession().createQuery(hql);
+                            query.setParameter("fileId", fileId);
+                            List<FeePaymentInfo> FeePaymentInfo = query.list();
+                            if (FeePaymentInfo != null && FeePaymentInfo.size() > 0) {
+                                FeePaymentInfo fpifOld = FeePaymentInfo.get(0);
+                                //neu tien cu bang tien moi thi k can thay doi tien
+                                if (!Constants.PRICE.TPCN.equals(fpifOld.getCost())) {
+                                    fpifOld.setStatus(0L);
+                                    fpifOld.setCost(Constants.PRICE.TPCN);
+                                    fpifOld.setCostCheck(Constants.PRICE.TPCN);
+                                    getSession().update(fpifOld);
+                                }
+                                FeePaymentInfo lstlpcs = getLePhiCapSo(fileId);
+                                if (lstlpcs != null
+                                        && Constants.PRICE.LPCS.equals(lstlpcs.getCost())) {
+                                    fileBo.setFileType(proceduceIdNew);
+                                    fileBo.setFileTypeName(proBoNew.getName());
+                                    fileBo.setIsFee(0l);
+                                    fileBo.setUserSigned("2. HQ->PH_CN");
+                                    getSession().update(fileBo);
+                                } else {
+                                    //them ban ghi ve le phi cap so
+                                    FeePaymentInfo fpif = new FeePaymentInfo();
+                                    fpif.setCreateDate(getSysdate());
+                                    fpif.setStatus(0L);
+                                    fpif.setFileId(fileId);
+                                    fpif.setIsActive(1l);
+                                    fpif.setFeeId(feeWantChange.getFeeId());
+                                    fpif.setCost(feeWantChange.getPrice());
+                                    getSession().save(fpif);
+                                    //update bang file
+                                    fileBo.setFileType(proceduceIdNew);
+                                    fileBo.setFileTypeName(proBoNew.getName());
+                                    fileBo.setIsFee(0l);
+                                    fileBo.setUserSigned("3. HQ->PH_CN");
+                                    getSession().update(fileBo);
+                                }
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        } else {//TH hợp quy -> phù hợp thường
+                            FeePaymentInfo fpif = new FeePaymentInfo();
+                            fpif.setCreateDate(getSysdate());
+                            fpif.setStatus(0l);
+                            fpif.setFileId(fileId);
+                            fpif.setIsActive(1l);
+                            fpif.setFeeId(feeWantChange.getFeeId());
+                            fpif.setCost(feeWantChange.getPrice());
+                            getSession().save(fpif);
+                            //update bang file
+                            fileBo.setFileType(proBoNew.getProcedureId());
+                            fileBo.setFileTypeName(proBoNew.getName());
+                            fileBo.setUserSigned("4. HQ->PH_TH");
+                            getSession().update(fileBo);
+                            return true;
+                        }
+                    }
+                } else // phu hop sang phu hop or nguoc lai
+                 if (proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP)
+                            || proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN)
+                            || proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRMTL)) {
+                        if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
+                                || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP_TL)
+                                || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)) {
+                            FeePaymentInfo fpifOld = getLPTD(fileId);
+                            if (fpifOld != null
+                                    && !Constants.PRICE.TPCN.equals(fpifOld.getCost())) {//neu tien cu bang tien moi thi k can thay doi tien
+                                fpifOld.setStatus(0L);
+                                fpifOld.setCost(Constants.PRICE.TPCN);
+                                fpifOld.setCostCheck(Constants.PRICE.TPCN);
+                                getSession().update(fpifOld);
+                            }
+                            fileBo.setFileType(proBoNew.getProcedureId());
+                            fileBo.setFileTypeName(proBoNew.getName());
+                            fileBo.setIsFee(0l);
+                            fileBo.setUserSigned("5. PH->HQ_TH");
+                            getSession().update(fileBo);
+                            return true;
+                            //TH Phù hợp chức năng -> phù hợp thường
+                        }
+                    } else if (proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
+                            || proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP_TL)
+                            || proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)) {
+                        if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP)
+                                || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN)) {
+                            fileBo.setFileType(proBoNew.getProcedureId());
+                            fileBo.setFileTypeName(proBoNew.getName());
+                            fileBo.setUserSigned("6. PH_CN->PH_TH");
+                            getSession().update(fileBo);
+                            return true;
+                        } else if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01)
+                                || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03)
+                                || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01_TL)
+                                || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03_TL)) {
+
+                            FeePaymentInfo fpibo = getLePhiCapSo(fileId);
+                            if (fpibo != null) {
+                                fpibo.setIsActive(-1L);
+                                getSession().save(fpibo);
+                            }
+                            fileBo.setFileType(proBoNew.getProcedureId());
+                            fileBo.setFileTypeName(proBoNew.getName());
+                            fileBo.setUserSigned("7. PH_CN->HQ_TH");
+                            getSession().update(fileBo);
+                            return true;
+                        }
+                    } else if (proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
+                            || proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP_TL)
+                            || proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)
+                            || proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP)
+                            || proBoOld.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN)) {
+                        if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01)
+                                || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03)
+                                || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01_TL)
+                                || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03_TL)) {
+
+                            FeePaymentInfo fpibo = getLePhiCapSo(fileId);
+                            if (fpibo != null) {
+                                fpibo.setIsActive(-1L);
+                                getSession().save(fpibo);
+                            }
+                            fileBo.setFileType(proBoNew.getProcedureId());
+                            fileBo.setFileTypeName(proBoNew.getName());
+                            fileBo.setUserSigned("8. PH_CN->PH_TH");
+                            getSession().update(fileBo);
+                            return true;
+                        }
+                    } else {
                         String hql = "select fpif from FeePaymentInfo fpif "
                                 + "where fpif.fileId =:fileId "
                                 + "and fpif.isActive = 1";
                         Query query = getSession().createQuery(hql);
                         query.setParameter("fileId", fileId);
                         List<FeePaymentInfo> FeePaymentInfo = query.list();
-                        FeePaymentInfo fpifOld = FeePaymentInfo.get(0);
-                        fpifOld.setStatus(0L);
-//fpifOld.setCost(Constants.PRICE.TPCN);
-//fpifOld.setCostCheck(Constants.PRICE.TPCN);
-                        getSession().update(fpifOld);
-                        //them ban ghi moi
-                        FeePaymentInfo fpif = new FeePaymentInfo();
-                        fpif.setCreateDate(getSysdate());
-                        fpif.setStatus(0L);
-                        fpif.setFileId(fileId);
-                        fpif.setIsActive(1l);
-                        fpif.setFeeId(feeWantChange.getFeeId());
-                        fpif.setCost(feeWantChange.getPrice());
-                        getSession().save(fpif);
-                        //update bang file
-                        fileBo.setFileType(proceduceIdNew);
-                        fileBo.setFileTypeName(proBoNew.getName());
-                        fileBo.setIsFee(0l);
-                        fileBo.setUserSigned("reset");
-//                            DetailProductDAOHE dphe = new DetailProductDAOHE();
-//                            DetailProduct dp = dphe.findById(file.getDetailProductId());
-//                            dp.setProductType(null);
-//                            getSession().update(dp);
-                        getSession().update(fileBo);
-                        return true;
-                    } else if (!proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.REC_CONFIRM_NORMAL_IMP)
-                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT)
-                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_IMP)
-                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_VN)
-                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_NORMAL_VN)
-                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05_PAPER)
-                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)) {
-
-                        FeePaymentInfo fpif = new FeePaymentInfo();
-                        fpif.setCreateDate(getSysdate());
-                        fpif.setStatus(0l);
-                        fpif.setFileId(fileId);
-                        fpif.setIsActive(1l);
-                        fpif.setFeeId(feeWantChange.getFeeId());
-                        fpif.setCost(feeWantChange.getPrice());
-                        getSession().save(fpif);
-                        //update bang file
-                        fileBo.setFileType(proBoNew.getProcedureId());
-                        fileBo.setFileTypeName(proBoNew.getName());
-                        fileBo.setUserSigned("");
-                        getSession().update(fileBo);
-                        return true;
-                    } //}
-            } else// phu hop sang phu hop or nguoc lai
-             if (proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP)
-                        || proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
-                        || proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)
-                        || proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN)) {
-
-                    if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP)
-                            || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN)
-                            || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01)
-                            || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03)
-                            || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE01_TL)
-                            || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE03_TL)) {
-
-                        fileBo.setFileType(proBoNew.getProcedureId());
-                        fileBo.setFileTypeName(proBoNew.getName());
-                        fileBo.setUserSigned("");
-                        getSession().update(fileBo);
-                        return true;
-                    } else if (proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_IMP)
-                            || proBo.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_NORMAL_VN)) {
-
-                        if (proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_IMP)
-                                || proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.CONFIRM_FUNC_VN)) {
-
-                            String hql = "select fpif from FeePaymentInfo fpif "
-                                    + "where fpif.fileId =:fileId "
-                                    + "and fpif.isActive = 1";
-                            Query query = getSession().createQuery(hql);
-                            query.setParameter("fileId", fileId);
-                            List<FeePaymentInfo> FeePaymentInfo = query.list();
+                        if (FeePaymentInfo != null && FeePaymentInfo.size() > 0) {
                             for (int i = 0; i < FeePaymentInfo.size(); i++) {
                                 FeePaymentInfo fpif = FeePaymentInfo.get(i);
                                 if (fpif.getFeeId().equals(feeWantChange.getFeeId())) {
                                     fpif.setIsActive(0l);
                                     getSession().update(fpif);
                                 }
-                                if (fpif.getCost().equals(Constants.PRICE.TPT)) {
-                                    fpif.setStatus(0l);
-                                    getSession().update(fpif);
-                                }
                             }
                             fileBo.setFileType(proceduceIdNew);
                             fileBo.setFileTypeName(proBoNew.getName());
-                            fileBo.setIsFee(0l);
-                            fileBo.setUserSigned("reset");
+                            fileBo.setUserSigned("9.");
                             getSession().update(fileBo);
                             return true;
                         }
-                    } else if (!proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.REC_CONFIRM_NORMAL_IMP)
-                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_ANNOUNCEMENT)
-                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_IMP)
-                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_FUNC_VN)
-                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.RE_CONFIRM_NORMAL_VN)
-                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_FILE05_PAPER)
-                            && !proBoNew.getDescription().equals(Constants.FILE_DESCRIPTION.ANNOUNCEMENT_4STAR)) {
-                        String hql = "select fpif from FeePaymentInfo fpif "
-                                + "where fpif.fileId =:fileId "
-                                + "and fpif.isActive = 1";
-                        Query query = getSession().createQuery(hql);
-                        query.setParameter("fileId", fileId);
-                        List<FeePaymentInfo> FeePaymentInfo = query.list();
-                        for (int i = 0; i < FeePaymentInfo.size(); i++) {
-                            FeePaymentInfo fpif = FeePaymentInfo.get(i);
-                            if (fpif.getFeeId().equals(feeWantChange.getFeeId())) {
-                                fpif.setIsActive(0l);
-                                getSession().update(fpif);
-                            }
-                        }
-                        fileBo.setFileType(proceduceIdNew);
-                        fileBo.setFileTypeName(proBoNew.getName());
-                        fileBo.setUserSigned("");
-                        getSession().update(fileBo);
-                        return true;
                     }
-                }
+            } else {
+                return false;
+            }
+
         } catch (NumberFormatException | HibernateException ex) {
             LogUtil.addLog(ex);//binhnt sonar a160901
             return false;
         }
         return false;
+    }
+
+    public FeePaymentInfo getLePhiCapSo(Long fileId) {
+        String sqlLpcs = "select fpif from FeePaymentInfo fpif "
+                + "where fpif.fileId =:fileId "
+                + "and fpif.isActive = 1"
+                + "and fpif.status = 0";
+        Query querylpcs = getSession().createQuery(sqlLpcs);
+        querylpcs.setParameter("fileId", fileId);
+        List<FeePaymentInfo> lstlpcs = querylpcs.list();
+        if (lstlpcs != null
+                && lstlpcs.size() > 0
+                && Constants.PRICE.LPCS.equals(lstlpcs.get(0).getCost())) {
+            return lstlpcs.get(0);
+        }
+        return null;
+    }
+
+    public FeePaymentInfo getLPTD(Long fileId) {//lay ban ghi phi tham dinh ho so
+        String hql = "select fpif from FeePaymentInfo fpif "
+                + "where fpif.fileId =:fileId "
+                + "and fpif.isActive = 1"
+                + "and fpif.status = 1";
+        Query query = getSession().createQuery(hql);
+        query.setParameter("fileId", fileId);
+        List<FeePaymentInfo> FeePaymentInfo = query.list();
+        if (FeePaymentInfo != null
+                && FeePaymentInfo.size() > 0) {
+            return FeePaymentInfo.get(0);
+        } else {
+            return null;
+        }
     }
 
     public Fee findFeeByFeeType(Long feeType) {

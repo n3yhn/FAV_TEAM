@@ -555,9 +555,10 @@ public class FeeDao extends BaseDAO {
         if (bReturn) {
             resultMessage.add("1");
             resultMessage.add("Lưu dữ liệu thành công !");
-
-            EventLogDAOHE edhe = new EventLogDAOHE();
-            edhe.insertEventLog("Chuyển loại hồ sơ", getUserLogin() + " file_code=" + fileCode, getRequest());
+            if (!Constants.ROLES.QT_VOFFICE.equals(getUserLogin())) {
+                EventLogDAOHE edhe = new EventLogDAOHE();
+                edhe.insertEventLog("Chuyển loại hồ sơ", getUserLogin() + " mã hồ sơ=" + fileCode, getRequest());
+            }
         } else {
             resultMessage.add("0");
             resultMessage.add("Lưu dữ liệu không thành công, hồ sơ đang ở trạng thái không được phép sửa hoặc chuyển sang loại không đúng !");

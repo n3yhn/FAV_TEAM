@@ -113,6 +113,30 @@ public class BusinessAlertDAO extends BaseDAO {
         return GRID_DATA;
     }
 
+    public String onDelete() throws Exception {
+        List resultMessage = new ArrayList();
+        BusinessAlertDAOHE pcdhe = new BusinessAlertDAOHE();
+        try {
+            Long businessAlertId = Long.valueOf(getRequest().getParameter("businessAlertId"));
+            BusinessAlert p = pcdhe.findById(businessAlertId);
+            if (p != null) {
+                p.setIsActive(Constants.ACTIVE_STATUS.DELETED);
+                pcdhe.update(p);
+                resultMessage.add("1");
+                resultMessage.add("Xóa Thông báo thành công");
+            } else {
+                resultMessage.add("3");
+                resultMessage.add("Xóa Thông báo không thành công");
+            }
+        } catch (Exception ex) {
+            resultMessage.add("3");
+            resultMessage.add("Xóa Thông báo không thành công");
+        }
+
+        jsonDataGrid.setItems(resultMessage);
+        return GRID_DATA;
+    }
+
     public String toBusinessAlertPage() {
         return this.forwardPage;
     }

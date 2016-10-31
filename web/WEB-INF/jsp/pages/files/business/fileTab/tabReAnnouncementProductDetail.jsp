@@ -282,6 +282,7 @@
                 break;
             }
         }
+        /*
         if (dem == 1) {
             alert("Phí thẩm định nhóm sản phẩm này có giá: " + priceDBT + " VNĐ, Chú ý chọn đúng nhóm SP vì có liên quan tới phí");
         } else if (check == tpcnId) {
@@ -293,5 +294,6 @@
         } else if (check != dbtId && check != tpcnId && check != -1) {
             alert("Phí thẩm định nhóm sản phẩm này có giá: " + priceETC + " VNĐ, Chú ý chọn đúng nhóm SP vì có liên quan tới phí");
         }
+        */
     };
 </script>

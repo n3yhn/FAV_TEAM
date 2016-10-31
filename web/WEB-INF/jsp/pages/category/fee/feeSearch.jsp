@@ -365,21 +365,21 @@
                                         msg.confirm('Bạn có chắc chắn chuyển hồ sơ này 1 sang loại hồ sơ đã chọn ?', '<sd:Property>Cảnh báo</sd:Property>', page.changeFileTypeNew);
                                             }
 
-                                            page.changeFileTypeNew = function() {
-                                                var fileCode = dijit.byId("searchForm.fileCodeNew").getValue();
-                                                var fileType = dijit.byId("searchForm.Type").getValue();
-                                                if (fileCode == null || fileCode.trim().length == 0)
-                                                {
-                                                    alert("Bạn phải nhập mã hồ sơ muốn chuyển loại !")
-                                                } else
-                                                {
-                                                    if (fileType == -1)
-                                                    {
-                                                        alert("Bạn phải chọn loại hồ sơ muốn chuyển !")
-                                                    } else {
-                                                        sd.connector.post("feeAction!onChangeFileType.do?" + token.getTokenParamString() + "&fileCode=" + fileCode + "&fileType=" + fileType, null, null, null, page.returnMessageReset);
-                                                    }
-                                                }
-                                            }
+page.changeFileTypeNew = function() {
+    var fileCode = dijit.byId("searchForm.fileCodeNew").getValue();
+    var fileType = dijit.byId("searchForm.Type").getValue();
+    if (fileCode == null || fileCode.trim().length == 0)
+    {
+        alert("Bạn phải nhập mã hồ sơ muốn chuyển loại !")
+    } else
+    {
+        if (fileType == -1)
+        {
+            alert("Bạn phải chọn loại hồ sơ muốn chuyển !")
+        } else {
+            sd.connector.post("feeAction!onChangeFileType.do?" + token.getTokenParamString() + "&fileCode=" + fileCode + "&fileType=" + fileType, null, null, null, page.returnMessageReset);
+        }
+    }
+}
 
 </script>

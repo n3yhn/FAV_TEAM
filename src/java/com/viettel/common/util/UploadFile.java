@@ -69,7 +69,10 @@ public class UploadFile {
 //        String dir = "/share/" + directory + separatorFile;
 //        String pathDir = request.getRealPath(dir);
         File destFile = new File(subFolder + separatorFile + fName);
-        copy(srcFile, destFile);
+        boolean isOk = copy(srcFile, destFile);
+        if(!isOk){
+            return "";
+        }
         srcFile.deleteOnExit();
         File temp = new File(subFolder);
         if (temp.isDirectory()) {
@@ -97,7 +100,7 @@ public class UploadFile {
                 + separatorFile + String.valueOf(cal.getTime().getMonth() + 1)
                 + separatorFile + String.valueOf(cal.getTime().getDate())
                 + separatorFile;
-        File folderExisting = new File(getSafeFileName(dir));
+        File folderExisting = new File(dir);
         if (!folderExisting.isDirectory()) {
             folderExisting.mkdir();
         }
@@ -142,7 +145,7 @@ public class UploadFile {
                 + separatorFile + String.valueOf(cal.getTime().getMonth() + 1)
                 + separatorFile + String.valueOf(cal.getTime().getDate())
                 + separatorFile;
-        File folderExisting = new File(getSafeFileName(dir));
+        File folderExisting = new File(dir);
         if (!folderExisting.isDirectory()) {
             folderExisting.mkdir();
         }
@@ -182,7 +185,7 @@ public class UploadFile {
                 + separatorFile + String.valueOf(cal.getTime().getMonth() + 1)
                 + separatorFile + String.valueOf(cal.getTime().getDate());
         String subFolder = dir + subDir;
-        File folderExisting = new File(getSafeFileName(dir));
+        File folderExisting = new File(dir);
         if (!folderExisting.isDirectory()) {
             folderExisting.mkdir();
         }
@@ -223,7 +226,7 @@ public class UploadFile {
         String dir = rb.getString("directory");
         String subDir = separatorFile + userName;
         String subFolder = dir + subDir;
-        File folderExisting = new File(getSafeFileName(dir));
+        File folderExisting = new File(dir);
         if (!folderExisting.isDirectory()) {
             folderExisting.mkdir();
         }
@@ -310,7 +313,7 @@ public class UploadFile {
      * @param src
      * @param dest
      */
-    public static synchronized void copy(File src, File dest) {
+    public static synchronized boolean copy(File src, File dest) {
         try {
             InputStream in = new FileInputStream(src);
             OutputStream out = new FileOutputStream(dest);
@@ -323,8 +326,9 @@ public class UploadFile {
             out.close();
         } catch (IOException e) {
             LogUtil.addLog(e);//binhnt sonar a160901
+            return false;
         } 
-         
+        return true;
     }
 
     /**

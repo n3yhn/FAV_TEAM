@@ -137,7 +137,8 @@ public class UploadIframeDAO extends BaseDAO {
                 if (checkFileExtension(fileName)) {
 //                if (true) {
                     String filePath = UploadFile.uploadFile("temp", fileName, file, getRequest());
-                    VoAttachsDAOHE daoHe = new VoAttachsDAOHE();
+                    if(!"".equals(filePath)){
+                        VoAttachsDAOHE daoHe = new VoAttachsDAOHE();
                     VoAttachs bo = new VoAttachs();
                     bo.setAttachName(fileName);
                     bo.setAttachPath(filePath);
@@ -156,6 +157,10 @@ public class UploadIframeDAO extends BaseDAO {
                     }
                     idSession += id.toString() + ";";
                     getRequest().getSession().setAttribute("idSession", idSession);
+                    } else{
+                        return "uploadResultError";
+                    }
+                    
 
                 }
             }

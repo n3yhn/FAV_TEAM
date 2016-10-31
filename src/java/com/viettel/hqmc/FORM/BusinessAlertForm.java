@@ -21,6 +21,7 @@ public class BusinessAlertForm {
     private String createdByName;
     private Long seen;
     private String content;
+    private Long parentId;
 
     public BusinessAlertForm(Long businessAlertId, Long businessId, Long isActive, Date createdDate, Long createdById, String createdByName, Long seen, String content) {
         this.businessAlertId = businessAlertId;
@@ -98,6 +99,26 @@ public class BusinessAlertForm {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public BusinessAlertForm(Long businessAlertId, Long businessId, Long isActive, Date createdDate, Long createdById, String createdByName, Long seen, String content, Long parentId) {
+        this.businessAlertId = businessAlertId;
+        this.businessId = businessId;
+        this.isActive = isActive;
+        this.createdDate = createdDate;
+        this.createdById = createdById;
+        this.createdByName = createdByName;
+        this.seen = seen;
+        this.content = content;
+        this.parentId = parentId;
     }
 
 }

@@ -314,7 +314,7 @@ public final class Constants {
     }
 
     public interface ROLES {
-
+        public static String QT_VOFFICE = "voffice_admin";
         public static String LEAD_ROLE = "voffice_cvp";         // Chanh van phong
         public static String LEAD_OFFICE_ROLE = "voffice_ld";   // Lanh dao
         public static String STAFF_ROLE = "voffice_cv";         // Chuyen vien
@@ -397,15 +397,12 @@ public final class Constants {
         public static final String REC_CONFIRM_NORMAL_IMP = "reConfirmNormalImp";
         public static final String RE_CONFIRM_FUNC_VN = "reConfirmFuncVN";
         public static final String RE_CONFIRM_NORMAL_VN = "reConfirmNormalVN";
-        
-        public static final Long  RE_ANNOUNCEMENT_ID = 66741L;
+
+        public static final Long RE_ANNOUNCEMENT_ID = 66741L;
         public static final Long RE_CONFIRM_FUNC_IMP_ID = 66747L;
         public static final Long REC_CONFIRM_NORMAL_IMP_ID = 66743L;
         public static final Long RE_CONFIRM_FUNC_VN_ID = 66749L;
         public static final Long RE_CONFIRM_NORMAL_VN_ID = 66745L;
-        
-        
-        
 
         public static final String CONFIRM_FUNC_IMP_TL = "confirmTL";
         //hiepvv SDBS sau cong bo
@@ -489,6 +486,7 @@ public final class Constants {
 
         public static final Long TPCN = 1500000L;
         public static final Long TPT = 500000L;
+        public static final Long LPCS = 150000L;
     }
 
     //hieptq update 090715
@@ -525,22 +523,23 @@ public final class Constants {
 
     }
 
-   public interface TEMP {
+    public interface TEMP {
+
         public static final String FEATURE_GENERAL_ENTITIES = "http://xml.org/sax/features/external-general-entities";
         public static final String FEATURE_PARAMETER_ENTITIES = "http://xml.org/sax/features/external-parameter-entities";
     }
-   
-   public static String NSW_FUNCTION(Long k) {
-		if (k < 10L) {
-			return "0" + k.toString();
-		}
-		return k.toString();
-	}
 
-	public static String NSW_TYPE(Long k) {
-		if (k < 10L) {
-			return "0" + k.toString();
-		}
-		return k.toString();
-	}
+    public static String NSW_FUNCTION(Long k) {
+        if (k < 10L) {
+            return "0" + k.toString();
+        }
+        return k.toString();
+    }
+
+    public static String NSW_TYPE(Long k) {
+        if (k < 10L) {
+            return "0" + k.toString();
+        }
+        return k.toString();
+    }
 }

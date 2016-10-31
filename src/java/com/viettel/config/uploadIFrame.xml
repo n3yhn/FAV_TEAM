@@ -18,6 +18,7 @@
             <result type="tiles" name="uploadResultPageSh">uploadResultPageSh.page</result>
             <result type="tiles" name="reportResult">reportResult.page</result>
             <result type="tiles" name="errorNoFile">errorNoFile.page</result>
+            <result type="tiles" name="uploadResultError">uploadResultError.page</result>
             <result type="json" name="jsonFile">
                 <param name="root">jsonFile</param>
             </result>

@@ -72,6 +72,10 @@
         <put-attribute name="title" value="HỆ THỐNG QUẢN LÝ HỒ SƠ CÔNG VIỆC"/>        
         <put-attribute name="body" value="/WEB-INF/tags/uploadResult.jsp"/>
     </definition>
+    <definition extends="content.definition" name="uploadResultError.page">
+        <put-attribute name="title" value="Lỗi"/>        
+        <put-attribute name="body" value="/WEB-INF/tags/uploadResultError.jsp"/>
+    </definition>
     <definition extends="content.definition" name="uploadResultPageImp.page">      
         <put-attribute name="body" value="/WEB-INF/tags/uploadResultImp.jsp"/>
     </definition>

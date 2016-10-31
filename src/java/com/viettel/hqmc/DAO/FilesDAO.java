@@ -78,7 +78,6 @@ import com.viettel.voffice.database.BO.ProcessComment;
 import com.viettel.voffice.database.BO.VoAttachs;
 import com.viettel.voffice.database.DAO.BaseDAO;
 import com.viettel.voffice.database.DAO.GridResult;
-import static com.viettel.voffice.database.DAO.UploadIframeDAO.getSafeFileName;
 import com.viettel.voffice.database.DAOHibernate.CategoryDAOHE;
 import com.viettel.voffice.database.DAOHibernate.EventLogDAOHE;
 import com.viettel.voffice.database.DAOHibernate.ProcessCommentDAOHE;
@@ -1923,7 +1922,9 @@ public class FilesDAO extends BaseDAO {
                 resultMessage.add("1");
                 resultMessage.add("Cập nhật trạng thái hồ sơ thành công");
                 EventLogDAOHE edhe = new EventLogDAOHE();
-                edhe.insertEventLog("Chuyển luồng hồ sơ", getUserLogin() + " FileId=" + createForm.getFileId(), getRequest());
+                if (!Constants.ROLES.QT_VOFFICE.equals(getUserLogin())) {
+                    edhe.insertEventLog("Chuyển luồng hồ sơ", getUserLogin() + " FileId=" + createForm.getFileId(), getRequest());
+                }
             } else {
                 resultMessage.add("3");
                 resultMessage.add("Cập nhật trạng thái hồ sơ không thành công");
@@ -3382,14 +3383,14 @@ public class FilesDAO extends BaseDAO {
         getRequest().setAttribute("lstRepository", lstRepositories);
 
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MONTH, -1);
+        cal.add(Calendar.MONTH, -12);
         Date result1 = cal.getTime();
-        cal.add(Calendar.MONTH, 2);
+        cal.add(Calendar.MONTH, 12);
         Date result2 = cal.getTime();
 
         searchForm.setSendDateFrom(result1);
         searchForm.setSendDateTo(result2);
-
+        
         return lookupFilesByStaffDonothingPage;
     }
 
@@ -4180,14 +4181,12 @@ public class FilesDAO extends BaseDAO {
         if ((totalFeeFile.equals(feeFile) && feeFile > 0l) || (totalFeeFile > feeFile)) {
             customInfo.add(1);
         } else // nop thieu
-        {
-            if (totalFeeFile < feeFile && totalFeeFile > 0) {
+         if (totalFeeFile < feeFile && totalFeeFile > 0) {
                 customInfo.add(0);
             } // chua nop
             else {
                 customInfo.add(-1);
             }
-        }
 
         jsonDataGrid.setItems(result.getLstResult());
         jsonDataGrid.setTotalRows(result.getnCount().intValue());
@@ -8853,7 +8852,7 @@ public class FilesDAO extends BaseDAO {
 
             String paperOnly = "";
 
-            File folderExisting = new File(getSafeFileName(strPath));
+            File folderExisting = new File(strPath);
             if (!folderExisting.isDirectory()) {
                 folderExisting.mkdir();
             }
@@ -9014,7 +9013,7 @@ public class FilesDAO extends BaseDAO {
             String PATH1 = rb.getString("PERMIT_upload") + subDir;
             String copyPath = rb.getString("file_sign_link");
 
-            File folderExisting = new File(getSafeFileName(PATH1));
+            File folderExisting = new File(PATH1);
             if (!folderExisting.isDirectory()) {
                 folderExisting.mkdir();
             }
@@ -10321,7 +10320,7 @@ public class FilesDAO extends BaseDAO {
             String strPath = rb.getString("PERMIT_upload") + subDir;
             String copyPath = rb.getString("file_sign_link");
 
-            File folderExisting = new File(getSafeFileName(strPath));
+            File folderExisting = new File(strPath);
             if (!folderExisting.isDirectory()) {
                 folderExisting.mkdir();
             }
